@@ -4,10 +4,10 @@ const GROUND_RADIUS := 8.0
 const GRASS_COUNT := 7000
 const CHUNK_SIZE := 4.0
 const GRASS_MODEL := preload("res://assets/vegetation/models/grass_star_3card_v6.glb")
-const TREE_MODEL := preload("res://assets/vegetation/models/tree_foliage_480card_v6.glb")
+const TREE_MODEL := preload("res://assets/vegetation/models/tree_foliage_480card_v8.glb")
 const WIND_SHADER := preload("res://assets/vegetation/shaders/vegetation_wind.gdshader")
 const GRASS_TEXTURE := preload("res://assets/vegetation/textures/grass_tuft_straw_minimal_v5.png")
-const LEAF_TEXTURE := preload("res://assets/vegetation/textures/leaf_clusters_flat_muted_v7.png")
+const LEAF_TEXTURE := preload("res://assets/vegetation/textures/leaf_clusters_witness_sparse_flat_v11.png")
 const SKY_TEXTURE := preload("res://assets/environment/hdri/rosendal_park_sunset_puresky_4k.exr")
 
 
@@ -99,10 +99,23 @@ func _build_tree() -> void:
 	leaf_material.shader = WIND_SHADER
 	leaf_material.set_shader_parameter("albedo_texture", LEAF_TEXTURE)
 	leaf_material.set_shader_parameter("alpha_cutoff", 0.50)
+	leaf_material.set_shader_parameter("alpha_antialiasing_edge", 0.30)
+	leaf_material.set_shader_parameter("atlas_grid", Vector2(2.0, 2.0))
+	leaf_material.set_shader_parameter("card_edge_fade", 0.075)
 	leaf_material.set_shader_parameter("light_wrap", 0.34)
 	leaf_material.set_shader_parameter("wind_strength", 0.075)
 	leaf_material.set_shader_parameter("wind_speed", 0.72)
 	_apply_material_to_named_meshes(tree, "foliage", leaf_material)
+	_set_shadow_casting_for_named_meshes(
+		tree,
+		"foliage",
+		GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	)
+	_set_shadow_casting_for_named_meshes(
+		tree,
+		"trunk",
+		GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+	)
 
 
 func _build_grass_chunks() -> void:
@@ -118,6 +131,9 @@ func _build_grass_chunks() -> void:
 	grass_material.shader = WIND_SHADER
 	grass_material.set_shader_parameter("albedo_texture", GRASS_TEXTURE)
 	grass_material.set_shader_parameter("alpha_cutoff", 0.34)
+	grass_material.set_shader_parameter("alpha_antialiasing_edge", 0.20)
+	grass_material.set_shader_parameter("atlas_grid", Vector2.ONE)
+	grass_material.set_shader_parameter("card_edge_fade", 0.0)
 	grass_material.set_shader_parameter("light_wrap", 0.46)
 	grass_material.set_shader_parameter("wind_strength", 0.105)
 	grass_material.set_shader_parameter("wind_speed", 1.08)
@@ -166,7 +182,7 @@ func _build_grass_chunks() -> void:
 		chunk.multimesh = multimesh
 		chunk.visibility_range_end = 42.0
 		# Hundreds of alpha-cut grass shadows become dark visual noise. Grounding
-		# comes from SSAO; the hero tree remains the readable shadow caster.
+		# comes from SSAO; the trunk and a future canopy proxy handle tree shadows.
 		chunk.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		grass_root.add_child(chunk)
 
@@ -186,6 +202,17 @@ func _apply_material_to_named_meshes(node: Node, token: String, material: Materi
 		node.material_override = material
 	for child in node.get_children():
 		_apply_material_to_named_meshes(child, token, material)
+
+
+func _set_shadow_casting_for_named_meshes(
+	node: Node,
+	token: String,
+	setting: GeometryInstance3D.ShadowCastingSetting
+) -> void:
+	if node is MeshInstance3D and token.to_lower() in node.name.to_lower():
+		node.cast_shadow = setting
+	for child in node.get_children():
+		_set_shadow_casting_for_named_meshes(child, token, setting)
 
 
 func _capture_test_frame(filename: String) -> void:

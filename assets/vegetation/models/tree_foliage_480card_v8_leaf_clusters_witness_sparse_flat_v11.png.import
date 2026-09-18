@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3uru814bdp4s"
-path.s3tc="res://.godot/imported/tree_foliage_384card_v6_leaf_clusters_flat_single_v4.png-025aead17d698503ec108d77bc2b4673.s3tc.ctex"
+uid="uid://ojypl64uei5v"
+path.s3tc="res://.godot/imported/tree_foliage_480card_v8_leaf_clusters_witness_sparse_flat_v11.png-b80870d09c06fa1a7211b0d7aae46d14.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "84ee52a83876d56375f47fa4d38ae617"
+"md5": "d3bd790e9ef7e4c1e5fefbc5a464486f"
 }
 
 [deps]
 
-source_file="res://assets/vegetation/models/tree_foliage_384card_v6_leaf_clusters_flat_single_v4.png"
-dest_files=["res://.godot/imported/tree_foliage_384card_v6_leaf_clusters_flat_single_v4.png-025aead17d698503ec108d77bc2b4673.s3tc.ctex"]
+source_file="res://assets/vegetation/models/tree_foliage_480card_v8_leaf_clusters_witness_sparse_flat_v11.png"
+dest_files=["res://.godot/imported/tree_foliage_480card_v8_leaf_clusters_witness_sparse_flat_v11.png-b80870d09c06fa1a7211b0d7aae46d14.s3tc.ctex"]
 
 [params]
 

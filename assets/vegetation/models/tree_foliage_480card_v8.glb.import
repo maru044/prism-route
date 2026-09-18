@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bnllarbkkcbna"
-path="res://.godot/imported/tree_foliage_480card_v6.glb-aab109a657eca3d803c261327a1f6a93.scn"
+uid="uid://cv0r1lr63qjds"
+path="res://.godot/imported/tree_foliage_480card_v8.glb-3dc53addeacafbeaeff319f51918ad06.scn"
 
 [deps]
 
-source_file="res://assets/vegetation/models/tree_foliage_480card_v6.glb"
-dest_files=["res://.godot/imported/tree_foliage_480card_v6.glb-aab109a657eca3d803c261327a1f6a93.scn"]
+source_file="res://assets/vegetation/models/tree_foliage_480card_v8.glb"
+dest_files=["res://.godot/imported/tree_foliage_480card_v8.glb-3dc53addeacafbeaeff319f51918ad06.scn"]
 
 [params]
 

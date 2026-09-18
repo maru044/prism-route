@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvtckgcyk3gta"
-path="res://.godot/imported/leaf_clusters_flat_single_v4.png-d8a7e10cad2a536f56ba9b2fd00bf23c.ctex"
+uid="uid://f2rbix25fjrl"
+path="res://.godot/imported/leaf_clusters_witness_sparse_flat_v11.png-736b229184b70224f7106e426b5ace27.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/vegetation/textures/leaf_clusters_flat_single_v4.png"
-dest_files=["res://.godot/imported/leaf_clusters_flat_single_v4.png-d8a7e10cad2a536f56ba9b2fd00bf23c.ctex"]
+source_file="res://assets/vegetation/textures/leaf_clusters_witness_sparse_flat_v11.png"
+dest_files=["res://.godot/imported/leaf_clusters_witness_sparse_flat_v11.png-736b229184b70224f7106e426b5ace27.ctex"]
 
 [params]
 
