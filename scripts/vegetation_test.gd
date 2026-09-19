@@ -1,7 +1,9 @@
 extends Node3D
 
-const GROUND_RADIUS := 8.0
-const GRASS_COUNT := 7000
+const GROUND_RADIUS := 24.0
+# Preserve the original density: 7,000 instances over an 8 m radius disk.
+# Tripling the radius multiplies the area and instance count by nine.
+const GRASS_COUNT := 63000
 const CHUNK_SIZE := 4.0
 const GRASS_MODEL := preload("res://assets/vegetation/models/grass_star_3card_v6.glb")
 const TREE_MODEL := preload("res://assets/vegetation/models/tree_foliage_480card_v8.glb")
@@ -9,6 +11,8 @@ const WIND_SHADER := preload("res://assets/vegetation/shaders/vegetation_wind.gd
 const GRASS_TEXTURE := preload("res://assets/vegetation/textures/grass_tuft_straw_minimal_v5.png")
 const LEAF_TEXTURE := preload("res://assets/vegetation/textures/leaf_clusters_witness_sparse_flat_v11.png")
 const SKY_TEXTURE := preload("res://assets/environment/hdri/rosendal_park_sunset_puresky_4k.exr")
+
+var grass_wind_texture: NoiseTexture2D
 
 
 func _ready() -> void:
@@ -20,7 +24,7 @@ func _ready() -> void:
 	if "--capture-top" in arguments:
 		var camera := get_node("OrbitCamera") as Camera3D
 		camera.set_process(false)
-		camera.position = Vector3(0.0, 14.0, 0.01)
+		camera.position = Vector3(0.0, 52.0, 0.01)
 		camera.look_at(Vector3(0.0, 3.6, 0.0), Vector3.FORWARD)
 		_capture_test_frame("vegetation_test_top.png")
 	elif "--capture" in arguments:
@@ -64,7 +68,7 @@ func _build_environment() -> void:
 	sun.light_color = Color("ffe2b8")
 	sun.light_energy = 0.72
 	sun.shadow_enabled = true
-	sun.directional_shadow_max_distance = 45.0
+	sun.directional_shadow_max_distance = 100.0
 	add_child(sun)
 
 
@@ -76,7 +80,9 @@ func _build_ground() -> void:
 	ground_mesh.radial_segments = 128
 
 	var ground_material := StandardMaterial3D.new()
-	ground_material.albedo_color = Color("696c48")
+	# The under-grass ground stays darker and greyer than the straw blades, but
+	# within the same hue family so alpha gaps read as depth rather than noise.
+	ground_material.albedo_color = Color("968a55")
 	ground_material.roughness = 0.98
 	ground_material.metallic = 0.0
 	ground_mesh.material = ground_material
@@ -135,8 +141,26 @@ func _build_grass_chunks() -> void:
 	grass_material.set_shader_parameter("atlas_grid", Vector2.ONE)
 	grass_material.set_shader_parameter("card_edge_fade", 0.0)
 	grass_material.set_shader_parameter("light_wrap", 0.46)
-	grass_material.set_shader_parameter("wind_strength", 0.105)
+	grass_wind_texture = _create_grass_wind_texture()
+	grass_material.set_shader_parameter("use_noise_wind", true)
+	grass_material.set_shader_parameter("wind_noise_texture", grass_wind_texture)
+	grass_material.set_shader_parameter("wind_direction", Vector2(0.88, 0.34).normalized())
+	grass_material.set_shader_parameter("wind_strength", 0.085)
 	grass_material.set_shader_parameter("wind_speed", 1.08)
+	grass_material.set_shader_parameter("wind_noise_world_scale", 0.018)
+	grass_material.set_shader_parameter("wind_noise_scroll_speed", 0.035)
+	grass_material.set_shader_parameter("wind_tone_curve_c1", 0.92)
+	grass_material.set_shader_parameter("wind_tone_curve_c2", 1.0)
+	grass_material.set_shader_parameter("wind_detail_scale", 2.65)
+	grass_material.set_shader_parameter("wind_detail_amount", 0.20)
+	grass_material.set_shader_parameter("wind_lateral_amount", 0.14)
+	grass_material.set_shader_parameter("wind_gust_floor", 0.12)
+	grass_material.set_shader_parameter("wind_tone_strength", 0.22)
+	grass_material.set_shader_parameter("wind_variation_speed", 0.018)
+	grass_material.set_shader_parameter("wind_variation_min", 0.45)
+	grass_material.set_shader_parameter("wind_variation_max", 1.15)
+	grass_material.set_shader_parameter("root_tone", 0.90)
+	grass_material.set_shader_parameter("tip_tone", 1.045)
 	grass_mesh.surface_set_material(0, grass_material)
 
 	var rng := RandomNumberGenerator.new()
@@ -180,11 +204,37 @@ func _build_grass_chunks() -> void:
 		var chunk := MultiMeshInstance3D.new()
 		chunk.name = "GrassChunk_%d_%d" % [key.x, key.y]
 		chunk.multimesh = multimesh
-		chunk.visibility_range_end = 42.0
+		chunk.visibility_range_end = 100.0
 		# Hundreds of alpha-cut grass shadows become dark visual noise. Grounding
 		# comes from SSAO; the trunk and a future canopy proxy handle tree shadows.
 		chunk.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		grass_root.add_child(chunk)
+
+
+func _create_grass_wind_texture() -> NoiseTexture2D:
+	var noise := FastNoiseLite.new()
+	noise.seed = 20260919
+	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
+	noise.frequency = 0.008
+	noise.fractal_type = FastNoiseLite.FRACTAL_FBM
+	noise.fractal_octaves = 3
+	noise.fractal_lacunarity = 1.93
+	noise.fractal_gain = 0.42
+	noise.domain_warp_enabled = true
+	noise.domain_warp_type = FastNoiseLite.DOMAIN_WARP_SIMPLEX
+	noise.domain_warp_amplitude = 14.0
+	noise.domain_warp_frequency = 0.006
+	noise.domain_warp_fractal_type = FastNoiseLite.DOMAIN_WARP_FRACTAL_NONE
+
+	var texture := NoiseTexture2D.new()
+	texture.width = 512
+	texture.height = 512
+	texture.noise = noise
+	texture.normalize = true
+	texture.seamless = true
+	texture.seamless_blend_skirt = 0.12
+	texture.generate_mipmaps = true
+	return texture
 
 
 func _find_first_mesh_instance(node: Node) -> MeshInstance3D:
@@ -224,4 +274,27 @@ func _capture_test_frame(filename: String) -> void:
 	var error := image.save_png("res://screenshots/" + filename)
 	if error != OK:
 		push_error("Could not save test screenshot: %s" % error_string(error))
+	if filename == "vegetation_test.png":
+		for _frame in 60:
+			await get_tree().process_frame
+		await RenderingServer.frame_post_draw
+		var later_image := get_viewport().get_texture().get_image()
+		var later_error := later_image.save_png(
+			"res://screenshots/vegetation_test_wind_later.png"
+		)
+		if later_error != OK:
+			push_error("Could not save later wind frame: %s" % error_string(later_error))
+		_save_wind_debug_texture()
 	get_tree().quit()
+
+
+func _save_wind_debug_texture() -> void:
+	if grass_wind_texture == null:
+		return
+	var noise_image := grass_wind_texture.get_image()
+	if noise_image == null:
+		push_warning("Grass wind texture was not ready for debug export")
+		return
+	var error := noise_image.save_png("res://screenshots/wind_field_open_simplex2s.png")
+	if error != OK:
+		push_error("Could not save wind field debug texture: %s" % error_string(error))
