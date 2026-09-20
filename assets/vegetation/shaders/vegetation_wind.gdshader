@@ -3,6 +3,20 @@ render_mode cull_back, depth_prepass_alpha, diffuse_burley, alpha_to_coverage;
 
 uniform sampler2D albedo_texture : source_color, filter_linear_mipmap_anisotropic;
 uniform vec4 color_tint : source_color = vec4(1.0);
+// A shared palette can recolor the same texture without painting new species.
+// Grass gets a little per-blade overlap from MultiMesh custom data; each tree
+// gets a restrained per-instance tint through GeometryInstance3D.
+uniform bool use_biome_palette = false;
+uniform bool use_multimesh_color_data = false;
+uniform sampler2D biome_noise_texture : repeat_enable, filter_linear;
+uniform vec4 palette_dry : source_color = vec4(1.0);
+uniform vec4 palette_green : source_color = vec4(1.0);
+uniform float biome_noise_scale = 0.014;
+uniform float biome_warp_distance = 4.0;
+uniform float biome_transition_half_width = 5.0;
+uniform float biome_center_x = 0.0;
+uniform float biome_instance_overlap = 0.0;
+instance uniform vec4 variant_tint : source_color = vec4(1.0);
 uniform float alpha_cutoff : hint_range(0.0, 1.0) = 0.42;
 uniform float alpha_antialiasing_edge : hint_range(0.0, 1.0) = 0.24;
 uniform vec2 atlas_grid = vec2(1.0, 1.0);
@@ -32,6 +46,7 @@ uniform float tip_tone : hint_range(0.5, 1.5) = 1.0;
 varying float wind_weight;
 varying float wind_wave;
 varying float temporal_wind_strength;
+varying vec3 palette_tint;
 
 float cubic_bezier_01(float value, float control_1, float control_2) {
 	float t = clamp(value, 0.0, 1.0);
@@ -45,6 +60,29 @@ void vertex() {
 	wind_weight = clamp(COLOR.r, 0.0, 1.0);
 	temporal_wind_strength = 1.0;
 	vec3 world_origin = (MODEL_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
+	palette_tint = vec3(1.0);
+	if (use_biome_palette) {
+		float noise_value = textureLod(
+			biome_noise_texture,
+			world_origin.xz * biome_noise_scale + vec2(0.137, 0.411),
+			0.0
+		).r;
+		float instance_shift = 0.0;
+		float subtle_value = 1.0;
+		if (use_multimesh_color_data) {
+			instance_shift = (INSTANCE_CUSTOM.r * 2.0 - 1.0)
+				* biome_instance_overlap;
+			subtle_value = mix(0.96, 1.04, INSTANCE_CUSTOM.g);
+		}
+		float transition = smoothstep(
+			-biome_transition_half_width,
+			biome_transition_half_width,
+			world_origin.x - biome_center_x + (noise_value * 2.0 - 1.0)
+				* biome_warp_distance + instance_shift
+		);
+		palette_tint = mix(palette_dry.rgb, palette_green.rgb, transition)
+			* subtle_value;
+	}
 	float direction_length = max(length(wind_direction), 0.0001);
 	vec2 direction = wind_direction / direction_length;
 
@@ -162,7 +200,8 @@ void fragment() {
 		tip_tone,
 		smoothstep(0.0, 1.0, wind_weight)
 	);
-	ALBEDO = tex.rgb * wind_tone * height_tone;
+	ALBEDO = tex.rgb * palette_tint * variant_tint.rgb
+		* wind_tone * height_tone;
 	ALPHA = cutout_alpha;
 	ALPHA_SCISSOR_THRESHOLD = alpha_cutoff;
 	ALPHA_ANTIALIASING_EDGE = min(alpha_antialiasing_edge, alpha_cutoff - 0.001);

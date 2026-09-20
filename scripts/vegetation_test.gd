@@ -1,5 +1,18 @@
 extends Node3D
 
+@export var biome_demo := false
+@export_group("Biome color test")
+@export var grass_dry_tint := Color.WHITE
+@export var grass_green_tint := Color(0.77, 0.88, 0.78)
+@export var tree_dry_tint := Color(1.03, 0.98, 0.82)
+@export var tree_green_tint := Color(0.83, 0.97, 0.89)
+@export var ground_dry_color := Color("968a55")
+@export var ground_green_color := Color("667752")
+@export_range(1.0, 12.0) var biome_transition_half_width := 5.0
+@export_range(0.0, 10.0) var biome_warp_distance := 4.0
+@export_range(0.0, 5.0) var grass_color_overlap := 2.3
+@export_range(-12.0, 12.0) var biome_center_x := 0.0
+
 const GROUND_RADIUS := 24.0
 # Preserve the original density: 7,000 instances over an 8 m radius disk.
 # Tripling the radius multiplies the area and instance count by nine.
@@ -7,28 +20,54 @@ const GRASS_COUNT := 63000
 const CHUNK_SIZE := 4.0
 const GRASS_MODEL := preload("res://assets/vegetation/models/grass_star_3card_v6.glb")
 const TREE_MODEL := preload("res://assets/vegetation/models/tree_foliage_480card_v8.glb")
+const TREE_MODEL_REFINED := preload("res://assets/vegetation/models/tree_foliage_480card_v10_branch_guided.glb")
 const WIND_SHADER := preload("res://assets/vegetation/shaders/vegetation_wind.gdshader")
+const BIOME_GROUND_SHADER := preload("res://assets/vegetation/shaders/biome_ground.gdshader")
 const GRASS_TEXTURE := preload("res://assets/vegetation/textures/grass_tuft_straw_minimal_v5.png")
 const LEAF_TEXTURE := preload("res://assets/vegetation/textures/leaf_clusters_witness_sparse_flat_v11.png")
 const SKY_TEXTURE := preload("res://assets/environment/hdri/rosendal_park_sunset_puresky_4k.exr")
 
 var grass_wind_texture: NoiseTexture2D
+var biome_noise_texture: NoiseTexture2D
 
 
 func _ready() -> void:
+	var arguments := OS.get_cmdline_user_args()
+	var refined_tree := not ("--baseline-tree" in arguments)
+	if biome_demo:
+		biome_noise_texture = _create_biome_noise_texture()
 	_build_environment()
 	_build_ground()
-	_build_tree()
+	if biome_demo:
+		_build_forest(refined_tree)
+	else:
+		_build_tree(refined_tree)
 	_build_grass_chunks()
-	var arguments := OS.get_cmdline_user_args()
 	if "--capture-top" in arguments:
 		var camera := get_node("OrbitCamera") as Camera3D
 		camera.set_process(false)
-		camera.position = Vector3(0.0, 52.0, 0.01)
-		camera.look_at(Vector3(0.0, 3.6, 0.0), Vector3.FORWARD)
-		_capture_test_frame("vegetation_test_top.png")
+		camera.position = Vector3(0.0, 68.0 if biome_demo else 52.0, 0.01)
+		camera.look_at(Vector3(0.0, 0.0 if biome_demo else 3.6, 0.0), Vector3.FORWARD)
+		var top_name := "vegetation_biome_top.png" if biome_demo else (
+			"vegetation_test_refined_top.png" if refined_tree else "vegetation_test_top.png"
+		)
+		_capture_test_frame(top_name)
+	elif "--capture-left" in arguments or "--capture-right" in arguments:
+		var camera := get_node("OrbitCamera") as Camera3D
+		camera.set_process(false)
+		var target := Vector3(0.0, 2.25, 0.0)
+		var angle := -45.0 if "--capture-left" in arguments else 45.0
+		camera.position = target + Basis(Vector3.UP, deg_to_rad(angle)) * (camera.position - target)
+		camera.look_at(target, Vector3.UP)
+		var side := "left" if angle < 0.0 else "right"
+		var model := "refined" if refined_tree else "baseline"
+		var prefix := "vegetation_biome" if biome_demo else "vegetation_test_%s" % model
+		_capture_test_frame("%s_%s.png" % [prefix, side])
 	elif "--capture" in arguments:
-		_capture_test_frame("vegetation_test.png")
+		var filename := "vegetation_biome.png" if biome_demo else (
+			"vegetation_test_refined.png" if refined_tree else "vegetation_test.png"
+		)
+		_capture_test_frame(filename)
 
 
 func _build_environment() -> void:
@@ -79,13 +118,20 @@ func _build_ground() -> void:
 	ground_mesh.height = 0.35
 	ground_mesh.radial_segments = 128
 
-	var ground_material := StandardMaterial3D.new()
-	# The under-grass ground stays darker and greyer than the straw blades, but
-	# within the same hue family so alpha gaps read as depth rather than noise.
-	ground_material.albedo_color = Color("968a55")
-	ground_material.roughness = 0.98
-	ground_material.metallic = 0.0
-	ground_mesh.material = ground_material
+	if biome_demo:
+		var biome_material := ShaderMaterial.new()
+		biome_material.shader = BIOME_GROUND_SHADER
+		_set_biome_transition_parameters(biome_material)
+		biome_material.set_shader_parameter("ground_dry", ground_dry_color)
+		biome_material.set_shader_parameter("ground_green", ground_green_color)
+		ground_mesh.material = biome_material
+	else:
+		var ground_material := StandardMaterial3D.new()
+		# Ground gaps stay darker but in the same straw color family.
+		ground_material.albedo_color = ground_dry_color
+		ground_material.roughness = 0.98
+		ground_material.metallic = 0.0
+		ground_mesh.material = ground_material
 
 	var ground := MeshInstance3D.new()
 	ground.name = "CircularGround"
@@ -95,12 +141,47 @@ func _build_ground() -> void:
 	add_child(ground)
 
 
-func _build_tree() -> void:
-	var tree := TREE_MODEL.instantiate()
+func _build_tree(refined_tree: bool = true) -> void:
+	var tree: Node3D = (TREE_MODEL_REFINED if refined_tree else TREE_MODEL).instantiate()
 	tree.name = "HeroTree"
 	tree.scale = Vector3.ONE * 1.12
 	add_child(tree)
+	_configure_tree(tree, _create_tree_leaf_material(false), Color.WHITE)
 
+
+func _build_forest(refined_tree: bool) -> void:
+	var forest := Node3D.new()
+	forest.name = "TreeGrove"
+	add_child(forest)
+	var leaf_material := _create_tree_leaf_material(true)
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 20260920
+	var tint_variants := [
+		Color(0.96, 0.98, 0.96),
+		Color(1.04, 1.00, 0.96),
+		Color(0.93, 1.00, 0.93),
+		Color(1.00, 1.03, 0.98),
+		Color(1.06, 0.96, 0.93),
+	]
+	for row in range(6):
+		for column in range(6):
+			var point := Vector2(
+				(float(column) - 2.5) * 6.0 + rng.randf_range(-0.9, 0.9),
+				(float(row) - 2.5) * 6.0 + rng.randf_range(-0.9, 0.9)
+			)
+			if point.length() > GROUND_RADIUS - 3.4:
+				continue
+			var tree: Node3D = (TREE_MODEL_REFINED if refined_tree else TREE_MODEL).instantiate()
+			tree.name = "Tree_%d_%d" % [row, column]
+			tree.position = Vector3(point.x, 0.0, point.y)
+			tree.rotation.y = rng.randf_range(-PI, PI)
+			tree.scale = Vector3.ONE * rng.randf_range(0.85, 1.15)
+			forest.add_child(tree)
+			var tint: Color = tint_variants[rng.randi_range(0, tint_variants.size() - 1)]
+			_configure_tree(tree, leaf_material, tint)
+
+
+func _create_tree_leaf_material(use_biome: bool) -> ShaderMaterial:
 	var leaf_material := ShaderMaterial.new()
 	leaf_material.shader = WIND_SHADER
 	leaf_material.set_shader_parameter("albedo_texture", LEAF_TEXTURE)
@@ -111,7 +192,17 @@ func _build_tree() -> void:
 	leaf_material.set_shader_parameter("light_wrap", 0.34)
 	leaf_material.set_shader_parameter("wind_strength", 0.075)
 	leaf_material.set_shader_parameter("wind_speed", 0.72)
+	if use_biome:
+		leaf_material.set_shader_parameter("use_biome_palette", true)
+		_set_biome_transition_parameters(leaf_material)
+		leaf_material.set_shader_parameter("palette_dry", tree_dry_tint)
+		leaf_material.set_shader_parameter("palette_green", tree_green_tint)
+	return leaf_material
+
+
+func _configure_tree(tree: Node3D, leaf_material: ShaderMaterial, tint: Color) -> void:
 	_apply_material_to_named_meshes(tree, "foliage", leaf_material)
+	_set_tint_for_named_meshes(tree, "foliage", tint)
 	_set_shadow_casting_for_named_meshes(
 		tree,
 		"foliage",
@@ -161,11 +252,19 @@ func _build_grass_chunks() -> void:
 	grass_material.set_shader_parameter("wind_variation_max", 1.15)
 	grass_material.set_shader_parameter("root_tone", 0.90)
 	grass_material.set_shader_parameter("tip_tone", 1.045)
+	if biome_demo:
+		grass_material.set_shader_parameter("use_biome_palette", true)
+		grass_material.set_shader_parameter("use_multimesh_color_data", true)
+		_set_biome_transition_parameters(grass_material)
+		grass_material.set_shader_parameter("palette_dry", grass_dry_tint)
+		grass_material.set_shader_parameter("palette_green", grass_green_tint)
+		grass_material.set_shader_parameter("biome_instance_overlap", grass_color_overlap)
 	grass_mesh.surface_set_material(0, grass_material)
 
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 20260914
 	var chunk_transforms := {}
+	var chunk_color_data := {}
 	for _index in GRASS_COUNT:
 		var point := Vector2.ZERO
 		while true:
@@ -181,6 +280,8 @@ func _build_grass_chunks() -> void:
 		)
 		if not chunk_transforms.has(key):
 			chunk_transforms[key] = []
+			if biome_demo:
+				chunk_color_data[key] = []
 		var yaw := rng.randf_range(0.0, TAU)
 		var width_scale := rng.randf_range(0.70, 1.00)
 		var height_scale := rng.randf_range(0.72, 0.96)
@@ -189,6 +290,8 @@ func _build_grass_chunks() -> void:
 		basis = basis.scaled(Vector3(width_scale, height_scale, width_scale))
 		var transform := Transform3D(basis, Vector3(point.x, 0.02, point.y))
 		chunk_transforms[key].append(transform)
+		if biome_demo:
+			chunk_color_data[key].append(Color(rng.randf(), rng.randf(), 0.0, 1.0))
 
 	var grass_root := Node3D.new()
 	grass_root.name = "GrassChunks"
@@ -197,10 +300,13 @@ func _build_grass_chunks() -> void:
 		var transforms: Array = chunk_transforms[key]
 		var multimesh := MultiMesh.new()
 		multimesh.transform_format = MultiMesh.TRANSFORM_3D
+		multimesh.use_custom_data = biome_demo
 		multimesh.mesh = grass_mesh
 		multimesh.instance_count = transforms.size()
 		for index in transforms.size():
 			multimesh.set_instance_transform(index, transforms[index])
+			if biome_demo:
+				multimesh.set_instance_custom_data(index, chunk_color_data[key][index])
 		var chunk := MultiMeshInstance3D.new()
 		chunk.name = "GrassChunk_%d_%d" % [key.x, key.y]
 		chunk.multimesh = multimesh
@@ -237,6 +343,36 @@ func _create_grass_wind_texture() -> NoiseTexture2D:
 	return texture
 
 
+func _set_biome_transition_parameters(material: ShaderMaterial) -> void:
+	material.set_shader_parameter("biome_noise_texture", biome_noise_texture)
+	material.set_shader_parameter("biome_transition_half_width", biome_transition_half_width)
+	material.set_shader_parameter("biome_warp_distance", biome_warp_distance)
+	material.set_shader_parameter("biome_center_x", biome_center_x)
+
+
+func _create_biome_noise_texture() -> NoiseTexture2D:
+	var noise := FastNoiseLite.new()
+	noise.seed = 20260920
+	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
+	noise.frequency = 0.018
+	noise.fractal_type = FastNoiseLite.FRACTAL_FBM
+	noise.fractal_octaves = 2
+	noise.fractal_gain = 0.48
+	noise.domain_warp_enabled = true
+	noise.domain_warp_type = FastNoiseLite.DOMAIN_WARP_SIMPLEX
+	noise.domain_warp_amplitude = 9.0
+	noise.domain_warp_frequency = 0.012
+
+	var texture := NoiseTexture2D.new()
+	texture.width = 512
+	texture.height = 512
+	texture.noise = noise
+	texture.normalize = true
+	texture.seamless = true
+	texture.generate_mipmaps = true
+	return texture
+
+
 func _find_first_mesh_instance(node: Node) -> MeshInstance3D:
 	if node is MeshInstance3D:
 		return node
@@ -252,6 +388,13 @@ func _apply_material_to_named_meshes(node: Node, token: String, material: Materi
 		node.material_override = material
 	for child in node.get_children():
 		_apply_material_to_named_meshes(child, token, material)
+
+
+func _set_tint_for_named_meshes(node: Node, token: String, tint: Color) -> void:
+	if node is MeshInstance3D and token.to_lower() in node.name.to_lower():
+		node.set_instance_shader_parameter("variant_tint", tint)
+	for child in node.get_children():
+		_set_tint_for_named_meshes(child, token, tint)
 
 
 func _set_shadow_casting_for_named_meshes(
@@ -285,6 +428,15 @@ func _capture_test_frame(filename: String) -> void:
 		if later_error != OK:
 			push_error("Could not save later wind frame: %s" % error_string(later_error))
 		_save_wind_debug_texture()
+	elif filename == "vegetation_test_refined.png":
+		await get_tree().create_timer(10.0).timeout
+		await RenderingServer.frame_post_draw
+		var later_image := get_viewport().get_texture().get_image()
+		var later_error := later_image.save_png(
+			"res://screenshots/vegetation_test_refined_wind_10s.png"
+		)
+		if later_error != OK:
+			push_error("Could not save refined wind frame: %s" % error_string(later_error))
 	get_tree().quit()
 
 

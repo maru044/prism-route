@@ -38,12 +38,41 @@ the intent and the result of previous visual tests.
   regular stripes. A second, slow time-only noise envelope varies whole-field
   wind strength smoothly between roughly 45% and 115%, affecting both sway
   and tonal bands. Local gusts still move through the field.
-- Tree: `tree_foliage_480card_v8.glb` with a restrained sparse leaf-cluster
-  alpha texture, volumetric canopy normals and a single straight trunk. The
-  tree currently uses a separate lightweight sway fallback.
+- Tree: `tree_foliage_480card_v10_branch_guided.glb` is the accepted prototype
+  baseline. It retains the v8 layered placement and 240 crossed-card pairs,
+  gently widens the silhouette and increases each card's width and height by
+  25%. The sparse v11 alpha texture, straight trunk, volumetric normals,
+  shadow policy and lightweight sway fallback remain unchanged. Godot default,
+  overhead and side captures show a fuller continuous canopy without obvious
+  top-down holes. The original v8 remains available with `--baseline-tree` for
+  comparison; prototype acceptance does not imply a final production asset.
+- Rejected v9 experiment: moving all cards into six ellipsoidal clouds lost
+  the v8 silhouette and did not make convincing foliage masses. Do not use
+  "six balls" as the modelling target; preserve a coherent crown and refine
+  its edge and internal overlap instead.
 - Rosendal Park Sunset Pure Sky, directional sun, ACES, SSAO and mild glow
   provide the lighting baseline. Dense grass and leaf-card shadows are off to
   avoid dark card-shaped noise; tree trunk shadows remain.
+
+## New color and grove experiment (not yet accepted)
+
+- `scenes/vegetation_biome_test.tscn` is a separate scene so the accepted
+  single-tree test stays unchanged. It places the same v10 tree in a jittered
+  6 × 6 grove with edge culling; this is a visual-density test, not a finished
+  forest-placement algorithm or an LOD/performance conclusion.
+- The grass, tree leaves and ground share one world-space, low-frequency
+  boundary field. A broad smooth transition and a small noise warp make the
+  yellow and muted-green regions interpenetrate without a sharp line or a
+  square grid. Ground colors change with the same field, preventing a green
+  grass/yellow-gap mismatch. This is a test palette, not an extra texture.
+- Grass MultiMesh custom data adds a stable per-blade boundary offset and tiny
+  value variation. Tree foliage shares one ShaderMaterial; per-tree `instance
+  uniform` tints create restrained variants of the same leaf atlas. No new
+  grass or tree species mesh has been introduced.
+- The root inspector exposes dry/green colors for grass, tree and ground, plus
+  transition width, center, contour warp and grass-color overlap. Tune them
+  in Godot before deciding on final biome palettes. The current test is not
+  yet wired to the Rhino terrain or Grasshopper placement points.
 
 ## Experiments not to reintroduce without a specific new reason
 

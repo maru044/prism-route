@@ -24,7 +24,7 @@ func _process(delta: float) -> void:
 		distance = maxf(6.0, distance - delta * 5.0)
 		changed = true
 	if Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN):
-		distance = minf(28.0, distance + delta * 5.0)
+		distance = minf(70.0, distance + delta * 5.0)
 		changed = true
 	if changed:
 		_update_camera()
@@ -38,7 +38,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			distance = maxf(6.0, distance - 0.8)
 			_update_camera()
 		elif event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			distance = minf(28.0, distance + 0.8)
+			distance = minf(70.0, distance + 0.8)
 			_update_camera()
 	elif event is InputEventMouseMotion and _dragging:
 		yaw -= event.relative.x * 0.006
