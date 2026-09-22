@@ -89,6 +89,24 @@ the intent and the result of previous visual tests.
   provide the lighting baseline. Dense grass and leaf-card shadows are off to
   avoid dark card-shaped noise; tree trunk shadows remain.
 
+## Accepted trunk implementation
+
+- The three descriptive tree assets now include the accepted refined trunks;
+  no separate candidate or runtime legacy-trunk switch remains.
+- Trunks are quiet, nearly straight multi-ring meshes rather than
+  perfect cones. Variation is limited to subtle ring rotation, ellipticity and
+  centre offsets; there is no bark noise, baked shading or decorative bend.
+- The small tree remains branchless. Its trunk has 6 rings, 10 sides,
+  height 3.25 m and radii 0.145–0.074 m. The two medium trunks have 8
+  rings, 12 sides, a modest 0.36 m root flare and taper to 0.118 m inside the
+  crown at heights 6.4 m (broad) and 6.2 m (upright).
+- Godot overrides all trunk surfaces with one rough, desaturated
+  warm dark material (`#342A24`). The texture contains no lighting detail.
+- These trees intentionally have no visible primary branches: their crowns are
+  already dense and detailed enough that added structure would create noise
+  without improving readability. Do not introduce branches unless a future,
+  substantially more open tree species specifically requires them.
+
 ## Current color and grove experiment (not yet accepted)
 
 - `scenes/main.tscn` is now the sole active scene. Earlier single-tree and

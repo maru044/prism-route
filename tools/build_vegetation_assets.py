@@ -201,6 +201,99 @@ def tapered_segment(name, start, end, radius_start, radius_end, material, vertic
     return obj
 
 
+def create_stylized_trunk(name, height, material, size="small", seed=20260928):
+    """Create a restrained low-poly trunk from several subtly varied rings.
+
+    The centre line remains visually straight. Ring offsets, ellipse ratios and
+    rotations only keep the silhouette from reading as a perfect cone; they do
+    not turn the trunk into a decorative crooked branch sculpture.
+    """
+    if size == "small":
+        sides = 10
+        rings = [
+            (0.00, 0.145),
+            (0.12, 0.132),
+            (0.70, 0.118),
+            (1.42, 0.105),
+            (2.18, 0.089),
+            (height, 0.074),
+        ]
+        max_offset = 0.010
+        ellipse_range = (0.965, 1.035)
+    elif size == "large":
+        sides = 12
+        rings = [
+            (0.00, 0.360),
+            (0.16, 0.326),
+            (0.72, 0.300),
+            (1.48, 0.274),
+            (2.42, 0.238),
+            (3.46, 0.202),
+            (4.62, 0.160),
+            (height, 0.118),
+        ]
+        max_offset = 0.018
+        ellipse_range = (0.955, 1.045)
+    else:
+        raise ValueError(f"Unknown stylized trunk size: {size}")
+
+    rng = random.Random(seed)
+    vertices = []
+    faces = []
+    for ring_index, (z, radius) in enumerate(rings):
+        height_ratio = z / max(height, 0.001)
+        # Both ends remain centred. Intermediate offsets are small enough that
+        # the trunk still reads as one calm, upright stroke at gameplay scale.
+        offset_weight = math.sin(height_ratio * math.pi)
+        center = Vector((
+            rng.uniform(-max_offset, max_offset) * offset_weight,
+            rng.uniform(-max_offset, max_offset) * offset_weight,
+            z,
+        ))
+        ellipse = rng.uniform(*ellipse_range)
+        rotation = rng.uniform(-0.10, 0.10) + ring_index * 0.035
+        for side in range(sides):
+            angle = math.tau * side / sides + rotation
+            vertices.append(tuple(center + Vector((
+                math.cos(angle) * radius * ellipse,
+                math.sin(angle) * radius / ellipse,
+                0.0,
+            ))))
+
+    for ring_index in range(len(rings) - 1):
+        lower = ring_index * sides
+        upper = (ring_index + 1) * sides
+        for side in range(sides):
+            next_side = (side + 1) % sides
+            faces.append((
+                lower + side,
+                lower + next_side,
+                upper + next_side,
+                upper + side,
+            ))
+    faces.append(tuple(reversed(range(sides))))
+    top_start = (len(rings) - 1) * sides
+    faces.append(tuple(top_start + side for side in range(sides)))
+
+    mesh = bpy.data.meshes.new(name + "Mesh")
+    mesh.from_pydata(vertices, [], faces)
+    mesh.update()
+    mesh.materials.append(material)
+    # Smooth the vertical surface while keeping both end caps planar.
+    for polygon in mesh.polygons[:-2]:
+        polygon.use_smooth = True
+
+    obj = bpy.data.objects.new(name, mesh)
+    bpy.context.collection.objects.link(obj)
+    obj["asset_type"] = f"stylized_{size}_trunk"
+    obj["ring_count"] = len(rings)
+    obj["side_count"] = sides
+    obj["base_radius"] = rings[0][1]
+    obj["top_radius"] = rings[-1][1]
+    obj["height"] = height
+    return obj
+
+
 def join_objects(objects, name):
     bpy.ops.object.select_all(action="DESELECT")
     for obj in objects:
@@ -232,14 +325,25 @@ def refine_v8_crown(lobes):
     return refined
 
 
-def create_tree(trunk_material, leaf_material, crown_layout="layered"):
+def create_tree(
+    trunk_material, leaf_material, crown_layout="layered", use_refined_trunk=False
+):
     # Deliberately plain: one straight, slender trunk and no visible branch cage.
-    trunk = tapered_segment(
-        "Tree_Trunk_Straight",
-        Vector((0.0, 0.0, 0.0)), Vector((0.0, 0.0, 3.35)),
-        0.19, 0.105, trunk_material, 10,
-    )
-    trunk["asset_type"] = "stylized_single_trunk"
+    if use_refined_trunk:
+        trunk = create_stylized_trunk(
+            "Tree_Trunk_Stylized",
+            3.25,
+            trunk_material,
+            size="small",
+            seed=20260928,
+        )
+    else:
+        trunk = tapered_segment(
+            "Tree_Trunk_Straight",
+            Vector((0.0, 0.0, 0.0)), Vector((0.0, 0.0, 3.35)),
+            0.19, 0.105, trunk_material, 10,
+        )
+        trunk["asset_type"] = "stylized_single_trunk"
 
     rng = random.Random(20260914)
     # Two hundred forty crown cells, two crossed cards each. The v11 atlas has
@@ -560,7 +664,8 @@ def create_camphor_tree(trunk_material, leaf_material, shadow_material, dense_v2
 
 def create_camphor_from_old_crowns(
     trunk_material, leaf_material, compact=False, dense30=False,
-    round30=False, broad30=False, upright_asymmetric30=False
+    round30=False, broad30=False, upright_asymmetric30=False,
+    use_refined_trunk=False
 ):
     """Build a large tree from reduced copies of the accepted v10 crown."""
     old_trunk, source_crown = create_tree(
@@ -571,12 +676,22 @@ def create_camphor_from_old_crowns(
     trunk_height = 6.2 if upright_asymmetric30 else (6.4 if broad30 else (
         6.6 if round30 else (6.8 if dense30 else (7.3 if compact else 10.4))
     ))
-    trunk = tapered_segment(
-        "Camphor_Trunk_Straight",
-        Vector((0.0, 0.0, 0.0)), Vector((0.0, 0.0, trunk_height)),
-        0.46, 0.14, trunk_material, 12,
-    )
-    trunk["asset_type"] = "stylized_large_single_trunk"
+    if use_refined_trunk:
+        trunk_seed = 20260930 if upright_asymmetric30 else 20260929
+        trunk = create_stylized_trunk(
+            "Camphor_Trunk_Stylized",
+            trunk_height,
+            trunk_material,
+            size="large",
+            seed=trunk_seed,
+        )
+    else:
+        trunk = tapered_segment(
+            "Camphor_Trunk_Straight",
+            Vector((0.0, 0.0, 0.0)), Vector((0.0, 0.0, trunk_height)),
+            0.46, 0.14, trunk_material, 12,
+        )
+        trunk["asset_type"] = "stylized_large_single_trunk"
 
     # The coordinates describe crown-group centres. Each group is the complete
     # accepted 480-card v10 crown rather than a small procedural ellipsoid.
@@ -1012,8 +1127,16 @@ def make_preview(grass, trunk, foliage):
 reset_scene()
 leaf_mat = image_material("M_Leaves_FlatMuted_AlphaClip", LEAF_TEX, emission_strength=0.0)
 trunk_mat = flat_material("M_Trunk_Stylized", (0.28, 0.13, 0.055))
+trunk_refined_mat = flat_material(
+    "M_Trunk_WarmDark", (0.115, 0.080, 0.058)
+)
 if "--tree-small-broad-canopy" in sys.argv:
-    trunk, foliage = create_tree(trunk_mat, leaf_mat, crown_layout="branch_guided")
+    trunk, foliage = create_tree(
+        trunk_refined_mat,
+        leaf_mat,
+        crown_layout="branch_guided",
+        use_refined_trunk=True,
+    )
     model_path = os.path.join(MODEL_DIR, "tree_small_broad_canopy.glb")
     export_selected(model_path, [trunk, foliage])
     source_path = os.path.join(SOURCE_DIR, "tree_small_broad_canopy.blend")
@@ -1023,7 +1146,10 @@ if "--tree-small-broad-canopy" in sys.argv:
     print(source_path)
 elif "--tree-medium-upright-asymmetric-canopy" in sys.argv:
     trunk, crowns = create_camphor_from_old_crowns(
-        trunk_mat, leaf_mat, upright_asymmetric30=True
+        trunk_refined_mat,
+        leaf_mat,
+        upright_asymmetric30=True,
+        use_refined_trunk=True,
     )
     model_path = os.path.join(
         MODEL_DIR, "tree_medium_upright_asymmetric_canopy.glb"
@@ -1070,7 +1196,10 @@ elif "--tree-medium-upright-clustered-canopy" in sys.argv:
     print(source_path)
 elif "--tree-medium-broad-clustered-canopy" in sys.argv:
     trunk, crowns = create_camphor_from_old_crowns(
-        trunk_mat, leaf_mat, broad30=True
+        trunk_refined_mat,
+        leaf_mat,
+        broad30=True,
+        use_refined_trunk=True,
     )
     model_path = os.path.join(
         MODEL_DIR, "tree_medium_broad_clustered_canopy.glb"

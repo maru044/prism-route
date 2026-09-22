@@ -7,6 +7,7 @@ extends Node3D
 @export var grass_green_tint := Color(0.77, 0.88, 0.78)
 @export var tree_dry_tint := Color(1.03, 0.98, 0.82)
 @export var tree_green_tint := Color(0.83, 0.97, 0.89)
+@export var trunk_color := Color("342a24")
 @export var ground_dry_color := Color("968a55")
 @export var ground_green_color := Color("667752")
 @export_range(1.0, 12.0) var biome_transition_half_width := 5.0
@@ -32,11 +33,13 @@ const SKY_TEXTURE := preload("res://assets/environment/hdri/rosendal_park_sunset
 
 var grass_wind_texture: NoiseTexture2D
 var biome_noise_texture: NoiseTexture2D
+var shared_trunk_material: StandardMaterial3D
 
 
 func _ready() -> void:
 	var arguments := OS.get_cmdline_user_args()
 	var refined_tree := not ("--baseline-tree" in arguments)
+	shared_trunk_material = _create_trunk_material()
 	if biome_demo:
 		biome_noise_texture = _create_biome_noise_texture()
 	_build_environment()
@@ -346,8 +349,17 @@ func _create_tree_leaf_material(use_biome: bool) -> ShaderMaterial:
 	return leaf_material
 
 
+func _create_trunk_material() -> StandardMaterial3D:
+	var material := StandardMaterial3D.new()
+	material.albedo_color = trunk_color
+	material.roughness = 0.98
+	material.metallic = 0.0
+	return material
+
+
 func _configure_tree(tree: Node3D, leaf_material: ShaderMaterial, tint: Color) -> void:
 	_apply_material_to_named_meshes(tree, "foliage", leaf_material)
+	_apply_material_to_named_meshes(tree, "trunk", shared_trunk_material)
 	_set_tint_for_named_meshes(tree, "foliage", tint)
 	_set_shadow_casting_for_named_meshes(
 		tree,
