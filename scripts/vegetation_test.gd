@@ -1,6 +1,7 @@
 extends Node3D
 
 @export var biome_demo := false
+@export var grove_demo := false
 @export_group("Biome color test")
 @export var grass_dry_tint := Color.WHITE
 @export var grass_green_tint := Color(0.77, 0.88, 0.78)
@@ -20,7 +21,9 @@ const GRASS_COUNT := 63000
 const CHUNK_SIZE := 4.0
 const GRASS_MODEL := preload("res://assets/vegetation/models/grass_star_3card_v6.glb")
 const TREE_MODEL := preload("res://assets/vegetation/models/tree_foliage_480card_v8.glb")
-const TREE_MODEL_REFINED := preload("res://assets/vegetation/models/tree_foliage_480card_v10_branch_guided.glb")
+const TREE_MODEL_REFINED := preload("res://assets/vegetation/models/tree_small_broad_canopy.glb")
+const TREE_MODEL_UPRIGHT := preload("res://assets/vegetation/models/tree_medium_upright_asymmetric_canopy.glb")
+const TREE_MODEL_BROAD_CLUSTERED := preload("res://assets/vegetation/models/tree_medium_broad_clustered_canopy.glb")
 const WIND_SHADER := preload("res://assets/vegetation/shaders/vegetation_wind.gdshader")
 const BIOME_GROUND_SHADER := preload("res://assets/vegetation/shaders/biome_ground.gdshader")
 const GRASS_TEXTURE := preload("res://assets/vegetation/textures/grass_tuft_straw_minimal_v5.png")
@@ -39,18 +42,69 @@ func _ready() -> void:
 	_build_environment()
 	_build_ground()
 	if biome_demo:
-		_build_forest(refined_tree)
+		if grove_demo:
+			_build_landscape_grove(refined_tree)
+		else:
+			_build_forest(refined_tree)
 	else:
 		_build_tree(refined_tree)
 	_build_grass_chunks()
-	if "--capture-top" in arguments:
+	if grove_demo and (
+		"--capture-focal-front" in arguments
+		or "--capture-focal-side" in arguments
+		or "--capture-upright-front" in arguments
+		or "--capture-upright-side" in arguments
+	):
+		var camera := get_node("OrbitCamera") as Camera3D
+		camera.set_process(false)
+		var capture_upright := (
+			"--capture-upright-front" in arguments
+			or "--capture-upright-side" in arguments
+		)
+		var tree_origin := (
+			Vector3(5.2, 0.0, 3.0)
+			if capture_upright
+			else Vector3(-9.8, 0.0, 5.5)
+		)
+		var tree_target := tree_origin + Vector3(
+			0.0,
+			9.2 if capture_upright else 7.2,
+			0.0
+		)
+		var from_side := (
+			"--capture-focal-side" in arguments
+			or "--capture-upright-side" in arguments
+		)
+		var camera_distance := 20.0 if capture_upright else 17.0
+		camera.position = tree_target + (
+			Vector3(
+				camera_distance if capture_upright else -camera_distance,
+				0.0,
+				0.0
+			)
+			if from_side
+			else Vector3(0.0, 0.0, camera_distance)
+		)
+		camera.look_at(tree_target, Vector3.UP)
+		get_node("Instructions").hide()
+		var capture_prefix := "vegetation_upright" if capture_upright else "vegetation_focal"
+		_capture_test_frame("%s_%s.png" % [capture_prefix, "side" if from_side else "front"])
+	elif grove_demo and "--capture-ground" in arguments:
+		var camera := get_node("OrbitCamera") as Camera3D
+		camera.set_process(false)
+		camera.position = Vector3(-18.0, 2.6, 19.0)
+		camera.look_at(Vector3(-2.0, 3.5, -5.0), Vector3.UP)
+		get_node("Instructions").hide()
+		_capture_test_frame("vegetation_grove_ground.png")
+	elif "--capture-top" in arguments:
 		var camera := get_node("OrbitCamera") as Camera3D
 		camera.set_process(false)
 		camera.position = Vector3(0.0, 68.0 if biome_demo else 52.0, 0.01)
 		camera.look_at(Vector3(0.0, 0.0 if biome_demo else 3.6, 0.0), Vector3.FORWARD)
-		var top_name := "vegetation_biome_top.png" if biome_demo else (
+		var top_name := "vegetation_grove_top.png" if grove_demo else (
+			"vegetation_biome_top.png" if biome_demo else (
 			"vegetation_test_refined_top.png" if refined_tree else "vegetation_test_top.png"
-		)
+		))
 		_capture_test_frame(top_name)
 	elif "--capture-left" in arguments or "--capture-right" in arguments:
 		var camera := get_node("OrbitCamera") as Camera3D
@@ -61,12 +115,15 @@ func _ready() -> void:
 		camera.look_at(target, Vector3.UP)
 		var side := "left" if angle < 0.0 else "right"
 		var model := "refined" if refined_tree else "baseline"
-		var prefix := "vegetation_biome" if biome_demo else "vegetation_test_%s" % model
+		var prefix := "vegetation_grove" if grove_demo else (
+			"vegetation_biome" if biome_demo else "vegetation_test_%s" % model
+		)
 		_capture_test_frame("%s_%s.png" % [prefix, side])
 	elif "--capture" in arguments:
-		var filename := "vegetation_biome.png" if biome_demo else (
+		var filename := "vegetation_grove.png" if grove_demo else (
+			"vegetation_biome.png" if biome_demo else (
 			"vegetation_test_refined.png" if refined_tree else "vegetation_test.png"
-		)
+		))
 		_capture_test_frame(filename)
 
 
@@ -181,6 +238,95 @@ func _build_forest(refined_tree: bool) -> void:
 			_configure_tree(tree, leaf_material, tint)
 
 
+func _build_landscape_grove(refined_tree: bool) -> void:
+	var forest := Node3D.new()
+	forest.name = "LandscapeGrove"
+	add_child(forest)
+	var leaf_material := _create_tree_leaf_material(true)
+	var tree_model: PackedScene = TREE_MODEL_REFINED if refined_tree else TREE_MODEL
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 20260921
+	var tint_variants: Array[Color] = [
+		Color(0.96, 0.98, 0.96),
+		Color(1.04, 1.00, 0.96),
+		Color(0.93, 1.00, 0.93),
+		Color(1.00, 1.03, 0.98),
+		Color(1.06, 0.96, 0.93),
+	]
+	# A continuous central/foreground grass bay is deliberately left empty.
+	# The principal grove runs off the back/right edge instead of forming a round island.
+	_add_grove_group(forest, tree_model, leaf_material, rng, tint_variants, "Main", PackedVector2Array([
+		Vector2(-1.0, -16.0), Vector2(3.6, -17.8), Vector2(8.2, -16.1),
+		Vector2(13.0, -14.0), Vector2(17.2, -10.5), Vector2(18.5, -5.6),
+		Vector2(13.5, -7.5), Vector2(8.7, -10.2), Vector2(4.0, -11.2),
+		Vector2(11.5, -3.8), Vector2(3.5, -3.5), Vector2(8.8, -1.0),
+		Vector2(14.2, -0.5),
+	]))
+	_add_grove_group(forest, tree_model, leaf_material, rng, tint_variants, "BackLeft", PackedVector2Array([
+		Vector2(-15.0, -12.0), Vector2(-11.0, -15.0), Vector2(-9.0, -10.0),
+	]))
+	_add_grove_group(forest, tree_model, leaf_material, rng, tint_variants, "RightFront", PackedVector2Array([
+		Vector2(10.0, 7.5), Vector2(13.8, 8.8), Vector2(9.2, 12.2),
+		Vector2(14.0, 13.2),
+	]))
+	# The large tree is assembled from thirty reduced copies of the accepted v10
+	# crown. Each group keeps the old tree's density, normals and silhouette.
+	var large_tree_material := _create_tree_leaf_material(true)
+	large_tree_material.set_shader_parameter("use_view_angle_fade", true)
+	# Remove only genuinely edge-on cards. The narrow band preserves canopy
+	# density while preventing parallel sheets from reading as visible slivers.
+	large_tree_material.set_shader_parameter("view_angle_fade_start", 0.020)
+	large_tree_material.set_shader_parameter("view_angle_fade_end", 0.140)
+	var focal_tree: Node3D = TREE_MODEL_BROAD_CLUSTERED.instantiate()
+	focal_tree.name = "BroadClusteredComparisonTree"
+	focal_tree.position = Vector3(-9.8, 0.0, 5.5)
+	focal_tree.rotation.y = 0.58
+	focal_tree.scale = Vector3.ONE
+	forest.add_child(focal_tree)
+	_configure_tree(focal_tree, large_tree_material, Color(1.04, 1.01, 0.97))
+	_configure_large_tree_shading(
+		focal_tree,
+		Vector3(0.0, 7.875, 0.0),
+		Vector3(6.65, 5.295, 6.655),
+		0.34
+	)
+
+	# Keep the second accepted large-tree form visible in the same lighting test.
+	# It is offset in depth so the two silhouettes remain independently readable.
+	var upright_tree: Node3D = TREE_MODEL_UPRIGHT.instantiate()
+	upright_tree.name = "UprightAsymmetricTree"
+	upright_tree.position = Vector3(5.2, 0.0, 3.0)
+	upright_tree.rotation.y = -0.42
+	upright_tree.scale = Vector3.ONE
+	forest.add_child(upright_tree)
+	_configure_tree(upright_tree, large_tree_material, Color(1.04, 1.01, 0.97))
+	_configure_large_tree_shading(
+		upright_tree,
+		Vector3(0.085, 8.912, -0.250),
+		Vector3(7.145, 7.423, 7.135),
+		0.34
+	)
+
+
+func _add_grove_group(
+	forest: Node3D,
+	tree_model: PackedScene,
+	leaf_material: ShaderMaterial,
+	rng: RandomNumberGenerator,
+	tint_variants: Array[Color],
+	group_name: String,
+	points: PackedVector2Array
+) -> void:
+	for index in points.size():
+		var tree: Node3D = tree_model.instantiate()
+		tree.name = "%s_%02d" % [group_name, index]
+		tree.position = Vector3(points[index].x, 0.0, points[index].y)
+		tree.rotation.y = rng.randf_range(-PI, PI)
+		tree.scale = Vector3.ONE * rng.randf_range(0.94, 1.13)
+		forest.add_child(tree)
+		_configure_tree(tree, leaf_material, tint_variants[rng.randi_range(0, tint_variants.size() - 1)])
+
+
 func _create_tree_leaf_material(use_biome: bool) -> ShaderMaterial:
 	var leaf_material := ShaderMaterial.new()
 	leaf_material.shader = WIND_SHADER
@@ -213,6 +359,51 @@ func _configure_tree(tree: Node3D, leaf_material: ShaderMaterial, tint: Color) -
 		"trunk",
 		GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 	)
+
+
+func _configure_large_tree_shading(
+	tree: Node3D,
+	canopy_center_local: Vector3,
+	canopy_radii: Vector3,
+	local_normal_weight: float
+) -> void:
+	_set_large_tree_shading_parameters(
+		tree,
+		tree.global_position,
+		tree.to_global(canopy_center_local),
+		canopy_radii * tree.scale,
+		local_normal_weight,
+		true
+	)
+
+
+func _set_large_tree_shading_parameters(
+	node: Node,
+	palette_anchor_world: Vector3,
+	canopy_center_world: Vector3,
+	canopy_radii: Vector3,
+	local_normal_weight: float,
+	use_canopy_normal: bool
+) -> void:
+	if node is MeshInstance3D and "foliage" in node.name.to_lower():
+		node.set_instance_shader_parameter("use_tree_palette_anchor", 1.0)
+		node.set_instance_shader_parameter("tree_palette_anchor_world", palette_anchor_world)
+		node.set_instance_shader_parameter(
+			"use_tree_canopy_normal",
+			1.0 if use_canopy_normal else 0.0
+		)
+		node.set_instance_shader_parameter("tree_canopy_center_world", canopy_center_world)
+		node.set_instance_shader_parameter("tree_canopy_radii", canopy_radii)
+		node.set_instance_shader_parameter("tree_local_normal_weight", local_normal_weight)
+	for child in node.get_children():
+		_set_large_tree_shading_parameters(
+			child,
+			palette_anchor_world,
+			canopy_center_world,
+			canopy_radii,
+			local_normal_weight,
+			use_canopy_normal
+		)
 
 
 func _build_grass_chunks() -> void:

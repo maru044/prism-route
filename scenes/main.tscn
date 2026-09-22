@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/vegetation_test.gd" id="1_main"]
+[ext_resource type="Script" path="res://scripts/orbit_camera.gd" id="2_camera"]
+
+[node name="VegetationGrove" type="Node3D"]
+script = ExtResource("1_main")
+biome_demo = true
+grove_demo = true
+
+[node name="OrbitCamera" type="Camera3D" parent="."]
+current = true
+fov = 48.0
+near = 0.05
+far = 200.0
+script = ExtResource("2_camera")
+target = Vector3(0.0, 2.0, 0.0)
+distance = 48.0
+pitch = 0.62
+
+[node name="Instructions" type="Label" parent="."]
+offset_left = 18.0
+offset_top = 16.0
+offset_right = 650.0
+offset_bottom = 52.0
+text = "Broad + upright large-tree baselines    Right-drag / A,D: orbit    Wheel / W,S: zoom"
+theme_override_colors/font_color = Color(1, 1, 1, 0.82)
+theme_override_font_sizes/font_size = 16

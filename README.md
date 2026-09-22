@@ -1,37 +1,30 @@
 # Prism Route — vegetation rendering prototype
 
-This Godot 4.6 Forward+ project contains small, runnable tests for the game's
-stylized grass, trees, wind, sky and palette transitions. It is **not** the
-full game or the Rhino terrain. The accepted single-tree baseline remains
-separate from the new forest color experiment.
+This Godot 4.6 Forward+ project has one active scene for testing the game's
+stylized grass, trees, wind, sky, color transitions and landscape composition.
+It is **not** the full game or the Rhino terrain. Actual game planting points
+will be designed and previewed in CAD; these positions only test the look.
 
 ## Open and inspect
 
-Open `project.godot` in Godot 4.6 and run the main scene, or open
-`scenes/vegetation_test.tscn`. Right-drag / A,D rotates the camera; mouse wheel
-/ W,S changes distance. The current captures are
-`screenshots/vegetation_test_refined.png` and
-`screenshots/vegetation_test_refined_top.png`.
+Open `project.godot` in Godot 4.6 and run the main scene,
+`scenes/main.tscn`. Right-drag / A,D rotates the camera; mouse wheel / W,S
+changes distance. The current captures are `screenshots/vegetation_grove.png`,
+`screenshots/vegetation_grove_top.png`, and
+`screenshots/vegetation_grove_ground.png`.
 Always judge changes in the actual Godot Forward+ scene, not solely in Blender.
 
-The scene currently opens with a conservative v8-derived refinement. The
-unchanged v8 baseline remains in `assets/vegetation/models/`; pass
-`--baseline-tree` as a Godot user argument to load it instead. Its original
-captures remain at `screenshots/vegetation_test.png` and
-`screenshots/vegetation_test_top.png`.
-
-Open `scenes/vegetation_biome_test.tscn` for the separate grove experiment.
-It uses the same grass and tree meshes to test dry yellow to muted green grass,
-a shared ground transition, and differently tinted tree crowns. Its captures
-are `screenshots/vegetation_biome.png` and
-`screenshots/vegetation_biome_top.png`. The palette is a test, not an accepted
-art-direction decision. In the scene inspector, the root node exposes grass,
-tree and ground colors, boundary position, transition width, contour warp and
-per-blade color overlap.
+The scene uses the v10 tree and current grass. An uneven back/right grove,
+smaller groups, a continuous grass bay and one larger isolated focal tree test
+spacing and negative space. The yellow-to-muted-green palette is still a test,
+not final art direction. The root inspector exposes grass, tree and ground
+colors, boundary position, transition width, contour warp and per-blade color
+overlap. Older scene files were removed; earlier screenshots remain as visual
+references, and the v8 tree model remains available as an asset.
 
 ## Project layout
 
-- `scenes/` — Godot scene files.
+- `scenes/main.tscn` — the only active Godot scene.
 - `scripts/` — scene generation and orbit camera scripts.
 - `assets/vegetation/models/` — the current grass and tree GLBs, including the
   v8 baseline and its refined v10 test.
@@ -61,20 +54,23 @@ instance has three crossed cards with double-sided geometry, approximately
 cards. The grass color is restrained straw yellow; the underlying ground is a
 slightly darker and greyer related hue (`#968A55`).
 
-The accepted v10 prototype starts from the v8 layered crown, retaining its 240 crossed-card
-pairs (480 cards total), inner fill, v11 texture, single straight trunk and
-lighting. It gently broadens the silhouette and enlarges each foliage card by
-25% in both dimensions to create more overlap. It is the current test-scene
-baseline, not a final production asset; grass and lighting remain unchanged.
+Stable tree assets use descriptive names. `tree_small_broad_canopy.glb` is the
+accepted approximately 6 m broad-crown tree formerly tested as v10. It retains
+240 crossed-card pairs (480 cards total), inner fill, the v11 texture and one
+straight trunk. `tree_medium_broad_clustered_canopy.glb` is the accepted large
+spreading broadleaf baseline. `tree_medium_upright_asymmetric_canopy.glb` is
+the accepted approximately 16 m, 30-group upright baseline with a low skirt,
+unequal shoulders and offset apex. Numbered experiments and the former layered
+upright model have been removed from the asset library.
 
 The grass uses one continuous world-space noise field for small vertex sway
 and moving light/dark wind bands. A separate slow temporal noise modulates the
 overall wind intensity. See `docs/RESEARCH_CONTEXT.md` for the exact tested
 choices and rejected visual approaches.
 
-The grove uses the same 63,000 grass instances and a jittered 6 × 6 layout of
-the v10 tree, excluding edge positions. Grass uses MultiMesh custom data for
-per-blade overlap in the transition; tree foliage uses per-instance shader
-uniforms. Neither requires new textures or species meshes. This only tests
-color variation and spatial transitions, not large-world placement, LOD or
-forest performance at production scale.
+The current scene uses 20 placements of the small broad-canopy tree in a
+13-tree main group, a 3-tree back-left group and a 4-tree right-front group.
+The accepted large spreading and upright baselines are displayed separately
+for comparison. Grass uses MultiMesh custom data for per-blade color overlap;
+tree foliage uses per-instance shader uniforms. This only tests appearance,
+not large-world placement, LOD or forest performance at production scale.

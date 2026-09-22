@@ -1,0 +1,137 @@
+YouTube transcript
+Video: How I made better foliage than 99% of games
+Creator: kodiakwhale
+URL: https://www.youtube.com/watch?v=GOfttJQ-FGw
+Video ID: GOfttJQ-FGw
+Language: English
+Captions: YouTube auto-generated
+Duration: 4:16
+Retrieved: 2026-09-21
+
+[0:00] This is the food chain you were taught
+[0:01] in school, but it's a little out of
+[0:03] date. There's someone new at the end,
+[0:05] and it's me. This is because people
+[0:07] consume cows. Cows consume grass, and
+[0:10] grass has totally consumed my life for
+[0:12] several weeks now. So far, I've gone
+[0:15] from this to this, and I think it looks
+[0:17] quite nice. Here's how I did it. First,
+[0:20] I modeled a grass tufted in Blender and
+[0:22] made a texture for it. If we go ahead
+[0:23] and just place this all over the island,
+[0:25] removing it where grass shouldn't grow,
+[0:27] it doesn't look very good. If you want a
+[0:29] game to have good graphics, of course,
+[0:31] shaders are important. But a Minecraft
+[0:33] tree is always going to look like a
+[0:35] Minecraft tree. If we want fluffy
+[0:37] foliage, we first need to improve our
+[0:38] models. For grass, we'll edit the normal
+[0:41] vectors of the model to point up, which
+[0:43] tells the sun to bounce light off the
+[0:44] top. Then, we'll randomly rotate
+[0:46] everything, randomly adjust positions,
+[0:48] and generate more grass to increase
+[0:50] density. Now, we can write a shader.
+[0:53] First, let's sample a texture for color.
+[0:55] One thing the industry doesn't want you
+[0:57] to know is that you can use any textures
+[0:59] you want. I've made this color palette
+[1:00] which we can map to the grayscale of our
+[1:02] texture. And while I love the sunglasses
+[1:04] emoji, it doesn't make for the most
+[1:06] natural looking terrain. So, let's just
+[1:08] replace it with some noise, which looks
+[1:10] much better. To get a nice wind effect,
+[1:12] we can add a scrolling texture, which is
+[1:14] just a texture that's sampled over time.
+[1:16] Then, we can add a little color from
+[1:17] that to give the illusion of more
+[1:19] complex shading and also actually bend
+[1:21] the vertices a bit. You want a very
+[1:23] smooth texture for this. Anything with
+[1:25] edges will look horribly unnatural, and
+[1:27] it needs to tile, or else you'll notice
+[1:28] where the texture repeats. This is
+[1:31] looking pretty good now, but we're still
+[1:33] just a couple SUVs away from the
+[1:35] American suburbs. We can prevent this by
+[1:37] adding flowers to keep away the
+[1:38] uncultured middle class. We're able to
+[1:41] render millions of blades of grass by
+[1:42] doing it all in one batch. Kind of like
+[1:44] baking a million cookies all in one try.
+[1:47] The trade-off is that we can't change
+[1:49] even a single blade of grass without
+[1:51] updating the entire batch on the
+[1:52] graphics card, which causes a massive
+[1:54] lag spike. This is actually fine because
+[1:56] grass doesn't move. It's completely
+[1:58] static.
+[2:00] Or is it?
+[2:03] This game has base building, and seeing
+[2:05] grass poke through the floor is worse
+[2:07] than 9/11. So, I remove grass where
+[2:10] structures are placed. To support this
+[2:12] with batching, we chop up the island
+[2:14] into chunks and batch the grass in each
+[2:16] chunk. That way, we get 99% of the
+[2:18] performance gains from batching, but we
+[2:20] only need to update each chunk that
+[2:22] changes. But still, we can only render
+[2:24] so many chunks before the game slows
+[2:26] down to a crawl. But we also don't need
+[2:28] so many chunks at full detail. If we
+[2:31] were painting a landscape, we wouldn't
+[2:32] paint individual leaves in the
+[2:34] background like we would in the
+[2:35] foreground. We can apply the same
+[2:36] concept to areas far away by swapping
+[2:38] out our models for lower detail versions
+[2:40] which are significantly easier to
+[2:42] render. And just like that, we have a
+[2:44] beautiful meadow, but there are no
+[2:46] trees, and I love trees. I want trees in
+[2:49] the game to look as if they were painted
+[2:51] by hand. Perfect. This tree could use
+[2:53] some better leaves. The Witness has my
+[2:55] favorite trees of any game, and if we
+[2:56] look closely, their leaf textures are
+[2:58] just a bunch of random individual
+[3:00] leaves. I made something similar, which
+[3:01] still looks really bad. The first and
+[3:04] most important ingredient in our fluffy
+[3:06] tree recipe is to edit the normals. We
+[3:08] want them to face away from the center
+[3:10] of each leaf clump so that light doesn't
+[3:12] bounce around inside. These are shadow
+[3:14] casting objects that rotate with the sun
+[3:16] around each clump. So, if we disable
+[3:18] shadow casting on the clumps themselves,
+[3:20] it looks a lot smoother, but the trees
+[3:22] still cast shadows on the ground.
+[3:24] Polygons in games generally have a front
+[3:26] and a back, and the back is never
+[3:27] rendered because you never see it. But
+[3:29] our leaves are just flat textures.
+[3:31] They're not actual models. So if we
+[3:32] enable rendering for the back faces, we
+[3:34] can suddenly see a lot more of our tree.
+[3:36] Up close, however, there are still these
+[3:38] harsh edges, which happens when polygons
+[3:40] are almost perpendicular to the camera.
+[3:42] We can calculate the angle to the camera
+[3:44] of each polygon and fade it out before
+[3:46] it gets too edgy. The edges disappear
+[3:48] with a small fade angle. And as we
+[3:50] increase the angle, the entire tree
+[3:52] disappears.
+[3:53] Everything from here is just artistic
+[3:55] preference. I added interior shadows to
+[3:58] each clump, which can get really dark,
+[4:01] and also a bluish color for the parts of
+[4:03] the tree and shadow. I'm not totally
+[4:05] sold on this, though, so leave a comment
+[4:07] on whether you think one or two looks
+[4:09] better. This is for my game Starboard.

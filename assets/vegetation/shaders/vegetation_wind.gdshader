@@ -17,10 +17,19 @@ uniform float biome_transition_half_width = 5.0;
 uniform float biome_center_x = 0.0;
 uniform float biome_instance_overlap = 0.0;
 instance uniform vec4 variant_tint : source_color = vec4(1.0);
+instance uniform float use_tree_palette_anchor = 0.0;
+instance uniform vec3 tree_palette_anchor_world = vec3(0.0);
+instance uniform float use_tree_canopy_normal = 0.0;
+instance uniform vec3 tree_canopy_center_world = vec3(0.0);
+instance uniform vec3 tree_canopy_radii = vec3(1.0);
+instance uniform float tree_local_normal_weight : hint_range(0.0, 1.0) = 0.34;
 uniform float alpha_cutoff : hint_range(0.0, 1.0) = 0.42;
 uniform float alpha_antialiasing_edge : hint_range(0.0, 1.0) = 0.24;
 uniform vec2 atlas_grid = vec2(1.0, 1.0);
 uniform float card_edge_fade : hint_range(0.0, 0.25) = 0.0;
+uniform bool use_view_angle_fade = false;
+uniform float view_angle_fade_start : hint_range(0.0, 0.5) = 0.020;
+uniform float view_angle_fade_end : hint_range(0.0, 0.5) = 0.140;
 uniform vec2 wind_direction = vec2(0.8, 0.35);
 uniform float wind_strength : hint_range(0.0, 1.0) = 0.12;
 uniform float wind_speed : hint_range(0.0, 5.0) = 1.25;
@@ -47,6 +56,17 @@ varying float wind_weight;
 varying float wind_wave;
 varying float temporal_wind_strength;
 varying vec3 palette_tint;
+varying vec3 card_plane_normal_view;
+varying vec3 global_canopy_normal_view;
+
+vec3 decode_octahedral(vec2 encoded) {
+	vec2 f = encoded * 2.0 - 1.0;
+	vec3 normal = vec3(f.x, f.y, 1.0 - abs(f.x) - abs(f.y));
+	if (normal.z < 0.0) {
+		normal.xy = (1.0 - abs(f.yx)) * sign(f.xy);
+	}
+	return normalize(normal);
+}
 
 float cubic_bezier_01(float value, float control_1, float control_2) {
 	float t = clamp(value, 0.0, 1.0);
@@ -58,13 +78,30 @@ float cubic_bezier_01(float value, float control_1, float control_2) {
 
 void vertex() {
 	wind_weight = clamp(COLOR.r, 0.0, 1.0);
+	vec3 card_plane_normal_model = decode_octahedral(COLOR.gb);
+	card_plane_normal_view = normalize(
+		MODELVIEW_NORMAL_MATRIX * card_plane_normal_model
+	);
 	temporal_wind_strength = 1.0;
 	vec3 world_origin = (MODEL_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
+	vec3 palette_origin = mix(
+		world_origin,
+		tree_palette_anchor_world,
+		clamp(use_tree_palette_anchor, 0.0, 1.0)
+	);
+	global_canopy_normal_view = vec3(0.0, 0.0, 1.0);
+	if (use_tree_canopy_normal > 0.5) {
+		vec3 world_vertex = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+		vec3 safe_radii = max(tree_canopy_radii, vec3(0.001));
+		vec3 canopy_delta = world_vertex - tree_canopy_center_world;
+		vec3 canopy_normal_world = normalize(canopy_delta / (safe_radii * safe_radii));
+		global_canopy_normal_view = normalize(mat3(VIEW_MATRIX) * canopy_normal_world);
+	}
 	palette_tint = vec3(1.0);
 	if (use_biome_palette) {
 		float noise_value = textureLod(
 			biome_noise_texture,
-			world_origin.xz * biome_noise_scale + vec2(0.137, 0.411),
+			palette_origin.xz * biome_noise_scale + vec2(0.137, 0.411),
 			0.0
 		).r;
 		float instance_shift = 0.0;
@@ -77,7 +114,7 @@ void vertex() {
 		float transition = smoothstep(
 			-biome_transition_half_width,
 			biome_transition_half_width,
-			world_origin.x - biome_center_x + (noise_value * 2.0 - 1.0)
+			palette_origin.x - biome_center_x + (noise_value * 2.0 - 1.0)
 				* biome_warp_distance + instance_shift
 		);
 		palette_tint = mix(palette_dry.rgb, palette_green.rgb, transition)
@@ -180,10 +217,30 @@ void fragment() {
 		);
 		edge_mask = smoothstep(0.0, card_edge_fade, edge_distance);
 	}
-	float cutout_alpha = tex.a * edge_mask;
+	float view_mask = 1.0;
+	if (use_view_angle_fade) {
+		float facing = abs(dot(
+			normalize(card_plane_normal_view),
+			normalize(VIEW)
+		));
+		view_mask = smoothstep(
+			view_angle_fade_start,
+			view_angle_fade_end,
+			facing
+		);
+	}
+	float cutout_alpha = tex.a * edge_mask * view_mask;
 	// Preserve the volume normals authored on the mesh. Flipping a normal from
 	// FRONT_FACING would restore the original card-plane lighting artifact.
-	NORMAL = normalize(NORMAL);
+	vec3 lighting_normal = normalize(NORMAL);
+	if (use_tree_canopy_normal > 0.5) {
+		lighting_normal = normalize(mix(
+			global_canopy_normal_view,
+			lighting_normal,
+			clamp(tree_local_normal_weight, 0.0, 1.0)
+		));
+	}
+	NORMAL = lighting_normal;
 	// At meadow scale, the moving low-frequency tonal band carries the wind
 	// farther than the subpixel silhouette displacement. Keep it achromatic so
 	// the grass remains one restrained straw-yellow color family.

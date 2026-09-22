@@ -1,23 +1,22 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://cq7q0k6kx4qmn"]
 
-[ext_resource type="Script" path="res://scripts/vegetation_test.gd" id="1_main"]
-[ext_resource type="Script" path="res://scripts/orbit_camera.gd" id="2_camera"]
+[ext_resource type="Script" uid="uid://bl3avtne2ar5g" path="res://scripts/vegetation_test.gd" id="1_main"]
+[ext_resource type="Script" uid="uid://epg6d0hvxyj5" path="res://scripts/orbit_camera.gd" id="2_camera"]
 
-[node name="VegetationTest" type="Node3D"]
+[node name="VegetationTest" type="Node3D" unique_id=1944718483]
 script = ExtResource("1_main")
 
-[node name="OrbitCamera" type="Camera3D" parent="."]
+[node name="OrbitCamera" type="Camera3D" parent="." unique_id=853201558]
 current = true
 fov = 48.0
-near = 0.05
 far = 200.0
 script = ExtResource("2_camera")
 
-[node name="Instructions" type="Label" parent="."]
+[node name="Instructions" type="Label" parent="." unique_id=1671111457]
 offset_left = 18.0
 offset_top = 16.0
 offset_right = 500.0
 offset_bottom = 52.0
-text = "Right-drag / A,D: orbit    Wheel / W,S: zoom"
 theme_override_colors/font_color = Color(1, 1, 1, 0.82)
 theme_override_font_sizes/font_size = 16
+text = "Right-drag / A,D: orbit    Wheel / W,S: zoom"

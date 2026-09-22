@@ -38,14 +38,49 @@ the intent and the result of previous visual tests.
   regular stripes. A second, slow time-only noise envelope varies whole-field
   wind strength smoothly between roughly 45% and 115%, affecting both sway
   and tonal bands. Local gusts still move through the field.
-- Tree: `tree_foliage_480card_v10_branch_guided.glb` is the accepted prototype
-  baseline. It retains the v8 layered placement and 240 crossed-card pairs,
-  gently widens the silhouette and increases each card's width and height by
-  25%. The sparse v11 alpha texture, straight trunk, volumetric normals,
-  shadow policy and lightweight sway fallback remain unchanged. Godot default,
-  overhead and side captures show a fuller continuous canopy without obvious
-  top-down holes. The original v8 remains available with `--baseline-tree` for
-  comparison; prototype acceptance does not imply a final production asset.
+- Small broad-canopy tree: `tree_small_broad_canopy.glb` is the accepted
+  approximately 6 m prototype formerly tested as v10. It retains the v8
+  layered placement and 240 crossed-card pairs, gently widens the silhouette
+  and increases each card's width and height by 25%. The sparse v11 alpha
+  texture, straight trunk, volumetric normals, shadow policy and lightweight
+  sway fallback remain unchanged. Godot default, overhead and side captures
+  show a fuller continuous canopy without obvious top-down holes.
+- Accepted medium upright tree: `tree_medium_upright_asymmetric_canopy.glb`
+  redistributes the same 30 accepted old-crown groups into a continuously
+  staggered upright oval with a low skirt, unequal shoulders, offset apex,
+  three-axis group rotation and a horizontally round footprint. It is the
+  current upright large-tree baseline. The former five-layer upright asset and
+  numbered camphor experiments were deleted; do not recreate their regular
+  shelves, column-like outline or excessive exposed trunk.
+- Accepted medium broad clustered tree: `tree_medium_broad_clustered_canopy.glb`
+  uses 30 variably sized, moderately flattened crown groups. Five groups now
+  form a low irregular skirt around the trunk; the remaining groups use a
+  wider controlled size range plus gentle pitch, roll and yaw variation rather
+  than equal-size horizontal rows. Group centres are distributed radially and
+  the generated model rejects horizontal X/Y bounds above a 1.12 aspect ratio,
+  preventing the crown from becoming a rectangular prism that works from only
+  one angle. Its lower skirt is pulled down around the trunk, while the outer
+  rings spread farther and the top contracts; the generator also rejects a
+  horizontal-diameter-to-crown-height ratio below 1.18. Its current silhouette
+  and massing are close to the video reference. The slightly rounder, fuller
+  and cuter result is an intentional strength for this project's clean,
+  stylized rendering rather than a defect to correct. Preserve this asset as
+  the current large broadleaf baseline; future work should refine it without
+  returning to narrow, tall, rectangular or strongly separated clumps.
+- Both medium-tree assets encode wind weight in vertex color `R` and each
+  card's octahedral plane normal in `G/B`. Their shared gameplay material now
+  tests a 0.020–0.140 grazing-angle fade (about 1.15–8.05 degrees from perfectly
+  edge-on); background small trees keep the fade disabled. Do not widen this
+  again without checking crown density from orthogonal gameplay views.
+- Both medium clustered trees now sample the biome palette once at their
+  whole-tree anchor and blend 66% whole-canopy ellipsoid normal with 34% of
+  the authored local crown normal. Each asset uses its own measured foliage
+  bounds rather than sharing one ellipsoid. This isolates excessive per-clump
+  color and light gradients without removing all local crown volume.
+- Numbered model names are temporary comparisons only. Stable assets use
+  descriptive names and must not be overwritten by later experiments.
+- The original v8 remains available with `--baseline-tree` for comparison;
+  prototype acceptance does not imply a final production asset.
 - Rejected v9 experiment: moving all cards into six ellipsoidal clouds lost
   the v8 silhouette and did not make convincing foliage masses. Do not use
   "six balls" as the modelling target; preserve a coherent crown and refine
@@ -54,12 +89,12 @@ the intent and the result of previous visual tests.
   provide the lighting baseline. Dense grass and leaf-card shadows are off to
   avoid dark card-shaped noise; tree trunk shadows remain.
 
-## New color and grove experiment (not yet accepted)
+## Current color and grove experiment (not yet accepted)
 
-- `scenes/vegetation_biome_test.tscn` is a separate scene so the accepted
-  single-tree test stays unchanged. It places the same v10 tree in a jittered
-  6 × 6 grove with edge culling; this is a visual-density test, not a finished
-  forest-placement algorithm or an LOD/performance conclusion.
+- `scenes/main.tscn` is now the sole active scene. Earlier single-tree and
+  6 × 6 grid scenes have been removed; their captures remain for comparison.
+  This scene is a visual test, not the eventual CAD planting layout or an
+  LOD/performance conclusion.
 - The grass, tree leaves and ground share one world-space, low-frequency
   boundary field. A broad smooth transition and a small noise warp make the
   yellow and muted-green regions interpenetrate without a sharp line or a
@@ -73,6 +108,16 @@ the intent and the result of previous visual tests.
   transition width, center, contour warp and grass-color overlap. Tune them
   in Godot before deciding on final biome palettes. The current test is not
   yet wired to the Rhino terrain or Grasshopper placement points.
+- The active scene has a provisional planting composition. It replaces the grid
+  with a 13-tree asymmetrical main group, a 3-tree small group and a 4-tree
+  foreground group, all using the small broad-canopy tree. The original 6 × 6
+  scene survives only in historical captures. Compare overhead, default and
+  low-viewpoint captures before any claim of a final placement method.
+- The active comparison scene places both accepted medium-tree forms:
+  `tree_medium_broad_clustered_canopy.glb` at the left foreground and
+  `tree_medium_upright_asymmetric_canopy.glb` offset toward the right. They share
+  the same leaf material and tint so the comparison isolates crown structure;
+  the small broad-canopy trees remain the background planting.
 
 ## Experiments not to reintroduce without a specific new reason
 
