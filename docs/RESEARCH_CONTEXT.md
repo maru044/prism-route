@@ -136,6 +136,46 @@ the intent and the result of previous visual tests.
   `tree_medium_upright_asymmetric_canopy.glb` offset toward the right. They share
   the same leaf material and tint so the comparison isolates crown structure;
   the small broad-canopy trees remain the background planting.
+- A provisional flower/autumn palette study now places four identical
+  `tree_small_broad_canopy.glb` instances at the front of the grove. From left
+  to right they test cherry pink, golden yellow, orange-red and burgundy-red.
+  All four use the same scale, orientation, alpha silhouette, normals and wind,
+  so the comparison isolates color and light response.
+- Species palettes do not multiply pink/orange by the green atlas RGB. The
+  atlas supplies alpha plus only 8% restrained luminance detail; instance
+  uniforms provide deep, shadow, middle, light and optional accent colors.
+  Direct color still uses canopy normals, sun direction and `ATTENUATION`,
+  while the shadow color remains the ambient/base response. The rejected A0
+  branch uses an 8–14% low-frequency accent field; A1 and A2 disable it.
+- Issue #5 phase A now has a one-command comparison. `--capture-flower-a0`
+  preserves the rejected three-tone/accent-noise paint-bucket baseline;
+  `--capture-flower-a1` enables the four-role `deep/shadow/mid/sun` remap and
+  disables accent noise. Additional A1 checks use `--capture-flower-a1-45`,
+  `--capture-flower-a1-top` and `--capture-flower-a1-cherry`. A1 uses current
+  directional `LIGHT`, `LIGHT_IS_DIRECTIONAL` and `ATTENUATION`; grass and
+  ordinary green foliage remain on the accepted legacy branch. These palettes
+  are rendering validation, not four new tree models or accepted final colors.
+- A1's nested `smoothstep` chain produced visible contour-like color bands.
+  A2 is now the default test: it uses broad overlapping shadow/mid/sun weights
+  instead of four sequential thresholds, with a very weak world-space macro
+  warp applied only to the lighting boundary. It does not paint noise directly
+  into the leaf color. `deep` is deliberately dormant in A2 until phase B has
+  a real interior-volume/occlusion signal; using N.L alone for `deep` made a
+  false back-facing band. Validate A2 with `--capture-flower-a2`,
+  `--capture-flower-a2-45`, `--capture-flower-a2-top` and
+  `--capture-flower-a2-cherry`. Front, 45-degree, top and cherry close-up tests
+  confirm that the transition remains continuous across views without changing
+  geometry, alpha, card-angle fading, normals, wind, grass or green foliage.
+- A2 still produced excessive value contrast because the Issue #5 palette
+  endpoints spanned dark purple/brown to near-white and the direct palette was
+  added over a shadow-colored environment base. A3 is now the default study.
+  It keeps A2's continuous weights but compresses every species into a tighter
+  hue/value family, mixes 42% of the mid color into the indirect-light base,
+  and reduces the colored direct-light contribution to 42% of A2. This keeps
+  the crown readable as one color before it is read as light and shadow. Use
+  `--capture-flower-a3`, `--capture-flower-a3-45`,
+  `--capture-flower-a3-top` and `--capture-flower-a3-cherry` for its four-view
+  check; A0, A1 and A2 remain selectable comparison baselines.
 
 ## Experiments not to reintroduce without a specific new reason
 

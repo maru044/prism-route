@@ -17,6 +17,37 @@ uniform float biome_transition_half_width = 5.0;
 uniform float biome_center_x = 0.0;
 uniform float biome_instance_overlap = 0.0;
 instance uniform vec4 variant_tint : source_color = vec4(1.0);
+// Flowering and autumn trees reuse the same alpha silhouette but replace the
+// green atlas RGB with a controlled three-tone species palette. The shadow
+// color is the ambient/base response; direct sun adds the middle/light tones.
+instance uniform float use_species_palette = 0.0;
+// 0 = A0 paint-bucket baseline, 1 = A1 nested four-role ramp,
+// 2 = A2 continuous three-family blend with a tiny macro boundary warp,
+// 3 = A3 same blend with compressed palettes and restrained direct light.
+// One packed stage value keeps the shader within Godot's 16 instance-uniform limit.
+instance uniform float species_palette_stage = 0.0;
+instance uniform vec4 species_deep_color : source_color = vec4(0.32, 0.16, 0.24, 1.0);
+instance uniform vec4 species_shadow_color : source_color = vec4(0.42, 0.25, 0.30, 1.0);
+instance uniform vec4 species_mid_color : source_color = vec4(0.78, 0.48, 0.56, 1.0);
+instance uniform vec4 species_light_color : source_color = vec4(1.0, 0.76, 0.80, 1.0);
+instance uniform vec4 species_accent_color : source_color = vec4(0.92, 0.62, 0.66, 1.0);
+instance uniform float species_accent_amount : hint_range(0.0, 0.35) = 0.0;
+instance uniform float species_seed : hint_range(0.0, 1.0) = 0.0;
+uniform sampler2D species_noise_texture : repeat_enable, filter_linear_mipmap;
+uniform float species_noise_scale : hint_range(0.005, 0.2) = 0.052;
+uniform float species_texture_detail : hint_range(0.0, 0.25) = 0.08;
+uniform float species_light_ramp_start : hint_range(-1.0, 1.0) = -0.05;
+uniform float species_light_ramp_end : hint_range(-1.0, 1.0) = 0.62;
+uniform float species_shadow_band_start : hint_range(-1.0, 1.0) = -0.38;
+uniform float species_shadow_band_end : hint_range(-1.0, 1.0) = -0.02;
+uniform float species_mid_band_start : hint_range(-1.0, 1.0) = -0.10;
+uniform float species_mid_band_end : hint_range(-1.0, 1.0) = 0.30;
+uniform float species_sun_band_start : hint_range(-1.0, 1.0) = 0.16;
+uniform float species_sun_band_end : hint_range(-1.0, 1.0) = 0.58;
+uniform float species_direct_strength : hint_range(0.0, 1.5) = 0.72;
+uniform float species_art_direct_strength : hint_range(0.0, 1.5) = 0.95;
+uniform float species_light_warp_scale : hint_range(0.001, 0.1) = 0.018;
+uniform float species_light_warp_amount : hint_range(0.0, 0.15) = 0.055;
 instance uniform float use_tree_palette_anchor = 0.0;
 instance uniform vec3 tree_palette_anchor_world = vec3(0.0);
 instance uniform float use_tree_canopy_normal = 0.0;
@@ -58,6 +89,8 @@ varying float temporal_wind_strength;
 varying vec3 palette_tint;
 varying vec3 card_plane_normal_view;
 varying vec3 global_canopy_normal_view;
+varying float species_accent_mix;
+varying float species_light_warp;
 
 vec3 decode_octahedral(vec2 encoded) {
 	vec2 f = encoded * 2.0 - 1.0;
@@ -84,6 +117,7 @@ void vertex() {
 	);
 	temporal_wind_strength = 1.0;
 	vec3 world_origin = (MODEL_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
+	vec3 world_vertex = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	vec3 palette_origin = mix(
 		world_origin,
 		tree_palette_anchor_world,
@@ -91,11 +125,54 @@ void vertex() {
 	);
 	global_canopy_normal_view = vec3(0.0, 0.0, 1.0);
 	if (use_tree_canopy_normal > 0.5) {
-		vec3 world_vertex = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 		vec3 safe_radii = max(tree_canopy_radii, vec3(0.001));
 		vec3 canopy_delta = world_vertex - tree_canopy_center_world;
 		vec3 canopy_normal_world = normalize(canopy_delta / (safe_radii * safe_radii));
 		global_canopy_normal_view = normalize(mat3(VIEW_MATRIX) * canopy_normal_world);
+	}
+	species_accent_mix = 0.0;
+	species_light_warp = 0.0;
+	if (use_species_palette > 0.5 && species_palette_stage > 1.5) {
+		vec2 warp_offset = vec2(
+			species_seed * 2.71 + 0.193,
+			species_seed * -1.87 + 0.577
+		);
+		float warp_xz = textureLod(
+			species_noise_texture,
+			world_vertex.xz * species_light_warp_scale + warp_offset,
+			0.0
+		).r;
+		float warp_xy = textureLod(
+			species_noise_texture,
+			world_vertex.xy * species_light_warp_scale * 0.79 + warp_offset.yx,
+			0.0
+		).r;
+		float macro_value = warp_xz * 0.58 + warp_xy * 0.42;
+		species_light_warp = (macro_value * 2.0 - 1.0)
+			* species_light_warp_amount;
+	}
+	if (
+		use_species_palette > 0.5
+		&& species_palette_stage < 0.5
+		&& species_accent_amount > 0.0
+	) {
+		vec2 seed_offset = vec2(
+			species_seed * 3.17 + 0.137,
+			species_seed * -2.43 + 0.619
+		);
+		float horizontal_noise = textureLod(
+			species_noise_texture,
+			world_vertex.xz * species_noise_scale + seed_offset,
+			0.0
+		).r;
+		float vertical_noise = textureLod(
+			species_noise_texture,
+			world_vertex.xy * species_noise_scale * 0.83 + seed_offset.yx,
+			0.0
+		).r;
+		float broad_noise = horizontal_noise * 0.62 + vertical_noise * 0.38;
+		species_accent_mix = smoothstep(0.48, 0.78, broad_noise)
+			* species_accent_amount;
 	}
 	palette_tint = vec3(1.0);
 	if (use_biome_palette) {
@@ -257,8 +334,50 @@ void fragment() {
 		tip_tone,
 		smoothstep(0.0, 1.0, wind_weight)
 	);
-	ALBEDO = tex.rgb * palette_tint * variant_tint.rgb
-		* wind_tone * height_tone;
+	if (use_species_palette > 0.5) {
+		// Retain only a trace of atlas luminance. Its green RGB must not tint a
+		// pink or orange species into mud, and the texture must not paint shadow.
+		float atlas_value = dot(tex.rgb, vec3(0.299, 0.587, 0.114));
+		float atlas_detail = mix(
+			1.0,
+			mix(0.94, 1.04, clamp(atlas_value, 0.0, 1.0)),
+			species_texture_detail
+		);
+		if (species_palette_stage > 1.5) {
+			// In A2, deep is intentionally dormant until a real interior-volume
+			// mask is tested in phase B. Environment light starts from shadow.
+			vec3 environment_family = species_shadow_color.rgb;
+			if (species_palette_stage > 2.5) {
+				// Low-contrast stylization keeps indirect light inside the same
+				// family instead of allowing the crown underside to become a
+				// separate dark/purple object.
+				environment_family = mix(
+					species_shadow_color.rgb,
+					species_mid_color.rgb,
+					0.42
+				);
+			}
+			ALBEDO = environment_family * atlas_detail;
+		} else if (species_palette_stage > 0.5) {
+			// A1 starts from the deliberate deep family under environment light.
+			// The directional light adds shadow/mid/sun target colors below.
+			ALBEDO = mix(
+				species_shadow_color.rgb,
+				species_deep_color.rgb,
+				0.28
+			) * atlas_detail;
+		} else {
+			vec3 accent_shadow = species_accent_color.rgb * 0.62;
+			ALBEDO = mix(
+				species_shadow_color.rgb,
+				accent_shadow,
+				species_accent_mix
+			) * atlas_detail;
+		}
+	} else {
+		ALBEDO = tex.rgb * palette_tint * variant_tint.rgb
+			* wind_tone * height_tone;
+	}
 	ALPHA = cutout_alpha;
 	ALPHA_SCISSOR_THRESHOLD = alpha_cutoff;
 	ALPHA_ANTIALIASING_EDGE = min(alpha_antialiasing_edge, alpha_cutoff - 0.001);
@@ -275,5 +394,88 @@ void light() {
 		0.0,
 		1.0
 	);
-	DIFFUSE_LIGHT += ALBEDO * LIGHT_COLOR * ATTENUATION * wrapped_ndotl;
+	if (
+		use_species_palette > 0.5
+		&& species_palette_stage > 0.5
+		&& LIGHT_IS_DIRECTIONAL
+	) {
+		float ndotl = dot(NORMAL, LIGHT);
+		vec3 direct_palette;
+		float artistic_diffuse;
+		if (species_palette_stage > 1.5) {
+			float light_t = smoothstep(
+				-0.30,
+				0.80,
+				ndotl + species_light_warp
+			);
+			float shadow_weight = 1.0 - smoothstep(0.10, 0.58, light_t);
+			float sun_weight = smoothstep(0.62, 0.92, light_t);
+			float mid_weight = max(0.0, 1.0 - shadow_weight - sun_weight);
+			direct_palette = species_shadow_color.rgb * shadow_weight
+				+ species_mid_color.rgb * mid_weight
+				+ species_light_color.rgb * sun_weight;
+			artistic_diffuse = smoothstep(
+				-0.32,
+				0.68,
+				ndotl + species_light_warp
+			);
+		} else {
+			float shadow_band = smoothstep(
+				species_shadow_band_start,
+				species_shadow_band_end,
+				ndotl
+			);
+			float mid_band = smoothstep(
+				species_mid_band_start,
+				species_mid_band_end,
+				ndotl
+			);
+			float sun_band = smoothstep(
+				species_sun_band_start,
+				species_sun_band_end,
+				ndotl
+			);
+			direct_palette = mix(
+				species_deep_color.rgb,
+				species_shadow_color.rgb,
+				shadow_band
+			);
+			direct_palette = mix(direct_palette, species_mid_color.rgb, mid_band);
+			direct_palette = mix(direct_palette, species_light_color.rgb, sun_band);
+			artistic_diffuse = smoothstep(
+				species_shadow_band_start,
+				species_sun_band_end,
+				ndotl
+			);
+		}
+		float palette_direct_strength = species_art_direct_strength;
+		if (species_palette_stage > 2.5) {
+			// A3 keeps the hue response but stops the sun family from reading as
+			// a second, almost-white paint layer over the crown.
+			palette_direct_strength *= 0.42;
+		}
+		DIFFUSE_LIGHT += direct_palette * LIGHT_COLOR * ATTENUATION
+			* artistic_diffuse * palette_direct_strength;
+	} else if (use_species_palette > 0.5) {
+		float palette_ramp = smoothstep(
+			species_light_ramp_start,
+			species_light_ramp_end,
+			dot(NORMAL, LIGHT)
+		);
+		vec3 middle_color = mix(
+			species_mid_color.rgb,
+			species_accent_color.rgb * 0.88,
+			species_accent_mix
+		);
+		vec3 light_color = mix(
+			species_light_color.rgb,
+			species_accent_color.rgb * 1.08,
+			species_accent_mix
+		);
+		vec3 direct_palette = mix(middle_color, light_color, palette_ramp);
+		DIFFUSE_LIGHT += direct_palette * LIGHT_COLOR * ATTENUATION
+			* wrapped_ndotl * species_direct_strength;
+	} else {
+		DIFFUSE_LIGHT += ALBEDO * LIGHT_COLOR * ATTENUATION * wrapped_ndotl;
+	}
 }

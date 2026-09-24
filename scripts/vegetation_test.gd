@@ -39,6 +39,25 @@ var shared_trunk_material: StandardMaterial3D
 func _ready() -> void:
 	var arguments := OS.get_cmdline_user_args()
 	var refined_tree := not ("--baseline-tree" in arguments)
+	var flower_palette_stage := 3
+	if "--flower-a0" in arguments or "--capture-flower-a0" in arguments:
+		flower_palette_stage = 0
+	elif (
+		"--flower-a1" in arguments
+		or "--capture-flower-a1" in arguments
+		or "--capture-flower-a1-45" in arguments
+		or "--capture-flower-a1-top" in arguments
+		or "--capture-flower-a1-cherry" in arguments
+	):
+		flower_palette_stage = 1
+	elif (
+		"--flower-a2" in arguments
+		or "--capture-flower-a2" in arguments
+		or "--capture-flower-a2-45" in arguments
+		or "--capture-flower-a2-top" in arguments
+		or "--capture-flower-a2-cherry" in arguments
+	):
+		flower_palette_stage = 2
 	shared_trunk_material = _create_trunk_material()
 	if biome_demo:
 		biome_noise_texture = _create_biome_noise_texture()
@@ -46,13 +65,90 @@ func _ready() -> void:
 	_build_ground()
 	if biome_demo:
 		if grove_demo:
-			_build_landscape_grove(refined_tree)
+			_build_landscape_grove(refined_tree, flower_palette_stage)
 		else:
 			_build_forest(refined_tree)
 	else:
 		_build_tree(refined_tree)
 	_build_grass_chunks()
 	if grove_demo and (
+		"--capture-flower-study" in arguments
+		or "--capture-flower-a0" in arguments
+		or "--capture-flower-a1" in arguments
+		or "--capture-flower-a1-45" in arguments
+		or "--capture-flower-a1-top" in arguments
+		or "--capture-flower-a1-cherry" in arguments
+		or "--capture-flower-a2" in arguments
+		or "--capture-flower-a2-45" in arguments
+		or "--capture-flower-a2-top" in arguments
+		or "--capture-flower-a2-cherry" in arguments
+		or "--capture-flower-a3" in arguments
+		or "--capture-flower-a3-45" in arguments
+		or "--capture-flower-a3-top" in arguments
+		or "--capture-flower-a3-cherry" in arguments
+	):
+		var camera := get_node("OrbitCamera") as Camera3D
+		camera.set_process(false)
+		var flower_target := Vector3(0.0, 3.6, 13.4)
+		var capture_suffix := "a3_front"
+		if "--capture-flower-a0" in arguments:
+			capture_suffix = "a0_front"
+		elif "--capture-flower-a1" in arguments:
+			capture_suffix = "a1_front"
+		elif "--capture-flower-a2" in arguments:
+			capture_suffix = "a2_front"
+		if (
+			"--capture-flower-a1-cherry" in arguments
+			or "--capture-flower-a2-cherry" in arguments
+			or "--capture-flower-a3-cherry" in arguments
+		):
+			flower_target = Vector3(-10.0, 3.4, 13.6)
+			camera.position = flower_target + Vector3(0.0, 0.4, 12.0)
+			if "--capture-flower-a1-cherry" in arguments:
+				capture_suffix = "a1_cherry_close"
+			elif "--capture-flower-a2-cherry" in arguments:
+				capture_suffix = "a2_cherry_close"
+			else:
+				capture_suffix = "a3_cherry_close"
+		elif (
+			"--capture-flower-a1-45" in arguments
+			or "--capture-flower-a2-45" in arguments
+			or "--capture-flower-a3-45" in arguments
+		):
+			camera.position = Vector3(23.5, 7.0, 39.0)
+			if "--capture-flower-a1-45" in arguments:
+				capture_suffix = "a1_45deg"
+			elif "--capture-flower-a2-45" in arguments:
+				capture_suffix = "a2_45deg"
+			else:
+				capture_suffix = "a3_45deg"
+		elif (
+			"--capture-flower-a1-top" in arguments
+			or "--capture-flower-a2-top" in arguments
+			or "--capture-flower-a3-top" in arguments
+		):
+			camera.position = Vector3(0.0, 42.0, 13.41)
+			if "--capture-flower-a1-top" in arguments:
+				capture_suffix = "a1_top"
+			elif "--capture-flower-a2-top" in arguments:
+				capture_suffix = "a2_top"
+			else:
+				capture_suffix = "a3_top"
+		else:
+			camera.position = Vector3(0.0, 5.6, 45.0)
+		camera.look_at(
+			flower_target,
+			Vector3.FORWARD
+			if (
+				"--capture-flower-a1-top" in arguments
+				or "--capture-flower-a2-top" in arguments
+				or "--capture-flower-a3-top" in arguments
+			)
+			else Vector3.UP
+		)
+		get_node("Instructions").hide()
+		_capture_test_frame("vegetation_flower_%s.png" % capture_suffix)
+	elif grove_demo and (
 		"--capture-focal-front" in arguments
 		or "--capture-focal-side" in arguments
 		or "--capture-upright-front" in arguments
@@ -241,7 +337,7 @@ func _build_forest(refined_tree: bool) -> void:
 			_configure_tree(tree, leaf_material, tint)
 
 
-func _build_landscape_grove(refined_tree: bool) -> void:
+func _build_landscape_grove(refined_tree: bool, flower_palette_stage: int) -> void:
 	var forest := Node3D.new()
 	forest.name = "LandscapeGrove"
 	add_child(forest)
@@ -272,6 +368,12 @@ func _build_landscape_grove(refined_tree: bool) -> void:
 		Vector2(10.0, 7.5), Vector2(13.8, 8.8), Vector2(9.2, 12.2),
 		Vector2(14.0, 13.2),
 	]))
+	_add_flower_palette_study(
+		forest,
+		tree_model,
+		leaf_material,
+		flower_palette_stage
+	)
 	# The large tree is assembled from thirty reduced copies of the accepted v10
 	# crown. Each group keeps the old tree's density, normals and silhouette.
 	var large_tree_material := _create_tree_leaf_material(true)
@@ -330,6 +432,117 @@ func _add_grove_group(
 		_configure_tree(tree, leaf_material, tint_variants[rng.randi_range(0, tint_variants.size() - 1)])
 
 
+func _add_flower_palette_study(
+	forest: Node3D,
+	tree_model: PackedScene,
+	leaf_material: ShaderMaterial,
+	palette_stage: int
+) -> void:
+	# Strict same-mesh palette study. Left to right: cherry blossom, golden
+	# autumn, orange autumn and deep red autumn. A0 preserves the rejected
+	# paint-bucket baseline; A1/A2 use the Issue #5 target palettes. A3 retains
+	# A2 blending but compresses each species into one close-knit color family.
+	if palette_stage >= 3:
+		_add_species_palette_tree(
+			forest, tree_model, leaf_material, "Flower_Cherry_A3", Vector3(-10.0, 0.0, 13.6),
+			Color("b77f99"), Color("c18da5"), Color("e0b0c1"), Color("f1d2d9"),
+			Color("e0b0c1"), 0.0, 0.17, palette_stage
+		)
+		_add_species_palette_tree(
+			forest, tree_model, leaf_material, "Autumn_Gold_A3", Vector3(-3.4, 0.0, 13.6),
+			Color("a47d43"), Color("b58f4f"), Color("d1ad62"), Color("e6c982"),
+			Color("d1ad62"), 0.0, 0.39, palette_stage
+		)
+		_add_species_palette_tree(
+			forest, tree_model, leaf_material, "Autumn_Orange_A3", Vector3(3.4, 0.0, 13.6),
+			Color("a75448"), Color("b56550"), Color("d68162"), Color("e8a886"),
+			Color("d68162"), 0.0, 0.63, palette_stage
+		)
+		_add_species_palette_tree(
+			forest, tree_model, leaf_material, "Autumn_Red_A3", Vector3(10.0, 0.0, 13.6),
+			Color("8c4359"), Color("9e5265"), Color("bf6874"), Color("d88b91"),
+			Color("bf6874"), 0.0, 0.84, palette_stage
+		)
+	elif palette_stage >= 1:
+		_add_species_palette_tree(
+			forest, tree_model, leaf_material, "Flower_Cherry", Vector3(-10.0, 0.0, 13.6),
+			Color("99617d"), Color("c98fae"), Color("ebc4d1"), Color("fff3ef"),
+			Color("ebc4d1"), 0.0, 0.17, palette_stage
+		)
+		_add_species_palette_tree(
+			forest, tree_model, leaf_material, "Autumn_Gold", Vector3(-3.4, 0.0, 13.6),
+			Color("86602d"), Color("bc8939"), Color("f0c85b"), Color("fff0af"),
+			Color("f0c85b"), 0.0, 0.39, palette_stage
+		)
+		_add_species_palette_tree(
+			forest, tree_model, leaf_material, "Autumn_Orange", Vector3(3.4, 0.0, 13.6),
+			Color("7d3f35"), Color("b95b3f"), Color("eb9254"), Color("ffe0a2"),
+			Color("eb9254"), 0.0, 0.63, palette_stage
+		)
+		_add_species_palette_tree(
+			forest, tree_model, leaf_material, "Autumn_Red", Vector3(10.0, 0.0, 13.6),
+			Color("572b47"), Color("8e3957"), Color("cf5261"), Color("f6a18f"),
+			Color("cf5261"), 0.0, 0.84, palette_stage
+		)
+	else:
+		_add_species_palette_tree(
+			forest, tree_model, leaf_material, "Flower_Cherry_A0", Vector3(-10.0, 0.0, 13.6),
+			Color("754c5a"), Color("a56c80"), Color("dc93a8"), Color("f6c8d0"),
+			Color("e9acb8"), 0.08, 0.17, 0
+		)
+		_add_species_palette_tree(
+			forest, tree_model, leaf_material, "Autumn_Gold_A0", Vector3(-3.4, 0.0, 13.6),
+			Color("705d25"), Color("a18635"), Color("e2b83b"), Color("ffe183"),
+			Color("db832e"), 0.12, 0.39, 0
+		)
+		_add_species_palette_tree(
+			forest, tree_model, leaf_material, "Autumn_Orange_A0", Vector3(3.4, 0.0, 13.6),
+			Color("603520"), Color("8d4a2d"), Color("dd7633"), Color("ffb257"),
+			Color("b43b31"), 0.14, 0.63, 0
+		)
+		_add_species_palette_tree(
+			forest, tree_model, leaf_material, "Autumn_Red_A0", Vector3(10.0, 0.0, 13.6),
+			Color("461d26"), Color("642936"), Color("aa3d38"), Color("e86a49"),
+			Color("ee8b43"), 0.10, 0.84, 0
+		)
+
+
+func _add_species_palette_tree(
+	forest: Node3D,
+	tree_model: PackedScene,
+	leaf_material: ShaderMaterial,
+	tree_name: String,
+	position: Vector3,
+	deep_color: Color,
+	shadow_color: Color,
+	mid_color: Color,
+	light_color: Color,
+	accent_color: Color,
+	accent_amount: float,
+	seed: float,
+	palette_stage: int
+) -> void:
+	var tree: Node3D = tree_model.instantiate()
+	tree.name = tree_name
+	tree.position = position
+	# Identical orientation makes the first comparison about palette only.
+	tree.rotation.y = 0.58
+	tree.scale = Vector3.ONE * 1.08
+	forest.add_child(tree)
+	_configure_tree(tree, leaf_material, Color.WHITE)
+	_configure_species_palette(
+		tree,
+		deep_color,
+		shadow_color,
+		mid_color,
+		light_color,
+		accent_color,
+		accent_amount,
+		seed,
+		palette_stage
+	)
+
+
 func _create_tree_leaf_material(use_biome: bool) -> ShaderMaterial:
 	var leaf_material := ShaderMaterial.new()
 	leaf_material.shader = WIND_SHADER
@@ -341,6 +554,22 @@ func _create_tree_leaf_material(use_biome: bool) -> ShaderMaterial:
 	leaf_material.set_shader_parameter("light_wrap", 0.34)
 	leaf_material.set_shader_parameter("wind_strength", 0.075)
 	leaf_material.set_shader_parameter("wind_speed", 0.72)
+	if biome_noise_texture != null:
+		leaf_material.set_shader_parameter("species_noise_texture", biome_noise_texture)
+	leaf_material.set_shader_parameter("species_noise_scale", 0.052)
+	leaf_material.set_shader_parameter("species_texture_detail", 0.08)
+	leaf_material.set_shader_parameter("species_light_ramp_start", -0.05)
+	leaf_material.set_shader_parameter("species_light_ramp_end", 0.62)
+	leaf_material.set_shader_parameter("species_shadow_band_start", -0.38)
+	leaf_material.set_shader_parameter("species_shadow_band_end", -0.02)
+	leaf_material.set_shader_parameter("species_mid_band_start", -0.10)
+	leaf_material.set_shader_parameter("species_mid_band_end", 0.30)
+	leaf_material.set_shader_parameter("species_sun_band_start", 0.16)
+	leaf_material.set_shader_parameter("species_sun_band_end", 0.58)
+	leaf_material.set_shader_parameter("species_direct_strength", 0.72)
+	leaf_material.set_shader_parameter("species_art_direct_strength", 0.95)
+	leaf_material.set_shader_parameter("species_light_warp_scale", 0.018)
+	leaf_material.set_shader_parameter("species_light_warp_amount", 0.055)
 	if use_biome:
 		leaf_material.set_shader_parameter("use_biome_palette", true)
 		_set_biome_transition_parameters(leaf_material)
@@ -371,6 +600,65 @@ func _configure_tree(tree: Node3D, leaf_material: ShaderMaterial, tint: Color) -
 		"trunk",
 		GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 	)
+
+
+func _configure_species_palette(
+	tree: Node3D,
+	deep_color: Color,
+	shadow_color: Color,
+	mid_color: Color,
+	light_color: Color,
+	accent_color: Color,
+	accent_amount: float,
+	seed: float,
+	palette_stage: int
+) -> void:
+	_set_species_palette_parameters(
+		tree,
+		deep_color,
+		shadow_color,
+		mid_color,
+		light_color,
+		accent_color,
+		accent_amount,
+		seed,
+		palette_stage
+	)
+
+
+func _set_species_palette_parameters(
+	node: Node,
+	deep_color: Color,
+	shadow_color: Color,
+	mid_color: Color,
+	light_color: Color,
+	accent_color: Color,
+	accent_amount: float,
+	seed: float,
+	palette_stage: int
+) -> void:
+	if node is MeshInstance3D and "foliage" in node.name.to_lower():
+		node.set_instance_shader_parameter("use_species_palette", 1.0)
+		node.set_instance_shader_parameter("species_palette_stage", float(palette_stage))
+		node.set_instance_shader_parameter("species_deep_color", deep_color)
+		node.set_instance_shader_parameter("species_shadow_color", shadow_color)
+		node.set_instance_shader_parameter("species_mid_color", mid_color)
+		node.set_instance_shader_parameter("species_light_color", light_color)
+		node.set_instance_shader_parameter("species_accent_color", accent_color)
+		node.set_instance_shader_parameter("species_accent_amount", accent_amount)
+		node.set_instance_shader_parameter("species_seed", seed)
+	for child in node.get_children():
+		_set_species_palette_parameters(
+			child,
+			deep_color,
+			shadow_color,
+			mid_color,
+			light_color,
+			accent_color,
+			accent_amount,
+			seed,
+			palette_stage
+		)
 
 
 func _configure_large_tree_shading(
