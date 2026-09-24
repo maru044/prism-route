@@ -176,6 +176,20 @@ the intent and the result of previous visual tests.
   `--capture-flower-a3`, `--capture-flower-a3-45`,
   `--capture-flower-a3-top` and `--capture-flower-a3-cherry` for its four-view
   check; A0, A1 and A2 remain selectable comparison baselines.
+- The palette-study planting is organized as a shallow four-tree arc rather
+  than a rigid row. The trees use generous lateral gaps so every crown and
+  trunk remains readable. The broad and upright large trees sit deeper in the
+  two intervening gaps, while the former right-front small trees have moved to
+  a loose right-edge cluster. This preserves an open central grass bay and
+  prevents unrelated green crowns from contaminating palette comparisons.
+- The two accepted medium/large models now also test A3 species color in the
+  default scene: `tree_medium_broad_clustered_canopy.glb` is the cherry-flower
+  tree and `tree_medium_upright_asymmetric_canopy.glb` is the orange autumn
+  tree. This is intentionally shader-only reuse: both keep their formal trunk,
+  card layout, canopy normals, angle fade and shadow behavior. Top view confirms
+  the large and small crowns are spatially separate even where the perspective
+  view overlaps them. Older A0-A2 comparison modes leave both large trees green
+  so their original palette baselines remain reproducible.
 
 ## Experiments not to reintroduce without a specific new reason
 

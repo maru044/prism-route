@@ -20,6 +20,12 @@ const GROUND_RADIUS := 24.0
 # Tripling the radius multiplies the area and instance count by nine.
 const GRASS_COUNT := 63000
 const CHUNK_SIZE := 4.0
+const FLOWER_STUDY_POSITIONS := [
+	Vector3(-11.5, 0.0, 14.5),
+	Vector3(-4.0, 0.0, 12.7),
+	Vector3(4.0, 0.0, 12.7),
+	Vector3(11.5, 0.0, 14.5),
+]
 const GRASS_MODEL := preload("res://assets/vegetation/models/grass_star_3card_v6.glb")
 const TREE_MODEL := preload("res://assets/vegetation/models/tree_foliage_480card_v8.glb")
 const TREE_MODEL_REFINED := preload("res://assets/vegetation/models/tree_small_broad_canopy.glb")
@@ -102,7 +108,7 @@ func _ready() -> void:
 			or "--capture-flower-a2-cherry" in arguments
 			or "--capture-flower-a3-cherry" in arguments
 		):
-			flower_target = Vector3(-10.0, 3.4, 13.6)
+			flower_target = FLOWER_STUDY_POSITIONS[0] + Vector3(0.0, 3.4, 0.0)
 			camera.position = flower_target + Vector3(0.0, 0.4, 12.0)
 			if "--capture-flower-a1-cherry" in arguments:
 				capture_suffix = "a1_cherry_close"
@@ -161,9 +167,9 @@ func _ready() -> void:
 			or "--capture-upright-side" in arguments
 		)
 		var tree_origin := (
-			Vector3(5.2, 0.0, 3.0)
+			Vector3(6.5, 0.0, 2.0)
 			if capture_upright
-			else Vector3(-9.8, 0.0, 5.5)
+			else Vector3(-9.0, 0.0, 4.5)
 		)
 		var tree_target := tree_origin + Vector3(
 			0.0,
@@ -364,9 +370,11 @@ func _build_landscape_grove(refined_tree: bool, flower_palette_stage: int) -> vo
 	_add_grove_group(forest, tree_model, leaf_material, rng, tint_variants, "BackLeft", PackedVector2Array([
 		Vector2(-15.0, -12.0), Vector2(-11.0, -15.0), Vector2(-9.0, -10.0),
 	]))
-	_add_grove_group(forest, tree_model, leaf_material, rng, tint_variants, "RightFront", PackedVector2Array([
-		Vector2(10.0, 7.5), Vector2(13.8, 8.8), Vector2(9.2, 12.2),
-		Vector2(14.0, 13.2),
+	# Keep the right-hand background trees as a loose edge cluster. They no
+	# longer sit directly behind the palette trees or merge with their trunks.
+	_add_grove_group(forest, tree_model, leaf_material, rng, tint_variants, "RightEdge", PackedVector2Array([
+		Vector2(14.8, 5.3), Vector2(18.3, 6.8), Vector2(15.6, 9.2),
+		Vector2(19.1, 10.7),
 	]))
 	_add_flower_palette_study(
 		forest,
@@ -383,8 +391,8 @@ func _build_landscape_grove(refined_tree: bool, flower_palette_stage: int) -> vo
 	large_tree_material.set_shader_parameter("view_angle_fade_start", 0.020)
 	large_tree_material.set_shader_parameter("view_angle_fade_end", 0.140)
 	var focal_tree: Node3D = TREE_MODEL_BROAD_CLUSTERED.instantiate()
-	focal_tree.name = "BroadClusteredComparisonTree"
-	focal_tree.position = Vector3(-9.8, 0.0, 5.5)
+	focal_tree.name = "BroadClusteredFlowerTree"
+	focal_tree.position = Vector3(-9.0, 0.0, 4.5)
 	focal_tree.rotation.y = 0.58
 	focal_tree.scale = Vector3.ONE
 	forest.add_child(focal_tree)
@@ -395,12 +403,21 @@ func _build_landscape_grove(refined_tree: bool, flower_palette_stage: int) -> vo
 		Vector3(6.65, 5.295, 6.655),
 		0.34
 	)
+	if flower_palette_stage >= 3:
+		# The accepted broad crown is the most suitable existing silhouette for
+		# a medium/large flowering tree. Recolor the foliage only; trunk,
+		# geometry, card fade, normals and shadow structure remain unchanged.
+		_configure_species_palette(
+			focal_tree,
+			Color("b77f99"), Color("c18da5"), Color("e0b0c1"), Color("f1d2d9"),
+			Color("e0b0c1"), 0.0, 0.17, flower_palette_stage
+		)
 
 	# Keep the second accepted large-tree form visible in the same lighting test.
 	# It is offset in depth so the two silhouettes remain independently readable.
 	var upright_tree: Node3D = TREE_MODEL_UPRIGHT.instantiate()
-	upright_tree.name = "UprightAsymmetricTree"
-	upright_tree.position = Vector3(5.2, 0.0, 3.0)
+	upright_tree.name = "UprightAsymmetricAutumnTree"
+	upright_tree.position = Vector3(6.5, 0.0, 2.0)
 	upright_tree.rotation.y = -0.42
 	upright_tree.scale = Vector3.ONE
 	forest.add_child(upright_tree)
@@ -411,6 +428,14 @@ func _build_landscape_grove(refined_tree: bool, flower_palette_stage: int) -> vo
 		Vector3(7.145, 7.423, 7.135),
 		0.34
 	)
+	if flower_palette_stage >= 3:
+		# Autumn color is a seasonal state, so the accepted upright model is
+		# deliberately reused instead of introducing a second geometry asset.
+		_configure_species_palette(
+			upright_tree,
+			Color("a75448"), Color("b56550"), Color("d68162"), Color("e8a886"),
+			Color("d68162"), 0.0, 0.63, flower_palette_stage
+		)
 
 
 func _add_grove_group(
@@ -444,64 +469,64 @@ func _add_flower_palette_study(
 	# A2 blending but compresses each species into one close-knit color family.
 	if palette_stage >= 3:
 		_add_species_palette_tree(
-			forest, tree_model, leaf_material, "Flower_Cherry_A3", Vector3(-10.0, 0.0, 13.6),
+			forest, tree_model, leaf_material, "Flower_Cherry_A3", FLOWER_STUDY_POSITIONS[0],
 			Color("b77f99"), Color("c18da5"), Color("e0b0c1"), Color("f1d2d9"),
 			Color("e0b0c1"), 0.0, 0.17, palette_stage
 		)
 		_add_species_palette_tree(
-			forest, tree_model, leaf_material, "Autumn_Gold_A3", Vector3(-3.4, 0.0, 13.6),
+			forest, tree_model, leaf_material, "Autumn_Gold_A3", FLOWER_STUDY_POSITIONS[1],
 			Color("a47d43"), Color("b58f4f"), Color("d1ad62"), Color("e6c982"),
 			Color("d1ad62"), 0.0, 0.39, palette_stage
 		)
 		_add_species_palette_tree(
-			forest, tree_model, leaf_material, "Autumn_Orange_A3", Vector3(3.4, 0.0, 13.6),
+			forest, tree_model, leaf_material, "Autumn_Orange_A3", FLOWER_STUDY_POSITIONS[2],
 			Color("a75448"), Color("b56550"), Color("d68162"), Color("e8a886"),
 			Color("d68162"), 0.0, 0.63, palette_stage
 		)
 		_add_species_palette_tree(
-			forest, tree_model, leaf_material, "Autumn_Red_A3", Vector3(10.0, 0.0, 13.6),
+			forest, tree_model, leaf_material, "Autumn_Red_A3", FLOWER_STUDY_POSITIONS[3],
 			Color("8c4359"), Color("9e5265"), Color("bf6874"), Color("d88b91"),
 			Color("bf6874"), 0.0, 0.84, palette_stage
 		)
 	elif palette_stage >= 1:
 		_add_species_palette_tree(
-			forest, tree_model, leaf_material, "Flower_Cherry", Vector3(-10.0, 0.0, 13.6),
+			forest, tree_model, leaf_material, "Flower_Cherry", FLOWER_STUDY_POSITIONS[0],
 			Color("99617d"), Color("c98fae"), Color("ebc4d1"), Color("fff3ef"),
 			Color("ebc4d1"), 0.0, 0.17, palette_stage
 		)
 		_add_species_palette_tree(
-			forest, tree_model, leaf_material, "Autumn_Gold", Vector3(-3.4, 0.0, 13.6),
+			forest, tree_model, leaf_material, "Autumn_Gold", FLOWER_STUDY_POSITIONS[1],
 			Color("86602d"), Color("bc8939"), Color("f0c85b"), Color("fff0af"),
 			Color("f0c85b"), 0.0, 0.39, palette_stage
 		)
 		_add_species_palette_tree(
-			forest, tree_model, leaf_material, "Autumn_Orange", Vector3(3.4, 0.0, 13.6),
+			forest, tree_model, leaf_material, "Autumn_Orange", FLOWER_STUDY_POSITIONS[2],
 			Color("7d3f35"), Color("b95b3f"), Color("eb9254"), Color("ffe0a2"),
 			Color("eb9254"), 0.0, 0.63, palette_stage
 		)
 		_add_species_palette_tree(
-			forest, tree_model, leaf_material, "Autumn_Red", Vector3(10.0, 0.0, 13.6),
+			forest, tree_model, leaf_material, "Autumn_Red", FLOWER_STUDY_POSITIONS[3],
 			Color("572b47"), Color("8e3957"), Color("cf5261"), Color("f6a18f"),
 			Color("cf5261"), 0.0, 0.84, palette_stage
 		)
 	else:
 		_add_species_palette_tree(
-			forest, tree_model, leaf_material, "Flower_Cherry_A0", Vector3(-10.0, 0.0, 13.6),
+			forest, tree_model, leaf_material, "Flower_Cherry_A0", FLOWER_STUDY_POSITIONS[0],
 			Color("754c5a"), Color("a56c80"), Color("dc93a8"), Color("f6c8d0"),
 			Color("e9acb8"), 0.08, 0.17, 0
 		)
 		_add_species_palette_tree(
-			forest, tree_model, leaf_material, "Autumn_Gold_A0", Vector3(-3.4, 0.0, 13.6),
+			forest, tree_model, leaf_material, "Autumn_Gold_A0", FLOWER_STUDY_POSITIONS[1],
 			Color("705d25"), Color("a18635"), Color("e2b83b"), Color("ffe183"),
 			Color("db832e"), 0.12, 0.39, 0
 		)
 		_add_species_palette_tree(
-			forest, tree_model, leaf_material, "Autumn_Orange_A0", Vector3(3.4, 0.0, 13.6),
+			forest, tree_model, leaf_material, "Autumn_Orange_A0", FLOWER_STUDY_POSITIONS[2],
 			Color("603520"), Color("8d4a2d"), Color("dd7633"), Color("ffb257"),
 			Color("b43b31"), 0.14, 0.63, 0
 		)
 		_add_species_palette_tree(
-			forest, tree_model, leaf_material, "Autumn_Red_A0", Vector3(10.0, 0.0, 13.6),
+			forest, tree_model, leaf_material, "Autumn_Red_A0", FLOWER_STUDY_POSITIONS[3],
 			Color("461d26"), Color("642936"), Color("aa3d38"), Color("e86a49"),
 			Color("ee8b43"), 0.10, 0.84, 0
 		)
