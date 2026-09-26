@@ -14,15 +14,15 @@ fov = 48.0
 near = 0.05
 far = 200.0
 script = ExtResource("2_camera")
-target = Vector3(0.0, 2.0, 0.0)
-distance = 48.0
-pitch = 0.62
+target = Vector3(4, 1.1, 2.4)
+distance = 9.0
+pitch = 0.24
 
 [node name="Instructions" type="Label" parent="."]
 offset_left = 24.0
 offset_top = 22.0
 offset_right = 900.0
 offset_bottom = 68.0
-text = "Vegetation species study: birch / cypress / shrubs    Right-drag / A,D: orbit    Wheel / W,S: zoom"
+text = "Character scale test: Ganyu / cherry / autumn    Right-drag / A,D: orbit    Wheel / W,S: zoom"
 theme_override_colors/font_color = Color(1, 1, 1, 0.82)
 theme_override_font_sizes/font_size = 22

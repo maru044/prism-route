@@ -410,12 +410,16 @@ def create_tree(
     # Every sheet has
     # front and back geometry so the engine can use real back-face culling.
     lobes = []
+    # Character-scale pass: pull the lower and middle crown mass down while
+    # preserving the accepted crown top and width.  The previous geometric
+    # minimum was misleading because a few tilted cards hung low, while the
+    # continuous, opaque crown still read much too far above the character.
     layer_specs = [
-        (2.85, 2.45, 2.00, 40, 1.12),
-        (3.35, 2.82, 2.25, 48, 1.10),
-        (3.90, 2.92, 2.34, 48, 1.07),
-        (4.45, 2.65, 2.15, 32, 1.02),
-        (5.00, 2.12, 1.76, 16, 0.96),
+        (2.35, 2.45, 2.00, 40, 1.12),
+        (2.90, 2.82, 2.25, 48, 1.10),
+        (3.50, 2.92, 2.34, 48, 1.07),
+        (4.15, 2.65, 2.15, 32, 1.02),
+        (4.85, 2.12, 1.76, 16, 0.96),
         (5.45, 1.30, 1.08, 8, 0.88),
     ]
     for z, radius_x, radius_y, count, scale in layer_specs:
@@ -434,10 +438,10 @@ def create_tree(
     # ring around the trunk. These are full 3D crossed-card groups as well, not
     # horizontal patches inserted only for one camera angle.
     inner_specs = [
-        (3.05, 0.82, 10, 1.04),
-        (3.55, 1.02, 14, 1.03),
-        (4.10, 1.08, 14, 0.99),
-        (4.65, 0.92, 10, 0.92),
+        (2.55, 0.82, 10, 1.04),
+        (3.15, 1.02, 14, 1.03),
+        (3.75, 1.08, 14, 0.99),
+        (4.45, 0.92, 10, 0.92),
     ]
     for z, radius, count, scale in inner_specs:
         for _index in range(count):
@@ -837,37 +841,8 @@ def create_billboard_lobes_mesh(name, leaf_material, lobe_specs):
     return foliage
 
 
-def create_shrub(leaf_material, umbrella=False, trunk_material=None):
-    """Build a person-height shrub from independently pivoted billboards."""
-    if umbrella:
-        lobe_specs = [
-            (Vector((0.00, 0.02, 1.53)), (1.48, 0.98), 1),
-            (Vector((-0.78, 0.12, 1.50)), (1.50, 0.88), 3),
-            (Vector((0.78, -0.08, 1.49)), (1.50, 0.90), 1),
-            (Vector((-0.36, 0.24, 1.80)), (1.30, 0.88), 0),
-            (Vector((0.40, -0.20, 1.77)), (1.32, 0.86), 2),
-            (Vector((0.00, -0.34, 1.27)), (1.72, 0.76), 3),
-        ]
-        foliage = create_billboard_lobes_mesh(
-            "Shrub_Umbrella_Foliage_6BillboardLobes",
-            leaf_material,
-            lobe_specs,
-        )
-        stems = []
-        stem_specs = [
-            (Vector((-0.05, -0.04, 0.0)), Vector((-0.36, 0.10, 1.02))),
-            (Vector((0.03, 0.02, 0.0)), Vector((0.22, -0.20, 1.08))),
-            (Vector((0.08, -0.03, 0.0)), Vector((0.48, 0.18, 0.96))),
-        ]
-        for index, (start, end) in enumerate(stem_specs):
-            stems.append(tapered_segment(
-                f"Shrub_Stem_{index + 1:02d}", start, end,
-                0.060, 0.032, trunk_material, 7,
-            ))
-        trunk = join_objects(stems, "Shrub_Trunk_Cluster")
-        trunk["asset_type"] = "restrained_shrub_stem_cluster"
-        return trunk, foliage
-
+def create_shrub(leaf_material):
+    """Build the single accepted person-height shrub-ball asset."""
     lobe_specs = [
         (Vector((0.00, 0.00, 1.08)), (1.48, 1.38), 0),
         (Vector((-0.56, 0.12, 1.00)), (1.28, 1.16), 2),
@@ -880,7 +855,7 @@ def create_shrub(leaf_material, umbrella=False, trunk_material=None):
         leaf_material,
         lobe_specs,
     )
-    return None, foliage
+    return foliage
 
 
 def create_camphor_tree(trunk_material, leaf_material, shadow_material, dense_v2=False):
@@ -1100,14 +1075,14 @@ def create_camphor_from_old_crowns(
         # makes the horizontal mass near-circular by construction; the uneven
         # angles and heights keep it from reading as several perfect rings.
         placements = [
-            (2.0, 18.0, 4.4, 1.12), (2.2, 92.0, 4.7, 0.98),
-            (2.3, 166.0, 4.8, 1.04), (2.0, 238.0, 4.3, 0.92),
-            (2.2, 309.0, 4.9, 1.03),
-            (4.1, 4.0, 6.2, 1.00), (4.3, 44.0, 6.6, 1.14),
-            (4.0, 84.0, 6.3, 0.90), (4.5, 126.0, 6.5, 1.18),
-            (4.2, 166.0, 6.1, 0.96), (4.4, 207.0, 6.7, 1.08),
-            (4.0, 248.0, 6.3, 0.94), (4.5, 287.0, 6.6, 1.11),
-            (4.2, 329.0, 6.2, 0.88),
+            (2.0, 18.0, 4.05, 1.12), (2.2, 92.0, 4.35, 0.98),
+            (2.3, 166.0, 4.45, 1.04), (2.0, 238.0, 3.95, 0.92),
+            (2.2, 309.0, 4.55, 1.03),
+            (4.1, 4.0, 6.05, 1.00), (4.3, 44.0, 6.45, 1.14),
+            (4.0, 84.0, 6.15, 0.90), (4.5, 126.0, 6.35, 1.18),
+            (4.2, 166.0, 5.95, 0.96), (4.4, 207.0, 6.55, 1.08),
+            (4.0, 248.0, 6.15, 0.94), (4.5, 287.0, 6.45, 1.11),
+            (4.2, 329.0, 6.05, 0.88),
             (4.2, 22.0, 7.9, 1.07), (3.7, 63.0, 8.4, 0.91),
             (4.5, 104.0, 7.8, 1.20), (3.9, 147.0, 8.2, 0.87),
             (4.3, 187.0, 7.7, 1.13), (3.6, 229.0, 8.5, 0.90),
@@ -1119,6 +1094,7 @@ def create_camphor_from_old_crowns(
             (1.4, 75.0, 10.8, 0.94), (1.2, 248.0, 11.2, 1.05),
         ]
         rng = random.Random(20260926)
+        crown_vertical_offset = 0.5
         crown_specs = []
         source_dimensions = Vector((7.70, 5.77, 3.80))
         crown_bounds = []
@@ -1140,7 +1116,7 @@ def create_camphor_from_old_crowns(
             center = Vector((
                 x + rng.uniform(-0.15, 0.15),
                 y + rng.uniform(-0.15, 0.15),
-                z + rng.uniform(-0.12, 0.12),
+                z + crown_vertical_offset + rng.uniform(-0.12, 0.12),
             ))
             # Gentle pitch and roll vary the old-crown silhouette without
             # turning the groups into the rejected chaotic small-ball tree.
@@ -1196,13 +1172,13 @@ def create_camphor_from_old_crowns(
         # toward its offset apex without becoming a leaning tree.
         # radius, azimuth degrees, height, size bias.
         placements = [
-            (2.1, 15.0, 4.10, 0.98), (2.4, 86.0, 4.50, 0.88),
-            (2.2, 158.0, 4.25, 1.04), (2.3, 231.0, 4.70, 0.86),
-            (2.0, 307.0, 4.35, 0.94),
-            (4.0, 2.0, 5.90, 1.10), (3.7, 43.0, 6.30, 0.98),
-            (4.0, 88.0, 5.70, 1.16), (3.6, 132.0, 6.80, 0.90),
-            (4.1, 176.0, 6.10, 1.06), (3.8, 221.0, 7.00, 1.13),
-            (4.0, 266.0, 6.50, 0.92), (3.6, 318.0, 7.30, 1.00),
+            (2.1, 15.0, 3.70, 0.98), (2.4, 86.0, 4.10, 0.88),
+            (2.2, 158.0, 3.85, 1.04), (2.3, 231.0, 4.30, 0.86),
+            (2.0, 307.0, 3.95, 0.94),
+            (4.0, 2.0, 5.75, 1.10), (3.7, 43.0, 6.15, 0.98),
+            (4.0, 88.0, 5.55, 1.16), (3.6, 132.0, 6.65, 0.90),
+            (4.1, 176.0, 5.95, 1.06), (3.8, 221.0, 6.85, 1.13),
+            (4.0, 266.0, 6.35, 0.92), (3.6, 318.0, 7.15, 1.00),
             (3.7, 20.0, 8.00, 1.18), (3.3, 62.0, 8.80, 0.88),
             (3.8, 105.0, 7.90, 1.08), (3.4, 151.0, 9.20, 0.98),
             (3.9, 196.0, 8.40, 1.14), (3.2, 239.0, 9.60, 0.90),
@@ -1214,6 +1190,7 @@ def create_camphor_from_old_crowns(
             (0.8, 285.0, 14.10, 0.82),
         ]
         rng = random.Random(20260927)
+        crown_vertical_offset = 0.5
         crown_specs = []
         source_dimensions = Vector((7.70, 5.77, 3.80))
         crown_bounds = []
@@ -1227,7 +1204,7 @@ def create_camphor_from_old_crowns(
                     + rng.uniform(-0.16, 0.16),
                 math.sin(angle) * radius - height_drift * 0.24
                     + rng.uniform(-0.16, 0.16),
-                z + rng.uniform(-0.13, 0.13),
+                z + crown_vertical_offset + rng.uniform(-0.13, 0.13),
             ))
             base_radius = rng.uniform(1.90, 2.35) * size_bias
             radii = Vector((
@@ -1281,7 +1258,7 @@ def create_camphor_from_old_crowns(
         assert horizontal_aspect <= 1.12, (
             f"Upright crown is not horizontally round: {span_x:.2f} x {span_y:.2f}"
         )
-        assert 2.0 <= crown_min_z <= 3.0, (
+        assert 2.1 <= crown_min_z <= 3.3, (
             f"Upright crown lower edge is outside target: {crown_min_z:.2f}"
         )
         assert 0.95 <= crown_height_ratio <= 1.25, (
@@ -1555,29 +1532,13 @@ elif "--tree-medium-columnar-cypress" in sys.argv:
     print(model_path)
     print(source_path)
 elif "--shrub-medium-rounded" in sys.argv:
-    trunk, foliage = create_shrub(
-        shrub_leaf_mat, umbrella=False, trunk_material=trunk_refined_mat
-    )
+    foliage = create_shrub(shrub_leaf_mat)
     model_path = os.path.join(MODEL_DIR, "shrub_medium_rounded_canopy.glb")
     export_selected(model_path, [foliage], include_materials=False)
     source_path = os.path.join(SOURCE_DIR, "shrub_medium_rounded_canopy.blend")
     bpy.ops.wm.save_as_mainfile(filepath=source_path)
     print(
         "SHRUB_MEDIUM_ROUNDED_BUILD_COMPLETE "
-        f"packed_y_billboard_lobes={foliage['billboard_lobe_count']}"
-    )
-    print(model_path)
-    print(source_path)
-elif "--shrub-medium-umbrella" in sys.argv:
-    trunk, foliage = create_shrub(
-        shrub_leaf_mat, umbrella=True, trunk_material=trunk_refined_mat
-    )
-    model_path = os.path.join(MODEL_DIR, "shrub_medium_umbrella_canopy.glb")
-    export_selected(model_path, [trunk, foliage], include_materials=False)
-    source_path = os.path.join(SOURCE_DIR, "shrub_medium_umbrella_canopy.blend")
-    bpy.ops.wm.save_as_mainfile(filepath=source_path)
-    print(
-        "SHRUB_MEDIUM_UMBRELLA_BUILD_COMPLETE "
         f"packed_y_billboard_lobes={foliage['billboard_lobe_count']}"
     )
     print(model_path)

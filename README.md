@@ -75,12 +75,12 @@ autumn test. Grass uses MultiMesh custom data for per-blade color overlap;
 tree foliage uses per-instance shader uniforms. This only tests appearance,
 not large-world placement, LOD or forest performance at production scale.
 
-The first species-expansion study adds three birches, three columnar cypresses,
-one four-plant rounded-shrub group and one three-plant umbrella-shrub group.
+The first species-expansion study adds three birches, three columnar cypresses
+and one four-plant rounded shrub-ball group.
 The birch is a separate 24-group, 7,200-card model with a restrained pale bark
 texture; the cypress is a separate 28-group, 6,720-card model whose foliage
-reaches close to the ground. The two shrubs use only 5 and 6 independently
-pivoted Y-billboard lobes. Each lobe depicts a complete porous leaf mass rather
+reaches close to the ground. The shrub ball uses five independently pivoted
+Y-billboard lobes. Each lobe depicts a complete porous leaf mass rather
 than one leaf or a small sprig; it rotates around its own center, so the shrub
 keeps parallax without exposing fixed crossed planes. Generated texture art
 contributes alpha silhouettes only:

@@ -34,7 +34,6 @@ const TREE_MODEL_BROAD_CLUSTERED := preload("res://assets/vegetation/models/tree
 const TREE_MODEL_BIRCH := preload("res://assets/vegetation/models/tree_medium_birch_upright_canopy.glb")
 const TREE_MODEL_CYPRESS := preload("res://assets/vegetation/models/tree_medium_columnar_cypress.glb")
 const SHRUB_MODEL_ROUNDED := preload("res://assets/vegetation/models/shrub_medium_rounded_canopy.glb")
-const SHRUB_MODEL_UMBRELLA := preload("res://assets/vegetation/models/shrub_medium_umbrella_canopy.glb")
 const WIND_SHADER := preload("res://assets/vegetation/shaders/vegetation_wind.gdshader")
 const BIOME_GROUND_SHADER := preload("res://assets/vegetation/shaders/biome_ground.gdshader")
 const GRASS_TEXTURE := preload("res://assets/vegetation/textures/grass_tuft_straw_minimal_v5.png")
@@ -44,6 +43,7 @@ const CYPRESS_TEXTURE := preload("res://assets/vegetation/textures/foliage_cypre
 const SHRUB_TEXTURE := preload("res://assets/vegetation/textures/shrub_leaf_lobes_billboard_flat_v3.png")
 const BIRCH_BARK_TEXTURE := preload("res://assets/vegetation/textures/bark_birch_flat_v1.png")
 const SKY_TEXTURE := preload("res://assets/environment/hdri/rosendal_park_sunset_puresky_4k.exr")
+const GANYU_SCENE := preload("res://scenes/characters/ganyu.tscn")
 
 var grass_wind_texture: NoiseTexture2D
 var biome_noise_texture: NoiseTexture2D
@@ -80,17 +80,24 @@ func _ready() -> void:
 	if biome_demo:
 		if grove_demo:
 			_build_landscape_grove(refined_tree, flower_palette_stage)
+			_build_character_preview()
 		else:
 			_build_forest(refined_tree)
 	else:
 		_build_tree(refined_tree)
 	_build_grass_chunks()
-	if grove_demo and (
+	if grove_demo and "--capture-character" in arguments:
+		var camera := get_node("OrbitCamera") as Camera3D
+		camera.set_process(false)
+		var character_target := Vector3(4.0, 1.0, 2.4)
+		camera.position = character_target + Vector3(0.0, 0.7, 6.0)
+		camera.look_at(character_target, Vector3.UP)
+		get_node("Instructions").hide()
+		_capture_test_frame("character_ganyu_autumn_cherry.png")
+	elif grove_demo and (
 		"--capture-new-birch" in arguments
 		or "--capture-new-cypress" in arguments
 		or "--capture-new-shrubs" in arguments
-		or "--capture-new-shrubs-side" in arguments
-		or "--capture-new-rounded-shrubs" in arguments
 	):
 		var camera := get_node("OrbitCamera") as Camera3D
 		camera.set_process(false)
@@ -102,17 +109,9 @@ func _ready() -> void:
 			camera_offset = Vector3(18.0, 0.8, 0.0)
 			filename = "vegetation_species_cypress.png"
 		elif "--capture-new-shrubs" in arguments:
-			target = Vector3(13.3, 0.8, 6.3)
-			camera_offset = Vector3(9.0, 1.8, 2.0)
-			filename = "vegetation_species_shrubs.png"
-		elif "--capture-new-shrubs-side" in arguments:
-			target = Vector3(13.8, 0.8, 7.4)
-			camera_offset = Vector3(-2.5, 1.8, -9.0)
-			filename = "vegetation_species_shrubs_side.png"
-		elif "--capture-new-rounded-shrubs" in arguments:
 			target = Vector3(-17.5, 0.9, 0.5)
 			camera_offset = Vector3(7.5, 1.6, 5.5)
-			filename = "vegetation_species_shrubs_rounded.png"
+			filename = "vegetation_species_shrubs.png"
 		camera.position = target + camera_offset
 		camera.look_at(target, Vector3.UP)
 		get_node("Instructions").hide()
@@ -478,6 +477,20 @@ func _build_landscape_grove(refined_tree: bool, flower_palette_stage: int) -> vo
 	_add_new_species_study(forest)
 
 
+func _build_character_preview() -> void:
+	# Place the character under the large autumn tree, on its cherry-facing side.
+	# This makes the accepted large-tree headroom directly readable at gameplay
+	# scale while keeping both seasonal crowns in the same composition.
+	var character: Node3D = GANYU_SCENE.instantiate()
+	character.name = "GanyuCharacterPreview"
+	character.position = Vector3(4.0, 0.02, 2.4)
+	character.rotation.y = -0.80
+	add_child(character)
+	var animation_player := character.get_node_or_null("AnimationPlayer") as AnimationPlayer
+	if animation_player != null and animation_player.has_animation("Idle"):
+		animation_player.play("Idle")
+
+
 func _add_new_species_study(forest: Node3D) -> void:
 	# New silhouettes stay separate from the accepted generic trees.  The test
 	# uses small natural groups so crown shape, pale bark and understory scale can
@@ -557,15 +570,12 @@ func _add_new_species_study(forest: Node3D) -> void:
 			0.24
 		)
 
-	# Shrubs are planted as two deliberate landscape groups, never scattered as
-	# isolated weeds across the meadow.  Crowns lightly overlap within a group;
+	# Shrub balls are planted as one deliberate landscape group, never scattered
+	# as isolated weeds across the meadow. Crowns lightly overlap within the group;
 	# the open central grass bay remains untouched.
 	var rounded_shrub_points := PackedVector2Array([
 		Vector2(-19.0, -0.8), Vector2(-17.1, -0.1),
 		Vector2(-18.2, 1.3), Vector2(-16.1, 1.6),
-	])
-	var umbrella_shrub_points := PackedVector2Array([
-		Vector2(12.8, 6.4), Vector2(15.2, 7.0), Vector2(14.0, 9.0),
 	])
 	_add_shrub_group(
 		forest,
@@ -574,14 +584,6 @@ func _add_new_species_study(forest: Node3D) -> void:
 		rounded_shrub_points,
 		"RoundedShrubGroup",
 		20261011
-	)
-	_add_shrub_group(
-		forest,
-		SHRUB_MODEL_UMBRELLA,
-		shrub_material,
-		umbrella_shrub_points,
-		"UmbrellaShrubGroup",
-		20261012
 	)
 
 

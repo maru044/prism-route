@@ -207,9 +207,8 @@ the intent and the result of previous visual tests.
   6,720 cards. Foliage begins near the ground. The outline may be irregular,
   but it must not become either a perfect Christmas-tree cone or a stack of
   horizontal shelves. Its low-contrast olive palette is shader-controlled.
-- `shrub_medium_rounded_canopy.glb` and
-  `shrub_medium_umbrella_canopy.glb` share
-  `shrub_leaf_lobes_billboard_flat_v3.png` and use 5/6 independently pivoted
+- `shrub_medium_rounded_canopy.glb` is the single accepted shrub asset. It uses
+  `shrub_leaf_lobes_billboard_flat_v3.png` and five independently pivoted
   Y-billboard lobes. Every lobe contains a complete porous foliage silhouette;
   these are not miniature tree foliage systems and must not be expanded to
   hundreds of single-leaf cards. All lobes are packed into one foliage
@@ -220,19 +219,19 @@ the intent and the result of previous visual tests.
 - Shrubs do not use `use_view_angle_fade`. Billboard orientation solves the
   edge-on problem directly. The lobe meshes use bulged corner normals for a
   soft volume response and `MAIN_CAM_INV_VIEW_MATRIX` so the shadow pass keeps
-  the gameplay-camera orientation. Both forms are approximately person-height
-  and remain readable above the 0.8–1 m meadow. The umbrella form has three
-  short, restrained stems; the rounded form keeps its woody structure concealed.
+  the gameplay-camera orientation. The shrub ball is approximately
+  person-height, remains readable above the 0.8–1 m meadow and keeps all woody
+  structure concealed. Do not add a bare-stem shrub variant without a new
+  explicit art requirement.
 - Shrubs are planted as deliberate groups rather than random meadow scatter:
-  four rounded shrubs form one compact group and three umbrella shrubs form a
-  second group with breathing space around it. This scene tests appearance,
-  not final CAD landscape placement.
+  four rounded shrubs form one compact group with breathing space around it.
+  This scene tests appearance, not final CAD landscape placement.
 - The three new alpha atlases were generated as transparent source silhouettes,
   then deliberately flattened by `tools/prepare_species_textures.py`. Never
   reintroduce the generated internal highlights, shadows or colored edge
   pixels. RGB is restrained and nearly uniform; Godot provides volume.
 - The main scene keeps fewer ordinary small trees than the earlier test. The
-  freed left and right areas hold the birch, cypress and two shrub groups. The
+  freed left and right areas hold the birch, cypress and shrub-ball group. The
   accepted old trees remain untouched.
 
 ## Experiments not to reintroduce without a specific new reason

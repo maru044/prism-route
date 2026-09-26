@@ -4,3 +4,5 @@
 # Temporary render diagnostics; keep the two curated scene captures tracked.
 /screenshots/vegetation_test_wind_later.png*
 /screenshots/wind_field_open_simplex2s.png*
+# Godot may leave a locked temporary copy while a GDExtension DLL is loaded.
+/addons/vrm/bin/~*.TMP
