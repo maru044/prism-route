@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://d13t42gshvjiv"
-path="res://.godot/imported/tree_foliage_480card_v10_branch_guided.glb-cebafba9a49fbba11a1817ff0104200d.scn"
+uid="uid://7uwx3j7m8ope"
+path="res://.godot/imported/shrub_medium_umbrella_canopy.glb-5dedcd80529540416cbb4c40dd0ef2e8.scn"
 
 [deps]
 
-source_file="res://assets/vegetation/models/tree_foliage_480card_v10_branch_guided.glb"
-dest_files=["res://.godot/imported/tree_foliage_480card_v10_branch_guided.glb-cebafba9a49fbba11a1817ff0104200d.scn"]
+source_file="res://assets/vegetation/models/shrub_medium_umbrella_canopy.glb"
+dest_files=["res://.godot/imported/shrub_medium_umbrella_canopy.glb-5dedcd80529540416cbb4c40dd0ef2e8.scn"]
 
 [params]
 

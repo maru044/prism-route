@@ -12,6 +12,10 @@ MODEL_DIR = os.path.join(ROOT, "models")
 PREVIEW_DIR = os.path.join(ROOT, "preview")
 GRASS_TEX = os.path.join(TEX_DIR, "grass_tuft_straw_minimal_v5.png")
 LEAF_TEX = os.path.join(TEX_DIR, "leaf_clusters_witness_sparse_flat_v11.png")
+BIRCH_LEAF_TEX = os.path.join(TEX_DIR, "leaf_clusters_birch_sparse_flat_v1.png")
+CYPRESS_TEX = os.path.join(TEX_DIR, "foliage_cypress_sprays_flat_v1.png")
+SHRUB_TEX = os.path.join(TEX_DIR, "shrub_leaf_lobes_billboard_flat_v3.png")
+BIRCH_BARK_TEX = os.path.join(TEX_DIR, "bark_birch_flat_v1.png")
 
 SOURCE_DIR = os.path.join(ROOT, "source")
 for path in (MODEL_DIR, SOURCE_DIR):
@@ -82,8 +86,37 @@ def flat_material(name, color, roughness=0.95):
     return mat
 
 
+def opaque_image_material(name, image_path, roughness=0.98):
+    mat = bpy.data.materials.new(name)
+    mat.use_nodes = True
+    mat.diffuse_color = (0.8, 0.78, 0.72, 1.0)
+    nodes = mat.node_tree.nodes
+    links = mat.node_tree.links
+    for node in list(nodes):
+        nodes.remove(node)
+    out = nodes.new("ShaderNodeOutputMaterial")
+    bsdf = nodes.new("ShaderNodeBsdfPrincipled")
+    tex = nodes.new("ShaderNodeTexImage")
+    tex.image = bpy.data.images.load(image_path, check_existing=True)
+    tex.interpolation = "Linear"
+    tex.extension = "REPEAT"
+    bsdf.inputs["Roughness"].default_value = roughness
+    bsdf.inputs["Specular IOR Level"].default_value = 0.12
+    links.new(tex.outputs["Color"], bsdf.inputs["Base Color"])
+    links.new(bsdf.outputs["BSDF"], out.inputs["Surface"])
+    return mat
+
+
 def assign_uv(mesh, uv_coords):
     uv_layer = mesh.uv_layers.new(name="UVMap")
+    for poly in mesh.polygons:
+        for loop_index in poly.loop_indices:
+            vertex_index = mesh.loops[loop_index].vertex_index
+            uv_layer.data[loop_index].uv = uv_coords[vertex_index]
+
+
+def assign_uv2(mesh, uv_coords):
+    uv_layer = mesh.uv_layers.new(name="UVMap.001")
     for poly in mesh.polygons:
         for loop_index in poly.loop_indices:
             vertex_index = mesh.loops[loop_index].vertex_index
@@ -112,12 +145,15 @@ def encode_octahedral(normal):
     return (x * 0.5 + 0.5, y * 0.5 + 0.5)
 
 
-def add_foliage_vertex_data(mesh, wind_values, plane_normals):
-    """R stores wind weight; G/B store the true card plane normal."""
+def add_foliage_vertex_data(mesh, wind_values, plane_normals, alpha_values=None):
+    """R stores wind; G/B store plane normal; optional A stores pivot depth."""
     attr = mesh.color_attributes.new(name="foliage_data", type="FLOAT_COLOR", domain="POINT")
     for index, (wind_value, plane_normal) in enumerate(zip(wind_values, plane_normals)):
         encoded_x, encoded_y = encode_octahedral(plane_normal)
-        attr.data[index].color = (wind_value, encoded_x, encoded_y, 1.0)
+        alpha_value = 1.0 if alpha_values is None else alpha_values[index]
+        attr.data[index].color = (
+            wind_value, encoded_x, encoded_y, alpha_value
+        )
     mesh.attributes.active_color = attr
 
 
@@ -234,6 +270,20 @@ def create_stylized_trunk(name, height, material, size="small", seed=20260928):
         ]
         max_offset = 0.018
         ellipse_range = (0.955, 1.045)
+    elif size == "medium_slender":
+        sides = 12
+        rings = [
+            (0.00, 0.230),
+            (0.14, 0.208),
+            (0.82, 0.188),
+            (1.85, 0.164),
+            (3.20, 0.138),
+            (4.85, 0.112),
+            (6.65, 0.092),
+            (height, 0.074),
+        ]
+        max_offset = 0.014
+        ellipse_range = (0.960, 1.040)
     else:
         raise ValueError(f"Unknown stylized trunk size: {size}")
 
@@ -279,6 +329,14 @@ def create_stylized_trunk(name, height, material, size="small", seed=20260928):
     mesh.from_pydata(vertices, [], faces)
     mesh.update()
     mesh.materials.append(material)
+    # Cylindrical UVs are sufficient for the deliberately low-detail birch
+    # bark mask.  Existing accepted GLBs are not rebuilt by the new commands.
+    uv_coords = []
+    for ring_index, (z, _radius) in enumerate(rings):
+        v = z / max(height, 0.001) * 3.2
+        for side in range(sides):
+            uv_coords.append((side / float(sides), v))
+    assign_uv(mesh, uv_coords)
     # Smooth the vertical surface while keeping both end caps planar.
     for polygon in mesh.polygons[:-2]:
         polygon.use_smooth = True
@@ -485,6 +543,344 @@ def create_tree(
     foliage["wind_vertex_color"] = "COLOR_0.r"
     foliage["view_angle_data"] = "COLOR_0.gb_octahedral_plane_normal"
     return trunk, foliage
+
+
+def sample_ellipsoid(rng, radii):
+    """Uniformly sample a point inside an axis-aligned ellipsoid."""
+    while True:
+        point = Vector((
+            rng.uniform(-1.0, 1.0),
+            rng.uniform(-1.0, 1.0),
+            rng.uniform(-1.0, 1.0),
+        ))
+        if point.length_squared <= 1.0:
+            return Vector((point.x * radii.x, point.y * radii.y, point.z * radii.z))
+
+
+def create_species_card_foliage(
+    name,
+    leaf_material,
+    group_specs,
+    overall_center,
+    overall_radii,
+    card_height_range,
+    seed,
+    wind_floor_z,
+    wind_top_z,
+    local_normal_weight=0.28,
+    card_aspect_range=(0.82, 1.18),
+):
+    """Create dense, multi-axis foliage from irregular overlapping volumes.
+
+    Each logical cell is a randomly oriented crossed pair.  The card plane
+    normal is preserved in COLOR.gb for view-angle fade, while the mesh normal
+    describes the whole plant volume so lighting does not expose each sheet.
+    """
+    rng = random.Random(seed)
+    atlas_regions = [
+        (0.02, 0.52, 0.48, 0.98),
+        (0.52, 0.52, 0.98, 0.98),
+        (0.02, 0.02, 0.48, 0.48),
+        (0.52, 0.02, 0.98, 0.48),
+    ]
+    verts, faces, uvs, wind, normals, plane_normals = [], [], [], [], [], []
+    card_count = 0
+    for group_index, (group_center, group_radii, cell_count) in enumerate(group_specs):
+        for cell_index in range(cell_count):
+            center = group_center + sample_ellipsoid(rng, group_radii)
+            rotation = random_rotation_matrix(rng)
+            group_up = (rotation @ Vector((0.0, 0.0, 1.0))).normalized()
+            for pair_index in range(2):
+                region_index = (group_index + cell_index + pair_index) % 4
+                height = rng.uniform(*card_height_range)
+                width = height * rng.uniform(*card_aspect_range)
+                local_right = (
+                    Vector((1.0, 0.0, 0.0))
+                    if pair_index == 0
+                    else Vector((0.0, 1.0, 0.0))
+                )
+                right = (rotation @ local_right).normalized()
+                plane_normal = right.cross(group_up).normalized()
+                half_r = right * width * 0.5
+                half_u = group_up * height * 0.5
+                card_vertices = [
+                    center - half_r - half_u,
+                    center + half_r - half_u,
+                    center + half_r + half_u,
+                    center - half_r + half_u,
+                ]
+                base = len(verts)
+                verts.extend(tuple(vertex) for vertex in card_vertices)
+                verts.extend(tuple(vertex) for vertex in card_vertices)
+                faces.extend((
+                    (base, base + 1, base + 2, base + 3),
+                    (base + 7, base + 6, base + 5, base + 4),
+                ))
+                u0, v0, u1, v1 = atlas_regions[region_index]
+                card_uvs = [(u0, v0), (u1, v0), (u1, v1), (u0, v1)]
+                uvs.extend(card_uvs)
+                uvs.extend(card_uvs)
+
+                for vertex in card_vertices:
+                    global_delta = vertex - overall_center
+                    global_normal = Vector((
+                        global_delta.x / max(0.001, overall_radii.x ** 2),
+                        global_delta.y / max(0.001, overall_radii.y ** 2),
+                        global_delta.z / max(0.001, overall_radii.z ** 2),
+                    ))
+                    local_delta = vertex - group_center
+                    local_normal = Vector((
+                        local_delta.x / max(0.001, group_radii.x ** 2),
+                        local_delta.y / max(0.001, group_radii.y ** 2),
+                        local_delta.z / max(0.001, group_radii.z ** 2),
+                    ))
+                    if global_normal.length_squared < 0.0001:
+                        global_normal = Vector((0.0, 0.0, 1.0))
+                    if local_normal.length_squared < 0.0001:
+                        local_normal = global_normal
+                    blended = global_normal.normalized().lerp(
+                        local_normal.normalized(), local_normal_weight
+                    ).normalized()
+                    normals.append(tuple(blended))
+                normals.extend(normals[-4:])
+
+                weight = max(0.0, min(
+                    1.0,
+                    (center.z - wind_floor_z) / max(0.001, wind_top_z - wind_floor_z),
+                ))
+                wind.extend([weight] * 8)
+                plane_normals.extend([plane_normal] * 8)
+                card_count += 1
+
+    mesh = bpy.data.meshes.new(name + "Mesh")
+    mesh.from_pydata(verts, [], faces)
+    mesh.update()
+    mesh.normals_split_custom_set_from_vertices(normals)
+    for polygon in mesh.polygons:
+        polygon.use_smooth = True
+    mesh.materials.append(leaf_material)
+    assign_uv(mesh, uvs)
+    add_foliage_vertex_data(mesh, wind, plane_normals)
+    foliage = bpy.data.objects.new(name, mesh)
+    bpy.context.collection.objects.link(foliage)
+    foliage["asset_type"] = "species_foliage_card_volume"
+    foliage["card_count"] = card_count
+    foliage["crown_group_count"] = len(group_specs)
+    foliage["recommended_alpha_cutoff"] = 0.48
+    foliage["wind_vertex_color"] = "COLOR_0.r"
+    foliage["view_angle_data"] = "COLOR_0.gb_octahedral_plane_normal"
+    return foliage
+
+
+def make_radial_groups(profile, seed, group_radius_range, group_height_range, cells):
+    rng = random.Random(seed)
+    groups = []
+    for layer_index, (z, ring_radius, count) in enumerate(profile):
+        phase = rng.uniform(0.0, math.tau)
+        for index in range(count):
+            angle = phase + math.tau * index / max(1, count)
+            radial = ring_radius * rng.uniform(0.46, 0.82) if count > 1 else 0.0
+            center = Vector((
+                math.cos(angle) * radial + rng.uniform(-0.14, 0.14),
+                math.sin(angle) * radial + rng.uniform(-0.14, 0.14),
+                z + rng.uniform(-0.18, 0.18),
+            ))
+            radius_x = rng.uniform(*group_radius_range)
+            radii = Vector((
+                radius_x,
+                radius_x * rng.uniform(0.82, 1.08),
+                rng.uniform(*group_height_range),
+            ))
+            groups.append((center, radii, cells))
+    return groups
+
+
+def create_birch_tree(trunk_material, leaf_material):
+    trunk = create_stylized_trunk(
+        "Birch_Trunk_Stylized",
+        8.65,
+        trunk_material,
+        size="medium_slender",
+        seed=20261001,
+    )
+    trunk["species"] = "birch"
+    profile = [
+        (3.00, 1.45, 3),
+        (4.20, 1.95, 4),
+        (5.45, 2.20, 4),
+        (6.75, 2.05, 4),
+        (8.05, 1.72, 3),
+        (9.25, 1.22, 3),
+        (10.35, 0.68, 2),
+        (11.10, 0.00, 1),
+    ]
+    groups = make_radial_groups(
+        profile, 20261002, (0.82, 1.12), (0.92, 1.30), 150
+    )
+    foliage = create_species_card_foliage(
+        "Birch_Foliage_24Groups",
+        leaf_material,
+        groups,
+        Vector((0.0, 0.0, 7.05)),
+        Vector((3.15, 3.05, 4.75)),
+        (0.42, 0.68),
+        20261003,
+        2.15,
+        11.65,
+        0.30,
+    )
+    return trunk, foliage
+
+
+def create_columnar_cypress(trunk_material, leaf_material):
+    trunk = create_stylized_trunk(
+        "Cypress_Trunk_Stylized",
+        10.4,
+        trunk_material,
+        size="medium_slender",
+        seed=20261004,
+    )
+    trunk["species"] = "columnar_cypress"
+    profile = [
+        (1.20, 1.12, 4),
+        (2.60, 1.55, 4),
+        (4.05, 1.72, 4),
+        (5.50, 1.62, 4),
+        (6.95, 1.42, 4),
+        (8.40, 1.08, 3),
+        (9.75, 0.72, 3),
+        (11.05, 0.30, 2),
+    ]
+    groups = make_radial_groups(
+        profile, 20261005, (0.62, 0.88), (0.88, 1.22), 120
+    )
+    foliage = create_species_card_foliage(
+        "Cypress_Foliage_28Groups",
+        leaf_material,
+        groups,
+        Vector((0.0, 0.0, 6.15)),
+        Vector((2.15, 2.08, 5.95)),
+        (0.46, 0.74),
+        20261006,
+        0.45,
+        11.75,
+        0.24,
+    )
+    return trunk, foliage
+
+
+def create_billboard_lobes_mesh(name, leaf_material, lobe_specs):
+    """Pack independently pivoted shrub billboards into one draw-call mesh.
+
+    UV2 stores each lobe pivot's Blender X/Z coordinates. COLOR.a stores its
+    shallow Blender Y depth mapped from -0.5..0.5 to 0..1. Godot reconstructs
+    the converted local pivot and rotates every quad about that pivot.
+    """
+    atlas_regions = [
+        (0.02, 0.52, 0.48, 0.98),
+        (0.52, 0.52, 0.98, 0.98),
+        (0.02, 0.02, 0.48, 0.48),
+        (0.52, 0.02, 0.98, 0.48),
+    ]
+    corner_normals = [
+        Vector((-0.46, -0.82, -0.28)).normalized(),
+        Vector((0.46, -0.82, -0.28)).normalized(),
+        Vector((0.46, -0.82, 0.30)).normalized(),
+        Vector((-0.46, -0.82, 0.30)).normalized(),
+    ]
+    verts, faces, uvs, pivot_uvs = [], [], [], []
+    normals, wind, plane_normals, pivot_depths = [], [], [], []
+    for center, size, region_index in lobe_specs:
+        width, height = size
+        half_width = width * 0.5
+        half_height = height * 0.5
+        card_vertices = [
+            center + Vector((-half_width, 0.0, -half_height)),
+            center + Vector((half_width, 0.0, -half_height)),
+            center + Vector((half_width, 0.0, half_height)),
+            center + Vector((-half_width, 0.0, half_height)),
+        ]
+        base = len(verts)
+        verts.extend(tuple(vertex) for vertex in card_vertices)
+        verts.extend(tuple(vertex) for vertex in card_vertices)
+        faces.extend((
+            (base, base + 1, base + 2, base + 3),
+            (base + 7, base + 6, base + 5, base + 4),
+        ))
+        u0, v0, u1, v1 = atlas_regions[region_index % 4]
+        card_uvs = [(u0, v0), (u1, v0), (u1, v1), (u0, v1)]
+        uvs.extend(card_uvs)
+        uvs.extend(card_uvs)
+        pivot_uvs.extend([(center.x, center.z)] * 8)
+        normals.extend([tuple(normal) for normal in corner_normals] * 2)
+        wind.extend([0.30, 0.30, 0.92, 0.92] * 2)
+        plane_normals.extend([Vector((0.0, -1.0, 0.0))] * 8)
+        pivot_depths.extend([max(0.0, min(1.0, center.y + 0.5))] * 8)
+
+    mesh = bpy.data.meshes.new(name + "Mesh")
+    mesh.from_pydata(verts, [], faces)
+    mesh.update()
+    mesh.normals_split_custom_set_from_vertices(normals)
+    for polygon in mesh.polygons:
+        polygon.use_smooth = True
+    mesh.materials.append(leaf_material)
+    assign_uv(mesh, uvs)
+    assign_uv2(mesh, pivot_uvs)
+    add_foliage_vertex_data(mesh, wind, plane_normals, pivot_depths)
+    foliage = bpy.data.objects.new(name, mesh)
+    bpy.context.collection.objects.link(foliage)
+    foliage["asset_type"] = "packed_independent_y_billboard_shrub_lobes"
+    foliage["billboard_lobe_count"] = len(lobe_specs)
+    foliage["pivot_encoding"] = "UV2.xy=x,z; COLOR_0.a=blender_y+0.5"
+    foliage["recommended_alpha_cutoff"] = 0.48
+    foliage["wind_vertex_color"] = "COLOR_0.r"
+    return foliage
+
+
+def create_shrub(leaf_material, umbrella=False, trunk_material=None):
+    """Build a person-height shrub from independently pivoted billboards."""
+    if umbrella:
+        lobe_specs = [
+            (Vector((0.00, 0.02, 1.53)), (1.48, 0.98), 1),
+            (Vector((-0.78, 0.12, 1.50)), (1.50, 0.88), 3),
+            (Vector((0.78, -0.08, 1.49)), (1.50, 0.90), 1),
+            (Vector((-0.36, 0.24, 1.80)), (1.30, 0.88), 0),
+            (Vector((0.40, -0.20, 1.77)), (1.32, 0.86), 2),
+            (Vector((0.00, -0.34, 1.27)), (1.72, 0.76), 3),
+        ]
+        foliage = create_billboard_lobes_mesh(
+            "Shrub_Umbrella_Foliage_6BillboardLobes",
+            leaf_material,
+            lobe_specs,
+        )
+        stems = []
+        stem_specs = [
+            (Vector((-0.05, -0.04, 0.0)), Vector((-0.36, 0.10, 1.02))),
+            (Vector((0.03, 0.02, 0.0)), Vector((0.22, -0.20, 1.08))),
+            (Vector((0.08, -0.03, 0.0)), Vector((0.48, 0.18, 0.96))),
+        ]
+        for index, (start, end) in enumerate(stem_specs):
+            stems.append(tapered_segment(
+                f"Shrub_Stem_{index + 1:02d}", start, end,
+                0.060, 0.032, trunk_material, 7,
+            ))
+        trunk = join_objects(stems, "Shrub_Trunk_Cluster")
+        trunk["asset_type"] = "restrained_shrub_stem_cluster"
+        return trunk, foliage
+
+    lobe_specs = [
+        (Vector((0.00, 0.00, 1.08)), (1.48, 1.38), 0),
+        (Vector((-0.56, 0.12, 1.00)), (1.28, 1.16), 2),
+        (Vector((0.56, -0.08, 1.02)), (1.30, 1.18), 0),
+        (Vector((0.05, 0.20, 1.48)), (1.22, 1.04), 1),
+        (Vector((-0.08, -0.30, 0.70)), (1.40, 0.90), 3),
+    ]
+    foliage = create_billboard_lobes_mesh(
+        "Shrub_Rounded_Foliage_5BillboardLobes",
+        leaf_material,
+        lobe_specs,
+    )
+    return None, foliage
 
 
 def create_camphor_tree(trunk_material, leaf_material, shadow_material, dense_v2=False):
@@ -1055,7 +1451,7 @@ def create_camphor_from_old_crowns(
     return trunk, crowns
 
 
-def export_selected(filepath, objects):
+def export_selected(filepath, objects, include_materials=True):
     bpy.ops.object.select_all(action="DESELECT")
     for obj in objects:
         obj.select_set(True)
@@ -1067,7 +1463,7 @@ def export_selected(filepath, objects):
         export_apply=True,
         export_yup=True,
         export_vertex_color="ACTIVE",
-        export_materials="EXPORT",
+        export_materials="EXPORT" if include_materials else "NONE",
     )
 
 
@@ -1126,11 +1522,67 @@ def make_preview(grass, trunk, foliage):
 
 reset_scene()
 leaf_mat = image_material("M_Leaves_FlatMuted_AlphaClip", LEAF_TEX, emission_strength=0.0)
+birch_leaf_mat = image_material("M_Birch_Leaves_Flat_AlphaClip", BIRCH_LEAF_TEX)
+cypress_leaf_mat = image_material("M_Cypress_Sprays_Flat_AlphaClip", CYPRESS_TEX)
+shrub_leaf_mat = image_material("M_Shrub_Leaves_Flat_AlphaClip", SHRUB_TEX)
+birch_bark_mat = opaque_image_material("M_Birch_Bark_Flat", BIRCH_BARK_TEX)
 trunk_mat = flat_material("M_Trunk_Stylized", (0.28, 0.13, 0.055))
 trunk_refined_mat = flat_material(
     "M_Trunk_WarmDark", (0.115, 0.080, 0.058)
 )
-if "--tree-small-broad-canopy" in sys.argv:
+if "--tree-medium-birch-upright" in sys.argv:
+    trunk, foliage = create_birch_tree(birch_bark_mat, birch_leaf_mat)
+    model_path = os.path.join(MODEL_DIR, "tree_medium_birch_upright_canopy.glb")
+    export_selected(model_path, [trunk, foliage], include_materials=False)
+    source_path = os.path.join(SOURCE_DIR, "tree_medium_birch_upright_canopy.blend")
+    bpy.ops.wm.save_as_mainfile(filepath=source_path)
+    print(
+        "MEDIUM_BIRCH_UPRIGHT_BUILD_COMPLETE "
+        f"groups={foliage['crown_group_count']} cards={foliage['card_count']}"
+    )
+    print(model_path)
+    print(source_path)
+elif "--tree-medium-columnar-cypress" in sys.argv:
+    trunk, foliage = create_columnar_cypress(trunk_refined_mat, cypress_leaf_mat)
+    model_path = os.path.join(MODEL_DIR, "tree_medium_columnar_cypress.glb")
+    export_selected(model_path, [trunk, foliage], include_materials=False)
+    source_path = os.path.join(SOURCE_DIR, "tree_medium_columnar_cypress.blend")
+    bpy.ops.wm.save_as_mainfile(filepath=source_path)
+    print(
+        "MEDIUM_COLUMNAR_CYPRESS_BUILD_COMPLETE "
+        f"groups={foliage['crown_group_count']} cards={foliage['card_count']}"
+    )
+    print(model_path)
+    print(source_path)
+elif "--shrub-medium-rounded" in sys.argv:
+    trunk, foliage = create_shrub(
+        shrub_leaf_mat, umbrella=False, trunk_material=trunk_refined_mat
+    )
+    model_path = os.path.join(MODEL_DIR, "shrub_medium_rounded_canopy.glb")
+    export_selected(model_path, [foliage], include_materials=False)
+    source_path = os.path.join(SOURCE_DIR, "shrub_medium_rounded_canopy.blend")
+    bpy.ops.wm.save_as_mainfile(filepath=source_path)
+    print(
+        "SHRUB_MEDIUM_ROUNDED_BUILD_COMPLETE "
+        f"packed_y_billboard_lobes={foliage['billboard_lobe_count']}"
+    )
+    print(model_path)
+    print(source_path)
+elif "--shrub-medium-umbrella" in sys.argv:
+    trunk, foliage = create_shrub(
+        shrub_leaf_mat, umbrella=True, trunk_material=trunk_refined_mat
+    )
+    model_path = os.path.join(MODEL_DIR, "shrub_medium_umbrella_canopy.glb")
+    export_selected(model_path, [trunk, foliage], include_materials=False)
+    source_path = os.path.join(SOURCE_DIR, "shrub_medium_umbrella_canopy.blend")
+    bpy.ops.wm.save_as_mainfile(filepath=source_path)
+    print(
+        "SHRUB_MEDIUM_UMBRELLA_BUILD_COMPLETE "
+        f"packed_y_billboard_lobes={foliage['billboard_lobe_count']}"
+    )
+    print(model_path)
+    print(source_path)
+elif "--tree-small-broad-canopy" in sys.argv:
     trunk, foliage = create_tree(
         trunk_refined_mat,
         leaf_mat,
@@ -1174,26 +1626,6 @@ elif "--tree-medium-upright-asymmetric-canopy" in sys.argv:
     )
     print(model_path)
     print(source_path)
-elif "--tree-medium-upright-clustered-canopy" in sys.argv:
-    trunk, crowns = create_camphor_from_old_crowns(
-        trunk_mat, leaf_mat, round30=True
-    )
-    model_path = os.path.join(
-        MODEL_DIR, "tree_medium_upright_clustered_canopy.glb"
-    )
-    export_selected(model_path, [trunk, *crowns])
-    source_path = os.path.join(
-        SOURCE_DIR, "tree_medium_upright_clustered_canopy.blend"
-    )
-    bpy.ops.wm.save_as_mainfile(filepath=source_path)
-    print(
-        "MEDIUM_UPRIGHT_CLUSTERED_CANOPY_BUILD_COMPLETE "
-        f"crown_groups={len(crowns)} cards={len(crowns) * 480} "
-        f"overlap_mean={trunk['overlap_ratio_mean']:.3f} "
-        f"overlap_max={trunk['overlap_ratio_max']:.3f}"
-    )
-    print(model_path)
-    print(source_path)
 elif "--tree-medium-broad-clustered-canopy" in sys.argv:
     trunk, crowns = create_camphor_from_old_crowns(
         trunk_refined_mat,
@@ -1222,103 +1654,6 @@ elif "--tree-medium-broad-clustered-canopy" in sys.argv:
         f"crown_z={trunk['crown_min_z']:.2f}..{trunk['crown_max_z']:.2f} "
         f"breadth_ratio={trunk['crown_breadth_ratio']:.3f}"
     )
-    print(model_path)
-    print(source_path)
-elif "--tree-camphor-v1" in sys.argv:
-    shadow_mat = flat_material("M_Camphor_Shadow_Proxy", (0.12, 0.10, 0.06), 1.0)
-    trunk, foliage, shadow_proxy = create_camphor_tree(trunk_mat, leaf_mat, shadow_mat)
-    model_path = os.path.join(MODEL_DIR, "tree_camphor_30clump_v1.glb")
-    export_selected(model_path, [trunk, foliage, shadow_proxy])
-    source_path = os.path.join(SOURCE_DIR, "tree_camphor_30clump_v1.blend")
-    bpy.ops.wm.save_as_mainfile(filepath=source_path)
-    print(
-        "CAMPHOR_TREE_BUILD_COMPLETE "
-        f"clumps={foliage['clump_count']} cards={foliage['card_count']}"
-    )
-    print(model_path)
-    print(source_path)
-elif "--tree-camphor-v2" in sys.argv:
-    shadow_mat = flat_material("M_Camphor_Shadow_Proxy", (0.12, 0.10, 0.06), 1.0)
-    trunk, foliage, shadow_proxy = create_camphor_tree(
-        trunk_mat, leaf_mat, shadow_mat, dense_v2=True
-    )
-    model_path = os.path.join(MODEL_DIR, "tree_camphor_30clump_v2_dense.glb")
-    # Keep the proxy in the Blender source for later experiments, but do not
-    # ship it in the gameplay GLB. Dense groves use foliage/trunk shading only.
-    export_selected(model_path, [trunk, foliage])
-    source_path = os.path.join(SOURCE_DIR, "tree_camphor_30clump_v2_dense.blend")
-    bpy.ops.wm.save_as_mainfile(filepath=source_path)
-    print(
-        "CAMPHOR_TREE_V2_BUILD_COMPLETE "
-        f"clumps={foliage['clump_count']} cards={foliage['card_count']}"
-    )
-    print(model_path)
-    print(source_path)
-elif "--tree-camphor-v3" in sys.argv:
-    trunk, crowns = create_camphor_from_old_crowns(trunk_mat, leaf_mat)
-    model_path = os.path.join(MODEL_DIR, "tree_camphor_10crown_v3.glb")
-    export_selected(model_path, [trunk, *crowns])
-    source_path = os.path.join(SOURCE_DIR, "tree_camphor_10crown_v3.blend")
-    bpy.ops.wm.save_as_mainfile(filepath=source_path)
-    print(
-        "CAMPHOR_TREE_V3_BUILD_COMPLETE "
-        f"crown_groups={len(crowns)} cards={len(crowns) * 480}"
-    )
-    print(model_path)
-    print(source_path)
-elif "--tree-camphor-v4" in sys.argv:
-    trunk, crowns = create_camphor_from_old_crowns(
-        trunk_mat, leaf_mat, compact=True
-    )
-    model_path = os.path.join(MODEL_DIR, "tree_camphor_10crown_v4_compact.glb")
-    export_selected(model_path, [trunk, *crowns])
-    source_path = os.path.join(SOURCE_DIR, "tree_camphor_10crown_v4_compact.blend")
-    bpy.ops.wm.save_as_mainfile(filepath=source_path)
-    print(
-        "CAMPHOR_TREE_V4_BUILD_COMPLETE "
-        f"crown_groups={len(crowns)} cards={len(crowns) * 480}"
-    )
-    print(model_path)
-    print(source_path)
-elif "--tree-camphor-v5" in sys.argv:
-    trunk, crowns = create_camphor_from_old_crowns(
-        trunk_mat, leaf_mat, dense30=True
-    )
-    model_path = os.path.join(MODEL_DIR, "tree_camphor_30crown_v5_dense.glb")
-    export_selected(model_path, [trunk, *crowns])
-    source_path = os.path.join(SOURCE_DIR, "tree_camphor_30crown_v5_dense.blend")
-    bpy.ops.wm.save_as_mainfile(filepath=source_path)
-    print(
-        "CAMPHOR_TREE_V5_BUILD_COMPLETE "
-        f"crown_groups={len(crowns)} cards={len(crowns) * 480}"
-    )
-    print(model_path)
-    print(source_path)
-elif "--tree-camphor-v6" in sys.argv:
-    trunk, crowns = create_camphor_from_old_crowns(
-        trunk_mat, leaf_mat, round30=True
-    )
-    model_path = os.path.join(MODEL_DIR, "tree_camphor_30round_v6.glb")
-    export_selected(model_path, [trunk, *crowns])
-    source_path = os.path.join(SOURCE_DIR, "tree_camphor_30round_v6.blend")
-    bpy.ops.wm.save_as_mainfile(filepath=source_path)
-    print(
-        "CAMPHOR_TREE_V6_BUILD_COMPLETE "
-        f"crown_groups={len(crowns)} cards={len(crowns) * 480} "
-        f"overlap_pairs={trunk['overlap_pair_count']} "
-        f"overlap_mean={trunk['overlap_ratio_mean']:.3f} "
-        f"overlap_max={trunk['overlap_ratio_max']:.3f} "
-        f"isolated={trunk['isolated_group_count']}"
-    )
-    print(model_path)
-    print(source_path)
-elif "--tree-refined-v10" in sys.argv:
-    trunk, foliage = create_tree(trunk_mat, leaf_mat, crown_layout="branch_guided")
-    model_path = os.path.join(MODEL_DIR, "tree_foliage_480card_v10_branch_guided.glb")
-    export_selected(model_path, [trunk, foliage])
-    source_path = os.path.join(SOURCE_DIR, "vegetation_source_v10_branch_guided.blend")
-    bpy.ops.wm.save_as_mainfile(filepath=source_path)
-    print(f"BRANCH_GUIDED_TREE_BUILD_COMPLETE cards={foliage['card_count']}")
     print(model_path)
     print(source_path)
 else:

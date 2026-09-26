@@ -107,7 +107,7 @@ the intent and the result of previous visual tests.
   without improving readability. Do not introduce branches unless a future,
   substantially more open tree species specifically requires them.
 
-## Current color and grove experiment (not yet accepted)
+## Accepted color and grove test baseline
 
 - `scenes/main.tscn` is now the sole active scene. Earlier single-tree and
   6 × 6 grid scenes have been removed; their captures remain for comparison.
@@ -131,10 +131,10 @@ the intent and the result of previous visual tests.
   foreground group, all using the small broad-canopy tree. The original 6 × 6
   scene survives only in historical captures. Compare overhead, default and
   low-viewpoint captures before any claim of a final placement method.
-- The active comparison scene places both accepted medium-tree forms:
-  `tree_medium_broad_clustered_canopy.glb` at the left foreground and
-  `tree_medium_upright_asymmetric_canopy.glb` offset toward the right. They share
-  the same leaf material and tint so the comparison isolates crown structure;
+- The active scene places both accepted medium-tree forms in the back layer:
+  `tree_medium_broad_clustered_canopy.glb` is the large cherry-flower tree and
+  `tree_medium_upright_asymmetric_canopy.glb` is the orange autumn tree. Older
+  A0-A2 capture modes keep them green for structural baseline comparisons;
   the small broad-canopy trees remain the background planting.
 - A provisional flower/autumn palette study now places four identical
   `tree_small_broad_canopy.glb` instances at the front of the grove. From left
@@ -190,6 +190,50 @@ the intent and the result of previous visual tests.
   the large and small crowns are spatially separate even where the perspective
   view overlaps them. Older A0-A2 comparison modes leave both large trees green
   so their original palette baselines remain reproducible.
+
+## Species expansion baseline, 2026-09-26
+
+- `tree_medium_birch_upright_canopy.glb` is a true species model, not a recolor
+  of the accepted upright broadleaf. It is approximately 11.6 m tall, uses 24
+  overlapping crown groups and 7,200 randomly oriented cards. Its horizontal
+  section remains near-round; the vertical oval and pale trunk create the
+  birch silhouette. Three nearby instances are the intended first planting
+  test, rather than a single artificial specimen.
+- Birch bark uses `bark_birch_flat_v1.png`: warm off-white with sparse broken
+  grey horizontal lenticels. It contains no directional shade or normal-map
+  detail. At gameplay distance it must read as one pale trunk before individual
+  marks become visible.
+- `tree_medium_columnar_cypress.glb` uses 28 overlapping tapered volumes and
+  6,720 cards. Foliage begins near the ground. The outline may be irregular,
+  but it must not become either a perfect Christmas-tree cone or a stack of
+  horizontal shelves. Its low-contrast olive palette is shader-controlled.
+- `shrub_medium_rounded_canopy.glb` and
+  `shrub_medium_umbrella_canopy.glb` share
+  `shrub_leaf_lobes_billboard_flat_v3.png` and use 5/6 independently pivoted
+  Y-billboard lobes. Every lobe contains a complete porous foliage silhouette;
+  these are not miniature tree foliage systems and must not be expanded to
+  hundreds of single-leaf cards. All lobes are packed into one foliage
+  MeshInstance3D; UV2 and vertex alpha preserve each local pivot so the shader
+  rotates every quad around its own center in one draw call. This retains
+  limited parallax, stays suitable for later MultiMesh placement, and removes
+  fixed crossed-card edges and view-angle-fade density popping.
+- Shrubs do not use `use_view_angle_fade`. Billboard orientation solves the
+  edge-on problem directly. The lobe meshes use bulged corner normals for a
+  soft volume response and `MAIN_CAM_INV_VIEW_MATRIX` so the shadow pass keeps
+  the gameplay-camera orientation. Both forms are approximately person-height
+  and remain readable above the 0.8–1 m meadow. The umbrella form has three
+  short, restrained stems; the rounded form keeps its woody structure concealed.
+- Shrubs are planted as deliberate groups rather than random meadow scatter:
+  four rounded shrubs form one compact group and three umbrella shrubs form a
+  second group with breathing space around it. This scene tests appearance,
+  not final CAD landscape placement.
+- The three new alpha atlases were generated as transparent source silhouettes,
+  then deliberately flattened by `tools/prepare_species_textures.py`. Never
+  reintroduce the generated internal highlights, shadows or colored edge
+  pixels. RGB is restrained and nearly uniform; Godot provides volume.
+- The main scene keeps fewer ordinary small trees than the earlier test. The
+  freed left and right areas hold the birch, cypress and two shrub groups. The
+  accepted old trees remain untouched.
 
 ## Experiments not to reintroduce without a specific new reason
 

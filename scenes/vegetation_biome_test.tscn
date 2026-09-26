@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://bean5x3cefujo"]
+[gd_scene format=3 uid="uid://mrayx70g4vaw"]
 
 [ext_resource type="Script" uid="uid://bl3avtne2ar5g" path="res://scripts/vegetation_test.gd" id="1_main"]
 [ext_resource type="Script" uid="uid://epg6d0hvxyj5" path="res://scripts/orbit_camera.gd" id="2_camera"]

@@ -31,10 +31,18 @@ const TREE_MODEL := preload("res://assets/vegetation/models/tree_foliage_480card
 const TREE_MODEL_REFINED := preload("res://assets/vegetation/models/tree_small_broad_canopy.glb")
 const TREE_MODEL_UPRIGHT := preload("res://assets/vegetation/models/tree_medium_upright_asymmetric_canopy.glb")
 const TREE_MODEL_BROAD_CLUSTERED := preload("res://assets/vegetation/models/tree_medium_broad_clustered_canopy.glb")
+const TREE_MODEL_BIRCH := preload("res://assets/vegetation/models/tree_medium_birch_upright_canopy.glb")
+const TREE_MODEL_CYPRESS := preload("res://assets/vegetation/models/tree_medium_columnar_cypress.glb")
+const SHRUB_MODEL_ROUNDED := preload("res://assets/vegetation/models/shrub_medium_rounded_canopy.glb")
+const SHRUB_MODEL_UMBRELLA := preload("res://assets/vegetation/models/shrub_medium_umbrella_canopy.glb")
 const WIND_SHADER := preload("res://assets/vegetation/shaders/vegetation_wind.gdshader")
 const BIOME_GROUND_SHADER := preload("res://assets/vegetation/shaders/biome_ground.gdshader")
 const GRASS_TEXTURE := preload("res://assets/vegetation/textures/grass_tuft_straw_minimal_v5.png")
 const LEAF_TEXTURE := preload("res://assets/vegetation/textures/leaf_clusters_witness_sparse_flat_v11.png")
+const BIRCH_LEAF_TEXTURE := preload("res://assets/vegetation/textures/leaf_clusters_birch_sparse_flat_v1.png")
+const CYPRESS_TEXTURE := preload("res://assets/vegetation/textures/foliage_cypress_sprays_flat_v1.png")
+const SHRUB_TEXTURE := preload("res://assets/vegetation/textures/shrub_leaf_lobes_billboard_flat_v3.png")
+const BIRCH_BARK_TEXTURE := preload("res://assets/vegetation/textures/bark_birch_flat_v1.png")
 const SKY_TEXTURE := preload("res://assets/environment/hdri/rosendal_park_sunset_puresky_4k.exr")
 
 var grass_wind_texture: NoiseTexture2D
@@ -78,6 +86,38 @@ func _ready() -> void:
 		_build_tree(refined_tree)
 	_build_grass_chunks()
 	if grove_demo and (
+		"--capture-new-birch" in arguments
+		or "--capture-new-cypress" in arguments
+		or "--capture-new-shrubs" in arguments
+		or "--capture-new-shrubs-side" in arguments
+		or "--capture-new-rounded-shrubs" in arguments
+	):
+		var camera := get_node("OrbitCamera") as Camera3D
+		camera.set_process(false)
+		var target := Vector3(-17.3, 5.8, -7.0)
+		var camera_offset := Vector3(0.0, 0.6, 18.0)
+		var filename := "vegetation_species_birch.png"
+		if "--capture-new-cypress" in arguments:
+			target = Vector3(18.6, 5.9, 0.8)
+			camera_offset = Vector3(18.0, 0.8, 0.0)
+			filename = "vegetation_species_cypress.png"
+		elif "--capture-new-shrubs" in arguments:
+			target = Vector3(13.3, 0.8, 6.3)
+			camera_offset = Vector3(9.0, 1.8, 2.0)
+			filename = "vegetation_species_shrubs.png"
+		elif "--capture-new-shrubs-side" in arguments:
+			target = Vector3(13.8, 0.8, 7.4)
+			camera_offset = Vector3(-2.5, 1.8, -9.0)
+			filename = "vegetation_species_shrubs_side.png"
+		elif "--capture-new-rounded-shrubs" in arguments:
+			target = Vector3(-17.5, 0.9, 0.5)
+			camera_offset = Vector3(7.5, 1.6, 5.5)
+			filename = "vegetation_species_shrubs_rounded.png"
+		camera.position = target + camera_offset
+		camera.look_at(target, Vector3.UP)
+		get_node("Instructions").hide()
+		_capture_test_frame(filename)
+	elif grove_demo and (
 		"--capture-flower-study" in arguments
 		or "--capture-flower-a0" in arguments
 		or "--capture-flower-a1" in arguments
@@ -361,19 +401,17 @@ func _build_landscape_grove(refined_tree: bool, flower_palette_stage: int) -> vo
 	# A continuous central/foreground grass bay is deliberately left empty.
 	# The principal grove runs off the back/right edge instead of forming a round island.
 	_add_grove_group(forest, tree_model, leaf_material, rng, tint_variants, "Main", PackedVector2Array([
-		Vector2(-1.0, -16.0), Vector2(3.6, -17.8), Vector2(8.2, -16.1),
-		Vector2(13.0, -14.0), Vector2(17.2, -10.5), Vector2(18.5, -5.6),
-		Vector2(13.5, -7.5), Vector2(8.7, -10.2), Vector2(4.0, -11.2),
-		Vector2(11.5, -3.8), Vector2(3.5, -3.5), Vector2(8.8, -1.0),
-		Vector2(14.2, -0.5),
+		Vector2(-1.0, -16.0), Vector2(8.2, -16.1),
+		Vector2(13.0, -14.0), Vector2(17.2, -10.5),
+		Vector2(13.5, -7.5), Vector2(8.7, -10.2),
+		Vector2(3.5, -3.5), Vector2(14.2, -0.5),
 	]))
 	_add_grove_group(forest, tree_model, leaf_material, rng, tint_variants, "BackLeft", PackedVector2Array([
-		Vector2(-15.0, -12.0), Vector2(-11.0, -15.0), Vector2(-9.0, -10.0),
+		Vector2(-11.0, -15.0), Vector2(-9.0, -10.0),
 	]))
 	# Keep the right-hand background trees as a loose edge cluster. They no
 	# longer sit directly behind the palette trees or merge with their trunks.
 	_add_grove_group(forest, tree_model, leaf_material, rng, tint_variants, "RightEdge", PackedVector2Array([
-		Vector2(14.8, 5.3), Vector2(18.3, 6.8), Vector2(15.6, 9.2),
 		Vector2(19.1, 10.7),
 	]))
 	_add_flower_palette_study(
@@ -435,6 +473,140 @@ func _build_landscape_grove(refined_tree: bool, flower_palette_stage: int) -> vo
 			upright_tree,
 			Color("a75448"), Color("b56550"), Color("d68162"), Color("e8a886"),
 			Color("d68162"), 0.0, 0.63, flower_palette_stage
+		)
+
+	_add_new_species_study(forest)
+
+
+func _add_new_species_study(forest: Node3D) -> void:
+	# New silhouettes stay separate from the accepted generic trees.  The test
+	# uses small natural groups so crown shape, pale bark and understory scale can
+	# be judged in the same Forward+ lighting rather than in a model viewer.
+	var birch_material := _create_species_foliage_material(
+		BIRCH_LEAF_TEXTURE, 0.082, true
+	)
+	var cypress_material := _create_species_foliage_material(
+		CYPRESS_TEXTURE, 0.035, true
+	)
+	var shrub_material := _create_species_foliage_material(
+		SHRUB_TEXTURE, 0.012, false
+	)
+	shrub_material.set_shader_parameter("use_y_billboard", true)
+	shrub_material.set_shader_parameter("use_billboard_pivot_data", true)
+	shrub_material.set_shader_parameter("card_edge_fade", 0.025)
+	shrub_material.set_shader_parameter("root_tone", 0.95)
+	shrub_material.set_shader_parameter("tip_tone", 1.025)
+	var birch_trunk_material := _create_birch_trunk_material()
+
+	var birch_positions := [
+		Vector3(-18.2, 0.0, -6.2),
+		Vector3(-15.0, 0.0, -4.7),
+		Vector3(-18.9, 0.0, -10.0),
+	]
+	for index in birch_positions.size():
+		var birch: Node3D = TREE_MODEL_BIRCH.instantiate()
+		birch.name = "Birch_%02d" % index
+		birch.position = birch_positions[index]
+		birch.rotation.y = 0.48 + float(index) * 1.31
+		birch.scale = Vector3.ONE * [0.94, 1.04, 0.98][index]
+		forest.add_child(birch)
+		_configure_tree(
+			birch,
+			birch_material,
+			[Color("f1f6e7"), Color("e6f0d7"), Color("f5efcf")][index],
+			birch_trunk_material
+		)
+		_configure_species_palette(
+			birch,
+			Color("687844"), Color("778a4e"), Color("8fa55d"), Color("a9ba73"),
+			Color("8fa55d"), 0.0, 0.21 + float(index) * 0.13, 3
+		)
+		_configure_large_tree_shading(
+			birch,
+			Vector3(0.0, 7.05, 0.0),
+			Vector3(3.15, 4.75, 3.05),
+			0.30
+		)
+
+	var cypress_positions := [
+		Vector3(18.0, 0.0, -2.4),
+		Vector3(20.2, 0.0, 1.2),
+		Vector3(17.8, 0.0, 4.2),
+	]
+	for index in cypress_positions.size():
+		var cypress: Node3D = TREE_MODEL_CYPRESS.instantiate()
+		cypress.name = "ColumnarCypress_%02d" % index
+		cypress.position = cypress_positions[index]
+		cypress.rotation.y = -0.36 + float(index) * 1.09
+		cypress.scale = Vector3.ONE * [1.00, 0.91, 1.06][index]
+		forest.add_child(cypress)
+		_configure_tree(
+			cypress,
+			cypress_material,
+			[Color("cad5bd"), Color("b9c8ad"), Color("d3d6b8")][index]
+		)
+		_configure_species_palette(
+			cypress,
+			Color("263724"), Color("34482f"), Color("455b39"), Color("5c7148"),
+			Color("455b39"), 0.0, 0.33 + float(index) * 0.17, 3
+		)
+		_configure_large_tree_shading(
+			cypress,
+			Vector3(0.0, 6.15, 0.0),
+			Vector3(2.15, 5.95, 2.08),
+			0.24
+		)
+
+	# Shrubs are planted as two deliberate landscape groups, never scattered as
+	# isolated weeds across the meadow.  Crowns lightly overlap within a group;
+	# the open central grass bay remains untouched.
+	var rounded_shrub_points := PackedVector2Array([
+		Vector2(-19.0, -0.8), Vector2(-17.1, -0.1),
+		Vector2(-18.2, 1.3), Vector2(-16.1, 1.6),
+	])
+	var umbrella_shrub_points := PackedVector2Array([
+		Vector2(12.8, 6.4), Vector2(15.2, 7.0), Vector2(14.0, 9.0),
+	])
+	_add_shrub_group(
+		forest,
+		SHRUB_MODEL_ROUNDED,
+		shrub_material,
+		rounded_shrub_points,
+		"RoundedShrubGroup",
+		20261011
+	)
+	_add_shrub_group(
+		forest,
+		SHRUB_MODEL_UMBRELLA,
+		shrub_material,
+		umbrella_shrub_points,
+		"UmbrellaShrubGroup",
+		20261012
+	)
+
+
+func _add_shrub_group(
+	forest: Node3D,
+	model: PackedScene,
+	material: ShaderMaterial,
+	points: PackedVector2Array,
+	group_name: String,
+	seed: int
+) -> void:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = seed
+	for index in points.size():
+		var shrub: Node3D = model.instantiate()
+		shrub.name = "%s_%02d" % [group_name, index]
+		shrub.position = Vector3(points[index].x, 0.0, points[index].y)
+		shrub.rotation.y = rng.randf_range(-PI, PI)
+		var scale_value := rng.randf_range(0.92, 1.10)
+		shrub.scale = Vector3.ONE * scale_value
+		forest.add_child(shrub)
+		_configure_tree(
+			shrub,
+			material,
+			Color(1.0, rng.randf_range(0.96, 1.04), rng.randf_range(0.94, 1.03))
 		)
 
 
@@ -603,6 +775,23 @@ func _create_tree_leaf_material(use_biome: bool) -> ShaderMaterial:
 	return leaf_material
 
 
+func _create_species_foliage_material(
+	texture: Texture2D,
+	wind_strength: float,
+	use_angle_fade: bool
+) -> ShaderMaterial:
+	var material := _create_tree_leaf_material(true)
+	material.set_shader_parameter("albedo_texture", texture)
+	material.set_shader_parameter("wind_strength", wind_strength)
+	material.set_shader_parameter("wind_speed", 0.58)
+	material.set_shader_parameter("use_view_angle_fade", use_angle_fade)
+	material.set_shader_parameter("view_angle_fade_start", 0.020)
+	material.set_shader_parameter("view_angle_fade_end", 0.140)
+	material.set_shader_parameter("alpha_cutoff", 0.48)
+	material.set_shader_parameter("alpha_antialiasing_edge", 0.26)
+	return material
+
+
 func _create_trunk_material() -> StandardMaterial3D:
 	var material := StandardMaterial3D.new()
 	material.albedo_color = trunk_color
@@ -611,9 +800,28 @@ func _create_trunk_material() -> StandardMaterial3D:
 	return material
 
 
-func _configure_tree(tree: Node3D, leaf_material: ShaderMaterial, tint: Color) -> void:
+func _create_birch_trunk_material() -> StandardMaterial3D:
+	var material := StandardMaterial3D.new()
+	material.albedo_texture = BIRCH_BARK_TEXTURE
+	material.albedo_color = Color("e2ded1")
+	material.roughness = 0.98
+	material.metallic = 0.0
+	material.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC
+	return material
+
+
+func _configure_tree(
+	tree: Node3D,
+	leaf_material: ShaderMaterial,
+	tint: Color,
+	trunk_material: Material = null
+) -> void:
 	_apply_material_to_named_meshes(tree, "foliage", leaf_material)
-	_apply_material_to_named_meshes(tree, "trunk", shared_trunk_material)
+	_apply_material_to_named_meshes(
+		tree,
+		"trunk",
+		shared_trunk_material if trunk_material == null else trunk_material
+	)
 	_set_tint_for_named_meshes(tree, "foliage", tint)
 	_set_shadow_casting_for_named_meshes(
 		tree,

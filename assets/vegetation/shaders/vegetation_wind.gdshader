@@ -61,6 +61,11 @@ uniform float card_edge_fade : hint_range(0.0, 0.25) = 0.0;
 uniform bool use_view_angle_fade = false;
 uniform float view_angle_fade_start : hint_range(0.0, 0.5) = 0.020;
 uniform float view_angle_fade_end : hint_range(0.0, 0.5) = 0.140;
+// Shrub lobe pivots are packed per vertex, so one MeshInstance3D can rotate
+// every quad independently. MAIN_CAM_INV_VIEW_MATRIX also keeps shadow-pass
+// orientation tied to the gameplay camera instead of rotating toward the sun.
+uniform bool use_y_billboard = false;
+uniform bool use_billboard_pivot_data = false;
 uniform vec2 wind_direction = vec2(0.8, 0.35);
 uniform float wind_strength : hint_range(0.0, 1.0) = 0.12;
 uniform float wind_speed : hint_range(0.0, 5.0) = 1.25;
@@ -110,6 +115,39 @@ float cubic_bezier_01(float value, float control_1, float control_2) {
 }
 
 void vertex() {
+	vec3 authored_model_vertex = VERTEX;
+	if (use_y_billboard) {
+		vec3 pivot_model = vec3(0.0);
+		if (use_billboard_pivot_data) {
+			// Blender X/Z are stored directly in UV2. Blender Y becomes negative
+			// Godot Z during glTF import and is packed into the 0..1 color alpha.
+			pivot_model = vec3(UV2.x, UV2.y, -(COLOR.a - 0.5));
+			VERTEX -= pivot_model;
+		}
+		vec3 pivot_world = (
+			MODEL_MATRIX * vec4(pivot_model, 1.0)
+		).xyz;
+		vec3 world_up = normalize(MODEL_MATRIX[1].xyz);
+		vec3 camera_back = normalize(MAIN_CAM_INV_VIEW_MATRIX[2].xyz);
+		vec3 billboard_right = cross(world_up, camera_back);
+		if (dot(billboard_right, billboard_right) < 0.0001) {
+			billboard_right = normalize(MODEL_MATRIX[0].xyz);
+		} else {
+			billboard_right = normalize(billboard_right);
+		}
+		vec3 billboard_back = normalize(cross(billboard_right, world_up));
+		float scale_x = length(MODEL_MATRIX[0].xyz);
+		float scale_y = length(MODEL_MATRIX[1].xyz);
+		float scale_z = length(MODEL_MATRIX[2].xyz);
+		mat4 billboard_model = mat4(
+			vec4(billboard_right * scale_x, 0.0),
+			vec4(world_up * scale_y, 0.0),
+			vec4(billboard_back * scale_z, 0.0),
+			vec4(pivot_world, 1.0)
+		);
+		MODELVIEW_MATRIX = VIEW_MATRIX * billboard_model;
+		MODELVIEW_NORMAL_MATRIX = mat3(MODELVIEW_MATRIX);
+	}
 	wind_weight = clamp(COLOR.r, 0.0, 1.0);
 	vec3 card_plane_normal_model = decode_octahedral(COLOR.gb);
 	card_plane_normal_view = normalize(
@@ -117,7 +155,7 @@ void vertex() {
 	);
 	temporal_wind_strength = 1.0;
 	vec3 world_origin = (MODEL_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
-	vec3 world_vertex = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	vec3 world_vertex = (MODEL_MATRIX * vec4(authored_model_vertex, 1.0)).xyz;
 	vec3 palette_origin = mix(
 		world_origin,
 		tree_palette_anchor_world,

@@ -19,10 +19,10 @@ distance = 48.0
 pitch = 0.62
 
 [node name="Instructions" type="Label" parent="."]
-offset_left = 18.0
-offset_top = 16.0
-offset_right = 650.0
-offset_bottom = 52.0
-text = "Flower palette A3: restrained color families    Right-drag / A,D: orbit    Wheel / W,S: zoom"
+offset_left = 24.0
+offset_top = 22.0
+offset_right = 900.0
+offset_bottom = 68.0
+text = "Vegetation species study: birch / cypress / shrubs    Right-drag / A,D: orbit    Wheel / W,S: zoom"
 theme_override_colors/font_color = Color(1, 1, 1, 0.82)
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 22
