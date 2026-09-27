@@ -23,4 +23,4 @@ offset_right = 570.0
 offset_bottom = 52.0
 theme_override_colors/font_color = Color(1, 1, 1, 0.82)
 theme_override_font_sizes/font_size = 16
-text = "Yellow / green biome test    Right-drag / A,D: orbit    Wheel / W,S: zoom"
+text = "Yellow / green biome test    WASD: move    Q/E: down/up    Right-drag: look    Wheel: forward/back"

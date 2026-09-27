@@ -718,8 +718,13 @@ def create_birch_tree(trunk_material, leaf_material):
         (10.35, 0.68, 2),
         (11.10, 0.00, 1),
     ]
+    # A complete atlas silhouette lives on every crossed card pair.  The first
+    # species prototype used 150 cells per group (7,200 cards total), which was
+    # unnecessary alpha-card overdraw rather than useful crown detail.  Twenty-
+    # four cells retain porous depth in each of the 24 overlapping volumes while
+    # keeping the complete near LOD to 1,152 cards.
     groups = make_radial_groups(
-        profile, 20261002, (0.82, 1.12), (0.92, 1.30), 150
+        profile, 20261002, (0.82, 1.12), (0.92, 1.30), 24
     )
     foliage = create_species_card_foliage(
         "Birch_Foliage_24Groups",
@@ -727,7 +732,10 @@ def create_birch_tree(trunk_material, leaf_material):
         groups,
         Vector((0.0, 0.0, 7.05)),
         Vector((3.15, 3.05, 4.75)),
-        (0.42, 0.68),
+        # Fewer cards must cover the same airy crown volume.  Match the proven
+        # broad-tree card scale instead of retaining the tiny high-density
+        # prototype sheets; the sparse birch atlas supplies the fine gaps.
+        (0.88, 1.20),
         20261003,
         2.15,
         11.65,
@@ -753,18 +761,31 @@ def create_columnar_cypress(trunk_material, leaf_material):
         (6.95, 1.42, 4),
         (8.40, 1.08, 3),
         (9.75, 0.72, 3),
-        (11.05, 0.30, 2),
+        (11.05, 0.00, 1),
     ]
+    # The spray atlas carries the fine foliage detail.  Twenty crossed cells per
+    # volume are enough to describe the 28-volume columnar silhouette; the former
+    # 120-cell value produced 6,720 mostly redundant cards.
     groups = make_radial_groups(
-        profile, 20261005, (0.62, 0.88), (0.88, 1.22), 120
+        profile, 20261005, (0.62, 0.88), (0.88, 1.22), 20
     )
+    # A centered upper volume and smaller terminal cap avoid the double peak
+    # created by the former pair of offset top groups.  View-angle fading can
+    # remove some cards without opening a conspicuous notch at the apex.
+    groups.append((
+        Vector((0.0, 0.0, 11.45)),
+        Vector((0.42, 0.40, 0.55)),
+        14,
+    ))
     foliage = create_species_card_foliage(
         "Cypress_Foliage_28Groups",
         leaf_material,
         groups,
         Vector((0.0, 0.0, 6.15)),
         Vector((2.15, 2.08, 5.95)),
-        (0.46, 0.74),
+        # Cypress sprays use deliberately broad cards so this secondary species
+        # can keep a full column without returning to thousands of small sheets.
+        (0.95, 1.30),
         20261006,
         0.45,
         11.75,

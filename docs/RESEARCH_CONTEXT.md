@@ -195,7 +195,7 @@ the intent and the result of previous visual tests.
 
 - `tree_medium_birch_upright_canopy.glb` is a true species model, not a recolor
   of the accepted upright broadleaf. It is approximately 11.6 m tall, uses 24
-  overlapping crown groups and 7,200 randomly oriented cards. Its horizontal
+  overlapping crown groups and 1,152 randomly oriented cards. Its horizontal
   section remains near-round; the vertical oval and pale trunk create the
   birch silhouette. Three nearby instances are the intended first planting
   test, rather than a single artificial specimen.
@@ -203,10 +203,22 @@ the intent and the result of previous visual tests.
   grey horizontal lenticels. It contains no directional shade or normal-map
   detail. At gameplay distance it must read as one pale trunk before individual
   marks become visible.
-- `tree_medium_columnar_cypress.glb` uses 28 overlapping tapered volumes and
-  6,720 cards. Foliage begins near the ground. The outline may be irregular,
+- `tree_medium_columnar_cypress.glb` uses 27 overlapping tapered volumes plus a
+  small centered terminal volume, for 1,108 cards in total. Foliage begins near
+  the ground. The outline may be irregular,
   but it must not become either a perfect Christmas-tree cone or a stack of
   horizontal shelves. Its low-contrast olive palette is shader-controlled.
+  Its geometry budget is now acceptable, but the current silhouette remains a
+  rejected visual study rather than an accepted production tree.
+- The original species prototypes used 7,200 birch cards and 6,720 cypress
+  cards. Those counts were generator overfill, not an artistic requirement:
+  every card already carries a complete porous atlas cluster. The accepted
+  near assets therefore use 24 crossed cells per birch group and 20 per cypress
+  group. Their cards are deliberately broader than the discarded high-density
+  prototype: card footprint and atlas negative space provide crown continuity,
+  rather than thousands of overlapping sheets. Do not restore density by
+  multiplying cards inside each volume; add or reshape crown volumes only when
+  the silhouette itself requires it.
 - `shrub_medium_rounded_canopy.glb` is the single accepted shrub asset. It uses
   `shrub_leaf_lobes_billboard_flat_v3.png` and five independently pivoted
   Y-billboard lobes. Every lobe contains a complete porous foliage silhouette;

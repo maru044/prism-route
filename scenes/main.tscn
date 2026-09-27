@@ -23,6 +23,6 @@ offset_left = 24.0
 offset_top = 22.0
 offset_right = 900.0
 offset_bottom = 68.0
-text = "Character scale test: Ganyu / cherry / autumn    Right-drag / A,D: orbit    Wheel / W,S: zoom"
+text = "WASD: move    Q/E: down/up    Shift: fast    Right-drag: look    Wheel: forward/back"
 theme_override_colors/font_color = Color(1, 1, 1, 0.82)
 theme_override_font_sizes/font_size = 22
