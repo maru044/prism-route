@@ -54,6 +54,9 @@ instance uniform float use_tree_canopy_normal = 0.0;
 instance uniform vec3 tree_canopy_center_world = vec3(0.0);
 instance uniform vec3 tree_canopy_radii = vec3(1.0);
 instance uniform float tree_local_normal_weight : hint_range(0.0, 1.0) = 0.34;
+uniform bool use_tree_local_canopy_normal = false;
+uniform vec3 tree_canopy_center_local = vec3(0.0);
+uniform vec3 tree_canopy_radii_local = vec3(1.0);
 uniform float alpha_cutoff : hint_range(0.0, 1.0) = 0.42;
 uniform float alpha_antialiasing_edge : hint_range(0.0, 1.0) = 0.24;
 uniform vec2 atlas_grid = vec2(1.0, 1.0);
@@ -66,6 +69,11 @@ uniform float view_angle_fade_end : hint_range(0.0, 0.5) = 0.140;
 // orientation tied to the gameplay camera instead of rotating toward the sun.
 uniform bool use_y_billboard = false;
 uniform bool use_billboard_pivot_data = false;
+// Whole-tree HLOD uses one Y-facing card and an eight-azimuth atlas.  Frame
+// selection is stable per instance and follows the authored tree rotation.
+uniform bool use_directional_impostor = false;
+uniform float directional_impostor_views = 8.0;
+uniform bool use_impostor_canopy_normal = false;
 uniform vec2 wind_direction = vec2(0.8, 0.35);
 uniform float wind_strength : hint_range(0.0, 1.0) = 0.12;
 uniform float wind_speed : hint_range(0.0, 5.0) = 1.25;
@@ -87,6 +95,19 @@ uniform float wind_variation_max : hint_range(1.0, 2.0) = 1.15;
 uniform float light_wrap : hint_range(0.0, 1.0) = 0.25;
 uniform float root_tone : hint_range(0.5, 1.5) = 1.0;
 uniform float tip_tone : hint_range(0.5, 1.5) = 1.0;
+// Grass HLOD keeps the accepted close mesh and alpha policy. Stable per-blade
+// thresholds in INSTANCE_CUSTOM.b progressively remove blades instead of
+// switching a complete 24 m MultiMesh at one distance. INSTANCE_CUSTOM.a
+// distinguishes the near-only population from the 20% far survivors.
+uniform bool use_grass_lod_density = false;
+uniform float grass_near_fade_start = 48.0;
+uniform float grass_near_fade_end = 76.0;
+uniform float grass_far_fade_start = 76.0;
+uniform float grass_far_fade_end = 128.0;
+// Tree MultiMeshes are spatial batches, not LOD units.  The shader evaluates
+// this range from each instance origin so a near tree never inherits the LOD
+// selected for the centre of its 128 m batch.
+uniform vec4 tree_lod_fade = vec4(-100000.0, -99999.0, 99999.0, 100000.0);
 
 varying float wind_weight;
 varying float wind_wave;
@@ -96,6 +117,9 @@ varying vec3 card_plane_normal_view;
 varying vec3 global_canopy_normal_view;
 varying float species_accent_mix;
 varying float species_light_warp;
+varying float grass_lod_visibility;
+varying float tree_lod_visibility;
+varying float directional_impostor_frame;
 
 vec3 decode_octahedral(vec2 encoded) {
 	vec2 f = encoded * 2.0 - 1.0;
@@ -116,6 +140,23 @@ float cubic_bezier_01(float value, float control_1, float control_2) {
 
 void vertex() {
 	vec3 authored_model_vertex = VERTEX;
+	vec3 original_world_origin = (
+		MODEL_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)
+	).xyz;
+	directional_impostor_frame = 0.0;
+	if (use_directional_impostor) {
+		vec3 to_camera_world = normalize(CAMERA_POSITION_WORLD - original_world_origin);
+		vec3 instance_right = normalize(MODEL_MATRIX[0].xyz);
+		vec3 instance_back = normalize(MODEL_MATRIX[2].xyz);
+		float local_x = dot(to_camera_world, instance_right);
+		float local_z = dot(to_camera_world, instance_back);
+		float azimuth = atan(local_x, local_z);
+		float view_count = max(1.0, directional_impostor_views);
+		directional_impostor_frame = mod(
+			floor(azimuth / TAU * view_count + 0.5),
+			view_count
+		);
+	}
 	if (use_y_billboard) {
 		vec3 pivot_model = vec3(0.0);
 		if (use_billboard_pivot_data) {
@@ -154,8 +195,31 @@ void vertex() {
 		MODELVIEW_NORMAL_MATRIX * card_plane_normal_model
 	);
 	temporal_wind_strength = 1.0;
-	vec3 world_origin = (MODEL_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
+	vec3 world_origin = original_world_origin;
 	vec3 world_vertex = (MODEL_MATRIX * vec4(authored_model_vertex, 1.0)).xyz;
+	float tree_camera_distance = distance(world_origin, CAMERA_POSITION_WORLD);
+	tree_lod_visibility = smoothstep(
+		tree_lod_fade.x, tree_lod_fade.y, tree_camera_distance
+	) * (1.0 - smoothstep(
+		tree_lod_fade.z, tree_lod_fade.w, tree_camera_distance
+	));
+	grass_lod_visibility = 1.0;
+	if (use_grass_lod_density) {
+		float camera_distance = distance(world_origin, CAMERA_POSITION_WORLD);
+		float near_keep = 1.0 - smoothstep(
+			grass_near_fade_start,
+			grass_near_fade_end,
+			camera_distance
+		);
+		float far_keep = 1.0 - smoothstep(
+			grass_far_fade_start,
+			grass_far_fade_end,
+			camera_distance
+		);
+		float survivor_group = step(0.5, INSTANCE_CUSTOM.a);
+		float density_keep = mix(near_keep, far_keep, survivor_group);
+		grass_lod_visibility = step(INSTANCE_CUSTOM.b, density_keep);
+	}
 	vec3 palette_origin = mix(
 		world_origin,
 		tree_palette_anchor_world,
@@ -167,6 +231,15 @@ void vertex() {
 		vec3 canopy_delta = world_vertex - tree_canopy_center_world;
 		vec3 canopy_normal_world = normalize(canopy_delta / (safe_radii * safe_radii));
 		global_canopy_normal_view = normalize(mat3(VIEW_MATRIX) * canopy_normal_world);
+	} else if (use_tree_local_canopy_normal) {
+		vec3 safe_local_radii = max(tree_canopy_radii_local, vec3(0.001));
+		vec3 local_delta = authored_model_vertex - tree_canopy_center_local;
+		vec3 canopy_normal_local = normalize(
+			local_delta / (safe_local_radii * safe_local_radii)
+		);
+		global_canopy_normal_view = normalize(
+			MODELVIEW_NORMAL_MATRIX * canopy_normal_local
+		);
 	}
 	species_accent_mix = 0.0;
 	species_light_warp = 0.0;
@@ -322,10 +395,22 @@ void vertex() {
 }
 
 void fragment() {
-	vec4 tex = texture(albedo_texture, UV) * color_tint;
+	vec2 local_card_uv = UV;
+	vec2 sample_uv = UV;
+	if (use_directional_impostor) {
+		float columns = max(1.0, atlas_grid.x);
+		float rows = max(1.0, atlas_grid.y);
+		float frame_x = mod(directional_impostor_frame, columns);
+		float frame_y = floor(directional_impostor_frame / columns);
+		sample_uv = (local_card_uv + vec2(frame_x, frame_y)) / vec2(columns, rows);
+	}
+	vec4 tex = texture(albedo_texture, sample_uv) * color_tint;
 	float edge_mask = 1.0;
 	if (card_edge_fade > 0.0) {
 		vec2 atlas_uv = fract(UV * atlas_grid);
+		if (use_directional_impostor) {
+			atlas_uv = local_card_uv;
+		}
 		float edge_distance = min(
 			min(atlas_uv.x, 1.0 - atlas_uv.x),
 			min(atlas_uv.y, 1.0 - atlas_uv.y)
@@ -344,16 +429,22 @@ void fragment() {
 			facing
 		);
 	}
-	float cutout_alpha = tex.a * edge_mask * view_mask;
+	float cutout_alpha = tex.a * edge_mask * view_mask
+		* grass_lod_visibility * tree_lod_visibility;
 	// Preserve the volume normals authored on the mesh. Flipping a normal from
 	// FRONT_FACING would restore the original card-plane lighting artifact.
 	vec3 lighting_normal = normalize(NORMAL);
-	if (use_tree_canopy_normal > 0.5) {
+	if (use_tree_canopy_normal > 0.5 || use_tree_local_canopy_normal) {
 		lighting_normal = normalize(mix(
 			global_canopy_normal_view,
 			lighting_normal,
 			clamp(tree_local_normal_weight, 0.0, 1.0)
 		));
+	}
+	if (use_impostor_canopy_normal) {
+		vec2 sphere_xy = (local_card_uv * 2.0 - 1.0) * vec2(0.82, 0.94);
+		float sphere_z = sqrt(max(0.08, 1.0 - dot(sphere_xy, sphere_xy)));
+		lighting_normal = normalize(vec3(sphere_xy.x, -sphere_xy.y, sphere_z));
 	}
 	NORMAL = lighting_normal;
 	// At meadow scale, the moving low-frequency tonal band carries the wind
@@ -419,7 +510,7 @@ void fragment() {
 	ALPHA = cutout_alpha;
 	ALPHA_SCISSOR_THRESHOLD = alpha_cutoff;
 	ALPHA_ANTIALIASING_EDGE = min(alpha_antialiasing_edge, alpha_cutoff - 0.001);
-	ALPHA_TEXTURE_COORDINATE = UV * vec2(textureSize(albedo_texture, 0));
+	ALPHA_TEXTURE_COORDINATE = sample_uv * vec2(textureSize(albedo_texture, 0));
 	ROUGHNESS = 0.9;
 	SPECULAR = 0.15;
 }

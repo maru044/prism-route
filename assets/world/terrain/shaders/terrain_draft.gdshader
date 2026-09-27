@@ -12,6 +12,13 @@ uniform float biome_warp_distance = 210.0;
 uniform float biome_transition_half_width = 135.0;
 uniform float biome_center_x = 20.0;
 uniform float rock_bias = 0.0;
+// The far proxy preserves the screen-integrated identity of a meadow after
+// individual grass cards disappear. It deliberately contains no blade detail.
+uniform bool use_far_grass_proxy = true;
+uniform vec4 far_dry_grass_color : source_color = vec4(0.80, 0.67, 0.33, 1.0);
+uniform vec4 far_green_grass_color : source_color = vec4(0.45, 0.53, 0.28, 1.0);
+uniform vec4 far_high_grass_color : source_color = vec4(0.41, 0.50, 0.24, 1.0);
+uniform float far_grass_proxy_strength : hint_range(0.0, 1.0) = 0.78;
 
 varying vec3 world_position;
 varying vec3 world_normal;
@@ -37,6 +44,18 @@ void fragment() {
 	float height_mix = smoothstep(22.0, 145.0, world_position.y + broad_noise * 7.0);
 	vec3 meadow = mix(dry_grass_color.rgb, green_grass_color.rgb, biome_mask);
 	vec3 grass = mix(meadow, high_grass_color.rgb, height_mix * 0.34);
+	if (use_far_grass_proxy) {
+		vec3 far_meadow = mix(
+			far_dry_grass_color.rgb,
+			far_green_grass_color.rgb,
+			biome_mask
+		);
+		far_meadow = mix(far_meadow, far_high_grass_color.rgb, height_mix * 0.34);
+		// Very low contrast variation retains field scale without pretending to
+		// draw distant individual blades or creating a camera-centred ring.
+		far_meadow *= 0.988 + broad_noise * 0.012;
+		grass = mix(grass, far_meadow, far_grass_proxy_strength);
+	}
 	float fine_grass = sin(world_position.x * 0.34 + sin(world_position.z * 0.19));
 	float wind_field = soft_noise(world_position.xz + vec2(TIME * 24.0, TIME * 8.0));
 	float wind_band = smoothstep(0.46, 0.76, wind_field);

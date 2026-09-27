@@ -2,6 +2,7 @@ extends Node3D
 
 const TERRAIN_SHADER := preload("res://assets/world/terrain/shaders/terrain_draft.gdshader")
 const SKY_TEXTURE := preload("res://assets/environment/hdri/rosendal_park_sunset_puresky_4k.exr")
+const GRASS_MODE_NAMES := ["baseline 52/96", "smooth + old ground", "smooth + far proxy"]
 
 @onready var terrain_source: Node3D = $TerrainSource
 @onready var camper = $CamperVan
@@ -14,26 +15,41 @@ var lod_enabled := true
 var vegetation_enabled := true
 var capture_requested := false
 var capture_stress_mode := false
+var capture_grass_overview := false
+var capture_stream_test := false
 var biome_noise_texture: NoiseTexture2D
+var grass_debug_mode := 2
+var terrain_materials: Array[ShaderMaterial] = []
 
 
 func _ready() -> void:
 	var arguments := OS.get_cmdline_user_args()
 	capture_requested = "--capture-world-lod" in arguments or "--capture" in arguments
 	capture_stress_mode = "--capture-world-lod-stress" in arguments
-	capture_requested = capture_requested or capture_stress_mode
+	capture_grass_overview = "--grass-overview" in arguments
+	capture_stream_test = "--grass-stream-test" in arguments
+	capture_requested = capture_requested or capture_stress_mode or capture_stream_test
+	if "--grass-baseline" in arguments:
+		grass_debug_mode = 0
+	elif "--grass-transition-only" in arguments:
+		grass_debug_mode = 1
 	_build_environment()
 	biome_noise_texture = _create_biome_noise_texture()
 	_prepare_terrain()
 	await get_tree().physics_frame
 	await get_tree().physics_frame
 	_place_camper_on_terrain()
-	vegetation.initialize(camper, biome_noise_texture)
+	vegetation.initialize(camper, biome_noise_texture, grass_debug_mode)
+	if capture_grass_overview:
+		_configure_grass_overview_camera()
 	if capture_stress_mode:
 		lod_enabled = false
 		vegetation.set_lod_enabled(false)
 	if capture_requested:
-		await get_tree().create_timer(8.0).timeout
+		if capture_stream_test:
+			await _run_grass_stream_test()
+		else:
+			await get_tree().create_timer(8.0).timeout
 		_capture_frame()
 
 
@@ -54,6 +70,13 @@ func _process(_delta: float) -> void:
 	else:
 		remove_meta("vegetation_key_down")
 
+	if Input.is_key_pressed(KEY_G):
+		if not has_meta("grass_mode_key_down"):
+			set_meta("grass_mode_key_down", true)
+			_set_grass_debug_mode((grass_debug_mode + 1) % 3)
+	else:
+		remove_meta("grass_mode_key_down")
+
 	var draws := int(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME))
 	var primitives := int(Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME))
 	status_label.text = (
@@ -64,9 +87,10 @@ func _process(_delta: float) -> void:
 			draws,
 			_format_count(primitives),
 		]
-		+ "LOD %s    Vegetation %s    Grass chunks %d (+%d loading)    Trees %d (large %d)"
+		+ "LOD %s    Grass %s    Vegetation %s    Chunks %d (+%d loading)    Trees %d (large %d)"
 		% [
 			"ON" if lod_enabled else "OFF / stress",
+			GRASS_MODE_NAMES[grass_debug_mode],
 			"ON" if vegetation_enabled else "OFF",
 			vegetation.get_active_grass_chunk_count(),
 			vegetation.get_pending_grass_chunk_count(),
@@ -133,7 +157,9 @@ func _prepare_terrain() -> void:
 		var terrain_material := ShaderMaterial.new()
 		terrain_material.shader = TERRAIN_SHADER
 		terrain_material.set_shader_parameter("biome_noise_texture", biome_noise_texture)
+		terrain_material.set_shader_parameter("use_far_grass_proxy", grass_debug_mode == 2)
 		mesh_instance.material_override = terrain_material
+		terrain_materials.append(terrain_material)
 	_create_coast_cliff_skirt(primary_terrain)
 	primary_terrain.create_trimesh_collision()
 	for child in primary_terrain.get_children():
@@ -183,7 +209,9 @@ func _create_coast_cliff_skirt(terrain: MeshInstance3D) -> void:
 	cliff_material.shader = TERRAIN_SHADER
 	cliff_material.set_shader_parameter("biome_noise_texture", biome_noise_texture)
 	cliff_material.set_shader_parameter("rock_bias", 0.44)
+	cliff_material.set_shader_parameter("use_far_grass_proxy", grass_debug_mode == 2)
 	cliff_node.material_override = cliff_material
+	terrain_materials.append(cliff_material)
 	terrain.add_child(cliff_node)
 
 
@@ -288,26 +316,102 @@ func _format_count(value: int) -> String:
 	return str(value)
 
 
+func _configure_grass_overview_camera() -> void:
+	var camera := Camera3D.new()
+	camera.name = "GrassOverviewCamera"
+	camera.fov = 48.0
+	camera.near = 0.1
+	camera.far = 5000.0
+	add_child(camera)
+	camera.global_position = camper.global_position + Vector3(0.0, 92.0, 118.0)
+	camera.look_at(camper.global_position + Vector3(0.0, -2.0, 0.0), Vector3.UP)
+	camera.current = true
+
+
+func _run_grass_stream_test() -> void:
+	# Fill the initial prefetch disk, then travel roughly 130 m at the vehicle's
+	# real maximum speed. Reasserting drive_speed supplies the same motion as W
+	# without adding a special production control path to the vehicle script.
+	await get_tree().create_timer(8.0).timeout
+	var start_position: Vector3 = camper.global_position
+	var maximum_pending: int = vegetation.get_pending_grass_chunk_count()
+	var maximum_visible_pending: int = vegetation.get_pending_visible_grass_chunk_count()
+	var minimum_fps: int = Engine.get_frames_per_second()
+	for _frame in 360:
+		camper.drive_speed = camper.maximum_forward_speed
+		await get_tree().physics_frame
+		maximum_pending = maxi(
+			maximum_pending,
+			vegetation.get_pending_grass_chunk_count()
+		)
+		maximum_visible_pending = maxi(
+			maximum_visible_pending,
+			vegetation.get_pending_visible_grass_chunk_count()
+		)
+		minimum_fps = mini(minimum_fps, Engine.get_frames_per_second())
+	var travelled := Vector2(
+		camper.global_position.x - start_position.x,
+		camper.global_position.z - start_position.z
+	).length()
+	print(
+		"GRASS_STREAM_METRICS speed_kph=%.1f travelled_m=%.1f max_pending=%d max_visible_pending=%d final_pending=%d final_visible_pending=%d active_chunks=%d min_fps=%d"
+		% [
+			camper.maximum_forward_speed * 3.6,
+			travelled,
+			maximum_pending,
+			maximum_visible_pending,
+			vegetation.get_pending_grass_chunk_count(),
+			vegetation.get_pending_visible_grass_chunk_count(),
+			vegetation.get_active_grass_chunk_count(),
+			minimum_fps,
+		]
+	)
+
+
+func _set_grass_debug_mode(value: int) -> void:
+	grass_debug_mode = clampi(value, 0, 2)
+	if vegetation.initialized:
+		vegetation.set_grass_debug_mode(grass_debug_mode)
+	for material in terrain_materials:
+		material.set_shader_parameter("use_far_grass_proxy", grass_debug_mode == 2)
+
+
 func _capture_frame() -> void:
 	var image := get_viewport().get_texture().get_image()
-	var output_path := (
-		"res://screenshots/world_lod_drive_stress.png"
-		if capture_stress_mode
-		else "res://screenshots/world_lod_drive_test.png"
-	)
+	var output_path := "res://screenshots/world_lod_drive_test.png"
+	if capture_stream_test:
+		output_path = "res://screenshots/world_lod_grass_streaming.png"
+	elif capture_stress_mode:
+		output_path = "res://screenshots/world_lod_drive_stress.png"
+	elif grass_debug_mode == 0:
+		output_path = (
+			"res://screenshots/world_lod_grass_baseline_overview.png"
+			if capture_grass_overview
+			else "res://screenshots/world_lod_grass_baseline.png"
+		)
+	elif grass_debug_mode == 1:
+		output_path = (
+			"res://screenshots/world_lod_grass_transition_overview.png"
+			if capture_grass_overview
+			else "res://screenshots/world_lod_grass_transition.png"
+		)
+	elif capture_grass_overview:
+		output_path = "res://screenshots/world_lod_grass_proxy_overview.png"
 	var error := image.save_png(output_path)
 	if error != OK:
 		push_error("Failed to save %s: %s" % [output_path, error_string(error)])
 	else:
 		print("Saved ", ProjectSettings.globalize_path(output_path))
 	print(
-		"LOD_METRICS mode=%s fps=%d draws=%d primitives=%d grass_chunks=%d trees=%d large_trees=%d"
+		"LOD_METRICS mode=%s grass_mode=%s fps=%d draws=%d primitives=%d grass_chunks=%d pending=%d trees=%d large_trees=%d"
 		% [
 			"stress_lod0" if capture_stress_mode else "lod_enabled",
+			GRASS_MODE_NAMES[grass_debug_mode],
 			Engine.get_frames_per_second(),
 			int(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)),
 			int(Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME)),
 			vegetation.get_active_grass_chunk_count(),
+			vegetation.get_pending_grass_chunk_count(),
 			vegetation.tree_instance_count,
 			vegetation.large_tree_instance_count,
 		]

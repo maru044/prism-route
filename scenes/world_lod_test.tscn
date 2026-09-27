@@ -78,7 +78,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.65)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
 theme_override_font_sizes/font_size = 21
-text = "World + vegetation LOD prototype    Tab: Ganyu vegetation test\nW/S accelerate/reverse    A/D steer    Space brake    R reset    Right-drag camera    Wheel zoom    L LOD stress    V vegetation"
+text = "World + vegetation LOD prototype    Tab: Ganyu vegetation test\nW/S accelerate/reverse    A/D steer    Space brake    R reset    Right-drag camera    Wheel zoom    G grass A/B    L LOD stress    V vegetation"
 
 [node name="Status" type="Label" parent="HUD"]
 offset_left = 24.0

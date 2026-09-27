@@ -13,7 +13,9 @@ Open `project.godot` in Godot 4.6 and run `scenes/main.tscn`. W/S
 accelerates or reverses the camper, A/D steers, Space brakes and R resets it to
 the starting point. Right-drag orbits the third-person camera and the mouse
 wheel changes its distance. L toggles the LOD stress comparison and V toggles
-all streamed vegetation. Tab switches to the restored Ganyu vegetation grove;
+all streamed vegetation. G cycles the grass A/B modes: the original 52/96 m
+hard switch, smooth stochastic density with the old terrain, and the default
+smooth density with the far-meadow proxy. Tab switches to the restored Ganyu vegetation grove;
 Tab in that scene returns to the playable world. The basic single-tree and
 biome scenes remain internal specialist tests rather than player-facing
 shortcuts. The current world captures are
@@ -71,7 +73,7 @@ accepted trees and camper placeholder are included here.
 The HDRI is included so the test scene remains runnable; check its source
 license before any public redistribution of the repository.
 
-## Current test, 2026-09-27
+## Current test, 2026-09-28
 
 The playable island is approximately 2.57 × 2.99 km and 175.6 m high. The
 first pass intentionally keeps the visual terrain as one complete mesh. It
@@ -81,22 +83,35 @@ sea level as a generated rock skirt: low northern edges remain beach-height,
 while elevated southern edges become visible cliffs.
 
 Grass streams around the camper in 24 m MultiMesh chunks at approximately the
-same 35 instances/m² used by the focused 63,000-instance sample. LOD0 uses the full
-three-card grass up to 52 m; LOD1 retains a larger, one-in-five subset from 52
-to 96 m; chunks are kept within 120 m so driving does not expose an empty ring.
-After the cards end, the terrain shader continues the meadow with the same
-world-aligned, feathered straw/green biome mask and restrained moving tonal
-bands, so distant ground does not revert to a bare neutral surface.
-Trees are scattered deterministically across the complete island, stored in
-96 m chunks and culled after 900 m. For this first version trees rely on
-Godot's imported automatic Mesh LOD. Low-contrast flower, cherry, gold-autumn
-and orange/red-autumn palettes occur as groves rather than isolated noise. A
-small number of the accepted broad and upright large trees punctuate those
-coloured groves; the small broad-canopy tree remains the forest majority. A
-deliberately cheap solid-canopy far
-proxy was tested and rejected because it produced visible floating color
-shapes against high terrain. A real multi-view tree impostor remains future
-work rather than being represented by an incorrect placeholder.
+same 35 instances/m² used by the focused 63,000-instance sample. The accepted
+three-card grass remains full-density through 48 m. Stable per-blade thresholds
+then remove the near-only population over 48–76 m, while the one-in-five far
+survivors continuously thin over 76–128 m. This avoids switching an entire
+24 m MultiMesh or dropping directly from full density to 20 percent. The
+terrain shader continues the meadow with the same world-aligned, feathered
+straw/green biome field and a calibrated screen-average far proxy, so distant
+ground retains grassland identity without drawing individual blades.
+
+Streaming uses a 1.5 second velocity lookahead, prioritizes visible cells, and
+caches zero-grass coast/rock cells instead of rebuilding them every refresh.
+The automated 79.2 km/h, 131 m drive test reached a prefetch-only queue peak of
+15 cells, zero visible-range pending cells, and returned to an empty queue; it
+finished at 60 FPS on the development PC with a 48 FPS minimum during chunk
+construction. These figures are a regression reference, not a target-hardware
+performance guarantee.
+The deterministic island stress population contains 50,000 logical trees,
+including exactly 5,000 accepted broad or upright large trees. Low-contrast
+flower, cherry, gold-autumn and orange/red-autumn palettes occur as groves
+rather than isolated noise; the small broad-canopy tree remains the forest
+majority. Tree instances are batched at three spatial scales while shader-side
+distance fades are evaluated per tree, preventing a complete chunk from
+switching at once. The accepted foliage-card models are LOD0. Camera-facing
+per-crown-group billboards form LOD1, and eight-azimuth whole-tree impostors
+form LOD2. Current small-tree transitions are 90–120 m and 280–330 m; large-tree
+transitions are 80–110 m and 280–330 m. These ranges are provisional visual
+tuning values rather than final gameplay settings. The batched tree shader
+keeps the focused test scene's crown normals and A3 seasonal-lighting formula
+without consuming Godot's limited per-instance shader-variable buffer.
 
 The focused vegetation test's 24 m radius ground has 63,000 grass instances in 4 m MultiMesh chunks,
 preserving the density of the earlier 8 m / 7,000-instance test. One grass
