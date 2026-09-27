@@ -1,33 +1,44 @@
-# Prism Route — vegetation rendering prototype
+# Prism Route — world and vegetation prototype
 
-This Godot 4.6 Forward+ project has one active scene for testing the game's
-stylized grass, trees, wind, sky, color transitions and landscape composition.
-It is **not** the full game or the Rhino terrain. Actual game planting points
-will be designed and previewed in CAD; these positions only test the look.
+This Godot 4.6 Forward+ project now uses the complete Rhino island draft for a
+first playable scale, driving and vegetation LOD test. It is still a prototype:
+roads, final planting points, terrain chunks and production vehicle physics are
+not implemented. Actual planting points will eventually be designed and
+previewed in CAD; the current deterministic scatter only tests appearance and
+rendering cost.
 
 ## Open and inspect
 
-Open `project.godot` in Godot 4.6 and run the main scene,
-`scenes/main.tscn`. WASD moves freely across the scene, Q/E moves vertically,
-Shift accelerates movement, right-drag freely looks in every direction, and
-the mouse wheel moves along the view direction. The current captures are
-`screenshots/vegetation_grove.png`,
-`screenshots/vegetation_grove_top.png`, and
-`screenshots/vegetation_grove_ground.png`.
+Open `project.godot` in Godot 4.6 and run `scenes/main.tscn`. W/S
+accelerates or reverses the camper, A/D steers, Space brakes and R resets it to
+the starting point. Right-drag orbits the third-person camera and the mouse
+wheel changes its distance. L toggles the LOD stress comparison and V toggles
+all streamed vegetation. Tab switches to the restored Ganyu vegetation grove;
+Tab in that scene returns to the playable world. The basic single-tree and
+biome scenes remain internal specialist tests rather than player-facing
+shortcuts. The current world captures are
+`screenshots/world_lod_drive_test.png` and
+`screenshots/world_lod_drive_stress.png`; the earlier vegetation captures are
+retained as art references.
 Always judge changes in the actual Godot Forward+ scene, not solely in Blender.
 
-The scene uses the accepted broadleaf baselines, current species studies and
-the current grass.
-An uneven back/right grove, smaller groups, a continuous grass bay and two
-larger seasonal trees test spacing and negative space. The root inspector exposes grass, tree and ground
-colors, boundary position, transition width, contour warp and per-blade color
-overlap. Older scene files were removed; earlier screenshots remain as visual
-references, and the v8 tree model remains available as an asset.
+The main scene uses the accepted small broadleaf and current grass. Dedicated
+vegetation test scenes remain available for inspecting species, palettes and
+composition without loading the island.
 
 ## Project layout
 
-- `scenes/main.tscn` — the only active Godot scene.
-- `scripts/` — scene generation and orbit camera scripts.
+- `scenes/main.tscn` — entry point for the playable world LOD prototype.
+- `scenes/world_lod_test.tscn` — complete island, camper and streamed
+  vegetation test.
+- `scenes/vegetation_grove_test.tscn` — restored full-scale vegetation test
+  with Ganyu, the composed grove, seasonal trees, shrubs and dense grass.
+- `scripts/camper_controller.gd` — intentionally simple kinematic third-person
+  driving controller.
+- `scripts/vegetation_lod_streamer.gd` — deterministic grass streaming, grass
+  density LOD, tree chunking and distance culling.
+- `scripts/world_lod_test.gd` — terrain collision, spawn selection,
+  environment, diagnostics and captures.
 - `assets/vegetation/models/` — the current grass, shrub and tree GLBs, including
   the v8 regression baseline, accepted broadleaf trees and species studies.
 - `assets/vegetation/source/` — editable Blender sources for the current
@@ -39,6 +50,14 @@ references, and the v8 tree model remains available as an asset.
 - `assets/vegetation/shaders/biome_ground.gdshader` — ground palette using the
   same world-space boundary as the grass and tree shader.
 - `assets/environment/hdri/` — the Rosendal Park Sunset Pure Sky panorama.
+- `assets/world/terrain/models/island_draft_rhino.gltf` — project copy of the
+  complete `map.gltf` exported from Rhino. The higher 175.6 m surface is used
+  for rendering and collision; its open boundary also generates the temporary
+  coast cliff skirt at runtime.
+- `assets/world/terrain/shaders/terrain_draft.gdshader` — temporary
+  height/slope world-space terrain colors.
+- `assets/vehicles/` — the simple 6.2 m camper placeholder and Blender source;
+  `tools/build_camper_van_placeholder.py` rebuilds both.
 - `assets/characters/` — character models. All character models in Prism Route
   use VRM as the standard runtime format so they share one import and animation
   pipeline.
@@ -46,14 +65,40 @@ references, and the v8 tree model remains available as an asset.
 - `docs/RESEARCH_CONTEXT.md` — current art direction, tested decisions and
   guidance for research tasks.
 
-The original Rhino terrain and earlier Blender sources live outside this small
-Godot repository; editable sources for the accepted trees are included here.
+The editable Rhino document remains outside the Godot repository; its exported
+draft is included so this scene stays reproducible. Editable sources for the
+accepted trees and camper placeholder are included here.
 The HDRI is included so the test scene remains runnable; check its source
 license before any public redistribution of the repository.
 
 ## Current test, 2026-09-27
 
-The 24 m radius ground has 63,000 grass instances in 4 m MultiMesh chunks,
+The playable island is approximately 2.57 × 2.99 km and 175.6 m high. The
+first pass intentionally keeps the visual terrain as one complete mesh. It
+creates a double-sided triangle collision at runtime because the open Rhino
+surface may face away from downward physics rays. Its boundary is extended to
+sea level as a generated rock skirt: low northern edges remain beach-height,
+while elevated southern edges become visible cliffs.
+
+Grass streams around the camper in 24 m MultiMesh chunks at approximately the
+same 35 instances/m² used by the focused 63,000-instance sample. LOD0 uses the full
+three-card grass up to 52 m; LOD1 retains a larger, one-in-five subset from 52
+to 96 m; chunks are kept within 120 m so driving does not expose an empty ring.
+After the cards end, the terrain shader continues the meadow with the same
+world-aligned, feathered straw/green biome mask and restrained moving tonal
+bands, so distant ground does not revert to a bare neutral surface.
+Trees are scattered deterministically across the complete island, stored in
+96 m chunks and culled after 900 m. For this first version trees rely on
+Godot's imported automatic Mesh LOD. Low-contrast flower, cherry, gold-autumn
+and orange/red-autumn palettes occur as groves rather than isolated noise. A
+small number of the accepted broad and upright large trees punctuate those
+coloured groves; the small broad-canopy tree remains the forest majority. A
+deliberately cheap solid-canopy far
+proxy was tested and rejected because it produced visible floating color
+shapes against high terrain. A real multi-view tree impostor remains future
+work rather than being represented by an incorrect placeholder.
+
+The focused vegetation test's 24 m radius ground has 63,000 grass instances in 4 m MultiMesh chunks,
 preserving the density of the earlier 8 m / 7,000-instance test. One grass
 instance has three crossed cards with double-sided geometry, approximately
 0.83–1.10 m tall after instance scaling. The tree crown uses 480 foliage
@@ -74,7 +119,7 @@ and moving light/dark wind bands. A separate slow temporal noise modulates the
 overall wind intensity. See `docs/RESEARCH_CONTEXT.md` for the exact tested
 choices and rejected visual approaches.
 
-The current scene uses 11 landscape placements of the small broad-canopy tree
+The focused vegetation scene uses 11 landscape placements of the small broad-canopy tree
 in an 8-tree main group, a 2-tree back-left group and one right-edge tree.
 Four small trees form the A3 flower/autumn palette study; the accepted large
 spreading tree is the cherry-flower test and the upright tree is the orange

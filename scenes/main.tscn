@@ -1,28 +1,5 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://scripts/vegetation_test.gd" id="1_main"]
-[ext_resource type="Script" path="res://scripts/orbit_camera.gd" id="2_camera"]
+[ext_resource type="PackedScene" path="res://scenes/world_lod_test.tscn" id="1_world"]
 
-[node name="VegetationGrove" type="Node3D"]
-script = ExtResource("1_main")
-biome_demo = true
-grove_demo = true
-
-[node name="OrbitCamera" type="Camera3D" parent="."]
-current = true
-fov = 48.0
-near = 0.05
-far = 200.0
-script = ExtResource("2_camera")
-target = Vector3(4, 1.1, 2.4)
-distance = 9.0
-pitch = 0.24
-
-[node name="Instructions" type="Label" parent="."]
-offset_left = 24.0
-offset_top = 22.0
-offset_right = 900.0
-offset_bottom = 68.0
-text = "WASD: move    Q/E: down/up    Shift: fast    Right-drag: look    Wheel: forward/back"
-theme_override_colors/font_color = Color(1, 1, 1, 0.82)
-theme_override_font_sizes/font_size = 22
+[node name="WorldLodTest" instance=ExtResource("1_world")]

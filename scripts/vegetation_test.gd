@@ -50,6 +50,13 @@ var biome_noise_texture: NoiseTexture2D
 var shared_trunk_material: StandardMaterial3D
 
 
+func _unhandled_input(event: InputEvent) -> void:
+	if not event is InputEventKey or not event.pressed or event.echo:
+		return
+	if event.keycode == KEY_TAB:
+		get_tree().change_scene_to_file("res://scenes/world_lod_test.tscn")
+
+
 func _ready() -> void:
 	var arguments := OS.get_cmdline_user_args()
 	var refined_tree := not ("--baseline-tree" in arguments)

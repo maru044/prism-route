@@ -1,0 +1,93 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/world_lod_test.gd" id="1_world"]
+[ext_resource type="PackedScene" path="res://assets/world/terrain/models/island_draft_rhino.gltf" id="2_terrain"]
+[ext_resource type="Script" path="res://scripts/camper_controller.gd" id="3_camper"]
+[ext_resource type="PackedScene" path="res://assets/vehicles/models/camper_van_placeholder.glb" id="4_camper_model"]
+[ext_resource type="Script" path="res://scripts/vegetation_lod_streamer.gd" id="5_vegetation"]
+
+[sub_resource type="BoxShape3D" id="BoxShape_camper"]
+size = Vector3(2.2, 2.5, 5.6)
+
+[sub_resource type="StandardMaterial3D" id="Material_ocean"]
+albedo_color = Color(0.16, 0.39, 0.46, 1)
+metallic = 0.05
+roughness = 0.24
+
+[sub_resource type="PlaneMesh" id="Plane_ocean"]
+material = SubResource("Material_ocean")
+size = Vector2(6500, 6500)
+
+[node name="WorldLodTest" type="Node3D"]
+script = ExtResource("1_world")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+shadow_enabled = true
+
+[node name="Ocean" type="MeshInstance3D" parent="."]
+position = Vector3(0, -0.3, 0)
+mesh = SubResource("Plane_ocean")
+cast_shadow = 0
+
+[node name="TerrainSource" parent="." instance=ExtResource("2_terrain")]
+position = Vector3(-1160.034, 0.162, 1140.257)
+
+[node name="CamperVan" type="CharacterBody3D" parent="."]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("3_camper")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CamperVan"]
+position = Vector3(0, 1.45, 0)
+shape = SubResource("BoxShape_camper")
+
+[node name="Visual" type="Node3D" parent="CamperVan"]
+rotation = Vector3(0, 3.1415927, 0)
+
+[node name="CamperVanPlaceholder" parent="CamperVan/Visual" instance=ExtResource("4_camper_model")]
+
+[node name="CameraPivot" type="Node3D" parent="CamperVan"]
+position = Vector3(0, 2.45, 0)
+rotation = Vector3(-0.16, 0, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CamperVan/CameraPivot"]
+spring_length = 10.0
+margin = 0.3
+collision_mask = 1
+
+[node name="Camera3D" type="Camera3D" parent="CamperVan/CameraPivot/SpringArm3D"]
+current = true
+fov = 55.0
+near = 0.08
+far = 5000.0
+
+[node name="VegetationLodStreamer" type="Node3D" parent="."]
+script = ExtResource("5_vegetation")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Info" type="Label" parent="HUD"]
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 1150.0
+offset_bottom = 92.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.9)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.65)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 21
+text = "World + vegetation LOD prototype    Tab: Ganyu vegetation test\nW/S accelerate/reverse    A/D steer    Space brake    R reset    Right-drag camera    Wheel zoom    L LOD stress    V vegetation"
+
+[node name="Status" type="Label" parent="HUD"]
+offset_left = 24.0
+offset_top = 984.0
+offset_right = 1500.0
+offset_bottom = 1058.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.9)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.7)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 19
+text = "Preparing terrain and vegetation..."
