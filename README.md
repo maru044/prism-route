@@ -39,6 +39,10 @@ references, and the v8 tree model remains available as an asset.
 - `assets/vegetation/shaders/biome_ground.gdshader` — ground palette using the
   same world-space boundary as the grass and tree shader.
 - `assets/environment/hdri/` — the Rosendal Park Sunset Pure Sky panorama.
+- `assets/characters/` — character models. All character models in Prism Route
+  use VRM as the standard runtime format so they share one import and animation
+  pipeline.
+- `scenes/characters/` — Godot character scene wrappers for imported VRM models.
 - `docs/RESEARCH_CONTEXT.md` — current art direction, tested decisions and
   guidance for research tasks.
 
@@ -91,14 +95,14 @@ contributes alpha silhouettes only:
 colors so lighting remains in Godot, and can recover alpha when a generator
 has painted a neutral checkerboard background.
 
-Current complete-mesh budgets are 1,956–2,108 triangles for the accepted
-broadleaf trees, 4,796 for the birch and 4,620 for the cypress. These are
-reasonable near LOD0 budgets; large forests will still require spatially
-chunked MultiMeshes, distance LODs and eventual tree impostors because alpha
-overdraw matters more than raw triangle count. The birch is a usable first
-species asset. The cypress is retained only as a performance-valid silhouette
-study: its current modeling is not accepted final art and should not be used as
-the visual reference for production trees.
+Current complete-mesh counts are 1,956–2,108 triangles for the accepted
+broadleaf trees, 4,796 for the birch and 4,620 for the cypress. These numbers
+record the current assets rather than fixed targets or a conclusion that their
+budgets are already appropriate. The birch is a usable first species asset. The
+cypress is retained only as a silhouette study: its current modeling is not
+accepted final art and should not be used as the visual reference for
+production trees. Mesh density and LOD budgets will be evaluated again when
+representative terrain and forest placements exist.
 
 ## Reimport generated assets
 

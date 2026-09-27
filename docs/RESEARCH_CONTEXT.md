@@ -207,9 +207,9 @@ the intent and the result of previous visual tests.
   small centered terminal volume, for 1,108 cards in total. Foliage begins near
   the ground. The outline may be irregular,
   but it must not become either a perfect Christmas-tree cone or a stack of
-  horizontal shelves. Its low-contrast olive palette is shader-controlled.
-  Its geometry budget is now acceptable, but the current silhouette remains a
-  rejected visual study rather than an accepted production tree.
+  horizontal shelves. Its low-contrast olive palette is shader-controlled. The
+  current silhouette remains a rejected visual study rather than an accepted
+  production tree; its geometry and density may change with the next redesign.
 - The original species prototypes used 7,200 birch cards and 6,720 cypress
   cards. Those counts were generator overfill, not an artistic requirement:
   every card already carries a complete porous atlas cluster. The accepted
