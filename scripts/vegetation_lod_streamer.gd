@@ -57,11 +57,13 @@ const TREE_BROAD_CLUMP_TEXTURE := preload("res://assets/vegetation/textures/tree
 const TREE_BROAD_IMPOSTOR_TEXTURE := preload("res://assets/vegetation/textures/tree_broad_canopy_unlit_8view_v1.png")
 const TREE_UPRIGHT_CLUMP_TEXTURE := preload("res://assets/vegetation/textures/tree_upright_clump_unlit_4var_v1.png")
 const TREE_UPRIGHT_IMPOSTOR_TEXTURE := preload("res://assets/vegetation/textures/tree_upright_canopy_unlit_8view_v1.png")
+const TREE_LOD_DITHER_TEXTURE := preload("res://assets/vegetation/textures/lod_blue_noise_64.png")
 
 var target: Node3D
 var initialized := false
 var lod_enabled := true
 var vegetation_enabled := true
+var transition_test_mode := false
 var active_grass_chunks: Dictionary[Vector2i, Node3D] = {}
 var empty_grass_cells: Dictionary[Vector2i, bool] = {}
 var queued_grass_cells: Dictionary[Vector2i, bool] = {}
@@ -111,19 +113,27 @@ var tree_palette_material_cache: Dictionary = {}
 func initialize(
 	target_node: Node3D,
 	shared_biome_noise: NoiseTexture2D,
-	initial_grass_debug_mode := 2
+	initial_grass_debug_mode := 2,
+	initial_transition_test_mode := false
 ) -> void:
 	target = target_node
 	biome_noise_texture = shared_biome_noise
 	grass_debug_mode = clampi(initial_grass_debug_mode, 0, 2)
+	transition_test_mode = initial_transition_test_mode
 	_load_meshes_and_materials()
-	_build_tree_lod()
+	if transition_test_mode:
+		_build_tree_transition_test()
+	else:
+		_build_tree_lod()
 	initialized = true
-	_refresh_grass_cells()
+	if not transition_test_mode:
+		_refresh_grass_cells()
 
 
 func _process(delta: float) -> void:
 	if not initialized or target == null:
+		return
+	if transition_test_mode:
 		return
 	update_accumulator += delta
 	if update_accumulator >= GRASS_STREAM_REFRESH_SECONDS:
@@ -244,6 +254,7 @@ func _load_meshes_and_materials() -> void:
 	leaf_material.set_shader_parameter("species_art_direct_strength", 0.95)
 	leaf_material.set_shader_parameter("species_light_warp_scale", 0.018)
 	leaf_material.set_shader_parameter("species_light_warp_amount", 0.055)
+	leaf_material.set_shader_parameter("lod_dither_texture", TREE_LOD_DITHER_TEXTURE)
 	# Match the accepted focused scene.  These are material uniforms here rather
 	# than per-instance uniforms so the 50k-tree MultiMesh population does not
 	# exhaust Godot's instance-variable buffer.
@@ -267,7 +278,12 @@ func _load_meshes_and_materials() -> void:
 		Vector3(0.085, 8.912, -0.250), Vector3(7.145, 7.423, 7.135)
 	)
 	tree_small_lod1_material = _make_tree_hlod_material(
-		TREE_SMALL_CLUMP_TEXTURE, false,
+		# The small source crown is a single mesh.  Its old LOD1 atlas therefore
+		# contained four whole-tree silhouettes, which repeated as flat umbrella
+		# layers when the crown was split into volume clumps.  Reuse the accepted
+		# broad-tree *clump* atlas here; colour and lighting still come from this
+		# material, while each card now represents foliage rather than a tiny tree.
+		TREE_BROAD_CLUMP_TEXTURE, false,
 		Vector3(0.011, 3.672, -0.049), Vector3(3.850, 2.568, 2.883),
 		Vector4(90.0, 120.0, 280.0, 330.0)
 	)
@@ -360,6 +376,7 @@ func _make_tree_hlod_material(
 	material.set_shader_parameter("species_art_direct_strength", 0.95)
 	material.set_shader_parameter("species_light_warp_scale", 0.018)
 	material.set_shader_parameter("species_light_warp_amount", 0.055)
+	material.set_shader_parameter("lod_dither_texture", TREE_LOD_DITHER_TEXTURE)
 	material.set_shader_parameter("use_biome_palette", true)
 	material.set_shader_parameter("biome_noise_texture", biome_noise_texture)
 	material.set_shader_parameter("palette_dry", Color(1.03, 0.98, 0.82))
@@ -779,6 +796,32 @@ func _build_tree_lod() -> void:
 				lod_level,
 				chunk_size * 1.45
 			)
+func _build_tree_transition_test() -> void:
+	# Three isolated species share the production meshes, materials and exact
+	# distance ranges.  Only the population and node-level safety margin differ,
+	# making this a repeatable visual test rather than a second implementation.
+	var test_species := [
+		{"model": 0, "palette": 0, "position": Vector3(-11.0, 0.0, 0.0)},
+		{"model": 1, "palette": 1, "position": Vector3(0.0, 0.0, 0.0)},
+		{"model": 2, "palette": 3, "position": Vector3(12.0, 0.0, 0.0)},
+	]
+	for species in test_species:
+		var transform := Transform3D(
+			Basis(Vector3.UP, 0.22 * float(species["model"])),
+			species["position"]
+		)
+		var transforms: Array[Transform3D] = [transform]
+		for lod_level in 3:
+			_add_tree_lod_level(
+				self,
+				int(species["model"]),
+				transforms,
+				int(species["palette"]),
+				lod_level,
+				16.0
+			)
+	tree_instance_count = test_species.size()
+	large_tree_instance_count = 2
 
 
 func _palette_for_cell(cell: Vector2i) -> int:
@@ -862,7 +905,8 @@ func _add_tree_lod_level(
 		_add_tree_mesh_pair(
 			parent, "Tree%d_LOD0" % model_id, lod0_trunk, lod0_leaf,
 			transforms, lod0_material, 0.0,
-			lod0_end + chunk_margin, 0, palette_id, true
+			lod0_end + chunk_margin, 0, palette_id, true,
+			lod1_end + chunk_margin
 		)
 	elif lod_level_to_build == 1:
 		_add_tree_mesh_pair(
@@ -898,7 +942,8 @@ func _add_tree_mesh_pair(
 	end_distance: float,
 	lod_level: int,
 	palette_id: int = 0,
-	include_trunk: bool = true
+	include_trunk: bool = true,
+	trunk_end_distance: float = -1.0
 ) -> void:
 	var leaf_node := _make_multimesh_node(
 		prefix + "_Leaves", leaves_mesh, transforms,
@@ -910,9 +955,12 @@ func _add_tree_mesh_pair(
 	leaf_node.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	var trunk_node: MultiMeshInstance3D
 	if include_trunk:
+		var resolved_trunk_end := (
+			trunk_end_distance if trunk_end_distance >= 0.0 else end_distance
+		)
 		trunk_node = _make_multimesh_node(
 			prefix + "_Trunks", trunk_mesh, transforms, trunk_material,
-			begin_distance, end_distance
+			begin_distance, resolved_trunk_end
 		)
 		parent.add_child(trunk_node)
 	parent.add_child(leaf_node)

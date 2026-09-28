@@ -23,6 +23,7 @@ uniform vec3 tree_canopy_center_local = vec3(0.0);
 uniform vec3 tree_canopy_radii_local = vec3(1.0);
 uniform float tree_local_normal_weight : hint_range(0.0, 1.0) = 0.34;
 uniform vec4 tree_lod_fade = vec4(-100000.0, -99999.0, 99999.0, 100000.0);
+uniform sampler2D lod_dither_texture : repeat_enable, filter_nearest;
 
 uniform vec2 wind_direction = vec2(0.8, 0.35);
 uniform float wind_strength = 0.05;
@@ -214,6 +215,23 @@ void fragment() {
 		float facing = abs(dot(normalize(card_plane_normal_view), normalize(VIEW)));
 		view_mask = smoothstep(view_angle_fade_start, view_angle_fade_end, facing);
 	}
+	// Leaf cutout and LOD coverage are deliberately independent. Multiplying
+	// tex.a by the continuous LOD weight before a fixed alpha scissor collapses
+	// a nominal 30 m transition into an almost-hard switch. Adjacent tiers share
+	// this screen-space threshold tile and complementary visibility weights, so
+	// each screen pixel is assigned to one representation throughout the fade.
+	if (tree_lod_visibility < 0.9999) {
+		vec2 noise_size = vec2(textureSize(lod_dither_texture, 0));
+		vec2 noise_pixel = mod(floor(FRAGCOORD.xy), noise_size);
+		float lod_threshold = textureLod(
+			lod_dither_texture,
+			(noise_pixel + vec2(0.5)) / noise_size,
+			0.0
+		).r;
+		if (lod_threshold >= tree_lod_visibility) {
+			discard;
+		}
+	}
 	vec3 lighting_normal = normalize(NORMAL);
 	if (use_tree_local_canopy_normal) {
 		lighting_normal = normalize(mix(
@@ -242,7 +260,7 @@ void fragment() {
 	} else {
 		ALBEDO = tex.rgb * palette_tint * variant_tint.rgb;
 	}
-	ALPHA = tex.a * edge_mask * view_mask * tree_lod_visibility;
+	ALPHA = tex.a * edge_mask * view_mask;
 	ALPHA_SCISSOR_THRESHOLD = alpha_cutoff;
 	ALPHA_ANTIALIASING_EDGE = min(alpha_antialiasing_edge, alpha_cutoff - 0.001);
 	ALPHA_TEXTURE_COORDINATE = sample_uv * vec2(textureSize(albedo_texture, 0));

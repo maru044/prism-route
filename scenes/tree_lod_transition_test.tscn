@@ -1,0 +1,65 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/tree_lod_transition_test.gd" id="1_test"]
+[ext_resource type="Script" path="res://scripts/orbit_camera.gd" id="2_camera"]
+[ext_resource type="Script" path="res://scripts/vegetation_lod_streamer.gd" id="3_vegetation"]
+
+[sub_resource type="StandardMaterial3D" id="GroundMaterial"]
+albedo_color = Color(0.52, 0.48, 0.29, 1)
+roughness = 0.95
+
+[sub_resource type="PlaneMesh" id="GroundMesh"]
+material = SubResource("GroundMaterial")
+size = Vector2(900, 900)
+
+[node name="TreeLodTransitionTest" type="Node3D"]
+script = ExtResource("1_test")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+position = Vector3(0, -0.04, 0)
+mesh = SubResource("GroundMesh")
+
+[node name="VegetationLodStreamer" type="Node3D" parent="."]
+script = ExtResource("3_vegetation")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+current = true
+fov = 55.0
+near = 0.08
+far = 1000.0
+script = ExtResource("2_camera")
+target = Vector3(0, 6, 0)
+distance = 100.0
+yaw = 0.0
+pitch = 0.01
+move_speed = 22.0
+fast_move_multiplier = 4.0
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Instructions" type="Label" parent="HUD"]
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 1200.0
+offset_bottom = 72.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.92)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.75)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 21
+text = "Tree LOD complementary-dither test\n1: 70 m   2: 100 m transition   3: 305 m transition   4: 370 m   M: automatic Mesh LOD   WASD/QE + right-drag"
+
+[node name="Status" type="Label" parent="HUD"]
+offset_left = 24.0
+offset_top = 930.0
+offset_right = 1100.0
+offset_bottom = 1060.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.92)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.75)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 20

@@ -1,8 +1,11 @@
 """Build non-destructive large-tree LOD assets from the accepted source trees.
 
-LOD1 keeps all 30 authored crown-group bounds, replacing each expensive group
-with two crossed, double-sided cards.  The card atlas is rendered from four of
-the accepted high-detail groups with an unlit material, so it carries alpha
+LOD1 preserves the authored crown volume with camera-facing clump cards.  The
+small tree is split into five overlapping volume clumps instead of collapsing
+to one whole-crown card.  The two large trees spatially aggregate their thirty
+authored groups into fourteen larger clumps, retaining the outer silhouette
+without paying for thirty medium-distance cards.  The atlas is rendered from
+accepted high-detail foliage with an unlit material, so it carries alpha
 silhouette detail but no baked lighting.
 
 LOD2 keeps the real low-poly trunk and replaces the complete crown with one
@@ -16,6 +19,7 @@ import math
 import os
 import shutil
 import sys
+import argparse
 from pathlib import Path
 
 import bpy
@@ -34,18 +38,27 @@ SPECS = (
         "source": SOURCE_DIR / "tree_small_broad_canopy.blend",
         "stem": "tree_small_broad_canopy",
         "group_count": 1,
+        "lod1_group_count": 5,
+        "lod1_card_width_scale": 1.14,
+        "lod1_card_height_scale": 1.22,
     },
     {
         "key": "broad",
         "source": SOURCE_DIR / "tree_medium_broad_clustered_canopy.blend",
         "stem": "tree_medium_broad_clustered_canopy",
         "group_count": 30,
+        "lod1_group_count": 14,
+        "lod1_card_width_scale": 0.94,
+        "lod1_card_height_scale": 1.22,
     },
     {
         "key": "upright",
         "source": SOURCE_DIR / "tree_medium_upright_asymmetric_canopy.blend",
         "stem": "tree_medium_upright_asymmetric_canopy",
         "group_count": 30,
+        "lod1_group_count": 14,
+        "lod1_card_width_scale": 0.99,
+        "lod1_card_height_scale": 1.18,
     },
 )
 
@@ -73,6 +86,105 @@ def union_bounds(objects):
     minimum = Vector(tuple(min(bound[0][axis] for bound in bounds) for axis in range(3)))
     maximum = Vector(tuple(max(bound[1][axis] for bound in bounds) for axis in range(3)))
     return minimum, maximum
+
+
+def bounds_center(bounds):
+    return (bounds[0] + bounds[1]) * 0.5
+
+
+def virtual_small_crown_bounds(foliage):
+    """Split the single authored small crown into five overlapping volumes."""
+    minimum, maximum = union_bounds(foliage)
+    center = (minimum + maximum) * 0.5
+    size = maximum - minimum
+    # X/Y are horizontal in Blender and Z is vertical.  Offsets introduce real
+    # front/back depth; cards later rotate around their individual pivots.
+    layouts = (
+        ((-0.22, -0.10, -0.10), (0.62, 0.68, 0.64)),
+        ((0.21, 0.10, -0.08), (0.62, 0.68, 0.64)),
+        ((-0.12, 0.18, 0.08), (0.60, 0.62, 0.62)),
+        ((0.13, -0.18, 0.09), (0.60, 0.62, 0.62)),
+        ((0.00, 0.00, 0.17), (0.58, 0.60, 0.60)),
+    )
+    result = []
+    for offset_values, scale_values in layouts:
+        offset = Vector(tuple(offset_values[index] * size[index] for index in range(3)))
+        half_size = Vector(tuple(scale_values[index] * size[index] * 0.5 for index in range(3)))
+        clump_center = center + offset
+        result.append((clump_center - half_size, clump_center + half_size))
+    return result
+
+
+def aggregate_crown_bounds(foliage, target_count):
+    """Deterministically cluster authored groups and return their union bounds."""
+    source_bounds = [object_world_bounds(obj) for obj in foliage]
+    if len(source_bounds) == 1:
+        return virtual_small_crown_bounds(foliage)
+    target_count = min(target_count, len(source_bounds))
+    centers = [bounds_center(bounds) for bounds in source_bounds]
+    overall_minimum, overall_maximum = union_bounds(foliage)
+    extent = overall_maximum - overall_minimum
+
+    def normalized_distance_squared(first, second):
+        return sum(
+            ((first[axis] - second[axis]) / max(extent[axis], 0.001)) ** 2
+            for axis in range(3)
+        )
+
+    # Farthest-point seeds cover the complete silhouette before Lloyd updates.
+    crown_center = (overall_minimum + overall_maximum) * 0.5
+    seed_indices = [min(
+        range(len(centers)),
+        key=lambda index: normalized_distance_squared(centers[index], crown_center),
+    )]
+    while len(seed_indices) < target_count:
+        seed_indices.append(max(
+            (index for index in range(len(centers)) if index not in seed_indices),
+            key=lambda index: min(
+                normalized_distance_squared(centers[index], centers[seed])
+                for seed in seed_indices
+            ),
+        ))
+    centroids = [centers[index].copy() for index in seed_indices]
+    assignments = [0] * len(centers)
+    for _iteration in range(12):
+        assignments = [
+            min(
+                range(target_count),
+                key=lambda cluster: normalized_distance_squared(center, centroids[cluster]),
+            )
+            for center in centers
+        ]
+        updated = []
+        for cluster in range(target_count):
+            members = [
+                centers[index]
+                for index, assignment in enumerate(assignments)
+                if assignment == cluster
+            ]
+            if not members:
+                updated.append(centroids[cluster])
+                continue
+            updated.append(sum(members, Vector()) / len(members))
+        centroids = updated
+
+    result = []
+    for cluster in range(target_count):
+        member_bounds = [
+            source_bounds[index]
+            for index, assignment in enumerate(assignments)
+            if assignment == cluster
+        ]
+        minimum = Vector(tuple(
+            min(bounds[0][axis] for bounds in member_bounds)
+            for axis in range(3)
+        ))
+        maximum = Vector(tuple(
+            max(bounds[1][axis] for bounds in member_bounds)
+            for axis in range(3)
+        ))
+        result.append((minimum, maximum))
+    return sorted(result, key=lambda bounds: tuple(bounds_center(bounds)))
 
 
 def foliage_objects():
@@ -293,13 +405,21 @@ def append_double_sided_quad(
     faces.append((start + 3, start + 2, start + 1, start))
 
 
-def create_lod1_foliage(foliage, material):
+def create_lod1_foliage(
+    group_bounds,
+    material,
+    source_group_count,
+    card_width_scale,
+    card_height_scale,
+):
     vertices, faces, uvs, normals, winds, pivots = [], [], [], [], [], []
-    for index, source in enumerate(foliage):
-        minimum, maximum = object_world_bounds(source)
+    for index, (minimum, maximum) in enumerate(group_bounds):
         center = (minimum + maximum) * 0.5
-        horizontal = max(maximum.x - minimum.x, maximum.y - minimum.y) * 1.06
-        height = (maximum.z - minimum.z) * 1.06
+        horizontal = (
+            max(maximum.x - minimum.x, maximum.y - minimum.y)
+            * card_width_scale
+        )
+        height = (maximum.z - minimum.z) * card_height_scale
         half_width = horizontal * 0.5
         half_height = height * 0.5
         z0 = center.z - half_height
@@ -329,7 +449,8 @@ def create_lod1_foliage(foliage, material):
     obj = bpy.data.objects.new("TreeHLOD1_Foliage", mesh)
     bpy.context.scene.collection.objects.link(obj)
     obj["lod_role"] = "tree_group_camera_facing_billboards"
-    obj["source_group_count"] = len(foliage)
+    obj["source_group_count"] = source_group_count
+    obj["lod1_group_count"] = len(group_bounds)
     obj["triangle_count"] = len(faces) * 2
     return obj
 
@@ -337,8 +458,17 @@ def create_lod1_foliage(foliage, material):
 def create_lod2_foliage(foliage, material):
     minimum, maximum = union_bounds(foliage)
     center = (minimum + maximum) * 0.5
-    half_width = max(maximum.x - minimum.x, maximum.y - minimum.y) * 0.5 * 1.04
-    half_height = (maximum.z - minimum.z) * 0.5 * 1.04
+    # render_view() bakes every direction through a square orthographic frame
+    # whose side is diameter * 1.10.  Mapping that image onto a crown-aspect
+    # rectangle scales the silhouette a second time and visibly flattens LOD2.
+    # Reconstruct it on the same square extent used by the bake instead.
+    diameter = max(
+        maximum.x - minimum.x,
+        maximum.y - minimum.y,
+        maximum.z - minimum.z,
+    )
+    half_width = diameter * 0.55
+    half_height = diameter * 0.55
     corners = (
         (center.x - half_width, 0.0, center.z - half_height),
         (center.x + half_width, 0.0, center.z - half_height),
@@ -382,7 +512,7 @@ def export_selected(filepath, objects):
     )
 
 
-def build_spec(spec):
+def build_spec(spec, lod1_only=False, lod2_only=False):
     bpy.ops.wm.open_mainfile(filepath=str(spec["source"]))
     foliage = foliage_objects()
     trunk = trunk_object()
@@ -392,74 +522,100 @@ def build_spec(spec):
             f"{spec['key']}: expected {expected_groups} crown groups, found {len(foliage)}"
         )
 
-    source_material = foliage[0].data.materials[0]
-    bake_material = make_unlit_leaf_material(source_material)
-    assign_bake_material(foliage, bake_material)
-    camera = configure_render()
     TEMP_DIR.mkdir(parents=True, exist_ok=True)
+    clump_atlas = TEXTURE_DIR / f"tree_{spec['key']}_clump_unlit_4var_v1.png"
+    tree_atlas = TEXTURE_DIR / f"tree_{spec['key']}_canopy_unlit_8view_v1.png"
 
-    # Pick four substantially different authored group sizes for the LOD1 atlas.
-    ranked = sorted(
-        foliage,
-        key=lambda obj: object_world_bounds(obj)[1].x - object_world_bounds(obj)[0].x,
-    )
-    if len(ranked) == 1:
-        representatives = [ranked[0]] * 4
-    else:
-        representatives = [ranked[2], ranked[10], ranked[19], ranked[27]]
-    clump_paths = []
-    for index, obj in enumerate(representatives):
-        minimum, maximum = object_world_bounds(obj)
+    geometry_only = lod1_only or lod2_only
+    if not geometry_only:
+        source_material = foliage[0].data.materials[0]
+        bake_material = make_unlit_leaf_material(source_material)
+        assign_bake_material(foliage, bake_material)
+        camera = configure_render()
+
+        # Pick four substantially different authored group sizes for LOD1.
+        ranked = sorted(
+            foliage,
+            key=lambda obj: object_world_bounds(obj)[1].x - object_world_bounds(obj)[0].x,
+        )
+        if len(ranked) == 1:
+            representatives = [ranked[0]] * 4
+        else:
+            representatives = [ranked[2], ranked[10], ranked[19], ranked[27]]
+        clump_paths = []
+        for index, obj in enumerate(representatives):
+            minimum, maximum = object_world_bounds(obj)
+            center = (minimum + maximum) * 0.5
+            diameter = max(
+                maximum.x - minimum.x,
+                maximum.y - minimum.y,
+                maximum.z - minimum.z,
+            )
+            path = TEMP_DIR / f"{spec['key']}_clump_{index}.png"
+            render_view([obj], center, diameter, index * math.pi * 0.37, path, CLUMP_CELL)
+            clump_paths.append(path)
+        pack_atlas(clump_paths, 2, 2, clump_atlas)
+
+        minimum, maximum = union_bounds(foliage)
         center = (minimum + maximum) * 0.5
         diameter = max(
             maximum.x - minimum.x,
             maximum.y - minimum.y,
             maximum.z - minimum.z,
         )
-        path = TEMP_DIR / f"{spec['key']}_clump_{index}.png"
-        render_view([obj], center, diameter, index * math.pi * 0.37, path, CLUMP_CELL)
-        clump_paths.append(path)
-    clump_atlas = TEXTURE_DIR / f"tree_{spec['key']}_clump_unlit_4var_v1.png"
-    pack_atlas(clump_paths, 2, 2, clump_atlas)
+        tree_paths = []
+        for index in range(8):
+            path = TEMP_DIR / f"{spec['key']}_tree_{index}.png"
+            render_view(
+                foliage,
+                center,
+                diameter,
+                index * math.tau / 8.0,
+                path,
+                TREE_CELL,
+            )
+            tree_paths.append(path)
+        pack_atlas(tree_paths, 4, 2, tree_atlas)
 
-    minimum, maximum = union_bounds(foliage)
-    center = (minimum + maximum) * 0.5
-    diameter = max(
-        maximum.x - minimum.x,
-        maximum.y - minimum.y,
-        maximum.z - minimum.z,
-    )
-    tree_paths = []
-    for index in range(8):
-        path = TEMP_DIR / f"{spec['key']}_tree_{index}.png"
-        render_view(
-            foliage,
-            center,
-            diameter,
-            index * math.tau / 8.0,
-            path,
-            TREE_CELL,
+        # Remove bake-only objects before constructing export scenes.
+        bpy.data.objects.remove(camera, do_unlink=True)
+        for obj in foliage:
+            bpy.data.objects.remove(obj, do_unlink=True)
+    elif lod1_only and not clump_atlas.exists():
+        raise RuntimeError(f"LOD1-only build needs: {clump_atlas}")
+    elif lod2_only and not tree_atlas.exists():
+        raise RuntimeError(f"LOD2-only build needs: {tree_atlas}")
+
+    if not lod2_only:
+        # Re-open to restore authored bounds and build a clean LOD1 scene.
+        bpy.ops.wm.open_mainfile(filepath=str(spec["source"]))
+        foliage = foliage_objects()
+        trunk = trunk_object()
+        lod1_group_bounds = aggregate_crown_bounds(
+            foliage, spec["lod1_group_count"]
         )
-        tree_paths.append(path)
-    tree_atlas = TEXTURE_DIR / f"tree_{spec['key']}_canopy_unlit_8view_v1.png"
-    pack_atlas(tree_paths, 4, 2, tree_atlas)
+        lod1_material = image_material(f"M_{spec['key']}_TreeHLOD1", clump_atlas)
+        lod1_foliage = create_lod1_foliage(
+            lod1_group_bounds,
+            lod1_material,
+            len(foliage),
+            spec["lod1_card_width_scale"],
+            spec["lod1_card_height_scale"],
+        )
+        for obj in foliage:
+            bpy.data.objects.remove(obj, do_unlink=True)
+        lod1_blend = SOURCE_DIR / f"{spec['stem']}_lod1.blend"
+        bpy.ops.wm.save_as_mainfile(filepath=str(lod1_blend))
+        export_selected(
+            MODEL_DIR / f"{spec['stem']}_lod1.glb", [trunk, lod1_foliage]
+        )
 
-    # Remove bake-only objects before constructing export scenes.
-    bpy.data.objects.remove(camera, do_unlink=True)
-    for obj in foliage:
-        bpy.data.objects.remove(obj, do_unlink=True)
-
-    # Re-open to restore the 30 authored bounds and build clean LOD scenes.
-    bpy.ops.wm.open_mainfile(filepath=str(spec["source"]))
-    foliage = foliage_objects()
-    trunk = trunk_object()
-    lod1_material = image_material(f"M_{spec['key']}_TreeHLOD1", clump_atlas)
-    lod1_foliage = create_lod1_foliage(foliage, lod1_material)
-    for obj in foliage:
-        bpy.data.objects.remove(obj, do_unlink=True)
-    lod1_blend = SOURCE_DIR / f"{spec['stem']}_lod1.blend"
-    bpy.ops.wm.save_as_mainfile(filepath=str(lod1_blend))
-    export_selected(MODEL_DIR / f"{spec['stem']}_lod1.glb", [trunk, lod1_foliage])
+        if lod1_only:
+            print(
+                f"TREE_HLOD1_BUILT {spec['key']} groups={len(lod1_group_bounds)} "
+                f"asset={MODEL_DIR / (spec['stem'] + '_lod1.glb')}"
+            )
+            return
 
     bpy.ops.wm.open_mainfile(filepath=str(spec["source"]))
     foliage = foliage_objects()
@@ -480,11 +636,29 @@ def build_spec(spec):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--lod1-only", action="store_true")
+    mode.add_argument("--lod2-only", action="store_true")
+    parser.add_argument(
+        "--spec",
+        action="append",
+        choices=tuple(spec["key"] for spec in SPECS),
+        help="Build only the selected tree key; may be repeated.",
+    )
+    # Blender leaves its own flags in sys.argv; arguments after `--` belong to
+    # this script.
+    script_arguments = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
+    arguments = parser.parse_args(script_arguments)
     MODEL_DIR.mkdir(parents=True, exist_ok=True)
     SOURCE_DIR.mkdir(parents=True, exist_ok=True)
     TEXTURE_DIR.mkdir(parents=True, exist_ok=True)
-    for spec in SPECS:
-        build_spec(spec)
+    selected_specs = [
+        spec for spec in SPECS
+        if not arguments.spec or spec["key"] in arguments.spec
+    ]
+    for spec in selected_specs:
+        build_spec(spec, arguments.lod1_only, arguments.lod2_only)
 
 
 if __name__ == "__main__":
