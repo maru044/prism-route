@@ -51,7 +51,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.75)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
 theme_override_font_sizes/font_size = 21
-text = "Tree LOD complementary-dither test\n1: 70 m   2: 100 m transition   3: 305 m transition   4: 370 m   M: automatic Mesh LOD   WASD/QE + right-drag"
+text = "Tree LOD complementary-dither test\n1: 70 m   2: 180 m large-tree transition   3: 305 m transition   4: 370 m   M: automatic Mesh LOD   WASD/QE + right-drag"
 
 [node name="Status" type="Label" parent="HUD"]
 offset_left = 24.0

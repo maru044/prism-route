@@ -91,7 +91,7 @@ func _process(delta: float) -> void:
 		var progress := clampf(
 			transition_sweep_elapsed / TRANSITION_SWEEP_DURATION, 0.0, 1.0
 		)
-		_configure_camera(lerpf(70.0, 140.0, progress), 8.0, 0.0)
+		_configure_camera(lerpf(70.0, 220.0, progress), 8.0, 0.0)
 		if progress >= 1.0:
 			print(
 				"TREE_LOD_SWEEP_COMPLETE fps=%d draws=%d primitives=%d"
@@ -113,8 +113,8 @@ func _process(delta: float) -> void:
 		1.0 - smoothstep(280.0, 330.0, distance)
 	)
 	var small_lod2 := smoothstep(280.0, 330.0, distance)
-	var large_lod0 := 1.0 - smoothstep(80.0, 110.0, distance)
-	var large_lod1 := smoothstep(80.0, 110.0, distance) * (
+	var large_lod0 := 1.0 - smoothstep(160.0, 200.0, distance)
+	var large_lod1 := smoothstep(160.0, 200.0, distance) * (
 		1.0 - smoothstep(280.0, 330.0, distance)
 	)
 	var large_lod2 := smoothstep(280.0, 330.0, distance)
@@ -137,7 +137,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		KEY_1:
 			_configure_camera(70.0, 7.0, 0.0)
 		KEY_2:
-			_configure_camera(100.0, 7.0, 0.0)
+			_configure_camera(180.0, 9.0, 0.0)
 		KEY_3:
 			_configure_camera(305.0, 18.0, 0.0)
 		KEY_4:

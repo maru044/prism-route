@@ -30,8 +30,8 @@ const TREE_SMALL_LOD1_BEGIN := 90.0
 const TREE_SMALL_LOD1_END := 330.0
 const TREE_SMALL_LOD2_BEGIN := 280.0
 const TREE_SMALL_LOD2_END := 1000.0
-const TREE_LARGE_LOD0_END := 110.0
-const TREE_LARGE_LOD1_BEGIN := 80.0
+const TREE_LARGE_LOD0_END := 200.0
+const TREE_LARGE_LOD1_BEGIN := 160.0
 const TREE_LARGE_LOD1_END := 330.0
 const TREE_LARGE_LOD2_BEGIN := 280.0
 const TREE_LARGE_LOD2_END := 1100.0
@@ -295,7 +295,10 @@ func _load_meshes_and_materials() -> void:
 	tree_broad_lod1_material = _make_tree_hlod_material(
 		TREE_BROAD_CLUMP_TEXTURE, false,
 		Vector3(0.0, 7.875, 0.0), Vector3(6.65, 5.295, 6.655),
-		Vector4(80.0, 110.0, 280.0, 330.0)
+		Vector4(
+			TREE_LARGE_LOD1_BEGIN, TREE_LARGE_LOD0_END,
+			TREE_LARGE_LOD2_BEGIN, TREE_LARGE_LOD1_END
+		)
 	)
 	tree_broad_lod2_material = _make_tree_hlod_material(
 		TREE_BROAD_IMPOSTOR_TEXTURE, true,
@@ -305,7 +308,10 @@ func _load_meshes_and_materials() -> void:
 	tree_upright_lod1_material = _make_tree_hlod_material(
 		TREE_UPRIGHT_CLUMP_TEXTURE, false,
 		Vector3(0.085, 8.912, -0.250), Vector3(7.145, 7.423, 7.135),
-		Vector4(80.0, 110.0, 280.0, 330.0)
+		Vector4(
+			TREE_LARGE_LOD1_BEGIN, TREE_LARGE_LOD0_END,
+			TREE_LARGE_LOD2_BEGIN, TREE_LARGE_LOD1_END
+		)
 	)
 	tree_upright_lod2_material = _make_tree_hlod_material(
 		TREE_UPRIGHT_IMPOSTOR_TEXTURE, true,
@@ -328,7 +334,8 @@ func _make_tree_lod0_material(
 	material.set_shader_parameter("tree_canopy_radii_local", canopy_radii)
 	material.set_shader_parameter("tree_local_normal_weight", 0.34)
 	material.set_shader_parameter(
-		"tree_lod_fade", Vector4(-100.0, -99.0, 80.0, 110.0)
+		"tree_lod_fade",
+		Vector4(-100.0, -99.0, TREE_LARGE_LOD1_BEGIN, TREE_LARGE_LOD0_END)
 	)
 	return material
 
