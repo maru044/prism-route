@@ -1,0 +1,1795 @@
+import bpy
+import math
+import os
+import random
+import sys
+from mathutils import Euler, Quaternion, Vector
+
+
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "assets", "vegetation"))
+TEX_DIR = os.path.join(ROOT, "textures")
+MODEL_DIR = os.path.join(ROOT, "models")
+PREVIEW_DIR = os.path.join(ROOT, "preview")
+GRASS_TEX = os.path.join(TEX_DIR, "grass_tuft_straw_minimal_v5.png")
+LEAF_TEX = os.path.join(TEX_DIR, "leaf_clusters_witness_sparse_flat_v11.png")
+FILLER_LEAF_TEX = os.path.join(TEX_DIR, "leaf_cluster_filler_full_v4.png")
+BIRCH_LEAF_TEX = os.path.join(TEX_DIR, "leaf_clusters_birch_sparse_flat_v1.png")
+CYPRESS_TEX = os.path.join(TEX_DIR, "foliage_cypress_sprays_flat_v1.png")
+SHRUB_TEX = os.path.join(TEX_DIR, "shrub_leaf_lobes_billboard_flat_v3.png")
+BIRCH_BARK_TEX = os.path.join(TEX_DIR, "bark_birch_flat_v1.png")
+
+SOURCE_DIR = os.path.join(ROOT, "source")
+for path in (MODEL_DIR, SOURCE_DIR):
+    os.makedirs(path, exist_ok=True)
+
+
+def reset_scene():
+    bpy.ops.object.select_all(action="SELECT")
+    bpy.ops.object.delete(use_global=False)
+    for datablocks in (bpy.data.meshes, bpy.data.curves, bpy.data.materials, bpy.data.cameras, bpy.data.lights):
+        pass
+
+
+def image_material(name, image_path, roughness=0.9, emission_strength=0.0):
+    mat = bpy.data.materials.new(name)
+    mat.use_nodes = True
+    mat.diffuse_color = (0.35, 0.8, 0.2, 1.0)
+    mat.use_backface_culling = False
+    try:
+        mat.surface_render_method = "DITHERED"
+    except Exception:
+        try:
+            mat.blend_method = "CLIP"
+        except Exception:
+            pass
+    try:
+        mat.alpha_threshold = 0.42
+    except Exception:
+        pass
+    nodes = mat.node_tree.nodes
+    links = mat.node_tree.links
+    for node in list(nodes):
+        nodes.remove(node)
+    out = nodes.new("ShaderNodeOutputMaterial")
+    bsdf = nodes.new("ShaderNodeBsdfPrincipled")
+    tex = nodes.new("ShaderNodeTexImage")
+    alpha_clip = nodes.new("ShaderNodeMath")
+    alpha_clip.operation = "GREATER_THAN"
+    alpha_clip.inputs[1].default_value = 0.42
+    tex.image = bpy.data.images.load(image_path, check_existing=True)
+    tex.interpolation = "Linear"
+    bsdf.inputs["Roughness"].default_value = roughness
+    bsdf.inputs["Specular IOR Level"].default_value = 0.18
+    links.new(tex.outputs["Color"], bsdf.inputs["Base Color"])
+    if emission_strength > 0.0 and "Emission Color" in bsdf.inputs:
+        links.new(tex.outputs["Color"], bsdf.inputs["Emission Color"])
+        bsdf.inputs["Emission Strength"].default_value = emission_strength
+    links.new(tex.outputs["Alpha"], alpha_clip.inputs[0])
+    links.new(alpha_clip.outputs[0], bsdf.inputs["Alpha"])
+    links.new(bsdf.outputs["BSDF"], out.inputs["Surface"])
+    return mat
+
+
+def flat_material(name, color, roughness=0.95):
+    mat = bpy.data.materials.new(name)
+    mat.use_nodes = True
+    mat.diffuse_color = (*color, 1.0)
+    nodes = mat.node_tree.nodes
+    links = mat.node_tree.links
+    for node in list(nodes):
+        nodes.remove(node)
+    out = nodes.new("ShaderNodeOutputMaterial")
+    bsdf = nodes.new("ShaderNodeBsdfPrincipled")
+    bsdf.inputs["Base Color"].default_value = (*color, 1.0)
+    bsdf.inputs["Roughness"].default_value = roughness
+    bsdf.inputs["Specular IOR Level"].default_value = 0.16
+    links.new(bsdf.outputs["BSDF"], out.inputs["Surface"])
+    return mat
+
+
+def opaque_image_material(name, image_path, roughness=0.98):
+    mat = bpy.data.materials.new(name)
+    mat.use_nodes = True
+    mat.diffuse_color = (0.8, 0.78, 0.72, 1.0)
+    nodes = mat.node_tree.nodes
+    links = mat.node_tree.links
+    for node in list(nodes):
+        nodes.remove(node)
+    out = nodes.new("ShaderNodeOutputMaterial")
+    bsdf = nodes.new("ShaderNodeBsdfPrincipled")
+    tex = nodes.new("ShaderNodeTexImage")
+    tex.image = bpy.data.images.load(image_path, check_existing=True)
+    tex.interpolation = "Linear"
+    tex.extension = "REPEAT"
+    bsdf.inputs["Roughness"].default_value = roughness
+    bsdf.inputs["Specular IOR Level"].default_value = 0.12
+    links.new(tex.outputs["Color"], bsdf.inputs["Base Color"])
+    links.new(bsdf.outputs["BSDF"], out.inputs["Surface"])
+    return mat
+
+
+def assign_uv(mesh, uv_coords):
+    uv_layer = mesh.uv_layers.new(name="UVMap")
+    for poly in mesh.polygons:
+        for loop_index in poly.loop_indices:
+            vertex_index = mesh.loops[loop_index].vertex_index
+            uv_layer.data[loop_index].uv = uv_coords[vertex_index]
+
+
+def assign_uv2(mesh, uv_coords):
+    uv_layer = mesh.uv_layers.new(name="UVMap.001")
+    for poly in mesh.polygons:
+        for loop_index in poly.loop_indices:
+            vertex_index = mesh.loops[loop_index].vertex_index
+            uv_layer.data[loop_index].uv = uv_coords[vertex_index]
+
+
+def add_wind_color(mesh, values):
+    attr = mesh.color_attributes.new(name="wind_weight", type="FLOAT_COLOR", domain="POINT")
+    for i, value in enumerate(values):
+        attr.data[i].color = (value, value, value, 1.0)
+    mesh.attributes.active_color = attr
+
+
+def encode_octahedral(normal):
+    """Pack a unit vector into two 0..1 channels for Godot vertex COLOR.gb."""
+    n = normal.normalized()
+    denominator = abs(n.x) + abs(n.y) + abs(n.z)
+    if denominator < 0.00001:
+        return (0.5, 0.5)
+    x = n.x / denominator
+    y = n.y / denominator
+    if n.z < 0.0:
+        old_x = x
+        x = (1.0 - abs(y)) * (1.0 if old_x >= 0.0 else -1.0)
+        y = (1.0 - abs(old_x)) * (1.0 if y >= 0.0 else -1.0)
+    return (x * 0.5 + 0.5, y * 0.5 + 0.5)
+
+
+def add_foliage_vertex_data(mesh, wind_values, plane_normals, alpha_values=None):
+    """R stores wind; G/B store plane normal; optional A stores pivot depth."""
+    attr = mesh.color_attributes.new(name="foliage_data", type="FLOAT_COLOR", domain="POINT")
+    for index, (wind_value, plane_normal) in enumerate(zip(wind_values, plane_normals)):
+        encoded_x, encoded_y = encode_octahedral(plane_normal)
+        alpha_value = 1.0 if alpha_values is None else alpha_values[index]
+        attr.data[index].color = (
+            wind_value, encoded_x, encoded_y, alpha_value
+        )
+    mesh.attributes.active_color = attr
+
+
+def random_rotation_matrix(rng):
+    """Return an unbiased random 3D rotation matrix."""
+    u1 = rng.random()
+    u2 = rng.random()
+    u3 = rng.random()
+    root_a = math.sqrt(1.0 - u1)
+    root_b = math.sqrt(u1)
+    x = root_a * math.sin(math.tau * u2)
+    y = root_a * math.cos(math.tau * u2)
+    z = root_b * math.sin(math.tau * u3)
+    w = root_b * math.cos(math.tau * u3)
+    return Quaternion((w, x, y, z)).to_matrix()
+
+
+def create_grass(material):
+    width = 0.92
+    height = 1.15
+    verts = []
+    faces = []
+    uvs = []
+    wind = []
+    # Three 60-degree cards form a star that keeps its apparent density while
+    # the camera rotates around it. This is the standard GPU meadow pattern.
+    for axis in range(3):
+        angle = axis * math.pi / 3.0
+        right = Vector((math.cos(angle), math.sin(angle), 0.0)) * (width * 0.5)
+        base = len(verts)
+        quad = [
+            tuple(-right),
+            tuple(right),
+            tuple(right + Vector((0.0, 0.0, height))),
+            tuple(-right + Vector((0.0, 0.0, height))),
+        ]
+        verts.extend(quad)
+        verts.extend(quad)
+        front = (base, base + 1, base + 2, base + 3)
+        back = (base + 7, base + 6, base + 5, base + 4)
+        faces.extend((front, back))
+        card_uvs = [(0.0, 0.0), (1.0, 0.0), (1.0, 1.0), (0.0, 1.0)]
+        uvs.extend(card_uvs)
+        uvs.extend(card_uvs)
+        wind.extend([0.0, 0.0, 1.0, 1.0] * 2)
+    mesh = bpy.data.meshes.new("GrassCrossMesh")
+    mesh.from_pydata(verts, [], faces)
+    mesh.update()
+    # Grass cards use a shared upward-biased field instead of plane normals.
+    # Both windings are present, so back-face culling remains enabled in-engine.
+    mesh.normals_split_custom_set_from_vertices([(0.0, 0.0, 1.0)] * len(verts))
+    for polygon in mesh.polygons:
+        polygon.use_smooth = True
+    mesh.materials.append(material)
+    assign_uv(mesh, uvs)
+    add_wind_color(mesh, wind)
+    obj = bpy.data.objects.new("Grass_Star_3Card", mesh)
+    bpy.context.collection.objects.link(obj)
+    obj["asset_type"] = "grass_star_3card"
+    obj["recommended_alpha_cutoff"] = 0.42
+    obj["wind_vertex_color"] = "COLOR_0.r"
+    return obj
+
+
+def tapered_segment(name, start, end, radius_start, radius_end, material, vertices=7):
+    direction = end - start
+    length = direction.length
+    bpy.ops.mesh.primitive_cone_add(
+        vertices=vertices,
+        radius1=radius_start,
+        radius2=radius_end,
+        depth=length,
+        end_fill_type="NGON",
+        location=(start + end) * 0.5,
+    )
+    obj = bpy.context.object
+    obj.name = name
+    obj.rotation_mode = "QUATERNION"
+    obj.rotation_quaternion = Vector((0.0, 0.0, 1.0)).rotation_difference(direction.normalized())
+    obj.data.materials.append(material)
+    return obj
+
+
+def create_stylized_trunk(name, height, material, size="small", seed=20260928):
+    """Create a restrained low-poly trunk from several subtly varied rings.
+
+    The centre line remains visually straight. Ring offsets, ellipse ratios and
+    rotations only keep the silhouette from reading as a perfect cone; they do
+    not turn the trunk into a decorative crooked branch sculpture.
+    """
+    if size == "small":
+        sides = 10
+        rings = [
+            (0.00, 0.145),
+            (0.12, 0.132),
+            (0.70, 0.118),
+            (1.42, 0.105),
+            (2.18, 0.089),
+            (height, 0.074),
+        ]
+        max_offset = 0.010
+        ellipse_range = (0.965, 1.035)
+    elif size == "large":
+        sides = 12
+        rings = [
+            (0.00, 0.360),
+            (0.16, 0.326),
+            (0.72, 0.300),
+            (1.48, 0.274),
+            (2.42, 0.238),
+            (3.46, 0.202),
+            (4.62, 0.160),
+            (height, 0.118),
+        ]
+        max_offset = 0.018
+        ellipse_range = (0.955, 1.045)
+    elif size == "medium_slender":
+        sides = 12
+        rings = [
+            (0.00, 0.230),
+            (0.14, 0.208),
+            (0.82, 0.188),
+            (1.85, 0.164),
+            (3.20, 0.138),
+            (4.85, 0.112),
+            (6.65, 0.092),
+            (height, 0.074),
+        ]
+        max_offset = 0.014
+        ellipse_range = (0.960, 1.040)
+    else:
+        raise ValueError(f"Unknown stylized trunk size: {size}")
+
+    rng = random.Random(seed)
+    vertices = []
+    faces = []
+    for ring_index, (z, radius) in enumerate(rings):
+        height_ratio = z / max(height, 0.001)
+        # Both ends remain centred. Intermediate offsets are small enough that
+        # the trunk still reads as one calm, upright stroke at gameplay scale.
+        offset_weight = math.sin(height_ratio * math.pi)
+        center = Vector((
+            rng.uniform(-max_offset, max_offset) * offset_weight,
+            rng.uniform(-max_offset, max_offset) * offset_weight,
+            z,
+        ))
+        ellipse = rng.uniform(*ellipse_range)
+        rotation = rng.uniform(-0.10, 0.10) + ring_index * 0.035
+        for side in range(sides):
+            angle = math.tau * side / sides + rotation
+            vertices.append(tuple(center + Vector((
+                math.cos(angle) * radius * ellipse,
+                math.sin(angle) * radius / ellipse,
+                0.0,
+            ))))
+
+    for ring_index in range(len(rings) - 1):
+        lower = ring_index * sides
+        upper = (ring_index + 1) * sides
+        for side in range(sides):
+            next_side = (side + 1) % sides
+            faces.append((
+                lower + side,
+                lower + next_side,
+                upper + next_side,
+                upper + side,
+            ))
+    faces.append(tuple(reversed(range(sides))))
+    top_start = (len(rings) - 1) * sides
+    faces.append(tuple(top_start + side for side in range(sides)))
+
+    mesh = bpy.data.meshes.new(name + "Mesh")
+    mesh.from_pydata(vertices, [], faces)
+    mesh.update()
+    mesh.materials.append(material)
+    # Cylindrical UVs are sufficient for the deliberately low-detail birch
+    # bark mask.  Existing accepted GLBs are not rebuilt by the new commands.
+    uv_coords = []
+    for ring_index, (z, _radius) in enumerate(rings):
+        v = z / max(height, 0.001) * 3.2
+        for side in range(sides):
+            uv_coords.append((side / float(sides), v))
+    assign_uv(mesh, uv_coords)
+    # Smooth the vertical surface while keeping both end caps planar.
+    for polygon in mesh.polygons[:-2]:
+        polygon.use_smooth = True
+
+    obj = bpy.data.objects.new(name, mesh)
+    bpy.context.collection.objects.link(obj)
+    obj["asset_type"] = f"stylized_{size}_trunk"
+    obj["ring_count"] = len(rings)
+    obj["side_count"] = sides
+    obj["base_radius"] = rings[0][1]
+    obj["top_radius"] = rings[-1][1]
+    obj["height"] = height
+    return obj
+
+
+def join_objects(objects, name):
+    bpy.ops.object.select_all(action="DESELECT")
+    for obj in objects:
+        obj.select_set(True)
+    bpy.context.view_layer.objects.active = objects[0]
+    bpy.ops.object.join()
+    objects[0].name = name
+    objects[0].data.name = name + "Mesh"
+    return objects[0]
+
+
+def refine_v8_crown(lobes):
+    """Widen the v8 silhouette without replacing its layered crown volume."""
+    # Upper growth directions are only a gentle contour influence. The v8
+    # layer heights, inner fill and all 240 card-pair cells stay in place.
+    directions = [-2.78, -1.64, -0.38, 0.63, 1.86, 2.63]
+    refined = []
+    for center, scale in lobes:
+        angle = math.atan2(center.y, center.x)
+        radial = math.hypot(center.x, center.y)
+        nearest = max(math.cos(angle - direction) for direction in directions)
+        influence = max(0.0, nearest) ** 7
+        perimeter = min(1.0, radial / 2.0)
+        position = center.copy()
+        position.x *= 1.10 + 0.09 * influence * perimeter
+        position.y *= 1.04 + 0.06 * influence * perimeter
+        position.z += 0.09 * perimeter * math.sin(3.0 * angle + 0.45)
+        refined.append((position, scale))
+    return refined
+
+
+def create_tree(
+    trunk_material, leaf_material, crown_layout="layered", use_refined_trunk=False
+):
+    # Deliberately plain: one straight, slender trunk and no visible branch cage.
+    if use_refined_trunk:
+        trunk = create_stylized_trunk(
+            "Tree_Trunk_Stylized",
+            3.25,
+            trunk_material,
+            size="small",
+            seed=20260928,
+        )
+    else:
+        trunk = tapered_segment(
+            "Tree_Trunk_Straight",
+            Vector((0.0, 0.0, 0.0)), Vector((0.0, 0.0, 3.35)),
+            0.19, 0.105, trunk_material, 10,
+        )
+        trunk["asset_type"] = "stylized_single_trunk"
+
+    rng = random.Random(20260914)
+    # Two hundred forty crown cells, two crossed cards each. The v11 atlas has
+    # Witness-like negative space, so crown continuity comes from overlapping
+    # many broad cards rather than packing each texture with opaque leaves.
+    # Every sheet has
+    # front and back geometry so the engine can use real back-face culling.
+    lobes = []
+    # Character-scale pass: pull the lower and middle crown mass down while
+    # preserving the accepted crown top and width.  The previous geometric
+    # minimum was misleading because a few tilted cards hung low, while the
+    # continuous, opaque crown still read much too far above the character.
+    layer_specs = [
+        (2.35, 2.45, 2.00, 40, 1.12),
+        (2.90, 2.82, 2.25, 48, 1.10),
+        (3.50, 2.92, 2.34, 48, 1.07),
+        (4.15, 2.65, 2.15, 32, 1.02),
+        (4.85, 2.12, 1.76, 16, 0.96),
+        (5.45, 1.30, 1.08, 8, 0.88),
+    ]
+    for z, radius_x, radius_y, count, scale in layer_specs:
+        phase = rng.uniform(0.0, math.tau)
+        for i in range(count):
+            angle = phase + (math.tau * i / count) + rng.uniform(-0.16, 0.16)
+            radial = rng.uniform(0.48, 0.94) if count > 4 else rng.uniform(0.18, 0.72)
+            center = Vector((
+                math.cos(angle) * radius_x * radial,
+                math.sin(angle) * radius_y * radial,
+                z + rng.uniform(-0.18, 0.18),
+            ))
+            lobes.append((center, scale * rng.uniform(0.92, 1.10)))
+    # The silhouette layers above deliberately favour the crown perimeter. Add
+    # a separate inner volume so a top-down camera never looks through a hollow
+    # ring around the trunk. These are full 3D crossed-card groups as well, not
+    # horizontal patches inserted only for one camera angle.
+    inner_specs = [
+        (2.55, 0.82, 10, 1.04),
+        (3.15, 1.02, 14, 1.03),
+        (3.75, 1.08, 14, 0.99),
+        (4.45, 0.92, 10, 0.92),
+    ]
+    for z, radius, count, scale in inner_specs:
+        for _index in range(count):
+            angle = rng.uniform(0.0, math.tau)
+            radial = math.sqrt(rng.random()) * radius
+            center = Vector((
+                math.cos(angle) * radial,
+                math.sin(angle) * radial * 0.84,
+                z + rng.uniform(-0.22, 0.22),
+            ))
+            lobes.append((center, scale * rng.uniform(0.92, 1.08)))
+    if crown_layout == "branch_guided":
+        # Preserve v8 cards, texture, inner volume, orientation, trunk and wind.
+        lobes = refine_v8_crown(lobes)
+    elif crown_layout != "layered":
+        raise ValueError(f"Unknown crown layout: {crown_layout}")
+    atlas_regions = [
+        (0.02, 0.52, 0.48, 0.98),
+        (0.52, 0.52, 0.98, 0.98),
+        (0.02, 0.02, 0.48, 0.48),
+        (0.52, 0.02, 0.98, 0.48),
+    ]
+    region_aspects = [1.42, 0.82, 1.08, 1.18]
+    verts, faces, uvs, wind, crown_normals, plane_normals = [], [], [], [], [], []
+    card_index = 0
+    for lobe_index, (lobe_center, lobe_scale) in enumerate(lobes):
+        # Each crown cell is one crossed-card cluster. The two cards remain
+        # perpendicular locally, then the whole pair receives an independent,
+        # unrestricted 3D rotation. No shared world-up direction remains.
+        group_rotation = random_rotation_matrix(rng)
+        group_center = lobe_center + Vector((
+            rng.uniform(-0.10, 0.10),
+            rng.uniform(-0.10, 0.10),
+            rng.uniform(-0.08, 0.08),
+        ))
+        group_up = (group_rotation @ Vector((0.0, 0.0, 1.0))).normalized()
+        for pair_index in range(2):
+            region_index = (lobe_index * 2 + pair_index) % 4
+            center = group_center
+            # Broad cards are intentional: v11 keeps only about 24% alpha
+            # coverage, so larger sheets overlap in 3D without reading as
+            # solid rectangular clumps.
+            # The refined tree keeps the v8 card count and sparse atlas, but
+            # gives each sheet more reach so adjacent foliage overlaps into
+            # broader, readable masses at gameplay distance.
+            card_extent = 1.25 if crown_layout == "branch_guided" else 1.0
+            height = rng.uniform(0.72, 0.94) * lobe_scale * card_extent
+            width = height * region_aspects[region_index] * rng.uniform(0.95, 1.10)
+            local_right = Vector((1.0, 0.0, 0.0)) if pair_index == 0 else Vector((0.0, 1.0, 0.0))
+            right = (group_rotation @ local_right).normalized()
+            plane_normal = right.cross(group_up).normalized()
+            half_r = right * (width * 0.5)
+            half_u = group_up * (height * 0.5)
+            base = len(verts)
+            card_vertices = [
+                center - half_r - half_u,
+                center + half_r - half_u,
+                center + half_r + half_u,
+                center - half_r + half_u,
+            ]
+            verts.extend(tuple(vertex) for vertex in card_vertices)
+            verts.extend(tuple(vertex) for vertex in card_vertices)
+            # The cards carry the normal field of one broad ellipsoidal crown,
+            # not their own plane normals. Lighting therefore describes crown
+            # volume and no longer reveals each crossed sheet.
+            card_normals = []
+            for vertex in card_vertices:
+                normal = Vector((
+                    vertex.x / (3.15 * 3.15),
+                    vertex.y / (2.58 * 2.58),
+                    (vertex.z - 4.08) / (1.78 * 1.78),
+                ))
+                if normal.length_squared < 0.0001:
+                    normal = Vector((0.0, 0.0, 1.0))
+                card_normals.append(tuple(normal.normalized()))
+            crown_normals.extend(card_normals)
+            crown_normals.extend(card_normals)
+            front = (base, base + 1, base + 2, base + 3)
+            back = (base + 7, base + 6, base + 5, base + 4)
+            faces.extend((front, back))
+            u0, v0, u1, v1 = atlas_regions[region_index]
+            card_uvs = [(u0, v0), (u1, v0), (u1, v1), (u0, v1)]
+            uvs.extend(card_uvs)
+            uvs.extend(card_uvs)
+            weight = min(1.0, max(0.58, (center.z - 2.35) / 3.2))
+            wind.extend([weight] * 8)
+            plane_normals.extend([plane_normal] * 8)
+            card_index += 1
+    mesh = bpy.data.meshes.new("TreeFoliageCardsMesh")
+    mesh.from_pydata(verts, [], faces)
+    mesh.update()
+    mesh.normals_split_custom_set_from_vertices(crown_normals)
+    for polygon in mesh.polygons:
+        polygon.use_smooth = True
+    mesh.materials.append(leaf_material)
+    assign_uv(mesh, uvs)
+    add_foliage_vertex_data(mesh, wind, plane_normals)
+    foliage = bpy.data.objects.new("Tree_Foliage_480Cards_BroadSparse", mesh)
+    bpy.context.collection.objects.link(foliage)
+    foliage["asset_type"] = "foliage_card_cluster"
+    foliage["card_count"] = card_index
+    foliage["recommended_alpha_cutoff"] = 0.42
+    foliage["wind_vertex_color"] = "COLOR_0.r"
+    foliage["view_angle_data"] = "COLOR_0.gb_octahedral_plane_normal"
+    return trunk, foliage
+
+
+def sample_ellipsoid(rng, radii):
+    """Uniformly sample a point inside an axis-aligned ellipsoid."""
+    while True:
+        point = Vector((
+            rng.uniform(-1.0, 1.0),
+            rng.uniform(-1.0, 1.0),
+            rng.uniform(-1.0, 1.0),
+        ))
+        if point.length_squared <= 1.0:
+            return Vector((point.x * radii.x, point.y * radii.y, point.z * radii.z))
+
+
+def create_species_card_foliage(
+    name,
+    leaf_material,
+    group_specs,
+    overall_center,
+    overall_radii,
+    card_height_range,
+    seed,
+    wind_floor_z,
+    wind_top_z,
+    local_normal_weight=0.28,
+    card_aspect_range=(0.82, 1.18),
+):
+    """Create dense, multi-axis foliage from irregular overlapping volumes.
+
+    Each logical cell is a randomly oriented crossed pair.  The card plane
+    normal is preserved in COLOR.gb for view-angle fade, while the mesh normal
+    describes the whole plant volume so lighting does not expose each sheet.
+    """
+    rng = random.Random(seed)
+    atlas_regions = [
+        (0.02, 0.52, 0.48, 0.98),
+        (0.52, 0.52, 0.98, 0.98),
+        (0.02, 0.02, 0.48, 0.48),
+        (0.52, 0.02, 0.98, 0.48),
+    ]
+    verts, faces, uvs, wind, normals, plane_normals = [], [], [], [], [], []
+    card_count = 0
+    for group_index, group_spec in enumerate(group_specs):
+        # Most species use axis-aligned crown volumes. A fourth value can
+        # provide a local Euler rotation for deliberately asymmetric broadleaf
+        # groups; sampling and normals then describe that rotated volume rather
+        # than falling back to one whole-tree ellipsoid.
+        if len(group_spec) == 3:
+            group_center, group_radii, cell_count = group_spec
+            group_rotation = Quaternion()
+            group_card_scale = 1.0
+        else:
+            group_center, group_radii, cell_count, rotation_euler = group_spec[:4]
+            group_rotation = Euler(rotation_euler, "XYZ").to_quaternion()
+            group_card_scale = group_spec[4] if len(group_spec) >= 5 else 1.0
+        inverse_group_rotation = group_rotation.inverted()
+        for cell_index in range(cell_count):
+            center = group_center + group_rotation @ sample_ellipsoid(rng, group_radii)
+            rotation = random_rotation_matrix(rng)
+            group_up = (rotation @ Vector((0.0, 0.0, 1.0))).normalized()
+            for pair_index in range(2):
+                region_index = (group_index + cell_index + pair_index) % 4
+                height = rng.uniform(*card_height_range) * group_card_scale
+                width = height * rng.uniform(*card_aspect_range)
+                local_right = (
+                    Vector((1.0, 0.0, 0.0))
+                    if pair_index == 0
+                    else Vector((0.0, 1.0, 0.0))
+                )
+                right = (rotation @ local_right).normalized()
+                plane_normal = right.cross(group_up).normalized()
+                half_r = right * width * 0.5
+                half_u = group_up * height * 0.5
+                card_vertices = [
+                    center - half_r - half_u,
+                    center + half_r - half_u,
+                    center + half_r + half_u,
+                    center - half_r + half_u,
+                ]
+                base = len(verts)
+                verts.extend(tuple(vertex) for vertex in card_vertices)
+                verts.extend(tuple(vertex) for vertex in card_vertices)
+                faces.extend((
+                    (base, base + 1, base + 2, base + 3),
+                    (base + 7, base + 6, base + 5, base + 4),
+                ))
+                u0, v0, u1, v1 = atlas_regions[region_index]
+                card_uvs = [(u0, v0), (u1, v0), (u1, v1), (u0, v1)]
+                uvs.extend(card_uvs)
+                uvs.extend(card_uvs)
+
+                for vertex in card_vertices:
+                    global_delta = vertex - overall_center
+                    global_normal = Vector((
+                        global_delta.x / max(0.001, overall_radii.x ** 2),
+                        global_delta.y / max(0.001, overall_radii.y ** 2),
+                        global_delta.z / max(0.001, overall_radii.z ** 2),
+                    ))
+                    local_delta = inverse_group_rotation @ (vertex - group_center)
+                    local_normal_unrotated = Vector((
+                        local_delta.x / max(0.001, group_radii.x ** 2),
+                        local_delta.y / max(0.001, group_radii.y ** 2),
+                        local_delta.z / max(0.001, group_radii.z ** 2),
+                    ))
+                    local_normal = group_rotation @ local_normal_unrotated
+                    if global_normal.length_squared < 0.0001:
+                        global_normal = Vector((0.0, 0.0, 1.0))
+                    if local_normal.length_squared < 0.0001:
+                        local_normal = global_normal
+                    blended = global_normal.normalized().lerp(
+                        local_normal.normalized(), local_normal_weight
+                    ).normalized()
+                    normals.append(tuple(blended))
+                normals.extend(normals[-4:])
+
+                weight = max(0.0, min(
+                    1.0,
+                    (center.z - wind_floor_z) / max(0.001, wind_top_z - wind_floor_z),
+                ))
+                wind.extend([weight] * 8)
+                plane_normals.extend([plane_normal] * 8)
+                card_count += 1
+
+    mesh = bpy.data.meshes.new(name + "Mesh")
+    mesh.from_pydata(verts, [], faces)
+    mesh.update()
+    mesh.normals_split_custom_set_from_vertices(normals)
+    for polygon in mesh.polygons:
+        polygon.use_smooth = True
+    mesh.materials.append(leaf_material)
+    assign_uv(mesh, uvs)
+    add_foliage_vertex_data(mesh, wind, plane_normals)
+    foliage = bpy.data.objects.new(name, mesh)
+    bpy.context.collection.objects.link(foliage)
+    foliage["asset_type"] = "species_foliage_card_volume"
+    foliage["card_count"] = card_count
+    foliage["crown_group_count"] = len(group_specs)
+    foliage["recommended_alpha_cutoff"] = 0.48
+    foliage["wind_vertex_color"] = "COLOR_0.r"
+    foliage["view_angle_data"] = "COLOR_0.gb_octahedral_plane_normal"
+    return foliage
+
+
+def create_small_broadleaf_v4_full(trunk_material, leaf_material, variant=0):
+    """Build a full crown from core, middle, and contour leaf-cluster tiers."""
+    variant_names = ("balanced", "offset", "low_broad")
+    if variant < 0 or variant >= len(variant_names):
+        raise ValueError(f"Unsupported small broadleaf variant: {variant}")
+    variant_name = variant_names[variant]
+    trunk = create_stylized_trunk(
+        f"SmallBroadleafV4Full_{variant_name}_Trunk_Stylized",
+        3.30,
+        trunk_material,
+        size="small",
+        seed=20261100 + variant * 20,
+    )
+    trunk["species"] = f"small_broadleaf_v4_full_{variant_name}"
+
+    # These volumes follow five imagined bough paths even though the small tree
+    # does not render secondary branches. Large core clusters create opacity,
+    # middle clusters connect the crown in depth, and small contour clusters
+    # break the silhouette without being asked to fill the whole tree.
+    base_groups = [
+        # Core tier: large cards and high overlap.
+        (Vector((0.00, 0.00, 3.10)), Vector((1.38, 1.20, 0.86)), 30, (2.0, -3.0, 5.0), 1.12),
+        (Vector((-0.88, -0.42, 3.62)), Vector((1.48, 1.25, 1.04)), 34, (-6.0, 7.0, 16.0), 1.12),
+        (Vector((0.88, 0.34, 3.70)), Vector((1.50, 1.27, 1.06)), 34, (6.0, -5.0, -14.0), 1.12),
+        (Vector((-0.06, 1.02, 3.82)), Vector((1.38, 1.20, 1.00)), 32, (-5.0, -7.0, 29.0), 1.08),
+        (Vector((0.10, -1.06, 3.78)), Vector((1.38, 1.18, 0.98)), 32, (7.0, 5.0, -25.0), 1.08),
+        # Middle tier: connected lobes on different depths and heights.
+        (Vector((-1.66, 0.52, 3.82)), Vector((1.08, 0.94, 0.84)), 24, (7.0, -8.0, -20.0), 0.92),
+        (Vector((1.70, -0.46, 3.86)), Vector((1.10, 0.94, 0.86)), 24, (-8.0, 7.0, 22.0), 0.92),
+        (Vector((-1.30, -1.08, 4.02)), Vector((1.02, 0.90, 0.82)), 24, (8.0, -6.0, 34.0), 0.90),
+        (Vector((1.28, 1.10, 4.08)), Vector((1.04, 0.92, 0.84)), 24, (-7.0, 8.0, -31.0), 0.90),
+        (Vector((-0.56, 0.20, 4.60)), Vector((1.08, 0.96, 0.82)), 24, (-5.0, 5.0, -10.0), 0.90),
+        (Vector((0.66, -0.18, 4.52)), Vector((1.06, 0.94, 0.80)), 24, (6.0, -4.0, 12.0), 0.90),
+        # Contour tier: small accents, deliberately not a continuous shell.
+        (Vector((-2.28, -0.12, 3.78)), Vector((0.78, 0.68, 0.66)), 15, (-7.0, -8.0, 38.0), 0.76),
+        (Vector((2.30, 0.16, 3.84)), Vector((0.80, 0.68, 0.66)), 15, (8.0, 7.0, -36.0), 0.76),
+        (Vector((-0.94, 0.76, 4.86)), Vector((0.76, 0.68, 0.58)), 15, (-6.0, 5.0, 20.0), 0.74),
+        (Vector((1.02, -0.66, 4.78)), Vector((0.78, 0.68, 0.60)), 15, (5.0, -6.0, -18.0), 0.74),
+    ]
+
+    groups = []
+    for index, (center, radii, count, rotation, card_scale) in enumerate(base_groups):
+        center = center.copy()
+        radii = radii.copy()
+        rotation = list(rotation)
+        if variant == 1:
+            # A crown biased gently to one side, with depth preserved.
+            height_factor = max(0.0, center.z - 3.15)
+            center.x -= 0.18 * height_factor
+            center.y += 0.10 * math.sin(index * 1.7)
+            if center.x < -0.5:
+                radii.x *= 1.08
+                card_scale *= 1.03
+            elif center.x > 0.8:
+                radii.x *= 0.94
+            rotation[2] += 5.0 * math.sin(index * 1.3)
+        elif variant == 2:
+            # A lower, wider crown suited to open-grown filler trees.
+            center.x *= 1.10
+            center.y *= 1.04
+            center.z = 3.30 + (center.z - 3.30) * 0.84
+            radii.x *= 1.10
+            radii.y *= 1.04
+            radii.z *= 0.88
+            rotation[2] *= 0.85
+        groups.append((
+            center,
+            radii,
+            count,
+            tuple(math.radians(angle) for angle in rotation),
+            card_scale,
+        ))
+
+    foliage = create_species_card_foliage(
+        f"SmallBroadleafV4Full_{variant_name}_Foliage_15HierarchicalGroups",
+        leaf_material,
+        groups,
+        Vector((-0.08 if variant == 1 else 0.0, 0.0, 3.88)),
+        Vector((3.30, 2.70, 2.05)),
+        (1.02, 1.34),
+        20261101 + variant * 20,
+        1.82,
+        5.72,
+        0.40,
+        (0.92, 1.26),
+    )
+    foliage["study_version"] = "v4_full_hierarchical"
+    foliage["shape_variant"] = variant_name
+    foliage["crown_structure"] = "5_core_6_middle_4_contour"
+    return trunk, foliage
+
+
+def make_radial_groups(profile, seed, group_radius_range, group_height_range, cells):
+    rng = random.Random(seed)
+    groups = []
+    for layer_index, (z, ring_radius, count) in enumerate(profile):
+        phase = rng.uniform(0.0, math.tau)
+        for index in range(count):
+            angle = phase + math.tau * index / max(1, count)
+            radial = ring_radius * rng.uniform(0.46, 0.82) if count > 1 else 0.0
+            center = Vector((
+                math.cos(angle) * radial + rng.uniform(-0.14, 0.14),
+                math.sin(angle) * radial + rng.uniform(-0.14, 0.14),
+                z + rng.uniform(-0.18, 0.18),
+            ))
+            radius_x = rng.uniform(*group_radius_range)
+            radii = Vector((
+                radius_x,
+                radius_x * rng.uniform(0.82, 1.08),
+                rng.uniform(*group_height_range),
+            ))
+            groups.append((center, radii, cells))
+    return groups
+
+
+def create_birch_tree(trunk_material, leaf_material):
+    trunk = create_stylized_trunk(
+        "Birch_Trunk_Stylized",
+        8.65,
+        trunk_material,
+        size="medium_slender",
+        seed=20261001,
+    )
+    trunk["species"] = "birch"
+    profile = [
+        (3.00, 1.45, 3),
+        (4.20, 1.95, 4),
+        (5.45, 2.20, 4),
+        (6.75, 2.05, 4),
+        (8.05, 1.72, 3),
+        (9.25, 1.22, 3),
+        (10.35, 0.68, 2),
+        (11.10, 0.00, 1),
+    ]
+    # A complete atlas silhouette lives on every crossed card pair.  The first
+    # species prototype used 150 cells per group (7,200 cards total), which was
+    # unnecessary alpha-card overdraw rather than useful crown detail.  Twenty-
+    # four cells retain porous depth in each of the 24 overlapping volumes while
+    # keeping the complete near LOD to 1,152 cards.
+    groups = make_radial_groups(
+        profile, 20261002, (0.82, 1.12), (0.92, 1.30), 24
+    )
+    foliage = create_species_card_foliage(
+        "Birch_Foliage_24Groups",
+        leaf_material,
+        groups,
+        Vector((0.0, 0.0, 7.05)),
+        Vector((3.15, 3.05, 4.75)),
+        # Fewer cards must cover the same airy crown volume.  Match the proven
+        # broad-tree card scale instead of retaining the tiny high-density
+        # prototype sheets; the sparse birch atlas supplies the fine gaps.
+        (0.88, 1.20),
+        20261003,
+        2.15,
+        11.65,
+        0.30,
+    )
+    return trunk, foliage
+
+
+def create_columnar_cypress(trunk_material, leaf_material):
+    trunk = create_stylized_trunk(
+        "Cypress_Trunk_Stylized",
+        10.4,
+        trunk_material,
+        size="medium_slender",
+        seed=20261004,
+    )
+    trunk["species"] = "columnar_cypress"
+    profile = [
+        (1.20, 1.12, 4),
+        (2.60, 1.55, 4),
+        (4.05, 1.72, 4),
+        (5.50, 1.62, 4),
+        (6.95, 1.42, 4),
+        (8.40, 1.08, 3),
+        (9.75, 0.72, 3),
+        (11.05, 0.00, 1),
+    ]
+    # The spray atlas carries the fine foliage detail.  Twenty crossed cells per
+    # volume are enough to describe the 28-volume columnar silhouette; the former
+    # 120-cell value produced 6,720 mostly redundant cards.
+    groups = make_radial_groups(
+        profile, 20261005, (0.62, 0.88), (0.88, 1.22), 20
+    )
+    # A centered upper volume and smaller terminal cap avoid the double peak
+    # created by the former pair of offset top groups.  View-angle fading can
+    # remove some cards without opening a conspicuous notch at the apex.
+    groups.append((
+        Vector((0.0, 0.0, 11.45)),
+        Vector((0.42, 0.40, 0.55)),
+        14,
+    ))
+    foliage = create_species_card_foliage(
+        "Cypress_Foliage_28Groups",
+        leaf_material,
+        groups,
+        Vector((0.0, 0.0, 6.15)),
+        Vector((2.15, 2.08, 5.95)),
+        # Cypress sprays use deliberately broad cards so this secondary species
+        # can keep a full column without returning to thousands of small sheets.
+        (0.95, 1.30),
+        20261006,
+        0.45,
+        11.75,
+        0.24,
+    )
+    return trunk, foliage
+
+
+def create_billboard_lobes_mesh(name, leaf_material, lobe_specs):
+    """Pack independently pivoted shrub billboards into one draw-call mesh.
+
+    UV2 stores each lobe pivot's Blender X/Z coordinates. COLOR.a stores its
+    shallow Blender Y depth mapped from -0.5..0.5 to 0..1. Godot reconstructs
+    the converted local pivot and rotates every quad about that pivot.
+    """
+    atlas_regions = [
+        (0.02, 0.52, 0.48, 0.98),
+        (0.52, 0.52, 0.98, 0.98),
+        (0.02, 0.02, 0.48, 0.48),
+        (0.52, 0.02, 0.98, 0.48),
+    ]
+    corner_normals = [
+        Vector((-0.46, -0.82, -0.28)).normalized(),
+        Vector((0.46, -0.82, -0.28)).normalized(),
+        Vector((0.46, -0.82, 0.30)).normalized(),
+        Vector((-0.46, -0.82, 0.30)).normalized(),
+    ]
+    verts, faces, uvs, pivot_uvs = [], [], [], []
+    normals, wind, plane_normals, pivot_depths = [], [], [], []
+    for center, size, region_index in lobe_specs:
+        width, height = size
+        half_width = width * 0.5
+        half_height = height * 0.5
+        card_vertices = [
+            center + Vector((-half_width, 0.0, -half_height)),
+            center + Vector((half_width, 0.0, -half_height)),
+            center + Vector((half_width, 0.0, half_height)),
+            center + Vector((-half_width, 0.0, half_height)),
+        ]
+        base = len(verts)
+        verts.extend(tuple(vertex) for vertex in card_vertices)
+        verts.extend(tuple(vertex) for vertex in card_vertices)
+        faces.extend((
+            (base, base + 1, base + 2, base + 3),
+            (base + 7, base + 6, base + 5, base + 4),
+        ))
+        u0, v0, u1, v1 = atlas_regions[region_index % 4]
+        card_uvs = [(u0, v0), (u1, v0), (u1, v1), (u0, v1)]
+        uvs.extend(card_uvs)
+        uvs.extend(card_uvs)
+        pivot_uvs.extend([(center.x, center.z)] * 8)
+        normals.extend([tuple(normal) for normal in corner_normals] * 2)
+        wind.extend([0.30, 0.30, 0.92, 0.92] * 2)
+        plane_normals.extend([Vector((0.0, -1.0, 0.0))] * 8)
+        pivot_depths.extend([max(0.0, min(1.0, center.y + 0.5))] * 8)
+
+    mesh = bpy.data.meshes.new(name + "Mesh")
+    mesh.from_pydata(verts, [], faces)
+    mesh.update()
+    mesh.normals_split_custom_set_from_vertices(normals)
+    for polygon in mesh.polygons:
+        polygon.use_smooth = True
+    mesh.materials.append(leaf_material)
+    assign_uv(mesh, uvs)
+    assign_uv2(mesh, pivot_uvs)
+    add_foliage_vertex_data(mesh, wind, plane_normals, pivot_depths)
+    foliage = bpy.data.objects.new(name, mesh)
+    bpy.context.collection.objects.link(foliage)
+    foliage["asset_type"] = "packed_independent_y_billboard_shrub_lobes"
+    foliage["billboard_lobe_count"] = len(lobe_specs)
+    foliage["pivot_encoding"] = "UV2.xy=x,z; COLOR_0.a=blender_y+0.5"
+    foliage["recommended_alpha_cutoff"] = 0.48
+    foliage["wind_vertex_color"] = "COLOR_0.r"
+    return foliage
+
+
+def create_shrub(leaf_material):
+    """Build the single accepted person-height shrub-ball asset."""
+    lobe_specs = [
+        (Vector((0.00, 0.00, 1.08)), (1.48, 1.38), 0),
+        (Vector((-0.56, 0.12, 1.00)), (1.28, 1.16), 2),
+        (Vector((0.56, -0.08, 1.02)), (1.30, 1.18), 0),
+        (Vector((0.05, 0.20, 1.48)), (1.22, 1.04), 1),
+        (Vector((-0.08, -0.30, 0.70)), (1.40, 0.90), 3),
+    ]
+    foliage = create_billboard_lobes_mesh(
+        "Shrub_Rounded_Foliage_5BillboardLobes",
+        leaf_material,
+        lobe_specs,
+    )
+    return foliage
+
+
+def create_camphor_tree(trunk_material, leaf_material, shadow_material, dense_v2=False):
+    """Build a 20 m, thirty-clump broad-canopy tree as a separate species test."""
+    trunk = tapered_segment(
+        "Camphor_Trunk_Straight",
+        Vector((0.0, 0.0, 0.0)), Vector((0.0, 0.0, 10.2)),
+        0.58, 0.16, trunk_material, 12,
+    )
+    trunk["asset_type"] = "stylized_large_single_trunk"
+
+    rng = random.Random(20260921)
+    clumps = []
+    # Thirty overlapping ellipsoids form the readable mid-scale crown. The
+    # lower rings are broad; the upper rings contract without becoming a cone.
+    layer_specs = [
+        (8.2, 5.7, 4.4, 8, (2.55, 2.05, 2.15)),
+        (11.2, 7.0, 5.2, 9, (2.85, 2.25, 2.35)),
+        (14.3, 6.2, 4.8, 7, (2.75, 2.20, 2.45)),
+        (17.0, 4.0, 3.2, 4, (2.45, 2.00, 2.35)),
+    ]
+    for layer_index, (z, radius_x, radius_y, count, base_radii) in enumerate(layer_specs):
+        phase = rng.uniform(0.0, math.tau)
+        for index in range(count):
+            angle = phase + math.tau * index / count + rng.uniform(-0.20, 0.20)
+            radial = rng.uniform(0.70, 1.0)
+            center = Vector((
+                math.cos(angle) * radius_x * radial + rng.uniform(-0.35, 0.35),
+                math.sin(angle) * radius_y * radial + rng.uniform(-0.30, 0.30),
+                z + rng.uniform(-0.45, 0.45),
+            ))
+            radii = Vector((
+                base_radii[0] * rng.uniform(0.86, 1.14),
+                base_radii[1] * rng.uniform(0.86, 1.14),
+                base_radii[2] * rng.uniform(0.88, 1.12),
+            ))
+            yaw = angle + rng.uniform(-0.55, 0.55)
+            tilt_axis = Vector((math.cos(yaw), math.sin(yaw), 0.0))
+            rotation = (
+                Quaternion(Vector((0.0, 0.0, 1.0)), yaw).to_matrix()
+                @ Quaternion(tilt_axis, rng.uniform(-0.16, 0.16)).to_matrix()
+            )
+            clumps.append((center, radii, rotation))
+    # Two inner clumps prevent a hollow crown while preserving readable valleys.
+    clumps.extend([
+        (Vector((-0.8, 0.4, 11.6)), Vector((3.15, 2.55, 2.55)), random_rotation_matrix(rng)),
+        (Vector((0.9, -0.5, 14.8)), Vector((2.90, 2.35, 2.65)), random_rotation_matrix(rng)),
+    ])
+    assert len(clumps) == 30
+
+    atlas_regions = [
+        (0.02, 0.52, 0.48, 0.98),
+        (0.52, 0.52, 0.98, 0.98),
+        (0.02, 0.02, 0.48, 0.48),
+        (0.52, 0.02, 0.98, 0.48),
+    ]
+    region_aspects = [1.42, 0.82, 1.08, 1.18]
+    verts, faces, uvs = [], [], []
+    wind, plane_normals, crown_normals = [], [], []
+    card_count = 0
+    # V1 inherited the card scale of the six-metre tree: eighty small cards
+    # could not fill an ellipsoid roughly five metres across. V2 treats every
+    # ellipsoid as a foliage asset of its own. Most cells sit near its shell to
+    # keep the silhouette continuous, while the rest prevent a hollow centre.
+    cells_per_clump = 110 if dense_v2 else 40
+    for clump_index, (clump_center, clump_radii, clump_rotation) in enumerate(clumps):
+        for cell_index in range(cells_per_clump):
+            azimuth = rng.uniform(0.0, math.tau)
+            vertical = rng.uniform(-1.0, 1.0)
+            horizontal = math.sqrt(max(0.0, 1.0 - vertical * vertical))
+            direction = Vector((
+                math.cos(azimuth) * horizontal,
+                math.sin(azimuth) * horizontal,
+                vertical,
+            ))
+            if dense_v2:
+                if rng.random() < 0.70:
+                    radial = 0.56 + 0.38 * (rng.random() ** 0.42)
+                else:
+                    radial = 0.12 + 0.58 * (rng.random() ** 0.72)
+            else:
+                # Mix interior fill with a mild surface bias for fluffy silhouettes.
+                radial = 0.20 + 0.80 * (rng.random() ** 0.48)
+            local_center = Vector((
+                direction.x * clump_radii.x * radial,
+                direction.y * clump_radii.y * radial,
+                direction.z * clump_radii.z * radial,
+            ))
+            center = clump_center + clump_rotation @ local_center
+            card_rotation = random_rotation_matrix(rng)
+            card_up = (card_rotation @ Vector((0.0, 0.0, 1.0))).normalized()
+            for pair_index in range(2):
+                region_index = (clump_index + cell_index * 2 + pair_index) % 4
+                local_right = (
+                    Vector((1.0, 0.0, 0.0)) if pair_index == 0
+                    else Vector((0.0, 1.0, 0.0))
+                )
+                card_right = (card_rotation @ local_right).normalized()
+                plane_normal = card_right.cross(card_up).normalized()
+                height = rng.uniform(1.38, 1.82) if dense_v2 else rng.uniform(0.92, 1.30)
+                width = height * region_aspects[region_index] * rng.uniform(0.94, 1.12)
+                half_r = card_right * width * 0.5
+                half_u = card_up * height * 0.5
+                card_vertices = [
+                    center - half_r - half_u,
+                    center + half_r - half_u,
+                    center + half_r + half_u,
+                    center - half_r + half_u,
+                ]
+                base = len(verts)
+                verts.extend(tuple(vertex) for vertex in card_vertices)
+                faces.append((base, base + 1, base + 2, base + 3))
+                u0, v0, u1, v1 = atlas_regions[region_index]
+                uvs.extend([(u0, v0), (u1, v0), (u1, v1), (u0, v1)])
+                for vertex in card_vertices:
+                    local_vertex = clump_rotation.transposed() @ (vertex - clump_center)
+                    normal_local = Vector((
+                        local_vertex.x / max(0.001, clump_radii.x * clump_radii.x),
+                        local_vertex.y / max(0.001, clump_radii.y * clump_radii.y),
+                        local_vertex.z / max(0.001, clump_radii.z * clump_radii.z),
+                    ))
+                    if normal_local.length_squared < 0.0001:
+                        normal_local = direction
+                    crown_normals.append(tuple((clump_rotation @ normal_local.normalized()).normalized()))
+                    plane_normals.append(plane_normal)
+                    wind.append(min(1.0, max(0.35, (vertex.z - 5.0) / 14.0)))
+                card_count += 1
+
+    mesh = bpy.data.meshes.new("CamphorFoliageCardsMesh")
+    mesh.from_pydata(verts, [], faces)
+    mesh.update()
+    mesh.normals_split_custom_set_from_vertices(crown_normals)
+    for polygon in mesh.polygons:
+        polygon.use_smooth = True
+    mesh.materials.append(leaf_material)
+    assign_uv(mesh, uvs)
+    add_foliage_vertex_data(mesh, wind, plane_normals)
+    foliage = bpy.data.objects.new(
+        "Camphor_Foliage_30Clumps_6600Cards"
+        if dense_v2 else "Camphor_Foliage_30Clumps_2400Cards",
+        mesh,
+    )
+    bpy.context.collection.objects.link(foliage)
+    foliage["asset_type"] = "foliage_30_ellipsoid_clumps"
+    foliage["clump_count"] = len(clumps)
+    foliage["card_count"] = card_count
+    foliage["view_angle_data"] = "COLOR_0.gb_octahedral_plane_normal"
+    foliage["wind_vertex_color"] = "COLOR_0.r"
+
+    proxy_verts, proxy_faces = [], []
+    octahedron_faces = [
+        (0, 2, 4), (0, 4, 3), (0, 3, 5), (0, 5, 2),
+        (1, 4, 2), (1, 3, 4), (1, 5, 3), (1, 2, 5),
+    ]
+    for clump_center, clump_radii, clump_rotation in clumps:
+        local_points = [
+            Vector((0.0, 0.0, clump_radii.z)),
+            Vector((0.0, 0.0, -clump_radii.z)),
+            Vector((clump_radii.x, 0.0, 0.0)),
+            Vector((-clump_radii.x, 0.0, 0.0)),
+            Vector((0.0, clump_radii.y, 0.0)),
+            Vector((0.0, -clump_radii.y, 0.0)),
+        ]
+        base = len(proxy_verts)
+        proxy_verts.extend(tuple(clump_center + clump_rotation @ point) for point in local_points)
+        proxy_faces.extend(tuple(base + index for index in face) for face in octahedron_faces)
+    proxy_mesh = bpy.data.meshes.new("CamphorShadowProxyMesh")
+    proxy_mesh.from_pydata(proxy_verts, [], proxy_faces)
+    proxy_mesh.update()
+    proxy_mesh.materials.append(shadow_material)
+    shadow_proxy = bpy.data.objects.new("Camphor_Shadow_Proxies_30Clumps", proxy_mesh)
+    bpy.context.collection.objects.link(shadow_proxy)
+    shadow_proxy["asset_type"] = "clump_shadow_proxies"
+    shadow_proxy["clump_count"] = len(clumps)
+    return trunk, foliage, shadow_proxy
+
+
+def create_camphor_from_old_crowns(
+    trunk_material, leaf_material, compact=False, dense30=False,
+    round30=False, broad30=False, upright_asymmetric30=False,
+    use_refined_trunk=False
+):
+    """Build a large tree from reduced copies of the accepted v10 crown."""
+    old_trunk, source_crown = create_tree(
+        trunk_material, leaf_material, crown_layout="branch_guided"
+    )
+    bpy.data.objects.remove(old_trunk, do_unlink=True)
+
+    trunk_height = 6.2 if upright_asymmetric30 else (6.4 if broad30 else (
+        6.6 if round30 else (6.8 if dense30 else (7.3 if compact else 10.4))
+    ))
+    if use_refined_trunk:
+        trunk_seed = 20260930 if upright_asymmetric30 else 20260929
+        trunk = create_stylized_trunk(
+            "Camphor_Trunk_Stylized",
+            trunk_height,
+            trunk_material,
+            size="large",
+            seed=trunk_seed,
+        )
+    else:
+        trunk = tapered_segment(
+            "Camphor_Trunk_Straight",
+            Vector((0.0, 0.0, 0.0)), Vector((0.0, 0.0, trunk_height)),
+            0.46, 0.14, trunk_material, 12,
+        )
+        trunk["asset_type"] = "stylized_large_single_trunk"
+
+    # The coordinates describe crown-group centres. Each group is the complete
+    # accepted 480-card v10 crown rather than a small procedural ellipsoid.
+    overlap_spheres = []
+    if broad30:
+        # Keep thirty groups, but redistribute them instead of adding another
+        # layer. Five lower groups wrap the trunk, while large anchors and
+        # smaller bridges break the former equal-size, horizontal-row rhythm.
+        # radius, azimuth degrees, height, size bias. Using polar coordinates
+        # makes the horizontal mass near-circular by construction; the uneven
+        # angles and heights keep it from reading as several perfect rings.
+        placements = [
+            (2.0, 18.0, 4.05, 1.12), (2.2, 92.0, 4.35, 0.98),
+            (2.3, 166.0, 4.45, 1.04), (2.0, 238.0, 3.95, 0.92),
+            (2.2, 309.0, 4.55, 1.03),
+            (4.1, 4.0, 6.05, 1.00), (4.3, 44.0, 6.45, 1.14),
+            (4.0, 84.0, 6.15, 0.90), (4.5, 126.0, 6.35, 1.18),
+            (4.2, 166.0, 5.95, 0.96), (4.4, 207.0, 6.55, 1.08),
+            (4.0, 248.0, 6.15, 0.94), (4.5, 287.0, 6.45, 1.11),
+            (4.2, 329.0, 6.05, 0.88),
+            (4.2, 22.0, 7.9, 1.07), (3.7, 63.0, 8.4, 0.91),
+            (4.5, 104.0, 7.8, 1.20), (3.9, 147.0, 8.2, 0.87),
+            (4.3, 187.0, 7.7, 1.13), (3.6, 229.0, 8.5, 0.90),
+            (4.5, 269.0, 7.9, 1.18), (3.8, 311.0, 8.3, 0.94),
+            (2.6, 350.0, 8.7, 1.05),
+            (3.1, 35.0, 9.5, 0.92), (3.3, 106.0, 9.8, 1.08),
+            (3.0, 178.0, 9.4, 0.95), (3.2, 252.0, 9.7, 1.11),
+            (2.7, 320.0, 10.0, 1.02),
+            (1.4, 75.0, 10.8, 0.94), (1.2, 248.0, 11.2, 1.05),
+        ]
+        rng = random.Random(20260926)
+        crown_vertical_offset = 0.5
+        crown_specs = []
+        source_dimensions = Vector((7.70, 5.77, 3.80))
+        crown_bounds = []
+        for radius, angle_degrees, z, size_bias in placements:
+            angle = math.radians(angle_degrees)
+            x = math.cos(angle) * radius
+            y = math.sin(angle) * radius
+            radius_x = rng.uniform(2.05, 2.45) * size_bias
+            radii = Vector((
+                radius_x,
+                radius_x * rng.uniform(0.76, 0.96),
+                radius_x * rng.uniform(0.62, 0.80),
+            ))
+            scale_vector = Vector((
+                radii.x * 2.0 / source_dimensions.x,
+                radii.y * 2.0 / source_dimensions.y,
+                radii.z * 2.0 / source_dimensions.z,
+            ))
+            center = Vector((
+                x + rng.uniform(-0.15, 0.15),
+                y + rng.uniform(-0.15, 0.15),
+                z + crown_vertical_offset + rng.uniform(-0.12, 0.12),
+            ))
+            # Gentle pitch and roll vary the old-crown silhouette without
+            # turning the groups into the rejected chaotic small-ball tree.
+            rotation = Vector((
+                math.radians(rng.uniform(-9.0, 9.0)),
+                math.radians(rng.uniform(-11.0, 11.0)),
+                rng.uniform(-math.pi, math.pi),
+            ))
+            crown_specs.append((center, scale_vector, rotation))
+            rotation_matrix = Euler(tuple(rotation), "XYZ").to_matrix()
+            extent_x = math.sqrt(sum(
+                (rotation_matrix[0][axis] * radii[axis]) ** 2
+                for axis in range(3)
+            ))
+            extent_y = math.sqrt(sum(
+                (rotation_matrix[1][axis] * radii[axis]) ** 2
+                for axis in range(3)
+            ))
+            extent_z = math.sqrt(sum(
+                (rotation_matrix[2][axis] * radii[axis]) ** 2
+                for axis in range(3)
+            ))
+            crown_bounds.append((
+                center.x - extent_x, center.x + extent_x,
+                center.y - extent_y, center.y + extent_y,
+                center.z - extent_z, center.z + extent_z,
+            ))
+            effective_radius = (radii.x * radii.y * radii.z) ** (1.0 / 3.0)
+            overlap_spheres.append((center, effective_radius))
+        assert len(crown_specs) == 30
+        span_x = max(bound[1] for bound in crown_bounds) - min(
+            bound[0] for bound in crown_bounds
+        )
+        span_y = max(bound[3] for bound in crown_bounds) - min(
+            bound[2] for bound in crown_bounds
+        )
+        crown_min_z = min(bound[4] for bound in crown_bounds)
+        crown_max_z = max(bound[5] for bound in crown_bounds)
+        crown_vertical_span = crown_max_z - crown_min_z
+        horizontal_aspect = max(span_x, span_y) / min(span_x, span_y)
+        crown_breadth_ratio = min(span_x, span_y) / crown_vertical_span
+        assert horizontal_aspect <= 1.12, (
+            f"Broad crown is not horizontally round: {span_x:.2f} x {span_y:.2f}"
+        )
+        assert crown_breadth_ratio >= 1.18, (
+            "Broad crown is too tall for an isolated spreading tree: "
+            f"horizontal={min(span_x, span_y):.2f}, vertical={crown_vertical_span:.2f}"
+        )
+    elif upright_asymmetric30:
+        # Thirty old-crown groups form one irregular upright oval rather than
+        # five level shelves. The low skirt hides the trunk early, unequal
+        # shoulders create a readable gesture, and the crown drifts slightly
+        # toward its offset apex without becoming a leaning tree.
+        # radius, azimuth degrees, height, size bias.
+        placements = [
+            (2.1, 15.0, 3.70, 0.98), (2.4, 86.0, 4.10, 0.88),
+            (2.2, 158.0, 3.85, 1.04), (2.3, 231.0, 4.30, 0.86),
+            (2.0, 307.0, 3.95, 0.94),
+            (4.0, 2.0, 5.75, 1.10), (3.7, 43.0, 6.15, 0.98),
+            (4.0, 88.0, 5.55, 1.16), (3.6, 132.0, 6.65, 0.90),
+            (4.1, 176.0, 5.95, 1.06), (3.8, 221.0, 6.85, 1.13),
+            (4.0, 266.0, 6.35, 0.92), (3.6, 318.0, 7.15, 1.00),
+            (3.7, 20.0, 8.00, 1.18), (3.3, 62.0, 8.80, 0.88),
+            (3.8, 105.0, 7.90, 1.08), (3.4, 151.0, 9.20, 0.98),
+            (3.9, 196.0, 8.40, 1.14), (3.2, 239.0, 9.60, 0.90),
+            (3.8, 283.0, 8.90, 1.05), (3.1, 331.0, 10.00, 0.94),
+            (3.0, 8.0, 10.60, 1.06), (2.8, 68.0, 11.20, 0.93),
+            (3.1, 126.0, 10.80, 1.12), (2.6, 185.0, 11.80, 0.90),
+            (2.9, 246.0, 11.40, 1.00), (2.5, 310.0, 12.10, 0.96),
+            (1.5, 35.0, 13.00, 0.92), (1.6, 165.0, 13.40, 1.02),
+            (0.8, 285.0, 14.10, 0.82),
+        ]
+        rng = random.Random(20260927)
+        crown_vertical_offset = 0.5
+        crown_specs = []
+        source_dimensions = Vector((7.70, 5.77, 3.80))
+        crown_bounds = []
+        for radius, angle_degrees, z, size_bias in placements:
+            angle = math.radians(angle_degrees)
+            # A restrained height-dependent drift offsets the crown peak and
+            # breaks bilateral symmetry without making the trunk look bent.
+            height_drift = max(0.0, z - 8.0) / 6.1
+            center = Vector((
+                math.cos(angle) * radius + height_drift * 0.42
+                    + rng.uniform(-0.16, 0.16),
+                math.sin(angle) * radius - height_drift * 0.24
+                    + rng.uniform(-0.16, 0.16),
+                z + crown_vertical_offset + rng.uniform(-0.13, 0.13),
+            ))
+            base_radius = rng.uniform(1.90, 2.35) * size_bias
+            radii = Vector((
+                base_radius * rng.uniform(0.92, 1.08),
+                base_radius * rng.uniform(0.90, 1.08),
+                base_radius * rng.uniform(0.78, 0.98),
+            ))
+            scale_vector = Vector((
+                radii.x * 2.0 / source_dimensions.x,
+                radii.y * 2.0 / source_dimensions.y,
+                radii.z * 2.0 / source_dimensions.z,
+            ))
+            rotation = Vector((
+                math.radians(rng.uniform(-12.0, 12.0)),
+                math.radians(rng.uniform(-12.0, 12.0)),
+                rng.uniform(-math.pi, math.pi),
+            ))
+            crown_specs.append((center, scale_vector, rotation))
+            rotation_matrix = Euler(tuple(rotation), "XYZ").to_matrix()
+            extent_x = math.sqrt(sum(
+                (rotation_matrix[0][axis] * radii[axis]) ** 2
+                for axis in range(3)
+            ))
+            extent_y = math.sqrt(sum(
+                (rotation_matrix[1][axis] * radii[axis]) ** 2
+                for axis in range(3)
+            ))
+            extent_z = math.sqrt(sum(
+                (rotation_matrix[2][axis] * radii[axis]) ** 2
+                for axis in range(3)
+            ))
+            crown_bounds.append((
+                center.x - extent_x, center.x + extent_x,
+                center.y - extent_y, center.y + extent_y,
+                center.z - extent_z, center.z + extent_z,
+            ))
+            effective_radius = (radii.x * radii.y * radii.z) ** (1.0 / 3.0)
+            overlap_spheres.append((center, effective_radius))
+        assert len(crown_specs) == 30
+        span_x = max(bound[1] for bound in crown_bounds) - min(
+            bound[0] for bound in crown_bounds
+        )
+        span_y = max(bound[3] for bound in crown_bounds) - min(
+            bound[2] for bound in crown_bounds
+        )
+        crown_min_z = min(bound[4] for bound in crown_bounds)
+        crown_max_z = max(bound[5] for bound in crown_bounds)
+        crown_vertical_span = crown_max_z - crown_min_z
+        horizontal_aspect = max(span_x, span_y) / min(span_x, span_y)
+        crown_height_ratio = crown_vertical_span / min(span_x, span_y)
+        assert horizontal_aspect <= 1.12, (
+            f"Upright crown is not horizontally round: {span_x:.2f} x {span_y:.2f}"
+        )
+        assert 2.1 <= crown_min_z <= 3.3, (
+            f"Upright crown lower edge is outside target: {crown_min_z:.2f}"
+        )
+        assert 0.95 <= crown_height_ratio <= 1.25, (
+            "Upright crown lost its oval proportion: "
+            f"horizontal={min(span_x, span_y):.2f}, vertical={crown_vertical_span:.2f}"
+        )
+    elif round30:
+        # Staggered three-dimensional lattice: adjacent groups intersect, but
+        # no horizontal slice becomes a solid packed slab.
+        centres = [
+            (-3.8, -1.2, 7.1), (-1.4, -2.0, 7.1), (1.3, -1.9, 7.1),
+            (3.7, -1.0, 7.1), (2.2, 1.5, 7.1), (-1.8, 1.7, 7.1),
+            (-4.0, 0.7, 8.7), (-2.5, -1.4, 8.7), (-0.2, -0.5, 8.7),
+            (2.2, -1.5, 8.7), (4.0, 0.6, 8.7), (1.7, 2.2, 8.7),
+            (-1.1, 2.3, 8.7),
+            (-3.7, -1.0, 10.3), (-1.5, -2.0, 10.3), (1.1, -1.8, 10.3),
+            (3.6, -0.6, 10.3), (2.5, 1.6, 10.3), (0.1, 1.1, 10.3),
+            (-2.4, 1.5, 10.3),
+            (-3.1, 0.3, 11.9), (-1.6, -1.4, 11.9), (0.9, -1.5, 11.9),
+            (3.0, 0.1, 11.9), (1.5, 1.8, 11.9), (-1.3, 1.7, 11.9),
+            (-2.0, 0.0, 13.4), (-0.3, -1.0, 13.4), (2.0, 0.3, 13.4),
+            (0.4, 1.4, 13.4),
+        ]
+        rng = random.Random(20260923)
+        crown_specs = []
+        source_dimensions = Vector((7.70, 5.77, 3.80))
+        for x, y, z in centres:
+            base_radius = rng.uniform(1.65, 2.15)
+            radii = Vector((
+                base_radius * rng.uniform(0.92, 1.08),
+                base_radius * rng.uniform(0.90, 1.08),
+                base_radius * rng.uniform(0.93, 1.10),
+            ))
+            scale_vector = Vector((
+                radii.x * 2.0 / source_dimensions.x,
+                radii.y * 2.0 / source_dimensions.y,
+                radii.z * 2.0 / source_dimensions.z,
+            ))
+            center = Vector((
+                x + rng.uniform(-0.12, 0.12),
+                y + rng.uniform(-0.12, 0.12),
+                z + rng.uniform(-0.10, 0.10),
+            ))
+            crown_specs.append((center, scale_vector, rng.uniform(-math.pi, math.pi)))
+            effective_radius = (radii.x * radii.y * radii.z) ** (1.0 / 3.0)
+            overlap_spheres.append((center, effective_radius))
+        assert len(crown_specs) == 30
+    elif dense30:
+        crown_specs = []
+        rng = random.Random(20260922)
+        # Six closely spaced layers form one continuous crown. Every layer has
+        # an inner group; the remaining groups overlap around its perimeter.
+        layer_specs = [
+            (7.3, 6, 3.30, 2.35, 0.67, 0.15),
+            (8.5, 7, 3.75, 2.70, 0.68, 0.62),
+            (9.7, 7, 3.65, 2.60, 0.67, 1.08),
+            (10.9, 5, 3.00, 2.15, 0.65, 0.32),
+            (12.1, 3, 1.90, 1.35, 0.63, 0.86),
+            (13.3, 2, 0.90, 0.65, 0.61, 0.05),
+        ]
+        for z, count, radius_x, radius_y, scale, phase in layer_specs:
+            for index in range(count):
+                if index == 0:
+                    x = rng.uniform(-0.28, 0.28)
+                    y = rng.uniform(-0.22, 0.22)
+                else:
+                    angle = phase + math.tau * (index - 1) / max(1, count - 1)
+                    radial = rng.uniform(0.70, 0.88)
+                    x = math.cos(angle) * radius_x * radial
+                    y = math.sin(angle) * radius_y * radial
+                crown_specs.append((
+                    ((x, y, z + rng.uniform(-0.16, 0.16)),
+                     scale * rng.uniform(0.96, 1.04),
+                     rng.uniform(-math.pi, math.pi))
+                ))
+        assert len(crown_specs) == 30
+    else:
+        crown_specs = (
+        [
+            ((-2.1, -0.7, 7.9), 0.60, -0.48),
+            ((0.0, -1.5, 7.8), 0.62, 0.22),
+            ((2.1, -0.4, 8.1), 0.60, 0.76),
+            ((-0.8, 1.5, 8.2), 0.61, -0.92),
+            ((-1.8, -0.5, 10.4), 0.59, 1.18),
+            ((0.2, -1.0, 10.6), 0.62, -0.16),
+            ((1.8, 0.5, 10.5), 0.59, 0.58),
+            ((-0.3, 1.3, 10.8), 0.61, -0.72),
+            ((-0.8, -0.1, 12.9), 0.58, 0.94),
+            ((1.0, 0.2, 13.1), 0.58, 0.08),
+        ] if compact else [
+            ((-4.1, -1.5, 10.2), 0.72, -0.48),
+            ((-1.1, -2.7, 10.5), 0.74, 0.22),
+            ((2.4, -2.1, 10.4), 0.73, 0.76),
+            ((4.2, 0.5, 10.7), 0.70, -0.92),
+            ((-2.8, 2.3, 11.1), 0.73, 1.18),
+            ((1.1, 2.6, 11.5), 0.75, -0.16),
+            ((-3.0, -0.5, 14.1), 0.68, 0.58),
+            ((0.3, -1.5, 14.5), 0.72, -0.72),
+            ((3.1, 0.8, 14.3), 0.68, 0.94),
+            ((-0.2, 1.4, 17.3), 0.67, 0.08),
+        ])
+    crowns = []
+    old_crown_center_z = 4.08
+    for index, (center_values, scale, rotation_value) in enumerate(crown_specs):
+        crown = source_crown if index == 0 else source_crown.copy()
+        if index > 0:
+            crown.data = source_crown.data
+            bpy.context.collection.objects.link(crown)
+        center = Vector(center_values)
+        scale_vector = scale if isinstance(scale, Vector) else Vector((scale, scale, scale))
+        rotation = (
+            Euler(tuple(rotation_value), "XYZ")
+            if isinstance(rotation_value, Vector)
+            else Euler((0.0, 0.0, rotation_value), "XYZ")
+        )
+        scaled_center = Vector((0.0, 0.0, old_crown_center_z * scale_vector.z))
+        crown.name = f"Camphor_Foliage_OldCrownGroup_{index + 1:02d}"
+        crown.location = center - rotation.to_matrix() @ scaled_center
+        crown.rotation_euler = rotation
+        crown.scale = scale_vector
+        crown["asset_type"] = "accepted_v10_crown_group"
+        crown["logical_card_count"] = 480
+        crowns.append(crown)
+
+    trunk["crown_group_count"] = len(crowns)
+    trunk["logical_card_count"] = len(crowns) * 480
+    if broad30 or upright_asymmetric30:
+        trunk["horizontal_span_x"] = span_x
+        trunk["horizontal_span_y"] = span_y
+        trunk["horizontal_aspect"] = horizontal_aspect
+        trunk["crown_min_z"] = crown_min_z
+        trunk["crown_max_z"] = crown_max_z
+        trunk["crown_vertical_span"] = crown_vertical_span
+        if broad30:
+            trunk["crown_breadth_ratio"] = crown_breadth_ratio
+        if upright_asymmetric30:
+            trunk["crown_height_ratio"] = crown_height_ratio
+    if overlap_spheres:
+        ratios = []
+        neighbours = [0] * len(overlap_spheres)
+        for first in range(len(overlap_spheres)):
+            center_a, radius_a = overlap_spheres[first]
+            for second in range(first + 1, len(overlap_spheres)):
+                center_b, radius_b = overlap_spheres[second]
+                distance = (center_a - center_b).length
+                if distance >= radius_a + radius_b:
+                    continue
+                if distance <= abs(radius_a - radius_b):
+                    intersection = 4.0 * math.pi * min(radius_a, radius_b) ** 3 / 3.0
+                else:
+                    intersection = (
+                        math.pi * (radius_a + radius_b - distance) ** 2
+                        * (distance * distance + 2.0 * distance * (radius_a + radius_b)
+                           - 3.0 * (radius_a - radius_b) ** 2)
+                        / (12.0 * distance)
+                    )
+                smaller_volume = 4.0 * math.pi * min(radius_a, radius_b) ** 3 / 3.0
+                ratio = intersection / smaller_volume
+                ratios.append(ratio)
+                if ratio >= 0.03:
+                    neighbours[first] += 1
+                    neighbours[second] += 1
+        trunk["overlap_pair_count"] = len(ratios)
+        trunk["overlap_ratio_mean"] = sum(ratios) / max(1, len(ratios))
+        trunk["overlap_ratio_max"] = max(ratios, default=0.0)
+        trunk["isolated_group_count"] = sum(count == 0 for count in neighbours)
+    return trunk, crowns
+
+
+def export_selected(filepath, objects, include_materials=True):
+    bpy.ops.object.select_all(action="DESELECT")
+    for obj in objects:
+        obj.select_set(True)
+    bpy.context.view_layer.objects.active = objects[0]
+    bpy.ops.export_scene.gltf(
+        filepath=filepath,
+        export_format="GLB",
+        use_selection=True,
+        export_apply=True,
+        export_yup=True,
+        export_vertex_color="ACTIVE",
+        export_materials="EXPORT" if include_materials else "NONE",
+    )
+
+
+def make_preview(grass, trunk, foliage):
+    grass.location = (-3.0, 0.1, 0.0)
+    grass.scale = (1.35, 1.35, 1.35)
+    trunk.location = (0.8, 0.0, 0.0)
+    foliage.location = (0.8, 0.0, 0.0)
+
+    ground_mat = flat_material("PreviewGround", (0.18, 0.42, 0.16), 1.0)
+    bpy.ops.mesh.primitive_plane_add(size=14, location=(0.0, 0.0, -0.02))
+    ground = bpy.context.object
+    ground.name = "Preview_Ground"
+    ground.data.materials.append(ground_mat)
+
+    bpy.ops.object.light_add(type="AREA", location=(-3.5, -4.0, 7.0))
+    key = bpy.context.object
+    key.name = "Preview_Key"
+    key.data.energy = 1100
+    key.data.shape = "DISK"
+    key.data.size = 5.0
+
+    bpy.ops.object.light_add(type="AREA", location=(4.0, 2.0, 4.5))
+    fill = bpy.context.object
+    fill.name = "Preview_Fill"
+    fill.data.energy = 500
+    fill.data.color = (0.65, 0.82, 1.0)
+    fill.data.size = 4.0
+
+    bpy.ops.object.camera_add(location=(10.8, -14.8, 7.4))
+    camera = bpy.context.object
+    camera.name = "Preview_Camera"
+    target = Vector((0.0, 0.0, 2.85))
+    camera.rotation_euler = (target - camera.location).to_track_quat("-Z", "Y").to_euler()
+    camera.data.lens = 58
+    bpy.context.scene.camera = camera
+
+    world = bpy.context.scene.world
+    world.color = (0.04, 0.06, 0.08)
+    world.use_nodes = True
+    bg = world.node_tree.nodes.get("Background")
+    bg.inputs["Color"].default_value = (0.11, 0.18, 0.24, 1.0)
+    bg.inputs["Strength"].default_value = 0.55
+
+    scene = bpy.context.scene
+    scene.render.engine = "BLENDER_EEVEE"
+    scene.render.resolution_x = 960
+    scene.render.resolution_y = 720
+    scene.render.resolution_percentage = 100
+    scene.render.image_settings.file_format = "PNG"
+    scene.render.filepath = os.path.join(PREVIEW_DIR, "vegetation_assets_preview_v8.png")
+    scene.render.film_transparent = False
+    scene.view_settings.look = "AgX - Medium High Contrast"
+    bpy.ops.render.render(write_still=True)
+
+
+reset_scene()
+leaf_mat = image_material("M_Leaves_FlatMuted_AlphaClip", LEAF_TEX, emission_strength=0.0)
+filler_leaf_mat = image_material(
+    "M_FillerLeaves_MidFrequency_AlphaClip", FILLER_LEAF_TEX, emission_strength=0.0
+)
+birch_leaf_mat = image_material("M_Birch_Leaves_Flat_AlphaClip", BIRCH_LEAF_TEX)
+cypress_leaf_mat = image_material("M_Cypress_Sprays_Flat_AlphaClip", CYPRESS_TEX)
+shrub_leaf_mat = image_material("M_Shrub_Leaves_Flat_AlphaClip", SHRUB_TEX)
+birch_bark_mat = opaque_image_material("M_Birch_Bark_Flat", BIRCH_BARK_TEX)
+trunk_mat = flat_material("M_Trunk_Stylized", (0.28, 0.13, 0.055))
+trunk_refined_mat = flat_material(
+    "M_Trunk_WarmDark", (0.115, 0.080, 0.058)
+)
+if "--tree-medium-birch-upright" in sys.argv:
+    trunk, foliage = create_birch_tree(birch_bark_mat, birch_leaf_mat)
+    model_path = os.path.join(MODEL_DIR, "tree_medium_birch_upright_canopy.glb")
+    export_selected(model_path, [trunk, foliage], include_materials=False)
+    source_path = os.path.join(SOURCE_DIR, "tree_medium_birch_upright_canopy.blend")
+    bpy.ops.wm.save_as_mainfile(filepath=source_path)
+    print(
+        "MEDIUM_BIRCH_UPRIGHT_BUILD_COMPLETE "
+        f"groups={foliage['crown_group_count']} cards={foliage['card_count']}"
+    )
+    print(model_path)
+    print(source_path)
+elif "--tree-medium-columnar-cypress" in sys.argv:
+    trunk, foliage = create_columnar_cypress(trunk_refined_mat, cypress_leaf_mat)
+    model_path = os.path.join(MODEL_DIR, "tree_medium_columnar_cypress.glb")
+    export_selected(model_path, [trunk, foliage], include_materials=False)
+    source_path = os.path.join(SOURCE_DIR, "tree_medium_columnar_cypress.blend")
+    bpy.ops.wm.save_as_mainfile(filepath=source_path)
+    print(
+        "MEDIUM_COLUMNAR_CYPRESS_BUILD_COMPLETE "
+        f"groups={foliage['crown_group_count']} cards={foliage['card_count']}"
+    )
+    print(model_path)
+    print(source_path)
+elif "--shrub-medium-rounded" in sys.argv:
+    foliage = create_shrub(shrub_leaf_mat)
+    model_path = os.path.join(MODEL_DIR, "shrub_medium_rounded_canopy.glb")
+    export_selected(model_path, [foliage], include_materials=False)
+    source_path = os.path.join(SOURCE_DIR, "shrub_medium_rounded_canopy.blend")
+    bpy.ops.wm.save_as_mainfile(filepath=source_path)
+    print(
+        "SHRUB_MEDIUM_ROUNDED_BUILD_COMPLETE "
+        f"packed_y_billboard_lobes={foliage['billboard_lobe_count']}"
+    )
+    print(model_path)
+    print(source_path)
+elif "--tree-small-broad-canopy" in sys.argv:
+    trunk, foliage = create_tree(
+        trunk_refined_mat,
+        leaf_mat,
+        crown_layout="branch_guided",
+        use_refined_trunk=True,
+    )
+    model_path = os.path.join(MODEL_DIR, "tree_small_broad_canopy.glb")
+    export_selected(model_path, [trunk, foliage])
+    source_path = os.path.join(SOURCE_DIR, "tree_small_broad_canopy.blend")
+    bpy.ops.wm.save_as_mainfile(filepath=source_path)
+    print(f"SMALL_BROAD_CANOPY_BUILD_COMPLETE cards={foliage['card_count']}")
+    print(model_path)
+    print(source_path)
+elif any(
+    flag in sys.argv
+    for flag in (
+        "--tree-small-broadleaf-v4-full-a",
+        "--tree-small-broadleaf-v4-full-b",
+        "--tree-small-broadleaf-v4-full-c",
+    )
+):
+    variant = 0
+    if "--tree-small-broadleaf-v4-full-b" in sys.argv:
+        variant = 1
+    elif "--tree-small-broadleaf-v4-full-c" in sys.argv:
+        variant = 2
+    suffix = ("a", "b", "c")[variant]
+    trunk, foliage = create_small_broadleaf_v4_full(
+        trunk_refined_mat, filler_leaf_mat, variant
+    )
+    model_path = os.path.join(
+        MODEL_DIR, f"tree_small_broadleaf_v4_full_{suffix}.glb"
+    )
+    export_selected(model_path, [trunk, foliage])
+    source_path = os.path.join(
+        SOURCE_DIR, f"tree_small_broadleaf_v4_full_{suffix}.blend"
+    )
+    bpy.ops.wm.save_as_mainfile(filepath=source_path)
+    print(
+        "SMALL_BROADLEAF_V4_FULL_BUILD_COMPLETE "
+        f"variant={suffix} "
+        f"groups={foliage['crown_group_count']} cards={foliage['card_count']}"
+    )
+    print(model_path)
+    print(source_path)
+elif "--tree-medium-upright-asymmetric-canopy" in sys.argv:
+    trunk, crowns = create_camphor_from_old_crowns(
+        trunk_refined_mat,
+        leaf_mat,
+        upright_asymmetric30=True,
+        use_refined_trunk=True,
+    )
+    model_path = os.path.join(
+        MODEL_DIR, "tree_medium_upright_asymmetric_canopy.glb"
+    )
+    export_selected(model_path, [trunk, *crowns])
+    source_path = os.path.join(
+        SOURCE_DIR, "tree_medium_upright_asymmetric_canopy.blend"
+    )
+    bpy.ops.wm.save_as_mainfile(filepath=source_path)
+    print(
+        "MEDIUM_UPRIGHT_ASYMMETRIC_CANOPY_BUILD_COMPLETE "
+        f"crown_groups={len(crowns)} cards={len(crowns) * 480} "
+        f"overlap_pairs={trunk['overlap_pair_count']} "
+        f"overlap_mean={trunk['overlap_ratio_mean']:.3f} "
+        f"overlap_max={trunk['overlap_ratio_max']:.3f} "
+        f"isolated={trunk['isolated_group_count']} "
+        f"horizontal_span={trunk['horizontal_span_x']:.2f}x"
+        f"{trunk['horizontal_span_y']:.2f} "
+        f"horizontal_aspect={trunk['horizontal_aspect']:.3f} "
+        f"crown_z={trunk['crown_min_z']:.2f}..{trunk['crown_max_z']:.2f} "
+        f"height_ratio={trunk['crown_height_ratio']:.3f}"
+    )
+    print(model_path)
+    print(source_path)
+elif "--tree-medium-broad-clustered-canopy" in sys.argv:
+    trunk, crowns = create_camphor_from_old_crowns(
+        trunk_refined_mat,
+        leaf_mat,
+        broad30=True,
+        use_refined_trunk=True,
+    )
+    model_path = os.path.join(
+        MODEL_DIR, "tree_medium_broad_clustered_canopy.glb"
+    )
+    export_selected(model_path, [trunk, *crowns])
+    source_path = os.path.join(
+        SOURCE_DIR, "tree_medium_broad_clustered_canopy.blend"
+    )
+    bpy.ops.wm.save_as_mainfile(filepath=source_path)
+    print(
+        "MEDIUM_BROAD_CLUSTERED_CANOPY_BUILD_COMPLETE "
+        f"crown_groups={len(crowns)} cards={len(crowns) * 480} "
+        f"overlap_pairs={trunk['overlap_pair_count']} "
+        f"overlap_mean={trunk['overlap_ratio_mean']:.3f} "
+        f"overlap_max={trunk['overlap_ratio_max']:.3f} "
+        f"isolated={trunk['isolated_group_count']} "
+        f"horizontal_span={trunk['horizontal_span_x']:.2f}x"
+        f"{trunk['horizontal_span_y']:.2f} "
+        f"horizontal_aspect={trunk['horizontal_aspect']:.3f} "
+        f"crown_z={trunk['crown_min_z']:.2f}..{trunk['crown_max_z']:.2f} "
+        f"breadth_ratio={trunk['crown_breadth_ratio']:.3f}"
+    )
+    print(model_path)
+    print(source_path)
+else:
+    os.makedirs(PREVIEW_DIR, exist_ok=True)
+    grass_mat = image_material("M_Grass_Fresh_AlphaClip", GRASS_TEX)
+    grass = create_grass(grass_mat)
+    trunk, foliage = create_tree(trunk_mat, leaf_mat)
+    export_selected(os.path.join(MODEL_DIR, "grass_star_3card_v6.glb"), [grass])
+    export_selected(os.path.join(MODEL_DIR, "tree_foliage_480card_v8.glb"), [trunk, foliage])
+    make_preview(grass, trunk, foliage)
+    bpy.ops.wm.save_as_mainfile(filepath=os.path.join(SOURCE_DIR, "vegetation_source_v8.blend"))
+    print("VEGETATION_BUILD_COMPLETE")
+    print(os.path.join(MODEL_DIR, "grass_star_3card_v6.glb"))
+    print(os.path.join(MODEL_DIR, "tree_foliage_480card_v8.glb"))
+    print(os.path.join(PREVIEW_DIR, "vegetation_assets_preview_v8.png"))
