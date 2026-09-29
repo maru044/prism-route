@@ -5,7 +5,7 @@ render_mode unshaded, blend_mix, depth_draw_never, cull_back;
 uniform vec3 clear_blue : source_color = vec3(0.74, 0.87, 0.93);
 uniform vec3 dense_blue : source_color = vec3(0.32, 0.60, 0.76);
 uniform float flow_speed : hint_range(0.0, 2.0) = 0.24;
-uniform float clear_opacity : hint_range(0.0, 1.0) = 0.16;
+uniform float clear_opacity : hint_range(0.0, 1.0) = 0.24;
 uniform float dense_opacity : hint_range(0.0, 1.0) = 0.70;
 
 varying vec3 model_position;
@@ -49,7 +49,9 @@ void fragment() {
 		+ bubble_ring(surface, vec2(0.03, 1.80 + 0.03 * sin(time * 0.8)), 0.038);
 
 	float edge = pow(1.0 - clamp(dot(normalize(NORMAL), normalize(VIEW)), 0.0, 1.0), 2.0);
+	float clear_weight = (1.0 - rich) * (1.0 - rich);
 	ALBEDO = mix(clear_blue, dense_blue, rich * 0.88) * (1.0 - edge * 0.16);
+	ALBEDO -= vec3(0.06) * clear_weight;
 	ALBEDO = mix(ALBEDO, vec3(0.75, 0.88, 0.92), clamp(bubbles * front * 0.24, 0.0, 0.24));
 	ALPHA = mix(clear_opacity, dense_opacity, rich) + bubbles * front * 0.09;
 }
