@@ -1,3 +1,4 @@
+@tool
 extends GLTFDocumentExtension
 
 enum DebugMode {
@@ -87,7 +88,7 @@ func _add_vrm_nodes_to_skin(obj: Dictionary) -> bool:
 
 
 func _import_preflight(
-	gstate: GLTFState, extensions: PackedStringArray = PackedStringArray(), psa2: Variant = null
+	gstate: GLTFState, extensions: PackedStringArray
 ) -> Error:
 	if extensions.has("VRMC_vrm"):
 		# VRM 1.0 file. Do not parse as a VRM 0.0.

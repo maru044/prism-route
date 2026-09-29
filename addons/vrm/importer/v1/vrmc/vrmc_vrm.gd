@@ -1,3 +1,4 @@
+@tool
 extends GLTFDocumentExtension
 
 const VRMLogger = preload("../../../core/logger.gd")
@@ -159,7 +160,7 @@ func _export_post(state: GLTFState) -> Error:
 
 
 func _import_preflight(
-	_state: GLTFState, extensions: PackedStringArray = PackedStringArray(), _psa2: Variant = null
+	_state: GLTFState, extensions: PackedStringArray
 ) -> Error:
 	if not extensions.has("VRMC_vrm"):
 		return ERR_SKIP

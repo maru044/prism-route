@@ -1,3 +1,4 @@
+@tool
 extends GLTFDocumentExtension
 
 const vrm_animation_import = preload("../vrm_animation_import.gd")

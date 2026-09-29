@@ -1,3 +1,4 @@
+@tool
 extends GLTFDocumentExtension
 
 const vrm_spring_bone_controller = preload("../../../runtime/vrm_spring_bone_controller.gd")

@@ -1,3 +1,4 @@
+@tool
 extends GLTFDocumentExtension
 
 const VRMLogger = preload("../../../core/logger.gd")
@@ -222,7 +223,7 @@ func _process_vrm_material(
 
 
 # Called when the node enters the scene tree for the first time.
-func _import_post(gstate, root):
+func _import_post(gstate, root) -> Error:
 	# Guard: skip if there are no MToon materials to process.
 	var materials: Array[Material] = gstate.get_materials()
 	var has_mtoon := false
@@ -236,7 +237,7 @@ func _import_post(gstate, root):
 		VRMLogger.debug(
 			"vrmc_materials_mtoon.gd", "_import_post: no MToon materials found, skipping"
 		)
-		return
+		return OK
 
 	VRMLogger.info(
 		"vrmc_materials_mtoon.gd", "_import_post: processing %d materials" % materials.size()
@@ -310,3 +311,4 @@ func _import_post(gstate, root):
 				)
 
 	# FIXME: due to head duplication, do we now have some meshes which are not in gltf state?
+	return OK
