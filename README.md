@@ -1,6 +1,6 @@
 # Prism Route — world and vegetation prototype
 
-This Godot 4.6 Forward+ project now uses the complete Rhino island draft for a
+This Godot 4.7.2 Forward+ project now uses the complete Rhino island draft for a
 first playable scale, driving and vegetation LOD test. It is still a prototype:
 roads, final planting points, terrain chunks and production vehicle physics are
 not implemented. Actual planting points will eventually be designed and
@@ -9,7 +9,7 @@ rendering cost.
 
 ## Open and inspect
 
-Open `project.godot` in Godot 4.6 and run `scenes/main.tscn`. W/S
+Open `project.godot` in Godot 4.7.2 and run `scenes/main.tscn`. W/S
 accelerates or reverses the camper, A/D steers, Space brakes and R resets it to
 the starting point. Right-drag orbits the third-person camera and the mouse
 wheel changes its distance. L toggles the LOD stress comparison and V toggles
@@ -64,6 +64,8 @@ composition without loading the island.
   use VRM as the standard runtime format so they share one import and animation
   pipeline.
 - `scenes/characters/` — Godot character scene wrappers for imported VRM models.
+- `scenes/product_preview.tscn` — isolated collectible product rendering study;
+  see `docs/PRODUCT_RENDERING_PLAN.md` for controls, current results and next steps.
 - `docs/RESEARCH_CONTEXT.md` — current art direction, tested decisions and
   guidance for research tasks.
 
