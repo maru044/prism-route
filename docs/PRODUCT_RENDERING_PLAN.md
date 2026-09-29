@@ -17,10 +17,11 @@ vehicle scale, or world lighting.
   lighting sample the synthetic EXR. Three `AreaLight3D` instances add direct
   rectangular highlights. Drag the viewport to inspect; Space toggles rotation.
 - The Blender asset has separate clear shell, gel core, base, and bubble meshes.
-  Godot applies independent materials. The gel shader moves a blue tonal wave
-  and adds readable bubble rims on its surface.
-- `tools/capture_product_preview.gd` records front and side views from the real
-  Forward+ renderer into `screenshots/`.
+  Godot applies independent materials. The gel shader uses translucent pale
+  ice blue and slowly moving, locally denser blue regions. The bubble meshes
+  remain separately animated and visible through the gel.
+- `tools/capture_product_preview.gd` records front, side and later motion views
+  from the real Forward+ renderer into `screenshots/`.
 
 ## Quality gates and next steps
 
@@ -29,8 +30,10 @@ vehicle scale, or world lighting.
 2. **Glass and light:** tune EXR panel positions, widths and luminance while
    rotating the object. The shell should keep a transparent center, readable
    edges and controlled long highlights at every useful inspection angle.
-3. **Gel motion:** replace the placeholder tonal wave and surface bubble rims
-   with a coherent fluid or gel treatment. Judge motion in video and at rest.
+3. **Gel motion:** judge whether the slowly drifting density regions read as
+   suspended gel from all inspection angles. If they still look like surface
+   marks, build a layered or volumetric treatment. Judge motion in video and
+   at rest.
 4. **Material variants:** only after the classic drop is accepted, reuse the
    preview stage for the elongated, faceted, double shell and thermal color
    concepts. Keep geometry and material variants separate from the stage.
@@ -43,10 +46,10 @@ vehicle scale, or world lighting.
 This is a first real-time approximation, not a physical glass simulation.
 Godot's normal screen-space refraction cannot reliably sample another
 transparent layer inside a clear shell, so the current shell uses a Fresnel
-transparency shader and the core remains opaque. The moving bubbles in the
-GLB are present as editable source geometry; the visible bubble rims are
-currently a shader treatment on the blue core. More convincing internal depth
-and liquid motion remain the main visual risks to resolve before calling the
+transparency shader and the core uses a translucent surface shader. The
+changing areas of density approximate moving gel; they are not a physical
+volumetric fluid simulation. More convincing internal depth, refraction and
+liquid motion remain the main visual risks to resolve before calling the
 product look final.
 
 The source `.blend` sits under `source/.gdignore` so Godot imports the exported

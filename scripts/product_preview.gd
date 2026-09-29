@@ -107,6 +107,7 @@ func _build_stage() -> void:
 	viewport.add_child(product)
 	var shell_material := ShaderMaterial.new()
 	shell_material.shader = SHELL_SHADER
+	shell_material.render_priority = 1
 	var gel_material := ShaderMaterial.new()
 	gel_material.shader = GEL_SHADER
 	var base_material := StandardMaterial3D.new()

@@ -25,4 +25,14 @@ func _capture() -> void:
 		var result := image.save_png(path)
 		print("product_preview_capture=", result, " size=", image.get_size(), " path=", path)
 		failed = failed or result != OK
+	scene.product.rotation.y = 0.25
+	await create_timer(8.0).timeout
+	for frame in 3:
+		await process_frame
+	await RenderingServer.frame_post_draw
+	var motion_image: Image = scene.viewport.get_texture().get_image()
+	var motion_path := ProjectSettings.globalize_path("res://screenshots/product_preview_classic_drop_motion.png")
+	var motion_result := motion_image.save_png(motion_path)
+	print("product_preview_motion_capture=", motion_result, " path=", motion_path)
+	failed = failed or motion_result != OK
 	quit(1 if failed else 0)
