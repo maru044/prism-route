@@ -63,6 +63,10 @@ var target: Node3D
 var initialized := false
 var lod_enabled := true
 var vegetation_enabled := true
+var painted_lod_enabled := false
+var painted_lod_materials: Array[ShaderMaterial] = []
+var record_tree_layout_for_review := false
+var review_tree_records: Array[Dictionary] = []
 var transition_test_mode := false
 var active_grass_chunks: Dictionary[Vector2i, Node3D] = {}
 var empty_grass_cells: Dictionary[Vector2i, bool] = {}
@@ -350,6 +354,18 @@ func _make_tree_hlod_material(
 	var material := ShaderMaterial.new()
 	material.shader = TREE_HLOD_SHADER
 	material.set_shader_parameter("albedo_texture", texture)
+	var painted_path := "res://assets/vegetation/painted_lod/painted_clumps_v1.png"
+	if is_impostor:
+		var species := "small"
+		if texture == TREE_BROAD_IMPOSTOR_TEXTURE:
+			species = "broad"
+		elif texture == TREE_UPRIGHT_IMPOSTOR_TEXTURE:
+			species = "upright"
+		painted_path = "res://assets/vegetation/painted_lod/painted_%s_canopy_8view_v1.png" % species
+	if ResourceLoader.exists(painted_path):
+		material.set_shader_parameter("painted_texture", load(painted_path))
+		material.set_shader_parameter("use_painted_foliage", painted_lod_enabled)
+	painted_lod_materials.append(material)
 	material.set_shader_parameter("alpha_cutoff", 0.42 if is_impostor else 0.46)
 	material.set_shader_parameter("alpha_antialiasing_edge", 0.24)
 	material.set_shader_parameter("atlas_grid", Vector2(4.0, 2.0) if is_impostor else Vector2(2.0, 2.0))
@@ -754,6 +770,8 @@ func _build_tree_lod() -> void:
 			Basis(Vector3.UP, yaw).scaled(Vector3.ONE * scale_value),
 			position
 		)
+		if record_tree_layout_for_review:
+			review_tree_records.append({"transform": transform, "model": model_id, "palette": palette_id})
 		for lod_level in 3:
 			var chunk_size: float = lod_chunk_sizes[lod_level]
 			var lod_cell := Vector2i(
@@ -993,6 +1011,8 @@ func _get_tree_palette_material(
 	if tree_palette_material_cache.has(cache_key):
 		return tree_palette_material_cache[cache_key]
 	var material := base_material.duplicate(true) as ShaderMaterial
+	if base_material in painted_lod_materials:
+		painted_lod_materials.append(material)
 	material.set_shader_parameter("use_species_palette", 0.0)
 	if palette_id == 0:
 		tree_palette_material_cache[cache_key] = material
@@ -1136,6 +1156,20 @@ func set_grass_debug_mode(value: int) -> void:
 	for node in grass_lod0_nodes + grass_lod1_nodes:
 		if lod_enabled:
 			_apply_grass_node_range(node)
+
+
+func set_painted_lod_enabled(value: bool) -> void:
+	painted_lod_enabled = value and has_painted_lod_assets()
+	for material in painted_lod_materials:
+		if material.get_shader_parameter("painted_texture") != null:
+			material.set_shader_parameter("use_painted_foliage", painted_lod_enabled)
+
+
+func has_painted_lod_assets() -> bool:
+	for filename in ["painted_clumps_v1.png", "painted_small_canopy_8view_v1.png", "painted_broad_canopy_8view_v1.png", "painted_upright_canopy_8view_v1.png"]:
+		if not ResourceLoader.exists("res://assets/vegetation/painted_lod/" + filename):
+			return false
+	return true
 
 
 func get_grass_debug_mode() -> int:

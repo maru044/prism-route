@@ -67,6 +67,9 @@ composition without loading the island.
 - `scenes/product_preview.tscn` — isolated collectible product rendering study;
   four selectable shapes and clear gel, frosted silicone or polished steel;
   see `docs/PRODUCT_RENDERING_PLAN.md` for controls, current results and next steps.
+- `scenes/vegetation_art_review.tscn` — four island viewpoints for comparing
+  old and painted foliage LOD. Painting generation is pending; see
+  `docs/VEGETATION_ART_REVIEW.md` for status and controls.
 - `docs/RESEARCH_CONTEXT.md` — current art direction, tested decisions and
   guidance for research tasks.
 

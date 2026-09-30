@@ -2,6 +2,10 @@ shader_type spatial;
 render_mode cull_back, depth_prepass_alpha, diffuse_burley, alpha_to_coverage;
 
 uniform sampler2D albedo_texture : source_color, filter_linear_mipmap_anisotropic;
+uniform bool use_painted_foliage = false;
+uniform sampler2D painted_texture : source_color, filter_linear_mipmap_anisotropic;
+uniform float painted_luma_reference = 0.20;
+uniform float painted_detail_strength = 0.65;
 uniform vec4 color_tint : source_color = vec4(1.0);
 uniform vec4 variant_tint : source_color = vec4(1.0);
 uniform float alpha_cutoff : hint_range(0.0, 1.0) = 0.45;
@@ -64,6 +68,7 @@ varying float tree_lod_visibility;
 varying float directional_impostor_frame;
 varying float species_light_warp;
 varying vec3 palette_tint;
+varying float painted_light_detail;
 
 vec3 decode_octahedral(vec2 encoded) {
 	vec2 f = encoded * 2.0 - 1.0;
@@ -198,6 +203,13 @@ void fragment() {
 		sample_uv = (local_uv + vec2(frame_x, frame_y)) / atlas_grid;
 	}
 	vec4 tex = texture(albedo_texture, sample_uv) * color_tint;
+	float painted_detail = 1.0;
+	if (use_painted_foliage) {
+		vec4 painted = texture(painted_texture, sample_uv);
+		float value = dot(painted.rgb, vec3(0.299, 0.587, 0.114));
+		painted_detail = mix(1.0, clamp(value / max(painted_luma_reference, 0.001), 0.65, 1.30), painted_detail_strength);
+		tex.a = painted.a * color_tint.a;
+	}
 	float edge_mask = 1.0;
 	if (card_edge_fade > 0.0) {
 		vec2 cell_uv = local_uv;
@@ -260,6 +272,8 @@ void fragment() {
 	} else {
 		ALBEDO = tex.rgb * palette_tint * variant_tint.rgb;
 	}
+	ALBEDO *= painted_detail;
+	painted_light_detail = painted_detail;
 	ALPHA = tex.a * edge_mask * view_mask;
 	ALPHA_SCISSOR_THRESHOLD = alpha_cutoff;
 	ALPHA_ANTIALIASING_EDGE = min(alpha_antialiasing_edge, alpha_cutoff - 0.001);
@@ -286,7 +300,7 @@ void light() {
 			0.68,
 			ndotl + species_light_warp
 		);
-		DIFFUSE_LIGHT += palette * LIGHT_COLOR * ATTENUATION
+		DIFFUSE_LIGHT += palette * painted_light_detail * LIGHT_COLOR * ATTENUATION
 			* artistic_diffuse * species_art_direct_strength * 0.42;
 	} else {
 		DIFFUSE_LIGHT += ALBEDO * LIGHT_COLOR * ATTENUATION * wrapped;
