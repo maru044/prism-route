@@ -248,6 +248,13 @@ the intent and the result of previous visual tests.
 
 ## Experiments not to reintroduce without a specific new reason
 
+- As of 2026-10-01, the user accepted smooth small-tree crown shading and
+  coverage-preserving mips as the baseline for the main entry, review and grove.
+  Keep strengths 0.62 / 0.35 / 0.0 for near / middle / far; do not reintroduce
+  the former shading toggle. Historical evidence and tools are in
+  `archive/small_tree_baseline_2026-10-01/`; see
+  `FOLIAGE_SIMPLIFICATION_RESULTS.md`. Original tree geometry remains accepted.
+
 - Grass distance/alpha/chunk fade made the meadow disappear in the test view.
   It was removed. Do not equate fading out grass with solved LOD.
 - Strong transmission/backlighting made the grass look more realistic than

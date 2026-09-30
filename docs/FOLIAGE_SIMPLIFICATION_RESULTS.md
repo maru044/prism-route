@@ -3,6 +3,10 @@
 日期：2026-10-01。对照基线：`f75fc7f`，原小树模型与旧贴图。
 使用 Godot 4.7.2、Forward+ / D3D12、RTX 5070 Ti 和现有 4× MSAA。
 
+用户已确认新版明显优于旧版，正式将其设为当前美术基准。
+主入口、审阅场景和专用树林直接采用此版本，原版切换已移除。
+旧版及当时的对照证据已归档；本文件以下实验数据为接受前的历史记录。
+
 ## 当前启用方案
 
 - 保留原小树 GLB、源 PNG、种植位置和 LOD 距离。
@@ -15,8 +19,8 @@
   RGB，校正 mip 的 Alpha 测试覆盖率，避免普通缩图使叶簇迅速变稀。
 - 校正八方向 atlas 的整数帧索引，避免插值精度使采样跳到相邻行。
 
-参数集中在 `scripts/small_tree_filtering.gd`。世界与专用树林场景已
-启用，其他树种和草的平滑强度默认仍为零。先前被否决的新绘制图
+参数集中在 `scripts/small_tree_filtering.gd`。世界与专用树林场景固定
+采用此基准，其他树种和草的平滑强度默认仍为零。先前被否决的新绘制图
 继续保存在归档中。
 
 ## 诊断结果
@@ -64,14 +68,14 @@ SSAO 在这一固定区域的影响也很小。运行时未因此关闭 SSAO 或
 60 帧 `process_frame` 间隔采样约 16.66–16.67 ms；这是应用帧调度间隔，
 受到同步和帧率限制影响，**不是 GPU 耗时测量，也不能证明无开销**。
 新增法线运算及 mip 存储有成本；完整 mip 链通常增加约三分之一的
-像素存储，对比功能还保留了原纹理资源。
+像素存储。实验时对比功能还保留了原纹理资源；接受后已移除该功能。
 
 ## 仍需保留的限制
 
 连续法线使用相机空间中树冠投影的前表面近似，会随观察方向变化；
 它有意弱化内部叶片深度产生的明暗。该做法适合当前风格化测试，
 可能使树冠体积显得更平，不能视为真实光照重建。强度已从初测的
-0.72 降到 0.62，仍需要用户按整体审美评价。
+0.72 降到 0.62，用户已基于整体效果接受当前参数。
 
 真实的几何孔隙和轮廓细叶保留。后续若仍需减少轮廓碎感，应另做
 小范围叶簇布局调整并对照；本次没有增加内层实心树冠。
@@ -79,24 +83,27 @@ SSAO 在这一固定区域的影响也很小。运行时未因此关闭 SSAO 或
 
 ## 查看与复现
 
-运行 `scenes/vegetation_art_review.tscn`：**F** 切换原版 / 当前处理，
-**1–4** 切换观景地点。默认当前处理。
+运行 `scenes/vegetation_art_review.tscn`：**1–4** 切换观景地点，
+场景始终显示已接受的新版。正式入口为 `scenes/main.tscn`。
+
+旧版归档目录：`archive/small_tree_baseline_2026-10-01/`，其中包含：
 
 - `screenshots/foliage_filtering_small_tree_comparison.png`：近景与玩家高度，左旧右新。
 - `screenshots/foliage_filtering_world_comparison.png`：四个观景点，左旧右新。
 - `screenshots/foliage_filtering_diagnostics.json`：固定区域诊断指标。
 - `screenshots/foliage_filtering_world_metrics.json`：四处计数与帧间隔。
+- 原版四处观景截图、旧对照工具和运行时代码快照。
+
+新版独立观景截图保存在 `screenshots/vegetation_art_site_*_accepted.png`。
 
 从仓库根目录运行，`godot` 表示本机 Godot 4.7.2 console 可执行文件：
 
 ```powershell
 python tools/build_foliage_mips.py
 godot --headless --path . --script res://tools/import_foliage_mips.gd
-godot --path . --script res://tools/capture_foliage_simplification.gd
-python tools/summarize_foliage_simplification.py
-godot --path . --script res://tools/capture_small_tree_world_review.gd
+godot --path . --script res://tools/capture_vegetation_art_review.gd
 ```
 
-Python 需要 Pillow 与 NumPy。全套原始截图写到忽略目录
-`.vegetation_art_build/simplification/`，保留的对比图是实际渲染截图的
-裁切、缩放和并排拼接。
+Python 需要 Pillow 与 NumPy。要复现接受前的 A/B 实验，请单独检出
+`9f6ff16`，使用该提交中的对照工具；归档脚本不应在当前工程直接运行。
+归档对比图是实际渲染截图的裁切、缩放和并排拼接。

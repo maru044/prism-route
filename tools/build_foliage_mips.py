@@ -34,7 +34,9 @@ def main():
         mean = (rgb * alpha[:, :, None]).sum(axis=(0, 1)) / alpha.sum()
         target = float((alpha >= cutoff).mean())
         width, height = pixels.shape[1], pixels.shape[0]
-        for preserve in [False, True]:
+        # Only the accepted coverage-corrected resources belong in live assets.
+        # The former raw-mip comparison builder is retained in the archive.
+        for preserve in [True]:
             rgb_premul = rgb * alpha[:, :, None]
             a = alpha.copy()
             chunks, statistics = [], []

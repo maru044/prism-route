@@ -1,0 +1,34 @@
+[
+	{
+		"baseline": "smooth_small_tree_2026-10-01",
+		"camera": "(-327.0, 94.23975, 389.0)",
+		"draws": 655.0,
+		"fps": 37.0,
+		"primitives": 9809645.0,
+		"site": 1
+	},
+	{
+		"baseline": "smooth_small_tree_2026-10-01",
+		"camera": "(501.0, 83.71725, -252.0)",
+		"draws": 493.0,
+		"fps": 34.0,
+		"primitives": 10669041.0,
+		"site": 2
+	},
+	{
+		"baseline": "smooth_small_tree_2026-10-01",
+		"camera": "(-16.0, 152.4287, 1166.0)",
+		"draws": 570.0,
+		"fps": 39.0,
+		"primitives": 3950265.0,
+		"site": 3
+	},
+	{
+		"baseline": "smooth_small_tree_2026-10-01",
+		"camera": "(510.0, 107.8691, 800.0)",
+		"draws": 465.0,
+		"fps": 58.0,
+		"primitives": 2108825.0,
+		"site": 4
+	}
+]

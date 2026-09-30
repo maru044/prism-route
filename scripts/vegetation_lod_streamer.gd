@@ -64,8 +64,6 @@ var initialized := false
 var lod_enabled := true
 var vegetation_enabled := true
 var painted_lod_enabled := false
-var small_tree_filtering_enabled := true
-var small_tree_filter_materials: Array[ShaderMaterial] = []
 var painted_lod_materials: Array[ShaderMaterial] = []
 var record_tree_layout_for_review := false
 var review_tree_records: Array[Dictionary] = []
@@ -300,9 +298,7 @@ func _load_meshes_and_materials() -> void:
 	)
 	for level in 3:
 		var small_material: ShaderMaterial = [tree_small_lod0_material, tree_small_lod1_material, tree_small_lod2_material][level]
-		small_material.set_meta("small_tree_lod", level)
-		small_tree_filter_materials.append(small_material)
-		SmallTreeFiltering.apply(small_material, level, small_tree_filtering_enabled)
+		SmallTreeFiltering.apply(small_material, level)
 	tree_broad_lod1_material = _make_tree_hlod_material(
 		TREE_BROAD_CLUMP_TEXTURE, false,
 		Vector3(0.0, 7.875, 0.0), Vector3(6.65, 5.295, 6.655),
@@ -1018,9 +1014,6 @@ func _get_tree_palette_material(
 	if tree_palette_material_cache.has(cache_key):
 		return tree_palette_material_cache[cache_key]
 	var material := base_material.duplicate(true) as ShaderMaterial
-	if base_material in small_tree_filter_materials:
-		material.set_meta("small_tree_lod", base_material.get_meta("small_tree_lod"))
-		small_tree_filter_materials.append(material)
 	if base_material in painted_lod_materials:
 		painted_lod_materials.append(material)
 	material.set_shader_parameter("use_species_palette", 0.0)
@@ -1166,12 +1159,6 @@ func set_grass_debug_mode(value: int) -> void:
 	for node in grass_lod0_nodes + grass_lod1_nodes:
 		if lod_enabled:
 			_apply_grass_node_range(node)
-
-
-func set_small_tree_filtering_enabled(value: bool) -> void:
-	small_tree_filtering_enabled = value
-	for material in small_tree_filter_materials:
-		SmallTreeFiltering.apply(material, int(material.get_meta("small_tree_lod")), value)
 
 
 func set_painted_lod_enabled(value: bool) -> void:

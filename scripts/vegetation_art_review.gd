@@ -8,8 +8,6 @@ var review_ready := false
 var review_camera: Camera3D
 var review_sites: Array[Vector3] = []
 var view_index := 0
-var painted_version := false
-var filtered_version := true
 var camera_dragging := false
 
 
@@ -26,10 +24,7 @@ func _ready() -> void:
 	for anchor in VIEW_ANCHORS:
 		review_sites.append(_find_review_site(anchor))
 	vegetation.target = review_camera
-	# The painted trial was rejected and archived. Review the stable old LOD.
-	painted_version = false
-	vegetation.set_painted_lod_enabled(painted_version)
-	filtered_version = vegetation.small_tree_filtering_enabled
+	# The accepted smooth small-tree baseline is used by every live entry.
 	select_view(0)
 	review_ready = true
 	print("ART_REVIEW_SITES ", review_sites)
@@ -82,20 +77,8 @@ func select_view(index: int) -> void:
 	_update_review_heading()
 
 
-func set_painted_version(_value: bool) -> void:
-	painted_version = false
-	vegetation.set_painted_lod_enabled(painted_version)
-	_update_review_heading()
-
-
 func _update_review_heading() -> void:
-	info_label.text = "VEGETATION ART REVIEW  /  %s  /  %s\n1–4: viewpoints   F: original / filtered small trees   Right-drag: look   WASD/QE: fly\nOriginal tree geometry; painted trial remains archived." % [VIEW_NAMES[view_index], "FILTERED" if filtered_version else "ORIGINAL"]
-
-
-func set_filtered_version(value: bool) -> void:
-	filtered_version = value
-	vegetation.set_small_tree_filtering_enabled(value)
-	_update_review_heading()
+	info_label.text = "VEGETATION ART REVIEW  /  %s  /  ACCEPTED BASELINE\n1–4: viewpoints   Right-drag: look   WASD/QE: fly   Shift: faster\nSmooth small-tree shading and coverage-preserving mips." % VIEW_NAMES[view_index]
 
 
 func _process(delta: float) -> void:
@@ -119,8 +102,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode >= KEY_1 and event.keycode <= KEY_4:
 			select_view(event.keycode - KEY_1)
-		elif event.keycode == KEY_F:
-			set_filtered_version(not filtered_version)
 		elif event.keycode == KEY_ESCAPE:
 			get_tree().change_scene_to_file("res://scenes/main.tscn")
 	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT:

@@ -1,7 +1,9 @@
 # Filtered derivatives of the accepted foliage
 
 No source painting or model is replaced. `SmallTreeFiltering` uses the three
-`*_coverage.res` ImageTextures. `*_raw.res` are diagnostic comparisons only.
+`*_coverage.res` ImageTextures as the accepted baseline. The former `*_raw.res`
+diagnostic comparisons and builder snapshot are archived under
+`archive/small_tree_baseline_2026-10-01/`.
 
 | Stem | Source PNG in the parent directory | Alpha cutoff |
 | --- | --- | --- |
