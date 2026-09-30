@@ -1,0 +1,638 @@
+[
+  {
+    "stem": "leaf_raw",
+    "source": "leaf_clusters_witness_sparse_flat_v11.png",
+    "width": 1254,
+    "height": 1254,
+    "cutoff": 0.5,
+    "target_coverage": 0.234541333760674,
+    "levels": [
+      {
+        "level": 0,
+        "size": [
+          1254,
+          1254
+        ],
+        "coverage": 0.234541333760674,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 1,
+        "size": [
+          627,
+          627
+        ],
+        "coverage": 0.23417504178017903,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 2,
+        "size": [
+          313,
+          313
+        ],
+        "coverage": 0.2339311414835305,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 3,
+        "size": [
+          156,
+          156
+        ],
+        "coverage": 0.23294707429322814,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 4,
+        "size": [
+          78,
+          78
+        ],
+        "coverage": 0.23076923076923078,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 5,
+        "size": [
+          39,
+          39
+        ],
+        "coverage": 0.24523339907955294,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 6,
+        "size": [
+          19,
+          19
+        ],
+        "coverage": 0.20221606648199447,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 7,
+        "size": [
+          9,
+          9
+        ],
+        "coverage": 0.2222222222222222,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 8,
+        "size": [
+          4,
+          4
+        ],
+        "coverage": 0.0,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 9,
+        "size": [
+          2,
+          2
+        ],
+        "coverage": 0.0,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 10,
+        "size": [
+          1,
+          1
+        ],
+        "coverage": 0.0,
+        "alpha_scale": 1.0
+      }
+    ]
+  },
+  {
+    "stem": "leaf_coverage",
+    "source": "leaf_clusters_witness_sparse_flat_v11.png",
+    "width": 1254,
+    "height": 1254,
+    "cutoff": 0.5,
+    "target_coverage": 0.234541333760674,
+    "levels": [
+      {
+        "level": 0,
+        "size": [
+          1254,
+          1254
+        ],
+        "coverage": 0.234541333760674,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 1,
+        "size": [
+          627,
+          627
+        ],
+        "coverage": 0.23455405223221895,
+        "alpha_scale": 1.015960693359375
+      },
+      {
+        "level": 2,
+        "size": [
+          313,
+          313
+        ],
+        "coverage": 0.2345639947330278,
+        "alpha_scale": 1.013946533203125
+      },
+      {
+        "level": 3,
+        "size": [
+          156,
+          156
+        ],
+        "coverage": 0.23454963839579224,
+        "alpha_scale": 1.017730712890625
+      },
+      {
+        "level": 4,
+        "size": [
+          78,
+          78
+        ],
+        "coverage": 0.23454963839579224,
+        "alpha_scale": 1.017364501953125
+      },
+      {
+        "level": 5,
+        "size": [
+          39,
+          39
+        ],
+        "coverage": 0.23471400394477318,
+        "alpha_scale": 0.967620849609375
+      },
+      {
+        "level": 6,
+        "size": [
+          19,
+          19
+        ],
+        "coverage": 0.23545706371191136,
+        "alpha_scale": 1.049957275390625
+      },
+      {
+        "level": 7,
+        "size": [
+          9,
+          9
+        ],
+        "coverage": 0.2345679012345679,
+        "alpha_scale": 1.035919189453125
+      },
+      {
+        "level": 8,
+        "size": [
+          4,
+          4
+        ],
+        "coverage": 0.25,
+        "alpha_scale": 1.351348876953125
+      },
+      {
+        "level": 9,
+        "size": [
+          2,
+          2
+        ],
+        "coverage": 0.25,
+        "alpha_scale": 1.638885498046875
+      },
+      {
+        "level": 10,
+        "size": [
+          1,
+          1
+        ],
+        "coverage": 1.0,
+        "alpha_scale": 2.055450439453125
+      }
+    ]
+  },
+  {
+    "stem": "clump_raw",
+    "source": "tree_broad_clump_unlit_4var_v1.png",
+    "width": 768,
+    "height": 768,
+    "cutoff": 0.46,
+    "target_coverage": 0.24242994520399305,
+    "levels": [
+      {
+        "level": 0,
+        "size": [
+          768,
+          768
+        ],
+        "coverage": 0.24242994520399305,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 1,
+        "size": [
+          384,
+          384
+        ],
+        "coverage": 0.24431016710069445,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 2,
+        "size": [
+          192,
+          192
+        ],
+        "coverage": 0.24500868055555555,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 3,
+        "size": [
+          96,
+          96
+        ],
+        "coverage": 0.24207899305555555,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 4,
+        "size": [
+          48,
+          48
+        ],
+        "coverage": 0.24348958333333334,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 5,
+        "size": [
+          24,
+          24
+        ],
+        "coverage": 0.24131944444444445,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 6,
+        "size": [
+          12,
+          12
+        ],
+        "coverage": 0.2361111111111111,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 7,
+        "size": [
+          6,
+          6
+        ],
+        "coverage": 0.1111111111111111,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 8,
+        "size": [
+          3,
+          3
+        ],
+        "coverage": 0.1111111111111111,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 9,
+        "size": [
+          1,
+          1
+        ],
+        "coverage": 0.0,
+        "alpha_scale": 1.0
+      }
+    ]
+  },
+  {
+    "stem": "clump_coverage",
+    "source": "tree_broad_clump_unlit_4var_v1.png",
+    "width": 768,
+    "height": 768,
+    "cutoff": 0.46,
+    "target_coverage": 0.24242994520399305,
+    "levels": [
+      {
+        "level": 0,
+        "size": [
+          768,
+          768
+        ],
+        "coverage": 0.24242994520399305,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 1,
+        "size": [
+          384,
+          384
+        ],
+        "coverage": 0.24235026041666666,
+        "alpha_scale": 0.953643798828125
+      },
+      {
+        "level": 2,
+        "size": [
+          192,
+          192
+        ],
+        "coverage": 0.24235026041666666,
+        "alpha_scale": 0.942169189453125
+      },
+      {
+        "level": 3,
+        "size": [
+          96,
+          96
+        ],
+        "coverage": 0.2424045138888889,
+        "alpha_scale": 1.003631591796875
+      },
+      {
+        "level": 4,
+        "size": [
+          48,
+          48
+        ],
+        "coverage": 0.2421875,
+        "alpha_scale": 0.986785888671875
+      },
+      {
+        "level": 5,
+        "size": [
+          24,
+          24
+        ],
+        "coverage": 0.24131944444444445,
+        "alpha_scale": 1.007598876953125
+      },
+      {
+        "level": 6,
+        "size": [
+          12,
+          12
+        ],
+        "coverage": 0.2361111111111111,
+        "alpha_scale": 1.001800537109375
+      },
+      {
+        "level": 7,
+        "size": [
+          6,
+          6
+        ],
+        "coverage": 0.2222222222222222,
+        "alpha_scale": 1.525543212890625
+      },
+      {
+        "level": 8,
+        "size": [
+          3,
+          3
+        ],
+        "coverage": 0.2222222222222222,
+        "alpha_scale": 1.372833251953125
+      },
+      {
+        "level": 9,
+        "size": [
+          1,
+          1
+        ],
+        "coverage": 0.0,
+        "alpha_scale": 1.965362548828125
+      }
+    ]
+  },
+  {
+    "stem": "canopy_raw",
+    "source": "tree_small_canopy_unlit_8view_v1.png",
+    "width": 1280,
+    "height": 640,
+    "cutoff": 0.42,
+    "target_coverage": 0.26849609375,
+    "levels": [
+      {
+        "level": 0,
+        "size": [
+          1280,
+          640
+        ],
+        "coverage": 0.26849609375,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 1,
+        "size": [
+          640,
+          320
+        ],
+        "coverage": 0.270732421875,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 2,
+        "size": [
+          320,
+          160
+        ],
+        "coverage": 0.271015625,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 3,
+        "size": [
+          160,
+          80
+        ],
+        "coverage": 0.269921875,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 4,
+        "size": [
+          80,
+          40
+        ],
+        "coverage": 0.2675,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 5,
+        "size": [
+          40,
+          20
+        ],
+        "coverage": 0.25,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 6,
+        "size": [
+          20,
+          10
+        ],
+        "coverage": 0.28,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 7,
+        "size": [
+          10,
+          5
+        ],
+        "coverage": 0.24,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 8,
+        "size": [
+          5,
+          2
+        ],
+        "coverage": 0.0,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 9,
+        "size": [
+          2,
+          1
+        ],
+        "coverage": 0.0,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 10,
+        "size": [
+          1,
+          1
+        ],
+        "coverage": 0.0,
+        "alpha_scale": 1.0
+      }
+    ]
+  },
+  {
+    "stem": "canopy_coverage",
+    "source": "tree_small_canopy_unlit_8view_v1.png",
+    "width": 1280,
+    "height": 640,
+    "cutoff": 0.42,
+    "target_coverage": 0.26849609375,
+    "levels": [
+      {
+        "level": 0,
+        "size": [
+          1280,
+          640
+        ],
+        "coverage": 0.26849609375,
+        "alpha_scale": 1.0
+      },
+      {
+        "level": 1,
+        "size": [
+          640,
+          320
+        ],
+        "coverage": 0.268349609375,
+        "alpha_scale": 0.929290771484375
+      },
+      {
+        "level": 2,
+        "size": [
+          320,
+          160
+        ],
+        "coverage": 0.268359375,
+        "alpha_scale": 0.924285888671875
+      },
+      {
+        "level": 3,
+        "size": [
+          160,
+          80
+        ],
+        "coverage": 0.26828125,
+        "alpha_scale": 0.951446533203125
+      },
+      {
+        "level": 4,
+        "size": [
+          80,
+          40
+        ],
+        "coverage": 0.268125,
+        "alpha_scale": 1.008026123046875
+      },
+      {
+        "level": 5,
+        "size": [
+          40,
+          20
+        ],
+        "coverage": 0.2675,
+        "alpha_scale": 1.231414794921875
+      },
+      {
+        "level": 6,
+        "size": [
+          20,
+          10
+        ],
+        "coverage": 0.26,
+        "alpha_scale": 0.798858642578125
+      },
+      {
+        "level": 7,
+        "size": [
+          10,
+          5
+        ],
+        "coverage": 0.26,
+        "alpha_scale": 1.172332763671875
+      },
+      {
+        "level": 8,
+        "size": [
+          5,
+          2
+        ],
+        "coverage": 0.2,
+        "alpha_scale": 1.385833740234375
+      },
+      {
+        "level": 9,
+        "size": [
+          2,
+          1
+        ],
+        "coverage": 0.0,
+        "alpha_scale": 1.539215087890625
+      },
+      {
+        "level": 10,
+        "size": [
+          1,
+          1
+        ],
+        "coverage": 0.0,
+        "alpha_scale": 1.566253662109375
+      }
+    ]
+  }
+]

@@ -68,8 +68,9 @@ composition without loading the island.
   four selectable shapes and clear gel, frosted silicone or polished steel;
   see `docs/PRODUCT_RENDERING_PLAN.md` for controls, current results and next steps.
 - `scenes/vegetation_art_review.tscn` — four island viewpoints for inspecting
-  the stable original foliage LOD. The painted trial was rejected for excess
-  visual detail and archived; see
+  the original foliage LOD with small-tree shading and mip filtering. F switches
+  between original and filtered small trees. The painted trial was rejected for
+  excess visual detail and archived; see
   `docs/VEGETATION_ART_REVIEW.md` for status and controls.
 - `docs/RESEARCH_CONTEXT.md` — current art direction, tested decisions and
   guidance for research tasks.

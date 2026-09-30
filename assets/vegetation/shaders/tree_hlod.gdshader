@@ -34,6 +34,10 @@ uniform float wind_strength = 0.05;
 uniform float wind_speed = 0.72;
 uniform float wind_scale = 0.65;
 uniform float light_wrap = 0.34;
+// Optional small-tree filtering; original materials keep zero strengths.
+uniform float canopy_smoothing_strength : hint_range(0.0, 1.0) = 0.0;
+uniform float canopy_color_uniformity : hint_range(0.0, 1.0) = 0.0;
+uniform vec4 canopy_base_color : source_color = vec4(0.35686, 0.47059, 0.29412, 1.0);
 
 // World-aligned colour transition used by the accepted vegetation test.
 // These stay material uniforms so MultiMesh batches do not consume Godot's
@@ -69,6 +73,8 @@ varying float directional_impostor_frame;
 varying float species_light_warp;
 varying vec3 palette_tint;
 varying float painted_light_detail;
+varying vec3 canopy_center_view;
+varying vec2 canopy_projected_radii;
 
 vec3 decode_octahedral(vec2 encoded) {
 	vec2 f = encoded * 2.0 - 1.0;
@@ -129,6 +135,16 @@ void vertex() {
 		MODELVIEW_NORMAL_MATRIX * decode_octahedral(COLOR.gb)
 	);
 	canopy_normal_view = vec3(0.0, 0.0, 1.0);
+	canopy_center_view = vec3(0.0);
+	canopy_projected_radii = vec2(1.0);
+	if (canopy_smoothing_strength > 0.0) {
+		canopy_center_view = (VIEW_MATRIX * MODEL_MATRIX * vec4(tree_canopy_center_local, 1.0)).xyz;
+		vec3 crown_axis_x = (VIEW_MATRIX * MODEL_MATRIX * vec4(tree_canopy_radii_local.x, 0.0, 0.0, 0.0)).xyz;
+		vec3 crown_axis_y = (VIEW_MATRIX * MODEL_MATRIX * vec4(0.0, tree_canopy_radii_local.y, 0.0, 0.0)).xyz;
+		vec3 crown_axis_z = (VIEW_MATRIX * MODEL_MATRIX * vec4(0.0, 0.0, tree_canopy_radii_local.z, 0.0)).xyz;
+		canopy_projected_radii = max(sqrt(crown_axis_x.xy * crown_axis_x.xy
+			+ crown_axis_y.xy * crown_axis_y.xy + crown_axis_z.xy * crown_axis_z.xy), vec2(0.001));
+	}
 	if (use_tree_local_canopy_normal) {
 		vec3 radii = max(tree_canopy_radii_local, vec3(0.001));
 		vec3 local_normal = normalize(
@@ -198,8 +214,9 @@ void fragment() {
 	vec2 local_uv = UV;
 	vec2 sample_uv = UV;
 	if (use_directional_impostor) {
-		float frame_x = mod(directional_impostor_frame, atlas_grid.x);
-		float frame_y = floor(directional_impostor_frame / atlas_grid.x);
+		float frame = floor(directional_impostor_frame + 0.5);
+		float frame_x = mod(frame, atlas_grid.x);
+		float frame_y = floor(frame / atlas_grid.x);
 		sample_uv = (local_uv + vec2(frame_x, frame_y)) / atlas_grid;
 	}
 	vec4 tex = texture(albedo_texture, sample_uv) * color_tint;
@@ -260,6 +277,14 @@ void fragment() {
 		lighting_normal = normalize(vec3(sphere_xy.x, -sphere_xy.y, sphere_z));
 	}
 	NORMAL = lighting_normal;
+	if (canopy_smoothing_strength > 0.0) {
+		// All visible sheets share the front surface of one crown volume.
+		// Internal leaf depth no longer creates alternating dark/light specks.
+		vec2 crown_xy = (VERTEX.xy - canopy_center_view.xy) / canopy_projected_radii;
+		float crown_z = sqrt(max(0.08, 1.0 - dot(crown_xy, crown_xy)));
+		vec3 continuous_normal = normalize(vec3(crown_xy, crown_z));
+		NORMAL = normalize(mix(lighting_normal, continuous_normal, canopy_smoothing_strength));
+	}
 
 	if (use_species_palette > 0.5) {
 		float value = dot(tex.rgb, vec3(0.299, 0.587, 0.114));
@@ -270,7 +295,8 @@ void fragment() {
 		);
 		ALBEDO = mix(species_shadow_color.rgb, species_mid_color.rgb, 0.42) * detail;
 	} else {
-		ALBEDO = tex.rgb * palette_tint * variant_tint.rgb;
+		vec3 base = mix(tex.rgb, canopy_base_color.rgb * color_tint.rgb, canopy_color_uniformity);
+		ALBEDO = base * palette_tint * variant_tint.rgb;
 	}
 	ALBEDO *= painted_detail;
 	painted_light_detail = painted_detail;

@@ -1,0 +1,90 @@
+{
+  "baseline": {
+    "roi": [
+      820,
+      540,
+      1080,
+      710
+    ],
+    "mean_absolute_rgb_change": 0.0,
+    "adjacent_luma_difference": 5.310061925544,
+    "mean_luma": 110.83922746606333
+  },
+  "no_ssao": {
+    "roi": [
+      820,
+      540,
+      1080,
+      710
+    ],
+    "mean_absolute_rgb_change": 0.004049773793667555,
+    "adjacent_luma_difference": 5.313495853093294,
+    "mean_luma": 110.8433507239819
+  },
+  "no_sun_shadow": {
+    "roi": [
+      820,
+      540,
+      1080,
+      710
+    ],
+    "mean_absolute_rgb_change": 0.0,
+    "adjacent_luma_difference": 5.310061925544,
+    "mean_luma": 110.83922746606333
+  },
+  "no_angle_fade": {
+    "roi": [
+      820,
+      540,
+      1080,
+      710
+    ],
+    "mean_absolute_rgb_change": 3.22352933883667,
+    "adjacent_luma_difference": 4.743945727351454,
+    "mean_luma": 114.16784427601809
+  },
+  "mip_raw": {
+    "roi": [
+      820,
+      540,
+      1080,
+      710
+    ],
+    "mean_absolute_rgb_change": 1.7170512676239014,
+    "adjacent_luma_difference": 5.396108262244852,
+    "mean_luma": 110.31703085972849
+  },
+  "mip_coverage": {
+    "roi": [
+      820,
+      540,
+      1080,
+      710
+    ],
+    "mean_absolute_rgb_change": 1.6778959035873413,
+    "adjacent_luma_difference": 5.340654582767305,
+    "mean_luma": 110.41850058823529
+  },
+  "shader_only": {
+    "roi": [
+      820,
+      540,
+      1080,
+      710
+    ],
+    "mean_absolute_rgb_change": 17.77362823486328,
+    "adjacent_luma_difference": 1.6238878086546897,
+    "mean_luma": 130.4869773076923
+  },
+  "candidate": {
+    "roi": [
+      820,
+      540,
+      1080,
+      710
+    ],
+    "mean_absolute_rgb_change": 17.73116111755371,
+    "adjacent_luma_difference": 1.6357738867554301,
+    "mean_luma": 130.35791864253392
+  }
+}

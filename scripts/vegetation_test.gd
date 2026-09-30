@@ -825,6 +825,9 @@ func _configure_tree(
 	tint: Color,
 	trunk_material: Material = null
 ) -> void:
+	if tree.scene_file_path == TREE_MODEL_REFINED.resource_path:
+		leaf_material = leaf_material.duplicate(true) as ShaderMaterial
+		SmallTreeFiltering.apply(leaf_material, 0)
 	_apply_material_to_named_meshes(tree, "foliage", leaf_material)
 	_apply_material_to_named_meshes(
 		tree,

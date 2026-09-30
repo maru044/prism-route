@@ -1,0 +1,58 @@
+[
+	{
+		"average_frame_ms_60": 16.6719166666667,
+		"draws": 655.0,
+		"filtered": false,
+		"primitives": 9809687.0,
+		"site": 1
+	},
+	{
+		"average_frame_ms_60": 16.6659,
+		"draws": 655.0,
+		"filtered": true,
+		"primitives": 9809687.0,
+		"site": 1
+	},
+	{
+		"average_frame_ms_60": 16.6646666666667,
+		"draws": 493.0,
+		"filtered": false,
+		"primitives": 10669083.0,
+		"site": 2
+	},
+	{
+		"average_frame_ms_60": 16.6660333333333,
+		"draws": 493.0,
+		"filtered": true,
+		"primitives": 10669083.0,
+		"site": 2
+	},
+	{
+		"average_frame_ms_60": 16.6652166666667,
+		"draws": 570.0,
+		"filtered": false,
+		"primitives": 3950307.0,
+		"site": 3
+	},
+	{
+		"average_frame_ms_60": 16.6661333333333,
+		"draws": 570.0,
+		"filtered": true,
+		"primitives": 3950307.0,
+		"site": 3
+	},
+	{
+		"average_frame_ms_60": 16.6673333333333,
+		"draws": 465.0,
+		"filtered": false,
+		"primitives": 2108867.0,
+		"site": 4
+	},
+	{
+		"average_frame_ms_60": 16.66595,
+		"draws": 465.0,
+		"filtered": true,
+		"primitives": 2108867.0,
+		"site": 4
+	}
+]

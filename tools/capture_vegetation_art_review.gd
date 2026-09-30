@@ -10,6 +10,8 @@ func _capture() -> void:
 	root.add_child(scene)
 	while not scene.review_ready:
 		await process_frame
+	# Preserve this tool's historical baseline meaning after filtering became default.
+	scene.set_filtered_version(false)
 	var failed := false
 	var measurements: Array[Dictionary] = []
 	for material in scene.vegetation.painted_lod_materials:
