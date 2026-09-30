@@ -1,0 +1,66 @@
+[
+	{
+		"camera": "(-327.0, 94.23975, 389.0)",
+		"draws": 653.0,
+		"fps": 32.0,
+		"painted": false,
+		"primitives": 9809393.0,
+		"site": 1
+	},
+	{
+		"camera": "(-327.0, 94.23975, 389.0)",
+		"draws": 653.0,
+		"fps": 33.0,
+		"painted": true,
+		"primitives": 9809387.0,
+		"site": 1
+	},
+	{
+		"camera": "(501.0, 83.71725, -252.0)",
+		"draws": 491.0,
+		"fps": 37.0,
+		"painted": false,
+		"primitives": 10668789.0,
+		"site": 2
+	},
+	{
+		"camera": "(501.0, 83.71725, -252.0)",
+		"draws": 491.0,
+		"fps": 46.0,
+		"painted": true,
+		"primitives": 10668783.0,
+		"site": 2
+	},
+	{
+		"camera": "(-16.0, 152.4287, 1166.0)",
+		"draws": 568.0,
+		"fps": 41.0,
+		"painted": false,
+		"primitives": 3950013.0,
+		"site": 3
+	},
+	{
+		"camera": "(-16.0, 152.4287, 1166.0)",
+		"draws": 568.0,
+		"fps": 34.0,
+		"painted": true,
+		"primitives": 3950007.0,
+		"site": 3
+	},
+	{
+		"camera": "(510.0, 107.8691, 800.0)",
+		"draws": 463.0,
+		"fps": 59.0,
+		"painted": false,
+		"primitives": 2108573.0,
+		"site": 4
+	},
+	{
+		"camera": "(510.0, 107.8691, 800.0)",
+		"draws": 463.0,
+		"fps": 58.0,
+		"painted": true,
+		"primitives": 2108567.0,
+		"site": 4
+	}
+]

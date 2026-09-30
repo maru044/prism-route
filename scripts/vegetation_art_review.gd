@@ -8,7 +8,7 @@ var review_ready := false
 var review_camera: Camera3D
 var review_sites: Array[Vector3] = []
 var view_index := 0
-var painted_version := true
+var painted_version := false
 var camera_dragging := false
 
 
@@ -25,7 +25,8 @@ func _ready() -> void:
 	for anchor in VIEW_ANCHORS:
 		review_sites.append(_find_review_site(anchor))
 	vegetation.target = review_camera
-	painted_version = vegetation.has_painted_lod_assets()
+	# The painted trial was rejected and archived. Review the stable old LOD.
+	painted_version = false
 	vegetation.set_painted_lod_enabled(painted_version)
 	select_view(0)
 	review_ready = true
@@ -79,16 +80,14 @@ func select_view(index: int) -> void:
 	_update_review_heading()
 
 
-func set_painted_version(value: bool) -> void:
-	painted_version = value and vegetation.has_painted_lod_assets()
+func set_painted_version(_value: bool) -> void:
+	painted_version = false
 	vegetation.set_painted_lod_enabled(painted_version)
 	_update_review_heading()
 
 
 func _update_review_heading() -> void:
-	info_label.text = "VEGETATION ART REVIEW  /  %s  /  %s\n1–4: viewpoints   B: old / painted LOD   Right-drag: look   WASD/QE: fly   Shift: faster" % [VIEW_NAMES[view_index], "PAINTED" if painted_version else "BASELINE"]
-	if not vegetation.has_painted_lod_assets():
-		info_label.text += "\nPainted assets pending generation; showing the original LOD."
+	info_label.text = "VEGETATION ART REVIEW  /  %s  /  BASELINE\n1–4: viewpoints   Right-drag: look   WASD/QE: fly   Shift: faster\nPainted trial archived; using the stable original LOD." % VIEW_NAMES[view_index]
 
 
 func _process(delta: float) -> void:
@@ -112,8 +111,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode >= KEY_1 and event.keycode <= KEY_4:
 			select_view(event.keycode - KEY_1)
-		elif event.keycode == KEY_B:
-			set_painted_version(not painted_version)
 		elif event.keycode == KEY_ESCAPE:
 			get_tree().change_scene_to_file("res://scenes/main.tscn")
 	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT:

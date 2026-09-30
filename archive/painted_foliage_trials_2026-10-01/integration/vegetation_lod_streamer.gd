@@ -1,0 +1,1216 @@
+extends Node3D
+
+const GRASS_CHUNK_SIZE := 24.0
+const GRASS_BASELINE_NEAR_END := 52.0
+const GRASS_BASELINE_FAR_END := 96.0
+const GRASS_NEAR_FADE_START := 48.0
+const GRASS_NEAR_FADE_END := 76.0
+const GRASS_FAR_FADE_START := 76.0
+const GRASS_FAR_FADE_END := 128.0
+const GRASS_PREFETCH_RADIUS := 144.0
+const GRASS_UNLOAD_RADIUS := 180.0
+const GRASS_STREAM_LOOKAHEAD_SECONDS := 1.5
+const GRASS_STREAM_REFRESH_SECONDS := 0.20
+const GRASS_STREAM_BUILD_BUDGET_USEC := 5000
+const GRASS_STREAM_MAX_BUILDS_PER_FRAME := 1
+const GRASS_FAR_SURVIVOR_FRACTION := 0.20
+# Match the focused test: 63,000 instances over a 24 m radius disk is about
+# 35 instances/m². Four nearby blades share one terrain sample to keep chunk
+# streaming affordable while preserving that actual instance density.
+const GRASS_SAMPLES_PER_CHUNK := 5200
+const GRASS_BLADES_PER_SAMPLE := 4
+const TREE_PALETTE_CELL_SIZE := 128.0
+const TREE_LOD0_CHUNK_SIZE := 48.0
+const TREE_LOD1_CHUNK_SIZE := 96.0
+const TREE_LOD2_CHUNK_SIZE := 256.0
+const TREE_TARGET_COUNT := 50000
+const LARGE_TREE_TARGET_COUNT := 5000
+const TREE_SMALL_LOD0_END := 120.0
+const TREE_SMALL_LOD1_BEGIN := 90.0
+const TREE_SMALL_LOD1_END := 330.0
+const TREE_SMALL_LOD2_BEGIN := 280.0
+const TREE_SMALL_LOD2_END := 1000.0
+const TREE_LARGE_LOD0_END := 200.0
+const TREE_LARGE_LOD1_BEGIN := 160.0
+const TREE_LARGE_LOD1_END := 330.0
+const TREE_LARGE_LOD2_BEGIN := 280.0
+const TREE_LARGE_LOD2_END := 1100.0
+const ISLAND_HALF_EXTENTS := Vector2(1285.0, 1494.0)
+
+const GRASS_SCENE := preload("res://assets/vegetation/models/grass_star_3card_v6.glb")
+const TREE_NEAR_SCENE := preload("res://assets/vegetation/models/tree_small_broad_canopy.glb")
+const TREE_NEAR_LOD1_SCENE := preload("res://assets/vegetation/models/tree_small_broad_canopy_lod1.glb")
+const TREE_NEAR_LOD2_SCENE := preload("res://assets/vegetation/models/tree_small_broad_canopy_lod2_impostor.glb")
+const TREE_LARGE_BROAD_SCENE := preload("res://assets/vegetation/models/tree_medium_broad_clustered_canopy.glb")
+const TREE_LARGE_BROAD_LOD1_SCENE := preload("res://assets/vegetation/models/tree_medium_broad_clustered_canopy_lod1.glb")
+const TREE_LARGE_BROAD_LOD2_SCENE := preload("res://assets/vegetation/models/tree_medium_broad_clustered_canopy_lod2_impostor.glb")
+const TREE_LARGE_UPRIGHT_SCENE := preload("res://assets/vegetation/models/tree_medium_upright_asymmetric_canopy.glb")
+const TREE_LARGE_UPRIGHT_LOD1_SCENE := preload("res://assets/vegetation/models/tree_medium_upright_asymmetric_canopy_lod1.glb")
+const TREE_LARGE_UPRIGHT_LOD2_SCENE := preload("res://assets/vegetation/models/tree_medium_upright_asymmetric_canopy_lod2_impostor.glb")
+const VEGETATION_SHADER := preload("res://assets/vegetation/shaders/vegetation_wind.gdshader")
+const TREE_HLOD_SHADER := preload("res://assets/vegetation/shaders/tree_hlod.gdshader")
+const GRASS_TEXTURE := preload("res://assets/vegetation/textures/grass_tuft_straw_minimal_v5.png")
+const LEAF_TEXTURE := preload("res://assets/vegetation/textures/leaf_clusters_witness_sparse_flat_v11.png")
+const TREE_SMALL_CLUMP_TEXTURE := preload("res://assets/vegetation/textures/tree_small_clump_unlit_4var_v1.png")
+const TREE_SMALL_IMPOSTOR_TEXTURE := preload("res://assets/vegetation/textures/tree_small_canopy_unlit_8view_v1.png")
+const TREE_BROAD_CLUMP_TEXTURE := preload("res://assets/vegetation/textures/tree_broad_clump_unlit_4var_v1.png")
+const TREE_BROAD_IMPOSTOR_TEXTURE := preload("res://assets/vegetation/textures/tree_broad_canopy_unlit_8view_v1.png")
+const TREE_UPRIGHT_CLUMP_TEXTURE := preload("res://assets/vegetation/textures/tree_upright_clump_unlit_4var_v1.png")
+const TREE_UPRIGHT_IMPOSTOR_TEXTURE := preload("res://assets/vegetation/textures/tree_upright_canopy_unlit_8view_v1.png")
+const TREE_LOD_DITHER_TEXTURE := preload("res://assets/vegetation/textures/lod_blue_noise_64.png")
+
+var target: Node3D
+var initialized := false
+var lod_enabled := true
+var vegetation_enabled := true
+var painted_lod_enabled := false
+var painted_lod_materials: Array[ShaderMaterial] = []
+var record_tree_layout_for_review := false
+var review_tree_records: Array[Dictionary] = []
+var transition_test_mode := false
+var active_grass_chunks: Dictionary[Vector2i, Node3D] = {}
+var empty_grass_cells: Dictionary[Vector2i, bool] = {}
+var queued_grass_cells: Dictionary[Vector2i, bool] = {}
+var grass_build_queue: Array[Vector2i] = []
+var grass_lod0_nodes: Array[MultiMeshInstance3D] = []
+var grass_lod1_nodes: Array[MultiMeshInstance3D] = []
+var tree_lod0_nodes: Array[MultiMeshInstance3D] = []
+var tree_lod1_nodes: Array[MultiMeshInstance3D] = []
+var tree_lod2_nodes: Array[MultiMeshInstance3D] = []
+var tree_instance_count := 0
+var large_tree_instance_count := 0
+var update_accumulator := 0.0
+var grass_debug_mode := 2
+
+var grass_mesh: Mesh
+var tree_near_trunk_mesh: Mesh
+var tree_near_leaf_mesh: Mesh
+var tree_near_lod1_trunk_mesh: Mesh
+var tree_near_lod1_leaf_mesh: Mesh
+var tree_near_lod2_leaf_mesh: Mesh
+var tree_large_broad_trunk_mesh: Mesh
+var tree_large_broad_leaf_mesh: Mesh
+var tree_large_broad_lod1_trunk_mesh: Mesh
+var tree_large_broad_lod1_leaf_mesh: Mesh
+var tree_large_broad_lod2_leaf_mesh: Mesh
+var tree_large_upright_trunk_mesh: Mesh
+var tree_large_upright_leaf_mesh: Mesh
+var tree_large_upright_lod1_trunk_mesh: Mesh
+var tree_large_upright_lod1_leaf_mesh: Mesh
+var tree_large_upright_lod2_leaf_mesh: Mesh
+var grass_material: ShaderMaterial
+var leaf_material: ShaderMaterial
+var tree_small_lod0_material: ShaderMaterial
+var tree_broad_lod0_material: ShaderMaterial
+var tree_upright_lod0_material: ShaderMaterial
+var tree_small_lod1_material: ShaderMaterial
+var tree_small_lod2_material: ShaderMaterial
+var tree_broad_lod1_material: ShaderMaterial
+var tree_broad_lod2_material: ShaderMaterial
+var tree_upright_lod1_material: ShaderMaterial
+var tree_upright_lod2_material: ShaderMaterial
+var trunk_material: StandardMaterial3D
+var biome_noise_texture: NoiseTexture2D
+var tree_palette_material_cache: Dictionary = {}
+
+
+func initialize(
+	target_node: Node3D,
+	shared_biome_noise: NoiseTexture2D,
+	initial_grass_debug_mode := 2,
+	initial_transition_test_mode := false
+) -> void:
+	target = target_node
+	biome_noise_texture = shared_biome_noise
+	grass_debug_mode = clampi(initial_grass_debug_mode, 0, 2)
+	transition_test_mode = initial_transition_test_mode
+	_load_meshes_and_materials()
+	if transition_test_mode:
+		_build_tree_transition_test()
+	else:
+		_build_tree_lod()
+	initialized = true
+	if not transition_test_mode:
+		_refresh_grass_cells()
+
+
+func _process(delta: float) -> void:
+	if not initialized or target == null:
+		return
+	if transition_test_mode:
+		return
+	update_accumulator += delta
+	if update_accumulator >= GRASS_STREAM_REFRESH_SECONDS:
+		update_accumulator = 0.0
+		_refresh_grass_cells()
+	var build_start_usec := Time.get_ticks_usec()
+	var builds_this_frame := 0
+	while not grass_build_queue.is_empty():
+		var cell: Vector2i = grass_build_queue.pop_front()
+		queued_grass_cells.erase(cell)
+		if not active_grass_chunks.has(cell):
+			_build_grass_chunk(cell)
+		builds_this_frame += 1
+		if builds_this_frame >= GRASS_STREAM_MAX_BUILDS_PER_FRAME:
+			break
+		if Time.get_ticks_usec() - build_start_usec >= GRASS_STREAM_BUILD_BUDGET_USEC:
+			break
+
+
+func _load_meshes_and_materials() -> void:
+	grass_mesh = _extract_first_mesh(GRASS_SCENE)
+	var near_meshes := _extract_tree_meshes(TREE_NEAR_SCENE)
+	tree_near_trunk_mesh = near_meshes[0]
+	tree_near_leaf_mesh = near_meshes[1]
+	var near_lod1_meshes := _extract_tree_meshes(TREE_NEAR_LOD1_SCENE)
+	tree_near_lod1_trunk_mesh = near_lod1_meshes[0]
+	tree_near_lod1_leaf_mesh = near_lod1_meshes[1]
+	var near_lod2_meshes := _extract_tree_meshes(TREE_NEAR_LOD2_SCENE)
+	tree_near_lod2_leaf_mesh = near_lod2_meshes[1]
+	var large_broad_meshes := _extract_tree_meshes(TREE_LARGE_BROAD_SCENE)
+	tree_large_broad_trunk_mesh = large_broad_meshes[0]
+	tree_large_broad_leaf_mesh = large_broad_meshes[1]
+	var large_broad_lod1_meshes := _extract_tree_meshes(TREE_LARGE_BROAD_LOD1_SCENE)
+	tree_large_broad_lod1_trunk_mesh = large_broad_lod1_meshes[0]
+	tree_large_broad_lod1_leaf_mesh = large_broad_lod1_meshes[1]
+	var large_broad_lod2_meshes := _extract_tree_meshes(TREE_LARGE_BROAD_LOD2_SCENE)
+	tree_large_broad_lod2_leaf_mesh = large_broad_lod2_meshes[1]
+	var large_upright_meshes := _extract_tree_meshes(TREE_LARGE_UPRIGHT_SCENE)
+	tree_large_upright_trunk_mesh = large_upright_meshes[0]
+	tree_large_upright_leaf_mesh = large_upright_meshes[1]
+	var large_upright_lod1_meshes := _extract_tree_meshes(TREE_LARGE_UPRIGHT_LOD1_SCENE)
+	tree_large_upright_lod1_trunk_mesh = large_upright_lod1_meshes[0]
+	tree_large_upright_lod1_leaf_mesh = large_upright_lod1_meshes[1]
+	var large_upright_lod2_meshes := _extract_tree_meshes(TREE_LARGE_UPRIGHT_LOD2_SCENE)
+	tree_large_upright_lod2_leaf_mesh = large_upright_lod2_meshes[1]
+
+	var wind_noise := NoiseTexture2D.new()
+	wind_noise.width = 512
+	wind_noise.height = 512
+	wind_noise.seamless = true
+	wind_noise.normalize = true
+	var fast_noise := FastNoiseLite.new()
+	fast_noise.seed = 1947
+	fast_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
+	fast_noise.frequency = 0.018
+	fast_noise.fractal_type = FastNoiseLite.FRACTAL_FBM
+	fast_noise.fractal_octaves = 3
+	wind_noise.noise = fast_noise
+
+	grass_material = ShaderMaterial.new()
+	grass_material.shader = VEGETATION_SHADER
+	grass_material.set_shader_parameter("albedo_texture", GRASS_TEXTURE)
+	grass_material.set_shader_parameter("alpha_cutoff", 0.34)
+	grass_material.set_shader_parameter("alpha_antialiasing_edge", 0.20)
+	grass_material.set_shader_parameter("light_wrap", 0.46)
+	grass_material.set_shader_parameter("use_noise_wind", true)
+	grass_material.set_shader_parameter("wind_noise_texture", wind_noise)
+	grass_material.set_shader_parameter("wind_direction", Vector2(0.88, 0.34).normalized())
+	grass_material.set_shader_parameter("wind_strength", 0.085)
+	grass_material.set_shader_parameter("wind_speed", 1.08)
+	grass_material.set_shader_parameter("wind_noise_world_scale", 0.018)
+	grass_material.set_shader_parameter("wind_noise_scroll_speed", 0.035)
+	grass_material.set_shader_parameter("wind_tone_strength", 0.18)
+	grass_material.set_shader_parameter("root_tone", 0.93)
+	grass_material.set_shader_parameter("tip_tone", 1.025)
+	grass_material.set_shader_parameter("use_biome_palette", true)
+	grass_material.set_shader_parameter("use_multimesh_color_data", true)
+	grass_material.set_shader_parameter("biome_noise_texture", biome_noise_texture)
+	# These are restrained multipliers, not replacement albedo colours.
+	grass_material.set_shader_parameter("palette_dry", Color.WHITE)
+	grass_material.set_shader_parameter("palette_green", Color(0.77, 0.88, 0.78))
+	grass_material.set_shader_parameter("biome_noise_scale", 0.00135)
+	grass_material.set_shader_parameter("biome_warp_distance", 210.0)
+	grass_material.set_shader_parameter("biome_transition_half_width", 135.0)
+	grass_material.set_shader_parameter("biome_center_x", 20.0)
+	grass_material.set_shader_parameter("biome_instance_overlap", 35.0)
+	grass_material.set_shader_parameter("grass_near_fade_start", GRASS_NEAR_FADE_START)
+	grass_material.set_shader_parameter("grass_near_fade_end", GRASS_NEAR_FADE_END)
+	grass_material.set_shader_parameter("grass_far_fade_start", GRASS_FAR_FADE_START)
+	grass_material.set_shader_parameter("grass_far_fade_end", GRASS_FAR_FADE_END)
+	grass_material.set_shader_parameter("use_grass_lod_density", grass_debug_mode > 0)
+
+	leaf_material = ShaderMaterial.new()
+	leaf_material.shader = TREE_HLOD_SHADER
+	leaf_material.set_shader_parameter("albedo_texture", LEAF_TEXTURE)
+	leaf_material.set_shader_parameter("alpha_cutoff", 0.50)
+	leaf_material.set_shader_parameter("alpha_antialiasing_edge", 0.30)
+	leaf_material.set_shader_parameter("atlas_grid", Vector2(2.0, 2.0))
+	leaf_material.set_shader_parameter("card_edge_fade", 0.075)
+	leaf_material.set_shader_parameter("light_wrap", 0.34)
+	leaf_material.set_shader_parameter("wind_strength", 0.075)
+	leaf_material.set_shader_parameter("wind_speed", 0.72)
+	leaf_material.set_shader_parameter("use_view_angle_fade", true)
+	leaf_material.set_shader_parameter("view_angle_fade_start", 0.020)
+	leaf_material.set_shader_parameter("view_angle_fade_end", 0.140)
+	leaf_material.set_shader_parameter("species_noise_texture", biome_noise_texture)
+	leaf_material.set_shader_parameter("species_noise_scale", 0.052)
+	leaf_material.set_shader_parameter("species_texture_detail", 0.08)
+	leaf_material.set_shader_parameter("species_light_ramp_start", -0.05)
+	leaf_material.set_shader_parameter("species_light_ramp_end", 0.62)
+	leaf_material.set_shader_parameter("species_shadow_band_start", -0.38)
+	leaf_material.set_shader_parameter("species_shadow_band_end", -0.02)
+	leaf_material.set_shader_parameter("species_mid_band_start", -0.10)
+	leaf_material.set_shader_parameter("species_mid_band_end", 0.30)
+	leaf_material.set_shader_parameter("species_sun_band_start", 0.16)
+	leaf_material.set_shader_parameter("species_sun_band_end", 0.58)
+	leaf_material.set_shader_parameter("species_direct_strength", 0.72)
+	leaf_material.set_shader_parameter("species_art_direct_strength", 0.95)
+	leaf_material.set_shader_parameter("species_light_warp_scale", 0.018)
+	leaf_material.set_shader_parameter("species_light_warp_amount", 0.055)
+	leaf_material.set_shader_parameter("lod_dither_texture", TREE_LOD_DITHER_TEXTURE)
+	# Match the accepted focused scene.  These are material uniforms here rather
+	# than per-instance uniforms so the 50k-tree MultiMesh population does not
+	# exhaust Godot's instance-variable buffer.
+	leaf_material.set_shader_parameter("use_biome_palette", true)
+	leaf_material.set_shader_parameter("biome_noise_texture", biome_noise_texture)
+	leaf_material.set_shader_parameter("palette_dry", Color(1.03, 0.98, 0.82))
+	leaf_material.set_shader_parameter("palette_green", Color(0.83, 0.97, 0.89))
+	leaf_material.set_shader_parameter("biome_noise_scale", 0.014)
+	leaf_material.set_shader_parameter("biome_warp_distance", 4.0)
+	leaf_material.set_shader_parameter("biome_transition_half_width", 5.0)
+	leaf_material.set_shader_parameter("biome_center_x", 20.0)
+	leaf_material.set_shader_parameter("variant_tint", Color(1.04, 1.01, 0.97))
+	tree_small_lod0_material = leaf_material.duplicate(true) as ShaderMaterial
+	tree_small_lod0_material.set_shader_parameter(
+		"tree_lod_fade", Vector4(-100.0, -99.0, 90.0, 120.0)
+	)
+	tree_broad_lod0_material = _make_tree_lod0_material(
+		Vector3(0.0, 7.875, 0.0), Vector3(6.65, 5.295, 6.655)
+	)
+	tree_upright_lod0_material = _make_tree_lod0_material(
+		Vector3(0.085, 8.912, -0.250), Vector3(7.145, 7.423, 7.135)
+	)
+	tree_small_lod1_material = _make_tree_hlod_material(
+		# The small source crown is a single mesh.  Its old LOD1 atlas therefore
+		# contained four whole-tree silhouettes, which repeated as flat umbrella
+		# layers when the crown was split into volume clumps.  Reuse the accepted
+		# broad-tree *clump* atlas here; colour and lighting still come from this
+		# material, while each card now represents foliage rather than a tiny tree.
+		TREE_BROAD_CLUMP_TEXTURE, false,
+		Vector3(0.011, 3.672, -0.049), Vector3(3.850, 2.568, 2.883),
+		Vector4(90.0, 120.0, 280.0, 330.0)
+	)
+	tree_small_lod2_material = _make_tree_hlod_material(
+		TREE_SMALL_IMPOSTOR_TEXTURE, true,
+		Vector3(0.011, 3.672, -0.049), Vector3(3.850, 2.568, 2.883),
+		Vector4(280.0, 330.0, 970.0, 1000.0)
+	)
+	tree_broad_lod1_material = _make_tree_hlod_material(
+		TREE_BROAD_CLUMP_TEXTURE, false,
+		Vector3(0.0, 7.875, 0.0), Vector3(6.65, 5.295, 6.655),
+		Vector4(
+			TREE_LARGE_LOD1_BEGIN, TREE_LARGE_LOD0_END,
+			TREE_LARGE_LOD2_BEGIN, TREE_LARGE_LOD1_END
+		)
+	)
+	tree_broad_lod2_material = _make_tree_hlod_material(
+		TREE_BROAD_IMPOSTOR_TEXTURE, true,
+		Vector3(0.0, 7.875, 0.0), Vector3(6.65, 5.295, 6.655),
+		Vector4(280.0, 330.0, 1070.0, 1100.0)
+	)
+	tree_upright_lod1_material = _make_tree_hlod_material(
+		TREE_UPRIGHT_CLUMP_TEXTURE, false,
+		Vector3(0.085, 8.912, -0.250), Vector3(7.145, 7.423, 7.135),
+		Vector4(
+			TREE_LARGE_LOD1_BEGIN, TREE_LARGE_LOD0_END,
+			TREE_LARGE_LOD2_BEGIN, TREE_LARGE_LOD1_END
+		)
+	)
+	tree_upright_lod2_material = _make_tree_hlod_material(
+		TREE_UPRIGHT_IMPOSTOR_TEXTURE, true,
+		Vector3(0.085, 8.912, -0.250), Vector3(7.145, 7.423, 7.135),
+		Vector4(280.0, 330.0, 1070.0, 1100.0)
+	)
+
+	trunk_material = StandardMaterial3D.new()
+	trunk_material.albedo_color = Color("594238")
+	trunk_material.roughness = 0.92
+
+
+func _make_tree_lod0_material(
+	canopy_center: Vector3,
+	canopy_radii: Vector3
+) -> ShaderMaterial:
+	var material := leaf_material.duplicate(true) as ShaderMaterial
+	material.set_shader_parameter("use_tree_local_canopy_normal", true)
+	material.set_shader_parameter("tree_canopy_center_local", canopy_center)
+	material.set_shader_parameter("tree_canopy_radii_local", canopy_radii)
+	material.set_shader_parameter("tree_local_normal_weight", 0.34)
+	material.set_shader_parameter(
+		"tree_lod_fade",
+		Vector4(-100.0, -99.0, TREE_LARGE_LOD1_BEGIN, TREE_LARGE_LOD0_END)
+	)
+	return material
+
+
+func _make_tree_hlod_material(
+	texture: Texture2D,
+	is_impostor: bool,
+	canopy_center: Vector3,
+	canopy_radii: Vector3,
+	lod_fade: Vector4
+) -> ShaderMaterial:
+	var material := ShaderMaterial.new()
+	material.shader = TREE_HLOD_SHADER
+	material.set_shader_parameter("albedo_texture", texture)
+	var painted_path := "res://assets/vegetation/painted_lod/painted_clumps_v1.png"
+	var painted_key := "clumps"
+	if is_impostor:
+		var species := "small"
+		if texture == TREE_BROAD_IMPOSTOR_TEXTURE:
+			species = "broad"
+		elif texture == TREE_UPRIGHT_IMPOSTOR_TEXTURE:
+			species = "upright"
+		painted_path = "res://assets/vegetation/painted_lod/painted_%s_canopy_8view_v1.png" % species
+		painted_key = species
+	if ResourceLoader.exists(painted_path):
+		material.set_shader_parameter("painted_texture", load(painted_path))
+		material.set_shader_parameter("use_painted_foliage", painted_lod_enabled)
+		var statistics_path := "res://assets/vegetation/painted_lod/atlas_statistics.json"
+		if FileAccess.file_exists(statistics_path):
+			var statistics: Variant = JSON.parse_string(FileAccess.get_file_as_string(statistics_path))
+			if statistics is Dictionary and statistics.has(painted_key):
+				material.set_shader_parameter("painted_luma_reference", statistics[painted_key].linear_luma_reference)
+				var source_colors: Dictionary = statistics.get("original_base_colors", {})
+				var source_name := texture.resource_path.get_file()
+				if source_colors.has(source_name):
+					var rgb: Array = source_colors[source_name]
+					material.set_shader_parameter("painted_base_color", Color(rgb[0], rgb[1], rgb[2]))
+	painted_lod_materials.append(material)
+	material.set_shader_parameter("alpha_cutoff", 0.42 if is_impostor else 0.46)
+	material.set_shader_parameter("alpha_antialiasing_edge", 0.24)
+	material.set_shader_parameter("atlas_grid", Vector2(4.0, 2.0) if is_impostor else Vector2(2.0, 2.0))
+	material.set_shader_parameter("card_edge_fade", 0.035 if is_impostor else 0.055)
+	material.set_shader_parameter("light_wrap", 0.38)
+	material.set_shader_parameter("wind_strength", 0.035 if is_impostor else 0.055)
+	material.set_shader_parameter("wind_speed", 0.68)
+	# A clump card represents a complete volume, not one leaf plane.  Applying
+	# leaf-level angle fade to it would erase an entire 4-6 m crown group.
+	material.set_shader_parameter("use_view_angle_fade", false)
+	material.set_shader_parameter("view_angle_fade_start", 0.015)
+	material.set_shader_parameter("view_angle_fade_end", 0.105)
+	material.set_shader_parameter("use_y_billboard", is_impostor)
+	material.set_shader_parameter("use_spherical_billboard", not is_impostor)
+	material.set_shader_parameter("use_billboard_pivot_data", not is_impostor)
+	material.set_shader_parameter("use_directional_impostor", is_impostor)
+	material.set_shader_parameter("directional_impostor_views", 8.0)
+	# LOD1 only replaces geometry with camera-facing clump silhouettes.  Its
+	# lighting must still follow the accepted whole-crown ellipsoid; treating
+	# every billboard as an independent sphere makes large trees look like a
+	# pile of bright balls.  Only the distant whole-tree impostor uses the
+	# screen-space spherical normal reconstruction.
+	material.set_shader_parameter("use_impostor_canopy_normal", is_impostor)
+	material.set_shader_parameter("use_tree_local_canopy_normal", not is_impostor)
+	material.set_shader_parameter("tree_canopy_center_local", canopy_center)
+	material.set_shader_parameter("tree_canopy_radii_local", canopy_radii)
+	material.set_shader_parameter("tree_local_normal_weight", 0.34 if not is_impostor else 0.0)
+	material.set_shader_parameter("tree_lod_fade", lod_fade)
+	material.set_shader_parameter("species_noise_texture", biome_noise_texture)
+	material.set_shader_parameter("species_texture_detail", 0.05)
+	material.set_shader_parameter("species_art_direct_strength", 0.95)
+	material.set_shader_parameter("species_light_warp_scale", 0.018)
+	material.set_shader_parameter("species_light_warp_amount", 0.055)
+	material.set_shader_parameter("lod_dither_texture", TREE_LOD_DITHER_TEXTURE)
+	material.set_shader_parameter("use_biome_palette", true)
+	material.set_shader_parameter("biome_noise_texture", biome_noise_texture)
+	material.set_shader_parameter("palette_dry", Color(1.03, 0.98, 0.82))
+	material.set_shader_parameter("palette_green", Color(0.83, 0.97, 0.89))
+	material.set_shader_parameter("biome_noise_scale", 0.014)
+	material.set_shader_parameter("biome_warp_distance", 4.0)
+	material.set_shader_parameter("biome_transition_half_width", 5.0)
+	material.set_shader_parameter("biome_center_x", 20.0)
+	material.set_shader_parameter("variant_tint", Color(1.04, 1.01, 0.97))
+	return material
+
+
+func _extract_first_mesh(scene: PackedScene) -> Mesh:
+	var instance := scene.instantiate()
+	var meshes: Array[MeshInstance3D] = []
+	_collect_mesh_instances(instance, meshes)
+	if meshes.is_empty():
+		instance.free()
+		return null
+	var result := meshes[0].mesh.duplicate(true) as Mesh
+	instance.free()
+	return result
+
+
+func _extract_tree_meshes(scene: PackedScene) -> Array[Mesh]:
+	var instance := scene.instantiate()
+	var meshes: Array[MeshInstance3D] = []
+	_collect_mesh_instances(instance, meshes)
+	var trunk := _merge_tree_meshes(instance, meshes, true)
+	var leaves := _merge_tree_meshes(instance, meshes, false)
+	instance.free()
+	return [trunk, leaves]
+
+
+func _merge_tree_meshes(
+	root: Node,
+	meshes: Array[MeshInstance3D],
+	want_trunk: bool
+) -> Mesh:
+	var surface_tool := SurfaceTool.new()
+	surface_tool.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var appended := false
+	for mesh_instance in meshes:
+		var name_lower := mesh_instance.name.to_lower()
+		var is_trunk := "trunk" in name_lower
+		var is_foliage := (
+			"foliage" in name_lower
+			or "leaf" in name_lower
+			or "impostor" in name_lower
+		)
+		if (want_trunk and not is_trunk) or (not want_trunk and not is_foliage):
+			continue
+		var relative_transform := _transform_relative_to_root(mesh_instance, root)
+		for surface_index in mesh_instance.mesh.get_surface_count():
+			surface_tool.append_from(
+				mesh_instance.mesh, surface_index, relative_transform
+			)
+			appended = true
+	if not appended:
+		return null
+	return surface_tool.commit()
+
+
+func _transform_relative_to_root(node: Node3D, root: Node) -> Transform3D:
+	var result := node.transform
+	var parent := node.get_parent()
+	while parent != null and parent != root:
+		if parent is Node3D:
+			result = (parent as Node3D).transform * result
+		parent = parent.get_parent()
+	return result
+
+
+func _collect_mesh_instances(node: Node, result: Array[MeshInstance3D]) -> void:
+	if node is MeshInstance3D:
+		result.append(node as MeshInstance3D)
+	for child in node.get_children():
+		_collect_mesh_instances(child, result)
+
+
+func _refresh_grass_cells() -> void:
+	var center := Vector2(target.global_position.x, target.global_position.z)
+	var target_velocity := Vector3.ZERO
+	if target is CharacterBody3D:
+		target_velocity = (target as CharacterBody3D).velocity
+	var predicted_center := center + (
+		Vector2(target_velocity.x, target_velocity.z)
+		* GRASS_STREAM_LOOKAHEAD_SECONDS
+	)
+	var center_cell := Vector2i(
+		floori(predicted_center.x / GRASS_CHUNK_SIZE),
+		floori(predicted_center.y / GRASS_CHUNK_SIZE)
+	)
+	var prediction_offset := center.distance_to(predicted_center)
+	var cell_radius := ceili(
+		(GRASS_PREFETCH_RADIUS + prediction_offset) / GRASS_CHUNK_SIZE
+	)
+	var required_cells: Dictionary[Vector2i, bool] = {}
+	for offset_x in range(-cell_radius, cell_radius + 1):
+		for offset_y in range(-cell_radius, cell_radius + 1):
+			var cell := center_cell + Vector2i(offset_x, offset_y)
+			var cell_center := Vector2(
+				(cell.x + 0.5) * GRASS_CHUNK_SIZE,
+				(cell.y + 0.5) * GRASS_CHUNK_SIZE
+			)
+			var needed_now := (
+				cell_center.distance_to(center)
+				<= GRASS_PREFETCH_RADIUS
+			)
+			var needed_ahead := (
+				cell_center.distance_to(predicted_center)
+				<= GRASS_PREFETCH_RADIUS
+			)
+			if not needed_now and not needed_ahead:
+				continue
+			required_cells[cell] = true
+			if (
+				not active_grass_chunks.has(cell)
+				and not empty_grass_cells.has(cell)
+				and not queued_grass_cells.has(cell)
+			):
+				grass_build_queue.append(cell)
+				queued_grass_cells[cell] = true
+
+	# Drop requests that are no longer useful, then prioritize what is visible
+	# now before the predicted driving direction and finally pure distance.
+	var refreshed_queue: Array[Vector2i] = []
+	queued_grass_cells.clear()
+	for cell in grass_build_queue:
+		if (
+			required_cells.has(cell)
+			and not active_grass_chunks.has(cell)
+			and not empty_grass_cells.has(cell)
+		):
+			refreshed_queue.append(cell)
+			queued_grass_cells[cell] = true
+	grass_build_queue = refreshed_queue
+	grass_build_queue.sort_custom(func(first: Vector2i, second: Vector2i) -> bool:
+		return (
+			_grass_cell_priority(first, center, predicted_center)
+			< _grass_cell_priority(second, center, predicted_center)
+		)
+	)
+
+	var remove_cells: Array[Vector2i] = []
+	for cell in active_grass_chunks:
+		var cell_center := Vector2(
+			(cell.x + 0.5) * GRASS_CHUNK_SIZE,
+			(cell.y + 0.5) * GRASS_CHUNK_SIZE
+		)
+		if cell_center.distance_to(center) > GRASS_UNLOAD_RADIUS:
+			remove_cells.append(cell)
+	for cell in remove_cells:
+		var chunk := active_grass_chunks[cell] as Node3D
+		_remove_chunk_nodes_from_tracking(chunk)
+		chunk.queue_free()
+		active_grass_chunks.erase(cell)
+	var remove_empty_cells: Array[Vector2i] = []
+	for cell in empty_grass_cells:
+		var cell_center := Vector2(
+			(cell.x + 0.5) * GRASS_CHUNK_SIZE,
+			(cell.y + 0.5) * GRASS_CHUNK_SIZE
+		)
+		if cell_center.distance_to(center) > GRASS_UNLOAD_RADIUS:
+			remove_empty_cells.append(cell)
+	for cell in remove_empty_cells:
+		empty_grass_cells.erase(cell)
+
+
+func _grass_cell_priority(
+	cell: Vector2i,
+	center: Vector2,
+	predicted_center: Vector2
+) -> float:
+	var cell_center := Vector2(
+		(cell.x + 0.5) * GRASS_CHUNK_SIZE,
+		(cell.y + 0.5) * GRASS_CHUNK_SIZE
+	)
+	var current_distance := cell_center.distance_to(center)
+	var predicted_distance := cell_center.distance_to(predicted_center)
+	# Current visible cells always win; beyond that, favour the direction the
+	# vehicle is travelling without starving nearby cells behind it.
+	var visible_priority := 0.0 if current_distance <= GRASS_FAR_FADE_END else 10000.0
+	return visible_priority + predicted_distance * 0.68 + current_distance * 0.32
+
+
+func _grass_coverage(position: Vector3, normal: Vector3) -> float:
+	# This mirrors terrain_draft.gdshader. Geometry placement and the far proxy
+	# therefore agree on where meadow gives way to coast sand or steep rock.
+	var broad_noise := _terrain_soft_noise(Vector2(position.x, position.z))
+	var sand_mix := 1.0 - smoothstep(
+		1.5,
+		8.0,
+		position.y + broad_noise * 1.8
+	)
+	var slope := 1.0 - clampf(absf(normal.y), 0.0, 1.0)
+	var rock_mix := smoothstep(0.24, 0.58, slope)
+	return clampf((1.0 - sand_mix) * (1.0 - rock_mix), 0.0, 1.0)
+
+
+func _terrain_soft_noise(position: Vector2) -> float:
+	var first := sin(position.x * 0.021 + sin(position.y * 0.014) * 1.7)
+	var second := sin(position.y * 0.031 - position.x * 0.009)
+	return first * 0.62 + second * 0.38
+
+
+func _build_grass_chunk(cell: Vector2i) -> void:
+	var chunk_origin := Vector3(
+		cell.x * GRASS_CHUNK_SIZE,
+		0.0,
+		cell.y * GRASS_CHUNK_SIZE
+	)
+	var near_transforms: Array[Transform3D] = []
+	var near_custom_data: Array[Color] = []
+	var far_transforms: Array[Transform3D] = []
+	var far_custom_data: Array[Color] = []
+	var rng := RandomNumberGenerator.new()
+	rng.seed = _cell_seed(cell, 0x4A31)
+	for _sample in GRASS_SAMPLES_PER_CHUNK:
+		var local_x := rng.randf_range(0.0, GRASS_CHUNK_SIZE)
+		var local_z := rng.randf_range(0.0, GRASS_CHUNK_SIZE)
+		var world_x := chunk_origin.x + local_x
+		var world_z := chunk_origin.z + local_z
+		var hit := _raycast_terrain(world_x, world_z)
+		if hit.is_empty() or (hit.normal as Vector3).y < 0.72:
+			continue
+		var hit_position := hit.position as Vector3
+		var hit_normal := hit.normal as Vector3
+		var coverage := _grass_coverage(hit_position, hit_normal)
+		if rng.randf() > coverage:
+			continue
+		for blade in GRASS_BLADES_PER_SAMPLE:
+			var offset := Vector2.ZERO
+			if blade > 0:
+				offset = Vector2(
+					rng.randf_range(-0.34, 0.34),
+					rng.randf_range(-0.34, 0.34)
+				)
+			var height_offset := 0.0
+			if absf(hit_normal.y) > 0.01:
+				height_offset = -(
+					hit_normal.x * offset.x + hit_normal.z * offset.y
+				) / hit_normal.y
+			var yaw := rng.randf_range(0.0, TAU)
+			var width_scale := rng.randf_range(0.88, 1.28)
+			var height_scale := rng.randf_range(0.90, 1.16)
+			var basis := Basis(Vector3.UP, yaw).scaled(
+				Vector3(width_scale, height_scale, width_scale)
+			)
+			var transform := Transform3D(
+				basis,
+				Vector3(
+					local_x + offset.x,
+					hit_position.y + height_offset + 0.025,
+					local_z + offset.y
+				)
+			)
+			var biome_variation := rng.randf()
+			var value_variation := rng.randf()
+			var lod_threshold := rng.randf()
+			if lod_threshold < GRASS_FAR_SURVIVOR_FRACTION:
+				var far_transform := transform
+				far_transform.basis = far_transform.basis.scaled(
+					Vector3(1.32, 1.04, 1.32)
+				)
+				far_transforms.append(far_transform)
+				far_custom_data.append(Color(
+					biome_variation,
+					value_variation,
+					lod_threshold / GRASS_FAR_SURVIVOR_FRACTION,
+					1.0
+				))
+			else:
+				near_transforms.append(transform)
+				near_custom_data.append(Color(
+					biome_variation,
+					value_variation,
+					(lod_threshold - GRASS_FAR_SURVIVOR_FRACTION)
+						/ (1.0 - GRASS_FAR_SURVIVOR_FRACTION),
+					0.0
+				))
+
+	if near_transforms.is_empty() and far_transforms.is_empty():
+		empty_grass_cells[cell] = true
+		return
+	var chunk := Node3D.new()
+	chunk.name = "GrassChunk_%d_%d" % [cell.x, cell.y]
+	chunk.position = chunk_origin
+	add_child(chunk)
+	if not near_transforms.is_empty():
+		var near_node := _make_multimesh_node(
+			"Grass_NearOnly", grass_mesh, near_transforms, grass_material,
+			0.0, GRASS_NEAR_FADE_END + GRASS_CHUNK_SIZE * 1.5, near_custom_data
+		)
+		near_node.set_meta("grass_population", "near")
+		near_node.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		chunk.add_child(near_node)
+		grass_lod0_nodes.append(near_node)
+	if not far_transforms.is_empty():
+		var far_node := _make_multimesh_node(
+			"Grass_FarSurvivors", grass_mesh, far_transforms, grass_material,
+			0.0, GRASS_FAR_FADE_END + GRASS_CHUNK_SIZE * 1.5, far_custom_data
+		)
+		far_node.set_meta("grass_population", "far")
+		far_node.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		chunk.add_child(far_node)
+		grass_lod1_nodes.append(far_node)
+	active_grass_chunks[cell] = chunk
+	_apply_lod_state_to_chunk(chunk)
+
+
+func _build_tree_lod() -> void:
+	large_tree_instance_count = 0
+	var distribution_noise := FastNoiseLite.new()
+	distribution_noise.seed = 7291
+	distribution_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
+	distribution_noise.frequency = 0.0017
+	distribution_noise.fractal_type = FastNoiseLite.FRACTAL_FBM
+	distribution_noise.fractal_octaves = 3
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 910247
+	var lod_bucket_sets: Array[Dictionary] = [{}, {}, {}]
+	var lod_chunk_sizes := [
+		TREE_LOD0_CHUNK_SIZE,
+		TREE_LOD1_CHUNK_SIZE,
+		TREE_LOD2_CHUNK_SIZE,
+	]
+	var accepted := 0
+	var attempts := 0
+	while accepted < TREE_TARGET_COUNT and attempts < TREE_TARGET_COUNT * 8:
+		attempts += 1
+		var world_x := rng.randf_range(-ISLAND_HALF_EXTENTS.x, ISLAND_HALF_EXTENTS.x)
+		var world_z := rng.randf_range(-ISLAND_HALF_EXTENTS.y, ISLAND_HALF_EXTENTS.y)
+		if Vector2(world_x, world_z).distance_to(
+			Vector2(target.global_position.x, target.global_position.z)
+		) < 24.0:
+			continue
+		if distribution_noise.get_noise_2d(world_x, world_z) < -0.08:
+			continue
+		var hit := _raycast_terrain(world_x, world_z)
+		if hit.is_empty():
+			continue
+		var normal := hit.normal as Vector3
+		var position := hit.position as Vector3
+		if normal.y < 0.80 or position.y < 2.0:
+			continue
+		var palette_cell := Vector2i(
+			floori(world_x / TREE_PALETTE_CELL_SIZE),
+			floori(world_z / TREE_PALETTE_CELL_SIZE)
+		)
+		var palette_id := _palette_for_cell(palette_cell)
+		var model_id := 0
+		# Keep exactly ten percent large when the requested population is reached.
+		# The choice remains spatially unbiased even when terrain rejection varies.
+		var remaining_large := LARGE_TREE_TARGET_COUNT - large_tree_instance_count
+		var remaining_total := TREE_TARGET_COUNT - accepted
+		if remaining_large > 0 and rng.randf() < float(remaining_large) / remaining_total:
+			if palette_id == 1 or palette_id == 2:
+				model_id = 1
+			elif palette_id == 3 or palette_id == 4:
+				model_id = 2
+			else:
+				model_id = 1 if rng.randf() < 0.58 else 2
+			large_tree_instance_count += 1
+		var yaw := rng.randf_range(0.0, TAU)
+		var scale_value := rng.randf_range(0.82, 1.30)
+		var transform := Transform3D(
+			Basis(Vector3.UP, yaw).scaled(Vector3.ONE * scale_value),
+			position
+		)
+		if record_tree_layout_for_review:
+			review_tree_records.append({"transform": transform, "model": model_id, "palette": palette_id})
+		for lod_level in 3:
+			var chunk_size: float = lod_chunk_sizes[lod_level]
+			var lod_cell := Vector2i(
+				floori(world_x / chunk_size),
+				floori(world_z / chunk_size)
+			)
+			var bucket_key := "%d,%d,%d,%d" % [
+				lod_cell.x, lod_cell.y, palette_id, model_id
+			]
+			var buckets := lod_bucket_sets[lod_level]
+			if not buckets.has(bucket_key):
+				buckets[bucket_key] = {
+					"cell": lod_cell,
+					"palette": palette_id,
+					"model": model_id,
+					"transforms": [],
+				}
+			(buckets[bucket_key]["transforms"] as Array).append(transform)
+		accepted += 1
+
+	tree_instance_count = accepted
+	for lod_level in 3:
+		var chunk_size: float = lod_chunk_sizes[lod_level]
+		var buckets := lod_bucket_sets[lod_level]
+		for bucket_key in buckets:
+			var bucket: Dictionary = buckets[bucket_key]
+			var cell: Vector2i = bucket["cell"]
+			var origin := Vector3(
+				cell.x * chunk_size, 0.0, cell.y * chunk_size
+			)
+			var local_transforms: Array[Transform3D] = []
+			for world_transform in bucket["transforms"]:
+				var local_transform := world_transform as Transform3D
+				local_transform.origin -= origin
+				local_transforms.append(local_transform)
+			var chunk := Node3D.new()
+			chunk.name = "TreeLOD%dChunk_%d_%d_P%d_M%d" % [
+				lod_level, cell.x, cell.y, bucket["palette"], bucket["model"]
+			]
+			chunk.position = origin
+			add_child(chunk)
+			_add_tree_lod_level(
+				chunk,
+				bucket["model"],
+				local_transforms,
+				bucket["palette"],
+				lod_level,
+				chunk_size * 1.45
+			)
+func _build_tree_transition_test() -> void:
+	# Three isolated species share the production meshes, materials and exact
+	# distance ranges.  Only the population and node-level safety margin differ,
+	# making this a repeatable visual test rather than a second implementation.
+	var test_species := [
+		{"model": 0, "palette": 0, "position": Vector3(-11.0, 0.0, 0.0)},
+		{"model": 1, "palette": 1, "position": Vector3(0.0, 0.0, 0.0)},
+		{"model": 2, "palette": 3, "position": Vector3(12.0, 0.0, 0.0)},
+	]
+	for species in test_species:
+		var transform := Transform3D(
+			Basis(Vector3.UP, 0.22 * float(species["model"])),
+			species["position"]
+		)
+		var transforms: Array[Transform3D] = [transform]
+		for lod_level in 3:
+			_add_tree_lod_level(
+				self,
+				int(species["model"]),
+				transforms,
+				int(species["palette"]),
+				lod_level,
+				16.0
+			)
+	tree_instance_count = test_species.size()
+	large_tree_instance_count = 2
+
+
+func _palette_for_cell(cell: Vector2i) -> int:
+	var value := _cell_seed(cell, 0x35B7) % 100
+	if value < 7:
+		return 1 # accepted A3 cherry
+	if value < 14:
+		return 2 # accepted A3 gold autumn
+	if value < 20:
+		return 3 # accepted A3 orange autumn
+	if value < 25:
+		return 4 # accepted A3 red autumn
+	return 0
+
+
+func _add_tree_lod_level(
+	parent: Node3D,
+	model_id: int,
+	transforms: Array[Transform3D],
+	palette_id: int,
+	lod_level_to_build: int,
+	chunk_margin: float
+) -> void:
+	var lod0_trunk: Mesh
+	var lod0_leaf: Mesh
+	var lod1_trunk: Mesh
+	var lod1_leaf: Mesh
+	var lod2_leaf: Mesh
+	var lod0_material: ShaderMaterial
+	var lod1_material: ShaderMaterial
+	var lod2_material: ShaderMaterial
+	var lod0_end: float
+	var lod1_begin: float
+	var lod1_end: float
+	var lod2_begin: float
+	var lod2_end: float
+	if model_id == 0:
+		lod0_trunk = tree_near_trunk_mesh
+		lod0_leaf = tree_near_leaf_mesh
+		lod1_trunk = tree_near_lod1_trunk_mesh
+		lod1_leaf = tree_near_lod1_leaf_mesh
+		lod2_leaf = tree_near_lod2_leaf_mesh
+		lod0_material = tree_small_lod0_material
+		lod1_material = tree_small_lod1_material
+		lod2_material = tree_small_lod2_material
+		lod0_end = TREE_SMALL_LOD0_END
+		lod1_begin = TREE_SMALL_LOD1_BEGIN
+		lod1_end = TREE_SMALL_LOD1_END
+		lod2_begin = TREE_SMALL_LOD2_BEGIN
+		lod2_end = TREE_SMALL_LOD2_END
+	elif model_id == 1:
+		lod0_trunk = tree_large_broad_trunk_mesh
+		lod0_leaf = tree_large_broad_leaf_mesh
+		lod1_trunk = tree_large_broad_lod1_trunk_mesh
+		lod1_leaf = tree_large_broad_lod1_leaf_mesh
+		lod2_leaf = tree_large_broad_lod2_leaf_mesh
+		lod0_material = tree_broad_lod0_material
+		lod1_material = tree_broad_lod1_material
+		lod2_material = tree_broad_lod2_material
+		lod0_end = TREE_LARGE_LOD0_END
+		lod1_begin = TREE_LARGE_LOD1_BEGIN
+		lod1_end = TREE_LARGE_LOD1_END
+		lod2_begin = TREE_LARGE_LOD2_BEGIN
+		lod2_end = TREE_LARGE_LOD2_END
+	else:
+		lod0_trunk = tree_large_upright_trunk_mesh
+		lod0_leaf = tree_large_upright_leaf_mesh
+		lod1_trunk = tree_large_upright_lod1_trunk_mesh
+		lod1_leaf = tree_large_upright_lod1_leaf_mesh
+		lod2_leaf = tree_large_upright_lod2_leaf_mesh
+		lod0_material = tree_upright_lod0_material
+		lod1_material = tree_upright_lod1_material
+		lod2_material = tree_upright_lod2_material
+		lod0_end = TREE_LARGE_LOD0_END
+		lod1_begin = TREE_LARGE_LOD1_BEGIN
+		lod1_end = TREE_LARGE_LOD1_END
+		lod2_begin = TREE_LARGE_LOD2_BEGIN
+		lod2_end = TREE_LARGE_LOD2_END
+
+	if lod_level_to_build == 0:
+		_add_tree_mesh_pair(
+			parent, "Tree%d_LOD0" % model_id, lod0_trunk, lod0_leaf,
+			transforms, lod0_material, 0.0,
+			lod0_end + chunk_margin, 0, palette_id, true,
+			lod1_end + chunk_margin
+		)
+	elif lod_level_to_build == 1:
+		_add_tree_mesh_pair(
+			parent, "Tree%d_LOD1" % model_id, lod1_trunk, lod1_leaf,
+			transforms, lod1_material,
+			maxf(0.0, lod1_begin - chunk_margin),
+			lod1_end + chunk_margin, 1, palette_id, false
+		)
+	else:
+		# Beyond the medium range trunks are sub-pixel.  Omitting them saves 188
+		# triangles per tree while retaining the complete crown silhouette.
+		var impostor := _make_multimesh_node(
+			"Tree%d_LOD2_Impostors" % model_id,
+			lod2_leaf,
+			transforms,
+			_get_tree_palette_material(lod2_material, palette_id),
+			maxf(0.0, lod2_begin - chunk_margin),
+			lod2_end + chunk_margin
+		)
+		impostor.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		parent.add_child(impostor)
+		tree_lod2_nodes.append(impostor)
+
+
+func _add_tree_mesh_pair(
+	parent: Node3D,
+	prefix: String,
+	trunk_mesh: Mesh,
+	leaves_mesh: Mesh,
+	transforms: Array[Transform3D],
+	leaves_material: ShaderMaterial,
+	begin_distance: float,
+	end_distance: float,
+	lod_level: int,
+	palette_id: int = 0,
+	include_trunk: bool = true,
+	trunk_end_distance: float = -1.0
+) -> void:
+	var leaf_node := _make_multimesh_node(
+		prefix + "_Leaves", leaves_mesh, transforms,
+		_get_tree_palette_material(leaves_material, palette_id),
+		begin_distance, end_distance
+	)
+	# Match the accepted test scene: alpha-cut foliage shadows create dense dark
+	# noise in groves, while the trunk alone provides grounding.
+	leaf_node.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	var trunk_node: MultiMeshInstance3D
+	if include_trunk:
+		var resolved_trunk_end := (
+			trunk_end_distance if trunk_end_distance >= 0.0 else end_distance
+		)
+		trunk_node = _make_multimesh_node(
+			prefix + "_Trunks", trunk_mesh, transforms, trunk_material,
+			begin_distance, resolved_trunk_end
+		)
+		parent.add_child(trunk_node)
+	parent.add_child(leaf_node)
+	if lod_level == 0:
+		if trunk_node != null:
+			tree_lod0_nodes.append(trunk_node)
+		tree_lod0_nodes.append(leaf_node)
+	elif lod_level == 1:
+		if trunk_node != null:
+			tree_lod1_nodes.append(trunk_node)
+		tree_lod1_nodes.append(leaf_node)
+	else:
+		if trunk_node != null:
+			tree_lod2_nodes.append(trunk_node)
+		tree_lod2_nodes.append(leaf_node)
+
+
+func _get_tree_palette_material(
+	base_material: ShaderMaterial,
+	palette_id: int
+) -> ShaderMaterial:
+	var cache_key := "%d:%d" % [base_material.get_instance_id(), palette_id]
+	if tree_palette_material_cache.has(cache_key):
+		return tree_palette_material_cache[cache_key]
+	var material := base_material.duplicate(true) as ShaderMaterial
+	if base_material in painted_lod_materials:
+		painted_lod_materials.append(material)
+	material.set_shader_parameter("use_species_palette", 0.0)
+	if palette_id == 0:
+		tree_palette_material_cache[cache_key] = material
+		return material
+	var palettes := {
+		1: [Color("b77f99"), Color("c18da5"), Color("e0b0c1"), Color("f1d2d9"), 0.17],
+		2: [Color("a47d43"), Color("b58f4f"), Color("d1ad62"), Color("e6c982"), 0.39],
+		3: [Color("a75448"), Color("b56550"), Color("d68162"), Color("e8a886"), 0.63],
+		4: [Color("8c4359"), Color("9e5265"), Color("bf6874"), Color("d88b91"), 0.84],
+	}
+	var palette: Array = palettes[palette_id]
+	material.set_shader_parameter("use_species_palette", 1.0)
+	material.set_shader_parameter("species_palette_stage", 3.0)
+	material.set_shader_parameter("species_deep_color", palette[0])
+	material.set_shader_parameter("species_shadow_color", palette[1])
+	material.set_shader_parameter("species_mid_color", palette[2])
+	material.set_shader_parameter("species_light_color", palette[3])
+	material.set_shader_parameter("species_accent_color", palette[2])
+	material.set_shader_parameter("species_accent_amount", 0.0)
+	material.set_shader_parameter("species_seed", palette[4])
+	tree_palette_material_cache[cache_key] = material
+	return material
+
+
+func _make_multimesh_node(
+	node_name: String,
+	mesh: Mesh,
+	transforms: Array[Transform3D],
+	material: Material,
+	begin_distance: float,
+	end_distance: float,
+	custom_data: Array[Color] = []
+) -> MultiMeshInstance3D:
+	var multimesh := MultiMesh.new()
+	multimesh.transform_format = MultiMesh.TRANSFORM_3D
+	multimesh.use_custom_data = custom_data.size() == transforms.size()
+	multimesh.mesh = mesh
+	multimesh.instance_count = transforms.size()
+	for index in transforms.size():
+		multimesh.set_instance_transform(index, transforms[index])
+		if multimesh.use_custom_data:
+			multimesh.set_instance_custom_data(index, custom_data[index])
+	var node := MultiMeshInstance3D.new()
+	node.name = node_name
+	node.multimesh = multimesh
+	node.material_override = material
+	node.visibility_range_begin = begin_distance
+	node.visibility_range_end = end_distance
+	node.set_meta("lod_begin", begin_distance)
+	node.set_meta("lod_end", end_distance)
+	return node
+
+
+func _raycast_terrain(world_x: float, world_z: float) -> Dictionary:
+	var query := PhysicsRayQueryParameters3D.new()
+	query.from = Vector3(world_x, 320.0, world_z)
+	query.to = Vector3(world_x, -30.0, world_z)
+	query.collision_mask = 1
+	query.collide_with_areas = false
+	query.collide_with_bodies = true
+	return get_world_3d().direct_space_state.intersect_ray(query)
+
+
+func _cell_seed(cell: Vector2i, salt: int) -> int:
+	return abs(cell.x * 73856093 ^ cell.y * 19349663 ^ salt)
+
+
+func _remove_chunk_nodes_from_tracking(chunk: Node3D) -> void:
+	for child in chunk.get_children():
+		if child is MultiMeshInstance3D:
+			grass_lod0_nodes.erase(child)
+			grass_lod1_nodes.erase(child)
+
+
+func _apply_lod_state_to_chunk(chunk: Node3D) -> void:
+	for child in chunk.get_children():
+		if child is MultiMeshInstance3D:
+			var node := child as MultiMeshInstance3D
+			node.visible = vegetation_enabled
+			if not lod_enabled:
+				node.visibility_range_begin = 0.0
+				node.visibility_range_end = 0.0
+			else:
+				_apply_grass_node_range(node)
+
+
+func _apply_grass_node_range(node: MultiMeshInstance3D) -> void:
+	node.visibility_range_begin = 0.0
+	var population := String(node.get_meta("grass_population", "near"))
+	if grass_debug_mode == 0:
+		node.visibility_range_end = (
+			GRASS_BASELINE_FAR_END
+			if population == "far"
+			else GRASS_BASELINE_NEAR_END
+		)
+	else:
+		node.visibility_range_end = float(node.get_meta("lod_end"))
+
+
+func set_lod_enabled(value: bool) -> void:
+	lod_enabled = value
+	grass_material.set_shader_parameter(
+		"use_grass_lod_density",
+		lod_enabled and grass_debug_mode > 0
+	)
+	for node in grass_lod0_nodes + grass_lod1_nodes:
+		node.visible = vegetation_enabled
+		if lod_enabled:
+			_apply_grass_node_range(node)
+		else:
+			node.visibility_range_begin = 0.0
+			node.visibility_range_end = 0.0
+	for node in tree_lod0_nodes:
+		node.visible = vegetation_enabled and lod_enabled
+		if lod_enabled:
+			node.visibility_range_begin = 0.0
+			node.visibility_range_end = float(node.get_meta("lod_end"))
+	for node in tree_lod1_nodes:
+		node.visible = vegetation_enabled
+		if lod_enabled:
+			node.visibility_range_begin = float(node.get_meta("lod_begin"))
+			node.visibility_range_end = float(node.get_meta("lod_end"))
+		else:
+			# A safe comparison mode: force the medium representation instead of
+			# rendering fifty thousand original crowns without a distance limit.
+			node.visibility_range_begin = 0.0
+			node.visibility_range_end = TREE_LARGE_LOD2_END
+	for node in tree_lod2_nodes:
+		node.visible = vegetation_enabled and lod_enabled
+		if lod_enabled:
+			node.visibility_range_begin = float(node.get_meta("lod_begin"))
+			node.visibility_range_end = float(node.get_meta("lod_end"))
+
+
+func set_grass_debug_mode(value: int) -> void:
+	grass_debug_mode = clampi(value, 0, 2)
+	grass_material.set_shader_parameter(
+		"use_grass_lod_density",
+		lod_enabled and grass_debug_mode > 0
+	)
+	for node in grass_lod0_nodes + grass_lod1_nodes:
+		if lod_enabled:
+			_apply_grass_node_range(node)
+
+
+func set_painted_lod_enabled(value: bool) -> void:
+	painted_lod_enabled = value and has_painted_lod_assets()
+	for material in painted_lod_materials:
+		if material.get_shader_parameter("painted_texture") != null:
+			material.set_shader_parameter("use_painted_foliage", painted_lod_enabled)
+
+
+func has_painted_lod_assets() -> bool:
+	for filename in ["painted_clumps_v1.png", "painted_small_canopy_8view_v1.png", "painted_broad_canopy_8view_v1.png", "painted_upright_canopy_8view_v1.png"]:
+		if not ResourceLoader.exists("res://assets/vegetation/painted_lod/" + filename):
+			return false
+	return true
+
+
+func get_grass_debug_mode() -> int:
+	return grass_debug_mode
+
+
+func set_vegetation_enabled(value: bool) -> void:
+	vegetation_enabled = value
+	visible = value
+
+
+func get_active_grass_chunk_count() -> int:
+	return active_grass_chunks.size()
+
+
+func get_pending_grass_chunk_count() -> int:
+	return grass_build_queue.size()
+
+
+func get_pending_visible_grass_chunk_count() -> int:
+	if target == null:
+		return 0
+	var center := Vector2(target.global_position.x, target.global_position.z)
+	var count := 0
+	for cell in grass_build_queue:
+		var cell_center := Vector2(
+			(cell.x + 0.5) * GRASS_CHUNK_SIZE,
+			(cell.y + 0.5) * GRASS_CHUNK_SIZE
+		)
+		if cell_center.distance_to(center) <= GRASS_FAR_FADE_END:
+			count += 1
+	return count
