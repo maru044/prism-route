@@ -65,6 +65,7 @@ composition without loading the island.
   pipeline.
 - `scenes/characters/` — Godot character scene wrappers for imported VRM models.
 - `scenes/product_preview.tscn` — isolated collectible product rendering study;
+  four selectable shapes and clear gel, frosted silicone or polished steel;
   see `docs/PRODUCT_RENDERING_PLAN.md` for controls, current results and next steps.
 - `docs/RESEARCH_CONTEXT.md` — current art direction, tested decisions and
   guidance for research tasks.

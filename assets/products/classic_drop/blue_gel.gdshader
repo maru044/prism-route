@@ -7,6 +7,10 @@ uniform vec3 dense_blue : source_color = vec3(0.32, 0.60, 0.76);
 uniform float flow_speed : hint_range(0.0, 2.0) = 0.24;
 uniform float clear_opacity : hint_range(0.0, 1.0) = 0.24;
 uniform float dense_opacity : hint_range(0.0, 1.0) = 0.70;
+// Map each new core to the accepted drop's density field; defaults preserve it.
+uniform vec3 flow_scale = vec3(1.0);
+uniform vec3 flow_offset = vec3(0.0);
+uniform float flow_phase = 0.0;
 
 varying vec3 model_position;
 
@@ -23,11 +27,11 @@ float bubble_ring(vec2 point, vec2 center, float radius) {
 }
 
 void vertex() {
-	model_position = VERTEX;
+	model_position = VERTEX * flow_scale + flow_offset;
 }
 
 void fragment() {
-	float time = TIME * flow_speed;
+	float time = TIME * flow_speed + flow_phase;
 	vec3 point = model_position;
 	point.x += 0.075 * sin(point.y * 3.6 + time * 1.4);
 	point.z += 0.055 * sin(point.y * 4.2 - time * 1.1);
