@@ -255,6 +255,11 @@ the intent and the result of previous visual tests.
   cliff height and weak connectivity. See `ISLAND_MEGASTRUCTURE_TERRAIN_PLAN.md`
   for a discussion proposal and fresh main-entry screenshots; the map geometry
   has not been changed to implement that proposal.
+  The user subsequently rejected overly regular island/building silhouettes
+  in the first generated concept. Favor varied asymmetric landform silhouettes,
+  erosion cuts, offset courtyards and sloping exposed structural shells while
+  preserving usable circulation. Five revised candidate images and prompts are
+  in `terrain_concepts_2026-10-01/README.md`; they are not yet selected for use.
 
 - As of 2026-10-01, the user accepted smooth small-tree crown shading and
   coverage-preserving mips as the baseline for the main entry, review and grove.
