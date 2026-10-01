@@ -259,7 +259,11 @@ the intent and the result of previous visual tests.
   in the first generated concept. Favor varied asymmetric landform silhouettes,
   erosion cuts, offset courtyards and sloping exposed structural shells while
   preserving usable circulation. Five revised candidate images and prompts are
-  in `terrain_concepts_2026-10-01/README.md`; they are not yet selected for use.
+  in `terrain_concepts_2026-10-01/README.md`. The user subsequently rejected
+  their overall design as unusable, while allowing local details as references.
+  The user is creating new design drawings; those drawings take precedence for
+  overall terrain composition and route layout. Do not adopt this generated
+  set or the discussion proposal as an accepted island masterplan.
 
 - As of 2026-10-01, the user accepted smooth small-tree crown shading and
   coverage-preserving mips as the baseline for the main entry, review and grove.
