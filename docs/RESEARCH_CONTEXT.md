@@ -248,6 +248,14 @@ the intent and the result of previous visual tests.
 
 ## Experiments not to reintroduce without a specific new reason
 
+- Island redesign direction, 2026-10-01: northern beach, southern cliffs;
+  terrain can expose near-future artificial infrastructure beneath vegetation.
+  The southern area should use a few connected broken terraces / small islands
+  with explorable interiors and possible habitation. The user rejected excessive
+  cliff height and weak connectivity. See `ISLAND_MEGASTRUCTURE_TERRAIN_PLAN.md`
+  for a discussion proposal and fresh main-entry screenshots; the map geometry
+  has not been changed to implement that proposal.
+
 - As of 2026-10-01, the user accepted smooth small-tree crown shading and
   coverage-preserving mips as the baseline for the main entry, review and grove.
   Keep strengths 0.62 / 0.35 / 0.0 for near / middle / far; do not reintroduce

@@ -1,0 +1,46 @@
+{
+	"baseline": "smooth_small_tree_2026-10-01",
+	"captures": [
+		{
+			"camera": "(-0.000531, 35.25401, 9.870037)",
+			"draws": 387.0,
+			"file": "01_main_entry.png",
+			"fov": 55.0
+		},
+		{
+			"camera": "(-327.0, 94.23975, 389.0)",
+			"draws": 645.0,
+			"file": "02_forest.png",
+			"fov": 52.0
+		},
+		{
+			"camera": "(501.0, 83.71725, -252.0)",
+			"draws": 483.0,
+			"file": "03_hillside.png",
+			"fov": 52.0
+		},
+		{
+			"camera": "(1493.555, 2776.294, 2688.399)",
+			"draws": 30.0,
+			"file": "04_overview.png",
+			"fov": 60.0
+		},
+		{
+			"camera": "(150.0, 65.15958, -715.4054)",
+			"draws": 252.0,
+			"file": "05_shore_negative_z.png",
+			"fov": 60.0
+		},
+		{
+			"camera": "(920.8793, 125.7325, 939.4387)",
+			"draws": 530.0,
+			"file": "06_shore_positive_z.png",
+			"fov": 60.0
+		}
+	],
+	"compass_note": "Godot +/-Z views; geographic north is not assumed from the CAD export.",
+	"entry": "res://scenes/main.tscn",
+	"hud_hidden": true,
+	"terrain_bounds": "[P: (-1284.799, 0.0006, -1493.555), S: (2569.598, 175.7877, 2987.11)]",
+	"wind_frozen": true
+}

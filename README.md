@@ -73,6 +73,9 @@ composition without loading the island.
   `docs/VEGETATION_ART_REVIEW.md` for status and controls.
 - `docs/RESEARCH_CONTEXT.md` — current art direction, tested decisions and
   guidance for research tasks.
+- `docs/ISLAND_MEGASTRUCTURE_TERRAIN_PLAN.md` — island redesign discussion:
+  northern beach, a few connected southern cliff terraces, near-future interiors
+  and habitation, with fresh current-map captures. The proposal is not implemented.
 
 The editable Rhino document remains outside the Godot repository; its exported
 draft is included so this scene stays reproducible. Editable sources for the
