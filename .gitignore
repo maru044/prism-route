@@ -7,6 +7,7 @@
 # Regenerable vegetation-HLOD build cache and Blender safety copies.
 /.tree_hlod_build/
 /.vegetation_art_build/
+/.road_projection_build/
 /assets/vegetation/source/*.blend1
 /assets/products/**/source/*.blend1
 # Godot may extract GLB-embedded HLOD textures next to the model during import;

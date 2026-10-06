@@ -1,0 +1,59 @@
+{
+  "source_file": "model_1006.gltf",
+  "source_sha256": "52155b6c7a6298d1e7b5c398055eb58f1b4d8a274589e8ce002f49a53a90084c",
+  "resolution": 4096,
+  "edge_samples_per_axis": 2,
+  "model_translation": [
+    -1172.01708984375,
+    0.0,
+    983.4653930664062
+  ],
+  "mask_origin_xz": [
+    -1181.4658203125,
+    -1469.9208984375
+  ],
+  "mask_extent_xz": [
+    2362.931640625,
+    2939.841796875
+  ],
+  "meters_per_texel_xz": [
+    0.5768876075744629,
+    0.7177348136901855
+  ],
+  "terrain_triangles": 9603,
+  "road_triangles": 2607,
+  "height_tolerance_m": 2.0,
+  "road_mask_pixels": 109233,
+  "near_terrain_pixels": 106651,
+  "no_terrain_pixels": 75,
+  "height_mismatch_pixels": 2507,
+  "signed_gap_percentiles_m": [
+    -0.5534324645996094,
+    -0.15654955804347992,
+    0.03835010528564453,
+    1.488210868835449,
+    2.6894493103027344
+  ],
+  "terrain_xz_degenerate_triangles": 736,
+  "road_xz_degenerate_triangles": 0,
+  "retained_hybrid_triangles": 52,
+  "removed_ground_triangles": 2555,
+  "views": {
+    "near": [
+      516.2825927734375,
+      49.62599182128906,
+      120.27750396728516
+    ],
+    "slope": [
+      499.7816467285156,
+      -3.850017786026001,
+      -706.50341796875
+    ],
+    "unsupported": [
+      -787.0623168945312,
+      59.08708572387695,
+      485.1440734863281
+    ]
+  },
+  "unsupported_center_gap_m": 2.627643585205078
+}

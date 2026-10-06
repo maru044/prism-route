@@ -1,2 +1,4 @@
 # Normalize EOL for all files that Git considers text files.
 * text=auto eol=lf
+# Preserve the exact CAD fixture bytes recorded by the bake's source SHA-256.
+assets/world/road_projection_test/model_1006.gltf -text
