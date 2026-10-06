@@ -35,6 +35,8 @@ composition without loading the island.
   mask verification, with physical-road and height-mismatch comparisons.
   M switches modes, 1–4 switches viewpoints, H compares 2/4 m protection.
   See `docs/ROAD_PROJECTION_1006_VALIDATION.md` for actual captures and limits.
+  The agreed terrain-collision plan, grass exclusion and fallback options are
+  recorded in `docs/ROAD_IMPLEMENTATION_PLAN.md`.
 - `scenes/world_lod_test.tscn` — complete island, camper and streamed
   vegetation test.
 - `scenes/vegetation_grove_test.tscn` — restored full-scale vegetation test

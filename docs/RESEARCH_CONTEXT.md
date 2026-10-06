@@ -4,6 +4,22 @@ Read this before proposing changes to the vegetation. The source of truth for
 current numeric parameters is `scripts/vegetation_test.gd`; this note explains
 the intent and the result of previous visual tests.
 
+## Road plan, 2026-10-06
+
+- See [Road implementation plan](ROAD_IMPLEMENTATION_PLAN.md) for the current
+  decision and fallback options. Grounded roads use terrain collision and a
+  visual road material; the source CAD road height need not match the terrain
+  when only its footprint is used. Reshape terrain only when preserving a
+  designed road profile, then rebuild matching collision.
+- Bridges use explicit geometry/collision with continuous ground transitions.
+  The 52 automatically retained height-mismatch triangles are diagnostic only.
+- Exclude grass during chunk generation using cached road regions, with
+  per-layer handling below bridges. This is planned, not implemented.
+- The isolated `model_1006` study proves visual feasibility only: no grass,
+  collision, driving or main-scene integration has been validated there.
+- Fallbacks are terrain material partitions and fitted low-poly road meshes;
+  compare costs before adopting the large diagnostic height atlas in production.
+
 ## Art direction and acceptance
 
 - Stylized, fresh, quiet color blocks; *less is more*. Texture alpha defines
