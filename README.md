@@ -73,6 +73,8 @@ composition without loading the island.
 - `docs/CHARACTER_MOTION_LIBRARY_RESEARCH.md` — Koikatsu/ILLUSION and
   CM3D2/COM3D2 motion conversion research, usage restrictions, female animation
   alternatives and a first retargeting test plan.
+- `docs/INDEPENDENT_MOTION_SOURCES.md` — current independent motion shortlist:
+  CC0 female walk/run clips, small VRMA samples, provenance and inspection results.
 - `scenes/product_preview.tscn` — isolated collectible product rendering study;
   four selectable shapes and clear gel, frosted silicone or polished steel;
   see `docs/PRODUCT_RENDERING_PLAN.md` for controls, current results and next steps.
