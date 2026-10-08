@@ -107,13 +107,14 @@ addon 的 Walk_Female／Run_Female 具有连续时间采样及旋转、平移、
 
 ## 本机样本与验证范围
 
-样本暂存在项目外的研究目录：
+已下载的正式源资源在项目内：
 
-`D:\Prism Route\research\motion_candidates\2026-10-08`
+`assets/characters/motion_sources/independent_cc0/`
 
 当前共有 9 个二进制文件（3 GLB + 6 VRMA），合计 14,118,476 字节，约 13.46 MiB。
-`sources.json`、`inspection.json` 与仓库 `docs/INDEPENDENT_MOTION_SAMPLE_MANIFEST.json` 保留最初 7 样本的历史调查记录。
-当前完整文件、校验值和 42 个选中片段以本机 `download_plan.json`／仓库 `docs/MOTION_DOWNLOAD_MANIFEST.json` 为准；二进制没有提交到 Git，也没有接入默认人物。
+项目内附来源说明、下载核验 receipt 和 `.gdignore`，用于后续重定向。CC0 原始文件纳入 Git 保存，尚未接入默认人物。
+当前完整文件、校验值和 42 个选中片段以 `docs/MOTION_DOWNLOAD_MANIFEST.json` 和源目录 `DOWNLOAD_RECEIPT.json` 为准。
+项目外 `D:\Prism Route\research\motion_candidates\2026-10-08` 缓存及仓库 `docs/INDEPENDENT_MOTION_SAMPLE_MANIFEST.json` 保留早期调查记录。
 
 已检查：文件真实存在、二进制格式、片段名、动画数量、时间采样、通道、六个 VRMA 的上游校验值。
 尚未检查：Godot 导入、VRM 重定向、画面、脚底滑动、循环接缝、动作风格、道具与手部接触。

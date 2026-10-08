@@ -146,4 +146,4 @@ CM3D2（Custom Maid 3D2）及 COM3D2（Custom Order Maid 3D2）属于 KISS 系�
 7. 用户确认风格后再替换默认 Idle／Walk 等，并记录源地址、作者、取得方式、许可证和转换参数。
 
 尚待确定：本机恋活／CM3D2／COM3D2／AI 少女等游戏目录与版本、可获取的恋活导出工具版本、CM 转换器兼容环境、实际样本及动作的最终用途授权。
-目前已下载项目外的独立 CC0 样本并检查基本结构，未替换人物动画或验证实机重定向。
+目前已取得独立 CC0 样本并检查基本结构，9 个原始文件已保存到项目的 `assets/characters/motion_sources/independent_cc0/`，未替换人物动画或验证实机重定向。

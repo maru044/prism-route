@@ -19,7 +19,7 @@
       "creator": "Mesh2Motion contributors (per repository asset license)",
       "license": "CC0 1.0 Universal",
       "license_url": "https://github.com/Mesh2Motion/mesh2motion-app/blob/653a9698f5f315523072f1c3ff3496100401317b/LICENSE-CC0.MD",
-      "status": "downloaded_binary_verified",
+      "status": "downloaded_project_copy_verified",
       "animation_count": 75,
       "clips": [
         {
@@ -559,7 +559,7 @@
       "creator": "Mesh2Motion contributors (per repository asset license)",
       "license": "CC0 1.0 Universal",
       "license_url": "https://github.com/Mesh2Motion/mesh2motion-app/blob/653a9698f5f315523072f1c3ff3496100401317b/LICENSE-CC0.MD",
-      "status": "downloaded_binary_verified",
+      "status": "downloaded_project_copy_verified",
       "animation_count": 87,
       "clips": [
         {
@@ -1183,7 +1183,7 @@
       "creator": "Mesh2Motion contributors (per repository asset license)",
       "license": "CC0 1.0 Universal",
       "license_url": "https://github.com/Mesh2Motion/mesh2motion-app/blob/653a9698f5f315523072f1c3ff3496100401317b/LICENSE-CC0.MD",
-      "status": "downloaded_binary_verified",
+      "status": "downloaded_project_copy_verified",
       "animation_count": 16,
       "clips": [
         {
@@ -1310,7 +1310,7 @@
       "creator": "sashii",
       "license": "CC0 1.0 Universal",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
-      "status": "downloaded_binary_verified",
+      "status": "downloaded_project_copy_verified",
       "animation_count": 1,
       "clips": [
         {
@@ -1332,7 +1332,7 @@
       "creator": "sashii",
       "license": "CC0 1.0 Universal",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
-      "status": "downloaded_binary_verified",
+      "status": "downloaded_project_copy_verified",
       "animation_count": 1,
       "clips": [
         {
@@ -1354,7 +1354,7 @@
       "creator": "sashii (retarget); original Josie animation by JenJell",
       "license": "CC0 1.0 Universal",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
-      "status": "downloaded_binary_verified",
+      "status": "downloaded_project_copy_verified",
       "animation_count": 1,
       "clips": [
         {
@@ -1376,7 +1376,7 @@
       "creator": "sashii (retarget); original Josie animation by JenJell",
       "license": "CC0 1.0 Universal",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
-      "status": "downloaded_binary_verified",
+      "status": "downloaded_project_copy_verified",
       "animation_count": 1,
       "clips": [
         {
@@ -1398,7 +1398,7 @@
       "creator": "へすい / rerofumi",
       "license": "CC0 1.0 Universal",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
-      "status": "downloaded_binary_verified",
+      "status": "downloaded_project_copy_verified",
       "animation_count": 1,
       "clips": [
         {
@@ -1420,7 +1420,7 @@
       "creator": "へすい / rerofumi",
       "license": "CC0 1.0 Universal",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
-      "status": "downloaded_binary_verified",
+      "status": "downloaded_project_copy_verified",
       "animation_count": 1,
       "clips": [
         {
@@ -1837,5 +1837,7 @@
     "Stand to crouch / crouch to stand not confirmed",
     "Sleep or meditate entry/exit not confirmed",
     "Locomotion start/stop not confirmed; blending design remains"
-  ]
+  ],
+  "project_source_directory": "assets/characters/motion_sources/independent_cc0",
+  "download_receipt": "assets/characters/motion_sources/independent_cc0/DOWNLOAD_RECEIPT.json"
 }

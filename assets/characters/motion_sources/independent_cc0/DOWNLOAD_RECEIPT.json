@@ -1,0 +1,98 @@
+{
+  "manifest_date": "2026-10-08",
+  "files": [
+    {
+      "id": "D01",
+      "file": "human-addon-animations.glb",
+      "bytes": 5292804,
+      "sha256": "a0d64d555e0d492026b72d58bf8e16c5e86779295f9093e376dcc001915c2c95",
+      "download_url": "https://raw.githubusercontent.com/Mesh2Motion/mesh2motion-app/653a9698f5f315523072f1c3ff3496100401317b/static/animations/human-addon-animations.glb",
+      "source_url": "https://github.com/Mesh2Motion/mesh2motion-app/blob/main/static/animations/human-addon-animations.glb",
+      "license": "CC0 1.0 Universal",
+      "acquisition": "verified download cache"
+    },
+    {
+      "id": "D02",
+      "file": "human-base-animations.glb",
+      "bytes": 5656648,
+      "sha256": "406eb0a8dc4ab366e623b79b6e3005a4951392e1bda78ae39c1099d31147733c",
+      "download_url": "https://raw.githubusercontent.com/Mesh2Motion/mesh2motion-app/653a9698f5f315523072f1c3ff3496100401317b/static/animations/human-base-animations.glb",
+      "source_url": "https://github.com/Mesh2Motion/mesh2motion-app/blob/653a9698f5f315523072f1c3ff3496100401317b/static/animations/human-base-animations.glb",
+      "license": "CC0 1.0 Universal",
+      "acquisition": "verified download cache"
+    },
+    {
+      "id": "D03",
+      "file": "human-mocap-animations.glb",
+      "bytes": 2025372,
+      "sha256": "814593d62522f5be8d6bd32df2a8fa3c7feb90a8e1a1ba43f4aaf0048555280d",
+      "download_url": "https://raw.githubusercontent.com/Mesh2Motion/mesh2motion-app/653a9698f5f315523072f1c3ff3496100401317b/static/animations/human-mocap-animations.glb",
+      "source_url": "https://github.com/Mesh2Motion/mesh2motion-app/blob/653a9698f5f315523072f1c3ff3496100401317b/static/animations/human-mocap-animations.glb",
+      "license": "CC0 1.0 Universal",
+      "acquisition": "verified download cache"
+    },
+    {
+      "id": "D04",
+      "file": "idle-01.vrma",
+      "bytes": 95888,
+      "sha256": "5ed6c016df035b21daaefe64751e1356387c6a33693d31366b0912ac7566ea92",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a757396fe85b995630385794ad0b8c196a29b9f/public/assets/animations/idle-01.vrma",
+      "source_url": "https://booth.pm/ja/items/6412084",
+      "license": "CC0 1.0 Universal",
+      "acquisition": "verified download cache"
+    },
+    {
+      "id": "D05",
+      "file": "speaking-01.vrma",
+      "bytes": 37208,
+      "sha256": "ba0339d2d9755fc2e0dab06e96a0d91303d0a508c9f89f07dc17a07dc0e2535c",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a757396fe85b995630385794ad0b8c196a29b9f/public/assets/animations/speaking-01.vrma",
+      "source_url": "https://booth.pm/ja/items/6412084",
+      "license": "CC0 1.0 Universal",
+      "acquisition": "verified download cache"
+    },
+    {
+      "id": "D06",
+      "file": "walk.vrma",
+      "bytes": 66604,
+      "sha256": "51c4158488a86a6bb99b978fb4d269e1798f9749bceaf0420473bae413fc3271",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a757396fe85b995630385794ad0b8c196a29b9f/public/assets/animations/walk.vrma",
+      "source_url": "https://booth.pm/ja/items/7861818",
+      "license": "CC0 1.0 Universal",
+      "acquisition": "verified download cache"
+    },
+    {
+      "id": "D07",
+      "file": "run-slow.vrma",
+      "bytes": 48864,
+      "sha256": "54fff21bbbbbe6364dc812f39dd849eadb61de3888b556580143d386592d17e5",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a757396fe85b995630385794ad0b8c196a29b9f/public/assets/animations/run-slow.vrma",
+      "source_url": "https://booth.pm/ja/items/7861818",
+      "license": "CC0 1.0 Universal",
+      "acquisition": "verified download cache"
+    },
+    {
+      "id": "D08",
+      "file": "review-phone.vrma",
+      "bytes": 281528,
+      "sha256": "54a37ca48a1d4ffb60cfc539013f59fecd48d93375b2069c6c35b5e9f416b726",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a757396fe85b995630385794ad0b8c196a29b9f/public/assets/animations/review-phone.vrma",
+      "source_url": "https://booth.pm/ja/items/5527394",
+      "license": "CC0 1.0 Universal",
+      "acquisition": "verified download cache"
+    },
+    {
+      "id": "D09",
+      "file": "drink-water.vrma",
+      "bytes": 613560,
+      "sha256": "ba56122fecb5014f019096dcd014c0c35f1d560dcb0f6b1d55d3d66e5d69740c",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a757396fe85b995630385794ad0b8c196a29b9f/public/assets/animations/drink-water.vrma",
+      "source_url": "https://booth.pm/ja/items/5527394",
+      "license": "CC0 1.0 Universal",
+      "acquisition": "verified download cache"
+    }
+  ],
+  "total_bytes": 14118476,
+  "selected_clip_count": 42,
+  "verification": "Original SHA-256, sizes, binary headers and selected clip presence passed; no runtime playback test."
+}

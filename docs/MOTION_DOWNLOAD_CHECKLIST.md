@@ -99,10 +99,14 @@ D01–D03 是多个动作放在一个 GLB 内；下载文件后按以下名字�
 
 ## 4. 本机位置与后续取用
 
-`D:\Prism Route\research\motion_candidates\2026-10-08`
+正式源资源目录：`assets/characters/motion_sources/independent_cc0/`。
 
-该目录当前已有上述 9 个文件；以前的 inspection.json 及仓库 INDEPENDENT_MOTION_SAMPLE_MANIFEST.json 保留上一轮 7 样本历史记录，本轮状态以 download_plan.json／MOTION_DOWNLOAD_MANIFEST.json 为准。
+上述 9 个文件已从核验过的下载缓存整理到项目内，并附来源说明和 `DOWNLOAD_RECEIPT.json`；原始字节与固定清单的 SHA-256 一致。
+目录有 `.gdignore`，避免原始源骨架被 Godot 自动导入。当前未进行重定向或人物播放测试。
 
-下一轮直接按 JSON 的 files 下载或核对 hash，再按 actions 的 file_id + clip_name／index 提取。
+可用 `python tools/download_motion_sources.py` 按清单重新取得缺失文件；`--verify-only` 只检查项目内文件。
+原研究缓存 `D:\Prism Route\research\motion_candidates\2026-10-08` 及初次样本调查记录仍保留，当前正式资源状态以项目内 receipt 和下载 manifest 为准。
+
+下一轮按 actions 的 file_id + clip_name／index 提取。
 先预览 A05／A06／A01（女性走、女性跑、轻微待机），再验证 A21–A24 坐姿组合与 A12–A15 转身。
 VRMA 如不能直接由现有导入器处理，再转为目标骨架上的标准 GLB；本轮不接入默认人物。

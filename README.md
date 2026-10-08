@@ -70,6 +70,9 @@ composition without loading the island.
   use VRM as the standard runtime format so they share one import and animation
   pipeline.
 - `scenes/characters/` — Godot character scene wrappers for imported VRM models.
+- `assets/characters/motion_sources/independent_cc0/` — nine pinned CC0 motion
+  source files with provenance and checksums, excluded from automatic Godot import;
+  `tools/download_motion_sources.py` retrieves or verifies them from the manifest.
 - `docs/CHARACTER_MOTION_LIBRARY_RESEARCH.md` — Koikatsu/ILLUSION and
   CM3D2/COM3D2 motion conversion research, usage restrictions, female animation
   alternatives and a first retargeting test plan.
