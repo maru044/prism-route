@@ -205,3 +205,7 @@ prototype:
 
 Running the game with ordinary `--headless` does not perform an editor import
 and can therefore render a stale resource from `.godot/imported`.
+
+## Character motion review
+
+Open `scenes/character_motion_test.tscn` and press F6 to review all 42 downloaded CC0 clips on the current VRM character. The scene provides a searchable list, category filter, previous/next, pause, seek, playback speed, orbit camera, in-place viewing and an adjustable reference chair. See [the motion test guide](docs/CHARACTER_MOTION_TEST.md) for controls, rebuild instructions and known retargeting limitations. These are review candidates; the main game character animations are unchanged.

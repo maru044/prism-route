@@ -7,7 +7,7 @@
   "total_bytes": 14118476,
   "total_source_clips": 184,
   "selected_clips": 42,
-  "validation": "Every selected clip exists and has nonzero time span and channels; file sizes and hashes inspected; no Godot import, retargeting or visual playback yet",
+  "validation": "Source hashes verified; all 42 selected clips retargeted to current VRM and checked in Godot 4.7.2 for nonempty keys, resolved skeleton tracks and finite poses; artistic acceptance pending",
   "files": [
     {
       "id": "D01",
@@ -1441,7 +1441,7 @@
       "file_id": "D01",
       "clip_name": "Idle_Subtle",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A02",
@@ -1450,7 +1450,7 @@
       "file_id": "D01",
       "clip_name": "Idle Listening",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A03",
@@ -1459,7 +1459,7 @@
       "file_id": "D02",
       "clip_name": "Idle_FoldArms",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A04",
@@ -1468,7 +1468,7 @@
       "file_id": "D02",
       "clip_name": "Idle_Talking",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A05",
@@ -1477,7 +1477,7 @@
       "file_id": "D01",
       "clip_name": "Walk_Female",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A06",
@@ -1486,7 +1486,7 @@
       "file_id": "D01",
       "clip_name": "Run_Female",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A07",
@@ -1495,7 +1495,7 @@
       "file_id": "D02",
       "clip_name": "Jog",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A08",
@@ -1504,7 +1504,7 @@
       "file_id": "D02",
       "clip_name": "Sprint",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A09",
@@ -1513,7 +1513,7 @@
       "file_id": "D01",
       "clip_name": "Walk_Backwards",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A10",
@@ -1522,7 +1522,7 @@
       "file_id": "D01",
       "clip_name": "Strafe_left",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A11",
@@ -1531,7 +1531,7 @@
       "file_id": "D01",
       "clip_name": "Strafe_right",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A12",
@@ -1540,7 +1540,7 @@
       "file_id": "D03",
       "clip_name": "Turn_Left_90",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A13",
@@ -1549,7 +1549,7 @@
       "file_id": "D03",
       "clip_name": "Turn_Right_90",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A14",
@@ -1558,7 +1558,7 @@
       "file_id": "D03",
       "clip_name": "Turn_Left_180",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A15",
@@ -1567,7 +1567,7 @@
       "file_id": "D03",
       "clip_name": "Turn_Right_180",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A16",
@@ -1576,7 +1576,7 @@
       "file_id": "D02",
       "clip_name": "Crouch_Idle",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A17",
@@ -1585,7 +1585,7 @@
       "file_id": "D02",
       "clip_name": "Crouch_Walk",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A18",
@@ -1594,7 +1594,7 @@
       "file_id": "D02",
       "clip_name": "Jump_Start",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A19",
@@ -1603,7 +1603,7 @@
       "file_id": "D02",
       "clip_name": "Jump_air",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A20",
@@ -1612,7 +1612,7 @@
       "file_id": "D02",
       "clip_name": "Jump_Land",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A21",
@@ -1621,7 +1621,7 @@
       "file_id": "D02",
       "clip_name": "Sitting_Enter",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A22",
@@ -1630,7 +1630,7 @@
       "file_id": "D02",
       "clip_name": "Sitting_Idle",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A23",
@@ -1639,7 +1639,7 @@
       "file_id": "D02",
       "clip_name": "Sitting_Talking",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A24",
@@ -1648,7 +1648,7 @@
       "file_id": "D02",
       "clip_name": "Sitting_Exit",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A25",
@@ -1657,7 +1657,7 @@
       "file_id": "D01",
       "clip_name": "Greeting",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A26",
@@ -1666,7 +1666,7 @@
       "file_id": "D02",
       "clip_name": "Interact",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A27",
@@ -1675,7 +1675,7 @@
       "file_id": "D02",
       "clip_name": "PickUp_Table",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A28",
@@ -1684,7 +1684,7 @@
       "file_id": "D02",
       "clip_name": "Consume",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A29",
@@ -1693,7 +1693,7 @@
       "file_id": "D02",
       "clip_name": "Idle_TalkingPhone",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A30",
@@ -1702,7 +1702,7 @@
       "file_id": "D01",
       "clip_name": "Meditate",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A31",
@@ -1711,7 +1711,7 @@
       "file_id": "D01",
       "clip_name": "Kneeling Tired",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A32",
@@ -1720,7 +1720,7 @@
       "file_id": "D01",
       "clip_name": "Sleeping",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A33",
@@ -1729,7 +1729,7 @@
       "file_id": "D01",
       "clip_name": "Pushup",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A34",
@@ -1738,7 +1738,7 @@
       "file_id": "D01",
       "clip_name": "Jumping Jacks",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A35",
@@ -1747,7 +1747,7 @@
       "file_id": "D02",
       "clip_name": "Driving",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A36",
@@ -1756,7 +1756,7 @@
       "file_id": "D02",
       "clip_name": "Fixing_Kneeling",
       "clip_selection": "exact name",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A37",
@@ -1765,7 +1765,7 @@
       "file_id": "D04",
       "clip_name": "",
       "clip_selection": "only animation index 0",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A38",
@@ -1774,7 +1774,7 @@
       "file_id": "D05",
       "clip_name": "",
       "clip_selection": "only animation index 0",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A39",
@@ -1783,7 +1783,7 @@
       "file_id": "D06",
       "clip_name": "",
       "clip_selection": "only animation index 0",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A40",
@@ -1792,7 +1792,7 @@
       "file_id": "D07",
       "clip_name": "",
       "clip_selection": "only animation index 0",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A41",
@@ -1801,7 +1801,7 @@
       "file_id": "D08",
       "clip_name": "",
       "clip_selection": "only animation index 0",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     },
     {
       "id": "A42",
@@ -1810,7 +1810,7 @@
       "file_id": "D09",
       "clip_name": "",
       "clip_selection": "only animation index 0",
-      "status": "source_present_playback_unverified"
+      "status": "godot_playback_verified_art_review_pending"
     }
   ],
   "unresolved_requirements": [
@@ -1839,5 +1839,27 @@
     "Locomotion start/stop not confirmed; blending design remains"
   ],
   "project_source_directory": "assets/characters/motion_sources/independent_cc0",
-  "download_receipt": "assets/characters/motion_sources/independent_cc0/DOWNLOAD_RECEIPT.json"
+  "download_receipt": "assets/characters/motion_sources/independent_cc0/DOWNLOAD_RECEIPT.json",
+  "runtime_review": {
+    "scene": "scenes/character_motion_test.tscn",
+    "guide": "docs/CHARACTER_MOTION_TEST.md",
+    "godot": "4.7.2",
+    "retargeted_clips": 42,
+    "visual_sample_ids": [
+      "A01",
+      "A05",
+      "A06",
+      "A16",
+      "A22",
+      "A30",
+      "A33",
+      "A37",
+      "A39",
+      "A41",
+      "A42"
+    ],
+    "acceptance": "candidate_only_not_production_approved",
+    "facial_expressions": "not_retargeted",
+    "ik_and_prop_alignment": "not_implemented"
+  }
 }
