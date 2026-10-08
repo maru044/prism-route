@@ -62,7 +62,13 @@
     "duration": 1.33333333209157,
     "tracks": 53,
     "frames": 41,
-    "retarget_hip_scale": 0.7225939875955107
+    "retarget_hip_scale": 0.7225939875955107,
+    "horizontal_pelvis_scale": 0.9677232473783819,
+    "in_place_anchor_xz": [
+      -0.0015338414354970759,
+      -0.003774428277701684
+    ],
+    "before_walk_fix_path": "res://assets/characters/motion_review/archive/A05_before_walk_fix.tres"
   },
   {
     "id": "A06",
@@ -504,7 +510,13 @@
     "duration": 0.7666666507720947,
     "tracks": 52,
     "frames": 24,
-    "retarget_hip_scale": 0.7295213078247579
+    "retarget_hip_scale": 0.7295213078247579,
+    "horizontal_pelvis_scale": 1.0389232514860904,
+    "in_place_anchor_xz": [
+      0.035948192442678835,
+      -0.0011198053689553211
+    ],
+    "before_walk_fix_path": "res://assets/characters/motion_review/archive/A39_before_walk_fix.tres"
   },
   {
     "id": "A40",

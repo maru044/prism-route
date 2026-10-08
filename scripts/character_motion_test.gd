@@ -27,6 +27,7 @@ var dragging := false
 var update_timeline := false
 var initial_hips := Vector3.ZERO
 var height_offset := 0.0
+var compare_old_walk := false
 
 func _ready() -> void:
 	catalog = JSON.parse_string(FileAccess.get_file_as_string("res://assets/characters/motion_review/catalog.json"))
@@ -48,10 +49,17 @@ func _ready() -> void:
 	for action in catalog:
 		var animation: Animation = load("res://assets/characters/motion_review/%s.tres" % action.id)
 		library.add_animation(action.id, animation)
+		if action.has("before_walk_fix_path"):
+			library.add_animation(action.id+"_before_walk_fix", load(action.before_walk_fix_path))
 	player.add_animation_library("", library)
 	_build_ui()
-	_select(0)
-	list.get_v_scroll_bar().set_deferred("value",0.0)
+	var start_index:=0
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--motion="):
+			for i in catalog.size():
+				if catalog[i].id==argument.trim_prefix("--motion="): start_index=i
+	_select(start_index)
+	if start_index==0: list.get_v_scroll_bar().set_deferred("value",0.0)
 
 func _build_stage() -> void:
 	var environment := WorldEnvironment.new()
@@ -173,6 +181,9 @@ func _build_ui() -> void:
 	_check(column,"原地观察（保留上下运动）",true,func(value):
 		center_motion=value
 		_center_character())
+	_check(column,"对比步行修正前版本（A05 / A39）",false,func(value):
+		compare_old_walk=value
+		_select(selected))
 	var height_row := HBoxContainer.new()
 	column.add_child(height_row)
 	var height_label := Label.new()
@@ -244,21 +255,27 @@ func _select(index: int) -> void:
 	skeleton.reset_bone_poses()
 	character.position=Vector3.ZERO
 	_apply_loop()
-	player.play(action.id)
+	player.play(_animation_key())
 	player.advance(0)
 	initial_hips=skeleton.get_bone_global_pose(skeleton.find_bone("Hips")).origin
 	playing=true
 	pause_button.text="暂停"
 	timeline.max_value=action.duration
 	details.text="%s · %s\n%s · %.2f 秒\n%s" % [action.id,action.label_zh,action.file_id,action.duration,action.clip_name if not action.clip_name.is_empty() else "VRMA 单动作"]
+	if action.has("before_walk_fix_path"):
+		details.text += " · 修正前" if compare_old_walk else " · 骨盆修正后"
 	if visible_indices.has(index):
 		list.select(visible_indices.find(index))
 		list.ensure_current_is_visible()
 	_center_character()
 
 func _apply_loop() -> void:
-	var animation := player.get_animation(catalog[selected].id)
+	var animation := player.get_animation(_animation_key())
 	animation.loop_mode=Animation.LOOP_LINEAR if looping else Animation.LOOP_NONE
+
+func _animation_key() -> String:
+	var action: Dictionary=catalog[selected]
+	return action.id+"_before_walk_fix" if compare_old_walk and action.has("before_walk_fix_path") else action.id
 
 func _step(direction: int) -> void:
 	if visible_indices.is_empty(): return
@@ -280,7 +297,14 @@ func _set_springs(enabled: bool) -> void:
 
 func _center_character() -> void:
 	var hips=skeleton.get_bone_global_pose(skeleton.find_bone("Hips")).origin
-	character.position=Vector3(-hips.x,height_offset,-hips.z) if center_motion else Vector3(-initial_hips.x,height_offset,-initial_hips.z)
+	var action: Dictionary=catalog[selected]
+	if center_motion and not compare_old_walk and action.has("in_place_anchor_xz"):
+		# These source walks already run in place. Keep their lateral pelvis
+		# translation, which balances torso counter-rotation during each step.
+		var anchor: Array=action.in_place_anchor_xz
+		character.position=Vector3(-anchor[0],height_offset,-anchor[1])
+	else:
+		character.position=Vector3(-hips.x,height_offset,-hips.z) if center_motion else Vector3(-initial_hips.x,height_offset,-initial_hips.z)
 
 func _process(_delta: float) -> void:
 	if not is_instance_valid(player): return

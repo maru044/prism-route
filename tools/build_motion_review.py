@@ -11,6 +11,7 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 DEST = ROOT / 'assets/characters/motion_review'
+WALK_PIVOT_FIX = {'A05', 'A39'}
 
 
 def rotation(q):
@@ -132,6 +133,11 @@ def main():
         length=end-start; times=np.linspace(0,length,max(2,math.ceil(length*30)+1))
         mapping={indices[n]:j for n,j in src.mapping.items() if n in indices and 'Eye' not in n}
         hips=indices['Hips']; ship=src.mapping['Hips']; scale=rest[hips][1,3]/src.rest[ship][1,3]
+        target_center = (rest[indices['LeftUpperLeg']][:3,3] + rest[indices['RightUpperLeg']][:3,3]) / 2
+        source_center = (src.rest[src.mapping['LeftUpperLeg']][:3,3] + src.rest[src.mapping['RightUpperLeg']][:3,3]) / 2
+        pelvis_scale = target_center[1] / source_center[1]
+        pivot_difference = pelvis_scale * (source_center-src.rest[ship][:3,3]) - (target_center-rest[hips][:3,3])
+        global_hips = []
         rotations={i:[] for i in mapping}; positions=[]
         for time in times:
             pose=src.pose(channels,start+time); output=[None]*len(bones)
@@ -143,7 +149,16 @@ def main():
                     j=mapping[i]; desired=pose[j][:3,:3]@np.linalg.inv(src.rest[j][:3,:3])@rest[i][:3,:3]
                     # Strip any authored scaling; preserve the target mesh proportions.
                     u,_,vt=np.linalg.svd(desired); value[:3,:3]=u@vt
-                    if i==hips: value[:3,3]=rest[i][:3,3]+(pose[j][:3,3]-src.rest[j][:3,3])*scale
+                    if i==hips:
+                        value[:3,3]=rest[i][:3,3]+(pose[j][:3,3]-src.rest[j][:3,3])*scale
+                        if action['id'] in WALK_PIVOT_FIX:
+                            # The MMD Hips pivot lies ~24 cm below the leg roots.
+                            # Align the anatomical pelvis in X/Z instead of rotating
+                            # this extra lever arm; retain the accepted vertical motion.
+                            delta_rotation = pose[j][:3,:3] @ np.linalg.inv(src.rest[j][:3,:3])
+                            corrected = rest[i][:3,3] + (pose[j][:3,3]-src.rest[j][:3,3])*pelvis_scale + (delta_rotation-np.eye(3))@pivot_difference
+                            value[[0,2],3] = corrected[[0,2]]
+                        global_hips.append(value[:3,3].copy())
                     relative=np.linalg.inv(parent)@value
                     q=quaternion(relative[:3,:3])
                     if rotations[i] and np.dot(q,rotations[i][-1])<0: q=-q
@@ -159,7 +174,12 @@ def main():
             keys = np.column_stack((times, np.ones(len(times)), np.asarray(values)))
             lines += [f'tracks/{track}/type = "{kind}"',f'tracks/{track}/path = NodePath("{path}")',f'tracks/{track}/interp = 1',f'tracks/{track}/loop_wrap = false',f'tracks/{track}/keys = PackedFloat32Array('+numbers(keys.ravel())+')']
         (DEST/f'{action["id"]}.tres').write_text('\n'.join(lines)+'\n',encoding='utf8')
-        metadata.append(dict(action,status="retarget_baked_review_pending",duration=length,tracks=len(tracks),frames=len(times),retarget_hip_scale=scale))
+        entry = dict(action,status="retarget_baked_review_pending",duration=length,tracks=len(tracks),frames=len(times),retarget_hip_scale=scale)
+        if action['id'] in WALK_PIVOT_FIX:
+            entry.update(horizontal_pelvis_scale=pelvis_scale,
+                         in_place_anchor_xz=np.mean(global_hips,axis=0)[[0,2]].tolist(),
+                         before_walk_fix_path=f'res://assets/characters/motion_review/archive/{action["id"]}_before_walk_fix.tres')
+        metadata.append(entry)
         print(action['id'],action['label_zh'],round(length,3),len(tracks),flush=True)
     (DEST/'catalog.json').write_text(json.dumps(metadata,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 

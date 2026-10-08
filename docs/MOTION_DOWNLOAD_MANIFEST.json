@@ -1860,6 +1860,17 @@
     ],
     "acceptance": "candidate_only_not_production_approved",
     "facial_expressions": "not_retargeted",
-    "ik_and_prop_alignment": "not_implemented"
+    "ik_and_prop_alignment": "not_implemented",
+    "walk_fix": {
+      "ids": [
+        "A05",
+        "A39"
+      ],
+      "report": "docs/WALK_STABILITY_REPORT.json",
+      "status": "engine_verified_user_review_pending",
+      "changes": "horizontal pelvis pivot and scale correction, retain balance sway in in-place preview",
+      "ik": "out_of_scope_per_user",
+      "unchanged_actions": 40
+    }
   }
 }
