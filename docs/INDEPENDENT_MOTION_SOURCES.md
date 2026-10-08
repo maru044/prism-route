@@ -64,6 +64,44 @@ addon 的 Walk_Female／Run_Female 具有连续时间采样及旋转、平移、
 | [Ready Player Me animation-library](https://github.com/readyplayerme/animation-library) | 有 200+ 动作及女性演员 `F_` 标记，但[许可证](https://github.com/readyplayerme/animation-library/blob/master/LICENSE.md)明确限制用于 Ready Player Me avatars；其他角色需要书面许可。当前 VRM 路线排除 |
 | [MMDLoader-app walk/run VMD](https://github.com/takahirox/MMDLoader-app/tree/master/assets/vmd/walk) | 实际含独立 VMD，但附带 Readme 明确是复制、重命名的第三方动作并要求遵守原作者条款；未核实原作者用途授权，不因仓库开源就直接采用 |
 
+## D. 柔韧、拉伸与地面动作补充
+
+用户希望补充下腰、一字马等可用于日常表现的动作。这里调查的是这些身体运动本身，可用来表现练习、热身、伸展和休息。
+需要分别确认姿势与进入／保持／退出动画，不把静态 pose、视频、3D 打印模型或动作名称当作完整骨骼动画。
+
+### 已找到的独立动捕候选
+
+以下三组都是付费商品候选，未购买、未下载；本轮核对了发布者商品说明，并取得作者在商品页提供的预览链接，未逐帧观看视频或验证骨骼文件。
+
+| 来源 | 商品说明明确列出的内容 | 格式证据与待确认事项 |
+| --- | --- | --- |
+| [XSTAGE — Yoga #2_Stretching](https://www.fab.com/listings/deed2056-a58d-4eac-91f8-2686b7afb4ae)／[作者预览](https://www.youtube.com/watch?v=6bx4w_SwL4I) | 15 段，包含前后劈叉、全身拉伸、坐姿蝴蝶式、卧姿扭转、肩颈与手腕伸展 | 作者描述 FBX、120 fps、商业游戏用途；商品格式栏只显示 Unreal。取得前核对是否直接提供独立 FBX、根运动及具体用途条款。前后劈叉不等于横向劈叉，开腿角度与完整过渡需看预览 |
+| [Morro Motion — Yoga MoCap 02](https://www.fab.com/listings/baeb5207-7e6a-4d80-8468-5d34974e8332)／[作者预览](https://www.youtube.com/watch?v=IFZC-lNZlC8) | 15 段，包含后弯序列、平板与侧平板动作 | 商品说明称 FBX 动捕、UE5 Mannequin、60 fps、手指和循环；交付栏显示 Unreal。后弯序列是下腰候选，但未确认是否有从站姿下腰到手脚撑地的完整轮式，不直接承诺精确匹配 |
+| [Morro Motion — Yoga MoCap 01](https://www.fab.com/zh-cn/listings/3b54ec1a-2c51-49da-b9b3-ab14e225082b)／[作者预览](https://www.youtube.com/watch?v=-329rs1xB5U) | 15 段，包含树式、天堂鸟式、站立劈腿等 | 同样说明 FBX、UE5 骨架与 60 fps。站立劈腿属于单腿平衡／抬腿柔韧表现，不是坐地一字马，作为补充候选 |
+
+当前优先候选：一字马方向先看 XSTAGE 的前后劈叉；后弯方向先看 Morro Motion 02。
+没有取得源文件，不能确认这些片段有合适的进入／保持／退出段，也未确认任何一包包含完整横叉和站立下腰。
+作者文档没有给出可核实的当前下载体积或价格，本轮不填写估计值。
+
+[Fab Standard License 摘要](https://www.fab.com/eula)允许兼容工具使用，不限定 Unreal，但不允许把原始资产独立再分发。
+具体购买项的许可证、源格式和本项目用途仍要逐件核对，不能把页面写着“FBX”理解为购买后必然能绕过 Unreal 直接取得源文件，也不能把“商业游戏可用”扩大成所有用途已确认。
+
+### GitHub／免费资源目前的边界
+
+- 已检查的 Mesh2Motion addon 包没有名为下腰、劈叉或瑜伽的片段；源资产仓库路径搜索也未找到这些关键词。文件命名搜索不能证明所有动作内容均不存在，本轮没有逐帧观看全部片段。
+- 同一 CC0 addon 已确认有 `Meditate`、`Kneeling Tired`、`Pushup`、`Jumping Jacks`、`Sleeping` 等片段，可补充日常休息和运动；不能将它们当作用户指定的下腰／一字马。
+- [OpenGym3D](https://github.com/AssiamahS/opengym3d) 中找到 [`glute_bridge.json`](https://github.com/AssiamahS/opengym3d/blob/main/exercises/glute_bridge.json)，但它是仰卧抬臀的臀桥，文件还标记 `draft`；不是手脚支撑的全身下腰，也不是已交付的完整 GLB 动捕。
+- 本轮未核实免费 GitHub 上可直接用于本项目的下腰／一字马完整动作文件。没有为这类目标动作新增二进制样本，上一轮的 7 个样本数量不变。
+
+### 对当前 VRM 的接入建议
+
+这类动作主要依赖骨盆、脊柱、肩臂与腿部骨架，模型没有特殊局部细节也能做动作预览。
+视觉上的主要风险是大角度动作的蒙皮、身体与衣物穿插、手脚离地，以及重定向后的身体比例偏差，必须在目标人物上检查。
+
+若只需要下腰和纵／横叉少量动作，可以在 Blender 的目标骨架上单独制作：进入、保持、退出各一段，加入轻微呼吸与重心调整。
+下腰使用多段脊柱共同后弯并约束手脚接触；劈叉协调骨盆高度与腿部旋转。不能只拉开两条腿，或让一个腰骨承担全部后弯。
+这是自制备用方案，尚未制作，也不因搜索缺少免费文件就自动替换为未经检查的程序动画。
+
 ## 本机样本与验证范围
 
 样本暂存在项目外的研究目录：
