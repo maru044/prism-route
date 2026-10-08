@@ -1,0 +1,58 @@
+{
+	"clips": {
+		"A05": {
+			"after": {
+				"cycles_tested": 4,
+				"endpoint_local_rotation_error_degrees": 0.0,
+				"endpoint_position_error_m": 0.0000000471216097253091,
+				"interior_step_max_m": 0.0105843367055058,
+				"samples_per_cycle": 240,
+				"speed_scale": 1.0,
+				"wrap_step_max_m": 0.00147549319081008,
+				"wrap_velocity_difference_m_per_s": 0.00846133846789598
+			},
+			"before": {
+				"cycles_tested": 4,
+				"endpoint_local_rotation_error_degrees": 8.46701130705876,
+				"endpoint_position_error_m": 0.00893641915172338,
+				"interior_step_max_m": 0.0105843367055058,
+				"samples_per_cycle": 240,
+				"speed_scale": 1.0,
+				"wrap_step_max_m": 0.0118270432576537,
+				"wrap_velocity_difference_m_per_s": 1.59789073467255
+			}
+		},
+		"A39": {
+			"after": {
+				"cycles_tested": 4,
+				"endpoint_local_rotation_error_degrees": 0.0,
+				"endpoint_position_error_m": 0.0000000210734238947907,
+				"interior_step_max_m": 0.0157467219978571,
+				"samples_per_cycle": 240,
+				"speed_scale": 1.0,
+				"wrap_step_max_m": 0.00652754120528698,
+				"wrap_velocity_difference_m_per_s": 0.028458384796977
+			},
+			"after_at_speed_0_65": {
+				"cycles_tested": 4,
+				"endpoint_local_rotation_error_degrees": 0.0,
+				"endpoint_position_error_m": 0.0000000210734238947907,
+				"interior_step_max_m": 0.015746857970953,
+				"samples_per_cycle": 240,
+				"speed_scale": 0.65,
+				"wrap_step_max_m": 0.00653634872287512,
+				"wrap_velocity_difference_m_per_s": 0.0185872279107571
+			},
+			"before": {
+				"cycles_tested": 4,
+				"endpoint_local_rotation_error_degrees": 9.32876950697316,
+				"endpoint_position_error_m": 0.0796792954206467,
+				"interior_step_max_m": 0.0157467219978571,
+				"samples_per_cycle": 240,
+				"speed_scale": 1.0,
+				"wrap_step_max_m": 0.0808123275637627,
+				"wrap_velocity_difference_m_per_s": 21.5785045623779
+			}
+		}
+	}
+}

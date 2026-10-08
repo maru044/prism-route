@@ -28,6 +28,7 @@ var update_timeline := false
 var initial_hips := Vector3.ZERO
 var height_offset := 0.0
 var compare_old_walk := false
+var compare_old_loop := false
 
 func _ready() -> void:
 	catalog = JSON.parse_string(FileAccess.get_file_as_string("res://assets/characters/motion_review/catalog.json"))
@@ -51,6 +52,8 @@ func _ready() -> void:
 		library.add_animation(action.id, animation)
 		if action.has("before_walk_fix_path"):
 			library.add_animation(action.id+"_before_walk_fix", load(action.before_walk_fix_path))
+		if action.has("before_loop_fix_path"):
+			library.add_animation(action.id+"_before_loop_fix", load(action.before_loop_fix_path))
 	player.add_animation_library("", library)
 	_build_ui()
 	var start_index:=0
@@ -181,9 +184,15 @@ func _build_ui() -> void:
 	_check(column,"原地观察（保留上下运动）",true,func(value):
 		center_motion=value
 		_center_character())
-	_check(column,"对比步行修正前版本（A05 / A39）",false,func(value):
-		compare_old_walk=value
+	var comparison := OptionButton.new()
+	comparison.add_item("步行对比：当前修正版")
+	comparison.add_item("步行对比：横移修正前")
+	comparison.add_item("步行对比：循环修正前")
+	comparison.item_selected.connect(func(value):
+		compare_old_walk=value==1
+		compare_old_loop=value==2
 		_select(selected))
+	column.add_child(comparison)
 	var height_row := HBoxContainer.new()
 	column.add_child(height_row)
 	var height_label := Label.new()
@@ -263,7 +272,7 @@ func _select(index: int) -> void:
 	timeline.max_value=action.duration
 	details.text="%s · %s\n%s · %.2f 秒\n%s" % [action.id,action.label_zh,action.file_id,action.duration,action.clip_name if not action.clip_name.is_empty() else "VRMA 单动作"]
 	if action.has("before_walk_fix_path"):
-		details.text += " · 修正前" if compare_old_walk else " · 骨盆修正后"
+		details.text += " · 横移修正前" if compare_old_walk else (" · 循环修正前" if compare_old_loop else " · 循环修正后")
 	if visible_indices.has(index):
 		list.select(visible_indices.find(index))
 		list.ensure_current_is_visible()
@@ -275,6 +284,7 @@ func _apply_loop() -> void:
 
 func _animation_key() -> String:
 	var action: Dictionary=catalog[selected]
+	if compare_old_loop and action.has("before_loop_fix_path"): return action.id+"_before_loop_fix"
 	return action.id+"_before_walk_fix" if compare_old_walk and action.has("before_walk_fix_path") else action.id
 
 func _step(direction: int) -> void:

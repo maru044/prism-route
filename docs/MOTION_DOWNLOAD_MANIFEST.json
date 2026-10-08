@@ -1870,7 +1870,15 @@
       "status": "engine_verified_user_review_pending",
       "changes": "horizontal pelvis pivot and scale correction, retain balance sway in in-place preview",
       "ik": "out_of_scope_per_user",
-      "unchanged_actions": 40
+      "unchanged_actions": 40,
+      "loop_closure": {
+        "report": "docs/WALK_LOOP_REPORT.json",
+        "cycles_tested": 4,
+        "samples_per_cycle": 240,
+        "status": "engine_verified_user_review_pending",
+        "method": "local seam windows with matched pose and velocity",
+        "slow_walk_speed_verified": 0.65
+      }
     }
   }
 }

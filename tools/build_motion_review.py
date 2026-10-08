@@ -120,6 +120,70 @@ def numbers(values):
     return ', '.join(f'{float(x):.8g}' for x in values)
 
 
+def quat_multiply(a, b):
+    xyz = a[3]*b[:3] + b[3]*a[:3] + np.cross(a[:3], b[:3])
+    return np.r_[xyz, a[3]*b[3]-np.dot(a[:3], b[:3])]
+
+
+def quat_log(q):
+    q = q / np.linalg.norm(q)
+    if q[3] < 0: q = -q
+    norm = np.linalg.norm(q[:3])
+    return q[:3]*2 if norm < 1e-10 else q[:3]*(2*math.atan2(norm,q[3])/norm)
+
+
+def quat_exp(vector):
+    angle = np.linalg.norm(vector)
+    if angle < 1e-10: return np.r_[vector/2,1.0]
+    return np.r_[vector*(math.sin(angle/2)/angle),math.cos(angle/2)]
+
+
+def close_periodic_values(times, original):
+    """Join pose and discrete tangent in short windows around the loop seam.
+
+    Both endpoints use their midpoint and mean velocity. Cubic Hermite curves
+    connect them to the unchanged interior, rather than adding a held end frame.
+    """
+    values = np.asarray(original).copy()
+    window = min(0.16, times[-1]*0.18)
+    edge = max(3, int(np.searchsorted(times,window)))
+    edge = min(edge,(len(times)-1)//2)
+    start_velocity = (values[1]-values[0])/(times[1]-times[0])
+    end_velocity = (values[-1]-values[-2])/(times[-1]-times[-2])
+    seam = (values[0]+values[-1])/2
+    velocity = (start_velocity+end_velocity)/2
+    def hermite(t,p0,p1,v0,v1,duration):
+        return ((2*t**3-3*t**2+1)*p0 + (t**3-2*t**2+t)*duration*v0
+                + (-2*t**3+3*t**2)*p1 + (t**3-t**2)*duration*v1)
+    left_velocity = (values[edge+1]-values[edge-1])/(times[edge+1]-times[edge-1])
+    right = len(times)-1-edge
+    right_velocity = (values[right+1]-values[right-1])/(times[right+1]-times[right-1])
+    for i in range(edge+1):
+        values[i] = hermite(times[i]/times[edge],seam,original[edge],velocity,left_velocity,times[edge])
+    duration = times[-1]-times[right]
+    for i in range(right,len(times)):
+        values[i] = hermite((times[i]-times[right])/duration,original[right],seam,right_velocity,velocity,duration)
+    # Godot's baked tracks use linear/spherical interpolation. Match the actual
+    # one-sided segment slopes, not only the analytical Hermite endpoint tangent.
+    values[0] = values[-1] = seam
+    values[1] = seam+velocity*(times[1]-times[0])
+    values[-2] = seam-velocity*(times[-1]-times[-2])
+    return values
+
+
+def close_walk_loop(times, rotations, positions):
+    closed = {}
+    for bone, quaternions in rotations.items():
+        reference = np.asarray(quaternions[0])
+        inverse = reference*np.array([-1,-1,-1,1])
+        vectors = np.array([quat_log(quat_multiply(inverse,np.asarray(q))) for q in quaternions])
+        assert np.max(np.linalg.norm(vectors,axis=1)) < math.pi, 'Quaternion log branch crossed'
+        vectors = close_periodic_values(times,vectors)
+        closed[bone] = [quat_multiply(reference,quat_exp(v)) for v in vectors]
+        closed[bone][-1] = closed[bone][0].copy()
+    return closed, close_periodic_values(times,np.asarray(positions))
+
+
 def main():
     manifest = json.loads((ROOT/'docs/MOTION_DOWNLOAD_MANIFEST.json').read_text(encoding='utf8'))
     target = json.loads((ROOT/'.godot/motion_target_rest.json').read_text(encoding='utf8'))
@@ -167,18 +231,23 @@ def main():
                 output[i]=value; return value
             for i in range(len(bones)): solve(i)
         assert all(np.isfinite(q).all() for rows in rotations.values() for q in rows)
+        if action['id'] in WALK_PIVOT_FIX:
+            rotations, positions = close_walk_loop(times,rotations,positions)
         lines=['[gd_resource type="Animation" format=3]','', '[resource]',f'resource_name = "{action["id"]}"',f'length = {length:.8g}']
         tracks=[(i,'rotation_3d',qs) for i,qs in rotations.items()]+[(hips,'position_3d',positions)]
         for track,(i,kind,values) in enumerate(tracks):
             path=target['path']+':'+bones[i]['name']
             keys = np.column_stack((times, np.ones(len(times)), np.asarray(values)))
-            lines += [f'tracks/{track}/type = "{kind}"',f'tracks/{track}/path = NodePath("{path}")',f'tracks/{track}/interp = 1',f'tracks/{track}/loop_wrap = false',f'tracks/{track}/keys = PackedFloat32Array('+numbers(keys.ravel())+')']
+            wrap = 'true' if action['id'] in WALK_PIVOT_FIX else 'false'
+            lines += [f'tracks/{track}/type = "{kind}"',f'tracks/{track}/path = NodePath("{path}")',f'tracks/{track}/interp = 1',f'tracks/{track}/loop_wrap = {wrap}',f'tracks/{track}/keys = PackedFloat32Array('+numbers(keys.ravel())+')']
         (DEST/f'{action["id"]}.tres').write_text('\n'.join(lines)+'\n',encoding='utf8')
         entry = dict(action,status="retarget_baked_review_pending",duration=length,tracks=len(tracks),frames=len(times),retarget_hip_scale=scale)
         if action['id'] in WALK_PIVOT_FIX:
             entry.update(horizontal_pelvis_scale=pelvis_scale,
                          in_place_anchor_xz=np.mean(global_hips,axis=0)[[0,2]].tolist(),
-                         before_walk_fix_path=f'res://assets/characters/motion_review/archive/{action["id"]}_before_walk_fix.tres')
+                         before_walk_fix_path=f'res://assets/characters/motion_review/archive/{action["id"]}_before_walk_fix.tres',
+                         before_loop_fix_path=f'res://assets/characters/motion_review/archive/{action["id"]}_before_loop_fix.tres',
+                         loop_closure='matched_endpoints_and_segment_velocity_short_hermite_windows')
         metadata.append(entry)
         print(action['id'],action['label_zh'],round(length,3),len(tracks),flush=True)
     (DEST/'catalog.json').write_text(json.dumps(metadata,ensure_ascii=False,indent=2)+'\n',encoding='utf8')

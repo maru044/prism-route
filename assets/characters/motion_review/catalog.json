@@ -68,7 +68,9 @@
       -0.0015338414354970759,
       -0.003774428277701684
     ],
-    "before_walk_fix_path": "res://assets/characters/motion_review/archive/A05_before_walk_fix.tres"
+    "before_walk_fix_path": "res://assets/characters/motion_review/archive/A05_before_walk_fix.tres",
+    "before_loop_fix_path": "res://assets/characters/motion_review/archive/A05_before_loop_fix.tres",
+    "loop_closure": "matched_endpoints_and_segment_velocity_short_hermite_windows"
   },
   {
     "id": "A06",
@@ -516,7 +518,9 @@
       0.035948192442678835,
       -0.0011198053689553211
     ],
-    "before_walk_fix_path": "res://assets/characters/motion_review/archive/A39_before_walk_fix.tres"
+    "before_walk_fix_path": "res://assets/characters/motion_review/archive/A39_before_walk_fix.tres",
+    "before_loop_fix_path": "res://assets/characters/motion_review/archive/A39_before_loop_fix.tres",
+    "loop_closure": "matched_endpoints_and_segment_velocity_short_hermite_windows"
   },
   {
     "id": "A40",

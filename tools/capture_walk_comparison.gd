@@ -5,12 +5,13 @@ func _initialize() -> void:
 	call_deferred("_run")
 
 func _run() -> void:
+	var loop_seam:=OS.get_cmdline_user_args().has("--loop-seam")
 	root.size=Vector2i(1440,1000)
 	var scene=load("res://scenes/character_motion_test.tscn").instantiate()
 	root.add_child(scene)
 	for child in scene.get_children():
 		if child is CanvasLayer: child.visible=false
-	scene.yaw=0.0
+	scene.yaw=0.6 if loop_seam else 0.0
 	scene.pitch=0.0
 	scene.distance=3.1
 	scene.camera_target=Vector3(0,0.8,0)
@@ -26,7 +27,8 @@ func _run() -> void:
 	for index in [4,38]:
 		var versions: Array=[]
 		for old in [true,false]:
-			scene.compare_old_walk=old
+			scene.compare_old_walk=old and not loop_seam
+			scene.compare_old_loop=old and loop_seam
 			scene._select(index)
 			scene.player.pause()
 			title.text="%s · %s" % [scene.catalog[index].id,"修正前" if old else "修正后"]
@@ -41,7 +43,7 @@ func _run() -> void:
 				image.resize(384,600,Image.INTERPOLATE_LANCZOS)
 				frames.append(image)
 			versions.append(frames)
-		var directory="res://.godot/walk_compare/"+scene.catalog[index].id
+		var directory=("res://.godot/walk_loop_compare/" if loop_seam else "res://.godot/walk_compare/")+scene.catalog[index].id
 		DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(directory))
 		var contact=Image.create(384*4,600*2,false,Image.FORMAT_RGB8)
 		for frame in 32:
@@ -51,6 +53,7 @@ func _run() -> void:
 				if frame%8==0:
 					contact.blit_rect(versions[mode][frame],Rect2i(0,0,384,600),Vector2i((frame/8)*384,mode*600))
 			pair.save_png(ProjectSettings.globalize_path(directory+"/frame_%02d.png" % frame))
-		contact.save_png(ProjectSettings.globalize_path("res://screenshots/walk_%s_phases.png" % scene.catalog[index].id.to_lower()))
+		var suffix: String="loop_phases" if loop_seam else "phases"
+		contact.save_png(ProjectSettings.globalize_path("res://screenshots/walk_%s_%s.png" % [scene.catalog[index].id.to_lower(),suffix]))
 		print("WALK_CAPTURE ",scene.catalog[index].id)
 	quit()
