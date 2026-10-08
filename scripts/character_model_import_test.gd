@@ -7,7 +7,7 @@ var variant: OptionButton
 func _ready() -> void:
 	character_resource = LOCAL + "keqing_fixed.vrm"
 	motion_directory = LOCAL + "motions"
-	review_title = "刻晴模型转换测试"
+	review_title = "刻晴动作测试"
 	if not ResourceLoader.exists(character_resource) or not FileAccess.file_exists(motion_directory + "/catalog.json"):
 		var message := Label.new()
 		message.position = Vector2(32, 32)

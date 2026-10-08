@@ -36,12 +36,13 @@ def main():
     conversion = json.loads((BUILD/'conversion_report.json').read_text(encoding='utf8'))
     validation = json.loads((BUILD/'godot_validation.json').read_text(encoding='utf8'))
     assert conversion['source_unchanged'] and conversion['max_weight_total_error'] <= 1e-6
-    assert validation['clips'] == 6 and not validation['failures']
+    expected = json.loads((ROOT/'assets/characters/motion_review/catalog.json').read_text(encoding='utf8'))
+    assert validation['clips'] == len(expected) == 42 and not validation['failures']
     # Keep this report about conversion operations and validation results.
     for field in ['source', 'source_sha256', 'asset_usage']:
         conversion.pop(field, None)
     conversion['removed_constraint_count'] = len(conversion.pop('removed_constraints'))
-    report = {'date': '2026-10-08', 'conversion': conversion,
+    report = {'date': '2026-10-09', 'conversion': conversion,
               'exported': {v: inspect(LOCAL/f'keqing_{v}.vrm') for v in ['before', 'fixed']},
               'godot_validation': validation,
               'existing_ganyu_review_regression': {'clips': 42, 'failures': []}}

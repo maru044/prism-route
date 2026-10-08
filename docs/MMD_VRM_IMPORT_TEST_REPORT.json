@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-08",
+  "date": "2026-10-09",
   "conversion": {
     "blender": "5.1.1",
     "source_unchanged": true,
@@ -189,6 +189,21 @@
         "variant": 0
       },
       {
+        "id": "A02",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A03",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A04",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
         "id": "A05",
         "tracks": 53,
         "variant": 0
@@ -199,12 +214,177 @@
         "variant": 0
       },
       {
+        "id": "A07",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A08",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A09",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A10",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A11",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A12",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A13",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A14",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A15",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A16",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A17",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A18",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A19",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A20",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A21",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
         "id": "A22",
         "tracks": 53,
         "variant": 0
       },
       {
+        "id": "A23",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A24",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A25",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A26",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A27",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A28",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A29",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A30",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A31",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A32",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A33",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A34",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A35",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A36",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A37",
+        "tracks": 52,
+        "variant": 0
+      },
+      {
+        "id": "A38",
+        "tracks": 52,
+        "variant": 0
+      },
+      {
         "id": "A39",
+        "tracks": 52,
+        "variant": 0
+      },
+      {
+        "id": "A40",
+        "tracks": 52,
+        "variant": 0
+      },
+      {
+        "id": "A41",
         "tracks": 52,
         "variant": 0
       },
@@ -219,6 +399,21 @@
         "variant": 1
       },
       {
+        "id": "A02",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A03",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A04",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
         "id": "A05",
         "tracks": 53,
         "variant": 1
@@ -229,12 +424,177 @@
         "variant": 1
       },
       {
+        "id": "A07",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A08",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A09",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A10",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A11",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A12",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A13",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A14",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A15",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A16",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A17",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A18",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A19",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A20",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A21",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
         "id": "A22",
         "tracks": 53,
         "variant": 1
       },
       {
+        "id": "A23",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A24",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A25",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A26",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A27",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A28",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A29",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A30",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A31",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A32",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A33",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A34",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A35",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A36",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A37",
+        "tracks": 52,
+        "variant": 1
+      },
+      {
+        "id": "A38",
+        "tracks": 52,
+        "variant": 1
+      },
+      {
         "id": "A39",
+        "tracks": 52,
+        "variant": 1
+      },
+      {
+        "id": "A40",
+        "tracks": 52,
+        "variant": 1
+      },
+      {
+        "id": "A41",
         "tracks": 52,
         "variant": 1
       },
@@ -249,6 +609,21 @@
         "variant": 0
       },
       {
+        "id": "A02",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A03",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A04",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
         "id": "A05",
         "tracks": 53,
         "variant": 0
@@ -259,12 +634,177 @@
         "variant": 0
       },
       {
+        "id": "A07",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A08",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A09",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A10",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A11",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A12",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A13",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A14",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A15",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A16",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A17",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A18",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A19",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A20",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A21",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
         "id": "A22",
         "tracks": 53,
         "variant": 0
       },
       {
+        "id": "A23",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A24",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A25",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A26",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A27",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A28",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A29",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A30",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A31",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A32",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A33",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A34",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A35",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A36",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A37",
+        "tracks": 52,
+        "variant": 0
+      },
+      {
+        "id": "A38",
+        "tracks": 52,
+        "variant": 0
+      },
+      {
         "id": "A39",
+        "tracks": 52,
+        "variant": 0
+      },
+      {
+        "id": "A40",
+        "tracks": 52,
+        "variant": 0
+      },
+      {
+        "id": "A41",
         "tracks": 52,
         "variant": 0
       },
@@ -274,7 +814,8 @@
         "variant": 0
       }
     ],
-    "clips": 6,
+    "clips": 42,
+    "expected_clips": 42,
     "failures": [],
     "godot": "4.7.2-stable (official)"
   },

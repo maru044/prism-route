@@ -188,15 +188,16 @@ func _build_ui() -> void:
 	_check(column,"原地观察（保留上下运动）",true,func(value):
 		center_motion=value
 		_center_character())
-	var comparison := OptionButton.new()
-	comparison.add_item("步行对比：当前修正版")
-	comparison.add_item("步行对比：横移修正前")
-	comparison.add_item("步行对比：循环修正前")
-	comparison.item_selected.connect(func(value):
-		compare_old_walk=value==1
-		compare_old_loop=value==2
-		_select(selected))
-	column.add_child(comparison)
+	if catalog.any(func(action): return action.has("before_walk_fix_path") or action.has("before_loop_fix_path")):
+		var comparison := OptionButton.new()
+		comparison.add_item("步行对比：当前修正版")
+		comparison.add_item("步行对比：横移修正前")
+		comparison.add_item("步行对比：循环修正前")
+		comparison.item_selected.connect(func(value):
+			compare_old_walk=value==1
+			compare_old_loop=value==2
+			_select(selected))
+		column.add_child(comparison)
 	var height_row := HBoxContainer.new()
 	column.add_child(height_row)
 	var height_label := Label.new()

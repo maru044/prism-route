@@ -1,6 +1,6 @@
 # MMD → Blender → VRM → Godot：刻晴流程验证
 
-日期：2026-10-08。状态：本地中性技术验证完成，待人工检查动作与美术细节。
+首次转换：2026-10-08；完整动作场景更新：2026-10-09。状态：42 段动作已烘焙并验证，待人工检查动作与美术细节。
 
 ## 测试样本与范围
 
@@ -8,18 +8,54 @@
 
 使用 Blender 5.1.1、已安装的 mmd_tools / VRM 插件，以及项目 Godot 4.7.2 和 VRM 导入插件。
 独立入口：`res://scenes/character_model_import_test.tscn`。
-它使用本地刻晴测试副本和六段现有 CC0 普通动作：
+它使用本地刻晴测试副本和全部 42 段普通动作：
 
-| 编号 | 动作 |
-| --- | --- |
-| A01 | 放松站立 |
-| A05 | 女性步行 |
-| A06 | 女性跑步 |
-| A22 | 坐姿待机 |
-| A39 | 另一种步行 |
-| A42 | 喝水 |
+| 编号 | 动作 | 分类 |
+| --- | --- | --- |
+| A01 | 放松站立 | 待机 |
+| A02 | 倾听站立 | 待机 |
+| A03 | 抱臂站立 | 待机 |
+| A04 | 站立说话 | 待机 |
+| A05 | 女性步行 | 移动 |
+| A06 | 女性跑步 | 移动 |
+| A07 | 慢跑 | 移动 |
+| A08 | 冲刺 | 移动 |
+| A09 | 后退步行 | 移动 |
+| A10 | 左横移 | 移动 |
+| A11 | 右横移 | 移动 |
+| A12 | 左转90度 | 转身 |
+| A13 | 右转90度 | 转身 |
+| A14 | 左转180度 | 转身 |
+| A15 | 右转180度 | 转身 |
+| A16 | 蹲姿待机 | 蹲与跳 |
+| A17 | 蹲走 | 蹲与跳 |
+| A18 | 起跳 | 蹲与跳 |
+| A19 | 空中阶段 | 蹲与跳 |
+| A20 | 落地 | 蹲与跳 |
+| A21 | 坐下 | 坐姿 |
+| A22 | 坐姿待机 | 坐姿 |
+| A23 | 坐着说话 | 坐姿 |
+| A24 | 起身 | 坐姿 |
+| A25 | 招呼 | 互动 |
+| A26 | 一般交互 | 互动 |
+| A27 | 桌面取物 | 互动 |
+| A28 | 食用表现候选 | 互动 |
+| A29 | 打电话 | 互动 |
+| A30 | 冥想 | 地面与运动 |
+| A31 | 疲倦跪姿 | 地面与运动 |
+| A32 | 睡眠 | 地面与运动 |
+| A33 | 俯卧撑 | 地面与运动 |
+| A34 | 开合跳 | 地面与运动 |
+| A35 | 驾驶 | 房车场景 |
+| A36 | 跪姿修理 | 房车场景 |
+| A37 | 另一种站立待机 | 对照与补充 |
+| A38 | 另一种说话 | 对照与补充 |
+| A39 | 另一种步行 | 对照与补充 |
+| A40 | 另一种慢跑 | 对照与补充 |
+| A41 | 看手机 | 对照与补充 |
+| A42 | 喝水 | 对照与补充 |
 
-顶部可以切换处理前后模型；左侧保留动作选择、播放速度、暂停、时间轴；右键旋转，滚轮缩放。
+动作顺序、名称与甘雨场景一致。左侧使用相同的搜索、分类、上一段／下一段、重播、暂停、播放速度、时间轴、循环、角色高度和参考椅调整控件；右键旋转，滚轮缩放。顶部额外保留模型处理前后对比。甘雨骨架的旧步行归档不用于刻晴，刻晴只播放为自身骨架烘焙的当前动作。
 主项目入口未改变。甘雨的原有 42 段动作与测试控件回归通过。
 
 ## 转换操作流程（下次按此顺序执行）
@@ -86,7 +122,7 @@ EX 合并使用逐顶点相加，而不是仅重命名，也不是用 EX 覆盖�
 
 - Blender：脚踝旋转 25°，确认修复后脚部网格发生位移；核对顶点总权重与输入文件未被修改。
 - VRM：确认存在网格、蒙皮、20 个 MToon 材质、5 张内嵌主贴图和 61 个形变目标，避免只得到骨架文件。
-- Godot：验证六段动作所有轨道路径有效，抽样姿态不出现无效数值，处理前后切换保留暂停位置与速度。
+- Godot：验证全部 42 段动作所有轨道路径有效，抽样姿态不出现无效数值，处理前后切换保留暂停位置与速度。
 - 公共动作测试器有修改时，运行甘雨原有 42 段动作的回归检查。
 - 最后看 Forward+ 实机截图，数值检查不能替代网格变形和材质的视觉检查。生成报告后把结果留在 `docs/MMD_VRM_IMPORT_TEST_REPORT.json`。
 
@@ -95,19 +131,19 @@ EX 合并使用逐顶点相加，而不是仅重命名，也不是用 EX 覆盖�
 - Blender 网格 15,934 顶点、20 个材质；VRM 包含 20 个 MToon 材质、5 张内嵌主贴图、61 个形变目标。
 - 脚踝旋转 25°：处理前移动顶点数为 0；处理后 474 个顶点位移超过 0.1 mm，最大位移约 7.26 cm。
 - 权重总量最大误差 0；输入文件未被修改。
-- Godot 导入后 277 根骨骼；六段动作两种模型之间反复切换，所有轨道路径有效，抽样姿态有限，暂停位置与速度保持。
+- Godot 导入后 277 根骨骼；全部 42 段动作两种模型之间反复切换，所有轨道路径有效，抽样姿态有限，暂停位置与速度保持。
 - Forward+ / D3D12 实机截图检查：处理前腿基本不响应动作，处理后屈膝和迈步可见。
 - 详细数值：`docs/MMD_VRM_IMPORT_TEST_REPORT.json`。
 
 ## 测试资产与本地构建产物
 
 - VRM：`assets/characters/import_tests_local/keqing/keqing_fixed.vrm`、`keqing_before.vrm`。
-- 六段动作：同目录 `motions/`。
+- 全部 42 段动作：同目录 `motions/`。
 - Blender：`.model_import_build/keqing_fixed.blend`、`keqing_before.blend`。
 - 截图：`.model_import_build/keqing_contact_sheet.png` 及各动作单图。
 - 完整转换和验证日志：`.model_import_build/`。
 
-两份 VRM（含内嵌贴图）、Godot 导入配置、六段动作与动作目录纳入版本管理，检出后可直接使用独立测试场景。Blender 构建文件、截图与诊断日志仍保存在 `.model_import_build/`。转换操作和检查记录保存在本文与测试报告中，资产目录只存放测试场景使用的资源。
+两份 VRM（含内嵌贴图）、Godot 导入配置、全部 42 段动作与动作目录纳入版本管理，检出后可直接使用独立测试场景。Blender 构建文件、截图与诊断日志仍保存在 `.model_import_build/`。转换操作和检查记录保存在本文与测试报告中，资产目录只存放测试场景使用的资源。
 
 ## 复现（在项目根目录运行 PowerShell）
 
@@ -119,7 +155,7 @@ $pythonExe = 'C:\Users\PC\.cache\codex-runtimes\codex-primary-runtime\dependenci
 & $blenderExe --background --python tools/build_mmd_vrm_review.py
 & $godotExe --headless --editor --path . --quit
 & $godotExe --headless --path . --script tools/inspect_motion_skeleton.gd -- --model=res://assets/characters/import_tests_local/keqing/keqing_fixed.vrm --output=res://.model_import_build/keqing_rest.json
-& $pythonExe tools/build_motion_review.py --target .model_import_build/keqing_rest.json --dest assets/characters/import_tests_local/keqing/motions --ids A01,A05,A06,A22,A39,A42
+& $pythonExe tools/build_motion_review.py --target .model_import_build/keqing_rest.json --dest assets/characters/import_tests_local/keqing/motions
 & $godotExe --headless --path . --script tools/verify_model_import.gd
 & $godotExe --path . --script tools/capture_model_import.gd
 & $godotExe --headless --path . --script tools/verify_motion_review.gd *> '.model_import_build/ganyu_regression.log'
