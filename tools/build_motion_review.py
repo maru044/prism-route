@@ -4,6 +4,7 @@ Run inspect_motion_skeleton.gd first. Source bind transforms come from skin IBMs
 or the VRMA humanoid node hierarchy. Output uses absolute Godot bone poses.
 """
 import json
+import argparse
 import math
 import struct
 from pathlib import Path
@@ -185,13 +186,24 @@ def close_walk_loop(times, rotations, positions):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--target', type=Path, default=ROOT/'.godot/motion_target_rest.json')
+    parser.add_argument('--dest', type=Path, default=DEST)
+    parser.add_argument('--ids', help='Comma-separated manifest IDs; default is all 42')
+    args = parser.parse_args()
+    destination = args.dest
     manifest = json.loads((ROOT/'docs/MOTION_DOWNLOAD_MANIFEST.json').read_text(encoding='utf8'))
-    target = json.loads((ROOT/'.godot/motion_target_rest.json').read_text(encoding='utf8'))
+    target = json.loads(args.target.read_text(encoding='utf8'))
+    if args.ids:
+        requested = set(args.ids.split(','))
+        available = {a['id'] for a in manifest['actions']}
+        assert requested <= available, f'Unknown action IDs: {requested-available}'
+        manifest['actions'] = [a for a in manifest['actions'] if a['id'] in requested]
     bones = target['bones']; parents = [b['parent'] for b in bones]
     local = [transform(b['position'],b['rotation'],b['scale']) for b in bones]
     rest = worlds(local,parents); indices = {b['name']:i for i,b in enumerate(bones)}
     sources = {f['id']:Source(ROOT/'assets/characters/motion_sources/independent_cc0'/f['file']) for f in manifest['files']}
-    DEST.mkdir(parents=True,exist_ok=True); metadata=[]
+    destination.mkdir(parents=True,exist_ok=True); metadata=[]
     for action in manifest['actions']:
         src = sources[action['file_id']]; channels,start,end = src.prepare(action)
         length=end-start; times=np.linspace(0,length,max(2,math.ceil(length*30)+1))
@@ -240,17 +252,18 @@ def main():
             keys = np.column_stack((times, np.ones(len(times)), np.asarray(values)))
             wrap = 'true' if action['id'] in WALK_PIVOT_FIX else 'false'
             lines += [f'tracks/{track}/type = "{kind}"',f'tracks/{track}/path = NodePath("{path}")',f'tracks/{track}/interp = 1',f'tracks/{track}/loop_wrap = {wrap}',f'tracks/{track}/keys = PackedFloat32Array('+numbers(keys.ravel())+')']
-        (DEST/f'{action["id"]}.tres').write_text('\n'.join(lines)+'\n',encoding='utf8')
+        (destination/f'{action["id"]}.tres').write_text('\n'.join(lines)+'\n',encoding='utf8')
         entry = dict(action,status="retarget_baked_review_pending",duration=length,tracks=len(tracks),frames=len(times),retarget_hip_scale=scale)
         if action['id'] in WALK_PIVOT_FIX:
             entry.update(horizontal_pelvis_scale=pelvis_scale,
                          in_place_anchor_xz=np.mean(global_hips,axis=0)[[0,2]].tolist(),
-                         before_walk_fix_path=f'res://assets/characters/motion_review/archive/{action["id"]}_before_walk_fix.tres',
-                         before_loop_fix_path=f'res://assets/characters/motion_review/archive/{action["id"]}_before_loop_fix.tres',
                          loop_closure='matched_endpoints_and_segment_velocity_short_hermite_windows')
+            if destination.resolve() == DEST.resolve():
+                entry.update(before_walk_fix_path=f'res://assets/characters/motion_review/archive/{action["id"]}_before_walk_fix.tres',
+                             before_loop_fix_path=f'res://assets/characters/motion_review/archive/{action["id"]}_before_loop_fix.tres')
         metadata.append(entry)
         print(action['id'],action['label_zh'],round(length,3),len(tracks),flush=True)
-    (DEST/'catalog.json').write_text(json.dumps(metadata,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+    (destination/'catalog.json').write_text(json.dumps(metadata,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 
 
 if __name__ == '__main__': main()

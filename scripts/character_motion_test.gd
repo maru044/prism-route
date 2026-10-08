@@ -1,6 +1,10 @@
 extends Node3D
 ## Independent CC0 motion review. No connection to the main character controller.
 
+@export_file("*.tscn", "*.vrm") var character_resource := "res://scenes/characters/ganyu.tscn"
+@export_dir var motion_directory := "res://assets/characters/motion_review"
+@export var review_title := "人物动作测试"
+
 var catalog: Array = []
 var visible_indices: Array[int] = []
 var selected := 0
@@ -31,16 +35,16 @@ var compare_old_walk := false
 var compare_old_loop := false
 
 func _ready() -> void:
-	catalog = JSON.parse_string(FileAccess.get_file_as_string("res://assets/characters/motion_review/catalog.json"))
+	catalog = JSON.parse_string(FileAccess.get_file_as_string(motion_directory+"/catalog.json"))
 	_build_stage()
-	character = load("res://scenes/characters/ganyu.tscn").instantiate()
+	character = load(character_resource).instantiate()
 	add_child(character)
 	skeleton = character.find_child("GeneralSkeleton", true, false)
 	# Baked translations already use this model's meters. AnimationPlayer would
 	# otherwise multiply them by the imported humanoid motion_scale a second time.
 	skeleton.motion_scale = 1.0
 	var original: AnimationPlayer = character.find_child("AnimationPlayer", true, false)
-	original.stop()
+	if original: original.stop()
 	skeleton.reset_bone_poses()
 	_set_springs(false)
 	player = AnimationPlayer.new()
@@ -48,7 +52,7 @@ func _ready() -> void:
 	character.add_child(player)
 	var library := AnimationLibrary.new()
 	for action in catalog:
-		var animation: Animation = load("res://assets/characters/motion_review/%s.tres" % action.id)
+		var animation: Animation = load("%s/%s.tres" % [motion_directory, action.id])
 		library.add_animation(action.id, animation)
 		if action.has("before_walk_fix_path"):
 			library.add_animation(action.id+"_before_walk_fix", load(action.before_walk_fix_path))
@@ -127,7 +131,7 @@ func _build_ui() -> void:
 	column.add_theme_constant_override("separation",8)
 	margin.add_child(column)
 	var title := Label.new()
-	title.text = "人物动作测试 · 42 段"
+	title.text = "%s · %d 段" % [review_title, catalog.size()]
 	title.add_theme_font_size_override("font_size",23)
 	column.add_child(title)
 	search = LineEdit.new()

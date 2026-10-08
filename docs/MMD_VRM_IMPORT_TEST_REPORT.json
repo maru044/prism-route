@@ -1,0 +1,285 @@
+{
+  "date": "2026-10-08",
+  "conversion": {
+    "blender": "5.1.1",
+    "source_unchanged": true,
+    "vertices": 15934,
+    "bones": 316,
+    "materials": 20,
+    "transfers": [
+      {
+        "source": "足D.L",
+        "target": "足.L",
+        "operation": "rename_empty_destination",
+        "mesh_groups": 1,
+        "pivot_delta_m": 0.0
+      },
+      {
+        "source": "ひざD.L",
+        "target": "ひざ.L",
+        "operation": "rename_empty_destination",
+        "mesh_groups": 1,
+        "pivot_delta_m": 0.0
+      },
+      {
+        "source": "足首D.L",
+        "target": "足首.L",
+        "operation": "rename_empty_destination",
+        "mesh_groups": 1,
+        "pivot_delta_m": 0.0
+      },
+      {
+        "source": "足先EX.L",
+        "target": "足首.L",
+        "operation": "add_weights",
+        "vertex_entries": 154
+      },
+      {
+        "source": "足D.R",
+        "target": "足.R",
+        "operation": "rename_empty_destination",
+        "mesh_groups": 1,
+        "pivot_delta_m": 0.0
+      },
+      {
+        "source": "ひざD.R",
+        "target": "ひざ.R",
+        "operation": "rename_empty_destination",
+        "mesh_groups": 1,
+        "pivot_delta_m": 0.0
+      },
+      {
+        "source": "足首D.R",
+        "target": "足首.R",
+        "operation": "rename_empty_destination",
+        "mesh_groups": 1,
+        "pivot_delta_m": 0.0
+      },
+      {
+        "source": "足先EX.R",
+        "target": "足首.R",
+        "operation": "add_weights",
+        "vertex_entries": 155
+      }
+    ],
+    "leg_weight_counts_before": {
+      "足首D.L": 373,
+      "ひざD.L": 312,
+      "足先EX.L": 154,
+      "足D.L": 238,
+      "足D.R": 268,
+      "足首D.R": 373,
+      "ひざD.R": 312,
+      "足先EX.R": 155
+    },
+    "leg_weight_counts_after": {
+      "足首.L": 474,
+      "ひざ.L": 312,
+      "足.L": 238,
+      "足.R": 268,
+      "足首.R": 475,
+      "ひざ.R": 312
+    },
+    "max_weight_total_error": 0.0,
+    "foot_rotation_before": {
+      "bone": "足首.L",
+      "angle_deg": 25,
+      "moved_vertices_over_0_1mm": 0,
+      "max_displacement_m": 0.0
+    },
+    "foot_rotation_after": {
+      "bone": "足首.L",
+      "angle_deg": 25,
+      "moved_vertices_over_0_1mm": 474,
+      "max_displacement_m": 0.0726022347468187
+    },
+    "humanoid": {
+      "HumanBoneName.HIPS": "腰",
+      "HumanBoneName.SPINE": "上半身",
+      "HumanBoneName.CHEST": "上半身2",
+      "HumanBoneName.NECK": "首",
+      "HumanBoneName.HEAD": "頭",
+      "HumanBoneName.LEFT_EYE": "目.L",
+      "HumanBoneName.RIGHT_EYE": "目.R",
+      "HumanBoneName.LEFT_UPPER_LEG": "足.L",
+      "HumanBoneName.LEFT_LOWER_LEG": "ひざ.L",
+      "HumanBoneName.LEFT_FOOT": "足首.L",
+      "HumanBoneName.LEFT_TOES": "つま先.L",
+      "HumanBoneName.RIGHT_UPPER_LEG": "足.R",
+      "HumanBoneName.RIGHT_LOWER_LEG": "ひざ.R",
+      "HumanBoneName.RIGHT_FOOT": "足首.R",
+      "HumanBoneName.RIGHT_TOES": "つま先.R",
+      "HumanBoneName.LEFT_SHOULDER": "肩.L",
+      "HumanBoneName.LEFT_UPPER_ARM": "腕.L",
+      "HumanBoneName.LEFT_LOWER_ARM": "ひじ.L",
+      "HumanBoneName.LEFT_HAND": "手首.L",
+      "HumanBoneName.RIGHT_SHOULDER": "肩.R",
+      "HumanBoneName.RIGHT_UPPER_ARM": "腕.R",
+      "HumanBoneName.RIGHT_LOWER_ARM": "ひじ.R",
+      "HumanBoneName.RIGHT_HAND": "手首.R",
+      "HumanBoneName.LEFT_THUMB_METACARPAL": "親指０.L",
+      "HumanBoneName.LEFT_THUMB_PROXIMAL": "親指１.L",
+      "HumanBoneName.LEFT_THUMB_DISTAL": "親指２.L",
+      "HumanBoneName.LEFT_INDEX_PROXIMAL": "人指１.L",
+      "HumanBoneName.LEFT_INDEX_INTERMEDIATE": "人指２.L",
+      "HumanBoneName.LEFT_INDEX_DISTAL": "人指３.L",
+      "HumanBoneName.LEFT_MIDDLE_PROXIMAL": "中指１.L",
+      "HumanBoneName.LEFT_MIDDLE_INTERMEDIATE": "中指２.L",
+      "HumanBoneName.LEFT_MIDDLE_DISTAL": "中指３.L",
+      "HumanBoneName.LEFT_RING_PROXIMAL": "薬指１.L",
+      "HumanBoneName.LEFT_RING_INTERMEDIATE": "薬指２.L",
+      "HumanBoneName.LEFT_RING_DISTAL": "薬指３.L",
+      "HumanBoneName.LEFT_LITTLE_PROXIMAL": "小指１.L",
+      "HumanBoneName.LEFT_LITTLE_INTERMEDIATE": "小指２.L",
+      "HumanBoneName.LEFT_LITTLE_DISTAL": "小指３.L",
+      "HumanBoneName.RIGHT_THUMB_METACARPAL": "親指０.R",
+      "HumanBoneName.RIGHT_THUMB_PROXIMAL": "親指１.R",
+      "HumanBoneName.RIGHT_THUMB_DISTAL": "親指２.R",
+      "HumanBoneName.RIGHT_INDEX_PROXIMAL": "人指１.R",
+      "HumanBoneName.RIGHT_INDEX_INTERMEDIATE": "人指２.R",
+      "HumanBoneName.RIGHT_INDEX_DISTAL": "人指３.R",
+      "HumanBoneName.RIGHT_MIDDLE_PROXIMAL": "中指１.R",
+      "HumanBoneName.RIGHT_MIDDLE_INTERMEDIATE": "中指２.R",
+      "HumanBoneName.RIGHT_MIDDLE_DISTAL": "中指３.R",
+      "HumanBoneName.RIGHT_RING_PROXIMAL": "薬指１.R",
+      "HumanBoneName.RIGHT_RING_INTERMEDIATE": "薬指２.R",
+      "HumanBoneName.RIGHT_RING_DISTAL": "薬指３.R",
+      "HumanBoneName.RIGHT_LITTLE_PROXIMAL": "小指１.R",
+      "HumanBoneName.RIGHT_LITTLE_INTERMEDIATE": "小指２.R",
+      "HumanBoneName.RIGHT_LITTLE_DISTAL": "小指３.R"
+    },
+    "limitations": [
+      "Hair/skirt springs are not configured",
+      "Facial morphs retained but VRM expressions not assigned",
+      "MMD toon/sphere shading is not reproduced pixel-for-pixel",
+      "Single-model profile; other models require an audit"
+    ],
+    "removed_constraint_count": 50
+  },
+  "exported": {
+    "before": {
+      "bytes": 29107208,
+      "meshes": 1,
+      "primitives": 20,
+      "materials": 20,
+      "mtoon_materials": 20,
+      "images": 5,
+      "skin_joints": 276,
+      "morph_targets": 61,
+      "humanoid_hips_node": "腰"
+    },
+    "fixed": {
+      "bytes": 29107208,
+      "meshes": 1,
+      "primitives": 20,
+      "materials": 20,
+      "mtoon_materials": 20,
+      "images": 5,
+      "skin_joints": 276,
+      "morph_targets": 61,
+      "humanoid_hips_node": "腰"
+    }
+  },
+  "godot_validation": {
+    "bones": 277,
+    "checks": [
+      {
+        "id": "A01",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A05",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A06",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A22",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A39",
+        "tracks": 52,
+        "variant": 0
+      },
+      {
+        "id": "A42",
+        "tracks": 52,
+        "variant": 0
+      },
+      {
+        "id": "A01",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A05",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A06",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A22",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A39",
+        "tracks": 52,
+        "variant": 1
+      },
+      {
+        "id": "A42",
+        "tracks": 52,
+        "variant": 1
+      },
+      {
+        "id": "A01",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A05",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A06",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A22",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A39",
+        "tracks": 52,
+        "variant": 0
+      },
+      {
+        "id": "A42",
+        "tracks": 52,
+        "variant": 0
+      }
+    ],
+    "clips": 6,
+    "failures": [],
+    "godot": "4.7.2-stable (official)"
+  },
+  "existing_ganyu_review_regression": {
+    "clips": 42,
+    "failures": []
+  }
+}

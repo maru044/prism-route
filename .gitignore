@@ -15,3 +15,5 @@
 /assets/vegetation/models/*_lod*_*.png*
 # Godot may leave a locked temporary copy while a GDExtension DLL is loaded.
 /addons/vrm/bin/~*.TMP
+# Regenerable Blender conversion files, captures, and diagnostics.
+/.model_import_build/

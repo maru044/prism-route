@@ -1,0 +1,92 @@
+[
+  {
+    "id": "A01",
+    "category": "待机",
+    "label_zh": "放松站立",
+    "file_id": "D01",
+    "clip_name": "Idle_Subtle",
+    "clip_selection": "exact name",
+    "status": "retarget_baked_review_pending",
+    "duration": 2.5416665859520435,
+    "tracks": 53,
+    "frames": 78,
+    "retarget_hip_scale": 1.0057805764891135
+  },
+  {
+    "id": "A05",
+    "category": "移动",
+    "label_zh": "女性步行",
+    "file_id": "D01",
+    "clip_name": "Walk_Female",
+    "clip_selection": "exact name",
+    "status": "retarget_baked_review_pending",
+    "duration": 1.33333333209157,
+    "tracks": 53,
+    "frames": 41,
+    "retarget_hip_scale": 1.0057805764891135,
+    "horizontal_pelvis_scale": 0.9740474281794879,
+    "in_place_anchor_xz": [
+      -0.0009585468666075517,
+      -0.0086818388709595
+    ],
+    "loop_closure": "matched_endpoints_and_segment_velocity_short_hermite_windows"
+  },
+  {
+    "id": "A06",
+    "category": "移动",
+    "label_zh": "女性跑步",
+    "file_id": "D01",
+    "clip_name": "Run_Female",
+    "clip_selection": "exact name",
+    "status": "retarget_baked_review_pending",
+    "duration": 0.7916666455566883,
+    "tracks": 53,
+    "frames": 25,
+    "retarget_hip_scale": 1.0057805764891135
+  },
+  {
+    "id": "A22",
+    "category": "坐姿",
+    "label_zh": "坐姿待机",
+    "file_id": "D02",
+    "clip_name": "Sitting_Idle",
+    "clip_selection": "exact name",
+    "status": "retarget_baked_review_pending",
+    "duration": 2.0833332538604736,
+    "tracks": 53,
+    "frames": 64,
+    "retarget_hip_scale": 1.0057806466668744
+  },
+  {
+    "id": "A39",
+    "category": "对照与补充",
+    "label_zh": "另一种步行",
+    "file_id": "D06",
+    "clip_name": "",
+    "clip_selection": "only animation index 0",
+    "status": "retarget_baked_review_pending",
+    "duration": 0.7666666507720947,
+    "tracks": 52,
+    "frames": 24,
+    "retarget_hip_scale": 1.0154227327391003,
+    "horizontal_pelvis_scale": 1.0457127323616098,
+    "in_place_anchor_xz": [
+      0.02983907927882201,
+      -0.007740509817865761
+    ],
+    "loop_closure": "matched_endpoints_and_segment_velocity_short_hermite_windows"
+  },
+  {
+    "id": "A42",
+    "category": "对照与补充",
+    "label_zh": "喝水",
+    "file_id": "D09",
+    "clip_name": "",
+    "clip_selection": "only animation index 0",
+    "status": "retarget_baked_review_pending",
+    "duration": 23.66699981689453,
+    "tracks": 52,
+    "frames": 712,
+    "retarget_hip_scale": 1.0297341085980631
+  }
+]
