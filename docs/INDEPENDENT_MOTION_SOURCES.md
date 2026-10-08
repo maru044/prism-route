@@ -2,6 +2,9 @@
 
 日期：2026-10-08。目标是取得少量女性日常动作，不为动作选型下载整款恋活／COM3D2 整合包。
 
+当前下载执行入口：[固定下载清单与 42 片段覆盖表](MOTION_DOWNLOAD_CHECKLIST.md)。
+该清单固定 9 个文件、准确片段名和校验值，后续取用按 `MOTION_DOWNLOAD_MANIFEST.json` 执行，避免重新从候选库临时查找。
+
 ## 推荐顺序
 
 1. **先测试 Mesh2Motion 的 `Walk_Female`、`Run_Female`，搭配 `Idle_Subtle`**。已经读取实际 GLB，确认有这些动画，而不只是介绍页的文字；这最贴近目前女性移动动作的需求。
@@ -26,7 +29,7 @@
 | `human-base-animations.glb` | 5,656,648 | 87 | `Walk`、`Jog`、`Sitting_Enter`、`Sitting_Idle`、`Sitting_Exit`、`Sitting_Talking` |
 | `human-mocap-animations.glb` | 2,025,372 | 16 | 左右 90／180 度转身等 |
 
-已保存 addon 文件作为后续测试样本，约 5.05 MiB；base 与 mocap 本轮只在内存中检查。
+初次调查只保存 addon（约 5.05 MiB）；固定下载清单阶段又取得 base 与 mocap。当前三者均已保存并检查。
 addon 的 Walk_Female／Run_Female 具有连续时间采样及旋转、平移、缩放轨道，确实是动画而非静态 pose。
 该 GLB 是源骨架动画资产，需要映射 rest pose、单位与骨骼轨道，再烘焙到项目的 VRM 人形骨架。
 
@@ -91,7 +94,7 @@ addon 的 Walk_Female／Run_Female 具有连续时间采样及旋转、平移、
 - 已检查的 Mesh2Motion addon 包没有名为下腰、劈叉或瑜伽的片段；源资产仓库路径搜索也未找到这些关键词。文件命名搜索不能证明所有动作内容均不存在，本轮没有逐帧观看全部片段。
 - 同一 CC0 addon 已确认有 `Meditate`、`Kneeling Tired`、`Pushup`、`Jumping Jacks`、`Sleeping` 等片段，可补充日常休息和运动；不能将它们当作用户指定的下腰／一字马。
 - [OpenGym3D](https://github.com/AssiamahS/opengym3d) 中找到 [`glute_bridge.json`](https://github.com/AssiamahS/opengym3d/blob/main/exercises/glute_bridge.json)，但它是仰卧抬臀的臀桥，文件还标记 `draft`；不是手脚支撑的全身下腰，也不是已交付的完整 GLB 动捕。
-- 本轮未核实免费 GitHub 上可直接用于本项目的下腰／一字马完整动作文件。没有为这类目标动作新增二进制样本，上一轮的 7 个样本数量不变。
+- 未核实免费 GitHub 上可直接用于本项目的下腰／一字马完整动作文件。固定清单阶段补充的两个 GLB 用于基础坐姿与转身，不能计作这些柔韧动作已补齐。
 
 ### 对当前 VRM 的接入建议
 
@@ -108,9 +111,9 @@ addon 的 Walk_Female／Run_Female 具有连续时间采样及旋转、平移、
 
 `D:\Prism Route\research\motion_candidates\2026-10-08`
 
-共有 7 个二进制文件（1 GLB + 6 VRMA），合计 6,436,456 字节，约 6.14 MiB。
-`sources.json` 和 `inspection.json` 保留取得地址、作者、校验值和基本结构结果。
-仓库中的 `docs/INDEPENDENT_MOTION_SAMPLE_MANIFEST.json` 保存同一份调查记录；二进制样本本轮没有提交到 Git，也没有接入默认人物。
+当前共有 9 个二进制文件（3 GLB + 6 VRMA），合计 14,118,476 字节，约 13.46 MiB。
+`sources.json`、`inspection.json` 与仓库 `docs/INDEPENDENT_MOTION_SAMPLE_MANIFEST.json` 保留最初 7 样本的历史调查记录。
+当前完整文件、校验值和 42 个选中片段以本机 `download_plan.json`／仓库 `docs/MOTION_DOWNLOAD_MANIFEST.json` 为准；二进制没有提交到 Git，也没有接入默认人物。
 
 已检查：文件真实存在、二进制格式、片段名、动画数量、时间采样、通道、六个 VRMA 的上游校验值。
 尚未检查：Godot 导入、VRM 重定向、画面、脚底滑动、循环接缝、动作风格、道具与手部接触。

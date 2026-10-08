@@ -4,7 +4,8 @@
 本轮完成公开来源、格式和项目接入方式的调研，未下载收费动作、提取游戏数据或实机重定向。后续已取得独立 CC0 样本并检查二进制数据，见下方更新。
 
 补充更新：用户希望避免大型游戏安装包，现以[独立动作资源调查](INDEPENDENT_MOTION_SOURCES.md)为当前选型入口。
-已找到 Mesh2Motion 的 `Walk_Female`／`Run_Female`，以及 GitHub 可逐个取得的待机、步行、慢跑和互动 VRMA；样本共约 6.14 MiB，尚未实机播放。
+已找到 Mesh2Motion 的 `Walk_Female`／`Run_Female`，以及 GitHub 可逐个取得的待机、步行、慢跑和互动 VRMA。
+当前已固定[9 文件下载清单与 42 片段覆盖表](MOTION_DOWNLOAD_CHECKLIST.md)，取得的基础样本共约 13.46 MiB；柔韧动作仍列为缺项，尚未实机播放。
 
 ## 结论与优先级
 

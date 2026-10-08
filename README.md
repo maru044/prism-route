@@ -75,6 +75,9 @@ composition without loading the island.
   alternatives and a first retargeting test plan.
 - `docs/INDEPENDENT_MOTION_SOURCES.md` — current independent motion shortlist:
   CC0 female walk/run clips, small VRMA samples, provenance and inspection results.
+- `docs/MOTION_DOWNLOAD_CHECKLIST.md` — fixed nine-file download list and
+  42 selected clips; `docs/MOTION_DOWNLOAD_MANIFEST.json` pins URLs, hashes and
+  exact clip names, with unresolved flexibility and transition gaps tracked.
 - `scenes/product_preview.tscn` — isolated collectible product rendering study;
   four selectable shapes and clear gel, frosted silicone or polished steel;
   see `docs/PRODUCT_RENDERING_PLAN.md` for controls, current results and next steps.

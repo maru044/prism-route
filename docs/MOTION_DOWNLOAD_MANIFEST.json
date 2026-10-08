@@ -1,0 +1,1841 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-08",
+  "scope": "Standing, female walk/run, supporting locomotion, turns, jumps, crouch, chair sit cycle, daily interaction, floor exercises and camper scene tests",
+  "cache": "D:\\Prism Route\\research\\motion_candidates\\2026-10-08",
+  "total_files": 9,
+  "total_bytes": 14118476,
+  "total_source_clips": 184,
+  "selected_clips": 42,
+  "validation": "Every selected clip exists and has nonzero time span and channels; file sizes and hashes inspected; no Godot import, retargeting or visual playback yet",
+  "files": [
+    {
+      "id": "D01",
+      "file": "human-addon-animations.glb",
+      "bytes": 5292804,
+      "sha256": "a0d64d555e0d492026b72d58bf8e16c5e86779295f9093e376dcc001915c2c95",
+      "download_url": "https://raw.githubusercontent.com/Mesh2Motion/mesh2motion-app/653a9698f5f315523072f1c3ff3496100401317b/static/animations/human-addon-animations.glb",
+      "source_url": "https://github.com/Mesh2Motion/mesh2motion-app/blob/main/static/animations/human-addon-animations.glb",
+      "creator": "Mesh2Motion contributors (per repository asset license)",
+      "license": "CC0 1.0 Universal",
+      "license_url": "https://github.com/Mesh2Motion/mesh2motion-app/blob/653a9698f5f315523072f1c3ff3496100401317b/LICENSE-CC0.MD",
+      "status": "downloaded_binary_verified",
+      "animation_count": 75,
+      "clips": [
+        {
+          "name": "Angry",
+          "start_seconds": 0.041667,
+          "end_seconds": 0.833333,
+          "time_span_seconds": 0.791667,
+          "channel_count": 198
+        },
+        {
+          "name": "Attack_Ground_Pound",
+          "start_seconds": 0.041667,
+          "end_seconds": 2.708333,
+          "time_span_seconds": 2.666667,
+          "channel_count": 198
+        },
+        {
+          "name": "Backflip",
+          "start_seconds": 0.041667,
+          "end_seconds": 2.5,
+          "time_span_seconds": 2.458333,
+          "channel_count": 198
+        },
+        {
+          "name": "Bow",
+          "start_seconds": 0.041667,
+          "end_seconds": 3.75,
+          "time_span_seconds": 3.708333,
+          "channel_count": 198
+        },
+        {
+          "name": "Bow Pull Back",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.25,
+          "time_span_seconds": 1.208333,
+          "channel_count": 198
+        },
+        {
+          "name": "Bow Pull Hold",
+          "start_seconds": 0.041667,
+          "end_seconds": 0.25,
+          "time_span_seconds": 0.208333,
+          "channel_count": 198
+        },
+        {
+          "name": "Bow Release",
+          "start_seconds": 0.041667,
+          "end_seconds": 0.5,
+          "time_span_seconds": 0.458333,
+          "channel_count": 198
+        },
+        {
+          "name": "Climb Ladder",
+          "start_seconds": 0.041667,
+          "end_seconds": 3.625,
+          "time_span_seconds": 3.583333,
+          "channel_count": 198
+        },
+        {
+          "name": "Climb Wall",
+          "start_seconds": 0.041667,
+          "end_seconds": 2.083333,
+          "time_span_seconds": 2.041667,
+          "channel_count": 198
+        },
+        {
+          "name": "Confused",
+          "start_seconds": 0.041667,
+          "end_seconds": 2.916667,
+          "time_span_seconds": 2.875,
+          "channel_count": 198
+        },
+        {
+          "name": "Consume Item",
+          "start_seconds": 0.041667,
+          "end_seconds": 4.166667,
+          "time_span_seconds": 4.125,
+          "channel_count": 198
+        },
+        {
+          "name": "Crawl",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.708333,
+          "time_span_seconds": 1.666667,
+          "channel_count": 198
+        },
+        {
+          "name": "Crawl RM",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.708333,
+          "time_span_seconds": 1.666667,
+          "channel_count": 198
+        },
+        {
+          "name": "Dance Body Roll",
+          "start_seconds": 0.041667,
+          "end_seconds": 6.5,
+          "time_span_seconds": 6.458333,
+          "channel_count": 198
+        },
+        {
+          "name": "Dance Charleston",
+          "start_seconds": 0.041667,
+          "end_seconds": 2.333333,
+          "time_span_seconds": 2.291667,
+          "channel_count": 198
+        },
+        {
+          "name": "Dance Reach Hip",
+          "start_seconds": 0.041667,
+          "end_seconds": 2.541667,
+          "time_span_seconds": 2.5,
+          "channel_count": 198
+        },
+        {
+          "name": "Death_A",
+          "start_seconds": 0.041667,
+          "end_seconds": 4.5,
+          "time_span_seconds": 4.458333,
+          "channel_count": 198
+        },
+        {
+          "name": "Death_B",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.875,
+          "time_span_seconds": 1.833333,
+          "channel_count": 198
+        },
+        {
+          "name": "Death_C",
+          "start_seconds": 0.041667,
+          "end_seconds": 2.208333,
+          "time_span_seconds": 2.166667,
+          "channel_count": 198
+        },
+        {
+          "name": "Defend",
+          "start_seconds": 0.041667,
+          "end_seconds": 0.958333,
+          "time_span_seconds": 0.916667,
+          "channel_count": 198
+        },
+        {
+          "name": "Dizzy",
+          "start_seconds": 0.041667,
+          "end_seconds": 2.416667,
+          "time_span_seconds": 2.375,
+          "channel_count": 198
+        },
+        {
+          "name": "Dodge_back",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.0,
+          "time_span_seconds": 0.958333,
+          "channel_count": 198
+        },
+        {
+          "name": "Dodge_back_RM",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.0,
+          "time_span_seconds": 0.958333,
+          "channel_count": 198
+        },
+        {
+          "name": "Dodge_left",
+          "start_seconds": 0.041667,
+          "end_seconds": 0.833333,
+          "time_span_seconds": 0.791667,
+          "channel_count": 198
+        },
+        {
+          "name": "Dodge_left_RM",
+          "start_seconds": 0.041667,
+          "end_seconds": 0.833333,
+          "time_span_seconds": 0.791667,
+          "channel_count": 198
+        },
+        {
+          "name": "Dodge_right",
+          "start_seconds": 0.041667,
+          "end_seconds": 0.833333,
+          "time_span_seconds": 0.791667,
+          "channel_count": 198
+        },
+        {
+          "name": "Dodge_right_RM",
+          "start_seconds": 0.041667,
+          "end_seconds": 0.833333,
+          "time_span_seconds": 0.791667,
+          "channel_count": 198
+        },
+        {
+          "name": "Fighting Idle",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.708333,
+          "time_span_seconds": 1.666667,
+          "channel_count": 198
+        },
+        {
+          "name": "Fighting Left Jab",
+          "start_seconds": 0.041667,
+          "end_seconds": 0.916667,
+          "time_span_seconds": 0.875,
+          "channel_count": 198
+        },
+        {
+          "name": "Fighting Right Jab",
+          "start_seconds": 0.041667,
+          "end_seconds": 0.916667,
+          "time_span_seconds": 0.875,
+          "channel_count": 198
+        },
+        {
+          "name": "Flying Forward",
+          "start_seconds": 0.041667,
+          "end_seconds": 0.5,
+          "time_span_seconds": 0.458333,
+          "channel_count": 198
+        },
+        {
+          "name": "Flying Forward Super",
+          "start_seconds": 0.041667,
+          "end_seconds": 0.5,
+          "time_span_seconds": 0.458333,
+          "channel_count": 198
+        },
+        {
+          "name": "Glide",
+          "start_seconds": 0.041667,
+          "end_seconds": 0.791667,
+          "time_span_seconds": 0.75,
+          "channel_count": 198
+        },
+        {
+          "name": "Greeting",
+          "start_seconds": 0.041667,
+          "end_seconds": 4.833333,
+          "time_span_seconds": 4.791667,
+          "channel_count": 198
+        },
+        {
+          "name": "Head Nod",
+          "start_seconds": 0.041667,
+          "end_seconds": 0.875,
+          "time_span_seconds": 0.833333,
+          "channel_count": 198
+        },
+        {
+          "name": "Idle Hurt",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.666667,
+          "time_span_seconds": 1.625,
+          "channel_count": 198
+        },
+        {
+          "name": "Idle Listening",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.708333,
+          "time_span_seconds": 1.666667,
+          "channel_count": 198
+        },
+        {
+          "name": "Idle_Subtle",
+          "start_seconds": 0.041667,
+          "end_seconds": 2.583333,
+          "time_span_seconds": 2.541667,
+          "channel_count": 198
+        },
+        {
+          "name": "Jump_2",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.625,
+          "time_span_seconds": 1.583333,
+          "channel_count": 198
+        },
+        {
+          "name": "Jump_2_RM",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.625,
+          "time_span_seconds": 1.583333,
+          "channel_count": 198
+        },
+        {
+          "name": "Jumping Jacks",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.25,
+          "time_span_seconds": 1.208333,
+          "channel_count": 198
+        },
+        {
+          "name": "Kneeling Tired",
+          "start_seconds": 0.041667,
+          "end_seconds": 0.833333,
+          "time_span_seconds": 0.791667,
+          "channel_count": 198
+        },
+        {
+          "name": "Ladder_Idle",
+          "start_seconds": 0.041667,
+          "end_seconds": 2.5,
+          "time_span_seconds": 2.458333,
+          "channel_count": 198
+        },
+        {
+          "name": "Land_Three_Point",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.375,
+          "time_span_seconds": 1.333333,
+          "channel_count": 198
+        },
+        {
+          "name": "Ledge Hang",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.916667,
+          "time_span_seconds": 1.875,
+          "channel_count": 198
+        },
+        {
+          "name": "Levitate Entrance",
+          "start_seconds": 0.041667,
+          "end_seconds": 2.0,
+          "time_span_seconds": 1.958333,
+          "channel_count": 198
+        },
+        {
+          "name": "Levitate Idle",
+          "start_seconds": 0.041667,
+          "end_seconds": 2.0,
+          "time_span_seconds": 1.958333,
+          "channel_count": 198
+        },
+        {
+          "name": "Meditate",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.5,
+          "time_span_seconds": 1.458333,
+          "channel_count": 198
+        },
+        {
+          "name": "Pipe Climb",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.875,
+          "time_span_seconds": 1.833333,
+          "channel_count": 198
+        },
+        {
+          "name": "Power Up",
+          "start_seconds": 0.041667,
+          "end_seconds": 0.75,
+          "time_span_seconds": 0.708333,
+          "channel_count": 198
+        },
+        {
+          "name": "Pushup",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.541667,
+          "time_span_seconds": 1.5,
+          "channel_count": 198
+        },
+        {
+          "name": "Reject",
+          "start_seconds": 0.041667,
+          "end_seconds": 3.791667,
+          "time_span_seconds": 3.75,
+          "channel_count": 198
+        },
+        {
+          "name": "Rest Pose",
+          "start_seconds": 0.041667,
+          "end_seconds": 0.416667,
+          "time_span_seconds": 0.375,
+          "channel_count": 198
+        },
+        {
+          "name": "Run Jump",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.25,
+          "time_span_seconds": 1.208333,
+          "channel_count": 198
+        },
+        {
+          "name": "Run_Anime",
+          "start_seconds": 0.041667,
+          "end_seconds": 0.75,
+          "time_span_seconds": 0.708333,
+          "channel_count": 198
+        },
+        {
+          "name": "Run_Female",
+          "start_seconds": 0.041667,
+          "end_seconds": 0.833333,
+          "time_span_seconds": 0.791667,
+          "channel_count": 198
+        },
+        {
+          "name": "Run_Stealth",
+          "start_seconds": 0.041667,
+          "end_seconds": 0.541667,
+          "time_span_seconds": 0.5,
+          "channel_count": 198
+        },
+        {
+          "name": "Shivering",
+          "start_seconds": 0.041667,
+          "end_seconds": 0.25,
+          "time_span_seconds": 0.208333,
+          "channel_count": 198
+        },
+        {
+          "name": "Sleeping",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.666667,
+          "time_span_seconds": 1.625,
+          "channel_count": 198
+        },
+        {
+          "name": "Strafe_left",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.0,
+          "time_span_seconds": 0.958333,
+          "channel_count": 198
+        },
+        {
+          "name": "Strafe_right",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.0,
+          "time_span_seconds": 0.958333,
+          "channel_count": 198
+        },
+        {
+          "name": "Sword_Attack_Air_Vertical",
+          "start_seconds": 0.041667,
+          "end_seconds": 4.833333,
+          "time_span_seconds": 4.791667,
+          "channel_count": 198
+        },
+        {
+          "name": "Throw Object",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.875,
+          "time_span_seconds": 1.833333,
+          "channel_count": 198
+        },
+        {
+          "name": "Tired Hunched",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.041667,
+          "time_span_seconds": 1.0,
+          "channel_count": 198
+        },
+        {
+          "name": "Two-hand Blast",
+          "start_seconds": 0.041667,
+          "end_seconds": 0.458333,
+          "time_span_seconds": 0.416667,
+          "channel_count": 198
+        },
+        {
+          "name": "Victory",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.666667,
+          "time_span_seconds": 1.625,
+          "channel_count": 198
+        },
+        {
+          "name": "Victory Fist Pump",
+          "start_seconds": 0.041667,
+          "end_seconds": 2.25,
+          "time_span_seconds": 2.208333,
+          "channel_count": 198
+        },
+        {
+          "name": "Walk_Backwards",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.0,
+          "time_span_seconds": 0.958333,
+          "channel_count": 198
+        },
+        {
+          "name": "Walk_Female",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.375,
+          "time_span_seconds": 1.333333,
+          "channel_count": 198
+        },
+        {
+          "name": "Walk_Large",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.416667,
+          "time_span_seconds": 1.375,
+          "channel_count": 198
+        },
+        {
+          "name": "Walk_Stealth",
+          "start_seconds": 0.041667,
+          "end_seconds": 1.5,
+          "time_span_seconds": 1.458333,
+          "channel_count": 198
+        },
+        {
+          "name": "Zombie Yell",
+          "start_seconds": 0.041667,
+          "end_seconds": 3.708333,
+          "time_span_seconds": 3.666667,
+          "channel_count": 198
+        },
+        {
+          "name": "Zombie_Idle_Crouch",
+          "start_seconds": 0.041667,
+          "end_seconds": 2.958333,
+          "time_span_seconds": 2.916667,
+          "channel_count": 198
+        },
+        {
+          "name": "Zombie_Rise",
+          "start_seconds": 0.041667,
+          "end_seconds": 3.375,
+          "time_span_seconds": 3.333333,
+          "channel_count": 198
+        },
+        {
+          "name": "Zombie_Walk_2",
+          "start_seconds": 0.041667,
+          "end_seconds": 2.916667,
+          "time_span_seconds": 2.875,
+          "channel_count": 198
+        }
+      ]
+    },
+    {
+      "id": "D02",
+      "file": "human-base-animations.glb",
+      "bytes": 5656648,
+      "sha256": "406eb0a8dc4ab366e623b79b6e3005a4951392e1bda78ae39c1099d31147733c",
+      "download_url": "https://raw.githubusercontent.com/Mesh2Motion/mesh2motion-app/653a9698f5f315523072f1c3ff3496100401317b/static/animations/human-base-animations.glb",
+      "source_url": "https://github.com/Mesh2Motion/mesh2motion-app/blob/653a9698f5f315523072f1c3ff3496100401317b/static/animations/human-base-animations.glb",
+      "creator": "Mesh2Motion contributors (per repository asset license)",
+      "license": "CC0 1.0 Universal",
+      "license_url": "https://github.com/Mesh2Motion/mesh2motion-app/blob/653a9698f5f315523072f1c3ff3496100401317b/LICENSE-CC0.MD",
+      "status": "downloaded_binary_verified",
+      "animation_count": 87,
+      "clips": [
+        {
+          "name": "Chest_Open",
+          "start_seconds": 0.0,
+          "end_seconds": 1.375,
+          "time_span_seconds": 1.375,
+          "channel_count": 198
+        },
+        {
+          "name": "Chop_Tree",
+          "start_seconds": 0.0,
+          "end_seconds": 0.958333,
+          "time_span_seconds": 0.958333,
+          "channel_count": 198
+        },
+        {
+          "name": "ClimbUp_1m_RM",
+          "start_seconds": 0.0,
+          "end_seconds": 0.666667,
+          "time_span_seconds": 0.666667,
+          "channel_count": 198
+        },
+        {
+          "name": "Consume",
+          "start_seconds": 0.0,
+          "end_seconds": 1.333333,
+          "time_span_seconds": 1.333333,
+          "channel_count": 198
+        },
+        {
+          "name": "Crouch_Idle",
+          "start_seconds": 0.0,
+          "end_seconds": 3.666667,
+          "time_span_seconds": 3.666667,
+          "channel_count": 198
+        },
+        {
+          "name": "Crouch_Walk",
+          "start_seconds": 0.0,
+          "end_seconds": 2.5,
+          "time_span_seconds": 2.5,
+          "channel_count": 198
+        },
+        {
+          "name": "Dance_Simple",
+          "start_seconds": 0.0,
+          "end_seconds": 1.25,
+          "time_span_seconds": 1.25,
+          "channel_count": 198
+        },
+        {
+          "name": "Death_D",
+          "start_seconds": 0.0,
+          "end_seconds": 2.166667,
+          "time_span_seconds": 2.166667,
+          "channel_count": 198
+        },
+        {
+          "name": "Driving",
+          "start_seconds": 0.0,
+          "end_seconds": 2.083333,
+          "time_span_seconds": 2.083333,
+          "channel_count": 198
+        },
+        {
+          "name": "Farm_Harvest",
+          "start_seconds": 0.0,
+          "end_seconds": 2.333333,
+          "time_span_seconds": 2.333333,
+          "channel_count": 198
+        },
+        {
+          "name": "Farm_PlantSeed",
+          "start_seconds": 0.0,
+          "end_seconds": 2.791667,
+          "time_span_seconds": 2.791667,
+          "channel_count": 198
+        },
+        {
+          "name": "Farm_Watering",
+          "start_seconds": 0.0,
+          "end_seconds": 3.833333,
+          "time_span_seconds": 3.833333,
+          "channel_count": 198
+        },
+        {
+          "name": "Fixing_Kneeling",
+          "start_seconds": 0.0,
+          "end_seconds": 6.5,
+          "time_span_seconds": 6.5,
+          "channel_count": 198
+        },
+        {
+          "name": "Hit_Chest",
+          "start_seconds": 0.0,
+          "end_seconds": 0.416667,
+          "time_span_seconds": 0.416667,
+          "channel_count": 199
+        },
+        {
+          "name": "Hit_Head",
+          "start_seconds": 0.0,
+          "end_seconds": 0.541667,
+          "time_span_seconds": 0.541667,
+          "channel_count": 198
+        },
+        {
+          "name": "Hit_Knockback",
+          "start_seconds": 0.0,
+          "end_seconds": 0.833333,
+          "time_span_seconds": 0.833333,
+          "channel_count": 198
+        },
+        {
+          "name": "Hit_Knockback_RM",
+          "start_seconds": 0.0,
+          "end_seconds": 0.625,
+          "time_span_seconds": 0.625,
+          "channel_count": 198
+        },
+        {
+          "name": "Idle_A",
+          "start_seconds": 0.0,
+          "end_seconds": 3.125,
+          "time_span_seconds": 3.125,
+          "channel_count": 198
+        },
+        {
+          "name": "Idle_FoldArms",
+          "start_seconds": 0.0,
+          "end_seconds": 2.5,
+          "time_span_seconds": 2.5,
+          "channel_count": 198
+        },
+        {
+          "name": "Idle_Lantern",
+          "start_seconds": 0.0,
+          "end_seconds": 2.5,
+          "time_span_seconds": 2.5,
+          "channel_count": 198
+        },
+        {
+          "name": "Idle_Rail",
+          "start_seconds": 0.0,
+          "end_seconds": 2.5,
+          "time_span_seconds": 2.5,
+          "channel_count": 198
+        },
+        {
+          "name": "Idle_Rail_Call",
+          "start_seconds": 0.0,
+          "end_seconds": 2.5,
+          "time_span_seconds": 2.5,
+          "channel_count": 198
+        },
+        {
+          "name": "Idle_ShakeOff",
+          "start_seconds": 0.0,
+          "end_seconds": 2.5,
+          "time_span_seconds": 2.5,
+          "channel_count": 198
+        },
+        {
+          "name": "Idle_Shield",
+          "start_seconds": 0.0,
+          "end_seconds": 2.5,
+          "time_span_seconds": 2.5,
+          "channel_count": 198
+        },
+        {
+          "name": "Idle_Shield_Break",
+          "start_seconds": 0.0,
+          "end_seconds": 1.083333,
+          "time_span_seconds": 1.083333,
+          "channel_count": 198
+        },
+        {
+          "name": "Idle_Sword",
+          "start_seconds": 0.0,
+          "end_seconds": 2.083333,
+          "time_span_seconds": 2.083333,
+          "channel_count": 198
+        },
+        {
+          "name": "Idle_Talking",
+          "start_seconds": 0.0,
+          "end_seconds": 3.666667,
+          "time_span_seconds": 3.666667,
+          "channel_count": 198
+        },
+        {
+          "name": "Idle_TalkingPhone",
+          "start_seconds": 0.0,
+          "end_seconds": 2.916667,
+          "time_span_seconds": 2.916667,
+          "channel_count": 198
+        },
+        {
+          "name": "Idle_Torch",
+          "start_seconds": 0.0,
+          "end_seconds": 1.583333,
+          "time_span_seconds": 1.583333,
+          "channel_count": 198
+        },
+        {
+          "name": "Interact",
+          "start_seconds": 0.0,
+          "end_seconds": 2.5,
+          "time_span_seconds": 2.5,
+          "channel_count": 198
+        },
+        {
+          "name": "Jog",
+          "start_seconds": 0.0,
+          "end_seconds": 1.166667,
+          "time_span_seconds": 1.166667,
+          "channel_count": 198
+        },
+        {
+          "name": "Jump_air",
+          "start_seconds": 0.0,
+          "end_seconds": 3.125,
+          "time_span_seconds": 3.125,
+          "channel_count": 198
+        },
+        {
+          "name": "Jump_Land",
+          "start_seconds": 0.0,
+          "end_seconds": 1.583333,
+          "time_span_seconds": 1.583333,
+          "channel_count": 198
+        },
+        {
+          "name": "Jump_Start",
+          "start_seconds": 0.0,
+          "end_seconds": 1.666667,
+          "time_span_seconds": 1.666667,
+          "channel_count": 198
+        },
+        {
+          "name": "LayToIdle",
+          "start_seconds": 0.0,
+          "end_seconds": 1.5,
+          "time_span_seconds": 1.5,
+          "channel_count": 198
+        },
+        {
+          "name": "Melee_Hook",
+          "start_seconds": 0.0,
+          "end_seconds": 0.458333,
+          "time_span_seconds": 0.458333,
+          "channel_count": 198
+        },
+        {
+          "name": "Melee_Hook_Rec",
+          "start_seconds": 0.0,
+          "end_seconds": 0.583333,
+          "time_span_seconds": 0.583333,
+          "channel_count": 198
+        },
+        {
+          "name": "NinjaJump_Idle",
+          "start_seconds": 0.0,
+          "end_seconds": 2.0,
+          "time_span_seconds": 2.0,
+          "channel_count": 198
+        },
+        {
+          "name": "NinjaJump_Land",
+          "start_seconds": 0.0,
+          "end_seconds": 1.25,
+          "time_span_seconds": 1.25,
+          "channel_count": 198
+        },
+        {
+          "name": "NinjaJump_Start",
+          "start_seconds": 0.0,
+          "end_seconds": 0.958333,
+          "time_span_seconds": 0.958333,
+          "channel_count": 198
+        },
+        {
+          "name": "OverhandThrow",
+          "start_seconds": 0.0,
+          "end_seconds": 1.333333,
+          "time_span_seconds": 1.333333,
+          "channel_count": 198
+        },
+        {
+          "name": "PickUp_Table",
+          "start_seconds": 0.0,
+          "end_seconds": 1.041667,
+          "time_span_seconds": 1.041667,
+          "channel_count": 198
+        },
+        {
+          "name": "Pistol_Aim_Down",
+          "start_seconds": 0.0,
+          "end_seconds": 0.208333,
+          "time_span_seconds": 0.208333,
+          "channel_count": 198
+        },
+        {
+          "name": "Pistol_Aim_Neutral",
+          "start_seconds": 0.0,
+          "end_seconds": 0.208333,
+          "time_span_seconds": 0.208333,
+          "channel_count": 198
+        },
+        {
+          "name": "Pistol_Aim_Up",
+          "start_seconds": 0.0,
+          "end_seconds": 0.208333,
+          "time_span_seconds": 0.208333,
+          "channel_count": 198
+        },
+        {
+          "name": "Pistol_Idle",
+          "start_seconds": 0.0,
+          "end_seconds": 2.083333,
+          "time_span_seconds": 2.083333,
+          "channel_count": 198
+        },
+        {
+          "name": "Pistol_Reload",
+          "start_seconds": 0.0,
+          "end_seconds": 2.083333,
+          "time_span_seconds": 2.083333,
+          "channel_count": 198
+        },
+        {
+          "name": "Pistol_Shoot",
+          "start_seconds": 0.0,
+          "end_seconds": 0.791667,
+          "time_span_seconds": 0.791667,
+          "channel_count": 198
+        },
+        {
+          "name": "Punch_Cross",
+          "start_seconds": 0.0,
+          "end_seconds": 1.25,
+          "time_span_seconds": 1.25,
+          "channel_count": 198
+        },
+        {
+          "name": "Punch_Jab",
+          "start_seconds": 0.0,
+          "end_seconds": 1.083333,
+          "time_span_seconds": 1.083333,
+          "channel_count": 198
+        },
+        {
+          "name": "Push",
+          "start_seconds": 0.0,
+          "end_seconds": 3.333333,
+          "time_span_seconds": 3.333333,
+          "channel_count": 198
+        },
+        {
+          "name": "Roll",
+          "start_seconds": 0.0,
+          "end_seconds": 1.833333,
+          "time_span_seconds": 1.833333,
+          "channel_count": 198
+        },
+        {
+          "name": "Roll_RM",
+          "start_seconds": 0.0,
+          "end_seconds": 1.833333,
+          "time_span_seconds": 1.833333,
+          "channel_count": 198
+        },
+        {
+          "name": "Shield_Dash_RM",
+          "start_seconds": 0.0,
+          "end_seconds": 1.083333,
+          "time_span_seconds": 1.083333,
+          "channel_count": 198
+        },
+        {
+          "name": "Shield_OneShot",
+          "start_seconds": 0.0,
+          "end_seconds": 0.833333,
+          "time_span_seconds": 0.833333,
+          "channel_count": 198
+        },
+        {
+          "name": "Sitting_Enter",
+          "start_seconds": 0.0,
+          "end_seconds": 1.625,
+          "time_span_seconds": 1.625,
+          "channel_count": 198
+        },
+        {
+          "name": "Sitting_Exit",
+          "start_seconds": 0.0,
+          "end_seconds": 1.291667,
+          "time_span_seconds": 1.291667,
+          "channel_count": 198
+        },
+        {
+          "name": "Sitting_Idle",
+          "start_seconds": 0.0,
+          "end_seconds": 2.083333,
+          "time_span_seconds": 2.083333,
+          "channel_count": 198
+        },
+        {
+          "name": "Sitting_Talking",
+          "start_seconds": 0.0,
+          "end_seconds": 3.666667,
+          "time_span_seconds": 3.666667,
+          "channel_count": 198
+        },
+        {
+          "name": "Slide",
+          "start_seconds": 0.0,
+          "end_seconds": 2.0,
+          "time_span_seconds": 2.0,
+          "channel_count": 198
+        },
+        {
+          "name": "Slide_Exit",
+          "start_seconds": 0.0,
+          "end_seconds": 0.5,
+          "time_span_seconds": 0.5,
+          "channel_count": 198
+        },
+        {
+          "name": "Slide_Start",
+          "start_seconds": 0.0,
+          "end_seconds": 0.833333,
+          "time_span_seconds": 0.833333,
+          "channel_count": 198
+        },
+        {
+          "name": "Spell_Simple_Enter",
+          "start_seconds": 0.0,
+          "end_seconds": 0.666667,
+          "time_span_seconds": 0.666667,
+          "channel_count": 198
+        },
+        {
+          "name": "Spell_Simple_Exit",
+          "start_seconds": 0.0,
+          "end_seconds": 0.541667,
+          "time_span_seconds": 0.541667,
+          "channel_count": 198
+        },
+        {
+          "name": "Spell_Simple_Idle",
+          "start_seconds": 0.0,
+          "end_seconds": 2.666667,
+          "time_span_seconds": 2.666667,
+          "channel_count": 198
+        },
+        {
+          "name": "Spell_Simple_Shoot",
+          "start_seconds": 0.0,
+          "end_seconds": 0.625,
+          "time_span_seconds": 0.625,
+          "channel_count": 198
+        },
+        {
+          "name": "Sprint",
+          "start_seconds": 0.0,
+          "end_seconds": 0.833333,
+          "time_span_seconds": 0.833333,
+          "channel_count": 198
+        },
+        {
+          "name": "Swim_Fwd",
+          "start_seconds": 0.0,
+          "end_seconds": 1.666667,
+          "time_span_seconds": 1.666667,
+          "channel_count": 198
+        },
+        {
+          "name": "Swim_Idle",
+          "start_seconds": 0.0,
+          "end_seconds": 4.166667,
+          "time_span_seconds": 4.166667,
+          "channel_count": 198
+        },
+        {
+          "name": "Sword_Attack",
+          "start_seconds": 0.0,
+          "end_seconds": 1.916667,
+          "time_span_seconds": 1.916667,
+          "channel_count": 198
+        },
+        {
+          "name": "Sword_Attack_RM",
+          "start_seconds": 0.0,
+          "end_seconds": 1.916667,
+          "time_span_seconds": 1.916667,
+          "channel_count": 198
+        },
+        {
+          "name": "Sword_Block",
+          "start_seconds": 0.0,
+          "end_seconds": 1.25,
+          "time_span_seconds": 1.25,
+          "channel_count": 198
+        },
+        {
+          "name": "Sword_Dash_RM",
+          "start_seconds": 0.0,
+          "end_seconds": 1.583333,
+          "time_span_seconds": 1.583333,
+          "channel_count": 198
+        },
+        {
+          "name": "Sword_Regular_A",
+          "start_seconds": 0.0,
+          "end_seconds": 0.458333,
+          "time_span_seconds": 0.458333,
+          "channel_count": 198
+        },
+        {
+          "name": "Sword_Regular_A_Rec",
+          "start_seconds": 0.0,
+          "end_seconds": 0.958333,
+          "time_span_seconds": 0.958333,
+          "channel_count": 198
+        },
+        {
+          "name": "Sword_Regular_B",
+          "start_seconds": 0.0,
+          "end_seconds": 0.541667,
+          "time_span_seconds": 0.541667,
+          "channel_count": 198
+        },
+        {
+          "name": "Sword_Regular_B_Rec",
+          "start_seconds": 0.0,
+          "end_seconds": 1.0,
+          "time_span_seconds": 1.0,
+          "channel_count": 198
+        },
+        {
+          "name": "Sword_Regular_C",
+          "start_seconds": 0.0,
+          "end_seconds": 1.666667,
+          "time_span_seconds": 1.666667,
+          "channel_count": 198
+        },
+        {
+          "name": "Sword_Regular_C_RM",
+          "start_seconds": 0.0,
+          "end_seconds": 1.666667,
+          "time_span_seconds": 1.666667,
+          "channel_count": 396
+        },
+        {
+          "name": "Sword_Regular_Combo",
+          "start_seconds": 0.0,
+          "end_seconds": 2.958333,
+          "time_span_seconds": 2.958333,
+          "channel_count": 198
+        },
+        {
+          "name": "Walk",
+          "start_seconds": 0.0,
+          "end_seconds": 1.666667,
+          "time_span_seconds": 1.666667,
+          "channel_count": 198
+        },
+        {
+          "name": "Walk_Carry",
+          "start_seconds": 0.0,
+          "end_seconds": 2.0,
+          "time_span_seconds": 2.0,
+          "channel_count": 198
+        },
+        {
+          "name": "Walk_Formal",
+          "start_seconds": 0.0,
+          "end_seconds": 1.666667,
+          "time_span_seconds": 1.666667,
+          "channel_count": 198
+        },
+        {
+          "name": "Yes",
+          "start_seconds": 0.0,
+          "end_seconds": 2.5,
+          "time_span_seconds": 2.5,
+          "channel_count": 198
+        },
+        {
+          "name": "Zombie_Idle",
+          "start_seconds": 0.0,
+          "end_seconds": 1.333333,
+          "time_span_seconds": 1.333333,
+          "channel_count": 198
+        },
+        {
+          "name": "Zombie_Scratch",
+          "start_seconds": 0.0,
+          "end_seconds": 1.791667,
+          "time_span_seconds": 1.791667,
+          "channel_count": 198
+        },
+        {
+          "name": "Zombie_Walk",
+          "start_seconds": 0.0,
+          "end_seconds": 1.333333,
+          "time_span_seconds": 1.333333,
+          "channel_count": 198
+        }
+      ]
+    },
+    {
+      "id": "D03",
+      "file": "human-mocap-animations.glb",
+      "bytes": 2025372,
+      "sha256": "814593d62522f5be8d6bd32df2a8fa3c7feb90a8e1a1ba43f4aaf0048555280d",
+      "download_url": "https://raw.githubusercontent.com/Mesh2Motion/mesh2motion-app/653a9698f5f315523072f1c3ff3496100401317b/static/animations/human-mocap-animations.glb",
+      "source_url": "https://github.com/Mesh2Motion/mesh2motion-app/blob/653a9698f5f315523072f1c3ff3496100401317b/static/animations/human-mocap-animations.glb",
+      "creator": "Mesh2Motion contributors (per repository asset license)",
+      "license": "CC0 1.0 Universal",
+      "license_url": "https://github.com/Mesh2Motion/mesh2motion-app/blob/653a9698f5f315523072f1c3ff3496100401317b/LICENSE-CC0.MD",
+      "status": "downloaded_binary_verified",
+      "animation_count": 16,
+      "clips": [
+        {
+          "name": "Cheer_One_arm",
+          "start_seconds": 0.0,
+          "end_seconds": 2.166667,
+          "time_span_seconds": 2.166667,
+          "channel_count": 198
+        },
+        {
+          "name": "Cheering_Two_Hands",
+          "start_seconds": 0.0,
+          "end_seconds": 1.583333,
+          "time_span_seconds": 1.583333,
+          "channel_count": 198
+        },
+        {
+          "name": "Fishing_Cast",
+          "start_seconds": 0.0,
+          "end_seconds": 2.95,
+          "time_span_seconds": 2.95,
+          "channel_count": 198
+        },
+        {
+          "name": "Fishing_Catch",
+          "start_seconds": 0.0,
+          "end_seconds": 2.05,
+          "time_span_seconds": 2.05,
+          "channel_count": 198
+        },
+        {
+          "name": "Fishing_Reel",
+          "start_seconds": 0.0,
+          "end_seconds": 1.45,
+          "time_span_seconds": 1.45,
+          "channel_count": 198
+        },
+        {
+          "name": "Golf_Drive",
+          "start_seconds": 0.0,
+          "end_seconds": 3.1,
+          "time_span_seconds": 3.1,
+          "channel_count": 198
+        },
+        {
+          "name": "Golf_idle",
+          "start_seconds": 0.0,
+          "end_seconds": 1.833333,
+          "time_span_seconds": 1.833333,
+          "channel_count": 198
+        },
+        {
+          "name": "Help_One_Arm",
+          "start_seconds": 0.0,
+          "end_seconds": 2.666667,
+          "time_span_seconds": 2.666667,
+          "channel_count": 198
+        },
+        {
+          "name": "Help_Two_Arms",
+          "start_seconds": 0.0,
+          "end_seconds": 1.583333,
+          "time_span_seconds": 1.583333,
+          "channel_count": 198
+        },
+        {
+          "name": "Insult",
+          "start_seconds": 0.0,
+          "end_seconds": 2.783333,
+          "time_span_seconds": 2.783333,
+          "channel_count": 198
+        },
+        {
+          "name": "Kick_Breach",
+          "start_seconds": 0.0,
+          "end_seconds": 1.833333,
+          "time_span_seconds": 1.833333,
+          "channel_count": 198
+        },
+        {
+          "name": "Salute",
+          "start_seconds": 0.0,
+          "end_seconds": 4.383333,
+          "time_span_seconds": 4.383333,
+          "channel_count": 198
+        },
+        {
+          "name": "Turn_Left_180",
+          "start_seconds": 0.0,
+          "end_seconds": 2.116667,
+          "time_span_seconds": 2.116667,
+          "channel_count": 198
+        },
+        {
+          "name": "Turn_Left_90",
+          "start_seconds": 0.0,
+          "end_seconds": 2.0,
+          "time_span_seconds": 2.0,
+          "channel_count": 198
+        },
+        {
+          "name": "Turn_Right_180",
+          "start_seconds": 0.0,
+          "end_seconds": 1.483333,
+          "time_span_seconds": 1.483333,
+          "channel_count": 198
+        },
+        {
+          "name": "Turn_Right_90",
+          "start_seconds": 0.0,
+          "end_seconds": 2.0,
+          "time_span_seconds": 2.0,
+          "channel_count": 198
+        }
+      ]
+    },
+    {
+      "id": "D04",
+      "file": "idle-01.vrma",
+      "bytes": 95888,
+      "sha256": "5ed6c016df035b21daaefe64751e1356387c6a33693d31366b0912ac7566ea92",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a757396fe85b995630385794ad0b8c196a29b9f/public/assets/animations/idle-01.vrma",
+      "source_url": "https://booth.pm/ja/items/6412084",
+      "creator": "sashii",
+      "license": "CC0 1.0 Universal",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "status": "downloaded_binary_verified",
+      "animation_count": 1,
+      "clips": [
+        {
+          "name": "",
+          "start_seconds": 0.0,
+          "end_seconds": 7.966667,
+          "time_span_seconds": 7.966667,
+          "channel_count": 18
+        }
+      ]
+    },
+    {
+      "id": "D05",
+      "file": "speaking-01.vrma",
+      "bytes": 37208,
+      "sha256": "ba0339d2d9755fc2e0dab06e96a0d91303d0a508c9f89f07dc17a07dc0e2535c",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a757396fe85b995630385794ad0b8c196a29b9f/public/assets/animations/speaking-01.vrma",
+      "source_url": "https://booth.pm/ja/items/6412084",
+      "creator": "sashii",
+      "license": "CC0 1.0 Universal",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "status": "downloaded_binary_verified",
+      "animation_count": 1,
+      "clips": [
+        {
+          "name": "",
+          "start_seconds": 0.0,
+          "end_seconds": 1.966667,
+          "time_span_seconds": 1.966667,
+          "channel_count": 15
+        }
+      ]
+    },
+    {
+      "id": "D06",
+      "file": "walk.vrma",
+      "bytes": 66604,
+      "sha256": "51c4158488a86a6bb99b978fb4d269e1798f9749bceaf0420473bae413fc3271",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a757396fe85b995630385794ad0b8c196a29b9f/public/assets/animations/walk.vrma",
+      "source_url": "https://booth.pm/ja/items/7861818",
+      "creator": "sashii (retarget); original Josie animation by JenJell",
+      "license": "CC0 1.0 Universal",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "status": "downloaded_binary_verified",
+      "animation_count": 1,
+      "clips": [
+        {
+          "name": "",
+          "start_seconds": 0.0,
+          "end_seconds": 0.766667,
+          "time_span_seconds": 0.766667,
+          "channel_count": 53
+        }
+      ]
+    },
+    {
+      "id": "D07",
+      "file": "run-slow.vrma",
+      "bytes": 48864,
+      "sha256": "54fff21bbbbbe6364dc812f39dd849eadb61de3888b556580143d386592d17e5",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a757396fe85b995630385794ad0b8c196a29b9f/public/assets/animations/run-slow.vrma",
+      "source_url": "https://booth.pm/ja/items/7861818",
+      "creator": "sashii (retarget); original Josie animation by JenJell",
+      "license": "CC0 1.0 Universal",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "status": "downloaded_binary_verified",
+      "animation_count": 1,
+      "clips": [
+        {
+          "name": "",
+          "start_seconds": 0.0,
+          "end_seconds": 0.708333,
+          "time_span_seconds": 0.708333,
+          "channel_count": 39
+        }
+      ]
+    },
+    {
+      "id": "D08",
+      "file": "review-phone.vrma",
+      "bytes": 281528,
+      "sha256": "54a37ca48a1d4ffb60cfc539013f59fecd48d93375b2069c6c35b5e9f416b726",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a757396fe85b995630385794ad0b8c196a29b9f/public/assets/animations/review-phone.vrma",
+      "source_url": "https://booth.pm/ja/items/5527394",
+      "creator": "へすい / rerofumi",
+      "license": "CC0 1.0 Universal",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "status": "downloaded_binary_verified",
+      "animation_count": 1,
+      "clips": [
+        {
+          "name": "",
+          "start_seconds": 0.0,
+          "end_seconds": 10.367,
+          "time_span_seconds": 10.367,
+          "channel_count": 52
+        }
+      ]
+    },
+    {
+      "id": "D09",
+      "file": "drink-water.vrma",
+      "bytes": 613560,
+      "sha256": "ba56122fecb5014f019096dcd014c0c35f1d560dcb0f6b1d55d3d66e5d69740c",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a757396fe85b995630385794ad0b8c196a29b9f/public/assets/animations/drink-water.vrma",
+      "source_url": "https://booth.pm/ja/items/5527394",
+      "creator": "へすい / rerofumi",
+      "license": "CC0 1.0 Universal",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "status": "downloaded_binary_verified",
+      "animation_count": 1,
+      "clips": [
+        {
+          "name": "",
+          "start_seconds": 0.0,
+          "end_seconds": 23.667,
+          "time_span_seconds": 23.667,
+          "channel_count": 52
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "A01",
+      "category": "待机",
+      "label_zh": "放松站立",
+      "file_id": "D01",
+      "clip_name": "Idle_Subtle",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A02",
+      "category": "待机",
+      "label_zh": "倾听站立",
+      "file_id": "D01",
+      "clip_name": "Idle Listening",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A03",
+      "category": "待机",
+      "label_zh": "抱臂站立",
+      "file_id": "D02",
+      "clip_name": "Idle_FoldArms",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A04",
+      "category": "待机",
+      "label_zh": "站立说话",
+      "file_id": "D02",
+      "clip_name": "Idle_Talking",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A05",
+      "category": "移动",
+      "label_zh": "女性步行",
+      "file_id": "D01",
+      "clip_name": "Walk_Female",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A06",
+      "category": "移动",
+      "label_zh": "女性跑步",
+      "file_id": "D01",
+      "clip_name": "Run_Female",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A07",
+      "category": "移动",
+      "label_zh": "慢跑",
+      "file_id": "D02",
+      "clip_name": "Jog",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A08",
+      "category": "移动",
+      "label_zh": "冲刺",
+      "file_id": "D02",
+      "clip_name": "Sprint",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A09",
+      "category": "移动",
+      "label_zh": "后退步行",
+      "file_id": "D01",
+      "clip_name": "Walk_Backwards",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A10",
+      "category": "移动",
+      "label_zh": "左横移",
+      "file_id": "D01",
+      "clip_name": "Strafe_left",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A11",
+      "category": "移动",
+      "label_zh": "右横移",
+      "file_id": "D01",
+      "clip_name": "Strafe_right",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A12",
+      "category": "转身",
+      "label_zh": "左转90度",
+      "file_id": "D03",
+      "clip_name": "Turn_Left_90",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A13",
+      "category": "转身",
+      "label_zh": "右转90度",
+      "file_id": "D03",
+      "clip_name": "Turn_Right_90",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A14",
+      "category": "转身",
+      "label_zh": "左转180度",
+      "file_id": "D03",
+      "clip_name": "Turn_Left_180",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A15",
+      "category": "转身",
+      "label_zh": "右转180度",
+      "file_id": "D03",
+      "clip_name": "Turn_Right_180",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A16",
+      "category": "蹲与跳",
+      "label_zh": "蹲姿待机",
+      "file_id": "D02",
+      "clip_name": "Crouch_Idle",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A17",
+      "category": "蹲与跳",
+      "label_zh": "蹲走",
+      "file_id": "D02",
+      "clip_name": "Crouch_Walk",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A18",
+      "category": "蹲与跳",
+      "label_zh": "起跳",
+      "file_id": "D02",
+      "clip_name": "Jump_Start",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A19",
+      "category": "蹲与跳",
+      "label_zh": "空中阶段",
+      "file_id": "D02",
+      "clip_name": "Jump_air",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A20",
+      "category": "蹲与跳",
+      "label_zh": "落地",
+      "file_id": "D02",
+      "clip_name": "Jump_Land",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A21",
+      "category": "坐姿",
+      "label_zh": "坐下",
+      "file_id": "D02",
+      "clip_name": "Sitting_Enter",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A22",
+      "category": "坐姿",
+      "label_zh": "坐姿待机",
+      "file_id": "D02",
+      "clip_name": "Sitting_Idle",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A23",
+      "category": "坐姿",
+      "label_zh": "坐着说话",
+      "file_id": "D02",
+      "clip_name": "Sitting_Talking",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A24",
+      "category": "坐姿",
+      "label_zh": "起身",
+      "file_id": "D02",
+      "clip_name": "Sitting_Exit",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A25",
+      "category": "互动",
+      "label_zh": "招呼",
+      "file_id": "D01",
+      "clip_name": "Greeting",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A26",
+      "category": "互动",
+      "label_zh": "一般交互",
+      "file_id": "D02",
+      "clip_name": "Interact",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A27",
+      "category": "互动",
+      "label_zh": "桌面取物",
+      "file_id": "D02",
+      "clip_name": "PickUp_Table",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A28",
+      "category": "互动",
+      "label_zh": "食用表现候选",
+      "file_id": "D02",
+      "clip_name": "Consume",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A29",
+      "category": "互动",
+      "label_zh": "打电话",
+      "file_id": "D02",
+      "clip_name": "Idle_TalkingPhone",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A30",
+      "category": "地面与运动",
+      "label_zh": "冥想",
+      "file_id": "D01",
+      "clip_name": "Meditate",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A31",
+      "category": "地面与运动",
+      "label_zh": "疲倦跪姿",
+      "file_id": "D01",
+      "clip_name": "Kneeling Tired",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A32",
+      "category": "地面与运动",
+      "label_zh": "睡眠",
+      "file_id": "D01",
+      "clip_name": "Sleeping",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A33",
+      "category": "地面与运动",
+      "label_zh": "俯卧撑",
+      "file_id": "D01",
+      "clip_name": "Pushup",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A34",
+      "category": "地面与运动",
+      "label_zh": "开合跳",
+      "file_id": "D01",
+      "clip_name": "Jumping Jacks",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A35",
+      "category": "房车场景",
+      "label_zh": "驾驶",
+      "file_id": "D02",
+      "clip_name": "Driving",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A36",
+      "category": "房车场景",
+      "label_zh": "跪姿修理",
+      "file_id": "D02",
+      "clip_name": "Fixing_Kneeling",
+      "clip_selection": "exact name",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A37",
+      "category": "对照与补充",
+      "label_zh": "另一种站立待机",
+      "file_id": "D04",
+      "clip_name": "",
+      "clip_selection": "only animation index 0",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A38",
+      "category": "对照与补充",
+      "label_zh": "另一种说话",
+      "file_id": "D05",
+      "clip_name": "",
+      "clip_selection": "only animation index 0",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A39",
+      "category": "对照与补充",
+      "label_zh": "另一种步行",
+      "file_id": "D06",
+      "clip_name": "",
+      "clip_selection": "only animation index 0",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A40",
+      "category": "对照与补充",
+      "label_zh": "另一种慢跑",
+      "file_id": "D07",
+      "clip_name": "",
+      "clip_selection": "only animation index 0",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A41",
+      "category": "对照与补充",
+      "label_zh": "看手机",
+      "file_id": "D08",
+      "clip_name": "",
+      "clip_selection": "only animation index 0",
+      "status": "source_present_playback_unverified"
+    },
+    {
+      "id": "A42",
+      "category": "对照与补充",
+      "label_zh": "喝水",
+      "file_id": "D09",
+      "clip_name": "",
+      "clip_selection": "only animation index 0",
+      "status": "source_present_playback_unverified"
+    }
+  ],
+  "unresolved_requirements": [
+    {
+      "id": "G01",
+      "label_zh": "下腰：进入／保持／退出",
+      "candidate_source": "https://www.fab.com/listings/baeb5207-7e6a-4d80-8468-5d34974e8332",
+      "status": "paid_candidate_not_downloaded_exact_wheel_pose_and_transition_unverified"
+    },
+    {
+      "id": "G02",
+      "label_zh": "纵叉：进入／保持／退出",
+      "candidate_source": "https://www.fab.com/listings/deed2056-a58d-4eac-91f8-2686b7afb4ae",
+      "status": "paid_candidate_not_downloaded_transition_and_source_format_unverified"
+    },
+    {
+      "id": "G03",
+      "label_zh": "横叉：进入／保持／退出",
+      "candidate_source": null,
+      "status": "no_verified_download_source"
+    }
+  ],
+  "additional_transition_gaps": [
+    "Stand to crouch / crouch to stand not confirmed",
+    "Sleep or meditate entry/exit not confirmed",
+    "Locomotion start/stop not confirmed; blending design remains"
+  ]
+}
