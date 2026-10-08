@@ -1,12 +1,12 @@
 # 人物动作库调研与首轮测试计划
 
-日期：2026-10-08。用户优先希望获得恋活／ILLUSION 风格的女性动作；MMD 模型转 VRM 留待后续。
+日期：2026-10-08。用户优先希望获得恋活／ILLUSION 及 CM3D2／COM3D2 风格的女性动作；MMD 模型转 VRM 留待后续。
 本轮完成公开来源、格式和项目接入方式的调研，尚未下载收费动作、提取游戏数据或实机重定向。
 
 ## 结论与优先级
 
-1. **先尝试恋活的日常动作导出**：有作者教程和开源工具作为依据，但没有确认可直接下载并导入 Godot 的完整、授权明确的恋活动作库。
-2. **AI 少女／HS2 作为第二条技术路线**：可以调查 Unity 资源工具，尚未确认针对这些游戏能直接成功导出的具体动作集。
+1. **恋活与 CM3D2／COM3D2 同列优先技术候选**：恋活有动画库教程，CM／COM 有专用 `.anm` 导入器及跨骨架转换实例。根据能取得的样本验证待机与步行；目前均未确认完整、可直接导入 Godot 且授权适合本项目的动作库。
+2. **AI 少女／HS2 作为后续技术路线**：可以调查 Unity 资源工具，尚未确认针对这些游戏能直接成功导出的具体动作集。CM／COM 的格式工具证据比这条路线更具体，但不代表已经实测通过或动作风格更好。
 3. **格式明确的女性 FBX 动作包作为备用**：优先看 VanillaLoop 和 HandMade 的移动动作；日常姿态补充看 Reallusion、Sway Motion。
 4. 动作风格必须在当前人物上对照。女性标签或换到女性模型并不保证符合想要的表演风格；骨骼比例和重定向也会影响结果。
 
@@ -36,7 +36,47 @@ KKBP 作者的 [动画导出和导入说明](https://kkbpwiki.github.io/import_p
 工具的 MIT 授权只覆盖工具代码，不能据此认定导出的游戏动作可用于本项目公开发行。
 导出技术、动作质量和动作的使用授权分别记录；游戏原动作、社区原创动作也应区分来源。
 
-## 第二选择：AI 少女／Honey Select 2
+## 补充优先候选：CM3D2／COM3D2
+
+CM3D2（Custom Maid 3D2）及 COM3D2（Custom Order Maid 3D2）属于 KISS 系列，不属于 ILLUSION；应独立调查，前一轮遗漏了这一项。
+
+### A. `.anm` → 专用 Blender 导入器 → 人形重定向
+
+[luvoid 的 Blender-CM3D2-Converter](https://github.com/luvoid/Blender-CM3D2-Converter) 是现有维护分支。
+[导入 API](https://luvoid.github.io/Blender-CM3D2-Converter/bpy/ops/import_anim.html) 明确支持 `.anm` 位置、旋转、循环与帧范围设置，并有缩放通道选项。
+[发布页](https://github.com/luvoid/Blender-CM3D2-Converter/releases) 当前列出的 `luv.2026.04.19` 支持 Blender 3.3–3.4；应准备独立转换环境，不假设项目使用的新版 Blender 可直接兼容。
+发布记录还说明 `.ex.anm` 扩展可以包含缩放动画；这类样本要额外核对通道，不与普通 `.anm` 混为一谈。
+
+计划路径：
+
+`源 .anm + 匹配的 CM／COM 源骨架 → Blender 导入 → 核对源骨架播放 → rest pose／比例／根运动处理 → 当前 VRM 人形骨架重定向并烘焙 → GLB → Godot 动画资源`
+
+`.anm` 依赖源骨骼路径和姿态，不能直接加载到任意 VRM；`.anm` 改后缀为 FBX 也不会完成转换。
+不必把 CM／COM 人物本体作为最终游戏人物，也不必等待后续 MMD 模型转换才能验证现有 VRM。
+
+[cm_to_kk_animation_transfer](https://github.com/gaudat/cm_to_kk_animation_transfer) 已提供 COM3D2 `.anm` 到恋活 Blender 骨架的转换脚本。
+它证明这类动作有跨骨架处理实例，但作者说明新骨架需要重新计算 T-pose 基础，配对位置转换未完成；不能把它当作现成 VRM 转换器。
+本项目计划直接重定向到目标人形骨架，避免额外经过恋活骨架。
+
+### B. 社区制作／导出工具与动作库的区别
+
+[COM3D2.MotionTimelineEditor.Plugin](https://github.com/kidonaru/COM3D2.MotionTimelineEditor.Plugin) 提供时间轴制作与 `.anm` 动画输出。
+作者文档区分 `_Timeline` 内的 XML 时间轴与导出的 `.anm`；输出目录按 Studio、MultipleMaids、MeidoPhotoStudio 环境不同而变化。
+它是制作工具，不是附带完整女性日常动作的资源包。
+
+[COM3D2 MOD Editor](https://github.com/MeidoPromotionAssociation/COM3D2_MOD_EDITOR) 列出 `.anm` 各版本支持，但只提供 JSON 编辑；可用于检查文件数据，不能据此认定可直接导出 FBX。
+
+本轮尚未核实作者发布的完整待机／走跑／坐起动作库。社区的静态 pose、舞蹈、时间轴以及游戏内置片段必须逐件区分，不能将“支持 .anm”写成“已经找到完整动作库”。
+首轮应取得待机和步行各一段，再检查是否存在可循环的小跑、转身、坐下与起身；不先批量转换所有文件。
+
+### 使用条款发现
+
+[MotionTimelineEditor 作者条款](https://github.com/kidonaru/COM3D2.MotionTimelineEditor.Plugin#規約) 明确禁止直接复制官方动作分发或用于别的游戏，并写明 MOD 限于指定 KISS 产品内显示使用。
+因此不能将官方动作提取转换方案直接作为 Prism Route 的发行资产方案；社区原创动作也需要核对作者及相关条款是否允许跨游戏使用。
+这些限制来自该工具作者文档。本轮尝试访问其引用的 KISS 官方条款原页失败，未声称已独立核实该原页内容。
+转换器开源代码许可证不等于游戏动作的使用许可；当前只记录技术路径，没有取得本项目使用授权。
+
+## 后续候选：AI 少女／Honey Select 2
 
 [SB3Utility](https://github.com/enimaroah/SB3Utility) 是面向 ILLUSION 游戏的资源工具。
 [AssetStudio](https://github.com/Perfare/AssetStudio) 的 README 明确支持 Animator 与 AnimationClip 一同导出 FBX，并支持 Unity 3.4–2022.1；原仓库已归档。
@@ -73,6 +113,7 @@ KKBP 作者的 [动画导出和导入说明](https://kkbpwiki.github.io/import_p
 | FBX | 检查源骨架、rest pose、单位和根运动；导入 Godot 做 Humanoid 映射，或先经 Blender 整理后导出 GLB 动画 |
 | BVH | Blender 导入骨骼运动，映射到统一人形骨架并处理根运动；面部通常另行制作 |
 | VMD | MMD Tools 加载到兼容源骨架，烘焙 IK／约束结果，再做人形重定向和 GLB 导出；不能只改骨骼名字 |
+| CM／COM `.anm`、`.ex.anm` | 专用转换器导入匹配的源骨架，再做人形重定向／GLB 导出；验证位置、旋转、缩放、帧率、循环和辅助骨，先核对跨游戏使用条款 |
 | Unity `.anim` | 区分 transform 曲线与 Humanoid muscle 数据；可能需要匹配 Avatar、Unity 播放并烘焙，不能改后缀冒充 FBX |
 | VRMA | 项目插件已有 `VRMC_vrm_animation` 支持代码；实际文件扩展名、导入流程和播放需样本验证 |
 
@@ -92,7 +133,7 @@ KKBP 作者的 [动画导出和导入说明](https://kkbpwiki.github.io/import_p
 
 先取得一个完整片段证明“导出 → 重定向 → 当前人物播放”能通，再扩展成小库。
 
-1. 优先用恋活日常待机或步行完成样本转换；安装目录未知时保留这一步待用户提供。
+1. 优先从恋活或 CM／COM 中选择来源与用途条款明确的日常待机或步行样本，完成转换链验证；需要游戏环境的路线待用户提供安装目录／版本，不能把已购买游戏等同于取得动作跨游戏使用授权。
 2. 做独立人物动作预览场景，使用现有 VRM 人物，提供旧动作与新动作同机位切换。
 3. 首轮挑选自然待机、另一种日常待机、步行、小跑、转身、坐下、坐姿待机、起身约 8 段；来源覆盖不足时分批测试。
 4. 分别保留原地与根运动用途，避免视觉脚步速度和人物移动速度不一致。
@@ -100,5 +141,5 @@ KKBP 作者的 [动画导出和导入说明](https://kkbpwiki.github.io/import_p
 6. 同一动作在源骨架和目标骨架对照，区分动作本身风格与重定向造成的扭曲。表情单独验证，不假设身体动作附带完整表情。
 7. 用户确认风格后再替换默认 Idle／Walk 等，并记录源地址、作者、取得方式、许可证和转换参数。
 
-尚待确定：本机游戏目录／版本、可获取的恋活导出工具版本、实际样本及各商业包的最终用途授权。
+尚待确定：本机恋活／CM3D2／COM3D2／AI 少女等游戏目录与版本、可获取的恋活导出工具版本、CM 转换器兼容环境、实际样本及动作的最终用途授权。
 本轮只确认候选与测试路径，未声称已下载动作或替换人物动画。

@@ -70,8 +70,9 @@ composition without loading the island.
   use VRM as the standard runtime format so they share one import and animation
   pipeline.
 - `scenes/characters/` — Godot character scene wrappers for imported VRM models.
-- `docs/CHARACTER_MOTION_LIBRARY_RESEARCH.md` — Koikatsu/ILLUSION motion
-  export research, female animation alternatives and a first retargeting test plan.
+- `docs/CHARACTER_MOTION_LIBRARY_RESEARCH.md` — Koikatsu/ILLUSION and
+  CM3D2/COM3D2 motion conversion research, usage restrictions, female animation
+  alternatives and a first retargeting test plan.
 - `scenes/product_preview.tscn` — isolated collectible product rendering study;
   four selectable shapes and clear gel, frosted silicone or polished steel;
   see `docs/PRODUCT_RENDERING_PLAN.md` for controls, current results and next steps.
