@@ -17,3 +17,4 @@
 /addons/vrm/bin/~*.TMP
 # Regenerable Blender conversion files, captures, and diagnostics.
 /.model_import_build/
+/.map_1009_build/

@@ -31,6 +31,10 @@ composition without loading the island.
 ## Project layout
 
 - `scenes/main.tscn` — entry point for the playable world LOD prototype.
+- `scenes/map_1009_drive_test.tscn` — complete `model_1009` driving test with
+  an 11 x 3 m RV, original/natural-relief terrain switching, and free camera.
+  M switches terrain and matching collision, F toggles free camera, Tab shows
+  the island, and 1–4 selects bookmarks. See `docs/MAP_1009_DRIVE_RELIEF_TEST.md`.
 - `scenes/road_projection_test.tscn` — isolated `model_1006` world-XZ road
   mask verification, with physical-road and height-mismatch comparisons.
   M switches modes, 1–4 switches viewpoints, H compares 2/4 m protection.

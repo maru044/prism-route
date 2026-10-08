@@ -1,0 +1,71 @@
+{
+  "bounds_min": [
+    -1177.4658184051514,
+    -4.256858825683594,
+    -1465.9208374023438
+  ],
+  "bounds_max": [
+    1177.4658203125,
+    185.6218719482422,
+    1465.9208679199219
+  ],
+  "model_translation": [
+    -1172.01708984375,
+    0,
+    983.4653930664062
+  ],
+  "original_terrain_triangles": 12032,
+  "natural": {
+    "vertices": 156479,
+    "triangles": 308017,
+    "changed_vertices": 131760,
+    "displacement_min_m": -2.222086873244866,
+    "displacement_max_m": 2.602264723777771,
+    "road_protected_max_displacement_m": 0.0,
+    "target_top_edge_m": 10.0,
+    "noise_layers": [
+      [
+        160.0,
+        3.0
+      ],
+      [
+        48.0,
+        0.9
+      ],
+      [
+        14.0,
+        0.12
+      ]
+    ],
+    "road_fade_distance_m": [
+      5.0,
+      28.0
+    ],
+    "boundary_fade_distance_m": 20.0,
+    "shore_fade_height_m": [
+      -0.65,
+      -0.1
+    ],
+    "relief_view": [
+      -836.8135986328125,
+      34.806480407714844,
+      58.9451904296875
+    ]
+  },
+  "top_orientation_fixes": 11,
+  "road_spawn": [
+    516.4752807617188,
+    50.04324722290039,
+    126.6224365234375
+  ],
+  "road_direction": [
+    0.2565550208091736,
+    0,
+    0.9665296673774719
+  ],
+  "upper_view": [
+    -68.90478515625,
+    84.22107696533203,
+    643.3399047851562
+  ]
+}
