@@ -7,7 +7,9 @@
   "height_difference_m": 0.9032343557201486,
   "terrain_hit_to_cliff_distance_m": 4.5829609754479773e-13,
   "terrain_hit_relation_on_cliff": "Interior",
-  "interpretation": "At this sample the terrain intersects the cliff wall below its upper edge. The upper edge stands proud of terrain; height difference is not an open gap width.",
+  "interpretation": "At this sample the terrain intersects the cliff wall below its upper edge. The user confirmed this is normal edge finishing. Keep the intended geometry; the measured height difference is a dimension record, not an asset defect.",
+  "design_status": "user_confirmed_normal_edge_finishing",
+  "requires_fix": false,
   "source_geometry_changed": false,
   "current_view_target_m": [280.6468180150398, 1354.570790947034, 0.88],
   "screenshots_use_temporary_display_overlay": true
