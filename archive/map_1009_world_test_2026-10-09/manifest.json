@@ -1,0 +1,117 @@
+[
+  {
+    "original_path": "assets/world/map_1009_test/build_metadata.json",
+    "bytes": 1358,
+    "sha256": "9efac06e515160c6d5522ad580741ffbf4d03233e0c93b4e16580ef2c7ea7463"
+  },
+  {
+    "original_path": "assets/world/map_1009_test/map_1009_natural.glb",
+    "bytes": 9240304,
+    "sha256": "2b01df21dfda53eac05f62e7248a0e08b59f8a4b66a865406aa035bfabe3b6d1"
+  },
+  {
+    "original_path": "assets/world/map_1009_test/map_1009_natural.glb.import",
+    "bytes": 1190,
+    "sha256": "4260580009ef4af8034ffedc09ab84071ab7c715bb6438a0146bd1d14c0bb509"
+  },
+  {
+    "original_path": "assets/world/map_1009_test/map_1009_original.glb",
+    "bytes": 494212,
+    "sha256": "fbea7c55757127cbd5096dfe6c3bcb76bb295319deab3704269e6df81a9b5e17"
+  },
+  {
+    "original_path": "assets/world/map_1009_test/map_1009_original.glb.import",
+    "bytes": 1192,
+    "sha256": "6040618801812870d3f830a36c97f29f31032f0e1b287e28258ecd81b50ab227"
+  },
+  {
+    "original_path": "assets/world/map_1009_test/terrain_review.gdshader",
+    "bytes": 751,
+    "sha256": "a5ac935afe3dc3a13846082e46eb1216b5fc1859ac26b7442cd98a53634c43d4"
+  },
+  {
+    "original_path": "assets/world/map_1009_test/terrain_review.gdshader.uid",
+    "bytes": 20,
+    "sha256": "bc1d9465b775ea92b22e6f123dd4379fb32bffc9e84185d4d063bdee1f4c5842"
+  },
+  {
+    "original_path": "docs/MAP_1009_DRIVE_RELIEF_TEST.md",
+    "bytes": 6506,
+    "sha256": "075173ba077263eb0540c35a4a2d1f190445d8e8cc5cc49270c2e990986b5a38"
+  },
+  {
+    "original_path": "scenes/map_1009_drive_test.tscn",
+    "bytes": 1262,
+    "sha256": "5e354678d0740ffe498ac0d2914b28c82fee5901f4c85d0a7737a85bdc276572"
+  },
+  {
+    "original_path": "screenshots/map_1009_drive_test.png",
+    "bytes": 180426,
+    "sha256": "7316e60084e42479a98642a3bebc7e720975e7c1f4052ad49af7a163c3e231fc"
+  },
+  {
+    "original_path": "screenshots/map_1009_drive_test.png.import",
+    "bytes": 973,
+    "sha256": "5aed18ccca756ba969bb4ab441d87c9b64f5e5ab3f46f18473503d4afd5113d6"
+  },
+  {
+    "original_path": "screenshots/map_1009_relief_comparison.png",
+    "bytes": 697345,
+    "sha256": "aa47c0d4de072767370e1ee603f13e2b1c93b30c6292378baa1aac9f8d0a93ca"
+  },
+  {
+    "original_path": "screenshots/map_1009_relief_comparison.png.import",
+    "bytes": 993,
+    "sha256": "a8f1dc386007f5fed4d77c51cbf5b5d5d8d2a3c7ddb68e940df0c19d1292cd38"
+  },
+  {
+    "original_path": "screenshots/map_1009_wheel_contact.png",
+    "bytes": 409509,
+    "sha256": "5055a23df6dc508e478ba36c2e72c48185827b2dd2627900ac297f3d5c022064"
+  },
+  {
+    "original_path": "screenshots/map_1009_wheel_contact.png.import",
+    "bytes": 982,
+    "sha256": "626b9dfd7d5eaca0857b2d87bc77ba4eadede93c7b03e9a75dce7892821800a1"
+  },
+  {
+    "original_path": "scripts/map_1009_camper.gd",
+    "bytes": 5184,
+    "sha256": "661d9b0aff3eccb2324f1945bd27dc068654922381cf2589069e07ff33844bcc"
+  },
+  {
+    "original_path": "scripts/map_1009_camper.gd.uid",
+    "bytes": 20,
+    "sha256": "d0fb6150ea165b86b004182788243f1123f5a64e259634cf9b1d268414afe7f0"
+  },
+  {
+    "original_path": "scripts/map_1009_drive_test.gd",
+    "bytes": 11371,
+    "sha256": "a0ebb3d151f0ef5333f9cd389690d699c14588890c05392d57c200c74b425b45"
+  },
+  {
+    "original_path": "scripts/map_1009_drive_test.gd.uid",
+    "bytes": 20,
+    "sha256": "47e0aa1b77fb42daa78a875146ac8dc83aa55de6069d33d566bbd02833b5df0b"
+  },
+  {
+    "original_path": "tools/build_map_1009_test.py",
+    "bytes": 11408,
+    "sha256": "8042c17334d063485bee18e5268f53535be644a9678f251a38c9e5438453f9c5"
+  },
+  {
+    "original_path": "tools/compose_map_1009_captures.py",
+    "bytes": 1271,
+    "sha256": "864434a9a99536e5685fa28e2a58fe75a6cc74c863321b90311bd5bfaf44d863"
+  },
+  {
+    "original_path": "tools/verify_map_1009_drive.gd",
+    "bytes": 5218,
+    "sha256": "f7b5e769b7e451c64a947d5b074dfede11be0b6af25a91a78166f94905fadb34"
+  },
+  {
+    "original_path": "tools/verify_map_1009_drive.gd.uid",
+    "bytes": 20,
+    "sha256": "a15c7cc5f02fafa7ab6d20711af43f34694e92f454f1f5191c13767089d755a2"
+  }
+]
