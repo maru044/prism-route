@@ -1,0 +1,198 @@
+{
+  "failures": [],
+  "godot": "4.7.2-stable (official)",
+  "models": [
+    {
+      "chains": 2,
+      "colliders": 9,
+      "model": "keqing",
+      "samples": [
+        {
+          "max_length_error_m": 9.68575477600098e-08,
+          "motion": "A01",
+          "tip_displacements_m": [
+            0.483531445264816,
+            0.595649480819702
+          ]
+        },
+        {
+          "max_length_error_m": 1.04308128356934e-07,
+          "motion": "A05",
+          "tip_displacements_m": [
+            0.562607765197754,
+            0.427207887172699
+          ]
+        },
+        {
+          "max_length_error_m": 1.11758708953857e-07,
+          "motion": "A06",
+          "tip_displacements_m": [
+            0.611458122730255,
+            0.462442994117737
+          ]
+        },
+        {
+          "max_length_error_m": 9.68575477600098e-08,
+          "motion": "A25",
+          "tip_displacements_m": [
+            0.612223327159882,
+            0.515835881233215
+          ]
+        },
+        {
+          "max_length_error_m": 5.96046447753906e-08,
+          "motion": "A30",
+          "tip_displacements_m": [
+            0.396841287612915,
+            0.444006502628326
+          ]
+        }
+      ]
+    },
+    {
+      "chains": 2,
+      "colliders": 9,
+      "model": "huahuo",
+      "samples": [
+        {
+          "max_length_error_m": 8.5681676864624e-08,
+          "motion": "A01",
+          "tip_displacements_m": [
+            0.909737884998322,
+            0.708203434944153
+          ]
+        },
+        {
+          "max_length_error_m": 8.19563865661621e-08,
+          "motion": "A05",
+          "tip_displacements_m": [
+            0.759792625904083,
+            0.840932428836823
+          ]
+        },
+        {
+          "max_length_error_m": 6.33299350738525e-08,
+          "motion": "A06",
+          "tip_displacements_m": [
+            0.69438099861145,
+            0.896312475204468
+          ]
+        },
+        {
+          "max_length_error_m": 1.00582838058472e-07,
+          "motion": "A25",
+          "tip_displacements_m": [
+            0.714274108409882,
+            0.931937694549561
+          ]
+        },
+        {
+          "max_length_error_m": 3.35276126861572e-08,
+          "motion": "A30",
+          "tip_displacements_m": [
+            0.77073085308075,
+            0.742317080497742
+          ]
+        }
+      ]
+    }
+  ],
+  "rest_regression": [
+    {
+      "model": "keqing",
+      "bones": 277,
+      "changed_local_rest_bones": [],
+      "humanoid_rest_and_animation_paths_unchanged": true
+    },
+    {
+      "model": "huahuo",
+      "bones": 719,
+      "changed_local_rest_bones": [
+        "yxx__1",
+        "yxx__11",
+        "yxx__2",
+        "yxx__12",
+        "yxx__21",
+        "yxx__3",
+        "yxx__13",
+        "yxx__22",
+        "yxx__30",
+        "yxx__36",
+        "yxx__4",
+        "yxx__14",
+        "yxx__23",
+        "yxx__31",
+        "yxx__37",
+        "yxx__5",
+        "yxx__15",
+        "yxx__24",
+        "yxx__32",
+        "yxx__38",
+        "yxx__6",
+        "yxx__16",
+        "yxx__25",
+        "yxx__33",
+        "yxx__39",
+        "yxx__7",
+        "yxx__17",
+        "yxx__26",
+        "yxx__34",
+        "yxx__40",
+        "yxx__8",
+        "yxx__18",
+        "yxx__27",
+        "yxx__35",
+        "yxx__41",
+        "yxx__9",
+        "yxx__19",
+        "yxx__28",
+        "yxx__10",
+        "yxx__20",
+        "yxx__29",
+        "zxx_0_0",
+        "zxx_1_0",
+        "zxx_0_1",
+        "zxx_1_1",
+        "zxx_2_1",
+        "zxx_0_2",
+        "zxx_1_2",
+        "zxx_2_2",
+        "zxx_3_2",
+        "zxx_4_2",
+        "zxx_0_3",
+        "zxx_1_3",
+        "zxx_2_3",
+        "zxx_3_3",
+        "zxx_4_3",
+        "zxx_0_4",
+        "zxx_1_4",
+        "zxx_2_4",
+        "zxx_3_4",
+        "zxx_4_4",
+        "zxx_0_5",
+        "zxx_1_5",
+        "zxx_2_5",
+        "zxx_3_5",
+        "zxx_4_5",
+        "zxx_0_6",
+        "zxx_1_6",
+        "zxx_2_6",
+        "zxx_3_6",
+        "zxx_4_6",
+        "zxx_0_7",
+        "zxx_1_7",
+        "zxx_2_7",
+        "zxx_3_7",
+        "zxx_4_7",
+        "zxx_0_8",
+        "zxx_1_8",
+        "zxx_2_8",
+        "zxx_0_9",
+        "zxx_1_9",
+        "zxx_2_9"
+      ],
+      "humanoid_rest_and_animation_paths_unchanged": true
+    }
+  ],
+  "date": "2026-10-09"
+}

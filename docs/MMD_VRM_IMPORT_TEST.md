@@ -168,6 +168,8 @@ $pythonExe = 'C:\Users\PC\.cache\codex-runtimes\codex-primary-runtime\dependenci
 
 ## 后续工作
 
+衣袖动态已补齐，修复版默认启用，详见 [袖尾动态记录](MMD_VRM_SLEEVE_DYNAMICS.md)。原始处理前模型继续保留；顶部切换目前同时包含腿部权重与衣袖修正。
+
 - 人工检查两种步行、手指姿态和高跟鞋的接地。测试场景没有 IK 或碰撞修正，不宣称所有动作适配完成。
 - 头发与裙摆尚未配置 VRM 弹簧，动作时会保持原骨架姿态，可能穿插。
 - 保留了形变目标，但尚未绑定 VRM 表情、眨眼与口型。

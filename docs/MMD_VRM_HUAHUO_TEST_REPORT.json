@@ -149,6 +149,159 @@
       "HumanBoneName.RIGHT_LITTLE_INTERMEDIATE": "小指２.R",
       "HumanBoneName.RIGHT_LITTLE_DISTAL": "小指３.R"
     },
+    "sleeves": {
+      "chains": [
+        {
+          "attachment": "yx__1",
+          "root": "yx__2",
+          "joints": [
+            "yx__2",
+            "yx__3",
+            "yx__4",
+            "yx__5",
+            "yx__6",
+            "yx__7",
+            "yx__8",
+            "yx__9",
+            "yx__10",
+            "yx__11",
+            "yx__12",
+            "yx__13",
+            "yx__14",
+            "yx__15",
+            "yx__16"
+          ]
+        },
+        {
+          "attachment": "zx_0_1",
+          "root": "zx_1_1",
+          "joints": [
+            "zx_1_1",
+            "zx_2_1",
+            "zx_3_1",
+            "zx_4_1",
+            "zx_5_1",
+            "zx_6_1",
+            "zx_7_1",
+            "zx_8_1",
+            "zx_9_1",
+            "zx_10_1",
+            "zx_11_1",
+            "zx_12_1",
+            "zx_13_1",
+            "zx_14_1",
+            "zx_15_1"
+          ]
+        }
+      ],
+      "colliders": 9,
+      "reparented_cuff_roots": [
+        {
+          "bone": "yxx__1",
+          "from": "肩C.R",
+          "to": "腕.R"
+        },
+        {
+          "bone": "yxx__2",
+          "from": "肩C.R",
+          "to": "腕.R"
+        },
+        {
+          "bone": "yxx__3",
+          "from": "肩C.R",
+          "to": "腕.R"
+        },
+        {
+          "bone": "yxx__4",
+          "from": "肩C.R",
+          "to": "腕.R"
+        },
+        {
+          "bone": "yxx__5",
+          "from": "肩C.R",
+          "to": "腕.R"
+        },
+        {
+          "bone": "yxx__6",
+          "from": "肩C.R",
+          "to": "腕.R"
+        },
+        {
+          "bone": "yxx__7",
+          "from": "肩C.R",
+          "to": "腕.R"
+        },
+        {
+          "bone": "yxx__8",
+          "from": "肩C.R",
+          "to": "腕.R"
+        },
+        {
+          "bone": "yxx__9",
+          "from": "肩C.R",
+          "to": "腕.R"
+        },
+        {
+          "bone": "yxx__10",
+          "from": "肩C.R",
+          "to": "腕.R"
+        },
+        {
+          "bone": "zxx_0_0",
+          "from": "肩C.L",
+          "to": "腕.L"
+        },
+        {
+          "bone": "zxx_0_1",
+          "from": "肩C.L",
+          "to": "腕.L"
+        },
+        {
+          "bone": "zxx_0_2",
+          "from": "肩C.L",
+          "to": "腕.L"
+        },
+        {
+          "bone": "zxx_0_3",
+          "from": "肩C.L",
+          "to": "腕.L"
+        },
+        {
+          "bone": "zxx_0_4",
+          "from": "肩C.L",
+          "to": "腕.L"
+        },
+        {
+          "bone": "zxx_0_5",
+          "from": "肩C.L",
+          "to": "腕.L"
+        },
+        {
+          "bone": "zxx_0_6",
+          "from": "肩C.L",
+          "to": "腕.L"
+        },
+        {
+          "bone": "zxx_0_7",
+          "from": "肩C.L",
+          "to": "腕.L"
+        },
+        {
+          "bone": "zxx_0_8",
+          "from": "肩C.L",
+          "to": "腕.L"
+        },
+        {
+          "bone": "zxx_0_9",
+          "from": "肩C.L",
+          "to": "腕.L"
+        }
+      ],
+      "limitations": [
+        "Bone-chain approximation, not cloth self-collision",
+        "Hair and skirt are still outside this sleeve-only setup"
+      ]
+    },
     "limitations": [
       "Hair/skirt springs are not configured",
       "Facial morphs retained but VRM expressions not assigned",
@@ -168,10 +321,12 @@
       "images": 5,
       "skin_joints": 718,
       "morph_targets": 66,
-      "humanoid_hips_node": "腰"
+      "humanoid_hips_node": "腰",
+      "sleeve_spring_chains": 0,
+      "sleeve_body_colliders": 0
     },
     "fixed": {
-      "bytes": 56155500,
+      "bytes": 56162216,
       "meshes": 1,
       "primitives": 40,
       "materials": 40,
@@ -179,7 +334,9 @@
       "images": 5,
       "skin_joints": 718,
       "morph_targets": 66,
-      "humanoid_hips_node": "腰"
+      "humanoid_hips_node": "腰",
+      "sleeve_spring_chains": 2,
+      "sleeve_body_colliders": 9
     }
   },
   "godot_validation": {
@@ -825,6 +982,53 @@
   "existing_ganyu_review_regression": {
     "clips": 42,
     "failures": []
+  },
+  "sleeve_dynamics_validation": {
+    "chains": 2,
+    "colliders": 9,
+    "model": "huahuo",
+    "samples": [
+      {
+        "max_length_error_m": 8.5681676864624e-08,
+        "motion": "A01",
+        "tip_displacements_m": [
+          0.909737884998322,
+          0.708203434944153
+        ]
+      },
+      {
+        "max_length_error_m": 8.19563865661621e-08,
+        "motion": "A05",
+        "tip_displacements_m": [
+          0.759792625904083,
+          0.840932428836823
+        ]
+      },
+      {
+        "max_length_error_m": 6.33299350738525e-08,
+        "motion": "A06",
+        "tip_displacements_m": [
+          0.69438099861145,
+          0.896312475204468
+        ]
+      },
+      {
+        "max_length_error_m": 1.00582838058472e-07,
+        "motion": "A25",
+        "tip_displacements_m": [
+          0.714274108409882,
+          0.931937694549561
+        ]
+      },
+      {
+        "max_length_error_m": 3.35276126861572e-08,
+        "motion": "A30",
+        "tip_displacements_m": [
+          0.77073085308075,
+          0.742317080497742
+        ]
+      }
+    ]
   },
   "existing_keqing_review_regression": {
     "clips": 42,

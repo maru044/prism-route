@@ -15,6 +15,8 @@ func _run() -> void:
 	var report_path := "res://.model_import_build/huahuo/godot_validation.json" if model_id == "huahuo" else "res://.model_import_build/godot_validation.json"
 	var scene = load(scene_path).instantiate()
 	root.add_child(scene)
+	await process_frame
+	await process_frame
 	var failures: Array[String] = []
 	var results: Array = []
 	var expected: Array = JSON.parse_string(FileAccess.get_file_as_string("res://assets/characters/motion_review/catalog.json"))
@@ -24,6 +26,9 @@ func _run() -> void:
 			failures.append("Catalog differs from Ganyu at index " + str(i))
 	for variant in [0, 1, 0]:
 		scene._switch_variant(variant)
+		# Native spring setup is deferred; exercise a completed variant switch.
+		await process_frame
+		await process_frame
 		for i in scene.catalog.size():
 			scene._select(i)
 			var animation: Animation = scene.player.get_animation(scene.catalog[i].id)
@@ -75,4 +80,9 @@ func _run() -> void:
 	var report := {"model": model_id, "godot": Engine.get_version_info().string, "bones": scene.skeleton.get_bone_count(), "clips": scene.catalog.size(), "expected_clips": expected.size(), "checks": results, "failures": failures}
 	FileAccess.open(report_path, FileAccess.WRITE).store_string(JSON.stringify(report, "\t"))
 	print("MODEL_IMPORT_RESULT ", JSON.stringify(report))
+	# Drain callbacks before deleting the review scene and shutting down.
+	await process_frame
+	await process_frame
+	scene.free()
+	await process_frame
 	quit(0 if failures.is_empty() else 1)

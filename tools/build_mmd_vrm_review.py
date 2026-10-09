@@ -246,6 +246,9 @@ def main():
     fixed_test = foot_test(meshes, arm, '足首.L')
     if baseline_test['moved_vertices_over_0_1mm'] != 0 or fixed_test['moved_vertices_over_0_1mm'] < 100:
         raise RuntimeError(f'Foot deformation test failed: {baseline_test}, {fixed_test}')
+    sys.path.insert(0, str(ROOT / 'tools'))
+    from mmd_sleeve_springs import configure_sleeves
+    sleeve_report = configure_sleeves(arm, args.profile)
     export_vrm(arm, meshes, DEST/f'{args.profile}_fixed.vrm')
     bpy.ops.wm.save_as_mainfile(filepath=str(BUILD/f'{args.profile}_fixed.blend'))
     report = {'profile': args.profile, 'blender': bpy.app.version_string,
@@ -257,6 +260,7 @@ def main():
         'max_weight_total_error': weight_error, 'removed_constraints': removed_constraints,
         'foot_rotation_before': baseline_test, 'foot_rotation_after': fixed_test,
         'humanoid': {str(name):bone.node.bone_name for name,bone in human.human_bone_name_to_human_bone().items() if bone.node.bone_name},
+        'sleeves': sleeve_report,
         'limitations': ['Hair/skirt springs are not configured', 'Facial morphs retained but VRM expressions not assigned',
                        'MMD toon/sphere shading is not reproduced pixel-for-pixel', 'Audited model profile; other models require an audit'],
         }

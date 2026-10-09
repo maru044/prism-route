@@ -1,6 +1,7 @@
 {
   "date": "2026-10-09",
   "conversion": {
+    "profile": "keqing",
     "blender": "5.1.1",
     "source_unchanged": true,
     "vertices": 15934,
@@ -148,14 +149,51 @@
       "HumanBoneName.RIGHT_LITTLE_INTERMEDIATE": "小指２.R",
       "HumanBoneName.RIGHT_LITTLE_DISTAL": "小指３.R"
     },
+    "sleeves": {
+      "chains": [
+        {
+          "attachment": "袖_0_1.L",
+          "root": "袖_1_1.L",
+          "joints": [
+            "袖_1_1.L",
+            "袖_2_1.L",
+            "袖_3_1.L",
+            "袖_4_1.L",
+            "袖_5_1.L",
+            "袖_6_1.L",
+            "袖_7_1.L"
+          ]
+        },
+        {
+          "attachment": "袖_0_1.R",
+          "root": "袖_1_1.R",
+          "joints": [
+            "袖_1_1.R",
+            "袖_2_1.R",
+            "袖_3_1.R",
+            "袖_4_1.R",
+            "袖_5_1.R",
+            "袖_6_1.R",
+            "袖_7_1.R"
+          ]
+        }
+      ],
+      "colliders": 9,
+      "reparented_cuff_roots": [],
+      "limitations": [
+        "Bone-chain approximation, not cloth self-collision",
+        "Hair and skirt are still outside this sleeve-only setup"
+      ]
+    },
     "limitations": [
       "Hair/skirt springs are not configured",
       "Facial morphs retained but VRM expressions not assigned",
       "MMD toon/sphere shading is not reproduced pixel-for-pixel",
-      "Single-model profile; other models require an audit"
+      "Audited model profile; other models require an audit"
     ],
     "removed_constraint_count": 50
   },
+  "model": "keqing",
   "exported": {
     "before": {
       "bytes": 29107208,
@@ -166,10 +204,12 @@
       "images": 5,
       "skin_joints": 276,
       "morph_targets": 61,
-      "humanoid_hips_node": "腰"
+      "humanoid_hips_node": "腰",
+      "sleeve_spring_chains": 0,
+      "sleeve_body_colliders": 0
     },
     "fixed": {
-      "bytes": 29107208,
+      "bytes": 29111672,
       "meshes": 1,
       "primitives": 20,
       "materials": 20,
@@ -177,7 +217,9 @@
       "images": 5,
       "skin_joints": 276,
       "morph_targets": 61,
-      "humanoid_hips_node": "腰"
+      "humanoid_hips_node": "腰",
+      "sleeve_spring_chains": 2,
+      "sleeve_body_colliders": 9
     }
   },
   "godot_validation": {
@@ -817,10 +859,58 @@
     "clips": 42,
     "expected_clips": 42,
     "failures": [],
-    "godot": "4.7.2-stable (official)"
+    "godot": "4.7.2-stable (official)",
+    "model": "keqing"
   },
   "existing_ganyu_review_regression": {
     "clips": 42,
     "failures": []
+  },
+  "sleeve_dynamics_validation": {
+    "chains": 2,
+    "colliders": 9,
+    "model": "keqing",
+    "samples": [
+      {
+        "max_length_error_m": 9.68575477600098e-08,
+        "motion": "A01",
+        "tip_displacements_m": [
+          0.483531445264816,
+          0.595649480819702
+        ]
+      },
+      {
+        "max_length_error_m": 1.04308128356934e-07,
+        "motion": "A05",
+        "tip_displacements_m": [
+          0.562607765197754,
+          0.427207887172699
+        ]
+      },
+      {
+        "max_length_error_m": 1.11758708953857e-07,
+        "motion": "A06",
+        "tip_displacements_m": [
+          0.611458122730255,
+          0.462442994117737
+        ]
+      },
+      {
+        "max_length_error_m": 9.68575477600098e-08,
+        "motion": "A25",
+        "tip_displacements_m": [
+          0.612223327159882,
+          0.515835881233215
+        ]
+      },
+      {
+        "max_length_error_m": 5.96046447753906e-08,
+        "motion": "A30",
+        "tip_displacements_m": [
+          0.396841287612915,
+          0.444006502628326
+        ]
+      }
+    ]
   }
 }

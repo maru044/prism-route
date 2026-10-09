@@ -4,6 +4,7 @@ extends Node3D
 @export_file("*.tscn", "*.vrm") var character_resource := "res://scenes/characters/ganyu.tscn"
 @export_dir var motion_directory := "res://assets/characters/motion_review"
 @export var review_title := "人物动作测试"
+@export var spring_physics_enabled := false
 
 var catalog: Array = []
 var visible_indices: Array[int] = []
@@ -46,7 +47,7 @@ func _ready() -> void:
 	var original: AnimationPlayer = character.find_child("AnimationPlayer", true, false)
 	if original: original.stop()
 	skeleton.reset_bone_poses()
-	_set_springs(false)
+	_set_springs(spring_physics_enabled)
 	player = AnimationPlayer.new()
 	player.name = "MotionReviewPlayer"
 	character.add_child(player)
@@ -225,7 +226,7 @@ func _build_ui() -> void:
 			if axis=="y": chair.position.y=value
 			else: chair.position.z=value)
 		chair_row.add_child(adjust)
-	_check(column,"头发／服饰物理（切换时可能抖动）",false,func(value): _set_springs(value))
+	_check(column,"服饰物理（关闭可对比僵硬袖尾）",spring_physics_enabled,func(value): _set_springs(value))
 	_button(column,"恢复正面视角",func():
 		yaw=0.22
 		pitch=0.12
@@ -307,8 +308,16 @@ func _pause() -> void:
 	pause_button.text="暂停" if playing else "继续"
 
 func _set_springs(enabled: bool) -> void:
+	spring_physics_enabled = enabled
 	var controller=character.find_child("VRMSpringBoneController",true,false)
 	if controller: controller.process_mode=Node.PROCESS_MODE_INHERIT if enabled else Node.PROCESS_MODE_DISABLED
+	# Native modifier is under Skeleton3D, outside the controller subtree.
+	_apply_spring_state.call_deferred()
+
+func _apply_spring_state() -> void:
+	if not is_instance_valid(skeleton): return
+	var simulation = skeleton.get_node_or_null("VRMSpringBoneSimulation")
+	if simulation: simulation.active = spring_physics_enabled
 
 func _center_character() -> void:
 	var hips=skeleton.get_bone_global_pose(skeleton.find_bone("Hips")).origin

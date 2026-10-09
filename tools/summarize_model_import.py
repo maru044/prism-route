@@ -30,6 +30,8 @@ def inspect(path):
         'images': len(data['images']), 'skin_joints': len(data['skins'][0]['joints']),
         'morph_targets': len(data['meshes'][0]['primitives'][0].get('targets', [])),
         'humanoid_hips_node': data['nodes'][data['extensions']['VRMC_vrm']['humanoid']['humanBones']['hips']['node']]['name'],
+        'sleeve_spring_chains': len(data['extensions'].get('VRMC_springBone', {}).get('springs', [])),
+        'sleeve_body_colliders': len(data['extensions'].get('VRMC_springBone', {}).get('colliders', [])),
     }
 
 
@@ -53,6 +55,10 @@ def main():
               'exported': {v: inspect(LOCAL/f'{args.model}_{v}.vrm') for v in ['before', 'fixed']},
               'godot_validation': validation,
               'existing_ganyu_review_regression': {'clips': 42, 'failures': []}}
+    if conversion.get('sleeves'):
+        sleeve_validation = json.loads((ROOT/'.model_import_build/sleeves_validation.json').read_text(encoding='utf8'))
+        assert not sleeve_validation['failures']
+        report['sleeve_dynamics_validation'] = next(model for model in sleeve_validation['models'] if model['model'] == args.model)
     regression = (ROOT/'.model_import_build/ganyu_regression.log').read_text(encoding='utf8')
     assert 'RESULT clips=42 failures=[]' in regression
     if args.model == 'huahuo':

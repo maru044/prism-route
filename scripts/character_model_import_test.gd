@@ -11,6 +11,7 @@ func _ready() -> void:
 	character_resource = local + model_id + "_fixed.vrm"
 	motion_directory = local + "motions"
 	review_title = model_label + "动作测试"
+	spring_physics_enabled = true
 	if not ResourceLoader.exists(character_resource) or not FileAccess.file_exists(motion_directory + "/catalog.json"):
 		var message := Label.new()
 		message.position = Vector2(32, 32)
@@ -21,6 +22,8 @@ func _ready() -> void:
 		set_process_unhandled_input(false)
 		return
 	super._ready()
+	timeline.value_changed.connect(func(_value):
+		if not update_timeline: _reset_sleeve_simulation.call_deferred())
 	var layer := CanvasLayer.new()
 	add_child(layer)
 	var panel := VBoxContainer.new()
@@ -32,7 +35,7 @@ func _ready() -> void:
 	variant.item_selected.connect(_switch_variant)
 	panel.add_child(variant)
 	var note := Label.new()
-	note.text = "本地普通动作验证 · MToon 材质\n头发和裙摆物理、表情绑定尚未配置"
+	note.text = "袖尾动态已启用 · 关闭左侧服饰物理可对比\n头发、裙摆物理和表情绑定尚未配置"
 	panel.add_child(note)
 
 func _switch_variant(index: int) -> void:
@@ -50,7 +53,7 @@ func _switch_variant(index: int) -> void:
 	var original: AnimationPlayer = character.find_child("AnimationPlayer", true, false)
 	if original: original.stop()
 	skeleton.reset_bone_poses()
-	_set_springs(false)
+	_set_springs(spring_physics_enabled)
 	player = AnimationPlayer.new()
 	player.name = "MotionReviewPlayer"
 	character.add_child(player)
@@ -61,3 +64,15 @@ func _switch_variant(index: int) -> void:
 	if not was_playing: _pause()
 	_center_character()
 	variant.select(index)
+
+func _select(index: int) -> void:
+	super._select(index)
+	_reset_sleeve_simulation.call_deferred()
+
+func _reset_sleeve_simulation() -> void:
+	if not is_instance_valid(character): return
+	var controller = character.find_child("VRMSpringBoneController", true, false)
+	var simulation = skeleton.get_node_or_null("VRMSpringBoneSimulation")
+	if controller and simulation:
+		simulation.setup(controller.spring_bones, controller.collider_groups)
+		simulation.active = spring_physics_enabled
