@@ -60,7 +60,7 @@
 
 ## 转换操作流程（下次按此顺序执行）
 
-自动化实现是 `tools/build_mmd_vrm_review.py`。以下记录本次实际操作，也可作为手动 Blender 处理的核对表。此配置只验证过刻晴，其他模型先检查权重与骨架。
+自动化实现是 `tools/build_mmd_vrm_review.py`。以下记录刻晴的实际操作，也可作为手动 Blender 处理的核对表。2026-10-09 增加经过骨架和权重审查的花火配置：`--profile huahuo`，测试记录见 [MMD_VRM_HUAHUO_TEST.md](MMD_VRM_HUAHUO_TEST.md)。其他模型仍先检查权重与骨架，不能把配置名当作通用转换开关。
 
 ### 1. 导入 PMX 与检查源文件
 
@@ -114,7 +114,7 @@ EX 合并使用逐顶点相加，而不是仅重命名，也不是用 EX 覆盖�
 ### 6. Godot 导入与动作烘焙
 
 - 让 Godot 编辑器导入两份 VRM，读取修复版 `GeneralSkeleton` 的静止姿态，输出 `.model_import_build/keqing_rest.json`。
-- 用这份静止姿态把六段现有 CC0 动作烘焙到刻晴的 `motions/`，不要直接复用甘雨已烘焙的动作轨道。
+- 用这份静止姿态把全部 42 段现有 CC0 动作烘焙到刻晴的 `motions/`，不要直接复用甘雨已烘焙的动作轨道。
 - 测试场景中把 `Skeleton3D.motion_scale` 设为 `1.0`：动作平移已按该模型的米制尺寸烘焙，避免导入器再缩放一次。
 - 在独立场景切换处理前后模型、暂停、拖动时间轴；检查屈膝、迈步和脚踝是否真正带动网格。
 
@@ -164,7 +164,7 @@ $pythonExe = 'C:\Users\PC\.cache\codex-runtimes\codex-primary-runtime\dependenci
 ```
 
 这些命令会重新生成两份 VRM 与刻晴动作；如果只是检查已提交资源，直接运行最后一条场景命令即可。
-工具是刻晴的具体配置，`--source` 用于明确指定该源文件，并非任意模型的通用转换器。
+不指定 `--profile` 时保留刻晴配置；`--profile huahuo` 使用单独审查过的花火配置。`--source` 用于明确指定相应源文件，并非任意模型的通用转换器。
 
 ## 后续工作
 

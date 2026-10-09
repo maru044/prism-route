@@ -1,6 +1,7 @@
 """Validate local VRM payloads and save small, redistributable test evidence."""
 import json
 import struct
+import argparse
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,6 +34,11 @@ def inspect(path):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--model', choices=['keqing', 'huahuo'], default='keqing')
+    args = parser.parse_args()
+    BUILD = ROOT / '.model_import_build' / (args.model if args.model != 'keqing' else '')
+    LOCAL = ROOT / 'assets/characters/import_tests_local' / args.model
     conversion = json.loads((BUILD/'conversion_report.json').read_text(encoding='utf8'))
     validation = json.loads((BUILD/'godot_validation.json').read_text(encoding='utf8'))
     assert conversion['source_unchanged'] and conversion['max_weight_total_error'] <= 1e-6
@@ -43,12 +49,18 @@ def main():
         conversion.pop(field, None)
     conversion['removed_constraint_count'] = len(conversion.pop('removed_constraints'))
     report = {'date': '2026-10-09', 'conversion': conversion,
-              'exported': {v: inspect(LOCAL/f'keqing_{v}.vrm') for v in ['before', 'fixed']},
+              'model': args.model,
+              'exported': {v: inspect(LOCAL/f'{args.model}_{v}.vrm') for v in ['before', 'fixed']},
               'godot_validation': validation,
               'existing_ganyu_review_regression': {'clips': 42, 'failures': []}}
-    regression = (BUILD/'ganyu_regression.log').read_text(encoding='utf8')
+    regression = (ROOT/'.model_import_build/ganyu_regression.log').read_text(encoding='utf8')
     assert 'RESULT clips=42 failures=[]' in regression
-    (ROOT/'docs/MMD_VRM_IMPORT_TEST_REPORT.json').write_text(
+    if args.model == 'huahuo':
+        keqing = json.loads((ROOT/'.model_import_build/godot_validation.json').read_text(encoding='utf8'))
+        assert keqing['model'] == 'keqing' and keqing['clips'] == 42 and not keqing['failures']
+        report['existing_keqing_review_regression'] = {'clips': keqing['clips'], 'failures': keqing['failures']}
+    report_name = 'MMD_VRM_HUAHUO_TEST_REPORT.json' if args.model == 'huahuo' else 'MMD_VRM_IMPORT_TEST_REPORT.json'
+    (ROOT/'docs'/report_name).write_text(
         json.dumps(report, ensure_ascii=False, indent=2)+'\n', encoding='utf8')
     print(json.dumps(report['exported'], ensure_ascii=False))
 

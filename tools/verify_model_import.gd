@@ -4,7 +4,16 @@ func _initialize() -> void:
 	call_deferred("_run")
 
 func _run() -> void:
-	var scene = load("res://scenes/character_model_import_test.tscn").instantiate()
+	var model_id := "keqing"
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--model="): model_id = argument.trim_prefix("--model=")
+	if model_id not in ["keqing", "huahuo"]:
+		push_error("Unknown model profile: " + model_id)
+		quit(1)
+		return
+	var scene_path := "res://scenes/character_huahuo_import_test.tscn" if model_id == "huahuo" else "res://scenes/character_model_import_test.tscn"
+	var report_path := "res://.model_import_build/huahuo/godot_validation.json" if model_id == "huahuo" else "res://.model_import_build/godot_validation.json"
+	var scene = load(scene_path).instantiate()
 	root.add_child(scene)
 	var failures: Array[String] = []
 	var results: Array = []
@@ -63,7 +72,7 @@ func _run() -> void:
 	scene._switch_variant(1)
 	if scene.player.is_playing() or absf(scene.player.current_animation_position - 0.2) > 0.001 or scene.player.speed_scale != 0.5:
 		failures.append("Variant switch lost playback state")
-	var report := {"godot": Engine.get_version_info().string, "bones": scene.skeleton.get_bone_count(), "clips": scene.catalog.size(), "expected_clips": expected.size(), "checks": results, "failures": failures}
-	FileAccess.open("res://.model_import_build/godot_validation.json", FileAccess.WRITE).store_string(JSON.stringify(report, "\t"))
+	var report := {"model": model_id, "godot": Engine.get_version_info().string, "bones": scene.skeleton.get_bone_count(), "clips": scene.catalog.size(), "expected_clips": expected.size(), "checks": results, "failures": failures}
+	FileAccess.open(report_path, FileAccess.WRITE).store_string(JSON.stringify(report, "\t"))
 	print("MODEL_IMPORT_RESULT ", JSON.stringify(report))
 	quit(0 if failures.is_empty() else 1)

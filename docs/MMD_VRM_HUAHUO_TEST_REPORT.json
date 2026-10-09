@@ -1,0 +1,833 @@
+{
+  "date": "2026-10-09",
+  "conversion": {
+    "profile": "huahuo",
+    "blender": "5.1.1",
+    "source_unchanged": true,
+    "vertices": 29094,
+    "bones": 766,
+    "materials": 40,
+    "transfers": [
+      {
+        "source": "足D.L",
+        "target": "足.L",
+        "operation": "rename_empty_destination",
+        "mesh_groups": 1,
+        "pivot_delta_m": 0.0
+      },
+      {
+        "source": "ひざD.L",
+        "target": "ひざ.L",
+        "operation": "rename_empty_destination",
+        "mesh_groups": 1,
+        "pivot_delta_m": 0.0
+      },
+      {
+        "source": "足首D.L",
+        "target": "足首.L",
+        "operation": "rename_empty_destination",
+        "mesh_groups": 1,
+        "pivot_delta_m": 0.0
+      },
+      {
+        "source": "足先EX.L",
+        "target": "足首.L",
+        "operation": "add_weights",
+        "vertex_entries": 1085
+      },
+      {
+        "source": "足D.R",
+        "target": "足.R",
+        "operation": "rename_empty_destination",
+        "mesh_groups": 1,
+        "pivot_delta_m": 0.0
+      },
+      {
+        "source": "ひざD.R",
+        "target": "ひざ.R",
+        "operation": "rename_empty_destination",
+        "mesh_groups": 1,
+        "pivot_delta_m": 0.0
+      },
+      {
+        "source": "足首D.R",
+        "target": "足首.R",
+        "operation": "rename_empty_destination",
+        "mesh_groups": 1,
+        "pivot_delta_m": 0.0
+      },
+      {
+        "source": "足先EX.R",
+        "target": "足首.R",
+        "operation": "add_weights",
+        "vertex_entries": 1083
+      }
+    ],
+    "leg_weight_counts_before": {
+      "ひざD.R": 780,
+      "ひざD.L": 898,
+      "足D.R": 919,
+      "足先EX.L": 1085,
+      "足首D.L": 816,
+      "足先EX.R": 1083,
+      "足首D.R": 821,
+      "足D.L": 413
+    },
+    "leg_weight_counts_after": {
+      "ひざ.R": 780,
+      "ひざ.L": 898,
+      "足.R": 919,
+      "足首.L": 1506,
+      "足首.R": 1507,
+      "足.L": 413
+    },
+    "max_weight_total_error": 0.0,
+    "foot_rotation_before": {
+      "bone": "足首.L",
+      "angle_deg": 25,
+      "moved_vertices_over_0_1mm": 0,
+      "max_displacement_m": 0.0
+    },
+    "foot_rotation_after": {
+      "bone": "足首.L",
+      "angle_deg": 25,
+      "moved_vertices_over_0_1mm": 1506,
+      "max_displacement_m": 0.06580706329799481
+    },
+    "humanoid": {
+      "HumanBoneName.HIPS": "腰",
+      "HumanBoneName.SPINE": "上半身",
+      "HumanBoneName.CHEST": "上半身2",
+      "HumanBoneName.NECK": "首",
+      "HumanBoneName.HEAD": "頭",
+      "HumanBoneName.LEFT_EYE": "目.L",
+      "HumanBoneName.RIGHT_EYE": "目.R",
+      "HumanBoneName.LEFT_UPPER_LEG": "足.L",
+      "HumanBoneName.LEFT_LOWER_LEG": "ひざ.L",
+      "HumanBoneName.LEFT_FOOT": "足首.L",
+      "HumanBoneName.LEFT_TOES": "つま先.L",
+      "HumanBoneName.RIGHT_UPPER_LEG": "足.R",
+      "HumanBoneName.RIGHT_LOWER_LEG": "ひざ.R",
+      "HumanBoneName.RIGHT_FOOT": "足首.R",
+      "HumanBoneName.RIGHT_TOES": "つま先.R",
+      "HumanBoneName.LEFT_SHOULDER": "肩.L",
+      "HumanBoneName.LEFT_UPPER_ARM": "腕.L",
+      "HumanBoneName.LEFT_LOWER_ARM": "ひじ.L",
+      "HumanBoneName.LEFT_HAND": "手首.L",
+      "HumanBoneName.RIGHT_SHOULDER": "肩.R",
+      "HumanBoneName.RIGHT_UPPER_ARM": "腕.R",
+      "HumanBoneName.RIGHT_LOWER_ARM": "ひじ.R",
+      "HumanBoneName.RIGHT_HAND": "手首.R",
+      "HumanBoneName.LEFT_THUMB_METACARPAL": "親指０.L",
+      "HumanBoneName.LEFT_THUMB_PROXIMAL": "親指１.L",
+      "HumanBoneName.LEFT_THUMB_DISTAL": "親指２.L",
+      "HumanBoneName.LEFT_INDEX_PROXIMAL": "人指１.L",
+      "HumanBoneName.LEFT_INDEX_INTERMEDIATE": "人指２.L",
+      "HumanBoneName.LEFT_INDEX_DISTAL": "人指３.L",
+      "HumanBoneName.LEFT_MIDDLE_PROXIMAL": "中指１.L",
+      "HumanBoneName.LEFT_MIDDLE_INTERMEDIATE": "中指２.L",
+      "HumanBoneName.LEFT_MIDDLE_DISTAL": "中指３.L",
+      "HumanBoneName.LEFT_RING_PROXIMAL": "薬指１.L",
+      "HumanBoneName.LEFT_RING_INTERMEDIATE": "薬指２.L",
+      "HumanBoneName.LEFT_RING_DISTAL": "薬指３.L",
+      "HumanBoneName.LEFT_LITTLE_PROXIMAL": "小指１.L",
+      "HumanBoneName.LEFT_LITTLE_INTERMEDIATE": "小指２.L",
+      "HumanBoneName.LEFT_LITTLE_DISTAL": "小指３.L",
+      "HumanBoneName.RIGHT_THUMB_METACARPAL": "親指０.R",
+      "HumanBoneName.RIGHT_THUMB_PROXIMAL": "親指１.R",
+      "HumanBoneName.RIGHT_THUMB_DISTAL": "親指２.R",
+      "HumanBoneName.RIGHT_INDEX_PROXIMAL": "人指１.R",
+      "HumanBoneName.RIGHT_INDEX_INTERMEDIATE": "人指２.R",
+      "HumanBoneName.RIGHT_INDEX_DISTAL": "人指３.R",
+      "HumanBoneName.RIGHT_MIDDLE_PROXIMAL": "中指１.R",
+      "HumanBoneName.RIGHT_MIDDLE_INTERMEDIATE": "中指２.R",
+      "HumanBoneName.RIGHT_MIDDLE_DISTAL": "中指３.R",
+      "HumanBoneName.RIGHT_RING_PROXIMAL": "薬指１.R",
+      "HumanBoneName.RIGHT_RING_INTERMEDIATE": "薬指２.R",
+      "HumanBoneName.RIGHT_RING_DISTAL": "薬指３.R",
+      "HumanBoneName.RIGHT_LITTLE_PROXIMAL": "小指１.R",
+      "HumanBoneName.RIGHT_LITTLE_INTERMEDIATE": "小指２.R",
+      "HumanBoneName.RIGHT_LITTLE_DISTAL": "小指３.R"
+    },
+    "limitations": [
+      "Hair/skirt springs are not configured",
+      "Facial morphs retained but VRM expressions not assigned",
+      "MMD toon/sphere shading is not reproduced pixel-for-pixel",
+      "Audited model profile; other models require an audit"
+    ],
+    "removed_constraint_count": 62
+  },
+  "model": "huahuo",
+  "exported": {
+    "before": {
+      "bytes": 56155500,
+      "meshes": 1,
+      "primitives": 40,
+      "materials": 40,
+      "mtoon_materials": 40,
+      "images": 5,
+      "skin_joints": 718,
+      "morph_targets": 66,
+      "humanoid_hips_node": "腰"
+    },
+    "fixed": {
+      "bytes": 56155500,
+      "meshes": 1,
+      "primitives": 40,
+      "materials": 40,
+      "mtoon_materials": 40,
+      "images": 5,
+      "skin_joints": 718,
+      "morph_targets": 66,
+      "humanoid_hips_node": "腰"
+    }
+  },
+  "godot_validation": {
+    "bones": 719,
+    "checks": [
+      {
+        "id": "A01",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A02",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A03",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A04",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A05",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A06",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A07",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A08",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A09",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A10",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A11",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A12",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A13",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A14",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A15",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A16",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A17",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A18",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A19",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A20",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A21",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A22",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A23",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A24",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A25",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A26",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A27",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A28",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A29",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A30",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A31",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A32",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A33",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A34",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A35",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A36",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A37",
+        "tracks": 52,
+        "variant": 0
+      },
+      {
+        "id": "A38",
+        "tracks": 52,
+        "variant": 0
+      },
+      {
+        "id": "A39",
+        "tracks": 52,
+        "variant": 0
+      },
+      {
+        "id": "A40",
+        "tracks": 52,
+        "variant": 0
+      },
+      {
+        "id": "A41",
+        "tracks": 52,
+        "variant": 0
+      },
+      {
+        "id": "A42",
+        "tracks": 52,
+        "variant": 0
+      },
+      {
+        "id": "A01",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A02",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A03",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A04",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A05",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A06",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A07",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A08",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A09",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A10",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A11",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A12",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A13",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A14",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A15",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A16",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A17",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A18",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A19",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A20",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A21",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A22",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A23",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A24",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A25",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A26",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A27",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A28",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A29",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A30",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A31",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A32",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A33",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A34",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A35",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A36",
+        "tracks": 53,
+        "variant": 1
+      },
+      {
+        "id": "A37",
+        "tracks": 52,
+        "variant": 1
+      },
+      {
+        "id": "A38",
+        "tracks": 52,
+        "variant": 1
+      },
+      {
+        "id": "A39",
+        "tracks": 52,
+        "variant": 1
+      },
+      {
+        "id": "A40",
+        "tracks": 52,
+        "variant": 1
+      },
+      {
+        "id": "A41",
+        "tracks": 52,
+        "variant": 1
+      },
+      {
+        "id": "A42",
+        "tracks": 52,
+        "variant": 1
+      },
+      {
+        "id": "A01",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A02",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A03",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A04",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A05",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A06",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A07",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A08",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A09",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A10",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A11",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A12",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A13",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A14",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A15",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A16",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A17",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A18",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A19",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A20",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A21",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A22",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A23",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A24",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A25",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A26",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A27",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A28",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A29",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A30",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A31",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A32",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A33",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A34",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A35",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A36",
+        "tracks": 53,
+        "variant": 0
+      },
+      {
+        "id": "A37",
+        "tracks": 52,
+        "variant": 0
+      },
+      {
+        "id": "A38",
+        "tracks": 52,
+        "variant": 0
+      },
+      {
+        "id": "A39",
+        "tracks": 52,
+        "variant": 0
+      },
+      {
+        "id": "A40",
+        "tracks": 52,
+        "variant": 0
+      },
+      {
+        "id": "A41",
+        "tracks": 52,
+        "variant": 0
+      },
+      {
+        "id": "A42",
+        "tracks": 52,
+        "variant": 0
+      }
+    ],
+    "clips": 42,
+    "expected_clips": 42,
+    "failures": [],
+    "godot": "4.7.2-stable (official)",
+    "model": "huahuo"
+  },
+  "existing_ganyu_review_regression": {
+    "clips": 42,
+    "failures": []
+  },
+  "existing_keqing_review_regression": {
+    "clips": 42,
+    "failures": []
+  }
+}

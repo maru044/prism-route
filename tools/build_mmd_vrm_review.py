@@ -1,6 +1,6 @@
 """Run in Blender background: local PMX -> VRM 1.0 workflow experiment.
 
-The source stays outside Git. This profile is deliberately limited to Keqing's
+The source stays outside Git. The audited Keqing and Huahuo profiles use the
 standard/D leg layout; missing or already weighted destinations fail explicitly.
 """
 import argparse
@@ -17,6 +17,10 @@ from mathutils import Matrix, Quaternion
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / '.model_import_build'
 DEST = ROOT / 'assets/characters/import_tests_local/keqing'
+PROFILES = {
+    'keqing': {'glob': '刻晴_by_*/刻晴/刻晴/刻晴.pmx', 'name': 'Keqing', 'editor': '观海'},
+    'huahuo': {'glob': '星穹铁道—花火_by_*/*/花火3.0.pmx', 'name': 'Huahuo', 'editor': '神帝宇'},
+}
 
 
 def set_enum(owner, field, identifier):
@@ -117,8 +121,12 @@ def main():
     sys.stdout.reconfigure(encoding='utf-8')
     parser = argparse.ArgumentParser()
     parser.add_argument('--source', type=Path)
+    parser.add_argument('--profile', choices=PROFILES, default='keqing')
     args = parser.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
-    source = args.source or next(Path('D:/模型/20261008').glob('刻晴_by_*/刻晴/刻晴/刻晴.pmx'))
+    profile = PROFILES[args.profile]
+    source = args.source or next(Path('D:/模型/20261008').glob(profile['glob']))
+    BUILD = ROOT / '.model_import_build' / (args.profile if args.profile != 'keqing' else '')
+    DEST = ROOT / 'assets/characters/import_tests_local' / args.profile
     BUILD.mkdir(parents=True, exist_ok=True)
     DEST.mkdir(parents=True, exist_ok=True)
     source_hash = hashlib.sha256(source.read_bytes()).hexdigest()
@@ -189,17 +197,18 @@ def main():
     set_enum(ext, 'spec_version', '1.0')
     bpy.ops.vrm.assign_vrm1_humanoid_human_bones_automatically(armature_object_name=arm.name)
     human = ext.vrm1.humanoid.human_bones
-    # The original MMD center is near 0.70m, whereas the pelvis is near 0.92m.
-    # Use the real pelvic fork so ordinary motion does not rotate a long lever.
+    # Use the audited pelvic fork rather than the lower MMD center pivot.
+    if '腰' not in arm.data.bones:
+        raise RuntimeError('Profile mismatch: missing pelvic fork 腰')
     human.hips.node.bone_name = '腰'
     set_enum(ext.vrm1.humanoid, 'pose', 'autoPose')
     meta = ext.vrm1.meta
-    meta.vrm_name = 'Keqing - local neutral conversion test'
-    meta.version = '2026-10-08'
+    meta.vrm_name = profile['name'] + ' - local neutral conversion test'
+    meta.version = '2026-10-08' if args.profile == 'keqing' else '2026-10-09'
     meta.authors.clear()
-    for author in ['miHoYo', '观海']:
+    for author in ['miHoYo', profile['editor']]:
         meta.authors.add().value = author
-    meta.copyright_information = 'Source model: miHoYo; MMD conversion: 观海. Original readme remains authoritative.'
+    meta.copyright_information = f"Source model: miHoYo; MMD conversion: {profile['editor']}. Original model terms remain authoritative."
     meta.third_party_licenses = 'Original readme prohibits redistribution, commercial use and use in 18+ works. Local neutral technical test only.'
     set_enum(meta, 'commercial_usage', 'personalNonProfit')
     set_enum(meta, 'modification', 'allowModification')
@@ -213,8 +222,8 @@ def main():
         obj.select_set(True)
     bpy.context.view_layer.objects.active = arm
     baseline_test = foot_test(meshes, arm, '足首.L')
-    export_vrm(arm, meshes, DEST/'keqing_before.vrm')
-    bpy.ops.wm.save_as_mainfile(filepath=str(BUILD/'keqing_before.blend'))
+    export_vrm(arm, meshes, DEST/f'{args.profile}_before.vrm')
+    bpy.ops.wm.save_as_mainfile(filepath=str(BUILD/f'{args.profile}_before.blend'))
     transfers = []
     for side in ['L', 'R']:
         for source_stem, target_stem in [('足D', '足'), ('ひざD', 'ひざ'), ('足首D', '足首')]:
@@ -237,9 +246,9 @@ def main():
     fixed_test = foot_test(meshes, arm, '足首.L')
     if baseline_test['moved_vertices_over_0_1mm'] != 0 or fixed_test['moved_vertices_over_0_1mm'] < 100:
         raise RuntimeError(f'Foot deformation test failed: {baseline_test}, {fixed_test}')
-    export_vrm(arm, meshes, DEST/'keqing_fixed.vrm')
-    bpy.ops.wm.save_as_mainfile(filepath=str(BUILD/'keqing_fixed.blend'))
-    report = {'blender': bpy.app.version_string,
+    export_vrm(arm, meshes, DEST/f'{args.profile}_fixed.vrm')
+    bpy.ops.wm.save_as_mainfile(filepath=str(BUILD/f'{args.profile}_fixed.blend'))
+    report = {'profile': args.profile, 'blender': bpy.app.version_string,
         'source_unchanged': hashlib.sha256(source.read_bytes()).hexdigest() == source_hash,
         'vertices': sum(len(mesh.data.vertices) for mesh in meshes), 'bones': len(arm.data.bones),
         'materials': len(materials), 'transfers': transfers,
@@ -249,7 +258,7 @@ def main():
         'foot_rotation_before': baseline_test, 'foot_rotation_after': fixed_test,
         'humanoid': {str(name):bone.node.bone_name for name,bone in human.human_bone_name_to_human_bone().items() if bone.node.bone_name},
         'limitations': ['Hair/skirt springs are not configured', 'Facial morphs retained but VRM expressions not assigned',
-                       'MMD toon/sphere shading is not reproduced pixel-for-pixel', 'Single-model profile; other models require an audit'],
+                       'MMD toon/sphere shading is not reproduced pixel-for-pixel', 'Audited model profile; other models require an audit'],
         }
     (BUILD/'conversion_report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
     print('CONVERSION_SUMMARY', json.dumps({k:report[k] for k in ['vertices','bones','materials','max_weight_total_error','foot_rotation_before','foot_rotation_after']}, ensure_ascii=False), flush=True)

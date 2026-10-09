@@ -1,13 +1,16 @@
 extends "res://scripts/character_motion_test.gd"
 ## Neutral PMX conversion review with versioned private-project test assets.
 
-const LOCAL := "res://assets/characters/import_tests_local/keqing/"
+@export var model_id := "keqing"
+@export var model_label := "刻晴"
+var local: String
 var variant: OptionButton
 
 func _ready() -> void:
-	character_resource = LOCAL + "keqing_fixed.vrm"
-	motion_directory = LOCAL + "motions"
-	review_title = "刻晴动作测试"
+	local = "res://assets/characters/import_tests_local/" + model_id + "/"
+	character_resource = local + model_id + "_fixed.vrm"
+	motion_directory = local + "motions"
+	review_title = model_label + "动作测试"
 	if not ResourceLoader.exists(character_resource) or not FileAccess.file_exists(motion_directory + "/catalog.json"):
 		var message := Label.new()
 		message.position = Vector2(32, 32)
@@ -39,7 +42,7 @@ func _switch_variant(index: int) -> void:
 	var library := player.get_animation_library("")
 	player.stop()
 	character.free()
-	character_resource = LOCAL + ("keqing_fixed.vrm" if index == 0 else "keqing_before.vrm")
+	character_resource = local + model_id + ("_fixed.vrm" if index == 0 else "_before.vrm")
 	character = load(character_resource).instantiate()
 	add_child(character)
 	skeleton = character.find_child("GeneralSkeleton", true, false)
