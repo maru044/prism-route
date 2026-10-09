@@ -1,0 +1,120 @@
+{
+  "duplicate_rebuild_edges": {
+    "distances_at_previous_points": [
+      0.1939146088431124,
+      0.90304754399668596,
+      0.75342528825523547
+    ],
+    "valid": true,
+    "success": true
+  },
+  "edge_source_checks": [
+    {
+      "samples": 501,
+      "edge": 3,
+      "sources": [
+        {
+          "mean_distance_m": 6.0508978504043457e-13,
+          "max_distance_m": 9.3616216586914658e-12,
+          "id": "409fe8c0-60a8-4456-b44a-8801880a0a1b"
+        },
+        {
+          "mean_distance_m": 2.2648867930012225e-10,
+          "max_distance_m": 1.1015960497783685e-07,
+          "id": "2f7670b2-e6b4-4af9-8724-65a7877cc858"
+        },
+        {
+          "mean_distance_m": 3.4496555288710783e-12,
+          "max_distance_m": 1.4777978782572684e-11,
+          "id": "34a6dae0-09e7-4b38-b104-151b72d18e28"
+        }
+      ]
+    },
+    {
+      "samples": 501,
+      "edge": 6,
+      "sources": [
+        {
+          "mean_distance_m": 4.4776830489708507e-13,
+          "max_distance_m": 9.9975786918450113e-12,
+          "id": "409fe8c0-60a8-4456-b44a-8801880a0a1b"
+        },
+        {
+          "mean_distance_m": 3.870931304601852e-12,
+          "max_distance_m": 1.8675918026422352e-11,
+          "id": "2f7670b2-e6b4-4af9-8724-65a7877cc858"
+        },
+        {
+          "mean_distance_m": 4.0808471464890496e-12,
+          "max_distance_m": 2.341100298925918e-11,
+          "id": "34a6dae0-09e7-4b38-b104-151b72d18e28"
+        }
+      ]
+    },
+    {
+      "samples": 501,
+      "edge": 7,
+      "sources": [
+        {
+          "mean_distance_m": 3.6242729458466831e-13,
+          "max_distance_m": 7.519086643802273e-12,
+          "id": "409fe8c0-60a8-4456-b44a-8801880a0a1b"
+        },
+        {
+          "mean_distance_m": 4.0322019091841327e-13,
+          "max_distance_m": 7.5779474376472553e-12,
+          "id": "2f7670b2-e6b4-4af9-8724-65a7877cc858"
+        },
+        {
+          "mean_distance_m": 0.047551805995404192,
+          "max_distance_m": 0.96385210303769531,
+          "id": "34a6dae0-09e7-4b38-b104-151b72d18e28"
+        }
+      ]
+    }
+  ],
+  "vertical_intersections": [
+    {
+      "overlap_count": 0,
+      "cliff_point": [
+        1922.2023838981208,
+        592.32848850155870,
+        57.014832913818807
+      ],
+      "terrain_hits": [
+        [
+          1922.2023838981211,
+          592.32848850155870,
+          57.208923068627421
+        ]
+      ],
+      "success": true
+    },
+    {
+      "overlap_count": 0,
+      "cliff_point": [
+        280.64681801503980,
+        1354.5707909470339,
+        1.3255828284017508
+      ],
+      "terrain_hits": [
+        [
+          280.64681801503974,
+          1354.5707909470339,
+          0.42234847268160242
+        ]
+      ],
+      "success": true
+    },
+    {
+      "overlap_count": 0,
+      "cliff_point": [
+        786.87989600885794,
+        205.10989642484574,
+        60
+      ],
+      "terrain_hits": [],
+      "success": true
+    }
+  ]
+}
