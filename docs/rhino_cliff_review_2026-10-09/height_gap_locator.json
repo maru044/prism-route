@@ -1,0 +1,14 @@
+{
+  "document": "D:\\Prism Route\\map\\map.3dm",
+  "cliff_id": "85836254-d682-4d80-af5a-1033c51c2cca",
+  "terrain_id": "ad44a7ee-76bf-4eac-aff2-1f138675d8a6",
+  "cliff_top_point_m": [280.6468180150398, 1354.570790947034, 1.325582828401751],
+  "terrain_vertical_hit_m": [280.6468180150398, 1354.570790947034, 0.42234847268160242],
+  "height_difference_m": 0.9032343557201486,
+  "terrain_hit_to_cliff_distance_m": 4.5829609754479773e-13,
+  "terrain_hit_relation_on_cliff": "Interior",
+  "interpretation": "At this sample the terrain intersects the cliff wall below its upper edge. The upper edge stands proud of terrain; height difference is not an open gap width.",
+  "source_geometry_changed": false,
+  "current_view_target_m": [280.6468180150398, 1354.570790947034, 0.88],
+  "screenshots_use_temporary_display_overlay": true
+}
