@@ -5,6 +5,7 @@ const ASSETS := "res://assets/world/map_1012_test/"
 const VIEW_NAMES := ["道路出生点", "林地", "沙滩", "高层平台"]
 const FRESH_SKY := preload("res://assets/environment/sky/fresh_cumulus_sky.tres")
 const TERRAIN_SHADER := preload("res://assets/world/terrain/shaders/terrain_draft.gdshader")
+const TEST_PANEL := preload("res://scripts/world_test_panel.gd")
 
 @onready var camper: CharacterBody3D = $CamperVan
 @onready var chase_camera: Camera3D = $CamperVan/CameraPivot/SpringArm3D/Camera3D
@@ -23,6 +24,7 @@ var status: Label
 var fly_button: Button
 var actor_button: Button
 var controls_label: Label
+var test_panel
 var character_mode := false
 var switching_actor := false
 var terrain_material: ShaderMaterial
@@ -146,53 +148,15 @@ func _build_environment() -> void:
 	add_child(sun)
 
 func _build_hud() -> void:
-	var canvas := CanvasLayer.new()
-	canvas.name = "HUD"
-	add_child(canvas)
-	var panel := PanelContainer.new()
-	panel.position = Vector2(20, 18)
-	canvas.add_child(panel)
-	var column := VBoxContainer.new()
-	panel.add_child(column)
-	var label := Label.new()
-	label.text = "model_1012｜大地图驾驶 / 角色测试\n20,000 棵树（2,000 棵大树）· 房车 / 甘雨 · 清新天空"
-	label.add_theme_font_size_override("font_size", 21)
-	column.add_child(label)
-	var buttons := HBoxContainer.new()
-	column.add_child(buttons)
-	fly_button = Button.new()
-	fly_button.text = "F 自由观景"
-	fly_button.focus_mode = Control.FOCUS_NONE
-	fly_button.pressed.connect(func(): set_free_mode(not free_mode))
-	buttons.add_child(fly_button)
-	var overview := Button.new()
-	overview.text = "Tab 全岛"
-	overview.focus_mode = Control.FOCUS_NONE
-	overview.pressed.connect(show_overview)
-	buttons.add_child(overview)
-	actor_button = Button.new()
-	actor_button.text = "C 切换为甘雨"
-	actor_button.focus_mode = Control.FOCUS_NONE
-	actor_button.pressed.connect(func(): set_character_mode(not character_mode))
-	buttons.add_child(actor_button)
-	var places := HBoxContainer.new()
-	column.add_child(places)
-	for index in VIEW_NAMES.size():
-		var button := Button.new()
-		button.text = "%d %s" % [index + 1, VIEW_NAMES[index]]
-		button.focus_mode = Control.FOCUS_NONE
-		button.pressed.connect(select_spawn.bind(index))
-		places.add_child(button)
-	controls_label = Label.new()
-	controls_label.add_theme_font_size_override("font_size", 17)
-	column.add_child(controls_label)
-	status = Label.new()
-	status.position = Vector2(22, 990)
-	status.add_theme_font_size_override("font_size", 18)
-	status.add_theme_color_override("font_shadow_color", Color.BLACK)
-	status.add_theme_constant_override("shadow_offset_x", 2)
-	status.add_theme_constant_override("shadow_offset_y", 2)
-	canvas.add_child(status)
+	test_panel = TEST_PANEL.new()
+	test_panel.name = "HUD"
+	add_child(test_panel)
+	test_panel.setup(self)
+	# Retain these handles for the existing world/actor verification tools.
+	fly_button = test_panel.fly_button
+	actor_button = test_panel.actor_button
+	controls_label = test_panel.controls_label
+	status = test_panel.status
 
 func ground_hit(point: Vector3, include_water := false) -> Dictionary:
 	var query := PhysicsRayQueryParameters3D.create(Vector3(point.x, 400, point.z), Vector3(point.x, -30, point.z), 5 if include_water else 1)
@@ -254,7 +218,8 @@ func _sync_actor_controls() -> void:
 	vegetation.set_grass_actor(active_actor(), not character_mode)
 	fly_button.text = "F 返回角色" if free_mode and character_mode else ("F 返回驾驶" if free_mode else "F 自由观景")
 	actor_button.text = "C 切换为房车" if character_mode else "C 切换为甘雨"
-	controls_label.text = ("WASD 移动 · Shift 奔跑 · 空格跳跃 · G 招呼 · R 复位" if character_mode else "W/S 前进倒车 · A/D 转向 · 空格刹车 · R 复位") + "\n右键拖动视角 · 滚轮缩放 · C 切换房车/甘雨 · L 树木 LOD · V 植被\n自由观景：WASD/QE 移动 · Shift 加速 · F 返回控制"
+	controls_label.text = ("人物：WASD 移动 · Shift 奔跑\n空格跳跃 · G 招呼 · R 复位" if character_mode else "房车：W/S 前进倒车 · A/D 转向\n空格刹车 · R 复位") + "\n\n镜头：右键拖动 · 滚轮缩放\n自由观景：WASD/QE 移动 · Shift 加速"
+	test_panel.refresh()
 
 func set_character_mode(enabled: bool) -> void:
 	if switching_actor or enabled == character_mode:
@@ -307,7 +272,7 @@ func show_detail(index := 1) -> void:
 	camera.look_at(target)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not test_ready:
+	if not test_ready or test_panel.menu_open:
 		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		match event.keycode:
@@ -315,11 +280,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_TAB: show_overview()
 			KEY_C: set_character_mode(not character_mode)
 			KEY_L:
-				lod_enabled = not lod_enabled
-				vegetation.set_lod_enabled(lod_enabled)
+				set_lod_enabled(not lod_enabled)
 			KEY_V:
-				vegetation_enabled = not vegetation_enabled
-				vegetation.set_vegetation_enabled(vegetation_enabled)
+				set_vegetation_enabled(not vegetation_enabled)
 		if event.keycode >= KEY_1 and event.keycode <= KEY_4:
 			await select_spawn(event.keycode - KEY_1)
 	if free_mode and event is InputEventMouseMotion and Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
@@ -332,6 +295,13 @@ func _process(delta: float) -> void:
 	if free_mode and not automation_enabled:
 		var direction := Vector3(float(Input.is_physical_key_pressed(KEY_D)) - float(Input.is_physical_key_pressed(KEY_A)), float(Input.is_physical_key_pressed(KEY_E)) - float(Input.is_physical_key_pressed(KEY_Q)), float(Input.is_physical_key_pressed(KEY_S)) - float(Input.is_physical_key_pressed(KEY_W)))
 		camera.position += camera.basis * direction.normalized() * (160.0 if Input.is_physical_key_pressed(KEY_SHIFT) else 28.0) * delta
-	status.position.y = get_viewport().get_visible_rect().size.y - 62
-	var mode_label: String = "自由观景" if free_mode else ("甘雨 · " + character.get_motion_label() if character_mode else "驾驶")
-	status.text = "%s · %s｜%.1f km/h｜FPS %d｜Draws %d\n树木 %d / 大树 %d · 草地区块 %d · LOD %s" % [mode_label, "全岛" if overview_mode else VIEW_NAMES[viewpoint], active_actor().get_speed_kph(), Engine.get_frames_per_second(), Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME), vegetation.tree_instance_count, vegetation.large_tree_instance_count, vegetation.get_active_grass_chunk_count(), "开启" if lod_enabled else "中距比较"]
+
+func set_lod_enabled(enabled: bool) -> void:
+	lod_enabled = enabled
+	vegetation.set_lod_enabled(enabled)
+	test_panel.refresh()
+
+func set_vegetation_enabled(enabled: bool) -> void:
+	vegetation_enabled = enabled
+	vegetation.set_vegetation_enabled(enabled)
+	test_panel.refresh()

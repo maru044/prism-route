@@ -1,0 +1,19 @@
+{
+	"aa_choices": 2,
+	"capture": true,
+	"detailed_statistics_default": true,
+	"failures": [],
+	"fxaa": false,
+	"godot": "4.7.2-stable (official)",
+	"legacy_postprocessing_preferences_migrated": true,
+	"menu_pauses_control": true,
+	"msaa_strengths": [
+		2,
+		4,
+		8
+	],
+	"preferences_round_trip": true,
+	"small_viewport": "960x540",
+	"taa": false,
+	"tabs": 5
+}
