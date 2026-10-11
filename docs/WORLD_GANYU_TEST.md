@@ -21,7 +21,9 @@
 
 ## 模型与控制器
 
-复用 `scenes/characters/ganyu.tscn`，保持原模型比例、MToon 材质和已有服饰 / 头发弹簧骨配置。新包装场景为 `scenes/characters/world_ganyu.tscn`，控制器为 `scripts/world_character_controller.gd`。
+复用 `scenes/characters/ganyu.tscn`，保持原模型比例、导入材质和已有服饰 / 头发弹簧骨配置。新包装场景为 `scenes/characters/world_ganyu.tscn`，控制器为 `scripts/world_character_controller.gd`。
+
+材质核对（2026-10-12）：运行时 19 个材质均为 `StandardMaterial3D`，使用逐像素标准光照，金属度 0、粗糙度 0.5；均使用 Alpha Depth Pre-Pass，未设置描边的 next_pass。源 VRM 未声明 `VRMC_materials_mtoon`，当前未应用 MToon 或项目专用角色着色器。此前此处将导入材质记为 MToon 有误；二次元观感主要来自原模型与贴图。
 
 控制器使用 CharacterBody3D 和直径 0.48 米、高 1.45 米的胶囊碰撞，重力 22 米/秒²，跳跃初速度 7 米/秒。步行 1.6 米/秒，奔跑 4.2 米/秒；移动方向归一化，模型平滑转向移动方向。镜头使用可碰撞的 SpringArm3D，默认距离 4.5 米。水面仍不作为人物或房车的地面。
 

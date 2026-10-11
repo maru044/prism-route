@@ -251,6 +251,7 @@ func _sync_actor_controls() -> void:
 	else:
 		active_camera().make_current()
 	vegetation.target = camera if free_mode else active_actor()
+	vegetation.set_grass_actor(active_actor(), not character_mode)
 	fly_button.text = "F 返回角色" if free_mode and character_mode else ("F 返回驾驶" if free_mode else "F 自由观景")
 	actor_button.text = "C 切换为房车" if character_mode else "C 切换为甘雨"
 	controls_label.text = ("WASD 移动 · Shift 奔跑 · 空格跳跃 · G 招呼 · R 复位" if character_mode else "W/S 前进倒车 · A/D 转向 · 空格刹车 · R 复位") + "\n右键拖动视角 · 滚轮缩放 · C 切换房车/甘雨 · L 树木 LOD · V 植被\n自由观景：WASD/QE 移动 · Shift 加速 · F 返回控制"

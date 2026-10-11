@@ -1,6 +1,8 @@
 shader_type spatial;
 render_mode cull_back, depth_prepass_alpha, diffuse_burley, alpha_to_coverage;
 
+#include "res://assets/vegetation/shaders/grass_interaction.gdshaderinc"
+
 uniform sampler2D albedo_texture : source_color, filter_linear_mipmap_anisotropic;
 uniform vec4 color_tint : source_color = vec4(1.0);
 // A shared palette can recolor the same texture without painting new species.
@@ -406,6 +408,14 @@ void vertex() {
 		float sway = (primary + detail) * wind_strength * wind_weight;
 		wind_wave = 0.5;
 		VERTEX.xz += direction * sway;
+	}
+	if (use_grass_interaction) {
+		vec3 push_world = grass_interaction_offset(world_origin, world_vertex, wind_weight);
+		// Instances have random yaw and nonuniform scale. Convert a WORLD push
+		// back to model space so adjacent chunks and rotated tufts agree.
+		if (dot(push_world, push_world) > 0.000001) {
+			VERTEX += inverse(mat3(MODEL_MATRIX)) * push_world;
+		}
 	}
 }
 

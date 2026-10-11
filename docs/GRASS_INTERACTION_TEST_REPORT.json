@@ -1,0 +1,19 @@
+{
+	"capture": true,
+	"failures": [],
+	"godot": "4.7.2-stable (official)",
+	"gpu_pixels_changed": {
+		"character": 868,
+		"recovered": 0,
+		"vehicle": 5029
+	},
+	"max_sample_distance_after_teleport_m": 0.0,
+	"world": {
+		"actor_switching": true,
+		"free_camera_does_not_push": true,
+		"large_trees": 2000,
+		"max_sources": 16,
+		"recovery_seconds": 1.6,
+		"trees": 20000
+	}
+}

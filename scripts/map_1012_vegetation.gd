@@ -3,6 +3,25 @@ extends "res://scripts/vegetation_lod_streamer.gd"
 
 const LAYOUT_PATH := "res://assets/world/map_1012_test/tree_layout.json"
 const MAP_FAR_TREE_END := 6000.0
+const GRASS_INTERACTION := preload("res://scripts/grass_interaction.gd")
+@export var grass_interaction_enabled := true
+var grass_interaction = GRASS_INTERACTION.new()
+
+func set_grass_actor(actor: Node3D, is_vehicle: bool) -> void:
+	grass_interaction.set_actor(actor, is_vehicle)
+
+func _process(delta: float) -> void:
+	super._process(delta)
+	if initialized and grass_material != null:
+		grass_interaction.enabled = grass_interaction_enabled
+		grass_interaction.update(delta, grass_material)
+
+func _build_grass_chunk(cell: Vector2i) -> void:
+	super._build_grass_chunk(cell)
+	if active_grass_chunks.has(cell):
+		for node in active_grass_chunks[cell].get_children():
+			if node is MultiMeshInstance3D:
+				node.extra_cull_margin = 1.5
 
 func _load_meshes_and_materials() -> void:
 	super._load_meshes_and_materials()
