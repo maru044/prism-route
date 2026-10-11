@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3]
+
+[ext_resource type="Shader" path="res://assets/environment/sky/stylized_panorama.gdshader" id="1_shader"]
+[ext_resource type="Texture2D" path="res://assets/environment/sky/fresh_cumulus_panorama_v2.png" id="2_visible"]
+[ext_resource type="Texture2D" path="res://assets/environment/hdri/rosendal_park_sunset_puresky_4k.exr" id="3_lighting"]
+
+[resource]
+shader = ExtResource("1_shader")
+shader_parameter/lighting_panorama = ExtResource("3_lighting")
+shader_parameter/display_panorama = ExtResource("2_visible")
+shader_parameter/lighting_energy = 0.48
+shader_parameter/display_energy = 1.0
+shader_parameter/display_yaw = 0.0

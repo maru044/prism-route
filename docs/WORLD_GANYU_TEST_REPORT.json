@@ -1,0 +1,51 @@
+{
+	"capture": true,
+	"elapsed_ms": 27976,
+	"failures": [],
+	"godot": "4.7.2-stable (official)",
+	"large_trees": 2000,
+	"motions": {
+		"greet": "A25",
+		"idle": "A01",
+		"jump_air": "A19",
+		"jump_land": "A20",
+		"jump_start": "A18",
+		"run": "A06",
+		"walk": "A05"
+	},
+	"movement": {
+		"bookmarks": [
+			{
+				"bookmark": 0,
+				"on_floor": true,
+				"position": "(77.17399, 0.055894, -62.09808)"
+			},
+			{
+				"bookmark": 1,
+				"on_floor": true,
+				"position": "(-803.76, 36.3059, 68.11559)"
+			},
+			{
+				"bookmark": 2,
+				"on_floor": true,
+				"position": "(200.8914, 0.00026, 804.0991)"
+			},
+			{
+				"bookmark": 3,
+				"on_floor": true,
+				"position": "(686.1088, 60.63874, 553.4354)"
+			}
+		],
+		"camera_relative_direction_alignment": 0.999954998493195,
+		"jump_height_m": 1.17228536307812,
+		"jump_states": [
+			"jump_start",
+			"jump_air",
+			"jump_land",
+			"idle"
+		],
+		"run_distance_1_5s_m": 6.01057529449463,
+		"walk_distance_1_5s_m": 2.29490089416504
+	},
+	"trees": 20000
+}

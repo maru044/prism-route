@@ -43,6 +43,7 @@ const CYPRESS_TEXTURE := preload("res://assets/vegetation/textures/foliage_cypre
 const SHRUB_TEXTURE := preload("res://assets/vegetation/textures/shrub_leaf_lobes_billboard_flat_v3.png")
 const BIRCH_BARK_TEXTURE := preload("res://assets/vegetation/textures/bark_birch_flat_v1.png")
 const SKY_TEXTURE := preload("res://assets/environment/hdri/rosendal_park_sunset_puresky_4k.exr")
+const FRESH_SKY_MATERIAL := preload("res://assets/environment/sky/fresh_cumulus_sky.tres")
 const GANYU_SCENE := preload("res://scenes/characters/ganyu.tscn")
 
 var grass_wind_texture: NoiseTexture2D
@@ -284,7 +285,9 @@ func _build_environment() -> void:
 	panorama.energy_multiplier = 0.48
 
 	var sky := Sky.new()
-	sky.sky_material = panorama
+	# Grove uses an original painted background; its radiance remains the same
+	# HDRI at the same energy. Other vegetation diagnostics keep their baseline.
+	sky.sky_material = FRESH_SKY_MATERIAL if grove_demo else panorama
 	sky.process_mode = Sky.PROCESS_MODE_QUALITY
 
 	var environment := Environment.new()

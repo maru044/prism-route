@@ -1,0 +1,92 @@
+{
+  "source": "D:\\Prism Route\\map\\model_1012.gltf",
+  "source_sha256": "90f1e70c5dd0a925aa3bb5ce554a5e2a6b4d2d49860218218074fe73db714100",
+  "geometry_scale": 1.0,
+  "model_translation": [
+    -1172.01708984375,
+    0,
+    983.4653930664062
+  ],
+  "bounds_min": [
+    -1177.46582,
+    -4.25686,
+    -1465.9209
+  ],
+  "bounds_max": [
+    1177.46582,
+    185.62186,
+    1465.9209
+  ],
+  "source_polygon_counts": {
+    "Terrain": 14413,
+    "Roads": 6844,
+    "Beaches": 917,
+    "Water": 566
+  },
+  "top_orientation_fixes": {
+    "Terrain": 11,
+    "Roads": 1,
+    "Beaches": 2,
+    "Water": 0
+  },
+  "road_spawn": [
+    77.17399,
+    -0.00848,
+    -62.09808
+  ],
+  "road_direction": [
+    -0.93346,
+    0.0,
+    0.35869
+  ],
+  "anchors": [
+    [
+      77.17399,
+      -0.00848,
+      -62.09808
+    ],
+    [
+      -807.76001,
+      36.19534,
+      68.11559
+    ],
+    [
+      200.89136,
+      0.0,
+      804.09912
+    ],
+    [
+      682.10883,
+      60.6312,
+      553.43542
+    ]
+  ],
+  "water_level_m": 0.0,
+  "water_display_offset_m": 0.0,
+  "water_source": "authored_mesh_only",
+  "vegetation": {
+    "tree_count": 20000,
+    "large_tree_count": 2000,
+    "minimum_horizontal_spacing_m": 9.0,
+    "large_to_large_minimum_spacing_m": 22.0,
+    "road_projection_clearance_m": 6.0,
+    "seed": 10122026,
+    "candidate_rejections": {
+      "empty_or_steep": 817654,
+      "road": 60802,
+      "edge": 3970,
+      "spacing": 493759,
+      "water": 374,
+      "spawn": 369,
+      "beach": 260
+    }
+  },
+  "layout_columns": [
+    "x",
+    "y",
+    "z",
+    "yaw",
+    "scale",
+    "large"
+  ]
+}

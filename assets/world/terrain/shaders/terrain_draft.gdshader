@@ -12,6 +12,15 @@ uniform float biome_warp_distance = 210.0;
 uniform float biome_transition_half_width = 135.0;
 uniform float biome_center_x = 20.0;
 uniform float rock_bias = 0.0;
+// CAD exports with separate beaches do not need a sea-height sand heuristic.
+uniform bool use_height_sand = true;
+// Optional CAD road projection: draw near-ground roads on this surface once.
+uniform bool project_roads = false;
+uniform sampler2D road_projection : filter_linear, repeat_disable;
+uniform vec2 road_origin_xz;
+uniform vec2 road_extent_xz;
+uniform float ground_road_height_tolerance = 2.0;
+uniform vec4 road_color : source_color = vec4(0.23, 0.25, 0.25, 1.0);
 // The far proxy preserves the screen-integrated identity of a meadow after
 // individual grass cards disappear. It deliberately contains no blade detail.
 uniform bool use_far_grass_proxy = true;
@@ -61,6 +70,9 @@ void fragment() {
 	float wind_band = smoothstep(0.46, 0.76, wind_field);
 	grass *= 0.985 + fine_grass * 0.012 - wind_band * 0.035;
 	float sand_mix = 1.0 - smoothstep(1.5, 8.0, world_position.y + broad_noise * 1.8);
+	if (!use_height_sand) {
+		sand_mix = 0.0;
+	}
 	// Rhino surfaces may be exported with their normals facing downward. Terrain
 	// steepness is orientation-independent, so use the absolute Y component.
 	float slope = 1.0 - clamp(abs(world_normal.y), 0.0, 1.0);
@@ -68,6 +80,16 @@ void fragment() {
 	vec3 color = mix(grass, sand_color.rgb, sand_mix);
 	color = mix(color, rock_color.rgb, rock_mix);
 	color *= 0.97 + broad_noise * 0.025;
+	if (project_roads) {
+		vec2 uv = (world_position.xz - road_origin_xz) / road_extent_xz;
+		float inside = step(0.0, uv.x) * step(uv.x, 1.0)
+			* step(0.0, uv.y) * step(uv.y, 1.0);
+		vec4 road_data = textureLod(road_projection, clamp(uv, vec2(0.0), vec2(1.0)), 0.0);
+		float road_y = road_data.g / max(road_data.r, 0.00001);
+		float close = 1.0 - step(ground_road_height_tolerance, abs(world_position.y - road_y));
+		float top_surface = smoothstep(0.25, 0.55, abs(world_normal.y));
+		color = mix(color, road_color.rgb, road_data.r * inside * close * top_surface);
+	}
 	ALBEDO = color;
 	ROUGHNESS = 0.93;
 	SPECULAR = 0.12;

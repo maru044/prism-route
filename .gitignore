@@ -18,5 +18,6 @@
 # Regenerable Blender conversion files, captures, and diagnostics.
 /.model_import_build/
 /.map_1009_build/
+/.map_1012_build/
 # Local reminder for the project's noncommercial use of miHoYo assets.
 /assets/MIHOYO_ASSET_USAGE.local.md

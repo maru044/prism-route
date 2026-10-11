@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/world_character_controller.gd" id="1_control"]
+[ext_resource type="PackedScene" path="res://scenes/characters/ganyu.tscn" id="2_ganyu"]
+
+[sub_resource type="CapsuleShape3D" id="Body"]
+radius = 0.24
+height = 1.45
+
+[node name="WorldGanyu" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_control")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.725, 0)
+shape = SubResource("Body")
+
+[node name="Visual" type="Node3D" parent="."]
+
+[node name="GanyuModel" parent="Visual" instance=ExtResource("2_ganyu")]
+
+[node name="CameraPivot" type="Node3D" parent="."]
+position = Vector3(0, 1.1, 0)
+rotation = Vector3(-0.16, 0, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot"]
+spring_length = 4.5
+margin = 0.2
+collision_mask = 1
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D"]
+fov = 55.0
+near = 0.05
+far = 12000.0

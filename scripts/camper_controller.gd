@@ -28,7 +28,10 @@ func _physics_process(delta: float) -> void:
 	var steering := float(Input.is_key_pressed(KEY_A))
 	steering -= float(Input.is_key_pressed(KEY_D))
 	var braking := Input.is_key_pressed(KEY_SPACE)
+	_step_driving(throttle, steering, braking, delta)
 
+
+func _step_driving(throttle: float, steering: float, braking: bool, delta: float) -> void:
 	var target_speed := 0.0
 	if throttle > 0.0:
 		target_speed = maximum_forward_speed
@@ -41,15 +44,8 @@ func _physics_process(delta: float) -> void:
 		change_rate = brake_deceleration
 	drive_speed = move_toward(drive_speed, target_speed, change_rate * delta)
 
-	var steering_weight: float = clamp(abs(drive_speed) / 5.0, 0.18, 1.0)
 	if abs(drive_speed) > 0.08:
-		rotation.y += (
-			steering
-			* steering_speed
-			* steering_weight
-			* sign(drive_speed)
-			* delta
-		)
+		rotation.y += steering * _steering_yaw_rate() * delta
 
 	var forward := -global_transform.basis.z.normalized()
 	velocity.x = forward.x * drive_speed
@@ -62,6 +58,11 @@ func _physics_process(delta: float) -> void:
 
 	if global_position.y < -25.0 or Input.is_key_pressed(KEY_R):
 		reset_to_respawn()
+
+
+func _steering_yaw_rate() -> float:
+	var steering_weight: float = clamp(abs(drive_speed) / 5.0, 0.18, 1.0)
+	return steering_speed * steering_weight * sign(drive_speed)
 
 
 func _unhandled_input(event: InputEvent) -> void:

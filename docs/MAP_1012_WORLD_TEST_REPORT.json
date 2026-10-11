@@ -1,0 +1,106 @@
+{
+  "capture": true,
+  "checks": [
+    {
+      "bookmark": 0,
+      "on_floor": true,
+      "surface": "Roads",
+      "wheel_gaps_m": [
+        1.37090682983398E-06,
+        4.17232513427734E-07,
+        -5.36441802978516E-07,
+        1.84774398803711E-06
+      ]
+    },
+    {
+      "bookmark": 1,
+      "on_floor": true,
+      "surface": "Terrain",
+      "wheel_gaps_m": [
+        0.0,
+        0.0,
+        3.814697265625E-06,
+        0.0
+      ]
+    },
+    {
+      "bookmark": 2,
+      "on_floor": true,
+      "surface": "Beaches",
+      "wheel_gaps_m": [
+        -4.76837158203125E-07,
+        -5.0663948059082E-07,
+        5.0663948059082E-07,
+        4.76837158203125E-07
+      ]
+    },
+    {
+      "bookmark": 3,
+      "on_floor": true,
+      "surface": "Terrain",
+      "wheel_gaps_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "driven_m": 10.7675151824951,
+      "on_floor": true,
+      "wheel_gaps_m": [
+        -8.83340835571289E-05,
+        0.000115275382995605,
+        -8.8810920715332E-05,
+        -8.83340835571289E-05
+      ]
+    }
+  ],
+  "failures": [],
+  "godot": "4.7.2-stable (official)",
+  "population": {
+    "ground_errors": 0,
+    "large": 2000,
+    "max_root_height_error_m": 0.0161170959472656,
+    "minimum_large_spacing_m": 22.0194778442383,
+    "minimum_tree_spacing_m": 9.00039005279541,
+    "trees": 20000,
+    "trees_below_zero": 4184
+  },
+  "root_discrepancies": [],
+  "startup_ms": 2892,
+  "validation_ms": 24264,
+  "road_projection": {
+    "source_sha256": "90f1e70c5dd0a925aa3bb5ce554a5e2a6b4d2d49860218218074fe73db714100",
+    "resolution": 4096,
+    "origin_xz": [
+      -1181.4658203125,
+      -1469.9208984375
+    ],
+    "extent_xz": [
+      2362.931640625,
+      2939.841796875
+    ],
+    "meters_per_texel": [
+      0.5768876075744629,
+      0.7177348136901855
+    ],
+    "ground_road_height_tolerance_m": 2.0,
+    "overlap_pixels": 465268,
+    "overlap_within_2cm_pixels": 39018,
+    "overlap_within_2m_pixels": 358843,
+    "signed_road_minus_terrain_percentiles_m": [
+      -122.04423522949219,
+      -26.48182773590088,
+      0.008068084716796875,
+      1.0095721244811995,
+      25.01458740234375
+    ],
+    "spawn_road_minus_terrain_m": 0.06344965100288391
+  },
+  "road_review_captures": [
+    "road_0.png",
+    "road_1.png",
+    "road_2.png"
+  ]
+}

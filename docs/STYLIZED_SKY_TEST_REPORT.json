@@ -1,0 +1,20 @@
+{
+	"display_texture_size": "(1774.0, 887.0)",
+	"failures": [],
+	"godot": "4.7.2-stable (official)",
+	"lighting_checks": [
+		{
+			"map": "radiance",
+			"max_linear_rgb_difference": 0.0,
+			"mean_max_channel_difference": 0.0
+		},
+		{
+			"map": "irradiance",
+			"max_linear_rgb_difference": 0.0,
+			"mean_max_channel_difference": 0.0
+		}
+	],
+	"sky_longitude_views": 8,
+	"sky_pole_views": 2,
+	"views": 4
+}

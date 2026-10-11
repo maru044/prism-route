@@ -1,0 +1,28 @@
+{
+  "source_sha256": "90f1e70c5dd0a925aa3bb5ce554a5e2a6b4d2d49860218218074fe73db714100",
+  "resolution": 4096,
+  "origin_xz": [
+    -1181.4658203125,
+    -1469.9208984375
+  ],
+  "extent_xz": [
+    2362.931640625,
+    2939.841796875
+  ],
+  "meters_per_texel": [
+    0.5768876075744629,
+    0.7177348136901855
+  ],
+  "ground_road_height_tolerance_m": 2.0,
+  "overlap_pixels": 465268,
+  "overlap_within_2cm_pixels": 39018,
+  "overlap_within_2m_pixels": 358843,
+  "signed_road_minus_terrain_percentiles_m": [
+    -122.04423522949219,
+    -26.48182773590088,
+    0.008068084716796875,
+    1.0095721244811995,
+    25.01458740234375
+  ],
+  "spawn_road_minus_terrain_m": 0.06344965100288391
+}
