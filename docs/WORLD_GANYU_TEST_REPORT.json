@@ -1,6 +1,6 @@
 {
 	"capture": true,
-	"elapsed_ms": 27976,
+	"elapsed_ms": 28049,
 	"failures": [],
 	"godot": "4.7.2-stable (official)",
 	"large_trees": 2000,
@@ -18,34 +18,34 @@
 			{
 				"bookmark": 0,
 				"on_floor": true,
-				"position": "(77.17399, 0.055894, -62.09808)"
+				"position": "(77.1403, 0.050736, -61.85955)"
 			},
 			{
 				"bookmark": 1,
 				"on_floor": true,
-				"position": "(-803.76, 36.3059, 68.11559)"
+				"position": "(-803.7937, 36.30733, 68.35412)"
 			},
 			{
 				"bookmark": 2,
 				"on_floor": true,
-				"position": "(200.8914, 0.00026, 804.0991)"
+				"position": "(200.8577, 0.00026, 804.3376)"
 			},
 			{
 				"bookmark": 3,
 				"on_floor": true,
-				"position": "(686.1088, 60.63874, 553.4354)"
+				"position": "(686.0751, 60.70771, 553.674)"
 			}
 		],
-		"camera_relative_direction_alignment": 0.999954998493195,
-		"jump_height_m": 1.17228536307812,
+		"camera_relative_direction_alignment": 0.999881446361542,
+		"jump_height_m": 1.17228524386883,
 		"jump_states": [
 			"jump_start",
 			"jump_air",
 			"jump_land",
 			"idle"
 		],
-		"run_distance_1_5s_m": 6.01057529449463,
-		"walk_distance_1_5s_m": 2.29490089416504
+		"run_distance_1_5s_m": 6.01042556762695,
+		"walk_distance_1_5s_m": 2.29547429084778
 	},
 	"trees": 20000
 }

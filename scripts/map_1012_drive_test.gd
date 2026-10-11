@@ -168,9 +168,8 @@ func select_spawn(index: int) -> void:
 	await get_tree().physics_frame
 	var spawn_point := anchors[index]
 	if character_mode and index in [1, 3]:
-		# These bookmarks were selected from the spaced tree sample itself. Four
-		# metres to its side clears the trunk while staying within the sampled
-		# patch; other trees are at least nine metres from the original anchor.
+		# Keep the established character viewpoints. The builder reserves a
+		# ten-metre tree clearance around these fixed terrain bookmarks.
 		spawn_point.x += 4.0
 	var hit := ground_hit(spawn_point)
 	if hit.is_empty():

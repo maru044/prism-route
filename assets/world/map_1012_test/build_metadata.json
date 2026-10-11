@@ -1,38 +1,38 @@
 {
-  "source": "D:\\Prism Route\\map\\model_1012.gltf",
-  "source_sha256": "90f1e70c5dd0a925aa3bb5ce554a5e2a6b4d2d49860218218074fe73db714100",
+  "source": "D:\\Prism Route\\map\\mesh.gltf",
+  "source_sha256": "ed7e602d67049f13975105486741cb7eab53ef2134f1403986227468d793f17a",
   "geometry_scale": 1.0,
   "model_translation": [
-    -1172.01708984375,
+    -1172.05078125,
     0,
-    983.4653930664062
+    983.7039184570312
   ],
   "bounds_min": [
-    -1177.46582,
-    -4.25686,
-    -1465.9209
+    -1177.66272,
+    -4.30238,
+    -1465.69482
   ],
   "bounds_max": [
-    1177.46582,
+    1177.6626,
     185.62186,
-    1465.9209
+    1465.69482
   ],
   "source_polygon_counts": {
-    "Terrain": 14413,
-    "Roads": 6844,
-    "Beaches": 917,
-    "Water": 566
+    "Terrain": 213216,
+    "Roads": 21992,
+    "Beaches": 21175,
+    "Water": 109488
   },
   "top_orientation_fixes": {
-    "Terrain": 11,
-    "Roads": 1,
-    "Beaches": 2,
+    "Terrain": 23,
+    "Roads": 0,
+    "Beaches": 421,
     "Water": 0
   },
   "road_spawn": [
-    77.17399,
-    -0.00848,
-    -62.09808
+    77.1403,
+    0.05057,
+    -61.85955
   ],
   "road_direction": [
     -0.93346,
@@ -41,24 +41,24 @@
   ],
   "anchors": [
     [
-      77.17399,
-      -0.00848,
-      -62.09808
+      77.1403,
+      0.05057,
+      -61.85955
     ],
     [
-      -807.76001,
-      36.19534,
-      68.11559
+      -807.7937,
+      36.24359,
+      68.35412
     ],
     [
-      200.89136,
+      200.85767,
       0.0,
-      804.09912
+      804.33765
     ],
     [
-      682.10883,
-      60.6312,
-      553.43542
+      682.07513,
+      60.71317,
+      553.67395
     ]
   ],
   "water_level_m": 0.0,
@@ -72,13 +72,14 @@
     "road_projection_clearance_m": 6.0,
     "seed": 10122026,
     "candidate_rejections": {
-      "empty_or_steep": 817654,
-      "road": 60802,
-      "edge": 3970,
-      "spacing": 493759,
-      "water": 374,
-      "spawn": 369,
-      "beach": 260
+      "empty_or_steep": 817442,
+      "road": 60865,
+      "edge": 3956,
+      "spacing": 494179,
+      "spawn": 372,
+      "review_point": 107,
+      "beach": 266,
+      "water": 1
     }
   },
   "layout_columns": [

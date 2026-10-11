@@ -15,10 +15,15 @@ from mathutils import Vector
 from mathutils.bvhtree import BVHTree
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT.parent / 'map/model_1012.gltf'
+SOURCE = ROOT.parent / 'map/mesh.gltf'
 OUT = ROOT / 'assets/world/map_1012_test'
 COUNT, LARGE_COUNT = 20000, 2000
 SPACING, LARGE_SPACING, ROAD_CLEARANCE = 9.0, 22.0, 6.0
+# Source-space XZ coordinates keep review locations stable when tessellation
+# changes face areas, triangle directions or the terrain's sampled bounds.
+VIEWPOINT_SOURCE_XZ = [(1249.19108, -1045.56347), (364.25708, -915.34980),
+                       (1372.90845, -179.36627), (1854.12592, -430.02997)]
+ROAD_DIRECTION = Vector((-0.93346, -0.35869, 0)).normalized()
 
 
 def join_layer(layer, name):
@@ -84,36 +89,14 @@ def ground(tree, x, y):
     return tree.ray_cast(Vector((x, y, 400)), Vector((0, 0, -1)), 450)
 
 
-def road_spawn(roads, terrain):
-    tree = bvh(roads)
-    terrain_tree = bvh(terrain)
-    best = None
-    for face in roads.data.polygons:
-        if face.normal.z < 0.98:
-            continue
-        p = face.center.copy()
-        points = [roads.data.vertices[i].co for i in face.vertices]
-        edge = max([b-a for a, b in zip(points, points[1:] + points[:1])], key=lambda e: e.length)
-        direction = Vector((edge.x, edge.y, 0)).normalized()
-        side = Vector((-direction.y, direction.x, 0))
-        probes = [p] + [p + side * d for d in [-1.7, 1.7]]
-        probes += [p + direction * d for d in [-9, 9]]
-        hits = [ground(tree, q.x, q.y)[0] for q in probes]
-        if any(q is None or abs(q.z-p.z) > 0.5 for q in hits):
-            continue
-        terrain_hits = [ground(terrain_tree, q.x, q.y)[0] for q in probes]
-        if any(land is not None and land.z > road.z + 0.005
-               for road, land in zip(hits, terrain_hits)):
-            continue
-        score = p.x*p.x + p.y*p.y + abs(p.z-35)*300
-        if best is None or score < best[0]:
-            best = (score, p, direction)
-    if best is None:
-        raise RuntimeError('No road spawn with enough clearance')
-    return best[1], best[2]
+def review_point(obj, source_xz, center):
+    point = ground(bvh(obj), source_xz[0] - center.x, -source_xz[1] - center.y)[0]
+    if point is None:
+        raise RuntimeError('Review point no longer lies on ' + obj.name)
+    return point
 
 
-def layout(terrain, roads, beaches, water, spawn):
+def layout(terrain, roads, beaches, water, spawn, review_points):
     terrain_tree = bvh(terrain)
     road_flat = bvh(roads, True)
     beach_flat = bvh(beaches, True)
@@ -150,6 +133,9 @@ def layout(terrain, roads, beaches, water, spawn):
                 continue
             if Vector((hit.x-spawn.x, hit.y-spawn.y)).length < 24:
                 reject['spawn'] += 1
+                continue
+            if any((hit.x-p.x)**2 + (hit.y-p.y)**2 < 10**2 for p in review_points):
+                reject['review_point'] += 1
                 continue
             if road_flat.find_nearest(Vector((x, y, 0)))[3] < ROAD_CLEARANCE:
                 reject['road'] += 1
@@ -228,26 +214,10 @@ def main():
         for v in obj.data.vertices:
             v.co -= center
         obj.data.update()
-    spawn, direction = road_spawn(roads, terrain)
-    records, vegetation, points = layout(terrain, roads, beaches, water, spawn)
-    # Use actual exported surface positions for the four inspection bookmarks.
-    meadow = min(points, key=lambda p: (p.x+650)**2 + p.y*p.y + (p.z-35)**2*10)
-    beach = max(beaches.data.polygons, key=lambda f: f.area).center.copy()
-    terrain_tree = bvh(terrain)
-    upper = None
-    # The highest tiny face may belong to a sculptural feature rather than a
-    # parking platform. Require an open, nearly flat patch around the bookmark.
-    for p in sorted(points, key=lambda p: p.z, reverse=True):
-        if p.z < 40:
-            break
-        probes = [ground(terrain_tree, p.x+dx, p.y+dy) for dx, dy in
-                  [(8, 0), (-8, 0), (0, 8), (0, -8), (6, 6), (-6, 6), (6, -6), (-6, -6)]]
-        if all(hit is not None and normal.z > 0.99 and abs(hit.z-p.z) < 0.15
-               for hit, normal, _, _ in probes):
-            upper = p
-            break
-    if upper is None:
-        raise RuntimeError('No sufficiently open upper platform bookmark')
+    spawn, meadow, beach, upper = [review_point(obj, xz, center) for obj, xz in
+                                 zip([roads, terrain, beaches, terrain], VIEWPOINT_SOURCE_XZ)]
+    direction = ROAD_DIRECTION
+    records, vegetation, _ = layout(terrain, roads, beaches, water, spawn, [meadow, upper])
     bpy.ops.object.select_all(action='DESELECT')
     for obj in objects:
         obj.select_set(True)

@@ -12,16 +12,16 @@ from build_road_projection_test import layers, raster
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'assets/world/map_1012_test'
 CACHE = ROOT / '.map_1012_build'
-SOURCE = ROOT.parent / 'map/model_1012.gltf'
 RESOLUTION = 4096
 
 
 def main():
     metadata = json.loads((OUT / 'build_metadata.json').read_text(encoding='utf-8'))
-    source_hash = hashlib.sha256(SOURCE.read_bytes()).hexdigest()
+    source = Path(metadata['source'])
+    source_hash = hashlib.sha256(source.read_bytes()).hexdigest()
     if source_hash != metadata['source_sha256']:
         raise RuntimeError('Rebuild the 1012 geometry first; source has changed')
-    groups = layers(json.loads(SOURCE.read_text(encoding='utf-8-sig')))
+    groups = layers(json.loads(source.read_text(encoding='utf-8-sig')))
     terrain, roads = groups['地形'], groups['路面']
     translation = np.array(metadata['model_translation'], dtype=np.float32)
     terrain += translation

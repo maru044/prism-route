@@ -7,7 +7,7 @@ from mathutils import Vector
 root = Path(__file__).resolve().parents[1]
 bpy.ops.object.select_all(action='SELECT')
 bpy.ops.object.delete(use_global=False)
-bpy.ops.import_scene.gltf(filepath=str(root.parent / 'map/model_1012.gltf'))
+bpy.ops.import_scene.gltf(filepath=str(root.parent / 'map/mesh.gltf'))
 report = []
 for obj in bpy.data.objects:
     if obj.type != 'MESH':
