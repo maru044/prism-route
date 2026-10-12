@@ -9,8 +9,7 @@
     "312d5359-acb9-4fdd-83b8-809ce9a951af",
     "bd99f18e-c9b7-412f-bbf6-a74050fd9f5f",
     "7b914279-0f38-47f2-9ab3-84ce8fda7c5f",
-    "e794e031-12d9-4607-ba2c-c3ed4575d143",
-    "ce36cdce-398b-44f5-b0b4-fe7f258106cf"
+    "e794e031-12d9-4607-ba2c-c3ed4575d143"
   ],
   "objects": [
     {
@@ -109,7 +108,7 @@
       "group": "06_连续曲面表皮"
     },
     {
-      "name": "B_NURBS_实体侧错层台地与斜切屋盖_合并",
+      "name": "B_NURBS_实体侧错层台地内核_圆润端部",
       "id": "de67bdb9-1d24-4d78-b864-a5f6bbd48ce6",
       "group": "01_退后内核"
     },
@@ -172,61 +171,77 @@
       "name": "B_NURBS_凹厅前亲水平台",
       "id": "b4b5dca5-231e-4d08-8340-47c0edaeb02d",
       "group": "07_实体侧亲水平台"
+    },
+    {
+      "name": "B_NURBS_西端斜向衔接",
+      "id": "27b8671e-bcb0-4727-a056-8f1737f830af",
+      "group": "13_圆润端部衔接"
     }
   ],
   "document_serial": 268435457,
   "backing_length": 2033.9421587579311,
   "audit": {
     "road_intersections": 0,
-    "core_volume_m3": 10374248.966425132,
-    "core_faces": 84,
-    "core_valid": true,
-    "neighbors": [
+    "component_mesh_audits": [
       {
-        "sampled_clearance_m": 43.053592695118176,
-        "id": "73e5d619-0b3e-4b57-ba79-be508a583cba",
-        "intersections": 0,
-        "porch_intersections": 0
+        "crossing_pairs": 0,
+        "bvh_pairs": 4,
+        "examples": [],
+        "degenerate_triangles": 0,
+        "nonadjacent_candidates": 0,
+        "triangles": 67404,
+        "scope": "Non-adjacent noncoplanar triangle crossings; adjacency and coplanar overlap excluded."
       },
       {
-        "sampled_clearance_m": 157.03501723175944,
-        "id": "886652a9-6613-4f5e-b1fc-01aa8b5259d7",
-        "intersections": 0,
-        "porch_intersections": 0
+        "crossing_pairs": 0,
+        "bvh_pairs": 0,
+        "examples": [],
+        "degenerate_triangles": 0,
+        "nonadjacent_candidates": 0,
+        "triangles": 10232,
+        "scope": "Non-adjacent noncoplanar triangle crossings; adjacency and coplanar overlap excluded."
       },
       {
-        "sampled_clearance_m": 79.403151967399253,
-        "id": "2068dd45-fc33-4cb3-b561-4cbfe1b7330a",
-        "intersections": 0,
-        "porch_intersections": 0
-      },
-      {
-        "sampled_clearance_m": 33.615239616753229,
-        "id": "4df36f45-d898-40ce-8a5d-7802a8711ae2",
-        "intersections": 0,
-        "porch_intersections": 0
-      },
-      {
-        "sampled_clearance_m": 226.31924316151913,
-        "id": "577d868b-7597-4058-83f8-4b630606b305",
-        "intersections": 0,
-        "porch_intersections": 0
-      },
-      {
-        "sampled_clearance_m": 234.79339607067467,
-        "id": "bbea2185-f5e3-4821-a363-63f19f463bc4",
-        "intersections": 0,
-        "porch_intersections": 0
-      },
-      {
-        "sampled_clearance_m": 29.291438946287599,
-        "id": "85836254-d682-4d80-af5a-1033c51c2cca",
-        "intersections": 0,
-        "porch_intersections": 0
+        "crossing_pairs": 0,
+        "bvh_pairs": 0,
+        "examples": [],
+        "degenerate_triangles": 0,
+        "nonadjacent_candidates": 0,
+        "triangles": 9166,
+        "scope": "Non-adjacent noncoplanar triangle crossings; adjacency and coplanar overlap excluded."
       }
     ],
-    "core_edge_self_events": [],
-    "original_island_preservation": [
+    "neighbors": [
+      {
+        "id": "73e5d619-0b3e-4b57-ba79-be508a583cba",
+        "intersections": 0
+      },
+      {
+        "id": "886652a9-6613-4f5e-b1fc-01aa8b5259d7",
+        "intersections": 0
+      },
+      {
+        "id": "2068dd45-fc33-4cb3-b561-4cbfe1b7330a",
+        "intersections": 0
+      },
+      {
+        "id": "4df36f45-d898-40ce-8a5d-7802a8711ae2",
+        "intersections": 0
+      },
+      {
+        "id": "577d868b-7597-4058-83f8-4b630606b305",
+        "intersections": 0
+      },
+      {
+        "id": "bbea2185-f5e3-4821-a363-63f19f463bc4",
+        "intersections": 0
+      },
+      {
+        "id": "85836254-d682-4d80-af5a-1033c51c2cca",
+        "intersections": 0
+      }
+    ],
+    "preserved_original_objects": [
       {
         "geometry_unchanged": true,
         "id": "73e5d619-0b3e-4b57-ba79-be508a583cba"
@@ -272,7 +287,8 @@
         "id": "580b55d4-797c-49fa-ba1d-f2c9d74e4d03"
       }
     ],
-    "core_closed": true,
+    "edge_self_events": 0,
+    "all_components_valid_closed": true,
     "ground_paths": [
       {
         "intersections": 0,
@@ -310,16 +326,7 @@
         "intersections": 0,
         "s": 0.9362573605690907
       }
-    ],
-    "mesh_audit": {
-      "crossing_pairs": 0,
-      "bvh_pairs": 4,
-      "examples": [],
-      "degenerate_triangles": 0,
-      "nonadjacent_candidates": 0,
-      "triangles": 77191,
-      "scope": "Non-adjacent noncoplanar triangle crossings; adjacency and coplanar overlap excluded."
-    }
+    ]
   },
   "config": {
     "pods": [
@@ -481,12 +488,345 @@
     "preview"
   ],
   "roof_union": {
-    "valid": true,
-    "solid": true,
-    "faces": 84
+    "strategy": "Separate closed NURBS construction solids with buried overlap",
+    "core_faces": 75,
+    "shoulder_faces": 4,
+    "roof_faces": 4
   },
   "backup": "D:\\Prism Route\\map\\map_before_cliffB_solid_nurbs_v01.3dm",
   "saved_model": "D:\\Prism Route\\map\\map_cliffB_solid_nurbs_v01.3dm",
+  "initial_unified_audit": {
+    "road_intersections": 0,
+    "core_volume_m3": 10374248.966425132,
+    "core_faces": 84,
+    "core_valid": true,
+    "neighbors": [
+      {
+        "sampled_clearance_m": 43.053592695118176,
+        "id": "73e5d619-0b3e-4b57-ba79-be508a583cba",
+        "intersections": 0,
+        "porch_intersections": 0
+      },
+      {
+        "sampled_clearance_m": 157.03501723175944,
+        "id": "886652a9-6613-4f5e-b1fc-01aa8b5259d7",
+        "intersections": 0,
+        "porch_intersections": 0
+      },
+      {
+        "sampled_clearance_m": 79.403151967399253,
+        "id": "2068dd45-fc33-4cb3-b561-4cbfe1b7330a",
+        "intersections": 0,
+        "porch_intersections": 0
+      },
+      {
+        "sampled_clearance_m": 33.615239616753229,
+        "id": "4df36f45-d898-40ce-8a5d-7802a8711ae2",
+        "intersections": 0,
+        "porch_intersections": 0
+      },
+      {
+        "sampled_clearance_m": 226.31924316151913,
+        "id": "577d868b-7597-4058-83f8-4b630606b305",
+        "intersections": 0,
+        "porch_intersections": 0
+      },
+      {
+        "sampled_clearance_m": 234.79339607067467,
+        "id": "bbea2185-f5e3-4821-a363-63f19f463bc4",
+        "intersections": 0,
+        "porch_intersections": 0
+      },
+      {
+        "sampled_clearance_m": 29.291438946287599,
+        "id": "85836254-d682-4d80-af5a-1033c51c2cca",
+        "intersections": 0,
+        "porch_intersections": 0
+      }
+    ],
+    "core_edge_self_events": [],
+    "original_island_preservation": [
+      {
+        "geometry_unchanged": true,
+        "id": "73e5d619-0b3e-4b57-ba79-be508a583cba"
+      },
+      {
+        "geometry_unchanged": true,
+        "id": "886652a9-6613-4f5e-b1fc-01aa8b5259d7"
+      },
+      {
+        "geometry_unchanged": true,
+        "id": "2068dd45-fc33-4cb3-b561-4cbfe1b7330a"
+      },
+      {
+        "geometry_unchanged": true,
+        "id": "4df36f45-d898-40ce-8a5d-7802a8711ae2"
+      },
+      {
+        "geometry_unchanged": true,
+        "id": "577d868b-7597-4058-83f8-4b630606b305"
+      },
+      {
+        "geometry_unchanged": true,
+        "id": "bbea2185-f5e3-4821-a363-63f19f463bc4"
+      },
+      {
+        "geometry_unchanged": true,
+        "id": "85836254-d682-4d80-af5a-1033c51c2cca"
+      },
+      {
+        "geometry_unchanged": true,
+        "id": "88eb76d2-2c5c-4c70-b64a-dd922afa1433"
+      },
+      {
+        "geometry_unchanged": true,
+        "id": "eda8bdb1-ff67-4448-a07f-e78e6914d209"
+      },
+      {
+        "geometry_unchanged": true,
+        "id": "0c51b890-631a-4633-b1b4-1682b8736500"
+      },
+      {
+        "geometry_unchanged": true,
+        "id": "580b55d4-797c-49fa-ba1d-f2c9d74e4d03"
+      }
+    ],
+    "core_closed": true,
+    "ground_paths": [
+      {
+        "intersections": 0,
+        "s": 0.06228029785252405
+      },
+      {
+        "intersections": 0,
+        "s": 0.16535188160484296
+      },
+      {
+        "intersections": 0,
+        "s": 0.25482153896850224
+      },
+      {
+        "intersections": 0,
+        "s": 0.35783042472852866
+      },
+      {
+        "intersections": 0,
+        "s": 0.47232727291530369
+      },
+      {
+        "intersections": 0,
+        "s": 0.57978597948887134
+      },
+      {
+        "intersections": 0,
+        "s": 0.69780776770810105
+      },
+      {
+        "intersections": 0,
+        "s": 0.81464423726791668
+      },
+      {
+        "intersections": 0,
+        "s": 0.9362573605690907
+      }
+    ],
+    "mesh_audit": {
+      "crossing_pairs": 0,
+      "bvh_pairs": 4,
+      "examples": [],
+      "degenerate_triangles": 0,
+      "nonadjacent_candidates": 0,
+      "triangles": 77191,
+      "scope": "Non-adjacent noncoplanar triangle crossings; adjacency and coplanar overlap excluded."
+    }
+  },
+  "round_corner_revision": {
+    "objects": [
+      {
+        "name": "B_NURBS_西端圆润修正候选",
+        "id": "72394328-996d-4b77-a8f4-d76e8337f244",
+        "group": "01_候选实体"
+      },
+      {
+        "name": "B_NURBS_西端斜向衔接",
+        "id": "27b8671e-bcb0-4727-a056-8f1737f830af",
+        "group": "03_候选衔接"
+      },
+      {
+        "name": "B_NURBS_西端圆润屋盖",
+        "id": "629ae04a-bb85-46a5-8c2f-37a3612f8ed6",
+        "group": "02_候选屋盖"
+      }
+    ],
+    "core_id": "de67bdb9-1d24-4d78-b864-a5f6bbd48ce6",
+    "document_serial": 268435457,
+    "candidate_id": "72394328-996d-4b77-a8f4-d76e8337f244",
+    "audit": {
+      "road_intersections": 0,
+      "component_mesh_audits": [
+        {
+          "crossing_pairs": 0,
+          "bvh_pairs": 4,
+          "examples": [],
+          "degenerate_triangles": 0,
+          "nonadjacent_candidates": 0,
+          "triangles": 67404,
+          "scope": "Non-adjacent noncoplanar triangle crossings; adjacency and coplanar overlap excluded."
+        },
+        {
+          "crossing_pairs": 0,
+          "bvh_pairs": 0,
+          "examples": [],
+          "degenerate_triangles": 0,
+          "nonadjacent_candidates": 0,
+          "triangles": 10232,
+          "scope": "Non-adjacent noncoplanar triangle crossings; adjacency and coplanar overlap excluded."
+        },
+        {
+          "crossing_pairs": 0,
+          "bvh_pairs": 0,
+          "examples": [],
+          "degenerate_triangles": 0,
+          "nonadjacent_candidates": 0,
+          "triangles": 9166,
+          "scope": "Non-adjacent noncoplanar triangle crossings; adjacency and coplanar overlap excluded."
+        }
+      ],
+      "neighbors": [
+        {
+          "id": "73e5d619-0b3e-4b57-ba79-be508a583cba",
+          "intersections": 0
+        },
+        {
+          "id": "886652a9-6613-4f5e-b1fc-01aa8b5259d7",
+          "intersections": 0
+        },
+        {
+          "id": "2068dd45-fc33-4cb3-b561-4cbfe1b7330a",
+          "intersections": 0
+        },
+        {
+          "id": "4df36f45-d898-40ce-8a5d-7802a8711ae2",
+          "intersections": 0
+        },
+        {
+          "id": "577d868b-7597-4058-83f8-4b630606b305",
+          "intersections": 0
+        },
+        {
+          "id": "bbea2185-f5e3-4821-a363-63f19f463bc4",
+          "intersections": 0
+        },
+        {
+          "id": "85836254-d682-4d80-af5a-1033c51c2cca",
+          "intersections": 0
+        }
+      ],
+      "preserved_original_objects": [
+        {
+          "geometry_unchanged": true,
+          "id": "73e5d619-0b3e-4b57-ba79-be508a583cba"
+        },
+        {
+          "geometry_unchanged": true,
+          "id": "886652a9-6613-4f5e-b1fc-01aa8b5259d7"
+        },
+        {
+          "geometry_unchanged": true,
+          "id": "2068dd45-fc33-4cb3-b561-4cbfe1b7330a"
+        },
+        {
+          "geometry_unchanged": true,
+          "id": "4df36f45-d898-40ce-8a5d-7802a8711ae2"
+        },
+        {
+          "geometry_unchanged": true,
+          "id": "577d868b-7597-4058-83f8-4b630606b305"
+        },
+        {
+          "geometry_unchanged": true,
+          "id": "bbea2185-f5e3-4821-a363-63f19f463bc4"
+        },
+        {
+          "geometry_unchanged": true,
+          "id": "85836254-d682-4d80-af5a-1033c51c2cca"
+        },
+        {
+          "geometry_unchanged": true,
+          "id": "88eb76d2-2c5c-4c70-b64a-dd922afa1433"
+        },
+        {
+          "geometry_unchanged": true,
+          "id": "eda8bdb1-ff67-4448-a07f-e78e6914d209"
+        },
+        {
+          "geometry_unchanged": true,
+          "id": "0c51b890-631a-4633-b1b4-1682b8736500"
+        },
+        {
+          "geometry_unchanged": true,
+          "id": "580b55d4-797c-49fa-ba1d-f2c9d74e4d03"
+        }
+      ],
+      "edge_self_events": 0,
+      "all_components_valid_closed": true,
+      "ground_paths": [
+        {
+          "intersections": 0,
+          "s": 0.06228029785252405
+        },
+        {
+          "intersections": 0,
+          "s": 0.16535188160484296
+        },
+        {
+          "intersections": 0,
+          "s": 0.25482153896850224
+        },
+        {
+          "intersections": 0,
+          "s": 0.35783042472852866
+        },
+        {
+          "intersections": 0,
+          "s": 0.47232727291530369
+        },
+        {
+          "intersections": 0,
+          "s": 0.57978597948887134
+        },
+        {
+          "intersections": 0,
+          "s": 0.69780776770810105
+        },
+        {
+          "intersections": 0,
+          "s": 0.81464423726791668
+        },
+        {
+          "intersections": 0,
+          "s": 0.9362573605690907
+        }
+      ]
+    },
+    "shoulder_start_z_m": 43,
+    "roof_id": "ce36cdce-398b-44f5-b0b4-fe7f258106cf",
+    "candidate_faces": [
+      75,
+      4,
+      4
+    ],
+    "candidate_roof_id": "629ae04a-bb85-46a5-8c2f-37a3612f8ed6",
+    "corner_retraction_m": 8,
+    "backup": "D:\\Prism Route\\map\\map_before_cliffB_round_corner.3dm",
+    "installed": true,
+    "candidate_shoulder_id": "27b8671e-bcb0-4727-a056-8f1737f830af",
+    "saved_model": "D:\\Prism Route\\map\\map_cliffB_solid_nurbs_v01.3dm",
+    "affected_sample_indices": [
+      120,
+      355
+    ]
+  },
   "pod_metrics": [
     {
       "depth_used": 45.0,
