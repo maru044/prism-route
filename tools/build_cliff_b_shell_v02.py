@@ -13,9 +13,52 @@ WORK = ROOT / '.map_1012_build'
 CFG = ROOT / 'tools' / 'cliff_b_shell_v02.json'
 
 
-def build():
+def open_ground_layout(length,cfg,rng):
+    """Sparse ground feet, arches crossing the floor, unaligned upper voids."""
+    count=cfg['bay_count']
+    weights=[rng.uniform(.75,1.35) for _ in range(count)]
+    intervals=[];cursor=0.0
+    for weight in weights:
+        width=length*weight/sum(weights)
+        intervals.append((cursor,cursor+width));cursor+=width
+    feet=[(0.0,13.0)]
+    for i in range(1,count):
+        x=intervals[i][0];width=rng.uniform(12,23)
+        feet.append((x-width/2,x+width/2))
+    feet.append((length-13,length))
+    holes,entries=[],[]
+    for i in range(count):
+        left,right=feet[i][1],feet[i+1][0]
+        top=rng.uniform(42,57.5) if i in [0,2,3,6,8] else rng.uniform(26,40)
+        cz=top*rng.uniform(.22,.34);rz=top-cz
+        tilt=rng.uniform(-.37,.37);taper=rng.uniform(-.10,.19)
+        bend=rng.uniform(-.07,.07)*(right-left)
+        v=(.66-cz)/rz
+        rx=(right-left)/2/(math.sqrt(1-v*v)*(1+taper*v))
+        cx=(left+right)/2-tilt*(.66-cz)-bend*(v*v-.25)
+        holes.append([cx,cz,rx,rz,tilt,'walkthrough_arch',bend,taper])
+        entries.append({'s':(left+right)/2/length,'floor_width_m':right-left,
+                        'top_m':top,'parameter_interval_m':[left,right]})
+        if i in [1,4,5,7]:
+            center_z=(top+59.0)/2
+            radius_z=(59.0-top)/2-3.0
+            # The secondary aperture shifts in plan and has its own height.
+            holes.append([cx+rx*rng.uniform(-.28,.32),center_z,
+                          rx*rng.uniform(.32,.62),radius_z,
+                          rng.uniform(-.5,.5),'floating_aperture',
+                          rng.uniform(-3,3),rng.uniform(-.25,.25)])
+    # Small lateral light holes in two broad rising support surfaces.
+    # Different elevations avoid reinstating a horizontal window band.
+    for i,z in [(2,25.0),(7,43.0)]:
+        center=sum(feet[i])/2
+        holes.append([center,z,4.2,7.0,(-1 if i==2 else 1)*.45,
+                      'support_light',2.0,.15])
+    return holes,feet,entries
+
+
+def build(config_name='cliff_b_shell_v02.json',output_name='cliff_b_shell_v02_mesh.json'):
     frames = json.loads((WORK / 'cliff_b_v02_road_frames.json').read_text())
-    cfg = json.loads(CFG.read_text(encoding='utf-8'))
+    cfg = json.loads((ROOT/'tools'/config_name).read_text(encoding='utf-8'))
     length, rows = frames['length'], frames['samples']
     rng = random.Random(cfg['seed'])
     widths = [rng.uniform(54, 96) for _ in range(cfg['bay_count'])]
@@ -45,6 +88,10 @@ def build():
     # and shifting centres avoid an array of identical elliptical windows.
     for hole in holes:
         hole.extend([rng.uniform(-.13,.13)*hole[2],rng.uniform(-.20,.24)])
+    feet,entries=[],[]
+    if cfg.get('layout')=='open_ground_v03':
+        rng=random.Random(cfg['seed'])
+        holes,feet,entries=open_ground_layout(length,cfg,rng)
 
     def signed(x, z):
         best, chosen = float('inf'), None
@@ -147,7 +194,10 @@ def build():
                 du_dz=(-tilt-2*bend*w/rz)/width-u*taper/(rz*(1+taper*w))
                 gx,gz = u/width,u*du_dz+w/rz
                 norm=math.hypot(gx,gz);gx/=norm;gz/=norm
-                shift=.42*math.sin(theta)
+                # At floor-cut endpoints taper the rolled lip to the floor
+                # cap. Otherwise rounding creates a fold across that seam.
+                floor_blend=smooth((z-z0)/1.2) if cfg.get('layout')=='open_ground_v03' else 1.0
+                shift=.42*math.sin(theta)*floor_blend
                 x-=gx*shift;z-=gz*shift
             indices[v]=len(vertices)
             vertices.append(mapped(x,z,thickness/2*math.cos(theta)))
@@ -157,8 +207,9 @@ def build():
             solid_faces.append([rings[ring][a],rings[ring][b],rings[ring+1][b],rings[ring+1][a]])
     payload = {'vertices':vertices,'faces':solid_faces,'openings':holes,'parameter_points':points,'length_m':length,
                'seed':cfg['seed'],'basis':'perforated curved thick sheet, no cylindrical members',
-               'parameter_vertices':len(points),'boundary_edges':len(boundary)}
-    (WORK/'cliff_b_shell_v02_mesh.json').write_text(json.dumps(payload,separators=(',',':')),encoding='utf-8')
+               'parameter_vertices':len(points),'boundary_edges':len(boundary),
+               'ground_support_intervals_m':feet,'walking_entries':entries}
+    (WORK/output_name).write_text(json.dumps(payload,separators=(',',':')),encoding='utf-8')
     print(json.dumps({k:payload[k] for k in ['length_m','basis','parameter_vertices','boundary_edges']}))
     print('vertices=%s faces=%s openings=%s' % (len(vertices),len(solid_faces),len(holes)))
 

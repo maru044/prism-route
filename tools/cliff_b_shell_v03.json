@@ -1,0 +1,12 @@
+{
+  "layer": "崖壁B_自由开口与架空底层_v03",
+  "layout": "open_ground_v03",
+  "seed": 101303,
+  "bay_count": 9,
+  "thickness_m": 2.6,
+  "grid_x_m": 1.5,
+  "grid_z_steps": 92,
+  "roof_rebuild_points": 256,
+  "roof_thickness_m": 6.0,
+  "roof_rollover_width_m": 6.0
+}
