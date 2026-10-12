@@ -1,0 +1,17 @@
+{
+  "layer": "崖壁B_错层台地_NURBS_v01",
+  "backing_setback_m": 45.0,
+  "profile_points": 64,
+  "bevel_height_m": 1.2,
+  "pods": [
+    {"name":"西侧下台地", "center":0.16, "span":0.23, "outer":11.0, "depth":45.0, "height":13.0, "bulge":5.0, "slope_x":0.010, "slope_y":-0.006},
+    {"name":"中央亲水台地", "center":0.51, "span":0.25, "outer":12.0, "depth":60.0, "height":18.0, "bulge":3.0, "slope_x":-0.008, "slope_y":0.009},
+    {"name":"东侧低台地", "center":0.85, "span":0.24, "outer":9.0, "depth":45.0, "height":11.0, "bulge":4.0, "slope_x":0.013, "slope_y":0.002},
+    {"name":"西侧转折平台", "center":0.30, "span":0.23, "outer":-3.0, "depth":67.0, "height":31.0, "bulge":6.0, "slope_x":-0.012, "slope_y":0.009},
+    {"name":"中央悬挑大厅", "center":0.64, "span":0.32, "outer":1.0, "depth":80.0, "height":30.0, "bulge":5.0, "slope_x":0.008, "slope_y":0.009},
+    {"name":"东侧抬升平台", "center":0.92, "span":0.18, "outer":-4.0, "depth":50.0, "height":36.0, "bulge":3.0, "slope_x":-0.010, "slope_y":-0.006},
+    {"name":"西侧上台地", "center":0.20, "span":0.32, "outer":-13.0, "depth":80.0, "height":46.0, "bulge":4.0, "slope_x":0.007, "slope_y":0.006},
+    {"name":"中央上台地", "center":0.55, "span":0.29, "outer":-14.0, "depth":95.0, "height":52.0, "bulge":5.0, "slope_x":-0.005, "slope_y":0.004},
+    {"name":"东侧上台地", "center":0.81, "span":0.28, "outer":-17.0, "depth":90.0, "height":55.0, "bulge":4.0, "slope_x":0.005, "slope_y":-0.005}
+  ]
+}

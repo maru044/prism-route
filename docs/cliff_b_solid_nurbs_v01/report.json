@@ -1,0 +1,589 @@
+{
+  "backing_setback_used_m": 45,
+  "editable_hidden_ids": [
+    "955051c2-d045-4d08-b945-243627a3ee65",
+    "e2c858fd-8361-4b3f-8907-6caf08a0aab6",
+    "034e1d30-a439-473f-8461-c676c50c9ccb",
+    "3f2c8d99-033f-4b60-b112-bfd9f20ecf8c",
+    "75cf2d64-366a-44c0-bf43-2e16aaae8d30",
+    "312d5359-acb9-4fdd-83b8-809ce9a951af",
+    "bd99f18e-c9b7-412f-bbf6-a74050fd9f5f",
+    "7b914279-0f38-47f2-9ab3-84ce8fda7c5f",
+    "e794e031-12d9-4607-ba2c-c3ed4575d143",
+    "ce36cdce-398b-44f5-b0b4-fe7f258106cf"
+  ],
+  "objects": [
+    {
+      "name": "B_完整基础板",
+      "id": "72f25860-17b4-4870-995e-4339e71af14e",
+      "group": "03_底层平台"
+    },
+    {
+      "name": "B_单层连续车行道路",
+      "id": "0295f8be-063a-4f5d-90ff-5dabbf9fad42",
+      "group": "04_中层道路"
+    },
+    {
+      "name": "B_中层外缘步行带",
+      "id": "3b615b62-6ef5-40bc-941c-f6bee7cb51cb",
+      "group": "05_中层步行"
+    },
+    {
+      "name": "B_中层连续矮护墙",
+      "id": "47456112-e53f-4799-aa9b-cfcc656da2ca",
+      "group": "05_中层步行"
+    },
+    {
+      "name": "B_全长峡谷步行平台_节点渐宽",
+      "id": "dc533d93-dff5-487c-9f4a-edb1ce64e76f",
+      "group": "03_底层平台"
+    },
+    {
+      "name": "B_亲水缓阶_1",
+      "id": "c86d61c7-e5d9-4e6c-b3e5-21e29302b78a",
+      "group": "08_亲水缓阶"
+    },
+    {
+      "name": "B_亲水缓阶_2",
+      "id": "f07e4a21-03bf-45e1-8402-c8602446e69a",
+      "group": "08_亲水缓阶"
+    },
+    {
+      "name": "B_底层连续廊檐_0",
+      "id": "b5b7567d-7af6-4168-993a-022638d5ef88",
+      "group": "09_底层廊檐"
+    },
+    {
+      "name": "B_底层连续廊檐_1",
+      "id": "99f7282d-6e88-4d60-9cf3-eb9a41abb35e",
+      "group": "09_底层廊檐"
+    },
+    {
+      "name": "B_底层连续廊檐_2",
+      "id": "5bde180f-774c-4392-b562-4c24835b1af6",
+      "group": "09_底层廊檐"
+    },
+    {
+      "name": "B_底层连续廊檐_3",
+      "id": "859c5d4b-7f1f-4b7e-8941-02122b518672",
+      "group": "09_底层廊檐"
+    },
+    {
+      "name": "B_观水坐凳_0",
+      "id": "d2d52e0d-ac53-4b9f-b92f-b83d7bf91bff",
+      "group": "10_停留节点"
+    },
+    {
+      "name": "B_光庭内侧坐台_0",
+      "id": "e2acaa46-927a-41de-ba08-f15ef13e3547",
+      "group": "10_停留节点"
+    },
+    {
+      "name": "B_观水坐凳_1",
+      "id": "8febf846-e595-4c63-9db0-52af7190b07b",
+      "group": "10_停留节点"
+    },
+    {
+      "name": "B_光庭内侧坐台_1",
+      "id": "d8cf6376-ae53-42d9-844a-dbeb0d8d3327",
+      "group": "10_停留节点"
+    },
+    {
+      "name": "B_观水坐凳_2",
+      "id": "5bac1c96-51fc-45b5-9237-bd4a7c7ff891",
+      "group": "10_停留节点"
+    },
+    {
+      "name": "B_光庭内侧坐台_2",
+      "id": "32985af8-e779-4e49-8a87-cbb10f6ed39c",
+      "group": "10_停留节点"
+    },
+    {
+      "name": "B_峡谷浅水_保留原沙底",
+      "id": "79d2ce03-2e53-4c69-9a13-a18da1838f89",
+      "group": "11_浅水示意"
+    },
+    {
+      "name": "B_v03_不规则开口连续厚曲面",
+      "id": "9885b6ab-30cd-4214-b68d-b5d1faa7c1d1",
+      "group": "06_连续曲面表皮"
+    },
+    {
+      "name": "B_NURBS_实体侧错层台地与斜切屋盖_合并",
+      "id": "de67bdb9-1d24-4d78-b864-a5f6bbd48ce6",
+      "group": "01_退后内核"
+    },
+    {
+      "name": "B_NURBS_00_西侧下台地",
+      "id": "955051c2-d045-4d08-b945-243627a3ee65",
+      "group": "02_独立曲面台地"
+    },
+    {
+      "name": "B_NURBS_01_中央亲水台地",
+      "id": "e2c858fd-8361-4b3f-8907-6caf08a0aab6",
+      "group": "02_独立曲面台地"
+    },
+    {
+      "name": "B_NURBS_02_东侧低台地",
+      "id": "034e1d30-a439-473f-8461-c676c50c9ccb",
+      "group": "02_独立曲面台地"
+    },
+    {
+      "name": "B_NURBS_03_西侧转折平台",
+      "id": "3f2c8d99-033f-4b60-b112-bfd9f20ecf8c",
+      "group": "02_独立曲面台地"
+    },
+    {
+      "name": "B_NURBS_04_中央悬挑大厅",
+      "id": "75cf2d64-366a-44c0-bf43-2e16aaae8d30",
+      "group": "02_独立曲面台地"
+    },
+    {
+      "name": "B_NURBS_05_东侧抬升平台",
+      "id": "312d5359-acb9-4fdd-83b8-809ce9a951af",
+      "group": "02_独立曲面台地"
+    },
+    {
+      "name": "B_NURBS_06_西侧上台地",
+      "id": "bd99f18e-c9b7-412f-bbf6-a74050fd9f5f",
+      "group": "02_独立曲面台地"
+    },
+    {
+      "name": "B_NURBS_07_中央上台地",
+      "id": "7b914279-0f38-47f2-9ab3-84ce8fda7c5f",
+      "group": "02_独立曲面台地"
+    },
+    {
+      "name": "B_NURBS_08_东侧上台地",
+      "id": "e794e031-12d9-4607-ba2c-c3ed4575d143",
+      "group": "02_独立曲面台地"
+    },
+    {
+      "name": "B_NURBS_随内核退台的斜切屋盖",
+      "id": "ce36cdce-398b-44f5-b0b4-fe7f258106cf",
+      "group": "03_斜切屋盖"
+    },
+    {
+      "name": "B_顶部低矮建筑_斜肩平顶",
+      "id": "78d43939-e418-428e-aad5-d51b08c73985",
+      "group": "12_斜切顶部建筑"
+    },
+    {
+      "name": "B_NURBS_凹厅前亲水平台",
+      "id": "b4b5dca5-231e-4d08-8340-47c0edaeb02d",
+      "group": "07_实体侧亲水平台"
+    }
+  ],
+  "document_serial": 268435457,
+  "backing_length": 2033.9421587579311,
+  "audit": {
+    "road_intersections": 0,
+    "core_volume_m3": 10374248.966425132,
+    "core_faces": 84,
+    "core_valid": true,
+    "neighbors": [
+      {
+        "sampled_clearance_m": 43.053592695118176,
+        "id": "73e5d619-0b3e-4b57-ba79-be508a583cba",
+        "intersections": 0,
+        "porch_intersections": 0
+      },
+      {
+        "sampled_clearance_m": 157.03501723175944,
+        "id": "886652a9-6613-4f5e-b1fc-01aa8b5259d7",
+        "intersections": 0,
+        "porch_intersections": 0
+      },
+      {
+        "sampled_clearance_m": 79.403151967399253,
+        "id": "2068dd45-fc33-4cb3-b561-4cbfe1b7330a",
+        "intersections": 0,
+        "porch_intersections": 0
+      },
+      {
+        "sampled_clearance_m": 33.615239616753229,
+        "id": "4df36f45-d898-40ce-8a5d-7802a8711ae2",
+        "intersections": 0,
+        "porch_intersections": 0
+      },
+      {
+        "sampled_clearance_m": 226.31924316151913,
+        "id": "577d868b-7597-4058-83f8-4b630606b305",
+        "intersections": 0,
+        "porch_intersections": 0
+      },
+      {
+        "sampled_clearance_m": 234.79339607067467,
+        "id": "bbea2185-f5e3-4821-a363-63f19f463bc4",
+        "intersections": 0,
+        "porch_intersections": 0
+      },
+      {
+        "sampled_clearance_m": 29.291438946287599,
+        "id": "85836254-d682-4d80-af5a-1033c51c2cca",
+        "intersections": 0,
+        "porch_intersections": 0
+      }
+    ],
+    "core_edge_self_events": [],
+    "original_island_preservation": [
+      {
+        "geometry_unchanged": true,
+        "id": "73e5d619-0b3e-4b57-ba79-be508a583cba"
+      },
+      {
+        "geometry_unchanged": true,
+        "id": "886652a9-6613-4f5e-b1fc-01aa8b5259d7"
+      },
+      {
+        "geometry_unchanged": true,
+        "id": "2068dd45-fc33-4cb3-b561-4cbfe1b7330a"
+      },
+      {
+        "geometry_unchanged": true,
+        "id": "4df36f45-d898-40ce-8a5d-7802a8711ae2"
+      },
+      {
+        "geometry_unchanged": true,
+        "id": "577d868b-7597-4058-83f8-4b630606b305"
+      },
+      {
+        "geometry_unchanged": true,
+        "id": "bbea2185-f5e3-4821-a363-63f19f463bc4"
+      },
+      {
+        "geometry_unchanged": true,
+        "id": "85836254-d682-4d80-af5a-1033c51c2cca"
+      },
+      {
+        "geometry_unchanged": true,
+        "id": "88eb76d2-2c5c-4c70-b64a-dd922afa1433"
+      },
+      {
+        "geometry_unchanged": true,
+        "id": "eda8bdb1-ff67-4448-a07f-e78e6914d209"
+      },
+      {
+        "geometry_unchanged": true,
+        "id": "0c51b890-631a-4633-b1b4-1682b8736500"
+      },
+      {
+        "geometry_unchanged": true,
+        "id": "580b55d4-797c-49fa-ba1d-f2c9d74e4d03"
+      }
+    ],
+    "core_closed": true,
+    "ground_paths": [
+      {
+        "intersections": 0,
+        "s": 0.06228029785252405
+      },
+      {
+        "intersections": 0,
+        "s": 0.16535188160484296
+      },
+      {
+        "intersections": 0,
+        "s": 0.25482153896850224
+      },
+      {
+        "intersections": 0,
+        "s": 0.35783042472852866
+      },
+      {
+        "intersections": 0,
+        "s": 0.47232727291530369
+      },
+      {
+        "intersections": 0,
+        "s": 0.57978597948887134
+      },
+      {
+        "intersections": 0,
+        "s": 0.69780776770810105
+      },
+      {
+        "intersections": 0,
+        "s": 0.81464423726791668
+      },
+      {
+        "intersections": 0,
+        "s": 0.9362573605690907
+      }
+    ],
+    "mesh_audit": {
+      "crossing_pairs": 0,
+      "bvh_pairs": 4,
+      "examples": [],
+      "degenerate_triangles": 0,
+      "nonadjacent_candidates": 0,
+      "triangles": 77191,
+      "scope": "Non-adjacent noncoplanar triangle crossings; adjacency and coplanar overlap excluded."
+    }
+  },
+  "config": {
+    "pods": [
+      {
+        "slope_x": 0.01,
+        "depth": 45.0,
+        "span": 0.23000000000000001,
+        "slope_y": -0.0060000000000000001,
+        "center": 0.16,
+        "height": 13.0,
+        "name": "西侧下台地",
+        "outer": 11.0,
+        "bulge": 5.0
+      },
+      {
+        "slope_x": -0.0080000000000000002,
+        "depth": 60.0,
+        "span": 0.25,
+        "slope_y": 0.0089999999999999993,
+        "center": 0.51000000000000001,
+        "height": 18.0,
+        "name": "中央亲水台地",
+        "outer": 12.0,
+        "bulge": 3.0
+      },
+      {
+        "slope_x": 0.012999999999999999,
+        "depth": 45.0,
+        "span": 0.23999999999999999,
+        "slope_y": 0.002,
+        "center": 0.84999999999999998,
+        "height": 11.0,
+        "name": "东侧低台地",
+        "outer": 9.0,
+        "bulge": 4.0
+      },
+      {
+        "slope_x": -0.012,
+        "depth": 67.0,
+        "span": 0.23000000000000001,
+        "slope_y": 0.0089999999999999993,
+        "center": 0.29999999999999999,
+        "height": 31.0,
+        "name": "西侧转折平台",
+        "outer": -3.0,
+        "bulge": 6.0
+      },
+      {
+        "slope_x": 0.0080000000000000002,
+        "depth": 80.0,
+        "span": 0.32000000000000001,
+        "slope_y": 0.0089999999999999993,
+        "center": 0.64000000000000001,
+        "height": 30.0,
+        "name": "中央悬挑大厅",
+        "outer": 1.0,
+        "bulge": 5.0
+      },
+      {
+        "slope_x": -0.01,
+        "depth": 50.0,
+        "span": 0.17999999999999999,
+        "slope_y": -0.0060000000000000001,
+        "center": 0.92000000000000004,
+        "height": 36.0,
+        "name": "东侧抬升平台",
+        "outer": -4.0,
+        "bulge": 3.0
+      },
+      {
+        "slope_x": 0.0070000000000000001,
+        "depth": 80.0,
+        "span": 0.32000000000000001,
+        "slope_y": 0.0060000000000000001,
+        "center": 0.20000000000000001,
+        "height": 46.0,
+        "name": "西侧上台地",
+        "outer": -13.0,
+        "bulge": 4.0
+      },
+      {
+        "slope_x": -0.0050000000000000001,
+        "depth": 95.0,
+        "span": 0.28999999999999998,
+        "slope_y": 0.0040000000000000001,
+        "center": 0.55000000000000004,
+        "height": 52.0,
+        "name": "中央上台地",
+        "outer": -14.0,
+        "bulge": 5.0
+      },
+      {
+        "slope_x": 0.0050000000000000001,
+        "depth": 90.0,
+        "span": 0.28000000000000003,
+        "slope_y": -0.0050000000000000001,
+        "center": 0.81000000000000005,
+        "height": 55.0,
+        "name": "东侧上台地",
+        "outer": -17.0,
+        "bulge": 4.0
+      }
+    ],
+    "backing_setback_m": 45.0,
+    "layer": "崖壁B_错层台地_NURBS_v01",
+    "profile_points": 64,
+    "bevel_height_m": 1.2000000000000000
+  },
+  "joined_pods": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "stages": [
+    "begin",
+    "pod_0",
+    "pod_1",
+    "pod_2",
+    "pod_3",
+    "pod_4",
+    "pod_5",
+    "pod_6",
+    "pod_7",
+    "pod_8",
+    "roof",
+    "show",
+    "refine_backing",
+    "recess",
+    "union_0",
+    "union_1",
+    "union_2",
+    "union_3",
+    "union_4",
+    "union_5",
+    "union_6",
+    "union_7",
+    "union_8",
+    "final_recess",
+    "restore_for_recess",
+    "rejoin_0",
+    "rejoin_1",
+    "rejoin_2",
+    "rejoin_3",
+    "rejoin_4",
+    "rejoin_5",
+    "rejoin_6",
+    "rejoin_7",
+    "rejoin_8",
+    "correct_recess",
+    "porch",
+    "join_roof",
+    "audit",
+    "preview"
+  ],
+  "roof_union": {
+    "valid": true,
+    "solid": true,
+    "faces": 84
+  },
+  "backup": "D:\\Prism Route\\map\\map_before_cliffB_solid_nurbs_v01.3dm",
+  "saved_model": "D:\\Prism Route\\map\\map_cliffB_solid_nurbs_v01.3dm",
+  "pod_metrics": [
+    {
+      "depth_used": 45.0,
+      "index": 0,
+      "solid": true,
+      "edge_self_events": 0,
+      "valid": true,
+      "faces": 4,
+      "height": 13.0,
+      "name": "西侧下台地"
+    },
+    {
+      "depth_used": 60.0,
+      "index": 1,
+      "solid": true,
+      "edge_self_events": 0,
+      "valid": true,
+      "faces": 4,
+      "height": 18.0,
+      "name": "中央亲水台地"
+    },
+    {
+      "depth_used": 45.0,
+      "index": 2,
+      "solid": true,
+      "edge_self_events": 0,
+      "valid": true,
+      "faces": 4,
+      "height": 11.0,
+      "name": "东侧低台地"
+    },
+    {
+      "depth_used": 67.0,
+      "index": 3,
+      "solid": true,
+      "edge_self_events": 0,
+      "valid": true,
+      "faces": 4,
+      "height": 31.0,
+      "name": "西侧转折平台"
+    },
+    {
+      "depth_used": 80.0,
+      "index": 4,
+      "solid": true,
+      "edge_self_events": 0,
+      "valid": true,
+      "faces": 4,
+      "height": 30.0,
+      "name": "中央悬挑大厅"
+    },
+    {
+      "depth_used": 50.0,
+      "index": 5,
+      "solid": true,
+      "edge_self_events": 0,
+      "valid": true,
+      "faces": 4,
+      "height": 36.0,
+      "name": "东侧抬升平台"
+    },
+    {
+      "depth_used": 32.768000000000008,
+      "index": 6,
+      "solid": true,
+      "edge_self_events": 0,
+      "valid": true,
+      "faces": 4,
+      "height": 46.0,
+      "name": "西侧上台地"
+    },
+    {
+      "depth_used": 95.0,
+      "index": 7,
+      "solid": true,
+      "edge_self_events": 0,
+      "valid": true,
+      "faces": 4,
+      "height": 52.0,
+      "name": "中央上台地"
+    },
+    {
+      "depth_used": 90.0,
+      "index": 8,
+      "solid": true,
+      "edge_self_events": 0,
+      "valid": true,
+      "faces": 4,
+      "height": 55.0,
+      "name": "东侧上台地"
+    }
+  ],
+  "recess": {
+    "max_height_m": 19,
+    "closed_nurbs": true,
+    "cut_depth_m": 48,
+    "width_m": 107
+  },
+  "backing_id": "de67bdb9-1d24-4d78-b864-a5f6bbd48ce6"
+}

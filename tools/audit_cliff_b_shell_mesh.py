@@ -33,6 +33,13 @@ for a,b in pairs:
             p,q=source[i],source[(i+1)%3]
             direction=q-p
             if direction.length < 1e-9:continue
+            normal=(target[1]-target[0]).cross(target[2]-target[0])
+            if normal.length<1e-9:continue
+            normal.normalize()
+            da,db=(p-target[0]).dot(normal),(q-target[0]).dot(normal)
+            # Count genuine passage through the triangle plane. Parallel,
+            # coplanar and endpoint-only contacts are not penetration.
+            if da*db>=0 or min(abs(da),abs(db))<1e-6:continue
             found=intersect_ray_tri(*target,direction,p,True)
             if found is not None:
                 t=(found-p).dot(direction)/direction.length_squared
