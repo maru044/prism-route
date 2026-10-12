@@ -1,0 +1,19 @@
+# 内置 imagegen 提示词
+
+模式：基于两张参考图的概念重绘，非 CLI。输出不透明背景。
+
+参考 1：用户指定的道路峡谷概念图 `exec-c2e87ae0-eb7d-4efa-a1a5-3deb55dccaa6.png`，仅参考左岸错层建筑；不复制右侧道路和分枝结构。
+
+参考 2：用户 Rhino 截图 `codex-clipboard-34fb9094-51a5-4973-8cd7-6bd6969b1a74.png`，作为实体侧大体量与场地参考。
+
+```text
+Use case: architectural concept edit / sketch-to-render.
+Input image 1 is the user's architectural reference. The MAIN target style is specifically the LEFT BANK of this image: softly curving, naturally staggered architectural terraces and retaining walls, with trees and planted shelves between levels. Do NOT use its right-hand road gallery or branching supports as the new facade.
+Input image 2 is the Rhino massing / edit target for the rear side of Cliff B. Remove Rhino UI, selection edges, guides, and gumball. Transform the selected blank curving solid core into a sculpted architectural landscape with natural-looking layered terraces.
+Critical design correction: NOT a simple smooth museum building with one sweeping roof ramp. NOT two or three blank wall planes. NOT a natural chalk or limestone cliff. The material is secondary; the architecture is the main subject. The user wants the LEFT BANK'S rich, organic, LAYERED ARCHITECTURAL MASSING applied to the solid core side.
+Create a roughly 60-metre-high near-future landform-building, with FIVE TO SEVEN interwoven broad curved terrace surfaces. These are substantial sculpted levels of solid architecture, each with different depth, width, slope and thickness. Shelves gently rise and fall along the facade, taper away, merge locally, overlap in depth, or turn back into the mass, creating a flowing irregular layered composition. Do not make a stack of equal horizontal floors or repetitive ring balconies. The terraces are carved into and extended from an opaque solid core, rather than a perforated facade or lightweight skeletal structure.
+Use the reference LEFT BANK's vocabulary: long curved planted ledges, broad convex retaining faces transitioning into concave alcoves, rounded lips, deep but sparse shaded undercuts, a few modest recessed openings behind terraces, trees of varied scale, dry walkable platforms, low seating edges, and local stepped connections. Vegetation is woven between levels but does not conceal the architectural geometry. Shape variety and changing setback create depth; no single cylindrical wall dominates the composition. A few terrace bands should sweep diagonally, some fade into neighboring green terrain. Roof terrace becomes part of the upper landscape. At the base, a gently curving promenade and stepped shallow-water edge make a comfortable canyon/shore experience.
+This is the SOLID, NON-ROAD SIDE, simpler in structural topology than the opposite roadway facade but still richly layered in spatial composition. Keep the majority of the interior mass solid. No road on this side; no exposed branch columns, Y ribs, pipes, Voronoi networks, rows of round holes or regular fins. Avoid a futuristic stadium, wedding-cake tower, floating pancake slabs, blank convention-centre wall, large glass-front atrium, and geological erosion.
+Style: polished stylized architectural game concept art, smooth matte light off-white finish with subdued texture, Zaha Hadid-inspired continuous curved architecture and artificial terrain, fresh blue sky with airy small clouds, clear shallow aqua water over pale sand, green trees and planted ledges. Material roughness and chalk are NOT focal information. No text, labels, logos or watermark.
+Composition: wide oblique view from across the shallow water toward the entire rear side, showing its upper silhouette and at least five layered architectural terraces clearly. Camera around 10-15 metres above base level, enough to read upper planted shelves and lower shadow recesses. Sunny angled daylight separates each layer and shows true concave/convex surface depth. A few tiny people on the lowest promenade are only scale references.
+```
