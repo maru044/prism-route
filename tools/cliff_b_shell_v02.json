@@ -1,0 +1,11 @@
+{
+  "layer": "崖壁B_曲面表皮验证_v02",
+  "seed": 101302,
+  "bay_count": 13,
+  "thickness_m": 2.6,
+  "grid_x_m": 2.0,
+  "grid_z_steps": 68,
+  "roof_rebuild_points": 256,
+  "roof_thickness_m": 6.0,
+  "roof_rollover_width_m": 6.0
+}
