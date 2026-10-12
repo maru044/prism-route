@@ -161,17 +161,69 @@ def build(config_name='cliff_b_shell_v02.json',output_name='cliff_b_shell_v02_me
         t = min(1,max(0,t))
         return t*t*(3-2*t)
 
-    def mapped(x,z,depth):
+    warp=cfg.get('spatial_warp')
+    anchor_fields=[]
+    if warp:
+        warp_rng=random.Random(warp['seed'])
+        for left,right in feet:
+            anchor_fields.append({'x':(left+right)/2,'bend':warp_rng.uniform(-1,1),
+                                  'lean':warp_rng.uniform(-1,1),'twist':warp_rng.uniform(-1,1),
+                                  'root':warp_rng.uniform(-1,1),'phase':warp_rng.uniform(-math.pi,math.pi)})
+
+    def field(x,z):
+        t=z/60
+        weights=[]
+        # Fan width varies with height; rising supports do not share the
+        # same sweep direction or a single common facade profile.
+        width=25+28*t+16*math.sin(math.pi*t)**2
+        for anchor in anchor_fields:
+            weight=math.exp(-((x-anchor['x'])/width)**2)
+            weights.append((weight,anchor))
+        total=sum(w for w,_ in weights) or 1
+        return {key:sum(w*a[key] for w,a in weights)/total
+                for key in ['bend','lean','twist','root','phase']}
+
+    def midsurface(x,z):
+        s,t=x/length,z/60
+        outward=11.8+2.5*math.sin(2*math.pi*s+1.1)+1.7*math.sin(7*math.pi*s-2*t)
+        outward+=4.0*(1-smooth(t/.24))
+        roof_blend=smooth((t-.68)/.315)
+        offset=outward*(1-roof_blend)-4.0*roof_blend
+        if warp:
+            values=field(x,z)
+            envelope=math.sin(math.pi*max(0,min(1,t)))**1.2
+            road_gate=1-math.exp(-((z-35)/5.8)**4)
+            depth_bend=warp['depth_excursion_m']*(values['bend']*math.sin(1.5*math.pi*t+values['phase']*.3)
+                       +.50*values['twist']*math.sin(3*math.pi*t))
+            root_flare=warp['root_flare_m']*values['root']*(1-smooth(t/.25))
+            offset+=depth_bend*envelope*road_gate*(1-smooth((t-.89)/.10))+root_flare
+            # Mid-level traffic stays outside the warped support, while the
+            # curves below and above remain free to curl towards the core.
+            minimum=6.3+warp['thickness_flare_m']*.5
+            road_mask=math.exp(-((z-37.6)/5.2)**4)
+            offset+=max(0,minimum-offset)*road_mask
+            end_gate=smooth(x/45)*smooth((length-x)/45)
+            x+=warp['tangent_shift_m']*values['lean']*envelope*(1-smooth((t-.89)/.10))*end_gate
         sample = x/length*(len(rows)-1)
+        sample=max(0,min(len(rows)-1.000001,sample))
         k = min(len(rows)-2,int(sample)); blend = sample-k
         q = [rows[k][i]*(1-blend)+rows[k+1][i]*blend for i in range(4)]
         normal_length = math.hypot(q[2],q[3]);q[2]/=normal_length;q[3]/=normal_length
-        s, t = x/length, z/60
-        outward = 11.8 + 2.5*math.sin(2*math.pi*s+1.1)+1.7*math.sin(7*math.pi*s-2*t)
-        outward += 4.0*(1-smooth(t/.24))
-        roof_blend = smooth((t-.68)/.315)
-        offset = outward*(1-roof_blend)-4.0*roof_blend+depth
-        return [q[0]+q[2]*offset,q[1]+q[3]*offset,z]
+        return [q[0]+q[2]*offset,q[1]+q[3]*offset,z],q[2:]
+
+    def mapped(x,z,depth):
+        center,normal=midsurface(x,z)
+        if warp:
+            values=field(x,z);t=z/60
+            angle=.22*values['twist']*math.sin(math.pi*t)
+            n=[normal[0]*math.cos(angle)-normal[1]*math.sin(angle),
+               normal[0]*math.sin(angle)+normal[1]*math.cos(angle),0]
+            flare=warp['thickness_flare_m']*(.65*(1-smooth(t/.24))
+                  +.35*(.5+.5*values['twist'])*math.sin(math.pi*t)**2)
+            taper_top=1-smooth((t-.88)/.12)
+            scale=1+flare*taper_top/cfg['thickness_m']
+            return [center[i]+n[i]*depth*scale for i in range(3)]
+        return [center[0]+normal[0]*depth,center[1]+normal[1]*depth,z]
 
     thickness = cfg['thickness_m']
     vertices = [mapped(x,z,thickness/2) for x,z in points]
@@ -208,7 +260,8 @@ def build(config_name='cliff_b_shell_v02.json',output_name='cliff_b_shell_v02_me
     payload = {'vertices':vertices,'faces':solid_faces,'openings':holes,'parameter_points':points,'length_m':length,
                'seed':cfg['seed'],'basis':'perforated curved thick sheet, no cylindrical members',
                'parameter_vertices':len(points),'boundary_edges':len(boundary),
-               'ground_support_intervals_m':feet,'walking_entries':entries}
+               'ground_support_intervals_m':feet,'walking_entries':entries,
+               'spatial_warp':warp,'spatial_anchor_fields':anchor_fields}
     (WORK/output_name).write_text(json.dumps(payload,separators=(',',':')),encoding='utf-8')
     print(json.dumps({k:payload[k] for k in ['length_m','basis','parameter_vertices','boundary_edges']}))
     print('vertices=%s faces=%s openings=%s' % (len(vertices),len(solid_faces),len(holes)))

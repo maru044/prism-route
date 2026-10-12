@@ -1,0 +1,16 @@
+{
+  "vertices_compared": 81020,
+  "openings_unchanged": true,
+  "max_plan_displacement_vs_v03_m": 28.133899427007012,
+  "mean_plan_displacement_vs_v03_m": 5.633920720624376,
+  "plan_displacement_percentiles_m": [
+    3.8221183406202055,
+    13.388633292768148,
+    22.92557874471983
+  ],
+  "thickness_segment_range_m": [
+    2.600000095730822,
+    5.832231809529829
+  ],
+  "max_vertex_z_change_vs_v03_m": 0.0
+}
