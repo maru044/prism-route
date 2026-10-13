@@ -1,5 +1,18 @@
 # Prism Route — world and vegetation prototype
 
+## Current entry: Cliff B, 2026-10-14
+
+F5 now opens `scenes/cliff_b_gameplay_test.tscn`: the current native Rhino B
+prototype with warm-white architectural PBR textures and explicit roof / terrace
+planting beds. It begins in an overview; F returns to the character. Keys 1–4
+visit the road gallery, base walkway, terrace and roof meadow; C swaps the
+character and camper, P highlights planting regions. See
+`docs/CLIFF_B_GAMEPLAY_TEST.md` for editable model paths, captures and validation.
+The full-island 1012 scene remains separately runnable.
+
+The descriptions and September performance figures below document the earlier
+island and vegetation studies rather than this new B entry.
+
 This Godot 4.7.2 Forward+ project now uses the complete Rhino island draft for a
 first playable scale, driving and vegetation LOD test. It is still a prototype:
 roads, final planting points, terrain chunks and production vehicle physics are

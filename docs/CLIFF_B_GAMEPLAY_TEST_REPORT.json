@@ -1,0 +1,53 @@
+{
+	"bookmarks": [
+		{
+			"index": 0,
+			"on_floor": true,
+			"position": [
+				279.054321289063,
+				35.0002555847168,
+				-202.362228393555
+			],
+			"surface": "Roads"
+		},
+		{
+			"index": 1,
+			"on_floor": true,
+			"position": [
+				-320.46484375,
+				0.660260319709778,
+				11.071439743042
+			],
+			"surface": "Architecture"
+		},
+		{
+			"index": 2,
+			"on_floor": true,
+			"position": [
+				114.0,
+				10.3239583969116,
+				46.0
+			],
+			"surface": "Planting"
+		},
+		{
+			"index": 3,
+			"on_floor": true,
+			"position": [
+				-159.633224487305,
+				63.0602531433105,
+				-107.763816833496
+			],
+			"surface": "Planting"
+		}
+	],
+	"cliff_b_trees": 208,
+	"failures": [],
+	"gallery_drive_distance_m": 4.3209228515625,
+	"godot": "4.7.2-stable (official)",
+	"max_tree_root_error_m": 0.000116348266601563,
+	"render_captures": true,
+	"roof_walk_distance_m": 2.33340883255005,
+	"scope": "Four bookmarks, local roof walking, short gallery drive, all tree roots and lower-storey grass rays. Not full circulation or final topology acceptance.",
+	"trees": 801
+}

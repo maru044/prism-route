@@ -2,6 +2,7 @@ extends "res://scripts/vegetation_lod_streamer.gd"
 ## The shared LOD renderer with a separately baked, spaced 1012 population.
 
 const LAYOUT_PATH := "res://assets/world/map_1012_test/tree_layout.json"
+@export var layout_path := LAYOUT_PATH
 const MAP_FAR_TREE_END := 6000.0
 const GRASS_INTERACTION := preload("res://scripts/grass_interaction.gd")
 @export var grass_interaction_enabled := true
@@ -30,7 +31,7 @@ func _load_meshes_and_materials() -> void:
 		material.set_shader_parameter("tree_lod_fade", Vector4(280, 330, 5700, MAP_FAR_TREE_END))
 
 func _build_tree_lod() -> void:
-	var records: Array = JSON.parse_string(FileAccess.get_file_as_string(LAYOUT_PATH))
+	var records: Array = JSON.parse_string(FileAccess.get_file_as_string(layout_path))
 	var bucket_sets: Array[Dictionary] = [{}, {}, {}]
 	var sizes := [TREE_LOD0_CHUNK_SIZE, TREE_LOD1_CHUNK_SIZE, TREE_LOD2_CHUNK_SIZE]
 	var rng := RandomNumberGenerator.new()

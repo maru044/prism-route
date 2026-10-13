@@ -174,8 +174,9 @@ func _build() -> void:
 	_paragraph("跳转到测试地点；自由观景时同时切换观察镜头。", places)
 	for index in world.VIEW_NAMES.size():
 		_button("%d  %s" % [index + 1, world.VIEW_NAMES[index]], places, func():
-			await world.select_spawn(index)
-			set_menu_open(false))
+			# Restore collision bodies before select_spawn waits for physics.
+			set_menu_open(false)
+			await world.select_spawn(index))
 	var graphics := _page("画面")
 	_paragraph("抗锯齿方案", graphics)
 	aa_choice = OptionButton.new()
@@ -234,9 +235,17 @@ func set_menu_open(enabled: bool) -> void:
 func _input(event: InputEvent) -> void:
 	if not world.test_ready:
 		return
-	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_ESCAPE:
-		set_menu_open(not menu_open)
-		get_viewport().set_input_as_handled()
+	if event is InputEventKey and event.pressed and not event.echo:
+		var code: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
+		if code == KEY_ESCAPE:
+			set_menu_open(not menu_open)
+			get_viewport().set_input_as_handled()
+		elif menu_open:
+			var index: int = code - KEY_1 if code >= KEY_1 and code <= KEY_4 else (code - KEY_KP_1 if code >= KEY_KP_1 and code <= KEY_KP_4 else -1)
+			if index >= 0:
+				get_viewport().set_input_as_handled()
+				set_menu_open(false)
+				await world.select_spawn(index)
 
 func _resize() -> void:
 	var size := get_viewport().get_visible_rect().size
@@ -257,7 +266,8 @@ func refresh() -> void:
 		return
 	var place: String = "全岛" if world.overview_mode else world.VIEW_NAMES[world.viewpoint]
 	var actor := "甘雨" if world.character_mode else "房车"
-	mode_label.text = "1012 · %s · %s" % [actor, place]
+	var scene_label = world.get("scene_label")
+	mode_label.text = "%s · %s · %s" % [str(scene_label) if scene_label != null else "1012", actor, place]
 	var mode: String = "自由观景" if world.free_mode else ("甘雨 · " + world.character.get_motion_label() if world.character_mode else "驾驶")
 	status.text = "%s｜%.1f km/h｜FPS %d" % [mode, world.active_actor().get_speed_kph(), Engine.get_frames_per_second()]
 	if show_statistics and world.test_ready:

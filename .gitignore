@@ -19,5 +19,8 @@
 /.model_import_build/
 /.map_1009_build/
 /.map_1012_build/
+/.cliff_b_build/
+/assets/world/cliff_b_test/source/*.blend1
+/.cliff_b_build/
 # Local reminder for the project's noncommercial use of miHoYo assets.
 /assets/MIHOYO_ASSET_USAGE.local.md

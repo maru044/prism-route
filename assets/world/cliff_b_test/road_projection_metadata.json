@@ -1,0 +1,13 @@
+{
+  "resolution": 2048,
+  "origin_xz": [
+    -1249.6097412109375,
+    -2173.38623046875
+  ],
+  "extent_xz": [
+    2363.3232421875,
+    2939.851318359375
+  ],
+  "ground_road_height_tolerance_m": 2.0,
+  "source_native_sha256": "01e5d4dddce245526a8c41248c98d927eb7665860a0150bdcdf5de04d433e55a"
+}

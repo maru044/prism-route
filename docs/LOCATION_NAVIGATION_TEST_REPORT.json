@@ -1,0 +1,166 @@
+{
+	"cases": [
+		{
+			"case": "res://scenes/cliff_b_gameplay_test.tscn menu 1",
+			"free_mode": true,
+			"position_error_m": 0.0999984741210938
+		},
+		{
+			"case": "res://scenes/cliff_b_gameplay_test.tscn menu 2",
+			"free_mode": true,
+			"position_error_m": 0.0999998450279236
+		},
+		{
+			"case": "res://scenes/cliff_b_gameplay_test.tscn menu 3",
+			"free_mode": true,
+			"position_error_m": 0.100027084350586
+		},
+		{
+			"case": "res://scenes/cliff_b_gameplay_test.tscn menu 4",
+			"free_mode": true,
+			"position_error_m": 0.100006103515625
+		},
+		{
+			"case": "res://scenes/cliff_b_gameplay_test.tscn key 1",
+			"free_mode": false,
+			"position_error_m": 0.000255584716796875
+		},
+		{
+			"case": "res://scenes/cliff_b_gameplay_test.tscn key 2",
+			"free_mode": false,
+			"position_error_m": 0.000260293483734131
+		},
+		{
+			"case": "res://scenes/cliff_b_gameplay_test.tscn key 3",
+			"free_mode": false,
+			"position_error_m": 0.000288009643554688
+		},
+		{
+			"case": "res://scenes/cliff_b_gameplay_test.tscn key 4",
+			"free_mode": false,
+			"position_error_m": 0.000263214111328125
+		},
+		{
+			"case": "res://scenes/cliff_b_gameplay_test.tscn modal key 1",
+			"free_mode": false,
+			"position_error_m": 0.000255584716796875
+		},
+		{
+			"case": "res://scenes/cliff_b_gameplay_test.tscn modal key 2",
+			"free_mode": false,
+			"position_error_m": 0.000260293483734131
+		},
+		{
+			"case": "res://scenes/cliff_b_gameplay_test.tscn modal key 3",
+			"free_mode": false,
+			"position_error_m": 0.000288009643554688
+		},
+		{
+			"case": "res://scenes/cliff_b_gameplay_test.tscn modal key 4",
+			"free_mode": false,
+			"position_error_m": 0.000263214111328125
+		},
+		{
+			"case": "res://scenes/cliff_b_gameplay_test.tscn keypad 1",
+			"free_mode": false,
+			"position_error_m": 0.000255584716796875
+		},
+		{
+			"case": "res://scenes/cliff_b_gameplay_test.tscn keypad 2",
+			"free_mode": false,
+			"position_error_m": 0.000260293483734131
+		},
+		{
+			"case": "res://scenes/cliff_b_gameplay_test.tscn keypad 3",
+			"free_mode": false,
+			"position_error_m": 0.000288009643554688
+		},
+		{
+			"case": "res://scenes/cliff_b_gameplay_test.tscn keypad 4",
+			"free_mode": false,
+			"position_error_m": 0.000263214111328125
+		},
+		{
+			"case": "res://scenes/map_1012_drive_test.tscn menu 1",
+			"free_mode": true,
+			"position_error_m": 0.249906077980995
+		},
+		{
+			"case": "res://scenes/map_1012_drive_test.tscn menu 2",
+			"free_mode": true,
+			"position_error_m": 0.249969482421875
+		},
+		{
+			"case": "res://scenes/map_1012_drive_test.tscn menu 3",
+			"free_mode": true,
+			"position_error_m": 0.25
+		},
+		{
+			"case": "res://scenes/map_1012_drive_test.tscn menu 4",
+			"free_mode": true,
+			"position_error_m": 0.250026702880859
+		},
+		{
+			"case": "res://scenes/map_1012_drive_test.tscn key 1",
+			"free_mode": false,
+			"position_error_m": 0.194364741444588
+		},
+		{
+			"case": "res://scenes/map_1012_drive_test.tscn key 2",
+			"free_mode": false,
+			"position_error_m": 0.0255546569824219
+		},
+		{
+			"case": "res://scenes/map_1012_drive_test.tscn key 3",
+			"free_mode": false,
+			"position_error_m": 0.198958352208138
+		},
+		{
+			"case": "res://scenes/map_1012_drive_test.tscn key 4",
+			"free_mode": false,
+			"position_error_m": 0.192684173583984
+		},
+		{
+			"case": "res://scenes/map_1012_drive_test.tscn modal key 1",
+			"free_mode": false,
+			"position_error_m": 0.194364741444588
+		},
+		{
+			"case": "res://scenes/map_1012_drive_test.tscn modal key 2",
+			"free_mode": false,
+			"position_error_m": 0.0255546569824219
+		},
+		{
+			"case": "res://scenes/map_1012_drive_test.tscn modal key 3",
+			"free_mode": false,
+			"position_error_m": 0.198958352208138
+		},
+		{
+			"case": "res://scenes/map_1012_drive_test.tscn modal key 4",
+			"free_mode": false,
+			"position_error_m": 0.192684173583984
+		},
+		{
+			"case": "res://scenes/map_1012_drive_test.tscn keypad 1",
+			"free_mode": false,
+			"position_error_m": 0.194364741444588
+		},
+		{
+			"case": "res://scenes/map_1012_drive_test.tscn keypad 2",
+			"free_mode": false,
+			"position_error_m": 0.0255546569824219
+		},
+		{
+			"case": "res://scenes/map_1012_drive_test.tscn keypad 3",
+			"free_mode": false,
+			"position_error_m": 0.198958352208138
+		},
+		{
+			"case": "res://scenes/map_1012_drive_test.tscn keypad 4",
+			"free_mode": false,
+			"position_error_m": 0.192684173583984
+		}
+	],
+	"failures": [],
+	"godot": "4.7.2-stable (official)"
+}

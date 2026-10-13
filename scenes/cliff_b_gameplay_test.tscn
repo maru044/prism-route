@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/cliff_b_gameplay_test.gd" id="1_map"]
+[ext_resource type="Script" path="res://scripts/map_1012_camper.gd" id="2_camper"]
+[ext_resource type="PackedScene" path="res://assets/vehicles/models/camper_van_placeholder.glb" id="3_visual"]
+[ext_resource type="Script" path="res://scripts/cliff_b_vegetation.gd" id="4_vegetation"]
+[ext_resource type="PackedScene" path="res://scenes/characters/world_ganyu.tscn" id="5_character"]
+
+[sub_resource type="BoxShape3D" id="RVShape"]
+size = Vector3(2.2, 2.5, 5.6)
+
+[node name="CliffBGameplayTest" type="Node3D"]
+script = ExtResource("1_map")
+
+[node name="CamperVan" type="CharacterBody3D" parent="."]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("2_camper")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CamperVan"]
+position = Vector3(0, 1.45, 0)
+shape = SubResource("RVShape")
+
+[node name="Visual" type="Node3D" parent="CamperVan"]
+
+[node name="CamperModel" parent="CamperVan/Visual" instance=ExtResource("3_visual")]
+rotation = Vector3(0, 3.1415927, 0)
+
+[node name="CameraPivot" type="Node3D" parent="CamperVan"]
+position = Vector3(0, 2.45, 0)
+rotation = Vector3(-0.20, 0, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CamperVan/CameraPivot"]
+spring_length = 10.0
+margin = 0.3
+collision_mask = 1
+
+[node name="Camera3D" type="Camera3D" parent="CamperVan/CameraPivot/SpringArm3D"]
+current = true
+fov = 60.0
+near = 0.1
+far = 12000.0
+
+[node name="VegetationLodStreamer" type="Node3D" parent="."]
+script = ExtResource("4_vegetation")
+
+[node name="WorldGanyu" parent="." instance=ExtResource("5_character")]
+visible = false

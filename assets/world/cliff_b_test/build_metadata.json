@@ -1,0 +1,95 @@
+{
+  "source": "native current Rhino snapshot",
+  "source_document": "D:\\Prism Route\\map\\map.3dm",
+  "source_native_sha256": "01e5d4dddce245526a8c41248c98d927eb7665860a0150bdcdf5de04d433e55a",
+  "geometry_scale": 1.0,
+  "native_center": [
+    1240.0,
+    280.0,
+    0.0
+  ],
+  "anchors": [
+    [
+      279.05432,
+      35.0,
+      -202.36223
+    ],
+    [
+      -324.46484,
+      0.66,
+      11.07144
+    ],
+    [
+      114.0,
+      10.32367,
+      46.0
+    ],
+    [
+      -163.63322,
+      63.05999,
+      -107.76382
+    ]
+  ],
+  "road_spawn": [
+    279.05432,
+    35.0,
+    -202.36223
+  ],
+  "road_direction": [
+    -1,
+    0,
+    0
+  ],
+  "zone_edge_setback_m": 6.0,
+  "planting_grid_m": 2.0,
+  "soil_skin_offset_m": 0.06,
+  "zones": [
+    {
+      "source_id": "ce36cdce-398b-44f5-b0b4-fe7f258106cf",
+      "object": "Planting_00",
+      "area_m2": 127744.0,
+      "cells": 31936,
+      "rejections": {
+        "outside_top": 57927,
+        "architectural_rim": 3226,
+        "covered_surface": 3607,
+        "open_meadow_gap": 6980
+      }
+    },
+    {
+      "source_id": "de67bdb9-1d24-4d78-b864-a5f6bbd48ce6",
+      "object": "Planting_01",
+      "area_m2": 13700.65,
+      "cells": 3425,
+      "rejections": {
+        "outside_top": 53946,
+        "architectural_rim": 8501,
+        "covered_surface": 27145,
+        "open_meadow_gap": 5601
+      }
+    },
+    {
+      "source_id": "27b8671e-bcb0-4727-a056-8f1737f830af",
+      "cells": 0,
+      "rejections": {
+        "outside_top": 3453,
+        "architectural_rim": 886,
+        "covered_surface": 5287,
+        "open_meadow_gap": 139
+      }
+    }
+  ],
+  "population": {
+    "cliff_b_trees": 208,
+    "context_trees": 593,
+    "shrubs": 32
+  },
+  "mesh_triangles": {
+    "Architecture": 213260,
+    "Water": 3204,
+    "Roads": 17056,
+    "Beaches": 4503,
+    "Terrain": 69960
+  },
+  "planting_triangles": 70722
+}

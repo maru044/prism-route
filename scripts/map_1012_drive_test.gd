@@ -274,7 +274,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not test_ready or test_panel.menu_open:
 		return
 	if event is InputEventKey and event.pressed and not event.echo:
-		match event.keycode:
+		var code: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
+		match code:
 			KEY_F: set_free_mode(not free_mode)
 			KEY_TAB: show_overview()
 			KEY_C: set_character_mode(not character_mode)
@@ -282,8 +283,10 @@ func _unhandled_input(event: InputEvent) -> void:
 				set_lod_enabled(not lod_enabled)
 			KEY_V:
 				set_vegetation_enabled(not vegetation_enabled)
-		if event.keycode >= KEY_1 and event.keycode <= KEY_4:
-			await select_spawn(event.keycode - KEY_1)
+		if code >= KEY_1 and code <= KEY_4:
+			await select_spawn(code - KEY_1)
+		elif code >= KEY_KP_1 and code <= KEY_KP_4:
+			await select_spawn(code - KEY_KP_1)
 	if free_mode and event is InputEventMouseMotion and Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 		camera.rotation.y -= event.relative.x * 0.003
 		camera.rotation.x = clampf(camera.rotation.x - event.relative.y * 0.003, -1.50, 1.50)
