@@ -1,0 +1,60 @@
+{
+  "retained_body_fraction": 0.9146732185802906,
+  "geometry": [
+    {
+      "valid": true,
+      "id": "2dc42d91-a8cd-498c-8fdd-9d52b15b4cfb",
+      "solid": true
+    },
+    {
+      "valid": true,
+      "id": "d80edbb1-6845-4799-935f-aede97fe0a4d",
+      "solid": true
+    },
+    {
+      "valid": true,
+      "id": "5b6ed4b5-9c6d-4f90-9856-ee0e16b62909",
+      "solid": true
+    },
+    {
+      "valid": true,
+      "id": "142c3330-386f-4a9c-bbac-17a5e8a304ac",
+      "solid": true
+    },
+    {
+      "valid": true,
+      "id": "9e530a15-a3cf-4e10-a440-3e95b206527f",
+      "solid": true
+    },
+    {
+      "valid": true,
+      "id": "db09614d-2c4a-4408-b84f-07f57dbd0c82",
+      "solid": true
+    },
+    {
+      "valid": true,
+      "id": "3887b05e-832e-4412-b3fb-07325c0b2c15",
+      "solid": true
+    }
+  ],
+  "sources_unchanged": true,
+  "maximum_height_m": 60.124839782714844,
+  "failures": [],
+  "passages": [
+    {
+      "violations": [],
+      "road": "T1",
+      "samples": 903,
+      "overhead_hits": 319,
+      "minimum_vertical_clearance_m": 10.066587969464051
+    },
+    {
+      "violations": [],
+      "road": "T2",
+      "samples": 903,
+      "overhead_hits": 296,
+      "minimum_vertical_clearance_m": 10.011152136920188
+    }
+  ],
+  "limitations": "Retained fraction is the sum of per-body volumes, not a union-volume measurement. Independent closed bodies and the local SubD overlap at transitions; final seam/union detailing remains. Sampled clearance is not full collision or structural acceptance."
+}

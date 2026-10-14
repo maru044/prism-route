@@ -1,0 +1,172 @@
+{
+  "preserved_pieces": 6,
+  "objects": [
+    {
+      "name": "保留原地形_00",
+      "group": "01_裁切后的原地形",
+      "id": "012ab31c-3bd7-4f32-8676-9592c584ca4c"
+    },
+    {
+      "name": "保留原地形_01",
+      "group": "01_裁切后的原地形",
+      "id": "e8d79f0e-6908-48e3-af35-3d131f7da558"
+    },
+    {
+      "name": "保留原地形_02",
+      "group": "01_裁切后的原地形",
+      "id": "1435beff-efcc-4af8-9837-27269aca4586"
+    },
+    {
+      "name": "保留原地形_03",
+      "group": "01_裁切后的原地形",
+      "id": "fac1e44f-0311-414e-ae69-18e143ff155a"
+    },
+    {
+      "name": "保留原地形_04",
+      "group": "01_裁切后的原地形",
+      "id": "27172e67-243a-4398-9933-89de8ecae12d"
+    },
+    {
+      "name": "保留原地形_05",
+      "group": "01_裁切后的原地形",
+      "id": "fd3b1833-5662-4283-888f-36ac476092f6"
+    },
+    {
+      "name": "陆侧主壳_顶面内切连续起伏_0_0",
+      "group": "02_内退建筑曲面",
+      "id": "6ff4660f-d023-461f-a4ac-9f0038a79c6d"
+    },
+    {
+      "name": "陆侧主壳_顶面内切连续起伏_1_0",
+      "group": "02_内退建筑曲面",
+      "id": "de6391b1-e6fa-48bf-978c-b261e0d6d4b4"
+    },
+    {
+      "name": "陆侧主壳_顶面内切连续起伏_2_0",
+      "group": "02_内退建筑曲面",
+      "id": "f0fd81ff-2de8-49cb-be97-a312dd9b3933"
+    },
+    {
+      "name": "湾缘低翼_内退曲面_0_0",
+      "group": "02_内退建筑曲面",
+      "id": "f6bf901b-4e02-49c2-8a1c-6382c255c941"
+    },
+    {
+      "name": "陆侧主壳_顶面内切连续起伏_种植曲面_00",
+      "group": "03_种植区域",
+      "id": "b2c537c3-9bda-4911-b8d8-7326c3a5568b"
+    },
+    {
+      "name": "陆侧主壳_顶面内切连续起伏_种植曲面_01",
+      "group": "03_种植区域",
+      "id": "7e6fe1f3-587a-4f25-baf7-e99d1596d0d4"
+    },
+    {
+      "name": "陆侧主壳_顶面内切连续起伏_种植曲面_02",
+      "group": "03_种植区域",
+      "id": "d28ee710-3fcb-4656-a5f7-06c3bc47118d"
+    },
+    {
+      "name": "陆侧主壳_顶面内切连续起伏_种植曲面_03",
+      "group": "03_种植区域",
+      "id": "e931c58c-a1b3-49c3-8c19-6f8a3fcdc5c7"
+    },
+    {
+      "name": "湾缘低翼_内退曲面_种植曲面_04",
+      "group": "03_种植区域",
+      "id": "bc836c0c-d5b8-4f40-b369-9a47d76c0e7d"
+    },
+    {
+      "name": "湾缘低翼_内退曲面_种植曲面_05",
+      "group": "03_种植区域",
+      "id": "21f2b271-69aa-4496-9eb2-1f7b9110231c"
+    },
+    {
+      "name": "流线艺术桥_变宽扭转与落地支承",
+      "group": "04_中央艺术桥",
+      "id": "a4c9a543-2d8a-401c-bebe-b21f45031605"
+    },
+    {
+      "name": "艺术桥_保留实际路面与两端接点",
+      "group": "05_桥上道路",
+      "id": "0808d32c-6ebc-4105-9258-a0f755ac2752"
+    },
+    {
+      "name": "T1_道路隧道净空",
+      "group": "07_隧道净空_辅助",
+      "id": "647fe230-eb86-4090-bb59-01b2dd0621c3"
+    },
+    {
+      "name": "T2_道路隧道净空",
+      "group": "07_隧道净空_辅助",
+      "id": "b5f7b848-ef2c-4910-8991-adb86e0659c4"
+    },
+    {
+      "name": "保留海平面丘陵_裁切后_00",
+      "group": "01_裁切后的原地形",
+      "id": "81aa365d-5fb7-430a-afc2-819c6030473b"
+    },
+    {
+      "name": "保留海平面丘陵_裁切后_01",
+      "group": "01_裁切后的原地形",
+      "id": "07fd1b44-62dc-4d69-8b33-fddc352277c9"
+    }
+  ],
+  "removed_top_area_m2": 491582.00536744727,
+  "recipe": "prism_cliff_terrace_inset_v02",
+  "overlap_refined": true,
+  "backup": "D:\\Prism Route\\map\\map_before_terrace_inset_B_v02.3dm",
+  "design": "Landward inset; new main/low shells clipped to original top XY footprint; original road alignment becomes a sculptural bridge",
+  "height_ceiling_m": 60.917999999999999,
+  "draft_path": "D:\\Prism Route\\map\\map_terrace_inset_B_v02.3dm",
+  "source_geometry_crc": {
+    "4e756d0f-b36d-46a4-ada9-12ebe57462a2": 2117227351,
+    "493f74fe-8166-43ba-9dd3-b60a30144c9a": 463385416,
+    "5fe43043-0e2d-49a6-a712-d1d18a396dc5": 4183009232,
+    "e6c5ceda-103d-48b7-af81-db0bcd3f4e41": 1578125691,
+    "ad44a7ee-76bf-4eac-aff2-1f138675d8a6": 3440922457,
+    "a4adc150-3ba0-4216-b8b5-8d21449e8f69": 2285093012,
+    "4c560a71-7757-47c1-8e6c-23bdf73081d6": 1314462534,
+    "85836254-d682-4d80-af5a-1033c51c2cca": 2808258739,
+    "e3c7a11d-7bdd-47a6-b8ae-b426b6903567": 1545898132
+  },
+  "source_attributes": {
+    "4e756d0f-b36d-46a4-ada9-12ebe57462a2": {
+      "layer": 10,
+      "name": null
+    },
+    "493f74fe-8166-43ba-9dd3-b60a30144c9a": {
+      "layer": 9,
+      "name": "海平面草地_接缝混接修复副本"
+    },
+    "5fe43043-0e2d-49a6-a712-d1d18a396dc5": {
+      "layer": 10,
+      "name": null
+    },
+    "e6c5ceda-103d-48b7-af81-db0bcd3f4e41": {
+      "layer": 104,
+      "name": "1014要修改的弧面"
+    },
+    "ad44a7ee-76bf-4eac-aff2-1f138675d8a6": {
+      "layer": 9,
+      "name": "主要地形曲面"
+    },
+    "a4adc150-3ba0-4216-b8b5-8d21449e8f69": {
+      "layer": 9,
+      "name": "海平面草地_中层丘陵_混接副本"
+    },
+    "4c560a71-7757-47c1-8e6c-23bdf73081d6": {
+      "layer": 9,
+      "name": "海平面草地_中层丘陵_混接副本"
+    },
+    "85836254-d682-4d80-af5a-1033c51c2cca": {
+      "layer": 9,
+      "name": "崖壁A"
+    },
+    "e3c7a11d-7bdd-47a6-b8ae-b426b6903567": {
+      "layer": 10,
+      "name": null
+    }
+  },
+  "original_outward_root": "崖岸_交错曲面_B方案_v01"
+}

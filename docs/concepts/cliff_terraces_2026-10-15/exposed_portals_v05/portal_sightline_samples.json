@@ -1,0 +1,29 @@
+{
+  "samples": [
+    {
+      "portal": "T1",
+      "left_right_next_structure_distance_m": [
+        null,
+        37.660855227126454
+      ],
+      "eye": [
+        952.11748682340692,
+        551.76561396295517,
+        37.121120428603668
+      ]
+    },
+    {
+      "portal": "T2",
+      "left_right_next_structure_distance_m": [
+        35.855522463010246,
+        45.825670972616066
+      ],
+      "eye": [
+        1541.9981614720302,
+        818.03273189012577,
+        25.592006721446026
+      ]
+    }
+  ],
+  "scope": "Two horizontal rays 55m along road beyond original wall, 6m above road center; local sight samples, not full visibility acceptance."
+}

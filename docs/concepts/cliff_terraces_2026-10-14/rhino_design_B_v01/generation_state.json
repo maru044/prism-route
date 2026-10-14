@@ -1,0 +1,199 @@
+{
+  "captures": [
+    "D:\\Prism Route\\prism-route\\docs\\concepts\\cliff_terraces_2026-10-14\\rhino_design_B_v01\\01_overview.png",
+    "D:\\Prism Route\\prism-route\\docs\\concepts\\cliff_terraces_2026-10-14\\rhino_design_B_v01\\02_interwoven_bay.png",
+    "D:\\Prism Route\\prism-route\\docs\\concepts\\cliff_terraces_2026-10-14\\rhino_design_B_v01\\03_T1_road_passage.png",
+    "D:\\Prism Route\\prism-route\\docs\\concepts\\cliff_terraces_2026-10-14\\rhino_design_B_v01\\04_T2_road_passage.png"
+  ],
+  "metrics": [
+    {
+      "name": "主壳_连续抬升扭转_保留60米上缘",
+      "faces": 6,
+      "valid": true,
+      "planting_area_m2": 166147.73365886830,
+      "solid": true,
+      "bounds": [
+        [
+          315.42974117401030,
+          591.76588913815374,
+          0.0
+        ],
+        [
+          1652.1548794502246,
+          1469.5374897010120,
+          60.000000000000007
+        ]
+      ]
+    },
+    {
+      "name": "西翼_长向起伏跨越绿谷",
+      "faces": 6,
+      "valid": true,
+      "planting_area_m2": 43247.095349728370,
+      "solid": true,
+      "bounds": [
+        [
+          321.52580861305785,
+          676.84958480656087,
+          0.0
+        ],
+        [
+          1431.6607597227373,
+          1049.7391407752639,
+          41.246512653290715
+        ]
+      ]
+    },
+    {
+      "name": "东翼_回折下降开敞曲面",
+      "faces": 6,
+      "valid": true,
+      "planting_area_m2": 40934.261655415510,
+      "solid": true,
+      "bounds": [
+        [
+          932.85080277313739,
+          591.85346521844542,
+          -1.3732718303587688e-15
+        ],
+        [
+          1650.7441385224404,
+          1400.2605911088231,
+          49.972055672227910
+        ]
+      ]
+    }
+  ],
+  "source_layer_index": 9,
+  "backup": "D:\\Prism Route\\map\\map_before_terrace_interwoven_B_v01.3dm",
+  "specs": [
+    {
+      "start": 0.017999999999999999,
+      "kind": "main",
+      "group": "01_连续抬升主壳",
+      "name": "主壳_连续抬升扭转_保留60米上缘",
+      "end": 0.98199999999999998
+    },
+    {
+      "start": 0.105,
+      "offset": 145,
+      "sway": 36,
+      "width": 66,
+      "height_ratio": 0.59999999999999998,
+      "phase": 0.29999999999999999,
+      "foot": 0.38,
+      "kind": "wing",
+      "group": "02_西侧交错翼",
+      "name": "西翼_长向起伏跨越绿谷",
+      "end": 0.68999999999999995,
+      "wave": 8
+    },
+    {
+      "width": 78,
+      "start": 0.47999999999999998,
+      "wave": 8,
+      "foot": 0.68000000000000005,
+      "kind": "wing",
+      "name": "东翼_回折下降开敞曲面",
+      "end": 0.95499999999999996,
+      "group": "03_东侧扭转翼",
+      "offset": 190,
+      "height_ratio": 0.65000000000000002,
+      "phase": 1.25,
+      "sway": -43
+    }
+  ],
+  "road_crossings": [
+    {
+      "station_m": 776.56498211818644,
+      "point": [
+        987.07686678559753,
+        594.05072452032346,
+        27.284194670861663
+      ],
+      "id": "e3c7a11d-7bdd-47a6-b8ae-b426b6903567"
+    },
+    {
+      "station_m": 327.26148228654444,
+      "point": [
+        1497.1713712057963,
+        849.65503444156309,
+        15.679642095205567
+      ],
+      "id": "4e756d0f-b36d-46a4-ada9-12ebe57462a2"
+    }
+  ],
+  "objects": [
+    {
+      "name": "主壳_连续抬升扭转_保留60米上缘",
+      "group": "01_连续抬升主壳",
+      "id": "04798c20-79d3-4569-8c90-4b8617688a7e"
+    },
+    {
+      "name": "主壳_连续抬升扭转_保留60米上缘_种植曲面",
+      "group": "04_种植顶面",
+      "id": "0fd0c069-8057-40eb-bd1d-2eb69d895cdc"
+    },
+    {
+      "name": "西翼_长向起伏跨越绿谷",
+      "group": "02_西侧交错翼",
+      "id": "9e24f0c6-4841-44e6-9b62-b61b1d92e89d"
+    },
+    {
+      "name": "西翼_长向起伏跨越绿谷_种植曲面",
+      "group": "04_种植顶面",
+      "id": "d6dad750-0dd1-4567-989e-a7f34a33bd86"
+    },
+    {
+      "name": "东翼_回折下降开敞曲面",
+      "group": "03_东侧扭转翼",
+      "id": "6d0fe9b7-8b8e-4363-8ace-d180bd925d74"
+    },
+    {
+      "name": "东翼_回折下降开敞曲面_种植曲面",
+      "group": "04_种植顶面",
+      "id": "b6e3cf99-1f88-4036-a102-814962b79e3a"
+    },
+    {
+      "name": "西端_保留落地过渡_0",
+      "group": "08_端部衔接",
+      "id": "06dd3538-b52b-4b26-a04f-14352bf37347"
+    },
+    {
+      "name": "东端_保留落地过渡_0",
+      "group": "08_端部衔接",
+      "id": "c1d5e4d5-335e-405c-aade-9de67b7b91d5"
+    },
+    {
+      "name": "T1_实际道路曲线净空体",
+      "group": "05_隧道净空_辅助",
+      "id": "c39f48cf-910d-4d1b-a777-68d82639c531"
+    },
+    {
+      "name": "T2_实际道路曲线净空体",
+      "group": "05_隧道净空_辅助",
+      "id": "7239a474-98ba-4ce3-b197-1b4dd2a17a53"
+    }
+  ],
+  "native_geometry": "NURBS surfaces and closed Breps; no mesh replacement",
+  "document_serial": 268435457,
+  "refinements": [
+    "Continuous finite ground-contact haunches",
+    "Explicit grass material in Rhino Rendered mode"
+  ],
+  "height_ceiling_m": 60,
+  "archive_object_count": 17,
+  "draft_path": "D:\\Prism Route\\map\\map_terrace_interwoven_B_v01.3dm",
+  "native_archive": "D:\\Prism Route\\prism-route\\docs\\concepts\\cliff_terraces_2026-10-14\\rhino_design_B_v01\\source\\terrace_B_design_and_context.3dm",
+  "source_name": "1014要修改的弧面",
+  "source_id": "e6c5ceda-103d-48b7-af81-db0bcd3f4e41",
+  "recipe": "prism_cliff_terrace_interwoven_v01",
+  "source_geometry_crc": {
+    "e3c7a11d-7bdd-47a6-b8ae-b426b6903567": 1545898132,
+    "e6c5ceda-103d-48b7-af81-db0bcd3f4e41": 1578125691,
+    "a4adc150-3ba0-4216-b8b5-8d21449e8f69": 2285093012,
+    "4c560a71-7757-47c1-8e6c-23bdf73081d6": 1314462534,
+    "4e756d0f-b36d-46a4-ada9-12ebe57462a2": 2117227351,
+    "493f74fe-8166-43ba-9dd3-b60a30144c9a": 463385416
+  }
+}

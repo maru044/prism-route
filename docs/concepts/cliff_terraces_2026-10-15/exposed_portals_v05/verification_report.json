@@ -1,0 +1,23 @@
+{
+  "maximum_height_m": 60.124839782714844,
+  "sources_unchanged": true,
+  "failures": [],
+  "passages": [
+    {
+      "road": "T1",
+      "samples": 903,
+      "hits": 319,
+      "violations": [],
+      "minimum_clearance_m": 10.068971619068941
+    },
+    {
+      "road": "T2",
+      "samples": 903,
+      "hits": 296,
+      "violations": [],
+      "minimum_clearance_m": 10.078525192528824
+    }
+  ],
+  "limitations": "Closed components overlap at joins; not globally unioned/G2 certified. Sampled road rays do not certify full collision, structure or game traversal.",
+  "body_retention_fraction": 0.7490203083392577
+}

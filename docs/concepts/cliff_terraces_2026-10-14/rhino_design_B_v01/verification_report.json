@@ -1,0 +1,148 @@
+{
+  "geometry": [
+    {
+      "name": "主壳_连续抬升扭转_保留60米上缘",
+      "id": "04798c20-79d3-4569-8c90-4b8617688a7e",
+      "valid": true,
+      "solid": true,
+      "bbox": [
+        [
+          315.42974117401030,
+          591.76588913815374,
+          -9.4715901788333667e-16
+        ],
+        [
+          1652.1548794502246,
+          1469.5374897010120,
+          60.000000000000007
+        ]
+      ]
+    },
+    {
+      "name": "主壳_连续抬升扭转_保留60米上缘_种植曲面",
+      "id": "0fd0c069-8057-40eb-bd1d-2eb69d895cdc",
+      "valid": true,
+      "solid": false,
+      "bbox": [
+        [
+          335.93434147376269,
+          616.63910389215619,
+          1.9838852882385254
+        ],
+        [
+          1639.0025239507454,
+          1468.8708745600306,
+          59.403996987456992
+        ]
+      ]
+    },
+    {
+      "name": "西翼_长向起伏跨越绿谷",
+      "id": "9e24f0c6-4841-44e6-9b62-b61b1d92e89d",
+      "valid": true,
+      "solid": true,
+      "bbox": [
+        [
+          321.52580861305785,
+          676.84958480656087,
+          0.0
+        ],
+        [
+          1431.6607666015625,
+          1049.7391407752639,
+          41.246513366699219
+        ]
+      ]
+    },
+    {
+      "name": "西翼_长向起伏跨越绿谷_种植曲面",
+      "id": "d6dad750-0dd1-4567-989e-a7f34a33bd86",
+      "valid": true,
+      "solid": false,
+      "bbox": [
+        [
+          324.8685302734375,
+          689.06576694325827,
+          17.175002130895376
+        ],
+        [
+          1429.2207109928763,
+          1049.154296875,
+          40.786113739013672
+        ]
+      ]
+    },
+    {
+      "name": "东翼_回折下降开敞曲面",
+      "id": "6d0fe9b7-8b8e-4363-8ace-d180bd925d74",
+      "valid": true,
+      "solid": true,
+      "bbox": [
+        [
+          932.85080277313739,
+          591.85345458984375,
+          -1.3732718592520581e-15
+        ],
+        [
+          1650.744140625,
+          1400.2606201171875,
+          49.972055672227910
+        ]
+      ]
+    },
+    {
+      "name": "东翼_回折下降开敞曲面_种植曲面",
+      "id": "b6e3cf99-1f88-4036-a102-814962b79e3a",
+      "valid": true,
+      "solid": false,
+      "bbox": [
+        [
+          932.90098670084512,
+          595.23894162019178,
+          6.8506855964660645
+        ],
+        [
+          1648.142822265625,
+          1400.0907556604641,
+          49.240003827156613
+        ]
+      ]
+    }
+  ],
+  "failures": [],
+  "passages": [
+    {
+      "rays": 847,
+      "overhead_hits": 314,
+      "limiting_road_point": [
+        1088.5625039047306,
+        737.14549007356993,
+        20.407445661315283
+      ],
+      "violations": [],
+      "scope": "600m along actual road; 121 stations x 7 points across its actual surface; upward ray mesh approximation at 0.06m tolerance",
+      "road_id": "e3c7a11d-7bdd-47a6-b8ae-b426b6903567",
+      "minimum_vertical_clearance_m": 12.714471430663400,
+      "name": "T1"
+    },
+    {
+      "rays": 847,
+      "overhead_hits": 319,
+      "limiting_road_point": [
+        1271.8016526247427,
+        1043.9711774997322,
+        0.092153959648641079
+      ],
+      "violations": [],
+      "scope": "600m along actual road; 121 stations x 7 points across its actual surface; upward ray mesh approximation at 0.06m tolerance",
+      "road_id": "4e756d0f-b36d-46a4-ada9-12ebe57462a2",
+      "minimum_vertical_clearance_m": 21.341793196920719,
+      "name": "T2"
+    }
+  ],
+  "source_geometry_crc_unchanged": true,
+  "mesh_triangles": 40815,
+  "limitations": "Clearance samples are not complete collision/topology/engineering or game physics acceptance; shell intersections and terrain connections remain design-review scope.",
+  "main_upper_boundary_max_deviation_m": 5.2635932079057589e-12,
+  "geometry_type": "Original editable NURBS Breps; mesh only for diagnostic rays"
+}

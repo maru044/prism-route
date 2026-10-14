@@ -1,0 +1,32 @@
+{
+  "span": [
+    0.059999999999999998,
+    0.19400000000000001
+  ],
+  "main_anchor_fraction": 0.025000000000000001,
+  "recipe": "prism_west_seam_v06",
+  "maximum_height_m": 60.124842947093953,
+  "method": "Native tangent blend between inset roof edges; filled to existing -2m base; Boolean union with main body. Lower tier remains a separate unchanged body.",
+  "source_crc": {
+    "69bc8221-501f-4ef6-a4d7-d84906607fa5": 2142698625,
+    "f81baad1-a64c-48e0-a17f-f3a3c620659a": 656981378
+  },
+  "patch_bbox": {
+    "min": [
+      213.11914670179095,
+      881.34353625288315,
+      -2.0000000000000004
+    ],
+    "max": [
+      299.11396821169632,
+      1160.4636189621745,
+      20.526615041324490
+    ]
+  },
+  "sources": [
+    "69bc8221-501f-4ef6-a4d7-d84906607fa5",
+    "f81baad1-a64c-48e0-a17f-f3a3c620659a"
+  ],
+  "low_anchor_fraction": 0.92000000000000004,
+  "objects": []
+}

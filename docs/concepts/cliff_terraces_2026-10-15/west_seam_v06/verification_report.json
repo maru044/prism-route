@@ -1,0 +1,16 @@
+{
+  "unchanged_prior_objects": 550,
+  "sampled_surface_height_m": [
+    12.719612365933841,
+    20.317370679105153
+  ],
+  "failures": [],
+  "gap_samples": 255,
+  "actual_roads_and_portal_geometry_unchanged": true,
+  "repaired_main_closed": true,
+  "after_missing": 0,
+  "before_missing": 255,
+  "repaired_main_valid": true,
+  "maximum_height_m": 60.124842947093953,
+  "limitations": "Local gap and native solid checks only; no global curvature, self-intersection or game collision certification."
+}

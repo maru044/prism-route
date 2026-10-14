@@ -5,3 +5,5 @@ assets/world/road_projection_test/model_1006.gltf -text -diff
 # Preserve the pinned original motion bytes and their recorded SHA-256 values.
 assets/characters/motion_sources/independent_cc0/*.glb -text -diff
 assets/characters/motion_sources/independent_cc0/*.vrma -text -diff
+# Preserve native Rhino concept archives without line-ending conversion.
+docs/concepts/**/*.3dm -text -diff
