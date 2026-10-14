@@ -1,0 +1,94 @@
+{
+	"camera_transforms": {
+		"base": "[X: (0.825336, 0.0, 0.564642), Y: (0.089958, 0.987227, -0.131491), Z: (-0.55743, 0.159318, 0.814794), O: (-322.9733, 2.477194, 14.73803)]",
+		"gallery": "[X: (-0.0, -0.0, -1.0), Y: (-0.198669, 0.980067, 0.0), Z: (0.980067, 0.198669, -0.0), O: (288.8549, 39.23793, -202.3622)]"
+	},
+	"failures": [],
+	"godot": "4.7.2-stable (official)",
+	"msaa": 4,
+	"performance": [
+		{
+			"average_fps": 1190.47737150533,
+			"draw_calls": 299,
+			"mean_frame_ms": 0.839999166666666,
+			"one_percent_low_fps": 567.697984672154,
+			"profile": "baseline",
+			"samples": 1200,
+			"viewport_cpu_ms": 0.283140000067651,
+			"viewport_gpu_ms": 0.589274999300639
+		},
+		{
+			"average_fps": 1170.53414399326,
+			"draw_calls": 299,
+			"mean_frame_ms": 0.854310833333332,
+			"one_percent_low_fps": 518.022879343838,
+			"profile": "final",
+			"samples": 1200,
+			"viewport_cpu_ms": 0.288286666522423,
+			"viewport_gpu_ms": 0.613478333751361
+		},
+		{
+			"average_fps": 1177.89214237968,
+			"draw_calls": 299,
+			"mean_frame_ms": 0.848974166666667,
+			"one_percent_low_fps": 499.708503373032,
+			"profile": "baseline",
+			"samples": 1200,
+			"viewport_cpu_ms": 0.28960416606317,
+			"viewport_gpu_ms": 0.58991249859333
+		},
+		{
+			"average_fps": 1180.46913810997,
+			"draw_calls": 299,
+			"mean_frame_ms": 0.847120833333333,
+			"one_percent_low_fps": 577.422769704552,
+			"profile": "final",
+			"samples": 1200,
+			"viewport_cpu_ms": 0.286964999983708,
+			"viewport_gpu_ms": 0.613196667134762
+		}
+	],
+	"population": {
+		"large": 81,
+		"trees": 801
+	},
+	"rendering_device": "NVIDIA GeForce RTX 5070 Ti",
+	"resolution": [
+		1920,
+		1080
+	],
+	"taa": false,
+	"timing_scope": "1200 uncapped post-draw intervals after 120 warm frames; fixed terraces camera, frozen simulation/TIME, alternating runs; includes CPU/GPU/display scheduling, not isolated GPU shader cost or gameplay benchmark. GPU/CPU viewport counters averaged over all samples.",
+	"variants": [
+		"gallery_baseline",
+		"gallery_ao_off",
+		"gallery_ao_half",
+		"gallery_ambient_050",
+		"gallery_ambient_060",
+		"gallery_sky_ambient",
+		"gallery_plain_white",
+		"gallery_road_only",
+		"gallery_shadow_off",
+		"gallery_warm",
+		"gallery_neutral",
+		"gallery_cool",
+		"gallery_warm_wide",
+		"gallery_final",
+		"gallery_no_gloss",
+		"base_baseline",
+		"base_ao_off",
+		"base_ao_half",
+		"base_ambient_050",
+		"base_ambient_060",
+		"base_sky_ambient",
+		"base_plain_white",
+		"base_road_only",
+		"base_shadow_off",
+		"base_warm",
+		"base_neutral",
+		"base_cool",
+		"base_warm_wide",
+		"base_final",
+		"base_no_gloss"
+	]
+}

@@ -46,7 +46,7 @@
 	"gallery_drive_distance_m": 4.3209228515625,
 	"godot": "4.7.2-stable (official)",
 	"max_tree_root_error_m": 0.000116348266601563,
-	"render_captures": true,
+	"render_captures": false,
 	"roof_walk_distance_m": 2.33340883255005,
 	"scope": "Four bookmarks, local roof walking, short gallery drive, all tree roots and lower-storey grass rays. Not full circulation or final topology acceptance.",
 	"trees": 801

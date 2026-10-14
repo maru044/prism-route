@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" load_steps=6 format=3]
+
+[ext_resource type="Shader" path="res://assets/world/cliff_b_test/architecture_toon.gdshader" id="1"]
+[ext_resource type="Texture2D" path="res://assets/world/cliff_b_test/textures/warm_white_architecture_albedo.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/world/cliff_b_test/textures/warm_white_architecture_normal.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/world/cliff_b_test/textures/warm_white_architecture_roughness.png" id="4"]
+
+[ext_resource type="Texture2D" path="res://assets/environment/sky/fresh_cumulus_panorama_v2.png" id="5"]
+
+[resource]
+shader = ExtResource("1")
+shader_parameter/base_texture = ExtResource("2")
+shader_parameter/micro_normal = ExtResource("3")
+shader_parameter/roughness_texture = ExtResource("4")
+shader_parameter/warm_white = Color(0.91, 0.895, 0.865, 1)
+shader_parameter/detail_strength = 0.2
+shader_parameter/normal_strength = 0.07
+shader_parameter/texture_meters = 1.6
+
+shader_parameter/reflection_panorama = ExtResource("5")

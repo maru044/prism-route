@@ -15,6 +15,7 @@
 | Tab | B 单体全景 |
 | F | 自由观景 / 返回当前控制对象 |
 | P | 用较亮绿色显示种植地表范围，再按恢复 |
+| M | 暖白高光建筑 / 原版材质对照；菜单画面页也可切换 |
 | V / L | 植被显示 / 树木 LOD 比较 |
 | Esc | 原有测试菜单，包含控制、地点、画面和植被 |
 
@@ -25,6 +26,8 @@
 `tools/verify_location_navigation.gd` 在 B 场景与原 1012 场景共验证 32 项：实际鼠标点击、正常数字键、菜单中的数字键和小键盘，并检查控制对象及自由相机位置。失败项为空，报告见 `docs/LOCATION_NAVIGATION_TEST_REPORT.json`。原测试菜单的暂停与画面设置回归检查也通过。
 
 ## 材质与模型
+
+2026-10-14 后续渲染修正：默认材质为 `architecture_toon.tres`，包含柔和 GGX 高光、建筑专属天空反射及暖灰投影；道路两条绘制路径使用一致深灰与阴影补光。原材质保留作 M 对照。固定机位矩阵、像素判因、性能实测及截图见 [CLIFF_B_RENDERING.md](CLIFF_B_RENDERING.md)。本节下方的材质和截图保留初次测试记录。
 
 - 几何从当时打开的 `map/map.3dm` 读取可见的最新版 B 及周边地形，共 66 个几何对象；米制、1:1，仅平移到局部坐标。未改写原 Rhino 文档，也未覆盖先前建模副本。
 - `assets/world/cliff_b_test/architecture.tres` 使用暖白人工建筑表面基础色、微法线和粗糙度纹理，以世界坐标三平面投射避免 NURBS 导出模型缺少 UV 的拉伸。细节强度、暖白颜色、法线强度和物理尺度可独立调整。
@@ -70,7 +73,7 @@ Godot 4.7.2 / Forward+ / D3D12 / RTX 5070 Ti 实际渲染通过，最终报告�
 2. 普通 Python 执行 `tools/build_architecture_maps.py`，创建周期微法线与粗糙度；基础色图片单独保留，不被重建脚本覆盖。
 3. Blender 后台执行 `tools/build_cliff_b_gameplay.py`，输出 GLB、Blender 源文件、种植布局与元数据。
 4. 普通 Python 执行 `tools/build_cliff_b_projection.py`，Godot 执行 `tools/import_cliff_b_projection.gd`，重新烘焙同一份几何的道路显示投影。
-5. 执行 `tools/create_cliff_b_scene.py` 组装测试场景，然后 Godot `--editor --import` 导入。
+5. 执行 `tools/build_cliff_b_rendering.py` 生成独立渲染变体，再执行 `tools/create_cliff_b_scene.py` 组装测试场景，然后 Godot `--editor --import` 导入。
 6. Godot `--script res://tools/verify_cliff_b_gameplay.gd` 验证；添加 `-- --capture-cliff-b` 且不使用 `--headless` 时输出实机截图。
 7. 如需同步 CAD 种植副本，在 Rhino 中执行 `tools/export_cliff_b_native_planting.py` 的 `run()`。
 

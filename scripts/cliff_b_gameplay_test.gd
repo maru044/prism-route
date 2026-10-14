@@ -4,8 +4,11 @@ extends Node3D
 const ASSETS := "res://assets/world/cliff_b_test/"
 const VIEW_NAMES := ["道路廊道", "底层步道", "错层台地", "屋顶草甸"]
 const FRESH_SKY := preload("res://assets/environment/sky/fresh_cumulus_sky.tres")
-const TERRAIN_SHADER := preload("res://assets/world/terrain/shaders/terrain_draft.gdshader")
+const TERRAIN_SHADER := preload("res://assets/world/cliff_b_test/terrain.gdshader")
 const TEST_PANEL := preload("res://scripts/world_test_panel.gd")
+
+@export var stylized_architecture := true
+var rendering
 
 @onready var camper: CharacterBody3D = $CamperVan
 @onready var chase_camera: Camera3D = $CamperVan/CameraPivot/SpringArm3D/Camera3D
@@ -91,7 +94,7 @@ func _build_map() -> void:
 	var water := ShaderMaterial.new()
 	water.shader = load("res://assets/world/map_1012_test/water.gdshader")
 	var road := ShaderMaterial.new()
-	road.shader = load("res://assets/world/map_1012_test/road.gdshader")
+	road.shader = load("res://assets/world/cliff_b_test/road.gdshader")
 	var projection: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(ASSETS + "road_projection_metadata.json"))
 	var atlas: Texture2D = load(ASSETS + "road_projection.res")
 	terrain_material.set_shader_parameter("project_roads", true)
@@ -121,6 +124,8 @@ func _build_map() -> void:
 		var collider := CollisionShape3D.new()
 		collider.shape = shape
 		body.add_child(collider)
+	rendering = preload("res://scripts/cliff_b_rendering.gd").new()
+	rendering.setup(self, road)
 
 func _collect_meshes(node: Node, result: Array[MeshInstance3D]) -> void:
 	if node is MeshInstance3D:
@@ -162,6 +167,7 @@ func _build_hud() -> void:
 	test_panel.name = "HUD"
 	add_child(test_panel)
 	test_panel.setup(self)
+	rendering.attach_controls(test_panel)
 	# Retain these handles for the existing world/actor verification tools.
 	fly_button = test_panel.fly_button
 	actor_button = test_panel.actor_button
@@ -289,6 +295,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_F: set_free_mode(not free_mode)
 			KEY_TAB: show_overview()
 			KEY_P: toggle_planting_regions()
+			KEY_M: rendering.set_enabled(not stylized_architecture)
 			KEY_C: set_character_mode(not character_mode)
 			KEY_L:
 				set_lod_enabled(not lod_enabled)

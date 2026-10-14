@@ -1,0 +1,750 @@
+{
+  "roi_coordinates_xyxy": {
+    "gallery_wall": [
+      100,
+      100,
+      600,
+      450
+    ],
+    "gallery_road": [
+      350,
+      800,
+      1000,
+      1000
+    ],
+    "base_underside": [
+      1100,
+      100,
+      1700,
+      250
+    ],
+    "base_sunlit_floor": [
+      100,
+      700,
+      700,
+      950
+    ]
+  },
+  "measurements": {
+    "gallery_wall": {
+      "baseline": {
+        "mean_rgb_8bit": [
+          164.942,
+          164.001,
+          162.0
+        ],
+        "mean_display_luma_8bit": 164.056,
+        "minimum_display_luma_8bit": 163.068
+      },
+      "ao_off": {
+        "mean_rgb_8bit": [
+          164.942,
+          164.001,
+          162.0
+        ],
+        "mean_display_luma_8bit": 164.056,
+        "minimum_display_luma_8bit": 163.068
+      },
+      "ao_half": {
+        "mean_rgb_8bit": [
+          164.942,
+          164.001,
+          162.0
+        ],
+        "mean_display_luma_8bit": 164.056,
+        "minimum_display_luma_8bit": 163.068
+      },
+      "ambient_050": {
+        "mean_rgb_8bit": [
+          186.801,
+          186.0,
+          184.0
+        ],
+        "mean_display_luma_8bit": 186.026,
+        "minimum_display_luma_8bit": 185.068
+      },
+      "ambient_060": {
+        "mean_rgb_8bit": [
+          200.0,
+          199.954,
+          197.997
+        ],
+        "mean_display_luma_8bit": 199.822,
+        "minimum_display_luma_8bit": 198.856
+      },
+      "sky_ambient": {
+        "mean_rgb_8bit": [
+          204.364,
+          196.871,
+          213.377
+        ],
+        "mean_display_luma_8bit": 199.656,
+        "minimum_display_luma_8bit": 194.575
+      },
+      "plain_white": {
+        "mean_rgb_8bit": [
+          165.0,
+          165.0,
+          163.0
+        ],
+        "mean_display_luma_8bit": 164.856,
+        "minimum_display_luma_8bit": 164.856
+      },
+      "road_only": {
+        "mean_rgb_8bit": [
+          164.942,
+          164.001,
+          162.0
+        ],
+        "mean_display_luma_8bit": 164.056,
+        "minimum_display_luma_8bit": 163.068
+      },
+      "shadow_off": {
+        "mean_rgb_8bit": [
+          164.942,
+          164.001,
+          162.0
+        ],
+        "mean_display_luma_8bit": 164.056,
+        "minimum_display_luma_8bit": 163.068
+      },
+      "warm": {
+        "mean_rgb_8bit": [
+          179.437,
+          175.046,
+          170.31
+        ],
+        "mean_display_luma_8bit": 175.637,
+        "minimum_display_luma_8bit": 174.489
+      },
+      "neutral": {
+        "mean_rgb_8bit": [
+          177.994,
+          176.017,
+          172.013
+        ],
+        "mean_display_luma_8bit": 176.148,
+        "minimum_display_luma_8bit": 175.136
+      },
+      "cool": {
+        "mean_rgb_8bit": [
+          176.941,
+          176.987,
+          173.918
+        ],
+        "mean_display_luma_8bit": 176.756,
+        "minimum_display_luma_8bit": 175.783
+      },
+      "warm_wide": {
+        "mean_rgb_8bit": [
+          179.437,
+          175.046,
+          170.31
+        ],
+        "mean_display_luma_8bit": 175.637,
+        "minimum_display_luma_8bit": 174.489
+      },
+      "final": {
+        "mean_rgb_8bit": [
+          179.437,
+          175.046,
+          170.31
+        ],
+        "mean_display_luma_8bit": 175.637,
+        "minimum_display_luma_8bit": 174.489
+      },
+      "no_gloss": {
+        "mean_rgb_8bit": [
+          178.991,
+          174.103,
+          169.125
+        ],
+        "mean_display_luma_8bit": 174.783,
+        "minimum_display_luma_8bit": 173.702
+      }
+    },
+    "gallery_road": {
+      "baseline": {
+        "mean_rgb_8bit": [
+          15.0,
+          18.0,
+          19.0
+        ],
+        "mean_display_luma_8bit": 17.434,
+        "minimum_display_luma_8bit": 17.434
+      },
+      "ao_off": {
+        "mean_rgb_8bit": [
+          15.0,
+          18.0,
+          19.0
+        ],
+        "mean_display_luma_8bit": 17.434,
+        "minimum_display_luma_8bit": 17.434
+      },
+      "ao_half": {
+        "mean_rgb_8bit": [
+          15.0,
+          18.0,
+          19.0
+        ],
+        "mean_display_luma_8bit": 17.434,
+        "minimum_display_luma_8bit": 17.434
+      },
+      "ambient_050": {
+        "mean_rgb_8bit": [
+          20.0,
+          24.0,
+          26.0
+        ],
+        "mean_display_luma_8bit": 23.294,
+        "minimum_display_luma_8bit": 23.294
+      },
+      "ambient_060": {
+        "mean_rgb_8bit": [
+          25.0,
+          29.0,
+          31.0
+        ],
+        "mean_display_luma_8bit": 28.294,
+        "minimum_display_luma_8bit": 28.294
+      },
+      "sky_ambient": {
+        "mean_rgb_8bit": [
+          25.0,
+          29.0,
+          41.0
+        ],
+        "mean_display_luma_8bit": 29.016,
+        "minimum_display_luma_8bit": 29.016
+      },
+      "plain_white": {
+        "mean_rgb_8bit": [
+          15.0,
+          18.0,
+          19.0
+        ],
+        "mean_display_luma_8bit": 17.434,
+        "minimum_display_luma_8bit": 17.434
+      },
+      "road_only": {
+        "mean_rgb_8bit": [
+          34.0,
+          37.0,
+          36.0
+        ],
+        "mean_display_luma_8bit": 36.29,
+        "minimum_display_luma_8bit": 36.29
+      },
+      "shadow_off": {
+        "mean_rgb_8bit": [
+          39.001,
+          42.232,
+          40.0
+        ],
+        "mean_display_luma_8bit": 41.384,
+        "minimum_display_luma_8bit": 41.218
+      },
+      "warm": {
+        "mean_rgb_8bit": [
+          15.0,
+          18.0,
+          19.0
+        ],
+        "mean_display_luma_8bit": 17.434,
+        "minimum_display_luma_8bit": 17.434
+      },
+      "neutral": {
+        "mean_rgb_8bit": [
+          15.0,
+          18.0,
+          19.0
+        ],
+        "mean_display_luma_8bit": 17.434,
+        "minimum_display_luma_8bit": 17.434
+      },
+      "cool": {
+        "mean_rgb_8bit": [
+          15.0,
+          18.0,
+          19.0
+        ],
+        "mean_display_luma_8bit": 17.434,
+        "minimum_display_luma_8bit": 17.434
+      },
+      "warm_wide": {
+        "mean_rgb_8bit": [
+          15.0,
+          18.0,
+          19.0
+        ],
+        "mean_display_luma_8bit": 17.434,
+        "minimum_display_luma_8bit": 17.434
+      },
+      "final": {
+        "mean_rgb_8bit": [
+          78.0,
+          78.0,
+          72.0
+        ],
+        "mean_display_luma_8bit": 77.567,
+        "minimum_display_luma_8bit": 77.567
+      },
+      "no_gloss": {
+        "mean_rgb_8bit": [
+          78.0,
+          78.0,
+          72.0
+        ],
+        "mean_display_luma_8bit": 77.567,
+        "minimum_display_luma_8bit": 77.567
+      }
+    },
+    "base_underside": {
+      "baseline": {
+        "mean_rgb_8bit": [
+          164.974,
+          163.99,
+          161.989
+        ],
+        "mean_display_luma_8bit": 164.055,
+        "minimum_display_luma_8bit": 161.068
+      },
+      "ao_off": {
+        "mean_rgb_8bit": [
+          164.995,
+          164.0,
+          162.0
+        ],
+        "mean_display_luma_8bit": 164.067,
+        "minimum_display_luma_8bit": 163.856
+      },
+      "ao_half": {
+        "mean_rgb_8bit": [
+          164.983,
+          163.997,
+          161.997
+        ],
+        "mean_display_luma_8bit": 164.062,
+        "minimum_display_luma_8bit": 162.856
+      },
+      "ambient_050": {
+        "mean_rgb_8bit": [
+          186.793,
+          185.989,
+          183.99
+        ],
+        "mean_display_luma_8bit": 186.016,
+        "minimum_display_luma_8bit": 183.856
+      },
+      "ambient_060": {
+        "mean_rgb_8bit": [
+          199.993,
+          199.974,
+          197.982
+        ],
+        "mean_display_luma_8bit": 199.835,
+        "minimum_display_luma_8bit": 197.068
+      },
+      "sky_ambient": {
+        "mean_rgb_8bit": [
+          180.505,
+          167.066,
+          184.61
+        ],
+        "mean_display_luma_8bit": 171.19,
+        "minimum_display_luma_8bit": 138.547
+      },
+      "plain_white": {
+        "mean_rgb_8bit": [
+          164.974,
+          164.974,
+          162.994
+        ],
+        "mean_display_luma_8bit": 164.831,
+        "minimum_display_luma_8bit": 161.928
+      },
+      "road_only": {
+        "mean_rgb_8bit": [
+          164.974,
+          163.99,
+          161.989
+        ],
+        "mean_display_luma_8bit": 164.055,
+        "minimum_display_luma_8bit": 161.068
+      },
+      "shadow_off": {
+        "mean_rgb_8bit": [
+          167.344,
+          166.206,
+          163.968
+        ],
+        "mean_display_luma_8bit": 166.287,
+        "minimum_display_luma_8bit": 162.068
+      },
+      "warm": {
+        "mean_rgb_8bit": [
+          182.851,
+          179.716,
+          175.93
+        ],
+        "mean_display_luma_8bit": 180.109,
+        "minimum_display_luma_8bit": 174.489
+      },
+      "neutral": {
+        "mean_rgb_8bit": [
+          181.375,
+          180.477,
+          177.287
+        ],
+        "mean_display_luma_8bit": 180.438,
+        "minimum_display_luma_8bit": 174.209
+      },
+      "cool": {
+        "mean_rgb_8bit": [
+          180.345,
+          181.211,
+          178.971
+        ],
+        "mean_display_luma_8bit": 180.865,
+        "minimum_display_luma_8bit": 174.783
+      },
+      "warm_wide": {
+        "mean_rgb_8bit": [
+          182.851,
+          179.716,
+          175.93
+        ],
+        "mean_display_luma_8bit": 180.109,
+        "minimum_display_luma_8bit": 174.489
+      },
+      "final": {
+        "mean_rgb_8bit": [
+          182.851,
+          179.716,
+          175.93
+        ],
+        "mean_display_luma_8bit": 180.109,
+        "minimum_display_luma_8bit": 174.489
+      },
+      "no_gloss": {
+        "mean_rgb_8bit": [
+          178.986,
+          174.091,
+          169.099
+        ],
+        "mean_display_luma_8bit": 174.771,
+        "minimum_display_luma_8bit": 172.702
+      }
+    },
+    "base_sunlit_floor": {
+      "baseline": {
+        "mean_rgb_8bit": [
+          229.339,
+          224.24,
+          215.938
+        ],
+        "mean_display_luma_8bit": 224.724,
+        "minimum_display_luma_8bit": 221.485
+      },
+      "ao_off": {
+        "mean_rgb_8bit": [
+          229.339,
+          224.24,
+          215.938
+        ],
+        "mean_display_luma_8bit": 224.724,
+        "minimum_display_luma_8bit": 221.485
+      },
+      "ao_half": {
+        "mean_rgb_8bit": [
+          229.339,
+          224.24,
+          215.938
+        ],
+        "mean_display_luma_8bit": 224.724,
+        "minimum_display_luma_8bit": 221.485
+      },
+      "ambient_050": {
+        "mean_rgb_8bit": [
+          235.539,
+          231.395,
+          224.593
+        ],
+        "mean_display_luma_8bit": 231.785,
+        "minimum_display_luma_8bit": 229.345
+      },
+      "ambient_060": {
+        "mean_rgb_8bit": [
+          239.834,
+          236.137,
+          230.358
+        ],
+        "mean_display_luma_8bit": 236.505,
+        "minimum_display_luma_8bit": 234.205
+      },
+      "sky_ambient": {
+        "mean_rgb_8bit": [
+          239.913,
+          235.385,
+          239.912
+        ],
+        "mean_display_luma_8bit": 236.675,
+        "minimum_display_luma_8bit": 234.211
+      },
+      "plain_white": {
+        "mean_rgb_8bit": [
+          230.001,
+          225.409,
+          217.854
+        ],
+        "mean_display_luma_8bit": 225.84,
+        "minimum_display_luma_8bit": 225.485
+      },
+      "road_only": {
+        "mean_rgb_8bit": [
+          229.339,
+          224.24,
+          215.938
+        ],
+        "mean_display_luma_8bit": 224.724,
+        "minimum_display_luma_8bit": 221.485
+      },
+      "shadow_off": {
+        "mean_rgb_8bit": [
+          229.339,
+          224.24,
+          215.938
+        ],
+        "mean_display_luma_8bit": 224.724,
+        "minimum_display_luma_8bit": 221.485
+      },
+      "warm": {
+        "mean_rgb_8bit": [
+          230.836,
+          225.906,
+          218.001
+        ],
+        "mean_display_luma_8bit": 226.383,
+        "minimum_display_luma_8bit": 223.485
+      },
+      "neutral": {
+        "mean_rgb_8bit": [
+          230.836,
+          225.906,
+          218.001
+        ],
+        "mean_display_luma_8bit": 226.383,
+        "minimum_display_luma_8bit": 223.485
+      },
+      "cool": {
+        "mean_rgb_8bit": [
+          230.836,
+          225.906,
+          218.001
+        ],
+        "mean_display_luma_8bit": 226.383,
+        "minimum_display_luma_8bit": 223.485
+      },
+      "warm_wide": {
+        "mean_rgb_8bit": [
+          230.836,
+          225.906,
+          218.001
+        ],
+        "mean_display_luma_8bit": 226.383,
+        "minimum_display_luma_8bit": 223.485
+      },
+      "final": {
+        "mean_rgb_8bit": [
+          230.836,
+          225.906,
+          218.001
+        ],
+        "mean_display_luma_8bit": 226.383,
+        "minimum_display_luma_8bit": 223.485
+      },
+      "no_gloss": {
+        "mean_rgb_8bit": [
+          230.322,
+          225.211,
+          216.929
+        ],
+        "mean_display_luma_8bit": 225.7,
+        "minimum_display_luma_8bit": 223.485
+      }
+    }
+  },
+  "gloss": {
+    "roof_roi_xyxy": [
+      700,
+      350,
+      1400,
+      750
+    ],
+    "max_rgb_gain_8bit": 38.0,
+    "mean_rgb_gain_8bit": [
+      2.454,
+      3.27,
+      3.258
+    ],
+    "pixels_gain_over_8": 27235,
+    "unmodified_background_max_change_8bit": 0.0
+  },
+  "geometry_normals": [
+    {
+      "mesh": "Architecture_00",
+      "triangles": 3204,
+      "nonfinite_vertices": 0,
+      "near_zero_area_triangles": 0,
+      "normals_opposed_to_winding": 0
+    },
+    {
+      "mesh": "Architecture_01",
+      "triangles": 22176,
+      "nonfinite_vertices": 0,
+      "near_zero_area_triangles": 0,
+      "normals_opposed_to_winding": 0
+    },
+    {
+      "mesh": "Architecture_02",
+      "triangles": 1496,
+      "nonfinite_vertices": 0,
+      "near_zero_area_triangles": 0,
+      "normals_opposed_to_winding": 0
+    },
+    {
+      "mesh": "Architecture_03",
+      "triangles": 492,
+      "nonfinite_vertices": 0,
+      "near_zero_area_triangles": 0,
+      "normals_opposed_to_winding": 0
+    },
+    {
+      "mesh": "Architecture_04",
+      "triangles": 772,
+      "nonfinite_vertices": 0,
+      "near_zero_area_triangles": 0,
+      "normals_opposed_to_winding": 0
+    },
+    {
+      "mesh": "Architecture_05",
+      "triangles": 162052,
+      "nonfinite_vertices": 0,
+      "near_zero_area_triangles": 0,
+      "normals_opposed_to_winding": 0
+    },
+    {
+      "mesh": "Architecture_07",
+      "triangles": 204,
+      "nonfinite_vertices": 0,
+      "near_zero_area_triangles": 0,
+      "normals_opposed_to_winding": 0
+    },
+    {
+      "mesh": "Architecture_08",
+      "triangles": 204,
+      "nonfinite_vertices": 0,
+      "near_zero_area_triangles": 0,
+      "normals_opposed_to_winding": 0
+    },
+    {
+      "mesh": "Architecture_09",
+      "triangles": 204,
+      "nonfinite_vertices": 0,
+      "near_zero_area_triangles": 0,
+      "normals_opposed_to_winding": 0
+    },
+    {
+      "mesh": "Architecture_10",
+      "triangles": 224,
+      "nonfinite_vertices": 0,
+      "near_zero_area_triangles": 0,
+      "normals_opposed_to_winding": 0
+    },
+    {
+      "mesh": "Architecture_11",
+      "triangles": 256,
+      "nonfinite_vertices": 0,
+      "near_zero_area_triangles": 0,
+      "normals_opposed_to_winding": 0
+    },
+    {
+      "mesh": "Architecture_12",
+      "triangles": 208,
+      "nonfinite_vertices": 0,
+      "near_zero_area_triangles": 0,
+      "normals_opposed_to_winding": 0
+    },
+    {
+      "mesh": "Architecture_13",
+      "triangles": 588,
+      "nonfinite_vertices": 0,
+      "near_zero_area_triangles": 0,
+      "normals_opposed_to_winding": 0
+    },
+    {
+      "mesh": "Architecture_14",
+      "triangles": 564,
+      "nonfinite_vertices": 0,
+      "near_zero_area_triangles": 0,
+      "normals_opposed_to_winding": 0
+    },
+    {
+      "mesh": "Architecture_15",
+      "triangles": 1068,
+      "nonfinite_vertices": 0,
+      "near_zero_area_triangles": 0,
+      "normals_opposed_to_winding": 0
+    },
+    {
+      "mesh": "Architecture_16",
+      "triangles": 1420,
+      "nonfinite_vertices": 0,
+      "near_zero_area_triangles": 0,
+      "normals_opposed_to_winding": 0
+    },
+    {
+      "mesh": "Architecture_17",
+      "triangles": 2900,
+      "nonfinite_vertices": 0,
+      "near_zero_area_triangles": 0,
+      "normals_opposed_to_winding": 0
+    },
+    {
+      "mesh": "Architecture_18",
+      "triangles": 2088,
+      "nonfinite_vertices": 0,
+      "near_zero_area_triangles": 0,
+      "normals_opposed_to_winding": 0
+    },
+    {
+      "mesh": "Architecture_19",
+      "triangles": 4416,
+      "nonfinite_vertices": 0,
+      "near_zero_area_triangles": 0,
+      "normals_opposed_to_winding": 0
+    },
+    {
+      "mesh": "Architecture_20",
+      "triangles": 1444,
+      "nonfinite_vertices": 0,
+      "near_zero_area_triangles": 0,
+      "normals_opposed_to_winding": 0
+    },
+    {
+      "mesh": "Architecture_21",
+      "triangles": 2032,
+      "nonfinite_vertices": 0,
+      "near_zero_area_triangles": 0,
+      "normals_opposed_to_winding": 0
+    },
+    {
+      "mesh": "Architecture_23",
+      "triangles": 5248,
+      "nonfinite_vertices": 0,
+      "near_zero_area_triangles": 0,
+      "normals_opposed_to_winding": 0
+    }
+  ]
+}

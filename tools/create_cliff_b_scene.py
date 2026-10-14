@@ -18,7 +18,7 @@ BUILD_MAP = '''func _build_map() -> void:
 \tvar water := ShaderMaterial.new()
 \twater.shader = load("res://assets/world/map_1012_test/water.gdshader")
 \tvar road := ShaderMaterial.new()
-\troad.shader = load("res://assets/world/map_1012_test/road.gdshader")
+\troad.shader = load("res://assets/world/cliff_b_test/road.gdshader")
 \tvar projection: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(ASSETS + "road_projection_metadata.json"))
 \tvar atlas: Texture2D = load(ASSETS + "road_projection.res")
 \tterrain_material.set_shader_parameter("project_roads", true)
@@ -48,6 +48,8 @@ BUILD_MAP = '''func _build_map() -> void:
 \t\tvar collider := CollisionShape3D.new()
 \t\tcollider.shape = shape
 \t\tbody.add_child(collider)
+\trendering = preload("res://scripts/cliff_b_rendering.gd").new()
+\trendering.setup(self, road)
 
 '''
 
@@ -57,6 +59,8 @@ def main():
     script = script.replace('## 1012 world review: original CAD surfaces, spaced trees and the short camper.',
         '## Cliff B: warm fabricated white architecture and explicit planting beds.')
     script = script.replace('res://assets/world/map_1012_test/', 'res://assets/world/cliff_b_test/')
+    script = script.replace('res://assets/world/terrain/shaders/terrain_draft.gdshader', 'res://assets/world/cliff_b_test/terrain.gdshader')
+    script = script.replace('@onready var camper:', '@export var stylized_architecture := true\nvar rendering\n\n@onready var camper:')
     script = script.replace('["道路出生点", "林地", "沙滩", "高层平台"]', '["道路廊道", "底层步道", "错层台地", "屋顶草甸"]')
     script = script.replace('var character_mode := false', 'var character_mode := true\nvar scene_label := "崖壁 B"\nvar planting_material: ShaderMaterial\nvar show_planting_regions := false')
     script = script.replace('await select_spawn(0)', 'await select_spawn(3)')
@@ -76,8 +80,8 @@ def main():
         'point + Vector3.UP * 3.0, point - Vector3.UP * 12.0')
     script = script.replace('camera.position = Vector3(1400, 1450, 1900)', 'camera.position = Vector3(550, 420, -620)')
     script = script.replace('camera.look_at(Vector3(0, 35, 0))', 'camera.look_at(Vector3(0, 30, 0))')
-    script = script.replace('KEY_TAB: show_overview()', 'KEY_TAB: show_overview()\n\t\t\tKEY_P: toggle_planting_regions()')
-    script = script.replace('test_panel.setup(self)', 'test_panel.setup(self)')
+    script = script.replace('KEY_TAB: show_overview()', 'KEY_TAB: show_overview()\n\t\t\tKEY_P: toggle_planting_regions()\n\t\t\tKEY_M: rendering.set_enabled(not stylized_architecture)')
+    script = script.replace('test_panel.setup(self)', 'test_panel.setup(self)\n\trendering.attach_controls(test_panel)')
     script += '''
 func toggle_planting_regions() -> void:
 \tshow_planting_regions = not show_planting_regions
