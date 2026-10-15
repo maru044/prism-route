@@ -1,0 +1,31 @@
+{
+  "convex_volume_valid": true,
+  "road_adaptation": [
+    {
+      "max_control_lift_m": 0.87500626007138704,
+      "object_id": "59dd95cc-d6f3-4378-ae67-d76fcbdf6ac8",
+      "min_sampled_clearance_m": 0.069892144016686239,
+      "source": "e3c7a11d-7bdd-47a6-b8ae-b426b6903567",
+      "valid": true,
+      "buried_samples": 0
+    },
+    {
+      "max_control_lift_m": 0.69510437081105914,
+      "object_id": "47800a9c-ca72-4dc5-8203-d6d5d91d29a9",
+      "min_sampled_clearance_m": 0.17658871392088937,
+      "source": "4e756d0f-b36d-46a4-ada9-12ebe57462a2",
+      "valid": true,
+      "buried_samples": 0
+    }
+  ],
+  "preserved_originals": 568,
+  "convex_volume_closed": true,
+  "new_tunnels": 0,
+  "file_bytes": 95635553,
+  "saved_objects": 571,
+  "original_geometry_changed": [],
+  "original_objects_missing": [],
+  "active_path": "D:\\Prism Route\\map\\map_1016.3dm",
+  "modified": false,
+  "saved_file": "D:/Prism Route/map/map_1016.3dm"
+}

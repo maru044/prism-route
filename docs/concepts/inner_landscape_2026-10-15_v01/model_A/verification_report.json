@@ -1,0 +1,119 @@
+{
+  "unchanged_source_objects": 232,
+  "failures": [],
+  "bodies": [
+    {
+      "name": "A01_内折下降主脊_00",
+      "faces": 7,
+      "edges": 24,
+      "valid": true,
+      "solid": true,
+      "bounds": [
+        [
+          1158.1345273981149,
+          721.28211326547785,
+          -6.4062914848327637
+        ],
+        [
+          1643.6168303894233,
+          1160.8895542456926,
+          47.064716339111328
+        ]
+      ]
+    },
+    {
+      "name": "A02_内湾低丘_回折肩部_00",
+      "faces": 3,
+      "edges": 3,
+      "valid": true,
+      "solid": true,
+      "bounds": [
+        [
+          860.65041741289042,
+          712.32533030132799,
+          -5.3705488401096293
+        ],
+        [
+          1136.3793787868331,
+          975.18309588847342,
+          26.317285164581783
+        ]
+      ]
+    },
+    {
+      "name": "A03_前景长丘_高低连续变化_00",
+      "faces": 3,
+      "edges": 3,
+      "valid": true,
+      "solid": true,
+      "bounds": [
+        [
+          1238.3573169298929,
+          998.99379698022801,
+          -5.9520626068115234
+        ],
+        [
+          1612.1611328125,
+          1361.3504671312903,
+          34.3614501953125
+        ]
+      ]
+    },
+    {
+      "name": "A04_亲水低丘_渐隐收束_00",
+      "faces": 3,
+      "edges": 3,
+      "valid": true,
+      "solid": true,
+      "bounds": [
+        [
+          1278.8064520661669,
+          1238.6947698994445,
+          -4.7447770817380874
+        ],
+        [
+          1611.7375550143101,
+          1521.8315098444546,
+          17.446539713209493
+        ]
+      ]
+    }
+  ],
+  "land_outline_samples": 344,
+  "tunnel_cuts": [
+    {
+      "body": "A01_内折下降主脊",
+      "removed_volume_m3": 68931.040313343969,
+      "tunnel": "T1"
+    },
+    {
+      "body": "A01_内折下降主脊",
+      "removed_volume_m3": 182541.42188813374,
+      "tunnel": "T2"
+    }
+  ],
+  "road_clearance": [
+    {
+      "road": "T1",
+      "samples": 2415,
+      "envelope_width_m": 18,
+      "tested_height_m": [
+        1,
+        8
+      ],
+      "obstructed": []
+    },
+    {
+      "road": "T2",
+      "samples": 2415,
+      "envelope_width_m": 18,
+      "tested_height_m": [
+        1,
+        8
+      ],
+      "obstructed": []
+    }
+  ],
+  "land_outline_outside": 0,
+  "limits": "Native validity/solid/height and source-preservation checks. No global G2, self-intersection, drivability or game collision certification."
+}

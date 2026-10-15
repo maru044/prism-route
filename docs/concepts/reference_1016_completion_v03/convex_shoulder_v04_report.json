@@ -1,0 +1,13 @@
+{
+  "tunnel_operations": 0,
+  "front_and_end_max_displacement_m": 0.0,
+  "valid": true,
+  "orientation": "Outward",
+  "recipe": "prism_landscape_1016_convex_shoulder_v04",
+  "closed": true,
+  "bridge_unchanged": true,
+  "bridge_side_boundary": "Raised with the crown; sidewall rebuilt to the same base.",
+  "source": "8d61be24-ad05-42dc-a1e3-5eec0bcf4f5d",
+  "original_max_z": 41.470062255859375,
+  "new_max_z": 51.923811391108551
+}

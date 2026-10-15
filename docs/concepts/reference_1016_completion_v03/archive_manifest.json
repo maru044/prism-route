@@ -1,0 +1,41 @@
+{
+  "checks": [
+    {
+      "exists": true,
+      "valid": true,
+      "id": "204a7798-bfc9-4231-9fab-219beeff1326",
+      "closed": true
+    },
+    {
+      "exists": true,
+      "valid": true,
+      "id": "63868f64-fba3-4988-aebd-1bb2ed0ffca3",
+      "closed": true
+    },
+    {
+      "exists": true,
+      "valid": true,
+      "id": "59dd95cc-d6f3-4378-ae67-d76fcbdf6ac8",
+      "closed": false
+    },
+    {
+      "exists": true,
+      "valid": true,
+      "id": "47800a9c-ca72-4dc5-8203-d6d5d91d29a9",
+      "closed": false
+    },
+    {
+      "exists": true,
+      "valid": true,
+      "id": "c8b4f91d-9c6a-4b2d-a93d-3b6180d89f88",
+      "closed": true
+    }
+  ],
+  "sha256": "e14739cec389b7954923fddf084b8607b74e798f772de4017104159600255eef",
+  "object_count": 571,
+  "source": "D:/Prism Route/map/map_1016.3dm",
+  "archive": "map_1016.3dm",
+  "bytes": 95538780,
+  "live_document_modified": false,
+  "live_document_path": "D:\\Prism Route\\map\\map_1016.3dm"
+}
