@@ -24,3 +24,5 @@
 /.cliff_b_build/
 # Local reminder for the project's noncommercial use of miHoYo assets.
 /assets/MIHOYO_ASSET_USAGE.local.md
+# Local package installation cache for the standalone Web modeling trial.
+/.web-terrace-build/

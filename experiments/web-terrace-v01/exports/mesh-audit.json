@@ -1,0 +1,165 @@
+{
+  "file": "D:\\Prism Route\\prism-route\\experiments\\web-terrace-v01\\exports\\web-curved-architecture-v01.glb",
+  "sha256": "39a3dcb64855fc8644769e0eba736abb3f6c2336e49c9b670bc607f2815166cb",
+  "bytes": 5584820,
+  "architecture": [
+    {
+      "name": "Upper_landscape",
+      "vertices": 44624,
+      "topology_vertices": 44624,
+      "triangles": 89280,
+      "bounds_min": [
+        -201.09765625,
+        -17.977636337280273,
+        -119.9847640991211
+      ],
+      "bounds_max": [
+        190.23110961914062,
+        69.12333679199219,
+        130.20907592773438
+      ],
+      "finite_positions_and_normals": true,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "boundary_bounds": null,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "component_vertex_counts": [
+        44624
+      ],
+      "minimum_normal_length": 0.9999999403953552
+    },
+    {
+      "name": "Middle_landscape",
+      "vertices": 31592,
+      "topology_vertices": 31592,
+      "triangles": 63188,
+      "bounds_min": [
+        -156.57070922851562,
+        -14.471198081970215,
+        -130.11231994628906
+      ],
+      "bounds_max": [
+        163.33306884765625,
+        39.16031265258789,
+        63.29843521118164
+      ],
+      "finite_positions_and_normals": true,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "boundary_bounds": null,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "component_vertex_counts": [
+        31592
+      ],
+      "minimum_normal_length": 0.9999999403953552
+    },
+    {
+      "name": "Lower_coastal_wing",
+      "vertices": 26870,
+      "topology_vertices": 26870,
+      "triangles": 53736,
+      "bounds_min": [
+        -149.47813415527344,
+        -11.996095657348633,
+        -116.71945190429688
+      ],
+      "bounds_max": [
+        140.02940368652344,
+        18.161394119262695,
+        -12.62720775604248
+      ],
+      "finite_positions_and_normals": true,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "boundary_bounds": null,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "component_vertex_counts": [
+        26870
+      ],
+      "minimum_normal_length": 0.9999999403953552
+    },
+    {
+      "name": "Diagonal_road_bridge",
+      "vertices": 15118,
+      "topology_vertices": 15118,
+      "triangles": 30244,
+      "bounds_min": [
+        -168.98019409179688,
+        -10.451323509216309,
+        -122.99259948730469
+      ],
+      "bounds_max": [
+        39.04884338378906,
+        59.43085861206055,
+        166.14022827148438
+      ],
+      "finite_positions_and_normals": true,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "boundary_bounds": null,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "component_vertex_counts": [
+        15118
+      ],
+      "minimum_normal_length": 0.9999999403953552
+    },
+    {
+      "name": "Central_organic_pavilion",
+      "vertices": 35124,
+      "topology_vertices": 35124,
+      "triangles": 70248,
+      "bounds_min": [
+        -42.8272590637207,
+        0.8347824811935425,
+        132.30111694335938
+      ],
+      "bounds_max": [
+        88.8133316040039,
+        56.57244873046875,
+        191.68028259277344
+      ],
+      "finite_positions_and_normals": true,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "boundary_bounds": null,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "component_vertex_counts": [
+        35124
+      ],
+      "minimum_normal_length": 0.9999999403953552
+    },
+    {
+      "name": "Roof_skylight_primitive",
+      "vertices": 1365,
+      "topology_vertices": 1218,
+      "triangles": 2432,
+      "bounds_min": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "bounds_max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "finite_positions_and_normals": true,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "boundary_bounds": null,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "component_vertex_counts": [
+        1218
+      ],
+      "minimum_normal_length": 0.9999999403953552
+    }
+  ],
+  "total_triangles": 309128,
+  "limitations": "Topology readback only. Components may overlap across meshes; curvature, self-intersection, visual reference fidelity and full road/game collision are not certified."
+}

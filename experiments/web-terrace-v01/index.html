@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>曲面群岛 · Web 建模试验</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font:14px system-ui,'Microsoft YaHei',sans-serif;color:#233838;background:#a6d8e9;overflow:hidden}canvas{display:block}header{position:absolute;top:22px;left:26px;z-index:2;pointer-events:none}h1{font-size:22px;font-weight:500;margin:0 0 5px}header p{margin:0;color:#496769;font-size:12px}.toolbar{position:absolute;right:22px;top:20px;display:flex;gap:7px;flex-wrap:wrap;max-width:620px;justify-content:flex-end}.toolbar button,details{background:#ffffffdc;border:1px solid #fff9;border-radius:5px;box-shadow:0 3px 18px #16485413;backdrop-filter:blur(12px)}button{font:inherit;padding:9px 13px;cursor:pointer;color:#243d3e}button:hover{background:#fff}button.active{background:#294c50;color:white}details{position:absolute;right:22px;top:75px;width:230px;padding:12px}summary{cursor:pointer}label{display:block;margin-top:14px;font-size:12px}input[type=range]{width:100%;accent-color:#597e75}.bottom{position:absolute;bottom:18px;left:26px;right:26px;display:flex;justify-content:space-between;align-items:end;pointer-events:none;font-size:12px;color:#254b54;text-shadow:0 1px 3px white}#loading{position:absolute;inset:0;background:#e3eef0;display:grid;place-content:center;z-index:10;font-size:19px;text-align:center}#loading small{font-size:13px;margin-top:12px;color:#537577}#failure{white-space:pre-wrap;max-width:80vw}@media(max-width:700px){header{top:12px;left:12px}h1{font-size:17px}.toolbar{top:65px;left:12px;right:12px;justify-content:flex-start;gap:4px}.toolbar button{font-size:12px;padding:7px}details{top:112px;right:12px}.bottom{left:12px;right:12px;font-size:11px}}
+</style>
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/"}}</script>
+</head><body>
+<header><h1>曲面群岛</h1><p>连续拱腹 · 分叉支承 · 起伏海岸</p></header>
+<div class="toolbar" aria-label="模型视图">
+<button data-view="overview" class="active">总体</button><button data-view="road">道路</button><button data-view="under">桥下</button><button data-view="structure">结构</button>
+<button id="white">白模</button><button id="plants">植被</button><button id="export">导出 GLB</button><button id="save">保存到项目</button>
+</div>
+<details><summary>形体调整</summary><label>肩部展开 <output id="fanValue">1.00</output><input id="fan" type="range" min="0.7" max="1.35" step="0.05" value="1"></label><label>拱腹厚度 <output id="bellyValue">1.00</output><input id="belly" type="range" min="0.7" max="1.35" step="0.05" value="1"></label><button id="rebuild" style="margin-top:12px;width:100%">重新生成</button><button id="exportStructure" style="margin-top:7px;width:100%">导出结构 GLB</button><button id="report" style="margin-top:7px;width:100%">保存参数与统计</button></details>
+<div class="bottom"><span>拖动旋转 · 滚轮缩放 · 右键平移</span><span id="status" role="status">准备几何</span></div>
+<div id="loading">生成曲面群岛<small id="progress">准备浏览器建模程序…</small><small id="failure"></small></div>
+<script type="module" src="./app.js"></script>
+</body></html>

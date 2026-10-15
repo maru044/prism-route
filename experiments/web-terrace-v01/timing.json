@@ -1,0 +1,11 @@
+{
+  "startUtc": "2026-10-14T20:17:22Z",
+  "archiveCompletedUtc": "2026-10-14T21:27:41Z",
+  "timeZone": "Asia/Shanghai",
+  "elapsedSeconds": 4219,
+  "elapsedMinutes": 70.31666666666666,
+  "firstRoughPreviewMinutesApprox": 12,
+  "scope": "Dependency setup, browser JS geometry authoring, preview/debugging, topology repair, export, screenshots, checks and documentation; not an equal-quality Rhino benchmark.",
+  "sceneRegeneration": "See exports/build-report.json; approximately 2.5 seconds for final default model. Excludes authoring time and frame rendering.",
+  "excludedEvaluation": "Trees, cars and other context props per user instruction."
+}
