@@ -1,0 +1,42 @@
+{
+  "resolution": 4096,
+  "supersample": 2,
+  "distance_method": "subpixel CAD-segment distance; exact even-odd sign",
+  "origin_xz": [
+    -328.0,
+    -263.0
+  ],
+  "extent_xz": [
+    560.0,
+    682.0
+  ],
+  "meters_per_texel": [
+    0.13671875,
+    0.16650390625
+  ],
+  "sdf_range_m": 18.0,
+  "segment_distance_check_max_error_m": 0.0,
+  "cad_white_area_m2": 15240.492128500393,
+  "source_document": "D:\\Prism Route\\map\\map_current.3dm",
+  "native_center": [
+    1450,
+    1150,
+    0
+  ],
+  "mesh_tolerance_m": 0.04,
+  "mesh_angle_rad": 0.08,
+  "mesh_max_edge_m": 8,
+  "objects": 15,
+  "triangles": 441485,
+  "mesh_sha256": "1df3ee7c1b09c1c64655c3fd6ec258ab8c4ca1b837cd35eec9a29923a58980f5",
+  "validation": {
+    "upward_triangle_samples": 118633,
+    "weighted_upward_grass_fraction": 0.9667316675186157,
+    "note": "Area-weighted triangle sampling, with overlapping source components; not an exact land-union percentage."
+  },
+  "near_target": [
+    -284.61145331468356,
+    0.014761810273569154,
+    -126.3432157930431
+  ]
+}

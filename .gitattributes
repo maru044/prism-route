@@ -7,3 +7,4 @@ assets/characters/motion_sources/independent_cc0/*.glb -text -diff
 assets/characters/motion_sources/independent_cc0/*.vrma -text -diff
 # Preserve native Rhino concept archives without line-ending conversion.
 docs/concepts/**/*.3dm -text -diff
+assets/world/landscape_mask_test/*.3dm -text -diff
