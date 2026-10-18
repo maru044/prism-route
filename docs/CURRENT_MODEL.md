@@ -50,7 +50,7 @@
 
 当前游戏遮罩已更新为用户手绘的 6 条草稿：树池1/树池2/水边装饰各 10 m，路边1为 8 m，路边2/路边3各 6 m，已替代三条示例线。路边3名称中的 `[w-6]` 未按标记解析，采用默认 6 m，未擅自改名。读取的是当前 Rhino 文档，不改动任何源几何；继续使用同一局部测试场景与同一 GLB（几何哈希未变）。新遮罩覆盖范围为 560×682 m，每像素约 0.137×0.167 m，抽样向上表面的草地比例约 96.7%（非土地去重面积）。已重建 RG16F 资源并覆盖原四张引擎验证截图。
 
-提交用的轻量源文件为 `assets/world/landscape_mask_test/cad_layout.3dm`，仅包含这六条原始 NURBS 曲线，已核对与本次导入的采样一致；不另外复制整个 Rhino 场景。运行与更新方法见同目录 `README.md`。
+CAD 编辑入口仅使用 `map_current.3dm`；按用户要求，不额外保存这六条曲线的独立 CAD 副本。运行与更新方法见 `assets/world/landscape_mask_test/README.md`。
 
 游戏验证场景：`res://scenes/landscape_mask_test.tscn`。导出当前 S 形丘陵及相邻地表、道路、沙滩，共 15 个对象、441,485 个三角形，保留原空间关系；不是全岛替换。Godot 内动态读取 `assets/world/landscape_mask_test/current_region.glb`，对地形使用同一个不透明材质中的草地/暖白混合，独立道路与沙滩不接收该遮罩。没有修改游戏主场景。
 

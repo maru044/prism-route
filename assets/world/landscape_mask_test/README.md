@@ -1,6 +1,6 @@
 # CAD 世界遮罩局部验证
 
-当前 Rhino 草稿的 6 条开放中心线控制暖白装饰带，其余向上的地表以草地为主。`cad_layout.3dm` 保留原 NURBS 曲线，`cad_layout.json` 保留本次采样及米制宽度；原完整场景仍在工作区 `D:/Prism Route/map/map_current.3dm`。
+当前 Rhino 草稿的 6 条开放中心线控制暖白装饰带，其余向上的地表以草地为主。CAD 编辑入口仅使用工作区 `D:/Prism Route/map/map_current.3dm`，不另存独立 CAD 副本。`cad_layout.json` 是本次导出生成的曲线采样及米制宽度记录。
 
 运行 `res://scenes/landscape_mask_test.tscn`。直接使用提交的 GLB 和 RG16F 资源，无需 Rhino、Python 或生成缓存。按 `1` 看抗锯齿遮罩，`2` 看合成的低分辨率硬边诊断，`3` 看相同网格的白模，`V` 切换视角；右键加 WASD/QE 漫游。
 
