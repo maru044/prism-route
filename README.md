@@ -1,8 +1,22 @@
 # Prism Route — world and vegetation prototype
 
+## Current game entry: map 1021, 2026-10-22
+
+F5 opens `scenes/map_1021.tscn`, the current map with eight validation spawns,
+character / camper switching, fixed tree placement, predictive 3D grass streaming,
+and a transparent performance monitor at the bottom left. See the
+[scene and asset guide](assets/world/current_map_validation/README.md).
+The full-map mesh uses Git LFS; run `git lfs pull` after cloning.
+
+## Current Rhino model, 2026-10-18
+
+Edit [map_current.3dm](../map/map_current.3dm). The scene has been cleaned and
+organized by asset; file locations, retained sources and pending work are listed
+in [the current model guide](docs/CURRENT_MODEL.md).
+
 ## Current entry: Cliff B, 2026-10-14
 
-F5 now opens `scenes/cliff_b_gameplay_test.tscn`: the current native Rhino B
+The earlier `scenes/cliff_b_gameplay_test.tscn` review contains the native Rhino B
 prototype with warm-white architectural PBR textures and explicit roof / terrace
 planting beds. It begins in an overview; F returns to the character. Keys 1–4
 visit the road gallery, base walkway, terrace and roof meadow; C swaps the

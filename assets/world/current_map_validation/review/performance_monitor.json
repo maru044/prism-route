@@ -1,0 +1,35 @@
+{
+  "layouts": [
+    {
+      "panel": "[P: (20.0, 507.0), S: (430.0, 553.0)]",
+      "viewport": "(1920.0, 1080.0)",
+      "window": "(1600, 900)"
+    },
+    {
+      "panel": "[P: (20.0, 507.0), S: (430.0, 553.0)]",
+      "viewport": "(1920.0, 1080.0)",
+      "window": "(1280, 720)"
+    }
+  ],
+  "metrics": {
+    "draws": "1 451 / 2 714",
+    "fps": "60.0 / 16.67 ms",
+    "frame_cap": "60 / 开启",
+    "grass": "36 / 304 / 1",
+    "hitches": "0 / 0",
+    "memory": "2435 / 2573",
+    "objects": "13 479 / 359 / 0",
+    "pending": "132",
+    "percentiles": "17.06 / 17.32 ms",
+    "physics": "未提供 (Jolt)",
+    "primitives": "9 274 222",
+    "process": "11.74 / 1.06",
+    "refresh": "0.58 / 4",
+    "render": "1.11 / 4.46",
+    "stream_budget": "5.0",
+    "stream_time": "5.31 / 6.43",
+    "stream_total": "36 / 0",
+    "vram": "1719",
+    "vram_parts": "642 / 257"
+  }
+}

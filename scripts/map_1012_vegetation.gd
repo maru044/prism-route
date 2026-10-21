@@ -30,8 +30,11 @@ func _load_meshes_and_materials() -> void:
 	for material in [tree_small_lod2_material, tree_broad_lod2_material, tree_upright_lod2_material]:
 		material.set_shader_parameter("tree_lod_fade", Vector4(280, 330, 5700, MAP_FAR_TREE_END))
 
+func _read_tree_records() -> Array:
+	return JSON.parse_string(FileAccess.get_file_as_string(layout_path))
+
 func _build_tree_lod() -> void:
-	var records: Array = JSON.parse_string(FileAccess.get_file_as_string(layout_path))
+	var records: Array = _read_tree_records()
 	var bucket_sets: Array[Dictionary] = [{}, {}, {}]
 	var sizes := [TREE_LOD0_CHUNK_SIZE, TREE_LOD1_CHUNK_SIZE, TREE_LOD2_CHUNK_SIZE]
 	var rng := RandomNumberGenerator.new()

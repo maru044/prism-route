@@ -1,0 +1,32 @@
+{
+  "actual_map": "D:\\Prism Route\\map\\map_current.3dm",
+  "blank_grass_frames": 0,
+  "bridge_y": 60.1418228149414,
+  "crossed_old_5m_boundary": true,
+  "failures": [],
+  "full_speed_forward_missing_frames": 0,
+  "lower_terrace_y": 39.5049438476563,
+  "lower_volume_rendered": true,
+  "maximum_lookahead_m": 114.330390930176,
+  "maximum_speed_mps": 18.0,
+  "objects": 199.0,
+  "passed": true,
+  "ramp_drive_m": 59.4777336120605,
+  "ramp_height_range": [
+    17.5826530456543,
+    20.298791885376
+  ],
+  "resident_chunk_replacements": 0,
+  "stream_metrics": {
+    "active": 204,
+    "building": true,
+    "built": 209,
+    "last_build_ms": 9.252,
+    "lookahead_m": 84.0137634277344,
+    "pending_visible": 21,
+    "queued": 208,
+    "speed_mps": 10.8217315673828,
+    "unloaded": 5
+  },
+  "warm_seconds": 34.613
+}

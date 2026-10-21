@@ -7,3 +7,5 @@ assets/characters/motion_sources/independent_cc0/*.glb -text -diff
 assets/characters/motion_sources/independent_cc0/*.vrma -text -diff
 # Preserve native Rhino concept archives without line-ending conversion.
 docs/concepts/**/*.3dm -text -diff
+# Full current-map mesh exceeds GitHub's regular Git object size limit.
+assets/world/current_map_validation/current_region.glb filter=lfs diff=lfs merge=lfs -text

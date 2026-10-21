@@ -1,0 +1,266 @@
+extends Node3D
+## Full current map review; explicit-height spawn selection never snaps to a roof above.
+const ASSETS := "res://assets/world/current_map_validation/"
+const VEGETATION := preload("res://scripts/map_1021_vegetation.gd")
+const PERFORMANCE_MONITOR := preload("res://scripts/performance_monitor_1021.gd")
+const SKY := preload("res://assets/environment/sky/fresh_cumulus_sky.tres")
+@onready var character = $Character
+@onready var camper = $CamperVan
+@onready var chase_camera: Camera3D = $CamperVan/CameraPivot/SpringArm3D/Camera3D
+var metadata: Dictionary
+var model: Node3D
+var mask_image: Image
+var mask_texture: Texture2D
+var terrain_material: ShaderMaterial
+var vegetation
+var test_ready := false
+var automation_enabled := false
+var free_mode := false
+var overview_mode := false
+var camera: Camera3D
+var spawn_index := 0
+var resolved_spawns: Array[Dictionary] = []
+var status: Label
+var spawn_menu: OptionButton
+var dragging := false
+var tree_placement_report: Dictionary = {}
+var character_mode := true
+var switching_actor := false
+var vegetation_bake_only := false
+
+func vec(value: Array) -> Vector3:
+	return Vector3(value[0],value[1],value[2])
+
+func _ready() -> void:
+	metadata=JSON.parse_string(FileAccess.get_file_as_string(ASSETS+"metadata.json"))
+	character.automation_enabled=automation_enabled; character.set_control_enabled(false)
+	camper.automation_enabled=automation_enabled;camper.set_physics_process(false);camper.set_process_unhandled_input(false);camper.visible=false
+	camper.calibrate_wheels()
+	_load_mask();_environment();_build_model();_hud()
+	camera=Camera3D.new();camera.near=0.15;camera.far=10000;camera.fov=58;add_child(camera)
+	await get_tree().physics_frame;await get_tree().physics_frame
+	for proposal: Dictionary in metadata.spawns:
+		resolved_spawns.append(resolve_spawn(proposal))
+	await select_spawn(0)
+	if vegetation_bake_only:
+		test_ready=true
+		return
+	vegetation=VEGETATION.new();vegetation.world_scene=self;add_child(vegetation)
+	vegetation.initialize(character,_noise(),2)
+	tree_placement_report=JSON.parse_string(FileAccess.get_file_as_string(ASSETS+"tree_layout_metadata.json"))
+	_sync_actor_controls()
+	test_ready=true
+	print("CURRENT_MAP_READY objects=%d triangles=%d spawns=%d trees=%d" % [metadata.objects,metadata.triangles,resolved_spawns.size(),vegetation.tree_instance_count])
+
+func _load_mask() -> void:
+	var path:=ASSETS+"landscape_mask.res"
+	if ResourceLoader.exists(path) and not "--rebuild-mask" in OS.get_cmdline_user_args():
+		mask_texture=load(path);mask_image=mask_texture.get_image()
+	else:
+		var raw:=FileAccess.get_file_as_bytes("res://.current_map_build/landscape_mask.rg16f")
+		var size:=int(metadata.resolution);assert(raw.size()==size*size*4)
+		mask_image=Image.create_from_data(size,size,false,Image.FORMAT_RGH,raw)
+		var image:=mask_image.duplicate();image.generate_mipmaps()
+		mask_texture=ImageTexture.create_from_image(image)
+		assert(ResourceSaver.save(mask_texture,path,ResourceSaver.FLAG_COMPRESS)==OK)
+	terrain_material=ShaderMaterial.new()
+	terrain_material.shader=load(ASSETS+"landscape.gdshader")
+	terrain_material.set_shader_parameter("landscape_mask",mask_texture)
+	terrain_material.set_shader_parameter("mask_origin_xz",Vector2(metadata.origin_xz[0],metadata.origin_xz[1]))
+	terrain_material.set_shader_parameter("mask_extent_xz",Vector2(metadata.extent_xz[0],metadata.extent_xz[1]))
+
+func architectural_band(p: Vector3,margin:=0.0) -> bool:
+	var uv: Vector2=(Vector2(p.x,p.z)-Vector2(metadata.origin_xz[0],metadata.origin_xz[1]))/Vector2(metadata.extent_xz[0],metadata.extent_xz[1])
+	if uv.x<0 or uv.y<0 or uv.x>=1 or uv.y>=1: return false
+	var data:=mask_image.get_pixel(clampi(int(uv.x*mask_image.get_width()),0,mask_image.get_width()-1),clampi(int(uv.y*mask_image.get_height()),0,mask_image.get_height()-1))
+	return data.r<margin and absf(p.y-data.g)<3.2
+
+func _build_model() -> void:
+	var doc:=GLTFDocument.new();var state:=GLTFState.new()
+	assert(doc.append_from_file(ProjectSettings.globalize_path(ASSETS+"current_region.glb"),state)==OK)
+	model=doc.generate_scene(state);add_child(model)
+	var architecture: Material=load("res://assets/world/cliff_b_test/architecture.tres")
+	var road:=StandardMaterial3D.new();road.albedo_color=Color(0.13,0.145,0.15);road.roughness=0.93
+	road.cull_mode=BaseMaterial3D.CULL_DISABLED
+	var sand:=StandardMaterial3D.new();sand.albedo_color=Color(0.77,0.71,0.52);sand.roughness=0.98
+	var water:=ShaderMaterial.new();water.shader=load("res://assets/world/map_1012_test/water.gdshader")
+	var byid: Dictionary={}
+	for row: Dictionary in metadata.object_records:byid[row.id]=row
+	for node in model.find_children("*","MeshInstance3D",true,false):
+		var mesh:=node as MeshInstance3D;var id:=str(mesh.name).get_slice("_",1)
+		# Object semantics can change without rebuilding or moving mesh geometry.
+		var row: Dictionary=byid.get(id,{})
+		var kind: String=row.get("kind",str(mesh.name).get_slice("_",0))
+		mesh.material_override={"Terrain":terrain_material,"Structure":architecture,"Road":road,"Sand":sand,"Water":water}.get(kind,architecture)
+		if kind=="Water":mesh.cast_shadow=GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		if not row.get("collision",true) and kind!="Water":continue
+		var body:=StaticBody3D.new();body.collision_layer=4 if kind=="Water" else (9 if kind=="Road" else (17 if kind=="Terrain" else 1));body.collision_mask=0
+		body.set_meta("surface_kind",kind);body.set_meta("source_id",id)
+		mesh.add_child(body)
+		var shape:=mesh.mesh.create_trimesh_shape();shape.backface_collision=true
+		var collider:=CollisionShape3D.new();collider.shape=shape;body.add_child(collider)
+	print("CURRENT_MAP_COLLISION_READY")
+
+func _environment() -> void:
+	var sky:=Sky.new();sky.sky_material=SKY
+	var env:=Environment.new();env.background_mode=Environment.BG_SKY;env.sky=sky
+	env.ambient_light_source=Environment.AMBIENT_SOURCE_SKY;env.ambient_light_energy=0.38
+	env.reflected_light_source=Environment.REFLECTION_SOURCE_SKY;env.tonemap_mode=Environment.TONE_MAPPER_ACES
+	env.tonemap_exposure=0.82;env.ssao_enabled=true;env.ssao_radius=1.1;env.ssao_intensity=0.85
+	var world:=WorldEnvironment.new();world.environment=env;add_child(world)
+	var sun:=DirectionalLight3D.new();sun.rotation_degrees=Vector3(-48,-125,0);sun.light_energy=0.72
+	sun.light_color=Color(1.0,0.95,0.86);sun.shadow_enabled=true;sun.directional_shadow_max_distance=180;add_child(sun)
+	get_viewport().msaa_3d=Viewport.MSAA_4X
+
+func _noise() -> NoiseTexture2D:
+	var result:=NoiseTexture2D.new();result.width=512;result.height=512;result.seamless=true
+	result.generate_mipmaps=true
+	var noise:=FastNoiseLite.new();noise.seed=46129;noise.frequency=0.012;noise.noise_type=FastNoiseLite.TYPE_SIMPLEX_SMOOTH;noise.fractal_octaves=4
+	result.noise=noise;return result
+
+func _hud() -> void:
+	var layer:=CanvasLayer.new();add_child(layer)
+	var panel:=PanelContainer.new();panel.position=Vector2(20,18);layer.add_child(panel)
+	var box:=VBoxContainer.new();box.add_theme_constant_override("separation",8);panel.add_child(box)
+	var title:=Label.new();title.text="1021 地图 · 场景验证";title.add_theme_font_size_override("font_size",22);box.add_child(title)
+	spawn_menu=OptionButton.new();spawn_menu.custom_minimum_size=Vector2(310,36)
+	for i in metadata.spawns.size():spawn_menu.add_item("%d  %s" % [i+1,metadata.spawns[i].name])
+	spawn_menu.item_selected.connect(select_spawn);box.add_child(spawn_menu)
+	status=Label.new();box.add_child(status)
+	var help:=Label.new();help.text="1–8 出生点   C 甘雨 / 房车\nF 自由观景 · V 全景 · B 植物开关\nWASD 移动 / 驾驶 · 空格跳跃 / 刹车\n右键转镜头 · 滚轮缩放 · R 复位";box.add_child(help)
+	var performance_monitor:=PERFORMANCE_MONITOR.new()
+	performance_monitor.world_scene=self;add_child(performance_monitor)
+
+func _ray(p: Vector3,highest:=false) -> Dictionary:
+	var top:=400.0 if highest else p.y+2.2
+	var bottom:=-20.0 if highest else p.y-4.0
+	var q:=PhysicsRayQueryParameters3D.create(Vector3(p.x,top,p.z),Vector3(p.x,bottom,p.z),1)
+	q.hit_back_faces=true
+	return get_world_3d().direct_space_state.intersect_ray(q)
+
+func resolve_spawn(proposal: Dictionary) -> Dictionary:
+	var base:=vec(proposal.position);var offsets: Array[Vector2]=[]
+	for x in range(-10,11):
+		for z in range(-10,11):offsets.append(Vector2(x*4,z*4))
+	offsets.sort_custom(func(a:Vector2,b:Vector2):return a.length_squared()<b.length_squared())
+	for offset in offsets:
+		var hit:=_ray(base+Vector3(offset.x,0,offset.y),proposal.get("highest",false))
+		if hit.is_empty() or (hit.normal as Vector3).y<0.72:continue
+		if proposal.has("required_floor_kind") and hit.collider.get_meta("surface_kind", "")!=proposal.required_floor_kind:continue
+		var floor_point: Vector3=hit.position
+		var clearance: float=proposal.get("minimum_edge_clearance_m",0.0)
+		var supported:=true
+		if clearance>0:
+			for delta in [Vector3(clearance,0,0),Vector3(-clearance,0,0),Vector3(0,0,clearance),Vector3(0,0,-clearance)]:
+				var edge:=_ray(floor_point+delta)
+				if edge.is_empty() or absf(edge.position.y-floor_point.y)>.25 or edge.collider.get_meta("surface_kind", "")!=proposal.required_floor_kind:supported=false;break
+		if not supported:continue
+		var query:=PhysicsShapeQueryParameters3D.new();query.shape=character.get_node("CollisionShape3D").shape
+		query.transform=Transform3D(Basis.IDENTITY,floor_point+Vector3(0,0.88,0));query.collision_mask=1
+		query.exclude=[character.get_rid()]
+		if not get_world_3d().direct_space_state.intersect_shape(query,1).is_empty():continue
+		var result:=proposal.duplicate();result["floor_position"]=floor_point;result["floor_source"]=hit.collider.get_meta("source_id","")
+		return result
+	push_error("Cannot resolve spawn: "+str(proposal.name));return {}
+
+func select_spawn(index: int) -> void:
+	if resolved_spawns.size()<=index or resolved_spawns[index].is_empty():return
+	spawn_index=index;free_mode=false;overview_mode=false
+	var row: Dictionary=resolved_spawns[index];var direction:=vec(row.look_direction)
+	var heading:=atan2(-direction.x,-direction.z)
+	if character_mode:character.set_spawn((row.floor_position as Vector3)+Vector3.UP*0.10,heading)
+	else:
+		var floor_point:=_find_actor_floor(row.floor_position,heading,false)
+		if floor_point.is_empty():character_mode=true;character.set_spawn((row.floor_position as Vector3)+Vector3.UP*.1,heading)
+		else:_spawn_camper(floor_point.position,heading)
+	_sync_actor_controls()
+	spawn_menu.select(index);status.text="%s · %.1f m" % [row.name,(row.floor_position as Vector3).y]
+	await get_tree().physics_frame
+
+func set_free(enabled: bool) -> void:
+	if enabled:camera.global_transform=active_camera().global_transform
+	free_mode=enabled;overview_mode=false;_sync_actor_controls()
+
+func active_actor() -> CharacterBody3D:
+	return character if character_mode else camper
+
+func active_camera() -> Camera3D:
+	return character.camera if character_mode else chase_camera
+
+func _sync_actor_controls() -> void:
+	character.visible=character_mode
+	character.process_mode=Node.PROCESS_MODE_INHERIT if character_mode else Node.PROCESS_MODE_DISABLED
+	character.set_control_enabled(character_mode and not free_mode)
+	camper.visible=not character_mode
+	camper.set_physics_process(not character_mode and not free_mode)
+	camper.set_process_unhandled_input(not character_mode and not free_mode)
+	if free_mode:camera.make_current()
+	else:active_camera().make_current()
+	if vegetation!=null:
+		vegetation.target=camera if free_mode else active_actor()
+		vegetation.set_grass_actor(active_actor(),not character_mode)
+
+func _spawn_camper(point: Vector3,heading: float) -> void:
+	camper.global_position=point+Vector3.UP*.12;camper.rotation=Vector3(0,heading,0)
+	camper.velocity=Vector3.ZERO;camper.drive_speed=0;camper.set_respawn_transform(camper.global_transform)
+	camper.camera_pivot.rotation=Vector3(-.20,0,0)
+
+func _find_actor_floor(base: Vector3,heading: float,use_character: bool) -> Dictionary:
+	var offsets: Array[Vector2]=[]
+	for x in range(-6,7):
+		for z in range(-6,7):offsets.append(Vector2(x*2,z*2))
+	offsets.sort_custom(func(a:Vector2,b:Vector2):return a.length_squared()<b.length_squared())
+	var actor=character if use_character else camper
+	var collider: CollisionShape3D=actor.get_node("CollisionShape3D")
+	var basis:=Basis(Vector3.UP,heading)
+	for offset in offsets:
+		var hit:=_ray(base+Vector3(offset.x,0,offset.y))
+		if hit.is_empty() or (hit.normal as Vector3).y<.72 or absf(hit.position.y-base.y)>1.3:continue
+		var p: Vector3=hit.position
+		var query:=PhysicsShapeQueryParameters3D.new();query.shape=collider.shape
+		query.transform=Transform3D(basis,p+Vector3.UP*.10)*collider.transform;query.collision_mask=1
+		if not get_world_3d().direct_space_state.intersect_shape(query,1).is_empty():continue
+		var supported:=true
+		if not use_character:
+			for foot in [Vector3(-1.0,0,-2.6),Vector3(1.0,0,-2.6),Vector3(-1.0,0,2.6),Vector3(1.0,0,2.6)]:
+				var ground:=_ray(p+basis*foot)
+				if ground.is_empty() or absf(ground.position.y-p.y)>.65:supported=false;break
+		if supported:return hit
+	return {}
+
+func set_character_mode(enabled: bool) -> void:
+	if switching_actor or enabled==character_mode:return
+	switching_actor=true
+	var point:=active_actor().global_position
+	var heading: float=camper.rotation.y if enabled else character.visual.rotation.y-PI
+	character.set_control_enabled(false);camper.set_physics_process(false)
+	camper.drive_speed=0;camper.velocity=Vector3.ZERO
+	await get_tree().physics_frame
+	var floor_point:=_find_actor_floor(point,heading,enabled)
+	if floor_point.is_empty():
+		status.text="附近空间不足，先移动到开阔路面再按 C";switching_actor=false;_sync_actor_controls();return
+	character_mode=enabled;free_mode=false;overview_mode=false
+	if enabled:character.set_spawn(floor_point.position+Vector3.UP*.1,heading)
+	else:_spawn_camper(floor_point.position,heading)
+	switching_actor=false;_sync_actor_controls()
+
+func show_overview() -> void:
+	free_mode=true;overview_mode=true;_sync_actor_controls()
+	camera.position=Vector3(-160,1800,2100);camera.look_at(Vector3(-250,15,400));camera.make_current()
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		var key: int=event.physical_keycode if event.physical_keycode!=0 else event.keycode
+		if key>=KEY_1 and key<=KEY_8:select_spawn(key-KEY_1)
+		elif key==KEY_F:set_free(not free_mode)
+		elif key==KEY_V:show_overview()
+		elif key==KEY_C:set_character_mode(not character_mode)
+		elif key==KEY_B and vegetation!=null:vegetation.set_vegetation_enabled(not vegetation.vegetation_enabled)
+	if event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_RIGHT:dragging=event.pressed
+	if event is InputEventMouseMotion and free_mode and dragging:
+		camera.rotation.y-=event.relative.x*.003;camera.rotation.x=clampf(camera.rotation.x-event.relative.y*.003,-1.5,1.5)
+
+func _process(delta: float) -> void:
+	if not free_mode or automation_enabled:return
+	var direction:=Vector3(float(Input.is_physical_key_pressed(KEY_D))-float(Input.is_physical_key_pressed(KEY_A)),float(Input.is_physical_key_pressed(KEY_E))-float(Input.is_physical_key_pressed(KEY_Q)),float(Input.is_physical_key_pressed(KEY_S))-float(Input.is_physical_key_pressed(KEY_W)))
+	camera.position+=camera.global_basis*direction*delta*(180 if Input.is_physical_key_pressed(KEY_SHIFT)else 50)

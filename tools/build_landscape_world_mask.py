@@ -50,28 +50,45 @@ def build_glb(source):
     (OUT/'current_region.glb').write_bytes(output)
     return terrain
 
-def build_mask(source,resolution):
-    center=np.asarray(source['native_center'],dtype=float)
-    curves=[]
-    for c in source['curves']:
-        p=np.asarray(c['points_xy'],dtype=float)-center[:2]
-        p[:,1]*=-1
+def curve_band(c,center):
+    """Original tapered open strokes, or seamless constant-width closed rings."""
+    p=np.asarray(c['points_xy'],dtype=float)-center[:2]
+    p[:,1]*=-1
+    closed=bool(c.get('closed',False))
+    if closed and np.linalg.norm(p[0]-p[-1])<1e-7:
+        p=p[:-1]
+    if len(p)<(3 if closed else 2):
+        raise ValueError('Too few centreline points')
+    if closed:
+        half=np.full(len(p),c['width_m']*.5)
+        tangent=np.roll(p,-1,axis=0)-np.roll(p,1,axis=0)
+    else:
         length=np.r_[0,np.cumsum(np.linalg.norm(np.diff(p,axis=0),axis=1))]
         fraction=length/max(length[-1],1)
         half=c['width_m']*.5*np.maximum(.005,np.sin(np.pi*fraction)**.4)
-        tangent=np.gradient(p,axis=0);tangent/=np.maximum(np.linalg.norm(tangent,axis=1,keepdims=True),1e-8)
-        normal=np.c_[-tangent[:,1],tangent[:,0]]
-        polygon=np.r_[p+normal*half[:,None],(p-normal*half[:,None])[::-1]]
-        hs=np.asarray(c['heights']);valid=hs[:,1]>-500
-        height=np.interp(np.arange(len(p)),hs[valid,0],hs[valid,1])
-        curves.append((p,polygon,half,height))
+        tangent=np.gradient(p,axis=0)
+    tangent/=np.maximum(np.linalg.norm(tangent,axis=1,keepdims=True),1e-8)
+    normal=np.c_[-tangent[:,1],tangent[:,0]]
+    # A closed band has two independent contours. Joining them with an
+    # artificial radial seam would corrupt both the hole and the SDF there.
+    loops=[p+normal*half[:,None],p-normal*half[:,None]] if closed else [np.r_[p+normal*half[:,None],(p-normal*half[:,None])[::-1]]]
+    hs=np.asarray(c['heights']);valid=hs[:,1]>-500
+    if not valid.any():
+        raise ValueError('Centreline has no valid surface height: '+c.get('id',''))
+    height=np.interp(np.arange(len(p)),hs[valid,0],hs[valid,1])
+    return p,loops,half,height
+
+
+def build_mask(source,resolution):
+    center=np.asarray(source['native_center'],dtype=float)
+    curves=[curve_band(c,center) for c in source['curves']]
     points=np.concatenate([c[0] for c in curves]);heights=np.concatenate([c[3] for c in curves])
     origin=np.floor(points.min(axis=0)-24);extent=np.ceil(points.max(axis=0)+24)-origin
     high=resolution*2
     raster=np.zeros((high,high),np.uint8)
-    for p,polygon,half,height in curves:
-        pix=np.round((polygon-origin)/extent*high).astype(np.int32)
-        cv2.fillPoly(raster,[pix],255,lineType=cv2.LINE_AA)
+    for p,loops,half,height in curves:
+        pix=[np.round((polygon-origin)/extent*high).astype(np.int32)for polygon in loops]
+        cv2.fillPoly(raster,pix,255,lineType=cv2.LINE_AA)
     binary=(raster>=128).astype(np.uint8)
     # Raster EDT only locates a bounded work band. Final distances are measured
     # against subpixel CAD boundary segments, not the quantized bitmap contour.
@@ -81,18 +98,23 @@ def build_mask(source,resolution):
     inside=np.zeros((resolution,resolution),dtype=bool)
     segment_a=[];segment_b=[]
     grid_x=origin[0]+(np.arange(resolution)+.5)*extent[0]/resolution
-    for _,poly,_,_ in curves:
-        a=poly;b=np.roll(poly,-1,axis=0)
-        segment_a.append(a);segment_b.append(b)
+    for _,loops,_,_ in curves:
+        rings=[]
+        for poly in loops:
+            a=poly;b=np.roll(poly,-1,axis=0)
+            segment_a.append(a);segment_b.append(b);rings.append((a,b))
         # Exact even-odd inclusion at texture sample centres; independent of
         # the supersampled raster, including the pointed endpoints.
         for row in range(resolution):
             y=origin[1]+(row+.5)*extent[1]/resolution
-            active=(a[:,1]>y)!=(b[:,1]>y)
-            aa=a[active];bb=b[active]
-            if not len(aa):continue
-            cuts=np.sort(aa[:,0]+(y-aa[:,1])*(bb[:,0]-aa[:,0])/(bb[:,1]-aa[:,1]))
-            inside[row]|=(np.searchsorted(cuts,grid_x,side='right')%2)==1
+            stroke_inside=np.zeros(resolution,dtype=bool)
+            for a,b in rings:
+                active=(a[:,1]>y)!=(b[:,1]>y)
+                aa=a[active];bb=b[active]
+                if not len(aa):continue
+                cuts=np.sort(aa[:,0]+(y-aa[:,1])*(bb[:,0]-aa[:,0])/(bb[:,1]-aa[:,1]))
+                stroke_inside^=(np.searchsorted(cuts,grid_x,side='right')%2)==1
+            inside[row]|=stroke_inside
     a=np.concatenate(segment_a);b=np.concatenate(segment_b);ab=b-a
     segments=cKDTree((a+b)*.5)
     sdf=np.full((resolution,resolution),18,dtype=np.float32)

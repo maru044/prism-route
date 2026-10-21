@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "description": "Explicit object semantics override the CAD storage layer. Roofs/terraces may plant; the megastructure shell and fixtures remain architectural.",
+  "objects": {
+    "a2a15e34-a9db-4e6a-a4ce-be472804bd15": {"kind": "Terrain", "role": "preserved_landscape", "reason": "Original land retained during shore-road editing; traffic layer is only its storage location."},
+    "7d8bf20b-f7cf-4c78-abe8-214e29f82247": {"kind": "Terrain", "role": "preserved_landscape", "reason": "Original shore terrain retained during local road/bridge clearance."},
+    "9178570a-b44f-4316-917c-0ce86332f3dd": {"kind": "Terrain", "role": "preserved_landscape", "reason": "Original waterfront land terrace retained around the tunnel."},
+    "ce36cdce-398b-44f5-b0b4-fe7f258106cf": {"kind": "Terrain", "role": "plantable_roof", "reason": "User-approved large roof planting and 6 m architectural edge mask."},
+    "78d43939-e418-428e-aad5-d51b08c73985": {"kind": "Terrain", "role": "plantable_roof", "reason": "User-approved oval roof planting and 3 m architectural edge mask."},
+    "de67bdb9-1d24-4d78-b864-a5f6bbd48ce6": {"kind": "Terrain", "role": "plantable_terraces", "reason": "User explicitly retained planting on the stepped core platforms; walls remain architectural through slope shading."},
+    "c86d61c7-e5d9-4e6c-b3e5-21e29302b78a": {"kind": "Terrain", "role": "plantable_steps", "reason": "Keep the previously designated stepped planting surfaces."},
+    "f07e4a21-03bf-45e1-8402-c8602446e69a": {"kind": "Terrain", "role": "plantable_steps", "reason": "Keep the previously designated stepped planting surfaces."},
+    "9885b6ab-30cd-4214-b68d-b5d1faa7c1d1": {"kind": "Structure", "role": "megastructure_shell", "reason": "User-selected perforated structural shell: architectural material on every face and no vegetation."}
+  },
+  "layer_defaults": {
+    "地形::保留原地形": "Terrain",
+    "建筑::崖壁B::种植承载面": "Terrain",
+    "建筑::崖壁B::建筑构件": "Structure",
+    "建筑::崖壁B": "Structure"
+  },
+  "preserve_special_kinds": ["Road", "Water", "Sand"]
+}

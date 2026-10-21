@@ -1,0 +1,149 @@
+{
+  "changes": [
+    {
+      "id": "27b8671e-bcb0-4727-a056-8f1737f830af",
+      "name": "B_NURBS_西端斜向衔接",
+      "before": "Terrain",
+      "after": "Structure",
+      "role": "architectural_component"
+    },
+    {
+      "id": "32985af8-e779-4e49-8a87-cbb10f6ed39c",
+      "name": "B_光庭内侧坐台_2",
+      "before": "Terrain",
+      "after": "Structure",
+      "role": "architectural_component"
+    },
+    {
+      "id": "3b615b62-6ef5-40bc-941c-f6bee7cb51cb",
+      "name": "B_中层外缘步行带",
+      "before": "Terrain",
+      "after": "Structure",
+      "role": "architectural_component"
+    },
+    {
+      "id": "47456112-e53f-4799-aa9b-cfcc656da2ca",
+      "name": "B_中层连续矮护墙",
+      "before": "Terrain",
+      "after": "Structure",
+      "role": "architectural_component"
+    },
+    {
+      "id": "5bac1c96-51fc-45b5-9237-bd4a7c7ff891",
+      "name": "B_观水坐凳_2",
+      "before": "Terrain",
+      "after": "Structure",
+      "role": "architectural_component"
+    },
+    {
+      "id": "5bde180f-774c-4392-b562-4c24835b1af6",
+      "name": "B_底层连续廊檐_2",
+      "before": "Terrain",
+      "after": "Structure",
+      "role": "architectural_component"
+    },
+    {
+      "id": "72f25860-17b4-4870-995e-4339e71af14e",
+      "name": "B_完整基础板",
+      "before": "Terrain",
+      "after": "Structure",
+      "role": "architectural_component"
+    },
+    {
+      "id": "7d8bf20b-f7cf-4c78-abe8-214e29f82247",
+      "name": "原岸地形_道路及小桥局部让位",
+      "before": "Structure",
+      "after": "Terrain",
+      "role": "preserved_landscape"
+    },
+    {
+      "id": "859c5d4b-7f1f-4b7e-8941-02122b518672",
+      "name": "B_底层连续廊檐_3",
+      "before": "Terrain",
+      "after": "Structure",
+      "role": "architectural_component"
+    },
+    {
+      "id": "8febf846-e595-4c63-9db0-52af7190b07b",
+      "name": "B_观水坐凳_1",
+      "before": "Terrain",
+      "after": "Structure",
+      "role": "architectural_component"
+    },
+    {
+      "id": "9178570a-b44f-4316-917c-0ce86332f3dd",
+      "name": "原临水台地_通行范围让位",
+      "before": "Structure",
+      "after": "Terrain",
+      "role": "preserved_landscape"
+    },
+    {
+      "id": "9885b6ab-30cd-4214-b68d-b5d1faa7c1d1",
+      "name": "B_v03_不规则开口连续厚曲面",
+      "before": "Terrain",
+      "after": "Structure",
+      "role": "megastructure_shell"
+    },
+    {
+      "id": "99f7282d-6e88-4d60-9cf3-eb9a41abb35e",
+      "name": "B_底层连续廊檐_1",
+      "before": "Terrain",
+      "after": "Structure",
+      "role": "architectural_component"
+    },
+    {
+      "id": "a2a15e34-a9db-4e6a-a4ce-be472804bd15",
+      "name": "原地形_仅让出沙嘴道路覆盖区",
+      "before": "Structure",
+      "after": "Terrain",
+      "role": "preserved_landscape"
+    },
+    {
+      "id": "b4b5dca5-231e-4d08-8340-47c0edaeb02d",
+      "name": "B_NURBS_凹厅前亲水平台",
+      "before": "Terrain",
+      "after": "Structure",
+      "role": "architectural_component"
+    },
+    {
+      "id": "b5b7567d-7af6-4168-993a-022638d5ef88",
+      "name": "B_底层连续廊檐_0",
+      "before": "Terrain",
+      "after": "Structure",
+      "role": "architectural_component"
+    },
+    {
+      "id": "d2d52e0d-ac53-4b9f-b92f-b83d7bf91bff",
+      "name": "B_观水坐凳_0",
+      "before": "Terrain",
+      "after": "Structure",
+      "role": "architectural_component"
+    },
+    {
+      "id": "d8cf6376-ae53-42d9-844a-dbeb0d8d3327",
+      "name": "B_光庭内侧坐台_1",
+      "before": "Terrain",
+      "after": "Structure",
+      "role": "architectural_component"
+    },
+    {
+      "id": "dc533d93-dff5-487c-9f4a-edb1ce64e76f",
+      "name": "B_全长峡谷步行平台_节点渐宽",
+      "before": "Terrain",
+      "after": "Structure",
+      "role": "architectural_component"
+    },
+    {
+      "id": "e2acaa46-927a-41de-ba08-f15ef13e3547",
+      "name": "B_光庭内侧坐台_0",
+      "before": "Terrain",
+      "after": "Structure",
+      "role": "architectural_component"
+    }
+  ],
+  "geometry_glb_sha256_before": "45eae060b42c582dc13143524313c9e8db81388ccee0d4a042a59692a0ee2df1",
+  "geometry_glb_sha256_after": "45eae060b42c582dc13143524313c9e8db81388ccee0d4a042a59692a0ee2df1",
+  "geometry_unchanged": true,
+  "cad_modified": false,
+  "policy": "surface_roles.json"
+}

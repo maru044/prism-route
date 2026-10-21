@@ -1,0 +1,204 @@
+{
+  "moved": 27,
+  "changes": [
+    {
+      "id": "9178570a-b44f-4316-917c-0ce86332f3dd",
+      "before": "交通::隧道",
+      "after": "地形::保留原地形",
+      "name": "原临水台地_通行范围让位",
+      "source_layer": 174
+    },
+    {
+      "id": "7d8bf20b-f7cf-4c78-abe8-214e29f82247",
+      "before": "交通::小桥岸路",
+      "after": "地形::保留原地形",
+      "name": "原岸地形_道路及小桥局部让位",
+      "source_layer": 178
+    },
+    {
+      "id": "a2a15e34-a9db-4e6a-a4ce-be472804bd15",
+      "before": "交通::沙嘴与沿岸道路",
+      "after": "地形::保留原地形",
+      "name": "原地形_仅让出沙嘴道路覆盖区",
+      "source_layer": 177
+    },
+    {
+      "id": "ce36cdce-398b-44f5-b0b4-fe7f258106cf",
+      "before": "建筑::崖壁B",
+      "after": "建筑::崖壁B::种植承载面",
+      "name": "B_NURBS_随内核退台的斜切屋盖",
+      "source_layer": 188
+    },
+    {
+      "id": "de67bdb9-1d24-4d78-b864-a5f6bbd48ce6",
+      "before": "建筑::崖壁B",
+      "after": "建筑::崖壁B::种植承载面",
+      "name": "B_NURBS_实体侧错层台地内核_圆润端部",
+      "source_layer": 188
+    },
+    {
+      "id": "27b8671e-bcb0-4727-a056-8f1737f830af",
+      "before": "建筑::崖壁B",
+      "after": "建筑::崖壁B::建筑构件",
+      "name": "B_NURBS_西端斜向衔接",
+      "source_layer": 188
+    },
+    {
+      "id": "b4b5dca5-231e-4d08-8340-47c0edaeb02d",
+      "before": "建筑::崖壁B",
+      "after": "建筑::崖壁B::建筑构件",
+      "name": "B_NURBS_凹厅前亲水平台",
+      "source_layer": 188
+    },
+    {
+      "id": "78d43939-e418-428e-aad5-d51b08c73985",
+      "before": "建筑::崖壁B",
+      "after": "建筑::崖壁B::种植承载面",
+      "name": "B_顶部低矮建筑_斜肩平顶",
+      "source_layer": 188
+    },
+    {
+      "id": "9885b6ab-30cd-4214-b68d-b5d1faa7c1d1",
+      "before": "建筑::崖壁B",
+      "after": "建筑::崖壁B::建筑构件",
+      "name": "B_v03_不规则开口连续厚曲面",
+      "source_layer": 188
+    },
+    {
+      "id": "79d2ce03-2e53-4c69-9a13-a18da1838f89",
+      "before": "建筑::崖壁B",
+      "after": "环境::水面",
+      "name": "B_峡谷浅水_保留原沙底",
+      "source_layer": 188
+    },
+    {
+      "id": "32985af8-e779-4e49-8a87-cbb10f6ed39c",
+      "before": "建筑::崖壁B",
+      "after": "建筑::崖壁B::建筑构件",
+      "name": "B_光庭内侧坐台_2",
+      "source_layer": 188
+    },
+    {
+      "id": "5bac1c96-51fc-45b5-9237-bd4a7c7ff891",
+      "before": "建筑::崖壁B",
+      "after": "建筑::崖壁B::建筑构件",
+      "name": "B_观水坐凳_2",
+      "source_layer": 188
+    },
+    {
+      "id": "d8cf6376-ae53-42d9-844a-dbeb0d8d3327",
+      "before": "建筑::崖壁B",
+      "after": "建筑::崖壁B::建筑构件",
+      "name": "B_光庭内侧坐台_1",
+      "source_layer": 188
+    },
+    {
+      "id": "8febf846-e595-4c63-9db0-52af7190b07b",
+      "before": "建筑::崖壁B",
+      "after": "建筑::崖壁B::建筑构件",
+      "name": "B_观水坐凳_1",
+      "source_layer": 188
+    },
+    {
+      "id": "e2acaa46-927a-41de-ba08-f15ef13e3547",
+      "before": "建筑::崖壁B",
+      "after": "建筑::崖壁B::建筑构件",
+      "name": "B_光庭内侧坐台_0",
+      "source_layer": 188
+    },
+    {
+      "id": "d2d52e0d-ac53-4b9f-b92f-b83d7bf91bff",
+      "before": "建筑::崖壁B",
+      "after": "建筑::崖壁B::建筑构件",
+      "name": "B_观水坐凳_0",
+      "source_layer": 188
+    },
+    {
+      "id": "859c5d4b-7f1f-4b7e-8941-02122b518672",
+      "before": "建筑::崖壁B",
+      "after": "建筑::崖壁B::建筑构件",
+      "name": "B_底层连续廊檐_3",
+      "source_layer": 188
+    },
+    {
+      "id": "5bde180f-774c-4392-b562-4c24835b1af6",
+      "before": "建筑::崖壁B",
+      "after": "建筑::崖壁B::建筑构件",
+      "name": "B_底层连续廊檐_2",
+      "source_layer": 188
+    },
+    {
+      "id": "99f7282d-6e88-4d60-9cf3-eb9a41abb35e",
+      "before": "建筑::崖壁B",
+      "after": "建筑::崖壁B::建筑构件",
+      "name": "B_底层连续廊檐_1",
+      "source_layer": 188
+    },
+    {
+      "id": "b5b7567d-7af6-4168-993a-022638d5ef88",
+      "before": "建筑::崖壁B",
+      "after": "建筑::崖壁B::建筑构件",
+      "name": "B_底层连续廊檐_0",
+      "source_layer": 188
+    },
+    {
+      "id": "f07e4a21-03bf-45e1-8402-c8602446e69a",
+      "before": "建筑::崖壁B",
+      "after": "建筑::崖壁B::种植承载面",
+      "name": "B_亲水缓阶_2",
+      "source_layer": 188
+    },
+    {
+      "id": "c86d61c7-e5d9-4e6c-b3e5-21e29302b78a",
+      "before": "建筑::崖壁B",
+      "after": "建筑::崖壁B::种植承载面",
+      "name": "B_亲水缓阶_1",
+      "source_layer": 188
+    },
+    {
+      "id": "dc533d93-dff5-487c-9f4a-edb1ce64e76f",
+      "before": "建筑::崖壁B",
+      "after": "建筑::崖壁B::建筑构件",
+      "name": "B_全长峡谷步行平台_节点渐宽",
+      "source_layer": 188
+    },
+    {
+      "id": "47456112-e53f-4799-aa9b-cfcc656da2ca",
+      "before": "建筑::崖壁B",
+      "after": "建筑::崖壁B::建筑构件",
+      "name": "B_中层连续矮护墙",
+      "source_layer": 188
+    },
+    {
+      "id": "3b615b62-6ef5-40bc-941c-f6bee7cb51cb",
+      "before": "建筑::崖壁B",
+      "after": "建筑::崖壁B::建筑构件",
+      "name": "B_中层外缘步行带",
+      "source_layer": 188
+    },
+    {
+      "id": "0295f8be-063a-4f5d-90ff-5dabbf9fad42",
+      "before": "建筑::崖壁B",
+      "after": "交通::中层道路",
+      "name": "B_单层连续车行道路",
+      "source_layer": 188
+    },
+    {
+      "id": "72f25860-17b4-4870-995e-4339e71af14e",
+      "before": "建筑::崖壁B",
+      "after": "建筑::崖壁B::建筑构件",
+      "name": "B_完整基础板",
+      "source_layer": 188
+    }
+  ],
+  "objects": 263,
+  "created_layers": [
+    "地形::保留原地形",
+    "建筑::崖壁B::种植承载面",
+    "建筑::崖壁B::建筑构件"
+  ],
+  "saved_and_reread": true,
+  "source_document": "D:\\Prism Route\\map\\map_current.3dm",
+  "geometry_and_ids_unchanged": true,
+  "only_layer_indices_changed": true
+}
