@@ -636,6 +636,8 @@ def build_spec(spec, lod1_only=False, lod2_only=False):
 
 
 def main():
+    # Editable sources are explicitly backed up by the caller when needed.
+    bpy.context.preferences.filepaths.save_version = 0
     parser = argparse.ArgumentParser()
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--lod1-only", action="store_true")

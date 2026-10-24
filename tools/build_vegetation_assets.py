@@ -1585,6 +1585,9 @@ elif "--tree-medium-upright-asymmetric-canopy" in sys.argv:
         upright_asymmetric30=True,
         use_refined_trunk=True,
     )
+    sys.path.insert(0, os.path.dirname(__file__))
+    from canopy_gap_repair import apply_saved_patches
+    apply_saved_patches(trunk, crowns, "upright")
     model_path = os.path.join(
         MODEL_DIR, "tree_medium_upright_asymmetric_canopy.glb"
     )
@@ -1595,7 +1598,7 @@ elif "--tree-medium-upright-asymmetric-canopy" in sys.argv:
     bpy.ops.wm.save_as_mainfile(filepath=source_path)
     print(
         "MEDIUM_UPRIGHT_ASYMMETRIC_CANOPY_BUILD_COMPLETE "
-        f"crown_groups={len(crowns)} cards={len(crowns) * 480} "
+        f"crown_groups={len(crowns)} cards={trunk['logical_card_count']} "
         f"overlap_pairs={trunk['overlap_pair_count']} "
         f"overlap_mean={trunk['overlap_ratio_mean']:.3f} "
         f"overlap_max={trunk['overlap_ratio_max']:.3f} "
@@ -1615,6 +1618,9 @@ elif "--tree-medium-broad-clustered-canopy" in sys.argv:
         broad30=True,
         use_refined_trunk=True,
     )
+    sys.path.insert(0, os.path.dirname(__file__))
+    from canopy_gap_repair import apply_saved_patches
+    apply_saved_patches(trunk, crowns, "broad")
     model_path = os.path.join(
         MODEL_DIR, "tree_medium_broad_clustered_canopy.glb"
     )
@@ -1625,7 +1631,7 @@ elif "--tree-medium-broad-clustered-canopy" in sys.argv:
     bpy.ops.wm.save_as_mainfile(filepath=source_path)
     print(
         "MEDIUM_BROAD_CLUSTERED_CANOPY_BUILD_COMPLETE "
-        f"crown_groups={len(crowns)} cards={len(crowns) * 480} "
+        f"crown_groups={len(crowns)} cards={trunk['logical_card_count']} "
         f"overlap_pairs={trunk['overlap_pair_count']} "
         f"overlap_mean={trunk['overlap_ratio_mean']:.3f} "
         f"overlap_max={trunk['overlap_ratio_max']:.3f} "

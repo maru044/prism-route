@@ -1,0 +1,668 @@
+{
+  "method": "alpha-aware BVH, 16 selection views and 16 held-out views per tree",
+  "ray_grid": [
+    128,
+    128
+  ],
+  "depth_threshold_m": 1.5,
+  "min_region_area_m2": 0.075,
+  "view_area_note": "Sum of projected observations, not unique physical surface area.",
+  "baseline_triangles": 57788,
+  "repaired_triangles": 59836,
+  "species": {
+    "broad": {
+      "selection_before_m2": 19.081427495364995,
+      "selection_after_m2": 10.125054134469659,
+      "selection_reduction": 0.46937648470330107,
+      "validation": {
+        "before": {
+          "views": [
+            {
+              "view": [
+                22.5,
+                0
+              ],
+              "opaque_pixels": 6901,
+              "macro_holes": 3,
+              "macro_hole_area_m2": 1.1579493972986508
+            },
+            {
+              "view": [
+                67.5,
+                0
+              ],
+              "opaque_pixels": 6280,
+              "macro_holes": 3,
+              "macro_hole_area_m2": 0.4270466358236438
+            },
+            {
+              "view": [
+                112.5,
+                0
+              ],
+              "opaque_pixels": 6495,
+              "macro_holes": 8,
+              "macro_hole_area_m2": 1.6051063208543852
+            },
+            {
+              "view": [
+                157.5,
+                0
+              ],
+              "opaque_pixels": 6473,
+              "macro_holes": 8,
+              "macro_hole_area_m2": 2.2279532707518346
+            },
+            {
+              "view": [
+                202.5,
+                0
+              ],
+              "opaque_pixels": 6902,
+              "macro_holes": 6,
+              "macro_hole_area_m2": 0.9380855876849828
+            },
+            {
+              "view": [
+                247.5,
+                0
+              ],
+              "opaque_pixels": 6281,
+              "macro_holes": 9,
+              "macro_hole_area_m2": 1.825992511797649
+            },
+            {
+              "view": [
+                292.5,
+                0
+              ],
+              "opaque_pixels": 6495,
+              "macro_holes": 4,
+              "macro_hole_area_m2": 0.6773843188926764
+            },
+            {
+              "view": [
+                337.5,
+                0
+              ],
+              "opaque_pixels": 6473,
+              "macro_holes": 7,
+              "macro_hole_area_m2": 1.143291809991073
+            },
+            {
+              "view": [
+                22.5,
+                35
+              ],
+              "opaque_pixels": 4172,
+              "macro_holes": 4,
+              "macro_hole_area_m2": 1.2186641154184785
+            },
+            {
+              "view": [
+                67.5,
+                35
+              ],
+              "opaque_pixels": 4180,
+              "macro_holes": 5,
+              "macro_hole_area_m2": 0.7084443260713356
+            },
+            {
+              "view": [
+                112.5,
+                35
+              ],
+              "opaque_pixels": 4128,
+              "macro_holes": 5,
+              "macro_hole_area_m2": 1.1970266199136355
+            },
+            {
+              "view": [
+                157.5,
+                35
+              ],
+              "opaque_pixels": 3993,
+              "macro_holes": 4,
+              "macro_hole_area_m2": 1.8767427377444577
+            },
+            {
+              "view": [
+                202.5,
+                35
+              ],
+              "opaque_pixels": 4214,
+              "macro_holes": 5,
+              "macro_hole_area_m2": 0.7799450338678263
+            },
+            {
+              "view": [
+                247.5,
+                35
+              ],
+              "opaque_pixels": 4041,
+              "macro_holes": 5,
+              "macro_hole_area_m2": 1.4413177668347856
+            },
+            {
+              "view": [
+                292.5,
+                35
+              ],
+              "opaque_pixels": 4011,
+              "macro_holes": 3,
+              "macro_hole_area_m2": 0.6351569819949903
+            },
+            {
+              "view": [
+                337.5,
+                35
+              ],
+              "opaque_pixels": 4011,
+              "macro_holes": 4,
+              "macro_hole_area_m2": 0.4874656461673914
+            }
+          ],
+          "total_macro_hole_area_m2": 18.347573081107797,
+          "hole_observations": 83,
+          "capped_rays": 0
+        },
+        "after": {
+          "views": [
+            {
+              "view": [
+                22.5,
+                0
+              ],
+              "opaque_pixels": 6930,
+              "macro_holes": 3,
+              "macro_hole_area_m2": 0.33712450807429073
+            },
+            {
+              "view": [
+                67.5,
+                0
+              ],
+              "opaque_pixels": 6298,
+              "macro_holes": 2,
+              "macro_hole_area_m2": 0.382869397634991
+            },
+            {
+              "view": [
+                112.5,
+                0
+              ],
+              "opaque_pixels": 6545,
+              "macro_holes": 8,
+              "macro_hole_area_m2": 1.325317145659584
+            },
+            {
+              "view": [
+                157.5,
+                0
+              ],
+              "opaque_pixels": 6540,
+              "macro_holes": 9,
+              "macro_hole_area_m2": 1.3778132069123188
+            },
+            {
+              "view": [
+                202.5,
+                0
+              ],
+              "opaque_pixels": 6931,
+              "macro_holes": 4,
+              "macro_hole_area_m2": 0.6595914288410035
+            },
+            {
+              "view": [
+                247.5,
+                0
+              ],
+              "opaque_pixels": 6298,
+              "macro_holes": 5,
+              "macro_hole_area_m2": 1.1927854310936257
+            },
+            {
+              "view": [
+                292.5,
+                0
+              ],
+              "opaque_pixels": 6545,
+              "macro_holes": 3,
+              "macro_hole_area_m2": 0.3386921594463382
+            },
+            {
+              "view": [
+                337.5,
+                0
+              ],
+              "opaque_pixels": 6540,
+              "macro_holes": 4,
+              "macro_hole_area_m2": 0.9527431749925608
+            },
+            {
+              "view": [
+                22.5,
+                35
+              ],
+              "opaque_pixels": 4179,
+              "macro_holes": 6,
+              "macro_hole_area_m2": 1.1211709861850003
+            },
+            {
+              "view": [
+                67.5,
+                35
+              ],
+              "opaque_pixels": 4196,
+              "macro_holes": 8,
+              "macro_hole_area_m2": 1.319172193374211
+            },
+            {
+              "view": [
+                112.5,
+                35
+              ],
+              "opaque_pixels": 4148,
+              "macro_holes": 7,
+              "macro_hole_area_m2": 1.2458848492978656
+            },
+            {
+              "view": [
+                157.5,
+                35
+              ],
+              "opaque_pixels": 4014,
+              "macro_holes": 4,
+              "macro_hole_area_m2": 1.2917839623435878
+            },
+            {
+              "view": [
+                202.5,
+                35
+              ],
+              "opaque_pixels": 4227,
+              "macro_holes": 3,
+              "macro_hole_area_m2": 0.6093320577092394
+            },
+            {
+              "view": [
+                247.5,
+                35
+              ],
+              "opaque_pixels": 4050,
+              "macro_holes": 5,
+              "macro_hole_area_m2": 1.1237392758372904
+            },
+            {
+              "view": [
+                292.5,
+                35
+              ],
+              "opaque_pixels": 4034,
+              "macro_holes": 2,
+              "macro_hole_area_m2": 0.4641531791501853
+            },
+            {
+              "view": [
+                337.5,
+                35
+              ],
+              "opaque_pixels": 4054,
+              "macro_holes": 3,
+              "macro_hole_area_m2": 0.36559923462554356
+            }
+          ],
+          "total_macro_hole_area_m2": 14.107772191177636,
+          "hole_observations": 76,
+          "capped_rays": 0
+        },
+        "base_geometry_unchanged": true,
+        "replay_matches_saved_mesh": true,
+        "bounds_unchanged": true,
+        "max_original_corner_normal_error": 0.0002657771110534668,
+        "added_logical_cards": 512,
+        "relative_area_reduction": 0.23108238191435881
+      },
+      "patches": 32,
+      "added_leaf_cards": 512,
+      "assets": {
+        "assets/vegetation/source/tree_medium_broad_clustered_canopy.blend": {
+          "bytes": 352093,
+          "sha256": "28a1b4c1f1ceb59f1bc7fefaf1503acf0bc45269cb9bf0a31188f39dfde8a535"
+        },
+        "assets/vegetation/models/tree_medium_broad_clustered_canopy.glb": {
+          "bytes": 2290244,
+          "sha256": "f3c01d1942702e6a05bfef9f3d4ce44e722503744582b2908987050ae784b4f0"
+        }
+      }
+    },
+    "upright": {
+      "selection_before_m2": 28.511305363427667,
+      "selection_after_m2": 9.255324772817863,
+      "selection_reduction": 0.6753805322189859,
+      "validation": {
+        "before": {
+          "views": [
+            {
+              "view": [
+                22.5,
+                0
+              ],
+              "opaque_pixels": 7071,
+              "macro_holes": 8,
+              "macro_hole_area_m2": 1.5549711430735829
+            },
+            {
+              "view": [
+                67.5,
+                0
+              ],
+              "opaque_pixels": 6975,
+              "macro_holes": 6,
+              "macro_hole_area_m2": 1.2433823560221475
+            },
+            {
+              "view": [
+                112.5,
+                0
+              ],
+              "opaque_pixels": 7117,
+              "macro_holes": 9,
+              "macro_hole_area_m2": 1.5705882391858703
+            },
+            {
+              "view": [
+                157.5,
+                0
+              ],
+              "opaque_pixels": 6825,
+              "macro_holes": 7,
+              "macro_hole_area_m2": 1.2148212055262368
+            },
+            {
+              "view": [
+                202.5,
+                0
+              ],
+              "opaque_pixels": 7071,
+              "macro_holes": 8,
+              "macro_hole_area_m2": 1.652156839515682
+            },
+            {
+              "view": [
+                247.5,
+                0
+              ],
+              "opaque_pixels": 6976,
+              "macro_holes": 12,
+              "macro_hole_area_m2": 1.766911769084104
+            },
+            {
+              "view": [
+                292.5,
+                0
+              ],
+              "opaque_pixels": 7117,
+              "macro_holes": 8,
+              "macro_hole_area_m2": 1.9141544165077795
+            },
+            {
+              "view": [
+                337.5,
+                0
+              ],
+              "opaque_pixels": 6825,
+              "macro_holes": 8,
+              "macro_hole_area_m2": 1.8465282323998795
+            },
+            {
+              "view": [
+                22.5,
+                35
+              ],
+              "opaque_pixels": 4713,
+              "macro_holes": 5,
+              "macro_hole_area_m2": 0.8850193587064901
+            },
+            {
+              "view": [
+                67.5,
+                35
+              ],
+              "opaque_pixels": 4637,
+              "macro_holes": 7,
+              "macro_hole_area_m2": 2.6234030154457044
+            },
+            {
+              "view": [
+                112.5,
+                35
+              ],
+              "opaque_pixels": 4755,
+              "macro_holes": 8,
+              "macro_hole_area_m2": 1.9909755027936145
+            },
+            {
+              "view": [
+                157.5,
+                35
+              ],
+              "opaque_pixels": 4597,
+              "macro_holes": 10,
+              "macro_hole_area_m2": 2.04951851489924
+            },
+            {
+              "view": [
+                202.5,
+                35
+              ],
+              "opaque_pixels": 4529,
+              "macro_holes": 6,
+              "macro_hole_area_m2": 1.90977861615611
+            },
+            {
+              "view": [
+                247.5,
+                35
+              ],
+              "opaque_pixels": 4422,
+              "macro_holes": 12,
+              "macro_hole_area_m2": 2.7639424627017233
+            },
+            {
+              "view": [
+                292.5,
+                35
+              ],
+              "opaque_pixels": 4597,
+              "macro_holes": 9,
+              "macro_hole_area_m2": 2.5999797742363673
+            },
+            {
+              "view": [
+                337.5,
+                35
+              ],
+              "opaque_pixels": 4539,
+              "macro_holes": 6,
+              "macro_hole_area_m2": 1.3275290380597347
+            }
+          ],
+          "total_macro_hole_area_m2": 28.913660484314267,
+          "hole_observations": 129,
+          "capped_rays": 0
+        },
+        "after": {
+          "views": [
+            {
+              "view": [
+                22.5,
+                0
+              ],
+              "opaque_pixels": 7107,
+              "macro_holes": 6,
+              "macro_hole_area_m2": 0.8098808036841578
+            },
+            {
+              "view": [
+                67.5,
+                0
+              ],
+              "opaque_pixels": 7023,
+              "macro_holes": 4,
+              "macro_hole_area_m2": 0.3599264714800953
+            },
+            {
+              "view": [
+                112.5,
+                0
+              ],
+              "opaque_pixels": 7136,
+              "macro_holes": 2,
+              "macro_hole_area_m2": 0.16360294158186148
+            },
+            {
+              "view": [
+                157.5,
+                0
+              ],
+              "opaque_pixels": 6874,
+              "macro_holes": 3,
+              "macro_hole_area_m2": 0.30775470539997996
+            },
+            {
+              "view": [
+                202.5,
+                0
+              ],
+              "opaque_pixels": 7107,
+              "macro_holes": 7,
+              "macro_hole_area_m2": 1.036647428715722
+            },
+            {
+              "view": [
+                247.5,
+                0
+              ],
+              "opaque_pixels": 7024,
+              "macro_holes": 8,
+              "macro_hole_area_m2": 0.997977943649355
+            },
+            {
+              "view": [
+                292.5,
+                0
+              ],
+              "opaque_pixels": 7136,
+              "macro_holes": 6,
+              "macro_hole_area_m2": 0.9979779436493551
+            },
+            {
+              "view": [
+                337.5,
+                0
+              ],
+              "opaque_pixels": 6874,
+              "macro_holes": 4,
+              "macro_hole_area_m2": 0.5021260982841778
+            },
+            {
+              "view": [
+                22.5,
+                35
+              ],
+              "opaque_pixels": 4730,
+              "macro_holes": 4,
+              "macro_hole_area_m2": 0.675409510591795
+            },
+            {
+              "view": [
+                67.5,
+                35
+              ],
+              "opaque_pixels": 4641,
+              "macro_holes": 7,
+              "macro_hole_area_m2": 1.3585479901415254
+            },
+            {
+              "view": [
+                112.5,
+                35
+              ],
+              "opaque_pixels": 4771,
+              "macro_holes": 7,
+              "macro_hole_area_m2": 0.9837761307921389
+            },
+            {
+              "view": [
+                157.5,
+                35
+              ],
+              "opaque_pixels": 4625,
+              "macro_holes": 10,
+              "macro_hole_area_m2": 1.58371885242214
+            },
+            {
+              "view": [
+                202.5,
+                35
+              ],
+              "opaque_pixels": 4553,
+              "macro_holes": 7,
+              "macro_hole_area_m2": 1.11791918994504
+            },
+            {
+              "view": [
+                247.5,
+                35
+              ],
+              "opaque_pixels": 4437,
+              "macro_holes": 12,
+              "macro_hole_area_m2": 2.131514950049634
+            },
+            {
+              "view": [
+                292.5,
+                35
+              ],
+              "opaque_pixels": 4600,
+              "macro_holes": 9,
+              "macro_hole_area_m2": 1.4756641961882084
+            },
+            {
+              "view": [
+                337.5,
+                35
+              ],
+              "opaque_pixels": 4554,
+              "macro_holes": 4,
+              "macro_hole_area_m2": 0.3959297131055349
+            }
+          ],
+          "total_macro_hole_area_m2": 14.89837486968072,
+          "hole_observations": 100,
+          "capped_rays": 0
+        },
+        "base_geometry_unchanged": true,
+        "replay_matches_saved_mesh": true,
+        "bounds_unchanged": true,
+        "max_original_corner_normal_error": 0.0002657771110534668,
+        "added_logical_cards": 512,
+        "relative_area_reduction": 0.4847288575667157
+      },
+      "patches": 32,
+      "added_leaf_cards": 512,
+      "assets": {
+        "assets/vegetation/source/tree_medium_upright_asymmetric_canopy.blend": {
+          "bytes": 384132,
+          "sha256": "e8b1cd1ac01caeabb87fffd23b4d117b9eed8dbbeefcc32776eebe3ba1eb7b88"
+        },
+        "assets/vegetation/models/tree_medium_upright_asymmetric_canopy.glb": {
+          "bytes": 2457100,
+          "sha256": "18aebaab723bfbe7d616cade4204cf4f898c1816b0d3f48bb289a91dd2122352"
+        }
+      }
+    }
+  }
+}
