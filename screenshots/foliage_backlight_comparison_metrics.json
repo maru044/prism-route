@@ -1,0 +1,111 @@
+{
+  "captures": [
+    {
+      "camera": "(-183.2739, 66.14182, 1208.302)",
+      "draws": 958.0,
+      "materials": 33,
+      "mode": "a_original",
+      "primitives": 3506999.0,
+      "target": "(-253.2739, 70.14182, 1100.302)",
+      "view": "bridge"
+    },
+    {
+      "camera": "(-183.2739, 66.14182, 1208.302)",
+      "draws": 958.0,
+      "materials": 33,
+      "mode": "b_soft",
+      "primitives": 3506999.0,
+      "target": "(-253.2739, 70.14182, 1100.302)",
+      "view": "bridge"
+    },
+    {
+      "camera": "(-183.2739, 66.14182, 1208.302)",
+      "draws": 958.0,
+      "materials": 33,
+      "mode": "a_restore",
+      "primitives": 3506999.0,
+      "target": "(-253.2739, 70.14182, 1100.302)",
+      "view": "bridge"
+    },
+    {
+      "camera": "(-458.1884, 68.96952, 1061.078)",
+      "draws": 491.0,
+      "materials": 33,
+      "mode": "a_original",
+      "primitives": 3024061.0,
+      "target": "(-436.6996, 72.22557, 1082.567)",
+      "view": "backlit"
+    },
+    {
+      "camera": "(-458.1884, 68.96952, 1061.078)",
+      "draws": 491.0,
+      "materials": 33,
+      "mode": "b_soft",
+      "primitives": 3024061.0,
+      "target": "(-436.6996, 72.22557, 1082.567)",
+      "view": "backlit"
+    },
+    {
+      "camera": "(-458.1884, 68.96952, 1061.078)",
+      "draws": 491.0,
+      "materials": 33,
+      "mode": "a_restore",
+      "primitives": 3024061.0,
+      "target": "(-436.6996, 72.22557, 1082.567)",
+      "view": "backlit"
+    },
+    {
+      "camera": "(-415.2108, 68.96952, 1104.056)",
+      "draws": 956.0,
+      "materials": 33,
+      "mode": "a_original",
+      "primitives": 4568796.0,
+      "target": "(-436.6996, 72.22557, 1082.567)",
+      "view": "frontlit"
+    },
+    {
+      "camera": "(-415.2108, 68.96952, 1104.056)",
+      "draws": 956.0,
+      "materials": 33,
+      "mode": "b_soft",
+      "primitives": 4568796.0,
+      "target": "(-436.6996, 72.22557, 1082.567)",
+      "view": "frontlit"
+    },
+    {
+      "camera": "(-415.2108, 68.96952, 1104.056)",
+      "draws": 956.0,
+      "materials": 33,
+      "mode": "a_restore",
+      "primitives": 4568796.0,
+      "target": "(-436.6996, 72.22557, 1082.567)",
+      "view": "frontlit"
+    }
+  ],
+  "fill": 0.06,
+  "grass_bake_signature": "b3f8cc2f8957e6b70ae3f4e2691ecc1debfcfcd1d9a1da524811694b43da4d31",
+  "grass_shader_unchanged": true,
+  "original_shaders_unchanged": true,
+  "relief": 0.0,
+  "image_restore_checks": {
+    "bridge": {
+      "mean_absolute_byte_error": 0.002044675925925926,
+      "p99_absolute_byte_error": 0.0,
+      "maximum_absolute_byte_error": 1.0
+    },
+    "backlit": {
+      "mean_absolute_byte_error": 3.2407407407407406e-06,
+      "p99_absolute_byte_error": 0.0,
+      "maximum_absolute_byte_error": 1.0
+    },
+    "frontlit": {
+      "mean_absolute_byte_error": 9.259259259259259e-07,
+      "p99_absolute_byte_error": 0.0,
+      "maximum_absolute_byte_error": 1.0
+    }
+  },
+  "baseline_shader_hashes": {
+    "vegetation_wind.gdshader": "393bd3091f88d00e9d943299b9182d0da767131e8a42808d32c08d75b34fcd34",
+    "tree_hlod.gdshader": "c534c324de1810832a9a35d1b91b142d87f36065d17efc499ffacb85f7063880"
+  }
+}

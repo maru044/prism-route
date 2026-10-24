@@ -1,8 +1,23 @@
 # Research context for ChatGPT and future contributors
 
 Read this before proposing changes to the vegetation. The source of truth for
-current numeric parameters is `scripts/vegetation_test.gd`; this note explains
+current numeric parameters is `scripts/vegetation_test.gd` and the approved tree
+style in `scripts/foliage_style.gd`; this note explains
 the intent and the result of previous visual tests.
+
+## Approved tree colour and backlight, 2026-10-24
+
+- Fresh leaf green (`#2E7D32`, `#388E3C`, `#66BB6A`, `#81C784`) and directional
+  backlight fill 0.06, shadow relief 0.0 are the approved defaults for 1021 and
+  the vegetation grove, including near/middle/far tree LODs.
+- N, M and bracket comparison keys and their HUD have been removed. Do not
+  reintroduce them. Existing movement, spawn selection, actor switching and
+  interface visibility controls remain.
+- Preserve legacy texture-based green and its original material parameters for
+  future species. Current style uses material copies and leaves flower palettes
+  intact. Offline review tools retain the ability to reproduce legacy colours.
+- See [colour review](FOLIAGE_COLOR_REVIEW.md) and
+  [backlight decision](FOLIAGE_BACKLIGHT_COMPARISON.md) for settings and evidence.
 
 ## Road plan, 2026-10-06
 

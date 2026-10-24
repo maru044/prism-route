@@ -49,6 +49,7 @@ const GANYU_SCENE := preload("res://scenes/characters/ganyu.tscn")
 var grass_wind_texture: NoiseTexture2D
 var biome_noise_texture: NoiseTexture2D
 var shared_trunk_material: StandardMaterial3D
+var foliage_style
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -94,6 +95,8 @@ func _ready() -> void:
 	else:
 		_build_tree(refined_tree)
 	_build_grass_chunks()
+	foliage_style=preload("res://scripts/foliage_style.gd").new()
+	foliage_style.bind_grove(self)
 	if grove_demo and "--capture-character" in arguments:
 		var camera := get_node("OrbitCamera") as Camera3D
 		camera.set_process(false)

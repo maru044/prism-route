@@ -1,0 +1,98 @@
+{
+  "captures": [
+    {
+      "draws": 460.0,
+      "palette": "original",
+      "primitives": 3021953.0,
+      "view": "backlit"
+    },
+    {
+      "draws": 460.0,
+      "palette": "fresh",
+      "primitives": 3021953.0,
+      "view": "backlit"
+    },
+    {
+      "draws": 460.0,
+      "palette": "restored",
+      "primitives": 3021953.0,
+      "view": "backlit"
+    },
+    {
+      "draws": 956.0,
+      "palette": "original",
+      "primitives": 4568796.0,
+      "view": "frontlit"
+    },
+    {
+      "draws": 956.0,
+      "palette": "fresh",
+      "primitives": 4568796.0,
+      "view": "frontlit"
+    },
+    {
+      "draws": 956.0,
+      "palette": "restored",
+      "primitives": 4568796.0,
+      "view": "frontlit"
+    }
+  ],
+  "flower_materials_unchanged": 24,
+  "grass_bake_signature": "b3f8cc2f8957e6b70ae3f4e2691ecc1debfcfcd1d9a1da524811694b43da4d31",
+  "grass_rebake_required": false,
+  "green_materials": 9,
+  "ground_dry": "(0.5882, 0.5412, 0.3333, 1.0)",
+  "ground_green": "(0.448, 0.4734, 0.2524, 1.0)",
+  "lighting_fill_fixed": 0.06,
+  "palette_hotkey_passed": true,
+  "shadow_relief_fixed": 0.0,
+  "shared_meadow_parameters": {
+    "biome_center_x": "20.0",
+    "biome_noise_scale": "0.00135",
+    "biome_noise_texture": "():<NoiseTexture2D#-9223371918910943472>",
+    "biome_transition_half_width": "135.0",
+    "biome_warp_distance": "210.0"
+  },
+  "mask_audit": {
+    "changed_base_bytes": 0,
+    "changed_pixels": 0,
+    "image_format": 13,
+    "loaded_mask_matches_latest_raw": true,
+    "mipmaps": 12,
+    "note": "This RG16F texture stores CAD distance and height, not meadow dry/green colour.",
+    "pixel_fraction": 0.0,
+    "resolution": 4096
+  },
+  "original_colour_restore": {
+    "frontlit": {
+      "mean_absolute_byte_error": 9.259259259259259e-07,
+      "p99_absolute_byte_error": 0.0,
+      "maximum_absolute_byte_error": 1.0
+    },
+    "backlit": {
+      "mean_absolute_byte_error": 3.0092592592592593e-06,
+      "p99_absolute_byte_error": 0.0,
+      "maximum_absolute_byte_error": 1.0
+    }
+  },
+  "grove_flower_unchanged": {
+    "1": {
+      "mean_absolute_byte_error": 6.944444444444445e-07,
+      "p99_absolute_byte_error": 0.0,
+      "maximum_absolute_byte_error": 1.0
+    },
+    "2": {
+      "mean_absolute_byte_error": 2.3148148148148148e-07,
+      "p99_absolute_byte_error": 0.0,
+      "maximum_absolute_byte_error": 1.0
+    }
+  },
+  "reference": "https://mui.com/material-ui/customization/color/",
+  "candidate_palette": {
+    "deep": "#2E7D32",
+    "shadow": "#388E3C",
+    "main": "#66BB6A",
+    "light": "#81C784"
+  },
+  "default_green_mode": "original; M selects the candidate; lighting remains independent"
+}

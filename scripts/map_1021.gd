@@ -3,6 +3,7 @@ extends Node3D
 const ASSETS := "res://assets/world/current_map_validation/"
 const VEGETATION := preload("res://scripts/map_1021_vegetation.gd")
 const PERFORMANCE_MONITOR := preload("res://scripts/performance_monitor_1021.gd")
+const FOLIAGE_STYLE := preload("res://scripts/foliage_style.gd")
 const SKY := preload("res://assets/environment/sky/fresh_cumulus_sky.tres")
 @onready var character = $Character
 @onready var camper = $CamperVan
@@ -13,6 +14,7 @@ var mask_image: Image
 var mask_texture: Texture2D
 var terrain_material: ShaderMaterial
 var vegetation
+var foliage_style
 var test_ready := false
 var automation_enabled := false
 var free_mode := false
@@ -27,6 +29,8 @@ var tree_placement_report: Dictionary = {}
 var character_mode := true
 var switching_actor := false
 var vegetation_bake_only := false
+var review_ui_visible := true
+var review_ui_layers: Array[CanvasLayer] = []
 
 func vec(value: Array) -> Vector3:
 	return Vector3(value[0],value[1],value[2])
@@ -47,10 +51,28 @@ func _ready() -> void:
 		return
 	vegetation=VEGETATION.new();vegetation.world_scene=self;add_child(vegetation)
 	vegetation.initialize(character,_noise(),2)
+	_sync_meadow_color()
+	foliage_style=FOLIAGE_STYLE.new()
+	foliage_style.bind_streamer(vegetation)
 	tree_placement_report=JSON.parse_string(FileAccess.get_file_as_string(ASSETS+"tree_layout_metadata.json"))
 	_sync_actor_controls()
 	test_ready=true
 	print("CURRENT_MAP_READY objects=%d triangles=%d spawns=%d trees=%d" % [metadata.objects,metadata.triangles,resolved_spawns.size(),vegetation.tree_instance_count])
+
+func _sync_meadow_color() -> void:
+	# Match the accepted grass zones, including their actual noise resource.
+	# Per-blade overlap/value remains fine variation; the ground uses their mean.
+	for parameter: String in ["biome_noise_texture","biome_noise_scale","biome_warp_distance","biome_transition_half_width","biome_center_x"]:
+		terrain_material.set_shader_parameter(parameter,vegetation.grass_material.get_shader_parameter(parameter))
+	terrain_material.set_shader_parameter("ground_dry",Color("968a55"))
+	# Pair the root colour with the same linear dry/green tint ratio as blades.
+	var root_color:=Color("968a55").srgb_to_linear()
+	var dry_tint: Color=vegetation.grass_material.get_shader_parameter("palette_dry")
+	var green_tint: Color=vegetation.grass_material.get_shader_parameter("palette_green")
+	dry_tint=dry_tint.srgb_to_linear();green_tint=green_tint.srgb_to_linear()
+	var paired_green:=Color(root_color.r*green_tint.r/maxf(dry_tint.r,.001),root_color.g*green_tint.g/maxf(dry_tint.g,.001),root_color.b*green_tint.b/maxf(dry_tint.b,.001))
+	terrain_material.set_shader_parameter("ground_green",paired_green.linear_to_srgb())
+	terrain_material.set_shader_parameter("use_shared_meadow_biome",true)
 
 func _load_mask() -> void:
 	var path:=ASSETS+"landscape_mask.res"
@@ -120,6 +142,7 @@ func _noise() -> NoiseTexture2D:
 
 func _hud() -> void:
 	var layer:=CanvasLayer.new();add_child(layer)
+	review_ui_layers.append(layer)
 	var panel:=PanelContainer.new();panel.position=Vector2(20,18);layer.add_child(panel)
 	var box:=VBoxContainer.new();box.add_theme_constant_override("separation",8);panel.add_child(box)
 	var title:=Label.new();title.text="1021 地图 · 场景验证";title.add_theme_font_size_override("font_size",22);box.add_child(title)
@@ -127,9 +150,24 @@ func _hud() -> void:
 	for i in metadata.spawns.size():spawn_menu.add_item("%d  %s" % [i+1,metadata.spawns[i].name])
 	spawn_menu.item_selected.connect(select_spawn);box.add_child(spawn_menu)
 	status=Label.new();box.add_child(status)
-	var help:=Label.new();help.text="1–8 出生点   C 甘雨 / 房车\nF 自由观景 · V 全景 · B 植物开关\nWASD 移动 / 驾驶 · 空格跳跃 / 刹车\n右键转镜头 · 滚轮缩放 · R 复位";box.add_child(help)
+	var help:=Label.new();help.text="1–8 出生点   C 甘雨 / 房车\nF 自由观景 · V 全景 · B 植物开关\nH 隐藏 / 恢复全部界面\nWASD 移动 / 驾驶 · 空格跳跃 / 刹车\n右键转镜头 · 滚轮缩放 · R 复位";box.add_child(help)
 	var performance_monitor:=PERFORMANCE_MONITOR.new()
 	performance_monitor.world_scene=self;add_child(performance_monitor)
+	review_ui_layers.append(performance_monitor)
+	set_review_ui_visible(not "--no-ui" in OS.get_cmdline_user_args())
+
+func set_review_ui_visible(enabled: bool) -> void:
+	review_ui_visible=enabled
+	for layer in review_ui_layers:layer.visible=enabled
+	if not enabled: get_viewport().gui_release_focus()
+
+func _input(event: InputEvent) -> void:
+	# Handle globally so H also works while the spawn menu has keyboard focus.
+	if event is InputEventKey and event.pressed and not event.echo:
+		var key: int=event.physical_keycode if event.physical_keycode!=0 else event.keycode
+		if key==KEY_H:
+			set_review_ui_visible(not review_ui_visible)
+			get_viewport().set_input_as_handled()
 
 func _ray(p: Vector3,highest:=false) -> Dictionary:
 	var top:=400.0 if highest else p.y+2.2

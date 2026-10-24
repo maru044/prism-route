@@ -8,6 +8,15 @@ uniform vec2 mask_extent_xz;
 uniform int comparison_mode = 0;
 uniform float edge_feather_m = 0.06;
 uniform float height_tolerance = 6.0;
+// Colour zoning follows the live grass material; CAD distance/height stay separate.
+uniform bool use_shared_meadow_biome = false;
+uniform sampler2D biome_noise_texture : repeat_enable, filter_linear;
+uniform float biome_noise_scale = 0.00135;
+uniform float biome_warp_distance = 210.0;
+uniform float biome_transition_half_width = 135.0;
+uniform float biome_center_x = 20.0;
+uniform vec4 ground_dry : source_color = vec4(0.588235, 0.541176, 0.333333, 1.0);
+uniform vec4 ground_green : source_color = vec4(0.447, 0.475, 0.255, 1.0);
 varying vec3 world_position;
 varying vec3 world_normal;
 
@@ -37,6 +46,13 @@ void fragment() {
         +sin(world_position.z*0.035-world_position.x*0.009)*0.5;
     float fine=sin(world_position.x*2.1+sin(world_position.z*1.9))*sin(world_position.z*2.7);
     vec3 meadow=mix(vec3(0.12,0.19,0.045),vec3(0.27,0.25,0.095),smoothstep(-0.4,0.8,broad)*0.65);
+    if (use_shared_meadow_biome) {
+        float noise_value=textureLod(biome_noise_texture,
+            world_position.xz*biome_noise_scale+vec2(0.137,0.411),0.0).r;
+        float transition=smoothstep(-biome_transition_half_width,biome_transition_half_width,
+            world_position.x-biome_center_x+(noise_value*2.0-1.0)*biome_warp_distance);
+        meadow=mix(ground_dry.rgb,ground_green.rgb,transition);
+    }
     meadow*=0.985+fine*0.015;
     ALBEDO=mix(vec3(0.92,0.90,0.86),meadow,grass);
     ROUGHNESS=mix(0.28,0.95,grass);
