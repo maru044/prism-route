@@ -5,6 +5,7 @@ extends Node3D
 @export_dir var motion_directory := "res://assets/characters/motion_review"
 @export var review_title := "人物动作测试"
 @export var spring_physics_enabled := false
+var spring_controls_available := true
 
 var catalog: Array = []
 var visible_indices: Array[int] = []
@@ -226,7 +227,8 @@ func _build_ui() -> void:
 			if axis=="y": chair.position.y=value
 			else: chair.position.z=value)
 		chair_row.add_child(adjust)
-	_check(column,"服饰物理（关闭可对比僵硬袖尾）",spring_physics_enabled,func(value): _set_springs(value))
+	if spring_controls_available:
+		_check(column,"服饰物理（关闭可对比僵硬袖尾）",spring_physics_enabled,func(value): _set_springs(value))
 	_button(column,"恢复正面视角",func():
 		yaw=0.22
 		pitch=0.12

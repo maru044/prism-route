@@ -3,6 +3,7 @@ extends "res://scripts/character_motion_test.gd"
 
 @export var model_id := "keqing"
 @export var model_label := "刻晴"
+@export var sleeve_dynamics_available := true
 var local: String
 var variant: OptionButton
 
@@ -11,7 +12,8 @@ func _ready() -> void:
 	character_resource = local + model_id + "_fixed.vrm"
 	motion_directory = local + "motions"
 	review_title = model_label + "动作测试"
-	spring_physics_enabled = true
+	spring_physics_enabled = sleeve_dynamics_available
+	spring_controls_available = sleeve_dynamics_available
 	if not ResourceLoader.exists(character_resource) or not FileAccess.file_exists(motion_directory + "/catalog.json"):
 		var message := Label.new()
 		message.position = Vector2(32, 32)
@@ -36,6 +38,8 @@ func _ready() -> void:
 	panel.add_child(variant)
 	var note := Label.new()
 	note.text = "袖尾动态已启用 · 关闭左侧服饰物理可对比\n头发、裙摆物理和表情绑定尚未配置"
+	if not sleeve_dynamics_available:
+		note.text = "头发、衣摆物理和表情绑定尚未配置"
 	panel.add_child(note)
 
 func _switch_variant(index: int) -> void:

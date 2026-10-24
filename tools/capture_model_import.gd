@@ -7,12 +7,12 @@ func _run() -> void:
 	var model_id := "keqing"
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--model="): model_id = argument.trim_prefix("--model=")
-	if model_id not in ["keqing", "huahuo"]:
+	if model_id not in ["keqing", "huahuo", "hutao"]:
 		push_error("Unknown model profile: " + model_id)
 		quit(1)
 		return
-	var scene_path := "res://scenes/character_huahuo_import_test.tscn" if model_id == "huahuo" else "res://scenes/character_model_import_test.tscn"
-	var build := "res://.model_import_build/huahuo/" if model_id == "huahuo" else "res://.model_import_build/"
+	var scene_path := "res://scenes/character_model_import_test.tscn" if model_id == "keqing" else "res://scenes/character_%s_import_test.tscn" % model_id
+	var build := "res://.model_import_build/" if model_id == "keqing" else "res://.model_import_build/%s/" % model_id
 	root.size = Vector2i(1440, 1000)
 	var scene = load(scene_path).instantiate()
 	root.add_child(scene)

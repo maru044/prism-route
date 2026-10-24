@@ -1,6 +1,6 @@
 """Run in Blender background: local PMX -> VRM 1.0 workflow experiment.
 
-The source stays outside Git. The audited Keqing and Huahuo profiles use the
+The source stays outside Git. The audited Keqing, Huahuo and Hu Tao profiles use the
 standard/D leg layout; missing or already weighted destinations fail explicitly.
 """
 import argparse
@@ -20,6 +20,7 @@ DEST = ROOT / 'assets/characters/import_tests_local/keqing'
 PROFILES = {
     'keqing': {'glob': '刻晴_by_*/刻晴/刻晴/刻晴.pmx', 'name': 'Keqing', 'editor': '观海'},
     'huahuo': {'glob': '星穹铁道—花火_by_*/*/花火3.0.pmx', 'name': 'Huahuo', 'editor': '神帝宇'},
+    'hutao': {'glob': '胡桃_by_*/*.pmx', 'name': 'Hu Tao', 'editor': '观海'},
 }
 
 
@@ -204,7 +205,7 @@ def main():
     set_enum(ext.vrm1.humanoid, 'pose', 'autoPose')
     meta = ext.vrm1.meta
     meta.vrm_name = profile['name'] + ' - local neutral conversion test'
-    meta.version = '2026-10-08' if args.profile == 'keqing' else '2026-10-09'
+    meta.version = {'keqing': '2026-10-08', 'huahuo': '2026-10-09', 'hutao': '2026-10-11'}[args.profile]
     meta.authors.clear()
     for author in ['miHoYo', profile['editor']]:
         meta.authors.add().value = author
@@ -244,11 +245,15 @@ def main():
     if weight_error > 1e-6 or any(t < 1e-6 for row in after_totals for t in row):
         raise RuntimeError(f'Weights lost: max total error {weight_error}')
     fixed_test = foot_test(meshes, arm, '足首.L')
-    if baseline_test['moved_vertices_over_0_1mm'] != 0 or fixed_test['moved_vertices_over_0_1mm'] < 100:
+    # Hu Tao already weights 24 vertices to the normal left toe child. Those
+    # follow the ankle even before the D/EX fix; the other profiles move zero.
+    expected_baseline = 24 if args.profile == 'hutao' else 0
+    if baseline_test['moved_vertices_over_0_1mm'] != expected_baseline or fixed_test['moved_vertices_over_0_1mm'] < 100:
         raise RuntimeError(f'Foot deformation test failed: {baseline_test}, {fixed_test}')
     sys.path.insert(0, str(ROOT / 'tools'))
     from mmd_sleeve_springs import configure_sleeves
-    sleeve_report = configure_sleeves(arm, args.profile)
+    # Hu Tao has no dedicated sleeve chains; do not reuse another model's rig.
+    sleeve_report = configure_sleeves(arm, args.profile) if args.profile != 'hutao' else None
     export_vrm(arm, meshes, DEST/f'{args.profile}_fixed.vrm')
     bpy.ops.wm.save_as_mainfile(filepath=str(BUILD/f'{args.profile}_fixed.blend'))
     report = {'profile': args.profile, 'blender': bpy.app.version_string,

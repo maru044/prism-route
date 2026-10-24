@@ -164,7 +164,7 @@ $pythonExe = 'C:\Users\PC\.cache\codex-runtimes\codex-primary-runtime\dependenci
 ```
 
 这些命令会重新生成两份 VRM 与刻晴动作；如果只是检查已提交资源，直接运行最后一条场景命令即可。
-不指定 `--profile` 时保留刻晴配置；`--profile huahuo` 使用单独审查过的花火配置。`--source` 用于明确指定相应源文件，并非任意模型的通用转换器。
+不指定 `--profile` 时保留刻晴配置；`--profile huahuo` 使用单独审查过的花火配置。2026-10-11 增加 `--profile hutao`，场景和检查记录见 [胡桃转换测试](MMD_VRM_HUTAO_TEST.md)。`--source` 用于明确指定相应源文件，并非任意模型的通用转换器。
 
 ## 后续工作
 

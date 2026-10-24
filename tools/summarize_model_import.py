@@ -37,7 +37,7 @@ def inspect(path):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model', choices=['keqing', 'huahuo'], default='keqing')
+    parser.add_argument('--model', choices=['keqing', 'huahuo', 'hutao'], default='keqing')
     args = parser.parse_args()
     BUILD = ROOT / '.model_import_build' / (args.model if args.model != 'keqing' else '')
     LOCAL = ROOT / 'assets/characters/import_tests_local' / args.model
@@ -50,7 +50,7 @@ def main():
     for field in ['source', 'source_sha256', 'asset_usage']:
         conversion.pop(field, None)
     conversion['removed_constraint_count'] = len(conversion.pop('removed_constraints'))
-    report = {'date': '2026-10-09', 'conversion': conversion,
+    report = {'date': '2026-10-11' if args.model == 'hutao' else '2026-10-09', 'conversion': conversion,
               'model': args.model,
               'exported': {v: inspect(LOCAL/f'{args.model}_{v}.vrm') for v in ['before', 'fixed']},
               'godot_validation': validation,
@@ -65,7 +65,21 @@ def main():
         keqing = json.loads((ROOT/'.model_import_build/godot_validation.json').read_text(encoding='utf8'))
         assert keqing['model'] == 'keqing' and keqing['clips'] == 42 and not keqing['failures']
         report['existing_keqing_review_regression'] = {'clips': keqing['clips'], 'failures': keqing['failures']}
-    report_name = 'MMD_VRM_HUAHUO_TEST_REPORT.json' if args.model == 'huahuo' else 'MMD_VRM_IMPORT_TEST_REPORT.json'
+    if args.model == 'hutao':
+        for previous in ['keqing', 'huahuo']:
+            directory = ROOT/'.model_import_build'/(previous if previous != 'keqing' else '')
+            result = json.loads((directory/'godot_validation.json').read_text(encoding='utf8'))
+            assert result['model'] == previous and result['clips'] == 42 and not result['failures']
+            report[f'existing_{previous}_review_regression'] = {'clips': result['clips'], 'failures': result['failures']}
+        assert 'MODEL_IMPORT_CAPTURE complete' in (BUILD/'capture.log').read_text(encoding='utf8')
+        assert not (BUILD/'capture_error.log').read_text(encoding='utf8').strip()
+        report['render_review'] = {'renderer': 'Forward+ D3D12 / RTX 5070 Ti',
+                                   'captured_frames': 12,
+                                   'contact_sheet': '.model_import_build/hutao/hutao_contact_sheet.png',
+                                   'note': 'Hair and coat remain rigid; no ground-contact or cloth correction.'}
+    report_name = {'keqing': 'MMD_VRM_IMPORT_TEST_REPORT.json',
+                   'huahuo': 'MMD_VRM_HUAHUO_TEST_REPORT.json',
+                   'hutao': 'MMD_VRM_HUTAO_TEST_REPORT.json'}[args.model]
     (ROOT/'docs'/report_name).write_text(
         json.dumps(report, ensure_ascii=False, indent=2)+'\n', encoding='utf8')
     print(json.dumps(report['exported'], ensure_ascii=False))
