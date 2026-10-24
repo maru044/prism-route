@@ -1,0 +1,42 @@
+{
+  "saved_file": "D:\\Prism Route\\map\\map_current.3dm", 
+  "objects": 261, 
+  "legacy_open_centerline_mask_layer_unchanged": "参考::种植边界", 
+  "curves": [
+    {
+      "id": "7404cff6-c36d-40b3-a24f-494802e636e6", 
+      "offset_distance_range_m": [
+        5.9992689493993465, 
+        6.0012541556489252
+      ], 
+      "width": 6.0, 
+      "surface_z": 62.999999999999993, 
+      "name": "大岛顶盖", 
+      "planting_inside_area_m2": 174251.51729864761, 
+      "source_area_m2": 187203.03368802529, 
+      "architectural_top_edge_area_m2": 12951.516389377677, 
+      "source_id": "ce36cdce-398b-44f5-b0b4-fe7f258106cf"
+    }, 
+    {
+      "id": "76c06be1-1acb-4bdd-a43c-c723e79666ca", 
+      "offset_distance_range_m": [
+        2.9999763213303621, 
+        3.0007179541477806
+      ], 
+      "width": 3.0, 
+      "surface_z": 72.599999999999994, 
+      "name": "椭圆顶盖", 
+      "planting_inside_area_m2": 5564.0676022795287, 
+      "source_area_m2": 6414.3290353771436, 
+      "architectural_top_edge_area_m2": 850.26143309761483, 
+      "source_id": "78d43939-e418-428e-aad5-d51b08c73985"
+    }
+  ], 
+  "scope": "CAD reference curves only. No face splitting, material replacement, coverage mesh, engine mask export or game scene modification.", 
+  "active_layers": 30, 
+  "new_curve_count": 2, 
+  "saved_ids_and_geometry_crc_match": true, 
+  "layer": "参考::建筑种植遮罩", 
+  "terrace_rule": "Existing stepped platforms are planting by default; no separate architectural edge bands on terrace ledges.", 
+  "original_geometry_and_attributes_unchanged": true
+}

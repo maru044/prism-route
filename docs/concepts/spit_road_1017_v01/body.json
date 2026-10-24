@@ -1,0 +1,10 @@
+{
+  "note": "Maximum outer and inner half-widths are 36m and 28m; the large detached cape is untouched.", 
+  "width_limits": [
+    72, 
+    56
+  ], 
+  "solid": true, 
+  "faces": 3, 
+  "sections": 143
+}

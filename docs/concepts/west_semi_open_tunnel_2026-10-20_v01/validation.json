@@ -1,0 +1,107 @@
+{
+  "gallery_sightlines": [
+    {
+      "blocked": false, 
+      "z": 38.0, 
+      "station": 516.0
+    }, 
+    {
+      "blocked": false, 
+      "z": 40.5, 
+      "station": 516.0
+    }, 
+    {
+      "blocked": false, 
+      "z": 43.0, 
+      "station": 516.0
+    }, 
+    {
+      "blocked": false, 
+      "z": 38.0, 
+      "station": 587.0
+    }, 
+    {
+      "blocked": false, 
+      "z": 40.5, 
+      "station": 587.0
+    }, 
+    {
+      "blocked": false, 
+      "z": 43.0, 
+      "station": 587.0
+    }, 
+    {
+      "blocked": false, 
+      "z": 38.0, 
+      "station": 661.5
+    }, 
+    {
+      "blocked": false, 
+      "z": 40.5, 
+      "station": 661.5
+    }, 
+    {
+      "blocked": false, 
+      "z": 43.0, 
+      "station": 661.5
+    }, 
+    {
+      "blocked": false, 
+      "z": 38.0, 
+      "station": 738.5
+    }, 
+    {
+      "blocked": false, 
+      "z": 40.5, 
+      "station": 738.5
+    }, 
+    {
+      "blocked": false, 
+      "z": 43.0, 
+      "station": 738.5
+    }, 
+    {
+      "blocked": false, 
+      "z": 38.0, 
+      "station": 811.5
+    }, 
+    {
+      "blocked": false, 
+      "z": 40.5, 
+      "station": 811.5
+    }, 
+    {
+      "blocked": false, 
+      "z": 43.0, 
+      "station": 811.5
+    }
+  ], 
+  "saved_geometry_match": true, 
+  "road_clearance_samples": 1505, 
+  "minimum_sampled_headroom_m": 11.575219085396864, 
+  "objects": 225, 
+  "wall_foot_vertex_samples": {
+    "unsupported": 0, 
+    "examples": [], 
+    "samples": 80
+  }, 
+  "wall_foot_floor_misses": [], 
+  "floor_below_road_m": [
+    0.2200012207031263, 
+    0.22000122070312653
+  ], 
+  "floor_misses": [], 
+  "changed_originals": [
+    "d01b8d98-9f3d-46e7-8737-7b60ad7a5657", 
+    "27172e67-243a-4398-9933-89de8ecae12d"
+  ], 
+  "road_geometry_unchanged": true, 
+  "body_valid": true, 
+  "body_solid": true, 
+  "added": [
+    "c92a65c2-822e-4dba-9a03-1037165d1340", 
+    "43a95a93-f015-4d31-902e-892640e449e4"
+  ], 
+  "intrusions": [], 
+  "saved_object_count": 225
+}

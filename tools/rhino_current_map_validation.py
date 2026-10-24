@@ -48,6 +48,26 @@ def kind(o):
  layer=sc.doc.Layers[o.Attributes.LayerIndex]
  return _roles['classify']({'id':str(o.Id),'kind':_layer_kind(o),'layer':layer.FullPath},_policy)[0]
 
+def mesh_parts(o):
+ """Keep the CAD solid intact; export authored surface roles independently."""
+ key=str(o.Id);g=o.Geometry;rule=_policy.get('mesh_partitions',{}).get(key)
+ if not rule:return [(key,g,kind(o),{})]
+ assert isinstance(g,G.Brep)
+ roof=[];architecture=[];roof_faces=[]
+ for i,face in enumerate(g.Faces):
+  box=face.GetBoundingBox(True)
+  # Only the original raised land roof has this full elevation range.
+  if box.Min.Z>34.9 and box.Max.Z>52.:
+   roof.append(face.DuplicateFace(False));roof_faces.append(i)
+  else:architecture.append(face.DuplicateFace(False))
+ assert len(roof)==1 and architecture,'Review changed cave surface topology'
+ def combine(parts):
+  b=G.Brep()
+  for part in parts:b.Append(part)
+  assert b.IsValid;return b
+ return [(key,combine(roof),'Terrain',{'source_object_id':key,'mesh_part':'plantable_roof','cad_face_indices':roof_faces}),
+  (rule['architecture_id'],combine(architecture),'Structure',{'source_object_id':key,'mesh_part':'cave_architecture','cad_face_indices':[i for i in range(g.Faces.Count)if i not in roof_faces]})]
+
 def prepare():
  assert sc.doc.Path.replace('\\','/').replace('//','/').lower()=='d:/prism route/map/map_current.3dm'
  if not os.path.isdir(CACHE):os.makedirs(CACHE)
@@ -68,20 +88,23 @@ def batch(count=16):
  stream=System.IO.FileStream(CACHE+'/source.bin',System.IO.FileMode.Append);writer=System.IO.BinaryWriter(stream)
  try:
   for key in d['ids'][d['index']:d['index']+count]:
-   o=sc.doc.Objects.FindId(System.Guid(key));assert o;g=o.Geometry;m=G.Mesh()
-   if isinstance(g,G.Mesh):m.Append(g)
-   elif isinstance(g,G.SubD):m.Append(G.Mesh.CreateFromSubD(g,2))
-   else:
-    b=g.ToBrep()if isinstance(g,G.Extrusion)else g
-    for q in G.Mesh.CreateFromBrep(b,p):m.Append(q)
-   m.Faces.ConvertQuadsToTriangles();m.Normals.ComputeNormals();m.Compact();assert m.IsValid
-   pos=m.Vertices.ToFloatArray();ix=m.Faces.ToIntArray(True);offset=stream.Position
-   for array in [pos,ix]:
-    raw=System.Array.CreateInstance(System.Byte,array.Length*4);System.Buffer.BlockCopy(array,0,raw,0,raw.Length);writer.Write(raw)
-   row={'id':key,'name':o.Name or'','layer':sc.doc.Layers[o.Attributes.LayerIndex].FullPath,'kind':kind(o),
-   'offset':int(offset),'vertex_count':m.Vertices.Count,'index_count':ix.Length,'bounds':[xyz(m.GetBoundingBox(True).Min),xyz(m.GetBoundingBox(True).Max)],
-   'collision':not('斜拉索'in(o.Name or''))and kind(o)!='Water'}
-   d['records'].append(row);d['index']+=1;records.append(row)
+   o=sc.doc.Objects.FindId(System.Guid(key));assert o
+   for export_id,g,role,extra in mesh_parts(o):
+    m=G.Mesh()
+    if isinstance(g,G.Mesh):m.Append(g)
+    elif isinstance(g,G.SubD):m.Append(G.Mesh.CreateFromSubD(g,2))
+    else:
+     b=g.ToBrep()if isinstance(g,G.Extrusion)else g
+     for q in G.Mesh.CreateFromBrep(b,p):m.Append(q)
+    m.Faces.ConvertQuadsToTriangles();m.Normals.ComputeNormals();m.Compact();assert m.IsValid
+    pos=m.Vertices.ToFloatArray();ix=m.Faces.ToIntArray(True);offset=stream.Position
+    for array in [pos,ix]:
+     raw=System.Array.CreateInstance(System.Byte,array.Length*4);System.Buffer.BlockCopy(array,0,raw,0,raw.Length);writer.Write(raw)
+    row={'id':export_id,'name':(o.Name or'')+('_'+extra['mesh_part']if extra else''),'layer':sc.doc.Layers[o.Attributes.LayerIndex].FullPath,'kind':role,
+     'offset':int(offset),'vertex_count':m.Vertices.Count,'index_count':ix.Length,'bounds':[xyz(m.GetBoundingBox(True).Min),xyz(m.GetBoundingBox(True).Max)],
+     'collision':not('斜拉索'in(o.Name or''))and role!='Water'}
+    row.update(extra);d['records'].append(row);records.append(row)
+   d['index']+=1
  finally:writer.Close()
  return {'done':d['index'],'total':len(d['ids']),'triangles':sum(r['index_count']//3 for r in records)}
 

@@ -1,0 +1,77 @@
+{
+  "unchanged_original_objects": 228,
+  "bridges": {
+    "east": {
+      "road_join_max_tangent_angle_degrees": 0.022204272734339944,
+      "road_width_m": 20.0,
+      "length_m": 59.214865620116406,
+      "longitudinal_clearance": {
+        "segments": 960,
+        "hits": []
+      },
+      "body_solid": true,
+      "road_join_max_gap_m": 0.00010471804142795179,
+      "support_clearance": {
+        "existing_intrusions": [],
+        "support_gap_m": [
+          0.10962978257906873,
+          0.11075164085097418
+        ],
+        "vertical_count": 655,
+        "existing_min_headroom_m": 8.715091946966862,
+        "new_body_problems": []
+      },
+      "connected_components": 1,
+      "naked_edges": 0,
+      "manifold": true,
+      "paving_faces": 6,
+      "gap_chord_m": 58.94204273087715,
+      "body_valid": true,
+      "body_faces": 10,
+      "native_nurbs_side_surfaces": 8
+    },
+    "west": {
+      "road_join_max_tangent_angle_degrees": 0.010884640828024077,
+      "road_width_m": 20.0,
+      "length_m": 120.42549296703439,
+      "longitudinal_clearance": {
+        "segments": 960,
+        "hits": []
+      },
+      "body_solid": true,
+      "road_join_max_gap_m": 8.803806575963693e-06,
+      "support_clearance": {
+        "existing_intrusions": [],
+        "support_gap_m": [
+          0.10987023207243023,
+          0.1101299926595679
+        ],
+        "vertical_count": 655,
+        "existing_min_headroom_m": 11.625041896198022,
+        "new_body_problems": []
+      },
+      "connected_components": 1,
+      "naked_edges": 0,
+      "manifold": true,
+      "paving_faces": 6,
+      "gap_chord_m": 120.04219703775645,
+      "body_valid": true,
+      "body_faces": 10,
+      "native_nurbs_side_surfaces": 8
+    }
+  },
+  "document": "D:\\Prism Route\\map\\map_current.3dm",
+  "active_layer_count": 26,
+  "object_count": 232,
+  "ids": {
+    "east_body": "084f961d-d217-45ae-b4be-dd035138bb99",
+    "west_paving": "3a30b9b4-5323-484e-b06c-6e90087ce317",
+    "west_body": "6cb4c0d2-5099-476f-975f-f7cebcde49f0",
+    "east_paving": "da70b7ab-69ad-4e7c-82a0-8ae40a247d59"
+  },
+  "saved_object_count": 232,
+  "saved_file_crc_matches": true,
+  "limitations": [
+    "Sampled Rhino geometry and clearance checks; Godot driving/collision and engineering load verification not performed."
+  ]
+}

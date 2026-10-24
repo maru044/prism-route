@@ -1,0 +1,42 @@
+{
+  "objects": 263, 
+  "active_layers": 30, 
+  "new_curves": [
+    {
+      "source_object": "ce36cdce-398b-44f5-b0b4-fe7f258106cf", 
+      "centerline_offset_from_top_edge_m": 3.0, 
+      "half_width_m": 3.0, 
+      "measured_offset_range_m": [
+        2.9994164788065558, 
+        3.0006896412943238
+      ], 
+      "closed": true, 
+      "surface_z_m": 63.0, 
+      "id": "1c27e61e-fedb-45fb-9ed5-54887be07ccc", 
+      "full_width_m": 6.0, 
+      "source_curve": "7404cff6-c36d-40b3-a24f-494802e636e6"
+    }, 
+    {
+      "source_object": "78d43939-e418-428e-aad5-d51b08c73985", 
+      "centerline_offset_from_top_edge_m": 1.5, 
+      "half_width_m": 1.5, 
+      "measured_offset_range_m": [
+        1.4999708342263263, 
+        1.5006923706497886
+      ], 
+      "closed": true, 
+      "surface_z_m": 72.599999999999994, 
+      "id": "2bcec7a3-6b73-460e-b722-7db09c2f0077", 
+      "full_width_m": 3.0, 
+      "source_curve": "76c06be1-1acb-4bdd-a43c-c723e79666ca"
+    }
+  ], 
+  "saved_ids_and_geometry_crc_match": true, 
+  "saved_file": "D:\\Prism Route\\map\\map_current.3dm", 
+  "all_prior_geometry_and_attributes_unchanged": true, 
+  "target_layer": "参考::种植边界", 
+  "original_boundary_curves_preserved": [
+    "7404cff6-c36d-40b3-a24f-494802e636e6", 
+    "76c06be1-1acb-4bdd-a43c-c723e79666ca"
+  ]
+}

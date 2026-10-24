@@ -1,0 +1,18 @@
+[
+  {
+    "island": 2, 
+    "B1_low_tower_center_lateral_range_m": [
+      -39.542472074666634, 
+      -32.733957333333329
+    ], 
+    "both_legs_same_side": true
+  }, 
+  {
+    "island": 4, 
+    "B1_low_tower_center_lateral_range_m": [
+      -39.542472074666705, 
+      -30.476465877333361
+    ], 
+    "both_legs_same_side": true
+  }
+]

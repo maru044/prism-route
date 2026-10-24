@@ -1,0 +1,63 @@
+{
+  "existing_scene_clearance": {
+    "lower": {
+      "blockages": [], 
+      "tested_verticals": 303
+    }, 
+    "upper": {
+      "blockages": [], 
+      "tested_verticals": 303
+    }
+  }, 
+  "rolled_seams": {
+    "sample_count": 180, 
+    "max_normal_angle_degrees": 0.015355582269270786, 
+    "max_surface_gap_m": 0.00075256878356751676
+  }, 
+  "unchanged_original_objects": 225, 
+  "source_cross_section_max_join_error_m": 5.6843418860808015e-14, 
+  "saved_file_crc_matches": true, 
+  "document": "D:\\Prism Route\\map\\map_current.3dm", 
+  "ids": {
+    "upper_road": "d05c0d78-6f0f-424e-8122-5b5ed360134e", 
+    "lower_road": "5a63fdbf-8010-4d72-92bd-51d436c90954", 
+    "shell": "113c5c2d-8fd8-458a-b2ee-80bb3b4daff8"
+  }, 
+  "body": {
+    "connected_face_components": 1, 
+    "manifold": true, 
+    "all_surfaces_native_nurbs": true, 
+    "naked_edges": 0, 
+    "solid": true, 
+    "faces": 12
+  }, 
+  "object_count": 228, 
+  "layer_count": 26, 
+  "traffic_support": {
+    "lower": {
+      "samples": 505, 
+      "minimum_headroom_m": 19.899340495493387, 
+      "support_gap_m": [
+        0.094847422765914707, 
+        0.10797522230282736
+      ], 
+      "paving_thickness_m": 0.16, 
+      "minimum_paving_overlap_m": 0.052024777697172647
+    }, 
+    "upper": {
+      "samples": 505, 
+      "minimum_headroom_m": null, 
+      "support_gap_m": [
+        0.030520345339864627, 
+        0.21080716808811148
+      ], 
+      "paving_thickness_m": 0.28000000000000003, 
+      "minimum_paving_overlap_m": 0.069192831911888547
+    }
+  }, 
+  "span_m": 126.78996544125266, 
+  "saved_object_count": 228, 
+  "limitations": [
+    "Rhino geometry and sampled clearance validation only; no Godot driving/collision validation or engineering load verification."
+  ]
+}

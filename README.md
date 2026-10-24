@@ -8,6 +8,9 @@ and a transparent performance monitor at the bottom left. See the
 [scene and asset guide](assets/world/current_map_validation/README.md).
 The full-map mesh uses Git LFS; run `git lfs pull` after cloning.
 
+End-of-October release materials and the itch.io upload-limit inquiry are tracked
+in the [upload preparation plan](docs/ITCH_IO_UPLOAD_LIMIT_PLAN.md).
+
 ## Current Rhino model, 2026-10-18
 
 Edit [map_current.3dm](../map/map_current.3dm). The scene has been cleaned and

@@ -1,0 +1,17 @@
+{
+  "user_approved_current_version": "B2", 
+  "retained_objects": 259, 
+  "deleted_empty_layer": "交通::上层道路::环塔对比::B1_同侧原版", 
+  "deleted_B1_object_ids": [
+    "a1623954-71ae-4c0d-830d-ced46440e17e", 
+    "e7082218-d1ba-4ff2-adce-cfb81648ef81", 
+    "4d5c9137-ee88-4e63-9ac4-806da86fac32", 
+    "020ca9f3-6ce4-463d-b274-f00621347643"
+  ], 
+  "all_retained_geometry_and_attributes_unchanged": true, 
+  "date": "2026-10-21", 
+  "active_layers": 29, 
+  "saved_file": "D:\\Prism Route\\map\\map_current.3dm", 
+  "B2_visible": true, 
+  "saved_ids_and_geometry_crc_match": true
+}

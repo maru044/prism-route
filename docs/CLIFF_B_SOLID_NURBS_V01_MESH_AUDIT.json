@@ -1,9 +1,0 @@
-{
-  "triangles": 77191,
-  "bvh_pairs": 4,
-  "nonadjacent_candidates": 0,
-  "degenerate_triangles": 0,
-  "crossing_pairs": 0,
-  "examples": [],
-  "scope": "Non-adjacent noncoplanar triangle crossings; adjacency and coplanar overlap excluded."
-}

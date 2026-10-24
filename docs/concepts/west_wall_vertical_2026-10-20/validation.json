@@ -1,0 +1,92 @@
+{
+  "added_objects": 0, 
+  "tunnel_and_floor_geometry_unchanged": true, 
+  "wall_valid": true, 
+  "gallery_sightlines": [
+    {
+      "blocked": false, 
+      "height": 38.0, 
+      "station": 516.0
+    }, 
+    {
+      "blocked": false, 
+      "height": 42.0, 
+      "station": 516.0
+    }, 
+    {
+      "blocked": false, 
+      "height": 47.0, 
+      "station": 516.0
+    }, 
+    {
+      "blocked": false, 
+      "height": 38.0, 
+      "station": 587.0
+    }, 
+    {
+      "blocked": false, 
+      "height": 42.0, 
+      "station": 587.0
+    }, 
+    {
+      "blocked": false, 
+      "height": 47.0, 
+      "station": 587.0
+    }, 
+    {
+      "blocked": false, 
+      "height": 38.0, 
+      "station": 661.5
+    }, 
+    {
+      "blocked": false, 
+      "height": 42.0, 
+      "station": 661.5
+    }, 
+    {
+      "blocked": false, 
+      "height": 47.0, 
+      "station": 661.5
+    }, 
+    {
+      "blocked": false, 
+      "height": 38.0, 
+      "station": 738.5
+    }, 
+    {
+      "blocked": false, 
+      "height": 42.0, 
+      "station": 738.5
+    }, 
+    {
+      "blocked": false, 
+      "height": 47.0, 
+      "station": 738.5
+    }, 
+    {
+      "blocked": false, 
+      "height": 38.0, 
+      "station": 811.5
+    }, 
+    {
+      "blocked": false, 
+      "height": 42.0, 
+      "station": 811.5
+    }, 
+    {
+      "blocked": false, 
+      "height": 47.0, 
+      "station": 811.5
+    }
+  ], 
+  "saved_geometry_match": true, 
+  "normal_z_max": 2.5135621153129484e-15, 
+  "object_count": 225, 
+  "retained_face_area_difference": 0.0, 
+  "changed_originals": [
+    "27172e67-243a-4398-9933-89de8ecae12d"
+  ], 
+  "vertical_xy_deviation_max_m": 0.0, 
+  "road_clearance_samples": 903, 
+  "wall_intrusions": []
+}

@@ -1,0 +1,160 @@
+{
+  "longitudinal_intrusions": [], 
+  "cables": 124, 
+  "cable_end_pairs_checked": 124, 
+  "longitudinal_vehicle_segments": 3600, 
+  "layers": {
+    "B2": "交通::上层道路::环塔对比::B2_跨桥扭转", 
+    "B1": "交通::上层道路::环塔对比::B1_同侧原版"
+  }, 
+  "B1_audit": [
+    {
+      "island": 2, 
+      "B1_low_tower_center_lateral_range_m": [
+        -39.542472074666634, 
+        -32.733957333333329
+      ], 
+      "both_legs_same_side": true
+    }, 
+    {
+      "island": 4, 
+      "B1_low_tower_center_lateral_range_m": [
+        -39.542472074666705, 
+        -30.476465877333361
+      ], 
+      "both_legs_same_side": true
+    }
+  ], 
+  "live_objects": 263, 
+  "active_layers": 30, 
+  "baseline_objects": 259, 
+  "B2_towers": [
+    {
+      "previous_wide_comparison_spacing_m": 117.98728745080972, 
+      "foot_lateral_m": [
+        -22.0, 
+        22.0
+      ], 
+      "feet_inside_original_base": true, 
+      "faces": 3, 
+      "no_naked_edges": true, 
+      "foot_spacing_m": 44.283179650969096, 
+      "island": 2, 
+      "native_nurbs_solid": true, 
+      "section_rotation_degrees": 85.0, 
+      "rail_nonplanarity_m": 16.871179914695794
+    }, 
+    {
+      "previous_wide_comparison_spacing_m": 129.34063553268942, 
+      "foot_lateral_m": [
+        -22.0, 
+        22.0
+      ], 
+      "feet_inside_original_base": true, 
+      "faces": 3, 
+      "no_naked_edges": true, 
+      "foot_spacing_m": 44.283179650969018, 
+      "island": 4, 
+      "native_nurbs_solid": true, 
+      "section_rotation_degrees": -85.0, 
+      "rail_nonplanarity_m": 16.646875479155025
+    }
+  ], 
+  "original_geometries_changed": [], 
+  "missing_originals": [], 
+  "scope": "Visual comparison and sampled Rhino geometry clearance. Not structural certification or Godot collision acceptance.", 
+  "saved_file": {
+    "objects": 263, 
+    "B2_visible_B1_off": true, 
+    "path": "D:\\Prism Route\\map\\map_current.3dm", 
+    "all_ids_and_geometry_crc_match": true
+  }, 
+  "tower_at_road_height": [
+    {
+      "island": 2, 
+      "straddles_road": true, 
+      "tower_axis_at_deck_height_lateral_range_m": [
+        -23.640756295088273, 
+        21.783408579222577
+      ]
+    }, 
+    {
+      "island": 4, 
+      "straddles_road": true, 
+      "tower_axis_at_deck_height_lateral_range_m": [
+        -23.458251273653630, 
+        22.279746758407956
+      ]
+    }
+  ], 
+  "cable_clearance_margin_m": 0.25, 
+  "both_cable_ends_inside_finished_bodies": 124, 
+  "tower_footprints": [
+    {
+      "foundation_supported_samples": 64, 
+      "island": 2, 
+      "samples": 64, 
+      "foot": "sea"
+    }, 
+    {
+      "foundation_supported_samples": 64, 
+      "island": 2, 
+      "samples": 64, 
+      "foot": "land"
+    }, 
+    {
+      "foundation_supported_samples": 64, 
+      "island": 4, 
+      "samples": 64, 
+      "foot": "sea"
+    }, 
+    {
+      "foundation_supported_samples": 64, 
+      "island": 4, 
+      "samples": 64, 
+      "foot": "land"
+    }
+  ], 
+  "clearance": {
+    "intrusions": [], 
+    "min_overhead_tower_m": 82.218269562453955, 
+    "road_samples": 2005
+  }, 
+  "only_expected_original_attribute_change": "Four B1 objects moved to the explicit B1 comparison layer; geometry and all other object attributes retained.", 
+  "components": [
+    {
+      "id": "d8a66a8a-7ee4-4016-850f-5f54f10a5563", 
+      "type": "Brep", 
+      "role": "tower_3", 
+      "valid": true, 
+      "closed": true, 
+      "faces": 3
+    }, 
+    {
+      "id": "b09a97de-0ef2-4c7c-ad9c-ca57e0f6544a", 
+      "type": "Mesh", 
+      "role": "stays_1", 
+      "valid": true, 
+      "closed": true, 
+      "faces": 2280
+    }, 
+    {
+      "id": "0a8d8005-6d57-439d-b9d2-f2015fc3cf3c", 
+      "type": "Mesh", 
+      "role": "stays_3", 
+      "valid": true, 
+      "closed": true, 
+      "faces": 1440
+    }, 
+    {
+      "id": "f28fbf87-2b97-452e-afd0-d9625d711c7f", 
+      "type": "Brep", 
+      "role": "tower_1", 
+      "valid": true, 
+      "closed": true, 
+      "faces": 3
+    }
+  ], 
+  "unexpected_attributes_changed": [], 
+  "active_version": "B2"
+}

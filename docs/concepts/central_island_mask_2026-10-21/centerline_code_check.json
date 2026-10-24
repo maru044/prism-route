@@ -1,0 +1,40 @@
+{
+  "readable_curves": 8,
+  "closed": 2,
+  "open": 6,
+  "six_existing_open_curve_positions_and_widths_unchanged": true,
+  "exported_objects": 47,
+  "exported_triangles": 819086,
+  "cad_closed_band_checks": [
+    {
+      "id": "1c27e61e-fedb-45fb-9ed5-54887be07ccc",
+      "name": "建筑中线_大岛顶盖_闭合恒宽 [w=6]",
+      "full_width_m": 6.0,
+      "ring_area_m2": 12951.375150829088,
+      "target_edge_area_m2": 12951.516389377677,
+      "relative_area_error": 1.0905174679391992e-05,
+      "height_range_m": [
+        62.99999999999997,
+        63.00000000000003
+      ],
+      "centreline_and_seam_samples_white": 64
+    },
+    {
+      "id": "2bcec7a3-6b73-460e-b722-7db09c2f0077",
+      "name": "建筑中线_椭圆顶盖_闭合恒宽 [w=3]",
+      "full_width_m": 3.0,
+      "ring_area_m2": 850.1855524366983,
+      "target_edge_area_m2": 850.2614330976148,
+      "relative_area_error": 8.92439171797301e-05,
+      "height_range_m": [
+        72.59999847412108,
+        72.59999847412112
+      ],
+      "centreline_and_seam_samples_white": 64
+    }
+  ],
+  "test_resolution": 1024,
+  "distance_check_error_m": 0.0,
+  "game_assets_untouched": true,
+  "test_outputs_in_ignored_build_cache": "D:\\Prism Route\\prism-route\\.landscape_mask_build\\closed_band_check"
+}
