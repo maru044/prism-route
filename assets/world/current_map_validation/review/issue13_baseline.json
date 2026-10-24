@@ -1,0 +1,1317 @@
+{
+  "final": {
+    "active": 77,
+    "building": true,
+    "built": 249,
+    "last_build_ms": 5.116,
+    "lookahead_m": 0.0,
+    "pending_visible": 144,
+    "queued": 302,
+    "speed_mps": 0.0,
+    "unloaded": 172
+  },
+  "frame_cap": 60,
+  "frames": {
+    "fps_1pct_low": 50.9236272899719,
+    "max_ms": 34.551,
+    "mean_ms": 16.6600595358224,
+    "p95_ms": 17.612,
+    "p99_ms": 17.916
+  },
+  "gpu": {
+    "max_ms": 9.10299968719482,
+    "mean_ms": 5.86477799919612,
+    "p95_ms": 8.86900043487549,
+    "p99_ms": 9.0
+  },
+  "mode": "baseline",
+  "monitor_peaks": {
+    "draw_calls": 1171.0,
+    "engine_mib": 2927.66818809509,
+    "nodes": 13815.0,
+    "primitives": 12657605.0,
+    "render_vram_mib": 1912.7890625
+  },
+  "performance_hud": false,
+  "phases": {
+    "cold": {
+      "frames": {
+        "fps_1pct_low": 47.4964615136172,
+        "max_ms": 33.683,
+        "mean_ms": 16.6373264033264,
+        "p95_ms": 17.612,
+        "p99_ms": 17.86
+      },
+      "stream_tick": {
+        "max_ms": 12.374,
+        "mean_ms": 5.74979209979209,
+        "p95_ms": 8.426,
+        "p99_ms": 9.777
+      }
+    },
+    "revisit": {
+      "frames": {
+        "fps_1pct_low": 42.3764725824222,
+        "max_ms": 34.551,
+        "mean_ms": 16.6728066666667,
+        "p95_ms": 17.65,
+        "p99_ms": 18.05
+      },
+      "stream_tick": {
+        "max_ms": 12.045,
+        "mean_ms": 5.75624,
+        "p95_ms": 8.458,
+        "p99_ms": 10.028
+      }
+    },
+    "travel_18mps_camera": {
+      "frames": {
+        "fps_1pct_low": 55.519728722064,
+        "max_ms": 18.25,
+        "mean_ms": 16.6659800166528,
+        "p95_ms": 17.588,
+        "p99_ms": 17.912
+      },
+      "stream_tick": {
+        "max_ms": 14.876,
+        "mean_ms": 9.72107160699417,
+        "p95_ms": 12.313,
+        "p99_ms": 13.702
+      }
+    }
+  },
+  "records": [
+    {
+      "active": 2,
+      "building": true,
+      "built": 2,
+      "elapsed_s": 0.502919,
+      "last_build_ms": 5.22,
+      "lookahead_m": 0.0,
+      "pending_visible": 166,
+      "queued": 340,
+      "speed_mps": 0.0,
+      "stage": "cold",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 12,
+        "110_128": 17,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 4,
+      "building": true,
+      "built": 4,
+      "elapsed_s": 1.019491,
+      "last_build_ms": 5.154,
+      "lookahead_m": 0.0,
+      "pending_visible": 164,
+      "queued": 338,
+      "speed_mps": 0.0,
+      "stage": "cold",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 12,
+        "110_128": 17,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 7,
+      "building": true,
+      "built": 7,
+      "elapsed_s": 1.519529,
+      "last_build_ms": 5.292,
+      "lookahead_m": 0.0,
+      "pending_visible": 161,
+      "queued": 335,
+      "speed_mps": 0.0,
+      "stage": "cold",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 9,
+        "110_128": 17,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 9,
+      "building": true,
+      "built": 9,
+      "elapsed_s": 2.019555,
+      "last_build_ms": 5.242,
+      "lookahead_m": 0.0,
+      "pending_visible": 159,
+      "queued": 333,
+      "speed_mps": 0.0,
+      "stage": "cold",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 9,
+        "110_128": 17,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 12,
+      "building": true,
+      "built": 12,
+      "elapsed_s": 2.536108,
+      "last_build_ms": 5.114,
+      "lookahead_m": 0.0,
+      "pending_visible": 156,
+      "queued": 330,
+      "speed_mps": 0.0,
+      "stage": "cold",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 8,
+        "110_128": 17,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 15,
+      "building": true,
+      "built": 15,
+      "elapsed_s": 3.036361,
+      "last_build_ms": 5.083,
+      "lookahead_m": 0.0,
+      "pending_visible": 153,
+      "queued": 327,
+      "speed_mps": 0.0,
+      "stage": "cold",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 8,
+        "110_128": 17,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 17,
+      "building": true,
+      "built": 17,
+      "elapsed_s": 3.53693,
+      "last_build_ms": 5.37,
+      "lookahead_m": 0.0,
+      "pending_visible": 151,
+      "queued": 325,
+      "speed_mps": 0.0,
+      "stage": "cold",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 8,
+        "110_128": 17,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 20,
+      "building": true,
+      "built": 20,
+      "elapsed_s": 4.052738,
+      "last_build_ms": 5.246,
+      "lookahead_m": 0.0,
+      "pending_visible": 148,
+      "queued": 322,
+      "speed_mps": 0.0,
+      "stage": "cold",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 8,
+        "110_128": 17,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 22,
+      "building": true,
+      "built": 22,
+      "elapsed_s": 4.569731,
+      "last_build_ms": 5.024,
+      "lookahead_m": 0.0,
+      "pending_visible": 146,
+      "queued": 320,
+      "speed_mps": 0.0,
+      "stage": "cold",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 8,
+        "110_128": 17,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 25,
+      "building": true,
+      "built": 25,
+      "elapsed_s": 5.085993,
+      "last_build_ms": 5.338,
+      "lookahead_m": 0.0,
+      "pending_visible": 143,
+      "queued": 317,
+      "speed_mps": 0.0,
+      "stage": "cold",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 7,
+        "110_128": 17,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 27,
+      "building": true,
+      "built": 27,
+      "elapsed_s": 5.586214,
+      "last_build_ms": 5.267,
+      "lookahead_m": 0.0,
+      "pending_visible": 141,
+      "queued": 315,
+      "speed_mps": 0.0,
+      "stage": "cold",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 5,
+        "110_128": 17,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 30,
+      "building": true,
+      "built": 30,
+      "elapsed_s": 6.102621,
+      "last_build_ms": 5.065,
+      "lookahead_m": 0.0,
+      "pending_visible": 138,
+      "queued": 312,
+      "speed_mps": 0.0,
+      "stage": "cold",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 5,
+        "110_128": 17,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 32,
+      "building": true,
+      "built": 32,
+      "elapsed_s": 6.602912,
+      "last_build_ms": 5.066,
+      "lookahead_m": 0.0,
+      "pending_visible": 136,
+      "queued": 310,
+      "speed_mps": 0.0,
+      "stage": "cold",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 5,
+        "110_128": 17,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 35,
+      "building": false,
+      "built": 35,
+      "elapsed_s": 7.119573,
+      "last_build_ms": 7.753,
+      "lookahead_m": 0.0,
+      "pending_visible": 133,
+      "queued": 308,
+      "speed_mps": 0.0,
+      "stage": "cold",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 2,
+        "110_128": 17,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 37,
+      "building": true,
+      "built": 37,
+      "elapsed_s": 7.636836,
+      "last_build_ms": 5.107,
+      "lookahead_m": 0.0,
+      "pending_visible": 131,
+      "queued": 305,
+      "speed_mps": 0.0,
+      "stage": "cold",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 1,
+        "110_128": 17,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 40,
+      "building": true,
+      "built": 40,
+      "elapsed_s": 8.153119,
+      "last_build_ms": 9.183,
+      "lookahead_m": 78.5982818603516,
+      "pending_visible": 128,
+      "queued": 364,
+      "speed_mps": 11.7603063583374,
+      "stage": "travel_18mps_camera",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 1,
+        "110_128": 15,
+        "48_76": 13,
+        "76_110": 21
+      }
+    },
+    {
+      "active": 45,
+      "building": true,
+      "built": 45,
+      "elapsed_s": 8.670399,
+      "last_build_ms": 9.129,
+      "lookahead_m": 112.79801940918,
+      "pending_visible": 121,
+      "queued": 393,
+      "speed_mps": 17.7595996856689,
+      "stage": "travel_18mps_camera",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 1,
+        "110_128": 17,
+        "48_76": 13,
+        "76_110": 25
+      }
+    },
+    {
+      "active": 50,
+      "building": false,
+      "built": 50,
+      "elapsed_s": 9.185835,
+      "last_build_ms": 11.276,
+      "lookahead_m": 113.966598510742,
+      "pending_visible": 117,
+      "queued": 382,
+      "speed_mps": 18.0002880096436,
+      "stage": "travel_18mps_camera",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 15,
+        "48_76": 15,
+        "76_110": 26
+      }
+    },
+    {
+      "active": 54,
+      "building": true,
+      "built": 54,
+      "elapsed_s": 9.686209,
+      "last_build_ms": 9.195,
+      "lookahead_m": 114.398880004883,
+      "pending_visible": 111,
+      "queued": 377,
+      "speed_mps": 17.9484615325928,
+      "stage": "travel_18mps_camera",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 14,
+        "48_76": 13,
+        "76_110": 22
+      }
+    },
+    {
+      "active": 59,
+      "building": true,
+      "built": 59,
+      "elapsed_s": 10.186526,
+      "last_build_ms": 9.164,
+      "lookahead_m": 114.500885009766,
+      "pending_visible": 109,
+      "queued": 373,
+      "speed_mps": 17.8996868133545,
+      "stage": "travel_18mps_camera",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 13,
+        "48_76": 13,
+        "76_110": 25
+      }
+    },
+    {
+      "active": 63,
+      "building": true,
+      "built": 63,
+      "elapsed_s": 10.702425,
+      "last_build_ms": 9.251,
+      "lookahead_m": 113.997138977051,
+      "pending_visible": 106,
+      "queued": 366,
+      "speed_mps": 18.0012187957764,
+      "stage": "travel_18mps_camera",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 1,
+        "110_128": 17,
+        "48_76": 16,
+        "76_110": 21
+      }
+    },
+    {
+      "active": 69,
+      "building": false,
+      "built": 69,
+      "elapsed_s": 11.219109,
+      "last_build_ms": 12.149,
+      "lookahead_m": 113.978858947754,
+      "pending_visible": 97,
+      "queued": 362,
+      "speed_mps": 17.9915523529053,
+      "stage": "travel_18mps_camera",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 16,
+        "48_76": 15,
+        "76_110": 20
+      }
+    },
+    {
+      "active": 73,
+      "building": true,
+      "built": 73,
+      "elapsed_s": 11.719124,
+      "last_build_ms": 9.09,
+      "lookahead_m": 113.995170593262,
+      "pending_visible": 93,
+      "queued": 352,
+      "speed_mps": 17.9921951293945,
+      "stage": "travel_18mps_camera",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 11,
+        "48_76": 10,
+        "76_110": 28
+      }
+    },
+    {
+      "active": 78,
+      "building": false,
+      "built": 78,
+      "elapsed_s": 12.235692,
+      "last_build_ms": 9.685,
+      "lookahead_m": 113.955932617188,
+      "pending_visible": 95,
+      "queued": 352,
+      "speed_mps": 17.9959926605225,
+      "stage": "travel_18mps_camera",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 18,
+        "48_76": 12,
+        "76_110": 25
+      }
+    },
+    {
+      "active": 83,
+      "building": true,
+      "built": 83,
+      "elapsed_s": 12.752353,
+      "last_build_ms": 9.17,
+      "lookahead_m": 113.968444824219,
+      "pending_visible": 89,
+      "queued": 338,
+      "speed_mps": 17.9940528869629,
+      "stage": "travel_18mps_camera",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 17,
+        "48_76": 14,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 88,
+      "building": true,
+      "built": 88,
+      "elapsed_s": 13.268998,
+      "last_build_ms": 9.098,
+      "lookahead_m": 114.033958435059,
+      "pending_visible": 89,
+      "queued": 337,
+      "speed_mps": 17.9973392486572,
+      "stage": "travel_18mps_camera",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 12,
+        "48_76": 13,
+        "76_110": 24
+      }
+    },
+    {
+      "active": 93,
+      "building": false,
+      "built": 93,
+      "elapsed_s": 13.785634,
+      "last_build_ms": 9.171,
+      "lookahead_m": 113.231956481934,
+      "pending_visible": 84,
+      "queued": 333,
+      "speed_mps": 17.9951629638672,
+      "stage": "travel_18mps_camera",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 14,
+        "48_76": 11,
+        "76_110": 26
+      }
+    },
+    {
+      "active": 97,
+      "building": true,
+      "built": 97,
+      "elapsed_s": 14.286892,
+      "last_build_ms": 9.241,
+      "lookahead_m": 114.002784729004,
+      "pending_visible": 87,
+      "queued": 326,
+      "speed_mps": 17.826416015625,
+      "stage": "travel_18mps_camera",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 16,
+        "48_76": 9,
+        "76_110": 20
+      }
+    },
+    {
+      "active": 102,
+      "building": true,
+      "built": 102,
+      "elapsed_s": 14.802368,
+      "last_build_ms": 9.27,
+      "lookahead_m": 113.915733337402,
+      "pending_visible": 86,
+      "queued": 326,
+      "speed_mps": 17.9831466674805,
+      "stage": "travel_18mps_camera",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 15,
+        "48_76": 7,
+        "76_110": 25
+      }
+    },
+    {
+      "active": 107,
+      "building": true,
+      "built": 107,
+      "elapsed_s": 15.318924,
+      "last_build_ms": 9.013,
+      "lookahead_m": 114.401344299316,
+      "pending_visible": 87,
+      "queued": 326,
+      "speed_mps": 18.0045528411865,
+      "stage": "travel_18mps_camera",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 12,
+        "48_76": 7,
+        "76_110": 26
+      }
+    },
+    {
+      "active": 112,
+      "building": true,
+      "built": 112,
+      "elapsed_s": 15.818999,
+      "last_build_ms": 9.319,
+      "lookahead_m": 113.665069580078,
+      "pending_visible": 84,
+      "queued": 324,
+      "speed_mps": 17.9964027404785,
+      "stage": "travel_18mps_camera",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 14,
+        "48_76": 6,
+        "76_110": 21
+      }
+    },
+    {
+      "active": 116,
+      "building": true,
+      "built": 116,
+      "elapsed_s": 16.335943,
+      "last_build_ms": 9.084,
+      "lookahead_m": 113.618690490723,
+      "pending_visible": 84,
+      "queued": 321,
+      "speed_mps": 17.9495487213135,
+      "stage": "travel_18mps_camera",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 15,
+        "48_76": 9,
+        "76_110": 22
+      }
+    },
+    {
+      "active": 121,
+      "building": true,
+      "built": 121,
+      "elapsed_s": 16.836065,
+      "last_build_ms": 9.15,
+      "lookahead_m": 113.692306518555,
+      "pending_visible": 86,
+      "queued": 329,
+      "speed_mps": 17.9223594665527,
+      "stage": "travel_18mps_camera",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 16,
+        "48_76": 8,
+        "76_110": 23
+      }
+    },
+    {
+      "active": 126,
+      "building": true,
+      "built": 126,
+      "elapsed_s": 17.353141,
+      "last_build_ms": 9.17,
+      "lookahead_m": 114.202018737793,
+      "pending_visible": 87,
+      "queued": 323,
+      "speed_mps": 17.8692531585693,
+      "stage": "travel_18mps_camera",
+      "unloaded": 0,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 16,
+        "48_76": 8,
+        "76_110": 23
+      }
+    },
+    {
+      "active": 129,
+      "building": true,
+      "built": 131,
+      "elapsed_s": 17.868964,
+      "last_build_ms": 9.319,
+      "lookahead_m": 114.007186889648,
+      "pending_visible": 84,
+      "queued": 323,
+      "speed_mps": 18.0014381408691,
+      "stage": "travel_18mps_camera",
+      "unloaded": 2,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 11,
+        "48_76": 6,
+        "76_110": 23
+      }
+    },
+    {
+      "active": 133,
+      "building": true,
+      "built": 135,
+      "elapsed_s": 18.36945,
+      "last_build_ms": 9.298,
+      "lookahead_m": 114.040420532227,
+      "pending_visible": 84,
+      "queued": 325,
+      "speed_mps": 17.9404144287109,
+      "stage": "travel_18mps_camera",
+      "unloaded": 2,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 15,
+        "48_76": 6,
+        "76_110": 20
+      }
+    },
+    {
+      "active": 134,
+      "building": true,
+      "built": 140,
+      "elapsed_s": 18.885445,
+      "last_build_ms": 9.265,
+      "lookahead_m": 114.433311462402,
+      "pending_visible": 84,
+      "queued": 319,
+      "speed_mps": 18.004524230957,
+      "stage": "travel_18mps_camera",
+      "unloaded": 6,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 15,
+        "48_76": 7,
+        "76_110": 21
+      }
+    },
+    {
+      "active": 137,
+      "building": true,
+      "built": 145,
+      "elapsed_s": 19.385455,
+      "last_build_ms": 9.195,
+      "lookahead_m": 114.001564025879,
+      "pending_visible": 80,
+      "queued": 318,
+      "speed_mps": 17.9941844940186,
+      "stage": "travel_18mps_camera",
+      "unloaded": 8,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 17,
+        "48_76": 7,
+        "76_110": 21
+      }
+    },
+    {
+      "active": 136,
+      "building": true,
+      "built": 150,
+      "elapsed_s": 19.902063,
+      "last_build_ms": 9.035,
+      "lookahead_m": 114.125991821289,
+      "pending_visible": 82,
+      "queued": 319,
+      "speed_mps": 17.9967460632324,
+      "stage": "travel_18mps_camera",
+      "unloaded": 14,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 11,
+        "48_76": 5,
+        "76_110": 25
+      }
+    },
+    {
+      "active": 138,
+      "building": true,
+      "built": 154,
+      "elapsed_s": 20.403129,
+      "last_build_ms": 9.013,
+      "lookahead_m": 113.255630493164,
+      "pending_visible": 82,
+      "queued": 320,
+      "speed_mps": 17.8511276245117,
+      "stage": "travel_18mps_camera",
+      "unloaded": 16,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 5,
+        "48_76": 0,
+        "76_110": 6
+      }
+    },
+    {
+      "active": 137,
+      "building": true,
+      "built": 159,
+      "elapsed_s": 20.918701,
+      "last_build_ms": 9.327,
+      "lookahead_m": 114.415939331055,
+      "pending_visible": 80,
+      "queued": 320,
+      "speed_mps": 18.0322608947754,
+      "stage": "travel_18mps_camera",
+      "unloaded": 22,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 5,
+        "48_76": 0,
+        "76_110": 3
+      }
+    },
+    {
+      "active": 138,
+      "building": true,
+      "built": 164,
+      "elapsed_s": 21.436018,
+      "last_build_ms": 9.072,
+      "lookahead_m": 113.994476318359,
+      "pending_visible": 82,
+      "queued": 317,
+      "speed_mps": 17.9065933227539,
+      "stage": "travel_18mps_camera",
+      "unloaded": 26,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 6,
+        "48_76": 0,
+        "76_110": 1
+      }
+    },
+    {
+      "active": 139,
+      "building": true,
+      "built": 169,
+      "elapsed_s": 21.952026,
+      "last_build_ms": 9.087,
+      "lookahead_m": 113.951309204102,
+      "pending_visible": 83,
+      "queued": 321,
+      "speed_mps": 17.9911518096924,
+      "stage": "travel_18mps_camera",
+      "unloaded": 30,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 8,
+        "48_76": 0,
+        "76_110": 3
+      }
+    },
+    {
+      "active": 141,
+      "building": false,
+      "built": 174,
+      "elapsed_s": 22.452224,
+      "last_build_ms": 9.449,
+      "lookahead_m": 113.978874206543,
+      "pending_visible": 80,
+      "queued": 325,
+      "speed_mps": 17.9612979888916,
+      "stage": "travel_18mps_camera",
+      "unloaded": 33,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 2,
+        "48_76": 0,
+        "76_110": 7
+      }
+    },
+    {
+      "active": 141,
+      "building": false,
+      "built": 179,
+      "elapsed_s": 22.968674,
+      "last_build_ms": 10.753,
+      "lookahead_m": 113.982276916504,
+      "pending_visible": 82,
+      "queued": 317,
+      "speed_mps": 17.9895038604736,
+      "stage": "travel_18mps_camera",
+      "unloaded": 38,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 5,
+        "48_76": 0,
+        "76_110": 2
+      }
+    },
+    {
+      "active": 140,
+      "building": true,
+      "built": 183,
+      "elapsed_s": 23.48618,
+      "last_build_ms": 9.07,
+      "lookahead_m": 114.00365447998,
+      "pending_visible": 82,
+      "queued": 325,
+      "speed_mps": 17.8734760284424,
+      "stage": "travel_18mps_camera",
+      "unloaded": 43,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 7,
+        "48_76": 0,
+        "76_110": 4
+      }
+    },
+    {
+      "active": 141,
+      "building": true,
+      "built": 188,
+      "elapsed_s": 24.001915,
+      "last_build_ms": 9.362,
+      "lookahead_m": 114.006477355957,
+      "pending_visible": 83,
+      "queued": 321,
+      "speed_mps": 18.0012969970703,
+      "stage": "travel_18mps_camera",
+      "unloaded": 47,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 8,
+        "48_76": 0,
+        "76_110": 4
+      }
+    },
+    {
+      "active": 140,
+      "building": true,
+      "built": 193,
+      "elapsed_s": 24.502383,
+      "last_build_ms": 9.283,
+      "lookahead_m": 113.657836914063,
+      "pending_visible": 78,
+      "queued": 322,
+      "speed_mps": 17.9304046630859,
+      "stage": "travel_18mps_camera",
+      "unloaded": 53,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 4,
+        "48_76": 0,
+        "76_110": 3
+      }
+    },
+    {
+      "active": 141,
+      "building": true,
+      "built": 197,
+      "elapsed_s": 25.002683,
+      "last_build_ms": 9.327,
+      "lookahead_m": 113.977325439453,
+      "pending_visible": 79,
+      "queued": 326,
+      "speed_mps": 17.9377250671387,
+      "stage": "travel_18mps_camera",
+      "unloaded": 56,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 5,
+        "48_76": 0,
+        "76_110": 6
+      }
+    },
+    {
+      "active": 141,
+      "building": true,
+      "built": 202,
+      "elapsed_s": 25.518508,
+      "last_build_ms": 9.322,
+      "lookahead_m": 113.760955810547,
+      "pending_visible": 78,
+      "queued": 320,
+      "speed_mps": 17.998966217041,
+      "stage": "travel_18mps_camera",
+      "unloaded": 61,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 8,
+        "48_76": 0,
+        "76_110": 3
+      }
+    },
+    {
+      "active": 143,
+      "building": true,
+      "built": 206,
+      "elapsed_s": 26.035911,
+      "last_build_ms": 9.356,
+      "lookahead_m": 114.137222290039,
+      "pending_visible": 79,
+      "queued": 325,
+      "speed_mps": 17.8942794799805,
+      "stage": "travel_18mps_camera",
+      "unloaded": 63,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 5,
+        "48_76": 0,
+        "76_110": 2
+      }
+    },
+    {
+      "active": 140,
+      "building": true,
+      "built": 211,
+      "elapsed_s": 26.551785,
+      "last_build_ms": 9.605,
+      "lookahead_m": 113.983581542969,
+      "pending_visible": 82,
+      "queued": 329,
+      "speed_mps": 18.0017127990723,
+      "stage": "travel_18mps_camera",
+      "unloaded": 71,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 6,
+        "48_76": 0,
+        "76_110": 3
+      }
+    },
+    {
+      "active": 143,
+      "building": true,
+      "built": 216,
+      "elapsed_s": 27.051808,
+      "last_build_ms": 9.287,
+      "lookahead_m": 114.425559997559,
+      "pending_visible": 81,
+      "queued": 328,
+      "speed_mps": 17.9902095794678,
+      "stage": "travel_18mps_camera",
+      "unloaded": 73,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 5,
+        "48_76": 0,
+        "76_110": 6
+      }
+    },
+    {
+      "active": 141,
+      "building": true,
+      "built": 220,
+      "elapsed_s": 27.569329,
+      "last_build_ms": 9.15,
+      "lookahead_m": 113.621574401855,
+      "pending_visible": 79,
+      "queued": 329,
+      "speed_mps": 17.8786506652832,
+      "stage": "travel_18mps_camera",
+      "unloaded": 79,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 2,
+        "48_76": 0,
+        "76_110": 4
+      }
+    },
+    {
+      "active": 142,
+      "building": true,
+      "built": 225,
+      "elapsed_s": 28.085616,
+      "last_build_ms": 5.218,
+      "lookahead_m": 114.291137695313,
+      "pending_visible": 80,
+      "queued": 325,
+      "speed_mps": 0.0,
+      "stage": "revisit",
+      "unloaded": 83,
+      "visible_bands": {
+        "0_48": 0,
+        "110_128": 0,
+        "48_76": 0,
+        "76_110": 0
+      }
+    },
+    {
+      "active": 55,
+      "building": true,
+      "built": 227,
+      "elapsed_s": 28.586261,
+      "last_build_ms": 5.237,
+      "lookahead_m": 0.0,
+      "pending_visible": 166,
+      "queued": 324,
+      "speed_mps": 0.0,
+      "stage": "revisit",
+      "unloaded": 172,
+      "visible_bands": {
+        "0_48": 12,
+        "110_128": 14,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 57,
+      "building": true,
+      "built": 229,
+      "elapsed_s": 29.102883,
+      "last_build_ms": 5.195,
+      "lookahead_m": 0.0,
+      "pending_visible": 164,
+      "queued": 322,
+      "speed_mps": 0.0,
+      "stage": "revisit",
+      "unloaded": 172,
+      "visible_bands": {
+        "0_48": 12,
+        "110_128": 14,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 60,
+      "building": true,
+      "built": 232,
+      "elapsed_s": 29.604278,
+      "last_build_ms": 5.355,
+      "lookahead_m": 0.0,
+      "pending_visible": 161,
+      "queued": 319,
+      "speed_mps": 0.0,
+      "stage": "revisit",
+      "unloaded": 172,
+      "visible_bands": {
+        "0_48": 9,
+        "110_128": 14,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 62,
+      "building": true,
+      "built": 234,
+      "elapsed_s": 30.119506,
+      "last_build_ms": 5.154,
+      "lookahead_m": 0.0,
+      "pending_visible": 159,
+      "queued": 317,
+      "speed_mps": 0.0,
+      "stage": "revisit",
+      "unloaded": 172,
+      "visible_bands": {
+        "0_48": 9,
+        "110_128": 14,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 65,
+      "building": true,
+      "built": 237,
+      "elapsed_s": 30.61954,
+      "last_build_ms": 5.108,
+      "lookahead_m": 0.0,
+      "pending_visible": 156,
+      "queued": 314,
+      "speed_mps": 0.0,
+      "stage": "revisit",
+      "unloaded": 172,
+      "visible_bands": {
+        "0_48": 8,
+        "110_128": 14,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 67,
+      "building": true,
+      "built": 239,
+      "elapsed_s": 31.136146,
+      "last_build_ms": 5.146,
+      "lookahead_m": 0.0,
+      "pending_visible": 154,
+      "queued": 312,
+      "speed_mps": 0.0,
+      "stage": "revisit",
+      "unloaded": 172,
+      "visible_bands": {
+        "0_48": 8,
+        "110_128": 14,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 70,
+      "building": true,
+      "built": 242,
+      "elapsed_s": 31.653933,
+      "last_build_ms": 5.161,
+      "lookahead_m": 0.0,
+      "pending_visible": 151,
+      "queued": 309,
+      "speed_mps": 0.0,
+      "stage": "revisit",
+      "unloaded": 172,
+      "visible_bands": {
+        "0_48": 8,
+        "110_128": 14,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 72,
+      "building": true,
+      "built": 244,
+      "elapsed_s": 32.16946,
+      "last_build_ms": 5.239,
+      "lookahead_m": 0.0,
+      "pending_visible": 149,
+      "queued": 307,
+      "speed_mps": 0.0,
+      "stage": "revisit",
+      "unloaded": 172,
+      "visible_bands": {
+        "0_48": 8,
+        "110_128": 14,
+        "48_76": 15,
+        "76_110": 18
+      }
+    },
+    {
+      "active": 75,
+      "building": true,
+      "built": 247,
+      "elapsed_s": 32.686079,
+      "last_build_ms": 5.226,
+      "lookahead_m": 0.0,
+      "pending_visible": 146,
+      "queued": 304,
+      "speed_mps": 0.0,
+      "stage": "revisit",
+      "unloaded": 172,
+      "visible_bands": {
+        "0_48": 8,
+        "110_128": 14,
+        "48_76": 15,
+        "76_110": 18
+      }
+    }
+  ],
+  "resolution": "(1920, 1080)",
+  "slow_tick_examples": [],
+  "source_sha256": {
+    "scripts/grass_baked_store.gd": "77bad243a95ae1016a7555d1b30bd1948ab95f9ee1c5f893bfecc9d865bd2c70",
+    "scripts/grass_instance_buffer.gd": "28afa632669717b63398a84c43c4087fd1e4a64ed5a51c47409a1f9cab42f255",
+    "scripts/grass_volume_streamer.gd": "6d0e7c98cc58930f8035b412523cd3f29fe59de1982b86171b59f802a463d86c",
+    "tools/benchmark_grass_issue13.gd": "77db1c8e6e04f07260fb066b8e1cb53d0003f4c92f307a9eb1384b83a2b94aca"
+  },
+  "stream_tick": {
+    "max_ms": 14.876,
+    "mean_ms": 8.15717911200807,
+    "p95_ms": 11.996,
+    "p99_ms": 13.258
+  },
+  "timing_note": "stream_tick measures the whole tick, including refresh/sorting/upload; old HUD last_build_ms excluded refresh. Optional instrumentation is enabled in online/baked runs.",
+  "trajectory": "360m camera at 18m/s, 90/180-degree turns; NOT a vehicle physics test"
+}

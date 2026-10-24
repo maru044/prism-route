@@ -36,6 +36,10 @@ func _grass_coverage(point: Vector3,normal: Vector3) -> float:
 	if world_scene.architectural_band(point,0.55): return 0.0
 	return super._grass_coverage(point,normal)
 
+func grass_coverage_unmasked(point: Vector3,normal: Vector3) -> float:
+	# The volume sampler already checked the architectural mask at this root.
+	return super._grass_coverage(point,normal)
+
 func get_active_grass_chunk_count() -> int:
 	return 0 if volume_streamer == null else volume_streamer.active.size()
 

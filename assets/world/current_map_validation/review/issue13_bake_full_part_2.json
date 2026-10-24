@@ -1,0 +1,13 @@
+{
+  "candidate_cells": 2731,
+  "global_candidates": 10925,
+  "new_compressed_bytes": 239300441,
+  "new_instances": 48600472,
+  "new_raw_bytes": 680406608,
+  "profile": {},
+  "scope": "full",
+  "seconds": 244.805,
+  "shard_count": 4,
+  "shard_index": 2,
+  "signature": "b3f8cc2f8957e6b70ae3f4e2691ecc1debfcfcd1d9a1da524811694b43da4d31"
+}

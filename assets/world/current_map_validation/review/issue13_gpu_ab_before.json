@@ -1,0 +1,90 @@
+{
+  "defaults_changed": false,
+  "note": "Diagnostic toggles only; grass-off/trees-off are attribution probes, not accepted optimizations. Zero-amplitude simple wind skips noise sampling but does not remove all vertex arithmetic. Timings include sky/wind time variation; baseline_end bounds temporal drift.",
+  "samples_per_variant": 90,
+  "scene": "spawn 6, north hill, fixed camera, complete visible baked grass",
+  "variants": [
+    {
+      "draw_calls": 1462.0,
+      "engine_primitives": 13300990.0,
+      "gpu_mean_ms": 17.1000889248318,
+      "gpu_p95_ms": 17.451000213623,
+      "render_vram_mib": 1906.2265625,
+      "resolution": "(1920, 1080)",
+      "variant": "baseline"
+    },
+    {
+      "draw_calls": 1092.0,
+      "engine_primitives": 13299850.0,
+      "gpu_mean_ms": 4.75237780147129,
+      "gpu_p95_ms": 4.76200008392334,
+      "render_vram_mib": 1906.2265625,
+      "resolution": "(1920, 1080)",
+      "variant": "grass_off"
+    },
+    {
+      "draw_calls": 662.0,
+      "engine_primitives": 9795706.0,
+      "gpu_mean_ms": 15.184322198232,
+      "gpu_p95_ms": 15.4750003814697,
+      "render_vram_mib": 1906.2265625,
+      "resolution": "(1920, 1080)",
+      "variant": "trees_off"
+    },
+    {
+      "draw_calls": 1462.0,
+      "engine_primitives": 13300990.0,
+      "gpu_mean_ms": 17.2073445214166,
+      "gpu_p95_ms": 17.5970001220703,
+      "render_vram_mib": 1906.2265625,
+      "resolution": "(1920, 1080)",
+      "variant": "grass_simple_wind_zero_amplitude"
+    },
+    {
+      "draw_calls": 1462.0,
+      "engine_primitives": 13300990.0,
+      "gpu_mean_ms": 14.6070333586799,
+      "gpu_p95_ms": 14.9390001296997,
+      "render_vram_mib": 1906.2265625,
+      "resolution": "(1920, 1080)",
+      "variant": "ssao_off"
+    },
+    {
+      "draw_calls": 1320.0,
+      "engine_primitives": 11316115.0,
+      "gpu_mean_ms": 16.8461222754584,
+      "gpu_p95_ms": 17.242000579834,
+      "render_vram_mib": 1906.2265625,
+      "resolution": "(1920, 1080)",
+      "variant": "shadows_off"
+    },
+    {
+      "draw_calls": 1462.0,
+      "engine_primitives": 13300990.0,
+      "gpu_mean_ms": 16.5548999574449,
+      "gpu_p95_ms": 16.9599990844727,
+      "render_vram_mib": 1850.2265625,
+      "resolution": "(1920, 1080)",
+      "variant": "msaa_2x"
+    },
+    {
+      "draw_calls": 1460.0,
+      "engine_primitives": 13300638.0,
+      "gpu_mean_ms": 14.8565555466546,
+      "gpu_p95_ms": 15.1339998245239,
+      "render_vram_mib": 1853.65234375,
+      "resolution": "(1600, 900)",
+      "variant": "1600x900"
+    },
+    {
+      "draw_calls": 1462.0,
+      "engine_primitives": 13300990.0,
+      "gpu_mean_ms": 17.3605445014106,
+      "gpu_p95_ms": 17.798999786377,
+      "render_vram_mib": 1906.1015625,
+      "resolution": "(1920, 1080)",
+      "variant": "baseline_end"
+    }
+  ],
+  "warmup_frames": 30
+}

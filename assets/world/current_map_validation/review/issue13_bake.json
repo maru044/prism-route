@@ -1,0 +1,22 @@
+{
+  "candidate_cells": 1152,
+  "new_compressed_bytes": 125239516,
+  "new_instances": 25489152,
+  "new_raw_bytes": 356848128,
+  "profile": {
+    "clearance_ray_count": 6837246,
+    "clearance_ray_usec": 9826710,
+    "coverage_usec": 2780139,
+    "mask_usec": 7102916,
+    "math_usec": 25584188,
+    "pack_usec": 11317110,
+    "samples": 5990400,
+    "surface_hits": 6372334,
+    "terrain_ray_count": 14131534,
+    "terrain_ray_usec": 29037642,
+    "water_ray_count": 5579600,
+    "water_ray_usec": 6174598
+  },
+  "seconds": 224.749,
+  "signature": "748060ec0d7ac671ad41f1429979b364923caa76693707fa12b69877b1a7b8a3"
+}

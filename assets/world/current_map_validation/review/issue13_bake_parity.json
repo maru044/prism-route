@@ -1,0 +1,62 @@
+{
+  "cache_test": {
+    "baked_cells": 11321,
+    "cache_hits": 1,
+    "cache_mib": 95.21484375,
+    "corrupt": 0,
+    "decode_ms": 16.525,
+    "disk_reads": 1,
+    "evictions": 76,
+    "inflight": 0,
+    "io_ms": 0.587,
+    "pack_worker_ms": 0.0,
+    "status": ""
+  },
+  "cells": [
+    {
+      "cell": "(-18, 2, 37)",
+      "instances": 41800,
+      "roots": 10450
+    },
+    {
+      "cell": "(-17, 2, 37)",
+      "instances": 47964,
+      "roots": 11991
+    },
+    {
+      "cell": "(-15, 0, 17)",
+      "instances": 20800,
+      "roots": 5200
+    },
+    {
+      "cell": "(-14, 0, 17)",
+      "instances": 20800,
+      "roots": 5200
+    },
+    {
+      "cell": "(-9, 1, 49)",
+      "instances": 27696,
+      "roots": 6924
+    },
+    {
+      "cell": "(-8, 1, 49)",
+      "instances": 0,
+      "roots": 0
+    },
+    {
+      "cell": "(-3, 0, -23)",
+      "instances": 20800,
+      "roots": 5200
+    },
+    {
+      "cell": "(-2, 0, -23)",
+      "instances": 17908,
+      "roots": 4477
+    }
+  ],
+  "corrupt_fallback": true,
+  "failures": [],
+  "parity": "Exact PackedFloat32Array bytes, including every transform and INSTANCE_CUSTOM; roots retain seed and RNG state",
+  "passed": true,
+  "reference": "abfc7e4"
+}

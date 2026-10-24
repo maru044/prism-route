@@ -1,5 +1,7 @@
 # Godot 4+ specific ignores
 .godot/
+__pycache__/
+*.py[cod]
 /android/
 # Temporary render diagnostics; keep the two curated scene captures tracked.
 /screenshots/vegetation_test_wind_later.png*
@@ -10,6 +12,8 @@
 /.road_projection_build/
 /.landscape_mask_build/
 /.current_map_build/
+# Local Issue 13 pilot bake; regenerate with tools/bake_grass_issue13.gd.
+/assets/world/current_map_validation/grass_bake/
 /assets/vegetation/source/*.blend1
 /assets/products/**/source/*.blend1
 # Godot may extract GLB-embedded HLOD textures next to the model during import;

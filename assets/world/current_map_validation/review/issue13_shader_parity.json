@@ -1,0 +1,9 @@
+{
+  "grass_visible": true,
+  "instances": 40000,
+  "note": "Real grass mesh/material with fixed TIME, static sun and no temporal SSAO. Only skip_invisible_grass differs.",
+  "passed": true,
+  "pixels_equal": true,
+  "resolution": "(1280, 720)",
+  "shader_time": 13.0
+}

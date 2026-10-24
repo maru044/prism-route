@@ -20,6 +20,7 @@ var render_samples := 0
 var stream_sum := 0.0
 var stream_peak := 0.0
 var stream_samples := 0
+var stream_phases: Dictionary = {}
 var refresh_cost_ms := 0.0
 var graph: FrameGraph
 var viewport_rid: RID
@@ -77,10 +78,17 @@ func _ready() -> void:
 	_add_row(details,"objects","节点 / 资源 / 孤立节点")
 	_add_row(details,"physics","物理活动体 / 碰撞对 / 岛")
 	_add_row(details,"grass","草块 · 常驻 / 排队 / 采样中")
-	_add_row(details,"pending","↳ 近处待加载草块")
-	_add_row(details,"stream_time","草采样切片 · 均值 / 峰值 ms")
+	_add_row(details,"pending","↳ 近处候选待加载草块")
+	_add_row(details,"stream_time","草流加载 · 均值 / 峰值 ms")
 	_add_row(details,"stream_budget","↳ 每帧目标预算 · ms")
 	_add_row(details,"stream_total","草块 · 累计生成 / 卸载")
+	_add_row(details,"throughput","草块进入 / 完成 · 每秒")
+	_add_row(details,"ages","排队P95 / 最久可见缺口 · s")
+	_add_row(details,"visible","视锥缺块 · 0–48 / 48–76 / 76–128")
+	_add_row(details,"sampling","射线 / 遮罩 / 数学 · ms")
+	_add_row(details,"upload","提交当前 / 历史峰值 · ms")
+	_add_row(details,"cpu_cache","CPU缓存 MiB / 命中 / 磁盘读")
+	_add_row(details,"source","草数据 · 烘焙 / 候选格")
 	_add_row(details,"refresh","面板刷新 · ms / Hz")
 	box.add_child(_label("显存为引擎分配量；CPU / GPU 耗时不可直接相加",12,MUTED))
 	for child in root_control.find_children("*","Control",true,false):
@@ -135,6 +143,9 @@ func _process(delta: float) -> void:
 	if stream!=null:
 		var ms: float=stream.last_build_usec/1000.0
 		stream_sum+=ms;stream_peak=maxf(stream_peak,ms);stream_samples+=1
+		var phases=stream.get("last_phases")
+		if phases is Dictionary:
+			for key in phases:stream_phases[key]=float(stream_phases.get(key,0))+float(phases[key])
 	sample_elapsed+=delta
 	if sample_elapsed<UPDATE_SECONDS:return
 	sample_elapsed=0
@@ -143,6 +154,7 @@ func _process(delta: float) -> void:
 	refresh_cost_ms=(Time.get_ticks_usec()-start)/1000.0
 	render_cpu_sum=0;render_gpu_sum=0;render_samples=0
 	stream_sum=0;stream_peak=0;stream_samples=0
+	stream_phases.clear()
 
 func _set_value(key: String,text: String,warn: bool=false) -> void:
 	var label: Label=values[key];label.text=text
@@ -199,6 +211,17 @@ func _refresh() -> void:
 		_set_value("stream_time","%.2f / %.2f" % [stream_sum/maxi(stream_samples,1),stream_peak])
 		_set_value("stream_budget","%.1f" % ((stream.DRIVING_BUDGET_USEC if stream.prediction_velocity.length()>6 else stream.BASE_BUDGET_USEC)/1000.0))
 		_set_value("stream_total","%d / %d" % [m.built,m.unloaded])
+		if not m.has("visible"):return
+		_set_value("throughput","%.1f / %.1f" % [m.incoming_per_s,m.completed_per_s])
+		_set_value("ages","%.1f / %.1f" % [m.queue_p95_s,m.oldest_visible_s],m.oldest_visible_s>1)
+		_set_value("visible","%d / %d / %d" % [m.visible["0_48"],m.visible["48_76"],m.visible["76_110"]+m.visible["110_128"]])
+		var ray: float=stream_phases.get("terrain_ray_usec",0)+stream_phases.get("water_ray_usec",0)+stream_phases.get("clearance_ray_usec",0)
+		var divisor: float=maxi(stream_samples,1)*1000.0
+		_set_value("sampling","%.2f / %.2f / %.2f" % [ray/divisor,stream_phases.get("mask_usec",0)/divisor,stream_phases.get("math_usec",0)/divisor])
+		if not stream.collect_detailed_timings or not stream.profiling:_set_value("sampling","F6 开启细分计时")
+		_set_value("upload","%.2f / %.2f" % [m.commit_ms,m.max_commit_ms])
+		_set_value("cpu_cache","%.0f / %d / %d" % [m.cache.cache_mib,m.cache.cache_hits,m.cache.disk_reads])
+		_set_value("source","%d / %d" % [m.cache.baked_cells,m.indexed_cells],m.cache.baked_cells<m.indexed_cells)
 	_set_value("refresh","%.2f / 4" % refresh_cost_ms)
 
 func _count(number: float) -> String:

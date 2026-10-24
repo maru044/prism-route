@@ -1,0 +1,13 @@
+{
+  "bulk_upload_ms": 0.932,
+  "custom_aabb": "[P: (-16.12774, -4.130254, -16.12722), S: (32.25671, 10.26081, 32.25555)]",
+  "failures": [],
+  "instances": 20800,
+  "legacy_upload_ms": 3.881,
+  "max_transform_error": 0.0,
+  "pack_ms": 4.419,
+  "passed": true,
+  "pixels_equal": true,
+  "staged_frames": 2,
+  "staged_pixels_equal": true
+}

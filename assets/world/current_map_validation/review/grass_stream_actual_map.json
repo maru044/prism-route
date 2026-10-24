@@ -7,7 +7,7 @@
   "full_speed_forward_missing_frames": 0,
   "lower_terrace_y": 39.5049438476563,
   "lower_volume_rendered": true,
-  "maximum_lookahead_m": 114.330390930176,
+  "maximum_lookahead_m": 114.330726623535,
   "maximum_speed_mps": 18.0,
   "objects": 199.0,
   "passed": true,
@@ -18,15 +18,45 @@
   ],
   "resident_chunk_replacements": 0,
   "stream_metrics": {
-    "active": 204,
-    "building": true,
-    "built": 209,
-    "last_build_ms": 9.252,
-    "lookahead_m": 84.0137634277344,
-    "pending_visible": 21,
-    "queued": 208,
+    "active": 380,
+    "building": false,
+    "built": 392,
+    "cache": {
+      "baked_cells": 11321,
+      "cache_hits": 512,
+      "cache_mib": 95.7900390625,
+      "corrupt": 0,
+      "decode_ms": 10151.704,
+      "disk_reads": 397,
+      "evictions": 318,
+      "inflight": 2,
+      "io_ms": 494.086,
+      "pack_worker_ms": 0.0,
+      "status": ""
+    },
+    "cancelled": 0,
+    "commit_ms": 1.009,
+    "completed_per_s": 42.8,
+    "incoming_per_s": 40.4,
+    "indexed_cells": 11321,
+    "last_build_ms": 1.432,
+    "lookahead_m": 82.5435256958008,
+    "max_commit_ms": 4.58,
+    "oldest_visible_s": 0.0,
+    "pending_visible": 0,
+    "phases": {},
+    "queue_p95_s": 8.952474,
+    "queued": 43,
+    "ready_cells": 0,
+    "rebuilt": 0,
     "speed_mps": 10.8217315673828,
-    "unloaded": 5
+    "unloaded": 12,
+    "visible": {
+      "0_48": 0,
+      "110_128": 0,
+      "48_76": 0,
+      "76_110": 0
+    }
   },
-  "warm_seconds": 34.613
+  "warm_seconds": 3.911
 }

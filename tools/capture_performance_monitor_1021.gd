@@ -14,6 +14,11 @@ func run() -> void:
 	assert(monitor.collecting and monitor.frame_times.size()>10)
 	assert(monitor.values.fps.text!="—" and monitor.values.grass.text!="—")
 	assert(monitor.panel.get_theme_stylebox("panel").bg_color.a==0,"Performance panel background must be transparent")
+	var initial: bool=scene.vegetation.volume_streamer.collect_detailed_timings
+	var toggle:=InputEventKey.new();toggle.physical_keycode=KEY_F6;toggle.pressed=true
+	scene._unhandled_input(toggle)
+	assert(scene.vegetation.volume_streamer.collect_detailed_timings!=initial,"F6 did not toggle detailed profiling")
+	scene._unhandled_input(toggle)
 	var report: Dictionary={"metrics":{},"layouts":[]}
 	for key in monitor.values:report.metrics[key]=monitor.values[key].text
 	for resolution in [Vector2i(1600,900),Vector2i(1280,720)]:
