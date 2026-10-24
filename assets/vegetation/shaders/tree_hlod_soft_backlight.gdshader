@@ -47,6 +47,7 @@ uniform vec4 canopy_base_color : source_color = vec4(0.35686, 0.47059, 0.29412, 
 // These stay material uniforms so MultiMesh batches do not consume Godot's
 // limited per-instance shader-variable buffer.
 uniform bool use_biome_palette = false;
+uniform bool species_biome_tint = false;
 uniform sampler2D biome_noise_texture : repeat_enable, filter_linear;
 uniform vec4 palette_dry : source_color = vec4(1.0);
 uniform vec4 palette_green : source_color = vec4(1.0);
@@ -297,7 +298,8 @@ void fragment() {
 			mix(0.94, 1.04, clamp(value, 0.0, 1.0)),
 			species_texture_detail
 		);
-		ALBEDO = mix(species_shadow_color.rgb, species_mid_color.rgb, 0.42) * detail;
+		ALBEDO = mix(species_shadow_color.rgb, species_mid_color.rgb, 0.42) * detail
+			* (species_biome_tint ? palette_tint : vec3(1.0));
 	} else {
 		vec3 base = mix(tex.rgb, canopy_base_color.rgb * color_tint.rgb, canopy_color_uniformity);
 		ALBEDO = base * palette_tint * variant_tint.rgb;
@@ -333,7 +335,7 @@ void light() {
 			0.68,
 			ndotl + species_light_warp
 		);
-		DIFFUSE_LIGHT += palette * painted_light_detail * LIGHT_COLOR * foliage_attenuation
+		DIFFUSE_LIGHT += palette * (species_biome_tint ? palette_tint : vec3(1.0)) * painted_light_detail * LIGHT_COLOR * foliage_attenuation
 			* artistic_diffuse * species_art_direct_strength * 0.42;
 	} else {
 		DIFFUSE_LIGHT += ALBEDO * LIGHT_COLOR * foliage_attenuation * wrapped;

@@ -6,6 +6,11 @@ const RECOVERY_SECONDS := 1.6
 const SAMPLE_SECONDS := 0.075
 const SAMPLE_DISTANCE := 0.40
 const TELEPORT_DISTANCE := 12.0
+# Walking parts the grass gently; the camper retains its full flattening footprint.
+const CHARACTER_RADIUS := 0.45
+const CHARACTER_STRENGTH := 0.50
+const CHARACTER_MARGIN := 0.35
+const VEHICLE_MARGIN := 0.65
 var actor: Node3D
 var vehicle := false
 var history: Array[Dictionary] = []
@@ -34,7 +39,8 @@ func footprint() -> Dictionary:
 	axis = axis.normalized()
 	var half_segment := 1.75 if vehicle else 0.0
 	return {"start": point - axis * half_segment, "end": point + axis * half_segment,
-		"radius": 1.30 if vehicle else 0.65, "strength": 1.0, "age": 0.0}
+		"radius": 1.30 if vehicle else CHARACTER_RADIUS,
+		"strength": 1.0 if vehicle else CHARACTER_STRENGTH, "age": 0.0}
 
 func update(delta: float, material: ShaderMaterial) -> void:
 	if not enabled or not is_instance_valid(actor) or not actor.visible:
@@ -66,19 +72,21 @@ func update(delta: float, material: ShaderMaterial) -> void:
 	ends.resize(MAX_SOURCES)
 	var bounds_min := Vector3(INF, INF, INF)
 	var bounds_max := Vector3(-INF, -INF, -INF)
+	var margin := VEHICLE_MARGIN if vehicle else CHARACTER_MARGIN
 	for i in sources.size():
 		var source := sources[i]
 		var start: Vector3 = source.start
 		var end: Vector3 = source.end
-		var strength := 1.0 - smoothstep(0.0, RECOVERY_SECONDS, float(source.age))
+		var strength := float(source.strength) * (1.0 - smoothstep(0.0, RECOVERY_SECONDS, float(source.age)))
 		starts[i] = Vector4(start.x, start.y, start.z, source.radius)
 		ends[i] = Vector4(end.x, end.y, end.z, strength)
-		var padding := Vector3(float(source.radius) + 0.65, 1.15, float(source.radius) + 0.65)
+		var padding := Vector3(float(source.radius) + margin, 1.15, float(source.radius) + margin)
 		bounds_min = bounds_min.min(start.min(end) - padding)
 		bounds_max = bounds_max.max(start.max(end) + padding)
 	material.set_shader_parameter("use_grass_interaction", true)
 	material.set_shader_parameter("grass_push_count", sources.size())
 	material.set_shader_parameter("grass_push_starts", starts)
 	material.set_shader_parameter("grass_push_ends", ends)
+	material.set_shader_parameter("grass_push_margin", margin)
 	material.set_shader_parameter("grass_push_bounds_min", bounds_min)
 	material.set_shader_parameter("grass_push_bounds_max", bounds_max)

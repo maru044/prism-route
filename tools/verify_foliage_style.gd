@@ -29,9 +29,16 @@ func verify_materials() -> Dictionary:
 					for node: GeometryInstance3D in row.nodes:
 						assert(node.get_instance_shader_parameter(name)==STYLE.GREEN_VALUES[name])
 				else:assert(material.get_shader_parameter(name)==STYLE.GREEN_VALUES[name])
-			assert(not material.get_shader_parameter("use_biome_palette"))
+			assert(material.get_shader_parameter("use_biome_palette"))
+			assert(material.get_shader_parameter("species_biome_tint"))
+			assert(material.get_shader_parameter("palette_dry")==STYLE.TREE_DRY_TINT)
+			assert(material.get_shader_parameter("palette_green")==STYLE.TREE_GREEN_TINT)
+			if scene.foliage_style.biome_source!=null:
+				for name: String in STYLE.BIOME_PARAMETERS:
+					assert(material.get_shader_parameter(name)==scene.foliage_style.biome_source.get_shader_parameter(name))
 		else:
 			flower+=1
+			assert(not material.get_shader_parameter("species_biome_tint"))
 			for name: String in STYLE.GREEN_VALUES:
 				if row.instance_palette:
 					for node: GeometryInstance3D in row.nodes:
@@ -64,6 +71,7 @@ func run() -> void:
 		await tap(key);assert(verify_materials()==report)
 	assert(scene.find_children("*","CanvasLayer",true,false).all(func(ui):return not "foliage" in ui.name.to_lower()))
 	report["retired_keys_inert"]=true
+	report["default_green_follows_world_biome"]=true
 	report["fill"]=STYLE.FILL_STRENGTH;report["shadow_relief"]=STYLE.SHADOW_RELIEF
 	if not grove:
 		scene.set_review_ui_visible(false)

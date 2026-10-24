@@ -2,6 +2,8 @@
 .godot/
 __pycache__/
 *.py[cod]
+/assets/world/tree_planting_test/*.json.bak
+/assets/world/tree_planting_test/*.json.tmp
 /android/
 # Temporary render diagnostics; keep the two curated scene captures tracked.
 /screenshots/vegetation_test_wind_later.png*

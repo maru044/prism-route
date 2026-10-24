@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/tree_planting/authoring_scene.gd" id="scene"]
+[ext_resource type="Resource" path="res://assets/world/tree_planting_test/current_map.tres" id="profile"]
+
+[node name="TreePlantingTest" type="Node3D"]
+script = ExtResource("scene")
+profile = ExtResource("profile")
+
+[node name="EditableTrees" type="Node3D" parent="."]

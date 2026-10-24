@@ -127,10 +127,30 @@ func _render_fixture() -> void:
 	await frames(4)
 	var character := await shot("grass_push_character_fixture")
 	var character_pixels := changed_pixels(baseline, character)
-	check(character_pixels > 500, "GPU character footprint did not displace the real grass mesh")
+	check(character_pixels > 100, "GPU character footprint did not displace the real grass mesh")
+	var starts: PackedVector4Array=material.get_shader_parameter("grass_push_starts")
+	var ends: PackedVector4Array=material.get_shader_parameter("grass_push_ends")
+	check(is_equal_approx(ends[0].w,0.5),"Character strength did not reach the shader")
+	# Same mesh/camera, restore the old 0.65 m core, 0.65 m margin and full strength.
+	var old_starts:=starts.duplicate();var old_ends:=ends.duplicate()
+	for i in int(material.get_shader_parameter("grass_push_count")):
+		old_starts[i].w=0.65;old_ends[i].w=1.0
+	material.set_shader_parameter("grass_push_starts",old_starts)
+	material.set_shader_parameter("grass_push_ends",old_ends)
+	material.set_shader_parameter("grass_push_margin",0.65)
+	material.set_shader_parameter("grass_push_bounds_min",Vector3(-1.3,-1.12,-1.3))
+	material.set_shader_parameter("grass_push_bounds_max",Vector3(1.3,1.18,1.3))
+	await frames(4)
+	var old_character:=await shot("grass_push_character_previous")
+	var old_character_pixels:=changed_pixels(baseline,old_character)
+	check(character_pixels<old_character_pixels*0.75,"New character footprint is not visibly gentler than the previous version")
+	interaction.update(0.0,material)
 	body.rotation.y = PI * 0.5
 	interaction.set_actor(body, true)
 	interaction.update(0.016, material)
+	check(is_equal_approx(float(material.get_shader_parameter("grass_push_margin")),0.65),"Vehicle margin was changed")
+	var vehicle_ends: PackedVector4Array=material.get_shader_parameter("grass_push_ends")
+	check(is_equal_approx(vehicle_ends[0].w,1.0),"Vehicle strength was changed")
 	await frames(4)
 	var vehicle := await shot("grass_push_vehicle_fixture")
 	var vehicle_pixels := changed_pixels(baseline, vehicle)
@@ -156,7 +176,7 @@ func _render_fixture() -> void:
 	await frames(4)
 	var other_storey := await shot("grass_push_other_storey")
 	check(changed_pixels(baseline, other_storey) < 20, "GPU interaction leaks to a different storey")
-	report["gpu_pixels_changed"] = {"character": character_pixels, "vehicle": vehicle_pixels, "recovered": recovered_pixels}
+	report["gpu_pixels_changed"] = {"character": character_pixels, "previous_character":old_character_pixels, "vehicle": vehicle_pixels, "recovered": recovered_pixels}
 	fixture.free()
 	await frames(2)
 

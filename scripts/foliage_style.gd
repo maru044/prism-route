@@ -7,6 +7,9 @@ const SHADERS := {
 }
 const FILL_STRENGTH := 0.06
 const SHADOW_RELIEF := 0.0
+const BIOME_PARAMETERS := ["biome_noise_texture","biome_noise_scale","biome_warp_distance","biome_transition_half_width","biome_center_x"]
+const TREE_DRY_TINT := Color(1.03,0.98,0.82)
+const TREE_GREEN_TINT := Color(0.83,0.97,0.89)
 const GREEN_VALUES := {
 	"use_species_palette":1.0,"species_palette_stage":3.0,
 	"species_deep_color":Color("2e7d32"),"species_shadow_color":Color("388e3c"),
@@ -15,8 +18,10 @@ const GREEN_VALUES := {
 }
 var records: Array[Dictionary] = []
 var copies: Dictionary = {}
+var biome_source: ShaderMaterial
 
 func bind_streamer(streamer: Node) -> void:
+	biome_source=streamer.grass_material
 	for property: String in ["tree_lod0_nodes","tree_lod1_nodes","tree_lod2_nodes"]:
 		for node: GeometryInstance3D in streamer.get(property):_register(node)
 
@@ -63,4 +68,14 @@ func _apply_green(row: Dictionary) -> void:
 			# Only the newly registered instance needs setting.
 			row.nodes.back().set_instance_shader_parameter(name,GREEN_VALUES[name])
 		else:material.set_shader_parameter(name,GREEN_VALUES[name])
-	material.set_shader_parameter("use_biome_palette",false)
+	configure_green_biome(material,biome_source)
+
+static func configure_green_biome(material: ShaderMaterial, source: ShaderMaterial) -> void:
+	# The approved green is the base palette; the world zone tints both lighting paths.
+	material.set_shader_parameter("use_biome_palette",true)
+	material.set_shader_parameter("species_biome_tint",true)
+	material.set_shader_parameter("palette_dry",TREE_DRY_TINT)
+	material.set_shader_parameter("palette_green",TREE_GREEN_TINT)
+	if source!=null:
+		for parameter: String in BIOME_PARAMETERS:
+			material.set_shader_parameter(parameter,source.get_shader_parameter(parameter))

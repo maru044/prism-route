@@ -12,6 +12,10 @@ def main():
     for stem in ('vegetation_wind','tree_hlod'):
         path=SHADERS/(stem+'.gdshader')
         original=path.read_text(encoding='utf-8')
+        # The breeze and gust variants now share their shader body as an include.
+        common='#include "res://assets/vegetation/shaders/vegetation_wind_common.gdshaderinc"'
+        if common in original:
+            original=original.replace(common,(SHADERS/'vegetation_wind_common.gdshaderinc').read_text(encoding='utf-8'))
         prefix,body=original.split('void light() {',1)
         uniforms='''// Approved tree backlight. Grass continues to use the source shader.
 uniform float foliage_backlight_fill : hint_range(0.0, 0.5) = 0.06;

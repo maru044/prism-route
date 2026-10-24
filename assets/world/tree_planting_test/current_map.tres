@@ -1,0 +1,136 @@
+[gd_resource type="Resource" load_steps=25 format=3]
+
+[ext_resource type="Script" path="res://scripts/tree_planting/profile.gd" id="profile"]
+[ext_resource type="Script" path="res://scripts/tree_planting/species.gd" id="species"]
+[ext_resource type="Script" path="res://scripts/tree_planting/palette.gd" id="palette"]
+[ext_resource type="PackedScene" path="res://assets/world/current_map_validation/current_region.glb" id="terrain"]
+[ext_resource type="PackedScene" path="res://assets/vegetation/models/tree_small_broad_canopy.glb" id="small"]
+[ext_resource type="PackedScene" path="res://assets/vegetation/models/tree_medium_broad_clustered_canopy.glb" id="broad"]
+[ext_resource type="PackedScene" path="res://assets/vegetation/models/tree_medium_upright_asymmetric_canopy.glb" id="upright"]
+[ext_resource type="Texture2D" path="res://assets/vegetation/textures/leaf_clusters_witness_sparse_flat_v11.png" id="leaf"]
+[ext_resource type="Shader" path="res://assets/world/current_map_validation/landscape.gdshader" id="ground_shader"]
+[ext_resource type="Texture2D" path="res://assets/world/current_map_validation/landscape_mask.res" id="mask"]
+[ext_resource type="Material" path="res://assets/world/cliff_b_test/architecture.tres" id="architecture"]
+[ext_resource type="Material" path="res://assets/environment/sky/fresh_cumulus_sky.tres" id="sky"]
+
+[sub_resource type="Resource" id="species_small"]
+script = ExtResource("species")
+id = "small"
+display_name = "小型阔叶树"
+model = ExtResource("small")
+leaf_texture = ExtResource("leaf")
+
+[sub_resource type="Resource" id="species_broad"]
+script = ExtResource("species")
+id = "broad"
+display_name = "大型圆冠树"
+model = ExtResource("broad")
+leaf_texture = ExtResource("leaf")
+
+[sub_resource type="Resource" id="species_upright"]
+script = ExtResource("species")
+id = "upright"
+display_name = "大型直立树"
+model = ExtResource("upright")
+leaf_texture = ExtResource("leaf")
+
+[sub_resource type="Resource" id="palette_green"]
+script = ExtResource("palette")
+id = "green"
+follow_world_biome = true
+display_name = "清脆叶绿"
+seed = 0.29
+deep = Color(0.18039216, 0.49019608, 0.19607843, 1)
+shadow = Color(0.21960784, 0.55686275, 0.23529412, 1)
+middle = Color(0.40000000, 0.73333333, 0.41568627, 1)
+light = Color(0.50588235, 0.78039216, 0.51764706, 1)
+
+[sub_resource type="Resource" id="palette_cherry"]
+script = ExtResource("palette")
+id = "cherry"
+display_name = "粉色花树"
+seed = 0.17
+deep = Color(0.71764706, 0.49803922, 0.60000000, 1)
+shadow = Color(0.75686275, 0.55294118, 0.64705882, 1)
+middle = Color(0.87843137, 0.69019608, 0.75686275, 1)
+light = Color(0.94509804, 0.82352941, 0.85098039, 1)
+
+[sub_resource type="Resource" id="palette_gold"]
+script = ExtResource("palette")
+id = "gold"
+display_name = "金色"
+seed = 0.39
+deep = Color(0.64313725, 0.49019608, 0.26274510, 1)
+shadow = Color(0.70980392, 0.56078431, 0.30980392, 1)
+middle = Color(0.81960784, 0.67843137, 0.38431373, 1)
+light = Color(0.90196078, 0.78823529, 0.50980392, 1)
+
+[sub_resource type="Resource" id="palette_orange"]
+script = ExtResource("palette")
+id = "orange"
+display_name = "橙色"
+seed = 0.63
+deep = Color(0.65490196, 0.32941176, 0.28235294, 1)
+shadow = Color(0.70980392, 0.39607843, 0.31372549, 1)
+middle = Color(0.83921569, 0.50588235, 0.38431373, 1)
+light = Color(0.90980392, 0.65882353, 0.52549020, 1)
+
+[sub_resource type="Resource" id="palette_red"]
+script = ExtResource("palette")
+id = "red"
+display_name = "红色"
+seed = 0.84
+deep = Color(0.54901961, 0.26274510, 0.34901961, 1)
+shadow = Color(0.61960784, 0.32156863, 0.39607843, 1)
+middle = Color(0.74901961, 0.40784314, 0.45490196, 1)
+light = Color(0.84705882, 0.54509804, 0.56862745, 1)
+
+[sub_resource type="Resource" id="palette_legacy"]
+script = ExtResource("palette")
+id = "legacy"
+display_name = "原贴图绿色（保留）"
+seed = 0.29
+deep = Color(0.18039216, 0.49019608, 0.19607843, 1)
+shadow = Color(0.21960784, 0.55686275, 0.23529412, 1)
+middle = Color(0.40000000, 0.73333333, 0.41568627, 1)
+light = Color(0.50588235, 0.78039216, 0.51764706, 1)
+use_texture_color = true
+texture_tint = Color(0.83, 0.97, 0.89, 1)
+
+[sub_resource type="FastNoiseLite" id="biome_noise"]
+seed = 46129
+frequency = 0.012
+noise_type = 1
+fractal_octaves = 4
+
+[sub_resource type="NoiseTexture2D" id="biome_texture"]
+width = 512
+height = 512
+seamless = true
+generate_mipmaps = true
+noise = SubResource("biome_noise")
+
+[sub_resource type="ShaderMaterial" id="ground"]
+shader = ExtResource("ground_shader")
+shader_parameter/use_shared_meadow_biome = true
+shader_parameter/biome_noise_texture = SubResource("biome_texture")
+shader_parameter/biome_noise_scale = 0.00135
+shader_parameter/biome_warp_distance = 210.0
+shader_parameter/biome_transition_half_width = 135.0
+shader_parameter/biome_center_x = 20.0
+shader_parameter/landscape_mask = ExtResource("mask")
+shader_parameter/mask_origin_xz = Vector2(-586.0, -263.0)
+shader_parameter/mask_extent_xz = Vector2(818.0, 1448.0)
+
+[resource]
+script = ExtResource("profile")
+terrain = ExtResource("terrain")
+terrain_metadata = "res://assets/world/current_map_validation/metadata.json"
+baseline_layout = "res://assets/world/current_map_validation/tree_layout.json"
+test_edits_path = "res://assets/world/tree_planting_test/edits.json"
+species = Array[Resource]([SubResource("species_small"), SubResource("species_broad"), SubResource("species_upright")])
+palettes = Array[Resource]([SubResource("palette_green"), SubResource("palette_cherry"), SubResource("palette_gold"), SubResource("palette_orange"), SubResource("palette_red"), SubResource("palette_legacy")])
+initial_center = Vector3(-415, 63, 910)
+architecture = ExtResource("architecture")
+terrain_material = SubResource("ground")
+sky = ExtResource("sky")

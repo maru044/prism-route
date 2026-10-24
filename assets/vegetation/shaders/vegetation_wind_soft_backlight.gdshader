@@ -9,6 +9,8 @@ uniform vec4 color_tint : source_color = vec4(1.0);
 // Grass gets a little per-blade overlap from MultiMesh custom data; each tree
 // gets a restrained per-instance tint through GeometryInstance3D.
 uniform bool use_biome_palette = false;
+// Opt-in for default green trees; flower palettes retain their authored colours.
+uniform bool species_biome_tint = false;
 uniform bool use_multimesh_color_data = false;
 uniform sampler2D biome_noise_texture : repeat_enable, filter_linear;
 uniform vec4 palette_dry : source_color = vec4(1.0);
@@ -549,6 +551,9 @@ void fragment() {
 		ALBEDO = tex.rgb * palette_tint * variant_tint.rgb
 			* wind_tone * height_tone;
 	}
+	if (use_species_palette > 0.5 && species_biome_tint) {
+		ALBEDO *= palette_tint;
+	}
 	ALPHA = cutout_alpha;
 	ALPHA_SCISSOR_THRESHOLD = alpha_cutoff;
 	ALPHA_ANTIALIASING_EDGE = min(alpha_antialiasing_edge, alpha_cutoff - 0.001);
@@ -628,7 +633,7 @@ void light() {
 			// a second, almost-white paint layer over the crown.
 			palette_direct_strength *= 0.42;
 		}
-		DIFFUSE_LIGHT += direct_palette * LIGHT_COLOR * foliage_attenuation
+		DIFFUSE_LIGHT += direct_palette * (species_biome_tint ? palette_tint : vec3(1.0)) * LIGHT_COLOR * foliage_attenuation
 			* artistic_diffuse * palette_direct_strength;
 	} else if (use_species_palette > 0.5) {
 		float palette_ramp = smoothstep(
@@ -647,7 +652,7 @@ void light() {
 			species_accent_mix
 		);
 		vec3 direct_palette = mix(middle_color, light_color, palette_ramp);
-		DIFFUSE_LIGHT += direct_palette * LIGHT_COLOR * foliage_attenuation
+		DIFFUSE_LIGHT += direct_palette * (species_biome_tint ? palette_tint : vec3(1.0)) * LIGHT_COLOR * foliage_attenuation
 			* wrapped_ndotl * species_direct_strength;
 	} else {
 		DIFFUSE_LIGHT += ALBEDO * LIGHT_COLOR * foliage_attenuation * wrapped_ndotl;

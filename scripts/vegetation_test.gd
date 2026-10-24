@@ -50,6 +50,8 @@ var grass_wind_texture: NoiseTexture2D
 var biome_noise_texture: NoiseTexture2D
 var shared_trunk_material: StandardMaterial3D
 var foliage_style
+var grass_material: ShaderMaterial
+var grass_wind_demo
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -95,6 +97,9 @@ func _ready() -> void:
 	else:
 		_build_tree(refined_tree)
 	_build_grass_chunks()
+	if grove_demo:
+		grass_wind_demo=load("res://scripts/grass_wind_demo.gd").new()
+		add_child(grass_wind_demo);grass_wind_demo.initialize(grass_material)
 	foliage_style=preload("res://scripts/foliage_style.gd").new()
 	foliage_style.bind_grove(self)
 	if grove_demo and "--capture-character" in arguments:
@@ -958,7 +963,9 @@ func _set_large_tree_shading_parameters(
 
 
 func _build_grass_chunks() -> void:
-	var source := GRASS_MODEL.instantiate()
+	# Only the small grove uses the segmented test mesh; the world keeps v6.
+	var grass_scene: PackedScene=load("res://assets/vegetation/models/grass_star_3card_gust_v7.glb") if grove_demo else GRASS_MODEL
+	var source := grass_scene.instantiate()
 	var source_mesh_instance := _find_first_mesh_instance(source)
 	if source_mesh_instance == null:
 		push_error("Grass GLB contains no MeshInstance3D")
@@ -966,8 +973,8 @@ func _build_grass_chunks() -> void:
 	var grass_mesh := source_mesh_instance.mesh.duplicate()
 	source.free()
 
-	var grass_material := ShaderMaterial.new()
-	grass_material.shader = WIND_SHADER
+	grass_material = ShaderMaterial.new()
+	grass_material.shader = load("res://assets/vegetation/shaders/grass_gust.gdshader") if grove_demo else WIND_SHADER
 	grass_material.set_shader_parameter("albedo_texture", GRASS_TEXTURE)
 	grass_material.set_shader_parameter("alpha_cutoff", 0.34)
 	grass_material.set_shader_parameter("alpha_antialiasing_edge", 0.20)
@@ -1053,6 +1060,7 @@ func _build_grass_chunks() -> void:
 		chunk.name = "GrassChunk_%d_%d" % [key.x, key.y]
 		chunk.multimesh = multimesh
 		chunk.visibility_range_end = 100.0
+		if grove_demo:chunk.extra_cull_margin=1.8
 		# Hundreds of alpha-cut grass shadows become dark visual noise. Grounding
 		# comes from SSAO; the trunk and a future canopy proxy handle tree shadows.
 		chunk.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
