@@ -23,16 +23,20 @@
     1150,
     0
   ],
-  "objects": 199,
-  "triangles": 9345058,
-  "cad_object_count": 263,
+  "objects": 205,
+  "triangles": 10144277,
+  "cad_object_count": 269,
   "cad_geometry_and_attributes_unchanged": true,
   "object_records": [
     {
-      "kind": "Terrain",
-      "index_count": 29133,
-      "collision": true,
       "id": "012ab31c-3bd7-4f32-8676-9592c584ca4c",
+      "collision": true,
+      "kind": "Terrain",
+      "layer": "地形::内湾主地形",
+      "offset": 0,
+      "name": "保留原地形_00",
+      "vertex_count": 5681,
+      "index_count": 30771,
       "bounds": [
         [
           -5.611911773681641,
@@ -42,14 +46,12 @@
         [
           790.2574462890625,
           1246.878662109375,
-          60.924591064453125
+          60.924808502197266
         ]
       ],
-      "layer": "地形::内湾主地形",
-      "name": "保留原地形_00",
-      "vertex_count": 5292,
-      "offset": 0,
-      "surface_role": "terrain"
+      "surface_role": "terrain",
+      "export_index_count": 30771,
+      "source_index_count": 30771
     },
     {
       "kind": "Structure",
@@ -71,8 +73,10 @@
       "layer": "交通::隧道",
       "name": "原岸墙_临水隧道实际开洞",
       "vertex_count": 11558,
-      "offset": 180036,
-      "surface_role": "structure"
+      "offset": 191256,
+      "surface_role": "structure",
+      "export_index_count": 64674,
+      "source_index_count": 64674
     },
     {
       "kind": "Road",
@@ -94,8 +98,10 @@
       "layer": "交通::中层道路",
       "name": "B_单层连续车行道路",
       "vertex_count": 6950,
-      "offset": 577428,
-      "surface_role": "road"
+      "offset": 588648,
+      "surface_role": "road",
+      "export_index_count": 30696,
+      "source_index_count": 30696
     },
     {
       "kind": "Structure",
@@ -117,8 +123,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛2_倾斜廊柱与桥面承托",
       "vertex_count": 104,
-      "offset": 783612,
-      "surface_role": "structure"
+      "offset": 794832,
+      "surface_role": "structure",
+      "export_index_count": 306,
+      "source_index_count": 306
     },
     {
       "kind": "Structure",
@@ -140,8 +148,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛2_倾斜廊柱与桥面承托",
       "vertex_count": 3328,
-      "offset": 786084,
-      "surface_role": "structure"
+      "offset": 797304,
+      "surface_role": "structure",
+      "export_index_count": 18636,
+      "source_index_count": 18636
     },
     {
       "kind": "Road",
@@ -163,8 +173,10 @@
       "layer": "地形::内湾主地形",
       "name": "艺术桥_保留实际路面与两端接点",
       "vertex_count": 1115,
-      "offset": 900564,
-      "surface_role": "road"
+      "offset": 911784,
+      "surface_role": "road",
+      "export_index_count": 5328,
+      "source_index_count": 5328
     },
     {
       "kind": "Structure",
@@ -186,8 +198,10 @@
       "layer": "交通::中层道路",
       "name": "东侧中层连接桥_连续浅拱桥腹与一体低护缘",
       "vertex_count": 12905,
-      "offset": 935256,
-      "surface_role": "structure"
+      "offset": 946476,
+      "surface_role": "structure",
+      "export_index_count": 70926,
+      "source_index_count": 70926
     },
     {
       "kind": "Structure",
@@ -209,8 +223,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛2_倾斜廊柱与桥面承托",
       "vertex_count": 3322,
-      "offset": 1373820,
-      "surface_role": "structure"
+      "offset": 1385040,
+      "surface_role": "structure",
+      "export_index_count": 18600,
+      "source_index_count": 18600
     },
     {
       "kind": "Structure",
@@ -232,8 +248,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛4_倾斜廊柱与桥面承托",
       "vertex_count": 104,
-      "offset": 1488084,
-      "surface_role": "structure"
+      "offset": 1499304,
+      "surface_role": "structure",
+      "export_index_count": 306,
+      "source_index_count": 306
     },
     {
       "kind": "Structure",
@@ -255,8 +273,10 @@
       "layer": "交通::隧道",
       "name": "west_左侧连续步行肩",
       "vertex_count": 1264,
-      "offset": 1490556,
-      "surface_role": "structure"
+      "offset": 1501776,
+      "surface_role": "structure",
+      "export_index_count": 3756,
+      "source_index_count": 3756
     },
     {
       "kind": "Structure",
@@ -278,8 +298,10 @@
       "layer": "交通::上层道路::环塔对比::B2_跨桥扭转",
       "name": "主桥B2_岛4_随扭转环塔重排的双侧斜拉索",
       "vertex_count": 2016,
-      "offset": 1520748,
-      "surface_role": "structure"
+      "offset": 1531968,
+      "surface_role": "structure",
+      "export_index_count": 5760,
+      "source_index_count": 5760
     },
     {
       "kind": "Terrain",
@@ -301,8 +323,10 @@
       "layer": "地形::丘陵与局部衔接",
       "name": "07_西侧宽槽_跨槽连续曲面实体",
       "vertex_count": 11912,
-      "offset": 1567980,
-      "surface_role": "terrain"
+      "offset": 1579200,
+      "surface_role": "terrain",
+      "export_index_count": 62484,
+      "source_index_count": 62484
     },
     {
       "kind": "Terrain",
@@ -324,8 +348,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛2_连续曲面水庭屋盖",
       "vertex_count": 103090,
-      "offset": 1960860,
-      "surface_role": "terrain"
+      "offset": 1972080,
+      "surface_role": "terrain",
+      "export_index_count": 617046,
+      "source_index_count": 617046
     },
     {
       "kind": "Sand",
@@ -347,8 +373,10 @@
       "layer": "环境::沙滩",
       "name": "",
       "vertex_count": 317,
-      "offset": 5666124,
-      "surface_role": "sand"
+      "offset": 5677344,
+      "surface_role": "sand",
+      "export_index_count": 945,
+      "source_index_count": 945
     },
     {
       "kind": "Terrain",
@@ -370,8 +398,10 @@
       "layer": "地形::入口曲面与支撑",
       "name": "保留实体与恢复旧空廊_07",
       "vertex_count": 1233,
-      "offset": 5673708,
-      "surface_role": "terrain"
+      "offset": 5684928,
+      "surface_role": "terrain",
+      "export_index_count": 5958,
+      "source_index_count": 5958
     },
     {
       "kind": "Structure",
@@ -393,8 +423,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛4_倾斜廊柱与桥面承托",
       "vertex_count": 3209,
-      "offset": 5712336,
-      "surface_role": "structure"
+      "offset": 5723556,
+      "surface_role": "structure",
+      "export_index_count": 17922,
+      "source_index_count": 17922
     },
     {
       "kind": "Structure",
@@ -416,8 +448,10 @@
       "layer": "交通::中层道路",
       "name": "A1双层桥_连续NURBS桥腹与交织斜壳",
       "vertex_count": 97983,
-      "offset": 5822532,
-      "surface_role": "structure"
+      "offset": 5833752,
+      "surface_role": "structure",
+      "export_index_count": 561342,
+      "source_index_count": 561342
     },
     {
       "kind": "Sand",
@@ -439,8 +473,10 @@
       "layer": "环境::沙滩",
       "name": "",
       "vertex_count": 563,
-      "offset": 9243696,
-      "surface_role": "sand"
+      "offset": 9254916,
+      "surface_role": "sand",
+      "export_index_count": 1683,
+      "source_index_count": 1683
     },
     {
       "kind": "Structure",
@@ -462,8 +498,10 @@
       "layer": "交通::沙嘴与沿岸道路",
       "name": "路口退让_A_扶手立柱_01",
       "vertex_count": 4620,
-      "offset": 9257184,
-      "surface_role": "structure"
+      "offset": 9268404,
+      "surface_role": "structure",
+      "export_index_count": 13200,
+      "source_index_count": 13200
     },
     {
       "kind": "Structure",
@@ -485,8 +523,10 @@
       "layer": "交通::隧道",
       "name": "03_入口道路下方_连续落地路基",
       "vertex_count": 77476,
-      "offset": 9365424,
-      "surface_role": "structure"
+      "offset": 9376644,
+      "surface_role": "structure",
+      "export_index_count": 462588,
+      "source_index_count": 462588
     },
     {
       "kind": "Structure",
@@ -508,8 +548,10 @@
       "layer": "交通::泻湖出口小桥",
       "name": "出口小桥_低护栏_5",
       "vertex_count": 2100,
-      "offset": 12145488,
-      "surface_role": "structure"
+      "offset": 12156708,
+      "surface_role": "structure",
+      "export_index_count": 6000,
+      "source_index_count": 6000
     },
     {
       "kind": "Structure",
@@ -531,8 +573,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛2_倾斜廊柱与桥面承托",
       "vertex_count": 104,
-      "offset": 12194688,
-      "surface_role": "structure"
+      "offset": 12205908,
+      "surface_role": "structure",
+      "export_index_count": 306,
+      "source_index_count": 306
     },
     {
       "kind": "Structure",
@@ -554,8 +598,10 @@
       "layer": "交通::泻湖出口小桥",
       "name": "出口小桥_低护栏_4",
       "vertex_count": 2100,
-      "offset": 12197160,
-      "surface_role": "structure"
+      "offset": 12208380,
+      "surface_role": "structure",
+      "export_index_count": 6000,
+      "source_index_count": 6000
     },
     {
       "kind": "Structure",
@@ -577,8 +623,10 @@
       "layer": "交通::泻湖长桥",
       "name": "A_车道线_01",
       "vertex_count": 802,
-      "offset": 12246360,
-      "surface_role": "structure"
+      "offset": 12257580,
+      "surface_role": "structure",
+      "export_index_count": 2400,
+      "source_index_count": 2400
     },
     {
       "kind": "Structure",
@@ -600,8 +648,10 @@
       "layer": "交通::隧道",
       "name": "04_洞内连续路肩_-1",
       "vertex_count": 596,
-      "offset": 12265584,
-      "surface_role": "structure"
+      "offset": 12276804,
+      "surface_role": "structure",
+      "export_index_count": 3564,
+      "source_index_count": 3564
     },
     {
       "kind": "Terrain",
@@ -623,8 +673,10 @@
       "layer": "地形::丘陵与局部衔接",
       "name": "08_西侧道路转角_连续收口实体",
       "vertex_count": 20755,
-      "offset": 12286992,
-      "surface_role": "terrain"
+      "offset": 12298212,
+      "surface_role": "terrain",
+      "export_index_count": 112206,
+      "source_index_count": 112206
     },
     {
       "kind": "Structure",
@@ -646,14 +698,20 @@
       "layer": "交通::沙嘴与沿岸道路",
       "name": "沙嘴_连续实体岸带_NURBS",
       "vertex_count": 224363,
-      "offset": 12984876,
-      "surface_role": "structure"
+      "offset": 12996096,
+      "surface_role": "structure",
+      "export_index_count": 1330374,
+      "source_index_count": 1330374
     },
     {
-      "kind": "Terrain",
-      "index_count": 22992,
-      "collision": true,
       "id": "1df69efa-10ae-4af3-bf52-c8510f167429",
+      "collision": true,
+      "kind": "Terrain",
+      "layer": "地形::入口曲面与支撑",
+      "offset": 21009948,
+      "name": "T2_东侧实体主台_保留顶面",
+      "vertex_count": 6282,
+      "index_count": 22464,
       "bounds": [
         [
           1502.159423828125,
@@ -666,11 +724,9 @@
           59.80260467529297
         ]
       ],
-      "layer": "地形::入口曲面与支撑",
-      "name": "T2_东侧实体主台_保留顶面",
-      "vertex_count": 4530,
-      "offset": 20998728,
-      "surface_role": "terrain"
+      "surface_role": "terrain",
+      "export_index_count": 22464,
+      "source_index_count": 33036
     },
     {
       "kind": "Terrain",
@@ -692,8 +748,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛2_环形临水基座",
       "vertex_count": 151000,
-      "offset": 21145056,
-      "surface_role": "terrain"
+      "offset": 21217476,
+      "surface_role": "terrain",
+      "export_index_count": 904356,
+      "source_index_count": 904356
     },
     {
       "kind": "Terrain",
@@ -715,8 +773,10 @@
       "layer": "地形::入口曲面与支撑",
       "name": "T1_front_连续展开支撑",
       "vertex_count": 130953,
-      "offset": 26574480,
-      "surface_role": "terrain"
+      "offset": 26646900,
+      "surface_role": "terrain",
+      "export_index_count": 741654,
+      "source_index_count": 741654
     },
     {
       "kind": "Structure",
@@ -738,8 +798,10 @@
       "layer": "交通::沙嘴与沿岸道路",
       "name": "路口退让_A_连续扶手_01",
       "vertex_count": 4755,
-      "offset": 31112532,
-      "surface_role": "structure"
+      "offset": 31184952,
+      "surface_role": "structure",
+      "export_index_count": 28362,
+      "source_index_count": 28362
     },
     {
       "kind": "Terrain",
@@ -761,8 +823,10 @@
       "layer": "地形::内湾主地形",
       "name": "西侧高台_竖直岸墙与现有隧道开口",
       "vertex_count": 4711,
-      "offset": 31283040,
-      "surface_role": "terrain"
+      "offset": 31355460,
+      "surface_role": "terrain",
+      "export_index_count": 24882,
+      "source_index_count": 24882
     },
     {
       "kind": "Structure",
@@ -784,8 +848,10 @@
       "layer": "建筑::崖壁B::建筑构件",
       "name": "B_NURBS_西端斜向衔接",
       "vertex_count": 5361,
-      "offset": 31439100,
-      "surface_role": "architectural_component"
+      "offset": 31511520,
+      "surface_role": "architectural_component",
+      "export_index_count": 30120,
+      "source_index_count": 30120
     },
     {
       "kind": "Structure",
@@ -807,8 +873,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛2_倾斜廊柱与桥面承托",
       "vertex_count": 104,
-      "offset": 31623912,
-      "surface_role": "structure"
+      "offset": 31696332,
+      "surface_role": "structure",
+      "export_index_count": 306,
+      "source_index_count": 306
     },
     {
       "kind": "Structure",
@@ -830,8 +898,10 @@
       "layer": "交通::小桥岸路",
       "name": "岸路_标线_0",
       "vertex_count": 572,
-      "offset": 31626384,
-      "surface_role": "structure"
+      "offset": 31698804,
+      "surface_role": "structure",
+      "export_index_count": 1584,
+      "source_index_count": 1584
     },
     {
       "kind": "Structure",
@@ -853,8 +923,10 @@
       "layer": "交通::沙嘴与沿岸道路",
       "name": "路口退让_A_连续扶手_02",
       "vertex_count": 4755,
-      "offset": 31639584,
-      "surface_role": "structure"
+      "offset": 31712004,
+      "surface_role": "structure",
+      "export_index_count": 28362,
+      "source_index_count": 28362
     },
     {
       "kind": "Road",
@@ -876,31 +948,35 @@
       "layer": "交通::中层道路",
       "name": "西侧中层道路_连续20米路面",
       "vertex_count": 29742,
-      "offset": 31810092,
-      "surface_role": "road"
+      "offset": 31882512,
+      "surface_role": "road",
+      "export_index_count": 128400,
+      "source_index_count": 128400
     },
     {
-      "kind": "Road",
-      "index_count": 7416,
-      "collision": true,
       "id": "305479e8-59d9-4a89-bcf6-204f69186e51",
+      "collision": true,
+      "kind": "Road",
+      "layer": "交通::小桥岸路",
+      "offset": 32753016,
+      "name": "西侧岸路_连续NURBS路面与闭合底板",
+      "vertex_count": 55289,
+      "index_count": 312102,
       "bounds": [
         [
-          252.2250213623047,
+          252.22500610351562,
           110.65953063964844,
-          2.7556886672973633
+          2.2956886291503906
         ],
         [
           717.0933837890625,
           1291.9429931640625,
-          60.613487243652344
+          60.613502502441406
         ]
       ],
-      "layer": "交通::小桥岸路",
-      "name": "原岸路_保留上坡及北段",
-      "vertex_count": 1574,
-      "offset": 32680596,
-      "surface_role": "road"
+      "surface_role": "road",
+      "export_index_count": 312102,
+      "source_index_count": 312102
     },
     {
       "kind": "Structure",
@@ -922,12 +998,14 @@
       "layer": "建筑::崖壁B::建筑构件",
       "name": "B_光庭内侧坐台_2",
       "vertex_count": 216,
-      "offset": 32729148,
-      "surface_role": "architectural_component"
+      "offset": 34664892,
+      "surface_role": "architectural_component",
+      "export_index_count": 612,
+      "source_index_count": 612
     },
     {
       "kind": "Structure",
-      "index_count": 256584,
+      "index_count": 256560,
       "collision": true,
       "id": "37cde2e1-e1e8-431f-a80a-697f4a61017a",
       "bounds": [
@@ -945,8 +1023,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛3_倾斜廊柱与桥面承托",
       "vertex_count": 45425,
-      "offset": 32734188,
-      "surface_role": "structure"
+      "offset": 34669932,
+      "surface_role": "structure",
+      "export_index_count": 256560,
+      "source_index_count": 256584
     },
     {
       "kind": "Water",
@@ -968,8 +1048,10 @@
       "layer": "环境::水面",
       "name": "",
       "vertex_count": 2172,
-      "offset": 34305624,
-      "surface_role": "water"
+      "offset": 36241368,
+      "surface_role": "water",
+      "export_index_count": 6540,
+      "source_index_count": 6540
     },
     {
       "kind": "Road",
@@ -991,12 +1073,14 @@
       "layer": "交通::中层道路",
       "name": "西侧中层连接桥_20米路面",
       "vertex_count": 4811,
-      "offset": 34357848,
-      "surface_role": "road"
+      "offset": 36293592,
+      "surface_role": "road",
+      "export_index_count": 22962,
+      "source_index_count": 22962
     },
     {
       "kind": "Terrain",
-      "index_count": 20376,
+      "index_count": 19173,
       "collision": true,
       "id": "3a784408-92fe-4bef-aa04-2c2e3f2bd05a",
       "bounds": [
@@ -1014,8 +1098,10 @@
       "layer": "地形::入口曲面与支撑",
       "name": "T1_湾缘实体低台_保留顶面",
       "vertex_count": 4004,
-      "offset": 34507428,
-      "surface_role": "terrain"
+      "offset": 36443172,
+      "surface_role": "terrain",
+      "export_index_count": 19173,
+      "source_index_count": 20376
     },
     {
       "kind": "Structure",
@@ -1037,8 +1123,10 @@
       "layer": "建筑::崖壁B::建筑构件",
       "name": "B_中层外缘步行带",
       "vertex_count": 2044,
-      "offset": 34636980,
-      "surface_role": "architectural_component"
+      "offset": 36572724,
+      "surface_role": "architectural_component",
+      "export_index_count": 6096,
+      "source_index_count": 6096
     },
     {
       "kind": "Road",
@@ -1060,8 +1148,10 @@
       "layer": "交通::沙嘴与沿岸道路",
       "name": "沙嘴_连续道路_0",
       "vertex_count": 32122,
-      "offset": 34685892,
-      "surface_role": "road"
+      "offset": 36621636,
+      "surface_role": "road",
+      "export_index_count": 163896,
+      "source_index_count": 163896
     },
     {
       "kind": "Terrain",
@@ -1083,8 +1173,10 @@
       "layer": "地形::基础地形",
       "name": "",
       "vertex_count": 6,
-      "offset": 35726940,
-      "surface_role": "terrain"
+      "offset": 37662684,
+      "surface_role": "terrain",
+      "export_index_count": 12,
+      "source_index_count": 12
     },
     {
       "kind": "Structure",
@@ -1106,8 +1198,10 @@
       "layer": "交通::隧道",
       "name": "east_连续拱腹_圆转洞唇_实体落地拱肩",
       "vertex_count": 118000,
-      "offset": 35727060,
-      "surface_role": "structure"
+      "offset": 37662804,
+      "surface_role": "structure",
+      "export_index_count": 453120,
+      "source_index_count": 453120
     },
     {
       "kind": "Structure",
@@ -1129,8 +1223,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛4_倾斜廊柱与桥面承托",
       "vertex_count": 104,
-      "offset": 38955540,
-      "surface_role": "structure"
+      "offset": 40891284,
+      "surface_role": "structure",
+      "export_index_count": 306,
+      "source_index_count": 306
     },
     {
       "kind": "Structure",
@@ -1152,8 +1248,10 @@
       "layer": "交通::隧道",
       "name": "西侧中层隧道_B_连续底板与崖壁搭接基座",
       "vertex_count": 262174,
-      "offset": 38958012,
-      "surface_role": "structure"
+      "offset": 40893756,
+      "surface_role": "structure",
+      "export_index_count": 1565604,
+      "source_index_count": 1565604
     },
     {
       "kind": "Structure",
@@ -1175,8 +1273,10 @@
       "layer": "交通::隧道",
       "name": "左侧入口_渐入落地坡脚与路基",
       "vertex_count": 75451,
-      "offset": 48366516,
-      "surface_role": "structure"
+      "offset": 50302260,
+      "surface_role": "structure",
+      "export_index_count": 448620,
+      "source_index_count": 448620
     },
     {
       "kind": "Structure",
@@ -1198,8 +1298,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛2_倾斜廊柱与桥面承托",
       "vertex_count": 104,
-      "offset": 51066408,
-      "surface_role": "structure"
+      "offset": 53002152,
+      "surface_role": "structure",
+      "export_index_count": 306,
+      "source_index_count": 306
     },
     {
       "kind": "Structure",
@@ -1221,8 +1323,10 @@
       "layer": "交通::中层道路",
       "name": "西侧中层道路_连续路肩与浅路基",
       "vertex_count": 303049,
-      "offset": 51068880,
-      "surface_role": "structure"
+      "offset": 53004624,
+      "surface_role": "structure",
+      "export_index_count": 1755024,
+      "source_index_count": 1755024
     },
     {
       "kind": "Structure",
@@ -1244,8 +1348,10 @@
       "layer": "建筑::崖壁B::建筑构件",
       "name": "B_中层连续矮护墙",
       "vertex_count": 1496,
-      "offset": 61725564,
-      "surface_role": "architectural_component"
+      "offset": 63661308,
+      "surface_role": "architectural_component",
+      "export_index_count": 4452,
+      "source_index_count": 4452
     },
     {
       "kind": "Road",
@@ -1267,8 +1373,10 @@
       "layer": "交通::中层道路",
       "name": "中层道路_低地接点抬升",
       "vertex_count": 4383,
-      "offset": 61761324,
-      "surface_role": "road"
+      "offset": 63697068,
+      "surface_role": "road",
+      "export_index_count": 23328,
+      "source_index_count": 23328
     },
     {
       "kind": "Structure",
@@ -1290,8 +1398,10 @@
       "layer": "交通::隧道",
       "name": "02_临水洞口后方_连续内壁与拱顶",
       "vertex_count": 82338,
-      "offset": 61907232,
-      "surface_role": "structure"
+      "offset": 63842976,
+      "surface_role": "structure",
+      "export_index_count": 490338,
+      "source_index_count": 490338
     },
     {
       "kind": "Terrain",
@@ -1313,54 +1423,65 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛1_环形临水基座",
       "vertex_count": 122693,
-      "offset": 64856640,
-      "surface_role": "terrain"
+      "offset": 66792384,
+      "surface_role": "terrain",
+      "export_index_count": 734556,
+      "source_index_count": 734556
     },
     {
-      "kind": "Road",
-      "index_count": 984,
-      "collision": true,
       "id": "5182ccac-8e3b-4322-8826-976a9254271b",
+      "collision": true,
+      "kind": "Road",
+      "layer": "交通::上层道路",
+      "offset": 71202924,
+      "name": "",
+      "vertex_count": 412,
+      "index_count": 1836,
       "bounds": [
         [
           571.7153930664062,
           204.6981964111328,
-          60.33799362182617
+          60.3330192565918
         ],
         [
           738.121826171875,
           352.3275451660156,
-          60.695228576660156
+          60.62928771972656
         ]
       ],
-      "layer": "交通::上层道路",
-      "name": "",
-      "vertex_count": 210,
-      "offset": 69267180,
-      "surface_role": "road"
+      "surface_role": "road",
+      "export_index_count": 1836,
+      "source_index_count": 1836
     },
     {
-      "kind": "Terrain",
-      "index_count": 36210,
-      "collision": true,
       "id": "577d868b-7597-4058-83f8-4b630606b305",
+      "layer": "地形::基础地形",
+      "name": "出生地_上扬尖角_喇叭形初始洞穴_步行_plantable_roof",
+      "vertex_count": 27313,
+      "mesh_part": "plantable_roof",
+      "collision": true,
+      "cad_face_indices": [
+        2
+      ],
+      "kind": "Terrain",
+      "offset": 71215212,
+      "index_count": 156441,
       "bounds": [
         [
           291.28094482421875,
-          -482.50006103515625,
-          0.0
+          -482.5017395019531,
+          34.99835205078125
         ],
         [
-          735.0422973632812,
+          735.0421752929688,
           218.54954528808594,
-          35.0
+          52.99949264526367
         ]
       ],
-      "layer": "地形::基础地形",
-      "name": "",
-      "vertex_count": 6879,
-      "offset": 69273636,
-      "surface_role": "terrain"
+      "source_object_id": "577d868b-7597-4058-83f8-4b630606b305",
+      "surface_role": "plantable_spawn_roof",
+      "export_index_count": 156441,
+      "source_index_count": 156441
     },
     {
       "kind": "Terrain",
@@ -1382,8 +1503,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛1_连续曲面水庭屋盖",
       "vertex_count": 79683,
-      "offset": 69501024,
-      "surface_role": "terrain"
+      "offset": 72168732,
+      "surface_role": "terrain",
+      "export_index_count": 476670,
+      "source_index_count": 476670
     },
     {
       "kind": "Road",
@@ -1405,8 +1528,10 @@
       "layer": "交通::中层道路",
       "name": "恢复的下降通路_沿新地形抬升",
       "vertex_count": 1310,
-      "offset": 72363900,
-      "surface_role": "road"
+      "offset": 75031608,
+      "surface_role": "road",
+      "export_index_count": 6264,
+      "source_index_count": 6264
     },
     {
       "kind": "Structure",
@@ -1428,8 +1553,10 @@
       "layer": "交通::隧道",
       "name": "east_埋入式连续承台",
       "vertex_count": 14322,
-      "offset": 72404676,
-      "surface_role": "structure"
+      "offset": 75072384,
+      "surface_role": "structure",
+      "export_index_count": 81690,
+      "source_index_count": 81690
     },
     {
       "kind": "Structure",
@@ -1451,8 +1578,10 @@
       "layer": "交通::隧道",
       "name": "east_左侧连续步行肩",
       "vertex_count": 1072,
-      "offset": 72903300,
-      "surface_role": "structure"
+      "offset": 75571008,
+      "surface_role": "structure",
+      "export_index_count": 3180,
+      "source_index_count": 3180
     },
     {
       "kind": "Road",
@@ -1474,8 +1603,10 @@
       "layer": "交通::中层道路",
       "name": "A1双层桥_下层路面",
       "vertex_count": 3388,
-      "offset": 72928884,
-      "surface_role": "road"
+      "offset": 75596592,
+      "surface_role": "road",
+      "export_index_count": 14052,
+      "source_index_count": 14052
     },
     {
       "kind": "Structure",
@@ -1497,8 +1628,10 @@
       "layer": "建筑::崖壁B::建筑构件",
       "name": "B_观水坐凳_2",
       "vertex_count": 216,
-      "offset": 73025748,
-      "surface_role": "architectural_component"
+      "offset": 75693456,
+      "surface_role": "architectural_component",
+      "export_index_count": 612,
+      "source_index_count": 612
     },
     {
       "kind": "Structure",
@@ -1520,8 +1653,10 @@
       "layer": "建筑::崖壁B::建筑构件",
       "name": "B_底层连续廊檐_2",
       "vertex_count": 576,
-      "offset": 73030788,
-      "surface_role": "architectural_component"
+      "offset": 75698496,
+      "surface_role": "architectural_component",
+      "export_index_count": 1692,
+      "source_index_count": 1692
     },
     {
       "kind": "Sand",
@@ -1543,8 +1678,10 @@
       "layer": "环境::沙滩",
       "name": "",
       "vertex_count": 4,
-      "offset": 73044468,
-      "surface_role": "sand"
+      "offset": 75712176,
+      "surface_role": "sand",
+      "export_index_count": 6,
+      "source_index_count": 6
     },
     {
       "kind": "Road",
@@ -1566,8 +1703,10 @@
       "layer": "交通::上层道路",
       "name": "主桥B_沿原中线抬升20米路面",
       "vertex_count": 55646,
-      "offset": 73044540,
-      "surface_role": "road"
+      "offset": 75712248,
+      "surface_role": "road",
+      "export_index_count": 241560,
+      "source_index_count": 241560
     },
     {
       "kind": "Structure",
@@ -1589,8 +1728,10 @@
       "layer": "交通::小桥岸路",
       "name": "岸路_标线_2",
       "vertex_count": 1042,
-      "offset": 74678532,
-      "surface_role": "structure"
+      "offset": 77346240,
+      "surface_role": "structure",
+      "export_index_count": 3120,
+      "source_index_count": 3120
     },
     {
       "kind": "Terrain",
@@ -1612,8 +1753,10 @@
       "layer": "地形::丘陵与局部衔接",
       "name": "桥侧凸起实体_实际宽度凸冠验证",
       "vertex_count": 29096,
-      "offset": 74703516,
-      "surface_role": "terrain"
+      "offset": 77371224,
+      "surface_role": "terrain",
+      "export_index_count": 174564,
+      "source_index_count": 174564
     },
     {
       "kind": "Road",
@@ -1635,8 +1778,10 @@
       "layer": "交通::泻湖长桥",
       "name": "A_连续缓拱沥青路面",
       "vertex_count": 2807,
-      "offset": 75750924,
-      "surface_role": "road"
+      "offset": 78418632,
+      "surface_role": "road",
+      "export_index_count": 14400,
+      "source_index_count": 14400
     },
     {
       "kind": "Terrain",
@@ -1658,8 +1803,10 @@
       "layer": "地形::入口曲面与支撑",
       "name": "T2_front_连续展开支撑",
       "vertex_count": 133330,
-      "offset": 75842208,
-      "surface_role": "terrain"
+      "offset": 78509916,
+      "surface_role": "terrain",
+      "export_index_count": 758064,
+      "source_index_count": 758064
     },
     {
       "kind": "Structure",
@@ -1681,8 +1828,10 @@
       "layer": "交通::隧道",
       "name": "west_右侧连续步行肩",
       "vertex_count": 1264,
-      "offset": 80474424,
-      "surface_role": "structure"
+      "offset": 83142132,
+      "surface_role": "structure",
+      "export_index_count": 3756,
+      "source_index_count": 3756
     },
     {
       "kind": "Water",
@@ -1704,8 +1853,10 @@
       "layer": "环境::水面",
       "name": "",
       "vertex_count": 50,
-      "offset": 80504616,
-      "surface_role": "water"
+      "offset": 83172324,
+      "surface_role": "water",
+      "export_index_count": 132,
+      "source_index_count": 132
     },
     {
       "kind": "Structure",
@@ -1727,8 +1878,10 @@
       "layer": "交通::隧道",
       "name": "east_右侧连续步行肩",
       "vertex_count": 1072,
-      "offset": 80505744,
-      "surface_role": "structure"
+      "offset": 83173452,
+      "surface_role": "structure",
+      "export_index_count": 3180,
+      "source_index_count": 3180
     },
     {
       "kind": "Structure",
@@ -1750,8 +1903,10 @@
       "layer": "交通::泻湖出口小桥",
       "name": "出口小桥_低护栏_3",
       "vertex_count": 3506,
-      "offset": 80531328,
-      "surface_role": "structure"
+      "offset": 83199036,
+      "surface_role": "structure",
+      "export_index_count": 21024,
+      "source_index_count": 21024
     },
     {
       "kind": "Structure",
@@ -1773,8 +1928,10 @@
       "layer": "交通::中层道路",
       "name": "西侧中层连接桥_连续浅拱桥腹与一体低护缘",
       "vertex_count": 18398,
-      "offset": 80657496,
-      "surface_role": "structure"
+      "offset": 83325204,
+      "surface_role": "structure",
+      "export_index_count": 101076,
+      "source_index_count": 101076
     },
     {
       "kind": "Structure",
@@ -1796,14 +1953,20 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛2_倾斜廊柱与桥面承托",
       "vertex_count": 3855,
-      "offset": 81282576,
-      "surface_role": "structure"
+      "offset": 83950284,
+      "surface_role": "structure",
+      "export_index_count": 21762,
+      "source_index_count": 21762
     },
     {
-      "kind": "Terrain",
-      "index_count": 115122,
-      "collision": true,
       "id": "6ff4660f-d023-461f-a4ac-9f0038a79c6d",
+      "collision": true,
+      "kind": "Terrain",
+      "layer": "地形::内湾主地形",
+      "offset": 84083592,
+      "name": "陆侧主壳_顶面内切连续起伏_0_0",
+      "vertex_count": 28250,
+      "index_count": 157596,
       "bounds": [
         [
           1484.71728515625,
@@ -1816,11 +1979,9 @@
           59.80260467529297
         ]
       ],
-      "layer": "地形::内湾主地形",
-      "name": "陆侧主壳_顶面内切连续起伏_0_0",
-      "vertex_count": 20888,
-      "offset": 81415884,
-      "surface_role": "terrain"
+      "surface_role": "terrain",
+      "export_index_count": 157596,
+      "source_index_count": 157596
     },
     {
       "kind": "Structure",
@@ -1842,8 +2003,10 @@
       "layer": "交通::沙嘴与沿岸道路",
       "name": "路口退让_A_圆转边带_00",
       "vertex_count": 4755,
-      "offset": 82127028,
-      "surface_role": "structure"
+      "offset": 85052976,
+      "surface_role": "structure",
+      "export_index_count": 28362,
+      "source_index_count": 28362
     },
     {
       "kind": "Structure",
@@ -1865,8 +2028,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛4_倾斜廊柱与桥面承托",
       "vertex_count": 3855,
-      "offset": 82297536,
-      "surface_role": "structure"
+      "offset": 85223484,
+      "surface_role": "structure",
+      "export_index_count": 21762,
+      "source_index_count": 21762
     },
     {
       "kind": "Structure",
@@ -1888,8 +2053,10 @@
       "layer": "建筑::崖壁B::建筑构件",
       "name": "B_完整基础板",
       "vertex_count": 3628,
-      "offset": 82430844,
-      "surface_role": "architectural_component"
+      "offset": 85356792,
+      "surface_role": "architectural_component",
+      "export_index_count": 15744,
+      "source_index_count": 15744
     },
     {
       "kind": "Terrain",
@@ -1911,8 +2078,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛4_环形临水基座",
       "vertex_count": 134561,
-      "offset": 82537356,
-      "surface_role": "terrain"
+      "offset": 85463304,
+      "surface_role": "terrain",
+      "export_index_count": 805788,
+      "source_index_count": 805788
     },
     {
       "kind": "Structure",
@@ -1934,8 +2103,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛2_倾斜廊柱与桥面承托",
       "vertex_count": 104,
-      "offset": 87375240,
-      "surface_role": "structure"
+      "offset": 90301188,
+      "surface_role": "structure",
+      "export_index_count": 306,
+      "source_index_count": 306
     },
     {
       "kind": "Structure",
@@ -1957,8 +2128,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛2_倾斜廊柱与桥面承托",
       "vertex_count": 3855,
-      "offset": 87377712,
-      "surface_role": "structure"
+      "offset": 90303660,
+      "surface_role": "structure",
+      "export_index_count": 21762,
+      "source_index_count": 21762
     },
     {
       "kind": "Terrain",
@@ -1980,8 +2153,10 @@
       "layer": "建筑::崖壁B::种植承载面",
       "name": "B_顶部低矮建筑_斜肩平顶",
       "vertex_count": 1159,
-      "offset": 87511020,
-      "surface_role": "plantable_roof"
+      "offset": 90436968,
+      "surface_role": "plantable_roof",
+      "export_index_count": 4596,
+      "source_index_count": 4596
     },
     {
       "kind": "Water",
@@ -2003,8 +2178,10 @@
       "layer": "环境::水面",
       "name": "B_峡谷浅水_保留原沙底",
       "vertex_count": 1634,
-      "offset": 87543312,
-      "surface_role": "water"
+      "offset": 90469260,
+      "surface_role": "water",
+      "export_index_count": 7767,
+      "source_index_count": 7767
     },
     {
       "kind": "Structure",
@@ -2026,8 +2203,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛2_倾斜廊柱与桥面承托",
       "vertex_count": 104,
-      "offset": 87593988,
-      "surface_role": "structure"
+      "offset": 90519936,
+      "surface_role": "structure",
+      "export_index_count": 306,
+      "source_index_count": 306
     },
     {
       "kind": "Sand",
@@ -2049,8 +2228,10 @@
       "layer": "环境::沙滩",
       "name": "",
       "vertex_count": 233,
-      "offset": 87596460,
-      "surface_role": "sand"
+      "offset": 90522408,
+      "surface_role": "sand",
+      "export_index_count": 693,
+      "source_index_count": 693
     },
     {
       "kind": "Road",
@@ -2072,8 +2253,10 @@
       "layer": "交通::隧道",
       "name": "east_铺装下实体基层",
       "vertex_count": 2420,
-      "offset": 87602028,
-      "surface_role": "road"
+      "offset": 90527976,
+      "surface_role": "road",
+      "export_index_count": 11160,
+      "source_index_count": 11160
     },
     {
       "kind": "Terrain",
@@ -2095,8 +2278,10 @@
       "layer": "地形::保留原地形",
       "name": "原岸地形_道路及小桥局部让位",
       "vertex_count": 790,
-      "offset": 87675708,
-      "surface_role": "preserved_landscape"
+      "offset": 90601656,
+      "surface_role": "preserved_landscape",
+      "export_index_count": 2883,
+      "source_index_count": 2883
     },
     {
       "kind": "Structure",
@@ -2118,8 +2303,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛4_倾斜廊柱与桥面承托",
       "vertex_count": 3297,
-      "offset": 87696720,
-      "surface_role": "structure"
+      "offset": 90622668,
+      "surface_role": "structure",
+      "export_index_count": 18462,
+      "source_index_count": 18462
     },
     {
       "kind": "Terrain",
@@ -2141,8 +2328,10 @@
       "layer": "地形::丘陵与局部衔接",
       "name": "06_东侧宽槽_跨槽连续曲面实体",
       "vertex_count": 9484,
-      "offset": 87810132,
-      "surface_role": "terrain"
+      "offset": 90736080,
+      "surface_role": "terrain",
+      "export_index_count": 51408,
+      "source_index_count": 51408
     },
     {
       "kind": "Sand",
@@ -2164,8 +2353,10 @@
       "layer": "环境::沙滩",
       "name": "",
       "vertex_count": 195,
-      "offset": 88129572,
-      "surface_role": "sand"
+      "offset": 91055520,
+      "surface_role": "sand",
+      "export_index_count": 579,
+      "source_index_count": 579
     },
     {
       "kind": "Structure",
@@ -2187,8 +2378,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛2_倾斜廊柱与桥面承托",
       "vertex_count": 3618,
-      "offset": 88134228,
-      "surface_role": "structure"
+      "offset": 91060176,
+      "surface_role": "structure",
+      "export_index_count": 20346,
+      "source_index_count": 20346
     },
     {
       "kind": "Structure",
@@ -2210,8 +2403,10 @@
       "layer": "交通::沙嘴与沿岸道路",
       "name": "沙嘴_道路标线_0",
       "vertex_count": 2288,
-      "offset": 88259028,
-      "surface_role": "structure"
+      "offset": 91184976,
+      "surface_role": "structure",
+      "export_index_count": 3432,
+      "source_index_count": 3432
     },
     {
       "kind": "Structure",
@@ -2233,8 +2428,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛4_倾斜廊柱与桥面承托",
       "vertex_count": 104,
-      "offset": 88300212,
-      "surface_role": "structure"
+      "offset": 91226160,
+      "surface_role": "structure",
+      "export_index_count": 306,
+      "source_index_count": 306
     },
     {
       "kind": "Structure",
@@ -2256,8 +2453,10 @@
       "layer": "交通::沙嘴与沿岸道路",
       "name": "路口退让_A_连续扶手_03",
       "vertex_count": 4755,
-      "offset": 88302684,
-      "surface_role": "structure"
+      "offset": 91228632,
+      "surface_role": "structure",
+      "export_index_count": 28362,
+      "source_index_count": 28362
     },
     {
       "kind": "Terrain",
@@ -2279,8 +2478,10 @@
       "layer": "地形::入口曲面与支撑",
       "name": "保留实体与恢复旧空廊_01",
       "vertex_count": 240,
-      "offset": 88473192,
-      "surface_role": "terrain"
+      "offset": 91399140,
+      "surface_role": "terrain",
+      "export_index_count": 984,
+      "source_index_count": 984
     },
     {
       "kind": "Water",
@@ -2302,8 +2503,10 @@
       "layer": "环境::水面",
       "name": "",
       "vertex_count": 8,
-      "offset": 88480008,
-      "surface_role": "water"
+      "offset": 91405956,
+      "surface_role": "water",
+      "export_index_count": 24,
+      "source_index_count": 24
     },
     {
       "kind": "Structure",
@@ -2325,8 +2528,10 @@
       "layer": "交通::泻湖出口小桥",
       "name": "出口小桥_连续展肩与单跨拱腹_NURBS",
       "vertex_count": 64272,
-      "offset": 88480200,
-      "surface_role": "structure"
+      "offset": 91406148,
+      "surface_role": "structure",
+      "export_index_count": 384078,
+      "source_index_count": 384078
     },
     {
       "kind": "Structure",
@@ -2348,8 +2553,10 @@
       "layer": "建筑::崖壁B::建筑构件",
       "name": "B_底层连续廊檐_3",
       "vertex_count": 588,
-      "offset": 90787776,
-      "surface_role": "architectural_component"
+      "offset": 93713724,
+      "surface_role": "architectural_component",
+      "export_index_count": 1764,
+      "source_index_count": 1764
     },
     {
       "kind": "Terrain",
@@ -2371,8 +2578,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛3_环形临水基座",
       "vertex_count": 170397,
-      "offset": 90801888,
-      "surface_role": "terrain"
+      "offset": 93727836,
+      "surface_role": "terrain",
+      "export_index_count": 1020576,
+      "source_index_count": 1020576
     },
     {
       "kind": "Terrain",
@@ -2394,8 +2603,10 @@
       "layer": "地形::基础地形",
       "name": "",
       "vertex_count": 5,
-      "offset": 96928956,
-      "surface_role": "terrain"
+      "offset": 99854904,
+      "surface_role": "terrain",
+      "export_index_count": 9,
+      "source_index_count": 9
     },
     {
       "kind": "Terrain",
@@ -2417,8 +2628,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛4_连续曲面水庭屋盖",
       "vertex_count": 100763,
-      "offset": 96929052,
-      "surface_role": "terrain"
+      "offset": 99855000,
+      "surface_role": "terrain",
+      "export_index_count": 603168,
+      "source_index_count": 603168
     },
     {
       "kind": "Structure",
@@ -2440,8 +2653,10 @@
       "layer": "交通::沙嘴与沿岸道路",
       "name": "路口退让_A_连续扶手_00",
       "vertex_count": 4755,
-      "offset": 100550880,
-      "surface_role": "structure"
+      "offset": 103476828,
+      "surface_role": "structure",
+      "export_index_count": 28362,
+      "source_index_count": 28362
     },
     {
       "kind": "Structure",
@@ -2463,8 +2678,10 @@
       "layer": "交通::沙嘴与沿岸道路",
       "name": "路口退让_A_圆转边带_01",
       "vertex_count": 4755,
-      "offset": 100721388,
-      "surface_role": "structure"
+      "offset": 103647336,
+      "surface_role": "structure",
+      "export_index_count": 28362,
+      "source_index_count": 28362
     },
     {
       "kind": "Structure",
@@ -2486,8 +2703,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛4_倾斜廊柱与桥面承托",
       "vertex_count": 3855,
-      "offset": 100891896,
-      "surface_role": "structure"
+      "offset": 103817844,
+      "surface_role": "structure",
+      "export_index_count": 21762,
+      "source_index_count": 21762
     },
     {
       "kind": "Structure",
@@ -2509,8 +2728,10 @@
       "layer": "交通::泻湖长桥",
       "name": "A_车道线_00",
       "vertex_count": 802,
-      "offset": 101025204,
-      "surface_role": "structure"
+      "offset": 103951152,
+      "surface_role": "structure",
+      "export_index_count": 2400,
+      "source_index_count": 2400
     },
     {
       "kind": "Structure",
@@ -2532,8 +2753,10 @@
       "layer": "建筑::崖壁B::建筑构件",
       "name": "B_观水坐凳_1",
       "vertex_count": 228,
-      "offset": 101044428,
-      "surface_role": "architectural_component"
+      "offset": 103970376,
+      "surface_role": "architectural_component",
+      "export_index_count": 672,
+      "source_index_count": 672
     },
     {
       "kind": "Structure",
@@ -2555,8 +2778,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛2_倾斜廊柱与桥面承托",
       "vertex_count": 3863,
-      "offset": 101049852,
-      "surface_role": "structure"
+      "offset": 103975800,
+      "surface_role": "structure",
+      "export_index_count": 21804,
+      "source_index_count": 21804
     },
     {
       "kind": "Terrain",
@@ -2578,8 +2803,10 @@
       "layer": "地形::保留原地形",
       "name": "原临水台地_通行范围让位",
       "vertex_count": 9284,
-      "offset": 101183424,
-      "surface_role": "preserved_landscape"
+      "offset": 104109372,
+      "surface_role": "preserved_landscape",
+      "export_index_count": 52920,
+      "source_index_count": 52920
     },
     {
       "kind": "Terrain",
@@ -2601,8 +2828,10 @@
       "layer": "地形::丘陵与局部衔接",
       "name": "02_中低地衔接带_0_接缝顺接",
       "vertex_count": 9297,
-      "offset": 101506512,
-      "surface_role": "terrain"
+      "offset": 104432460,
+      "surface_role": "terrain",
+      "export_index_count": 45960,
+      "source_index_count": 45960
     },
     {
       "kind": "Structure",
@@ -2624,8 +2853,10 @@
       "layer": "交通::泻湖出口小桥",
       "name": "出口小桥_标线_1",
       "vertex_count": 584,
-      "offset": 101801916,
-      "surface_role": "structure"
+      "offset": 104727864,
+      "surface_role": "structure",
+      "export_index_count": 1746,
+      "source_index_count": 1746
     },
     {
       "kind": "Structure",
@@ -2647,8 +2878,10 @@
       "layer": "交通::隧道",
       "name": "04_洞内连续路肩_1",
       "vertex_count": 596,
-      "offset": 101815908,
-      "surface_role": "structure"
+      "offset": 104741856,
+      "surface_role": "structure",
+      "export_index_count": 3564,
+      "source_index_count": 3564
     },
     {
       "kind": "Structure",
@@ -2670,8 +2903,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛2_倾斜廊柱与桥面承托",
       "vertex_count": 3453,
-      "offset": 101837316,
-      "surface_role": "structure"
+      "offset": 104763264,
+      "surface_role": "structure",
+      "export_index_count": 19392,
+      "source_index_count": 19392
     },
     {
       "kind": "Structure",
@@ -2693,8 +2928,10 @@
       "layer": "交通::小桥岸路",
       "name": "岸路_连续圆顺路基与路肩",
       "vertex_count": 89597,
-      "offset": 101956320,
-      "surface_role": "structure"
+      "offset": 104882268,
+      "surface_role": "structure",
+      "export_index_count": 530034,
+      "source_index_count": 530034
     },
     {
       "kind": "Terrain",
@@ -2716,8 +2953,10 @@
       "layer": "地形::入口曲面与支撑",
       "name": "T2_rear_连续展开支撑",
       "vertex_count": 124576,
-      "offset": 105151620,
-      "surface_role": "terrain"
+      "offset": 108077568,
+      "surface_role": "terrain",
+      "export_index_count": 701382,
+      "source_index_count": 701382
     },
     {
       "kind": "Structure",
@@ -2739,8 +2978,10 @@
       "layer": "建筑::崖壁B::建筑构件",
       "name": "B_v03_不规则开口连续厚曲面",
       "vertex_count": 81020,
-      "offset": 109452060,
-      "surface_role": "megastructure_shell"
+      "offset": 112378008,
+      "surface_role": "megastructure_shell",
+      "export_index_count": 486156,
+      "source_index_count": 486156
     },
     {
       "kind": "Structure",
@@ -2762,8 +3003,10 @@
       "layer": "建筑::崖壁B::建筑构件",
       "name": "B_底层连续廊檐_1",
       "vertex_count": 828,
-      "offset": 112368924,
-      "surface_role": "architectural_component"
+      "offset": 115294872,
+      "surface_role": "architectural_component",
+      "export_index_count": 3204,
+      "source_index_count": 3204
     },
     {
       "kind": "Structure",
@@ -2785,8 +3028,10 @@
       "layer": "交通::中层道路",
       "name": "分支道路_渐起实心路基",
       "vertex_count": 33247,
-      "offset": 112391676,
-      "surface_role": "structure"
+      "offset": 115317624,
+      "surface_role": "structure",
+      "export_index_count": 198234,
+      "source_index_count": 198234
     },
     {
       "kind": "Water",
@@ -2808,8 +3053,10 @@
       "layer": "环境::水面",
       "name": "",
       "vertex_count": 4,
-      "offset": 113583576,
-      "surface_role": "water"
+      "offset": 116509524,
+      "surface_role": "water",
+      "export_index_count": 6,
+      "source_index_count": 6
     },
     {
       "kind": "Structure",
@@ -2831,14 +3078,20 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛4_倾斜廊柱与桥面承托",
       "vertex_count": 104,
-      "offset": 113583648,
-      "surface_role": "structure"
+      "offset": 116509596,
+      "surface_role": "structure",
+      "export_index_count": 306,
+      "source_index_count": 306
     },
     {
-      "kind": "Terrain",
-      "index_count": 471984,
-      "collision": true,
       "id": "9c6e4638-fa65-4d06-b84d-21feb0ab3b1b",
+      "collision": true,
+      "kind": "Terrain",
+      "layer": "地形::丘陵与局部衔接",
+      "offset": 116512068,
+      "name": "05_S形地形与旧坡岸_连续顺接实体",
+      "vertex_count": 88363,
+      "index_count": 506928,
       "bounds": [
         [
           1290.0421142578125,
@@ -2851,11 +3104,9 @@
           41.54932403564453
         ]
       ],
-      "layer": "地形::丘陵与局部衔接",
-      "name": "05_S形地形与旧坡岸_连续顺接实体",
-      "vertex_count": 82204,
-      "offset": 113586120,
-      "surface_role": "terrain"
+      "surface_role": "terrain",
+      "export_index_count": 506928,
+      "source_index_count": 506928
     },
     {
       "kind": "Terrain",
@@ -2877,12 +3128,14 @@
       "layer": "地形::丘陵与局部衔接",
       "name": "01_中部连续起伏与曲面坡岸_0_接缝顺接",
       "vertex_count": 28030,
-      "offset": 116460504,
-      "surface_role": "terrain"
+      "offset": 119600136,
+      "surface_role": "terrain",
+      "export_index_count": 159102,
+      "source_index_count": 159102
     },
     {
       "kind": "Terrain",
-      "index_count": 15276,
+      "index_count": 14697,
       "collision": true,
       "id": "9f4e6ec5-912a-4884-9c5a-4be69f1ff211",
       "bounds": [
@@ -2900,19 +3153,25 @@
       "layer": "地形::入口曲面与支撑",
       "name": "T2_湾缘实体低台_保留顶面",
       "vertex_count": 3124,
-      "offset": 117433272,
-      "surface_role": "terrain"
+      "offset": 120572904,
+      "surface_role": "terrain",
+      "export_index_count": 14697,
+      "source_index_count": 15276
     },
     {
-      "kind": "Terrain",
-      "index_count": 108090,
-      "collision": true,
       "id": "a2a15e34-a9db-4e6a-a4ce-be472804bd15",
+      "collision": true,
+      "kind": "Terrain",
+      "layer": "地形::保留原地形",
+      "offset": 120671496,
+      "name": "原地形_仅让出沙嘴道路覆盖区",
+      "vertex_count": 19606,
+      "index_count": 110076,
       "bounds": [
         [
           688.4968872070312,
           -61.1047477722168,
-          -4.3020548820495605
+          -4.301314830780029
         ],
         [
           2349.701171875,
@@ -2920,11 +3179,9 @@
           60.749881744384766
         ]
       ],
-      "layer": "地形::保留原地形",
-      "name": "原地形_仅让出沙嘴道路覆盖区",
-      "vertex_count": 19119,
-      "offset": 117531864,
-      "surface_role": "preserved_landscape"
+      "surface_role": "preserved_landscape",
+      "export_index_count": 110076,
+      "source_index_count": 110076
     },
     {
       "kind": "Structure",
@@ -2946,8 +3203,10 @@
       "layer": "交通::泻湖长桥",
       "name": "A_整桥_桥身柱肩与13墩连续_SubD",
       "vertex_count": 265796,
-      "offset": 118193652,
-      "surface_role": "structure"
+      "offset": 121347072,
+      "surface_role": "structure",
+      "export_index_count": 1004880,
+      "source_index_count": 1004880
     },
     {
       "kind": "Sand",
@@ -2969,8 +3228,10 @@
       "layer": "环境::沙滩",
       "name": "",
       "vertex_count": 203,
-      "offset": 125402724,
-      "surface_role": "sand"
+      "offset": 128556144,
+      "surface_role": "sand",
+      "export_index_count": 603,
+      "source_index_count": 603
     },
     {
       "kind": "Terrain",
@@ -2992,8 +3253,10 @@
       "layer": "地形::内湾主地形",
       "name": "流线艺术桥_变宽扭转与落地支承",
       "vertex_count": 71813,
-      "offset": 125407572,
-      "surface_role": "terrain"
+      "offset": 128560992,
+      "surface_role": "terrain",
+      "export_index_count": 415860,
+      "source_index_count": 415860
     },
     {
       "kind": "Structure",
@@ -3015,8 +3278,10 @@
       "layer": "交通::泻湖出口小桥",
       "name": "出口小桥_标线_0",
       "vertex_count": 584,
-      "offset": 127932768,
-      "surface_role": "structure"
+      "offset": 131086188,
+      "surface_role": "structure",
+      "export_index_count": 1746,
+      "source_index_count": 1746
     },
     {
       "kind": "Water",
@@ -3038,8 +3303,10 @@
       "layer": "环境::水面",
       "name": "",
       "vertex_count": 1233,
-      "offset": 127946760,
-      "surface_role": "water"
+      "offset": 131100180,
+      "surface_role": "water",
+      "export_index_count": 3645,
+      "source_index_count": 3645
     },
     {
       "kind": "Structure",
@@ -3061,8 +3328,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛4_倾斜廊柱与桥面承托",
       "vertex_count": 3855,
-      "offset": 127976136,
-      "surface_role": "structure"
+      "offset": 131129556,
+      "surface_role": "structure",
+      "export_index_count": 21762,
+      "source_index_count": 21762
     },
     {
       "kind": "Sand",
@@ -3084,8 +3353,10 @@
       "layer": "环境::沙滩",
       "name": "",
       "vertex_count": 150,
-      "offset": 128109444,
-      "surface_role": "sand"
+      "offset": 131262864,
+      "surface_role": "sand",
+      "export_index_count": 444,
+      "source_index_count": 444
     },
     {
       "kind": "Terrain",
@@ -3107,8 +3378,10 @@
       "layer": "地形::基础地形",
       "name": "",
       "vertex_count": 4,
-      "offset": 128113020,
-      "surface_role": "terrain"
+      "offset": 131266440,
+      "surface_role": "terrain",
+      "export_index_count": 6,
+      "source_index_count": 6
     },
     {
       "kind": "Structure",
@@ -3130,8 +3403,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛4_倾斜廊柱与桥面承托",
       "vertex_count": 104,
-      "offset": 128113092,
-      "surface_role": "structure"
+      "offset": 131266512,
+      "surface_role": "structure",
+      "export_index_count": 306,
+      "source_index_count": 306
     },
     {
       "kind": "Terrain",
@@ -3153,8 +3428,10 @@
       "layer": "地形::丘陵与局部衔接",
       "name": "09_西侧三地形之间缺失区域_连续补全",
       "vertex_count": 5475,
-      "offset": 128115564,
-      "surface_role": "terrain"
+      "offset": 131268984,
+      "surface_role": "terrain",
+      "export_index_count": 29862,
+      "source_index_count": 29862
     },
     {
       "kind": "Structure",
@@ -3176,8 +3453,10 @@
       "layer": "交通::上层道路::环塔对比::B2_跨桥扭转",
       "name": "主桥B2_岛2_随扭转环塔重排的双侧斜拉索",
       "vertex_count": 3192,
-      "offset": 128300712,
-      "surface_role": "structure"
+      "offset": 131454132,
+      "surface_role": "structure",
+      "export_index_count": 9120,
+      "source_index_count": 9120
     },
     {
       "kind": "Structure",
@@ -3199,8 +3478,10 @@
       "layer": "建筑::崖壁B::建筑构件",
       "name": "B_NURBS_凹厅前亲水平台",
       "vertex_count": 708,
-      "offset": 128375496,
-      "surface_role": "architectural_component"
+      "offset": 131528916,
+      "surface_role": "architectural_component",
+      "export_index_count": 3012,
+      "source_index_count": 3012
     },
     {
       "kind": "Structure",
@@ -3222,8 +3503,10 @@
       "layer": "建筑::崖壁B::建筑构件",
       "name": "B_底层连续廊檐_0",
       "vertex_count": 1004,
-      "offset": 128396040,
-      "surface_role": "architectural_component"
+      "offset": 131549460,
+      "surface_role": "architectural_component",
+      "export_index_count": 4260,
+      "source_index_count": 4260
     },
     {
       "kind": "Structure",
@@ -3245,8 +3528,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛4_倾斜廊柱与桥面承托",
       "vertex_count": 3338,
-      "offset": 128425128,
-      "surface_role": "structure"
+      "offset": 131578548,
+      "surface_role": "structure",
+      "export_index_count": 18702,
+      "source_index_count": 18702
     },
     {
       "kind": "Road",
@@ -3268,8 +3553,10 @@
       "layer": "交通::隧道",
       "name": "west_铺装下实体基层",
       "vertex_count": 2854,
-      "offset": 128539992,
-      "surface_role": "road"
+      "offset": 131693412,
+      "surface_role": "road",
+      "export_index_count": 13176,
+      "source_index_count": 13176
     },
     {
       "kind": "Terrain",
@@ -3291,8 +3578,10 @@
       "layer": "地形::基础地形",
       "name": "",
       "vertex_count": 3204,
-      "offset": 128626944,
-      "surface_role": "terrain"
+      "offset": 131780364,
+      "surface_role": "terrain",
+      "export_index_count": 14340,
+      "source_index_count": 14340
     },
     {
       "kind": "Structure",
@@ -3314,8 +3603,10 @@
       "layer": "交通::泻湖出口小桥",
       "name": "出口小桥_低护栏_2",
       "vertex_count": 3506,
-      "offset": 128722752,
-      "surface_role": "structure"
+      "offset": 131876172,
+      "surface_role": "structure",
+      "export_index_count": 21024,
+      "source_index_count": 21024
     },
     {
       "kind": "Terrain",
@@ -3337,8 +3628,10 @@
       "layer": "地形::基础地形",
       "name": "",
       "vertex_count": 3,
-      "offset": 128848920,
-      "surface_role": "terrain"
+      "offset": 132002340,
+      "surface_role": "terrain",
+      "export_index_count": 3,
+      "source_index_count": 3
     },
     {
       "kind": "Structure",
@@ -3360,8 +3653,10 @@
       "layer": "交通::泻湖出口小桥",
       "name": "出口小桥_低护栏_0",
       "vertex_count": 3506,
-      "offset": 128848968,
-      "surface_role": "structure"
+      "offset": 132002388,
+      "surface_role": "structure",
+      "export_index_count": 21024,
+      "source_index_count": 21024
     },
     {
       "kind": "Structure",
@@ -3383,8 +3678,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛4_倾斜廊柱与桥面承托",
       "vertex_count": 104,
-      "offset": 128975136,
-      "surface_role": "structure"
+      "offset": 132128556,
+      "surface_role": "structure",
+      "export_index_count": 306,
+      "source_index_count": 306
     },
     {
       "kind": "Terrain",
@@ -3406,8 +3703,10 @@
       "layer": "地形::丘陵与局部衔接",
       "name": "03_滨水低丘连续地面_0_接缝顺接",
       "vertex_count": 11466,
-      "offset": 128977608,
-      "surface_role": "terrain"
+      "offset": 132131028,
+      "surface_role": "terrain",
+      "export_index_count": 56742,
+      "source_index_count": 56742
     },
     {
       "kind": "Road",
@@ -3429,8 +3728,10 @@
       "layer": "交通::泻湖出口小桥",
       "name": "出口小桥_桥面与两岸接坡",
       "vertex_count": 2044,
-      "offset": 129342168,
-      "surface_role": "road"
+      "offset": 132495588,
+      "surface_role": "road",
+      "export_index_count": 10476,
+      "source_index_count": 10476
     },
     {
       "kind": "Water",
@@ -3452,8 +3753,10 @@
       "layer": "环境::水面",
       "name": "",
       "vertex_count": 9,
-      "offset": 129408600,
-      "surface_role": "water"
+      "offset": 132562020,
+      "surface_role": "water",
+      "export_index_count": 21,
+      "source_index_count": 21
     },
     {
       "kind": "Sand",
@@ -3475,8 +3778,10 @@
       "layer": "环境::沙滩",
       "name": "",
       "vertex_count": 2472,
-      "offset": 129408792,
-      "surface_role": "sand"
+      "offset": 132562212,
+      "surface_role": "sand",
+      "export_index_count": 12795,
+      "source_index_count": 12795
     },
     {
       "kind": "Sand",
@@ -3498,8 +3803,10 @@
       "layer": "环境::沙滩",
       "name": "",
       "vertex_count": 238,
-      "offset": 129489636,
-      "surface_role": "sand"
+      "offset": 132643056,
+      "surface_role": "sand",
+      "export_index_count": 708,
+      "source_index_count": 708
     },
     {
       "kind": "Terrain",
@@ -3521,8 +3828,10 @@
       "layer": "建筑::崖壁B::种植承载面",
       "name": "B_亲水缓阶_1",
       "vertex_count": 2100,
-      "offset": 129495324,
-      "surface_role": "plantable_steps"
+      "offset": 132648744,
+      "surface_role": "plantable_steps",
+      "export_index_count": 6264,
+      "source_index_count": 6264
     },
     {
       "kind": "Structure",
@@ -3544,8 +3853,10 @@
       "layer": "交通::隧道",
       "name": "西侧中层隧道_B_倾斜流线拱肩与连续拱顶内壁",
       "vertex_count": 363800,
-      "offset": 129545580,
-      "surface_role": "structure"
+      "offset": 132699000,
+      "surface_role": "structure",
+      "export_index_count": 1396992,
+      "source_index_count": 1396992
     },
     {
       "kind": "Structure",
@@ -3567,8 +3878,10 @@
       "layer": "交通::中层道路",
       "name": "分支道路_三墩连续曲面桥腹",
       "vertex_count": 195134,
-      "offset": 139499148,
-      "surface_role": "structure"
+      "offset": 142652568,
+      "surface_role": "structure",
+      "export_index_count": 741648,
+      "source_index_count": 741648
     },
     {
       "kind": "Terrain",
@@ -3590,8 +3903,10 @@
       "layer": "建筑::崖壁B::种植承载面",
       "name": "B_NURBS_随内核退台的斜切屋盖",
       "vertex_count": 5261,
-      "offset": 144807348,
-      "surface_role": "plantable_roof"
+      "offset": 147960768,
+      "surface_role": "plantable_roof",
+      "export_index_count": 20226,
+      "source_index_count": 20226
     },
     {
       "kind": "Structure",
@@ -3613,14 +3928,20 @@
       "layer": "交通::隧道",
       "name": "平台回程隧道_沿现有环路连续内壁与洞口",
       "vertex_count": 43794,
-      "offset": 144951384,
-      "surface_role": "structure"
+      "offset": 148104804,
+      "surface_role": "structure",
+      "export_index_count": 259740,
+      "source_index_count": 259740
     },
     {
-      "kind": "Terrain",
-      "index_count": 95679,
-      "collision": true,
       "id": "d01b8d98-9f3d-46e7-8737-7b60ad7a5657",
+      "collision": true,
+      "kind": "Terrain",
+      "layer": "地形::丘陵与局部衔接",
+      "offset": 149669292,
+      "name": "西侧主台低台_连续衔接实体",
+      "vertex_count": 17882,
+      "index_count": 46509,
       "bounds": [
         [
           75.10377502441406,
@@ -3633,11 +3954,9 @@
           60.124839782714844
         ]
       ],
-      "layer": "地形::丘陵与局部衔接",
-      "name": "西侧主台低台_连续衔接实体",
-      "vertex_count": 17808,
-      "offset": 146515872,
-      "surface_role": "terrain"
+      "surface_role": "terrain",
+      "export_index_count": 46509,
+      "source_index_count": 96015
     },
     {
       "kind": "Road",
@@ -3659,8 +3978,10 @@
       "layer": "交通::中层道路",
       "name": "A1双层桥_上层路面",
       "vertex_count": 2649,
-      "offset": 147112284,
-      "surface_role": "road"
+      "offset": 150267936,
+      "surface_role": "road",
+      "export_index_count": 11142,
+      "source_index_count": 11142
     },
     {
       "kind": "Structure",
@@ -3682,8 +4003,10 @@
       "layer": "建筑::崖壁B::建筑构件",
       "name": "B_观水坐凳_0",
       "vertex_count": 220,
-      "offset": 147188640,
-      "surface_role": "architectural_component"
+      "offset": 150344292,
+      "surface_role": "architectural_component",
+      "export_index_count": 624,
+      "source_index_count": 624
     },
     {
       "kind": "Structure",
@@ -3705,8 +4028,10 @@
       "layer": "交通::上层道路::环塔对比::B2_跨桥扭转",
       "name": "主桥B2_岛4_跨桥扭转带状环塔",
       "vertex_count": 33817,
-      "offset": 147193776,
-      "surface_role": "structure"
+      "offset": 150349428,
+      "surface_role": "structure",
+      "export_index_count": 198696,
+      "source_index_count": 198696
     },
     {
       "kind": "Structure",
@@ -3728,8 +4053,10 @@
       "layer": "建筑::崖壁B::建筑构件",
       "name": "B_光庭内侧坐台_1",
       "vertex_count": 216,
-      "offset": 148394364,
-      "surface_role": "architectural_component"
+      "offset": 151550016,
+      "surface_role": "architectural_component",
+      "export_index_count": 612,
+      "source_index_count": 612
     },
     {
       "kind": "Structure",
@@ -3751,8 +4078,10 @@
       "layer": "交通::泻湖出口小桥",
       "name": "出口小桥_标线_2",
       "vertex_count": 584,
-      "offset": 148399404,
-      "surface_role": "structure"
+      "offset": 151555056,
+      "surface_role": "structure",
+      "export_index_count": 1746,
+      "source_index_count": 1746
     },
     {
       "kind": "Structure",
@@ -3774,8 +4103,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛4_倾斜廊柱与桥面承托",
       "vertex_count": 104,
-      "offset": 148413396,
-      "surface_role": "structure"
+      "offset": 151569048,
+      "surface_role": "structure",
+      "export_index_count": 306,
+      "source_index_count": 306
     },
     {
       "kind": "Structure",
@@ -3797,8 +4128,10 @@
       "layer": "交通::隧道",
       "name": "east_拱腹内收灯槽",
       "vertex_count": 1440,
-      "offset": 148415868,
-      "surface_role": "structure"
+      "offset": 151571520,
+      "surface_role": "structure",
+      "export_index_count": 8544,
+      "source_index_count": 8544
     },
     {
       "kind": "Road",
@@ -3820,8 +4153,10 @@
       "layer": "交通::中层道路",
       "name": "东侧中层连接桥_20米路面",
       "vertex_count": 3959,
-      "offset": 148467324,
-      "surface_role": "road"
+      "offset": 151622976,
+      "surface_role": "road",
+      "export_index_count": 20178,
+      "source_index_count": 20178
     },
     {
       "kind": "Structure",
@@ -3843,8 +4178,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛2_倾斜廊柱与桥面承托",
       "vertex_count": 104,
-      "offset": 148595544,
-      "surface_role": "structure"
+      "offset": 151751196,
+      "surface_role": "structure",
+      "export_index_count": 306,
+      "source_index_count": 306
     },
     {
       "kind": "Structure",
@@ -3866,8 +4203,10 @@
       "layer": "交通::上层道路",
       "name": "主桥B_抬升穿岛连续桥腹与低护缘",
       "vertex_count": 123815,
-      "offset": 148598016,
-      "surface_role": "structure"
+      "offset": 151753668,
+      "surface_role": "structure",
+      "export_index_count": 672618,
+      "source_index_count": 672618
     },
     {
       "kind": "Structure",
@@ -3889,8 +4228,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛1_倾斜廊柱与桥面承托",
       "vertex_count": 45975,
-      "offset": 152774268,
-      "surface_role": "structure"
+      "offset": 155929920,
+      "surface_role": "structure",
+      "export_index_count": 259500,
+      "source_index_count": 259500
     },
     {
       "kind": "Structure",
@@ -3912,8 +4253,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛4_倾斜廊柱与桥面承托",
       "vertex_count": 3064,
-      "offset": 154363968,
-      "surface_role": "structure"
+      "offset": 157519620,
+      "surface_role": "structure",
+      "export_index_count": 17070,
+      "source_index_count": 17070
     },
     {
       "kind": "Structure",
@@ -3935,8 +4278,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛2_倾斜廊柱与桥面承托",
       "vertex_count": 104,
-      "offset": 154469016,
-      "surface_role": "structure"
+      "offset": 157624668,
+      "surface_role": "structure",
+      "export_index_count": 306,
+      "source_index_count": 306
     },
     {
       "kind": "Structure",
@@ -3958,8 +4303,10 @@
       "layer": "建筑::崖壁B::建筑构件",
       "name": "B_全长峡谷步行平台_节点渐宽",
       "vertex_count": 3092,
-      "offset": 154471488,
-      "surface_role": "architectural_component"
+      "offset": 157627140,
+      "surface_role": "architectural_component",
+      "export_index_count": 13248,
+      "source_index_count": 13248
     },
     {
       "kind": "Terrain",
@@ -3981,14 +4328,20 @@
       "layer": "地形::入口曲面与支撑",
       "name": "入口侧_连续坡肩遮挡补体",
       "vertex_count": 72274,
-      "offset": 154561584,
-      "surface_role": "terrain"
+      "offset": 157717236,
+      "surface_role": "terrain",
+      "export_index_count": 425886,
+      "source_index_count": 425886
     },
     {
-      "kind": "Terrain",
-      "index_count": 111930,
-      "collision": true,
       "id": "de6391b1-e6fa-48bf-978c-b261e0d6d4b4",
+      "collision": true,
+      "kind": "Terrain",
+      "layer": "地形::内湾主地形",
+      "offset": 160288068,
+      "name": "陆侧主壳_顶面内切连续起伏_1_0",
+      "vertex_count": 21979,
+      "index_count": 120000,
       "bounds": [
         [
           75.10377502441406,
@@ -4001,11 +4354,9 @@
           60.124839782714844
         ]
       ],
-      "layer": "地形::内湾主地形",
-      "name": "陆侧主壳_顶面内切连续起伏_1_0",
-      "vertex_count": 20551,
-      "offset": 157132416,
-      "surface_role": "terrain"
+      "surface_role": "terrain",
+      "export_index_count": 120000,
+      "source_index_count": 120000
     },
     {
       "kind": "Terrain",
@@ -4027,8 +4378,10 @@
       "layer": "建筑::崖壁B::种植承载面",
       "name": "B_NURBS_实体侧错层台地内核_圆润端部",
       "vertex_count": 62754,
-      "offset": 157826748,
-      "surface_role": "plantable_terraces"
+      "offset": 161031816,
+      "surface_role": "plantable_terraces",
+      "export_index_count": 334134,
+      "source_index_count": 334134
     },
     {
       "kind": "Structure",
@@ -4050,8 +4403,10 @@
       "layer": "交通::泻湖出口小桥",
       "name": "出口小桥_低护栏_1",
       "vertex_count": 3506,
-      "offset": 159916332,
-      "surface_role": "structure"
+      "offset": 163121400,
+      "surface_role": "structure",
+      "export_index_count": 21024,
+      "source_index_count": 21024
     },
     {
       "kind": "Terrain",
@@ -4073,8 +4428,10 @@
       "layer": "地形::入口曲面与支撑",
       "name": "T1_upper_fan_连续展开支撑",
       "vertex_count": 77338,
-      "offset": 160042500,
-      "surface_role": "terrain"
+      "offset": 163247568,
+      "surface_role": "terrain",
+      "export_index_count": 434922,
+      "source_index_count": 434922
     },
     {
       "kind": "Structure",
@@ -4096,8 +4453,10 @@
       "layer": "建筑::崖壁B::建筑构件",
       "name": "B_光庭内侧坐台_0",
       "vertex_count": 242,
-      "offset": 162710244,
-      "surface_role": "architectural_component"
+      "offset": 165915312,
+      "surface_role": "architectural_component",
+      "export_index_count": 768,
+      "source_index_count": 768
     },
     {
       "kind": "Structure",
@@ -4119,8 +4478,10 @@
       "layer": "交通::小桥岸路",
       "name": "岸路_标线_1",
       "vertex_count": 1042,
-      "offset": 162716220,
-      "surface_role": "structure"
+      "offset": 165921288,
+      "surface_role": "structure",
+      "export_index_count": 3120,
+      "source_index_count": 3120
     },
     {
       "kind": "Structure",
@@ -4142,8 +4503,10 @@
       "layer": "交通::泻湖长桥",
       "name": "A_车道线_02",
       "vertex_count": 802,
-      "offset": 162741204,
-      "surface_role": "structure"
+      "offset": 165946272,
+      "surface_role": "structure",
+      "export_index_count": 2400,
+      "source_index_count": 2400
     },
     {
       "kind": "Structure",
@@ -4165,8 +4528,10 @@
       "layer": "交通::沙嘴与沿岸道路",
       "name": "沙嘴_道路标线_2",
       "vertex_count": 4588,
-      "offset": 162760428,
-      "surface_role": "structure"
+      "offset": 165965496,
+      "surface_role": "structure",
+      "export_index_count": 6882,
+      "source_index_count": 6882
     },
     {
       "kind": "Structure",
@@ -4188,8 +4553,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛4_倾斜廊柱与桥面承托",
       "vertex_count": 3468,
-      "offset": 162843012,
-      "surface_role": "structure"
+      "offset": 166048080,
+      "surface_role": "structure",
+      "export_index_count": 19482,
+      "source_index_count": 19482
     },
     {
       "kind": "Terrain",
@@ -4211,8 +4578,10 @@
       "layer": "地形::丘陵与局部衔接",
       "name": "03_滨水低丘连续地面_1_接缝顺接",
       "vertex_count": 6314,
-      "offset": 162962556,
-      "surface_role": "terrain"
+      "offset": 166167624,
+      "surface_role": "terrain",
+      "export_index_count": 31662,
+      "source_index_count": 31662
     },
     {
       "kind": "Structure",
@@ -4234,8 +4603,10 @@
       "layer": "交通::沙嘴与沿岸道路",
       "name": "沙嘴_道路标线_1",
       "vertex_count": 4600,
-      "offset": 163164972,
-      "surface_role": "structure"
+      "offset": 166370040,
+      "surface_role": "structure",
+      "export_index_count": 6900,
+      "source_index_count": 6900
     },
     {
       "kind": "Road",
@@ -4257,12 +4628,14 @@
       "layer": "交通::小桥岸路",
       "name": "岸路_修正纵坡与桥头接续",
       "vertex_count": 4184,
-      "offset": 163247772,
-      "surface_role": "road"
+      "offset": 166452840,
+      "surface_role": "road",
+      "export_index_count": 18732,
+      "source_index_count": 18732
     },
     {
       "kind": "Terrain",
-      "index_count": 21972,
+      "index_count": 21951,
       "collision": true,
       "id": "ecb36196-315f-4c98-9a41-9fada2f0724f",
       "bounds": [
@@ -4280,8 +4653,10 @@
       "layer": "地形::入口曲面与支撑",
       "name": "保留实体与恢复旧空廊_03",
       "vertex_count": 4394,
-      "offset": 163372908,
-      "surface_role": "terrain"
+      "offset": 166577976,
+      "surface_role": "terrain",
+      "export_index_count": 21951,
+      "source_index_count": 21972
     },
     {
       "kind": "Structure",
@@ -4303,8 +4678,10 @@
       "layer": "交通::隧道",
       "name": "左侧入口_连续洞唇拱腹与实心拱肩",
       "vertex_count": 154000,
-      "offset": 163513524,
-      "surface_role": "structure"
+      "offset": 166718592,
+      "surface_role": "structure",
+      "export_index_count": 591360,
+      "source_index_count": 591360
     },
     {
       "kind": "Terrain",
@@ -4326,8 +4703,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛3_连续曲面水庭屋盖",
       "vertex_count": 122300,
-      "offset": 167726964,
-      "surface_role": "terrain"
+      "offset": 170932032,
+      "surface_role": "terrain",
+      "export_index_count": 732162,
+      "source_index_count": 732162
     },
     {
       "kind": "Terrain",
@@ -4349,31 +4728,35 @@
       "layer": "地形::基础地形",
       "name": "",
       "vertex_count": 6,
-      "offset": 172123212,
-      "surface_role": "terrain"
+      "offset": 175328280,
+      "surface_role": "terrain",
+      "export_index_count": 12,
+      "source_index_count": 12
     },
     {
-      "kind": "Road",
-      "index_count": 9000,
-      "collision": true,
       "id": "ee277b2d-e4eb-4d39-80e6-c5d8a5d87d70",
+      "collision": true,
+      "kind": "Road",
+      "layer": "交通::沙嘴与沿岸道路",
+      "offset": 175328400,
+      "name": "东侧岸路_连续NURBS路面与闭合底板",
+      "vertex_count": 60429,
+      "index_count": 341154,
       "bounds": [
         [
           1621.790283203125,
           88.43708038330078,
-          2.3973114490509033
+          1.9373114109039307
         ],
         [
-          1847.7420654296875,
+          1847.742431640625,
           1504.8021240234375,
-          60.404903411865234
+          60.40489959716797
         ]
       ],
-      "layer": "交通::沙嘴与沿岸道路",
-      "name": "原岸路_保留北段_0",
-      "vertex_count": 1895,
-      "offset": 172123332,
-      "surface_role": "road"
+      "surface_role": "road",
+      "export_index_count": 341154,
+      "source_index_count": 341154
     },
     {
       "kind": "Structure",
@@ -4395,8 +4778,10 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛2_倾斜廊柱与桥面承托",
       "vertex_count": 3304,
-      "offset": 172182072,
-      "surface_role": "structure"
+      "offset": 177418164,
+      "surface_role": "structure",
+      "export_index_count": 18504,
+      "source_index_count": 18504
     },
     {
       "kind": "Terrain",
@@ -4418,8 +4803,10 @@
       "layer": "建筑::崖壁B::种植承载面",
       "name": "B_亲水缓阶_2",
       "vertex_count": 2912,
-      "offset": 172295736,
-      "surface_role": "plantable_steps"
+      "offset": 177531828,
+      "surface_role": "plantable_steps",
+      "export_index_count": 8700,
+      "source_index_count": 8700
     },
     {
       "kind": "Terrain",
@@ -4441,8 +4828,10 @@
       "layer": "地形::内湾主地形",
       "name": "陆侧主壳_顶面内切连续起伏_2_0",
       "vertex_count": 6423,
-      "offset": 172365480,
-      "surface_role": "terrain"
+      "offset": 177601572,
+      "surface_role": "terrain",
+      "export_index_count": 32706,
+      "source_index_count": 32706
     },
     {
       "kind": "Structure",
@@ -4464,8 +4853,10 @@
       "layer": "交通::上层道路::环塔对比::B2_跨桥扭转",
       "name": "主桥B2_岛2_跨桥扭转带状环塔",
       "vertex_count": 38146,
-      "offset": 172573380,
-      "surface_role": "structure"
+      "offset": 177809472,
+      "surface_role": "structure",
+      "export_index_count": 224178,
+      "source_index_count": 224178
     },
     {
       "kind": "Structure",
@@ -4487,8 +4878,10 @@
       "layer": "交通::沙嘴与沿岸道路",
       "name": "路口退让_A_扶手立柱_00",
       "vertex_count": 4620,
-      "offset": 173927844,
-      "surface_role": "structure"
+      "offset": 179163936,
+      "surface_role": "structure",
+      "export_index_count": 13200,
+      "source_index_count": 13200
     },
     {
       "kind": "Terrain",
@@ -4510,8 +4903,10 @@
       "layer": "地形::内湾主地形",
       "name": "湾缘低翼_内退曲面_0_0",
       "vertex_count": 32417,
-      "offset": 174036084,
-      "surface_role": "terrain"
+      "offset": 179272176,
+      "surface_role": "terrain",
+      "export_index_count": 164970,
+      "source_index_count": 164970
     },
     {
       "kind": "Terrain",
@@ -4533,8 +4928,10 @@
       "layer": "地形::入口曲面与支撑",
       "name": "保留实体与恢复旧空廊_06",
       "vertex_count": 8175,
-      "offset": 175084968,
-      "surface_role": "terrain"
+      "offset": 180321060,
+      "surface_role": "terrain",
+      "export_index_count": 40176,
+      "source_index_count": 40176
     },
     {
       "kind": "Terrain",
@@ -4556,12 +4953,14 @@
       "layer": "地形::内湾主地形",
       "name": "保留原地形_05",
       "vertex_count": 164,
-      "offset": 175343772,
-      "surface_role": "terrain"
+      "offset": 180579864,
+      "surface_role": "terrain",
+      "export_index_count": 720,
+      "source_index_count": 720
     },
     {
       "kind": "Terrain",
-      "index_count": 11328,
+      "index_count": 11115,
       "collision": true,
       "id": "ff65d92e-54e8-4420-94f7-6103ab69480c",
       "bounds": [
@@ -4579,8 +4978,10 @@
       "layer": "地形::入口曲面与支撑",
       "name": "T1_中央实体连接_保留顶面",
       "vertex_count": 2346,
-      "offset": 175348620,
-      "surface_role": "terrain"
+      "offset": 180584712,
+      "surface_role": "terrain",
+      "export_index_count": 11115,
+      "source_index_count": 11328
     },
     {
       "kind": "Structure",
@@ -4602,8 +5003,174 @@
       "layer": "建筑::主桥岛体",
       "name": "主桥B_岛4_倾斜廊柱与桥面承托",
       "vertex_count": 104,
-      "offset": 175422084,
-      "surface_role": "structure"
+      "offset": 180658176,
+      "surface_role": "structure",
+      "export_index_count": 306,
+      "source_index_count": 306
+    },
+    {
+      "id": "d348f4df-9b88-42a1-b57e-64023ce5f1ad",
+      "collision": true,
+      "kind": "Structure",
+      "layer": "交通::小桥岸路",
+      "offset": 180660648,
+      "name": "西侧岸路_连续路基_11墩高架与平台搭接_NURBS",
+      "vertex_count": 150139,
+      "index_count": 865398,
+      "bounds": [
+        [
+          250.73028564453125,
+          106.52601623535156,
+          0.1058746725320816
+        ],
+        [
+          719.2581176757812,
+          1293.792724609375,
+          60.46345901489258
+        ]
+      ],
+      "surface_role": "structure",
+      "export_index_count": 865398,
+      "source_index_count": 865398
+    },
+    {
+      "id": "e4060746-a264-469e-a672-b7e6e5883133",
+      "collision": true,
+      "kind": "Structure",
+      "layer": "交通::沙嘴与沿岸道路",
+      "offset": 185923908,
+      "name": "东侧岸路_连续路肩与承托底面",
+      "vertex_count": 16426,
+      "index_count": 56280,
+      "bounds": [
+        [
+          1620.59033203125,
+          87.53701782226562,
+          1.0943777561187744
+        ],
+        [
+          1849.2423095703125,
+          1505.2906494140625,
+          60.32489776611328
+        ]
+      ],
+      "surface_role": "structure",
+      "export_index_count": 56280,
+      "source_index_count": 56280
+    },
+    {
+      "id": "f03d5707-4703-58a3-9c33-96106ea052be",
+      "layer": "地形::基础地形",
+      "name": "出生地_上扬尖角_喇叭形初始洞穴_步行_cave_architecture",
+      "vertex_count": 84728,
+      "mesh_part": "cave_architecture",
+      "collision": true,
+      "cad_face_indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "kind": "Structure",
+      "offset": 186346140,
+      "index_count": 490758,
+      "bounds": [
+        [
+          291.28094482421875,
+          -482.5022888183594,
+          0.0
+        ],
+        [
+          735.043701171875,
+          218.54954528808594,
+          52.999366760253906
+        ]
+      ],
+      "source_object_id": "577d868b-7597-4058-83f8-4b630606b305",
+      "surface_role": "spawn_cave_architecture",
+      "export_index_count": 490758,
+      "source_index_count": 490758
+    },
+    {
+      "id": "9713e301-b5a7-4acb-821d-d98484bc52de",
+      "collision": true,
+      "kind": "Structure",
+      "layer": "交通::出生地步道",
+      "offset": 189325908,
+      "name": "出生地步道_洞口平台_连续缓坡与崖壁承托_NURBS",
+      "vertex_count": 5972,
+      "index_count": 31308,
+      "bounds": [
+        [
+          570.3240966796875,
+          -375.03826904296875,
+          31.0
+        ],
+        [
+          659.9931030273438,
+          -271.4524230957031,
+          35.433570861816406
+        ]
+      ],
+      "surface_role": "structure",
+      "export_index_count": 31308,
+      "source_index_count": 31308
+    },
+    {
+      "id": "4b6d5fc4-59f9-490c-9eaf-ecc252b3de46",
+      "collision": true,
+      "kind": "Structure",
+      "layer": "交通::出生地步道::栏杆",
+      "offset": 189522804,
+      "name": "出生地步道_连续扶手与中横杆_NURBS",
+      "vertex_count": 20617,
+      "index_count": 110244,
+      "bounds": [
+        [
+          574.5562133789062,
+          -374.4379577636719,
+          33.527462005615234
+        ],
+        [
+          659.754638671875,
+          -273.0281982421875,
+          36.608463287353516
+        ]
+      ],
+      "surface_role": "structure",
+      "export_index_count": 110244,
+      "source_index_count": 110244
+    },
+    {
+      "id": "66bd60fa-4f5b-458a-aa30-ad164b0f5d70",
+      "collision": true,
+      "kind": "Structure",
+      "layer": "交通::出生地步道::栏杆",
+      "offset": 190211184,
+      "name": "出生地步道_58根栏杆立柱_NURBS",
+      "vertex_count": 9976,
+      "index_count": 48372,
+      "bounds": [
+        [
+          574.5578002929688,
+          -374.43927001953125,
+          32.987998962402344
+        ],
+        [
+          659.7564697265625,
+          -273.01934814453125,
+          36.574493408203125
+        ]
+      ],
+      "surface_role": "structure",
+      "export_index_count": 48372,
+      "source_index_count": 48372
     }
   ],
   "spawns": [
@@ -4653,8 +5220,10 @@
         16.8,
         35.25
       ],
+      "required_floor_kind": "Road",
+      "minimum_edge_clearance_m": 3.5,
       "position": [
-        -900,
+        -900.0,
         35.25,
         1133.2
       ],
@@ -4662,9 +5231,7 @@
         1,
         0,
         0.12
-      ],
-      "required_floor_kind": "Road",
-      "minimum_edge_clearance_m": 3.5
+      ]
     },
     {
       "name": "南部中层 · 台地道路",
@@ -4762,12 +5329,36 @@
         0,
         -1
       ]
+    },
+    {
+      "name": "南部 · 初始洞穴",
+      "key": "spawn_cave",
+      "native": [
+        639.5260806328592,
+        -377.870286022694,
+        33.0
+      ],
+      "required_floor_kind": "Structure",
+      "required_source_id": "f03d5707-4703-58a3-9c33-96106ea052be",
+      "maximum_search_distance_m": 2.0,
+      "character_only": true,
+      "position": [
+        -810.4739193671408,
+        33.0,
+        1527.870286022694
+      ],
+      "look_direction": [
+        0.7777442901023691,
+        0,
+        -0.6285807976809042
+      ]
     }
   ],
+  "default_spawn_key": "spawn_cave",
   "native_bounds": [
     [
       -5.612869739532471,
-      -482.50006103515625,
+      -482.5022888183594,
       -7.0
     ],
     [
@@ -4780,7 +5371,7 @@
     [
       -1455.6128697395325,
       -7.0,
-      1632.5000610351562
+      1632.5022888183594
     ],
     [
       899.701171875,
@@ -4790,11 +5381,10 @@
   ],
   "mesh_tolerance_m": 0.04,
   "subd_export_level": 2,
-  "mesh_sha256": "45eae060b42c582dc13143524313c9e8db81388ccee0d4a042a59692a0ee2df1",
+  "mesh_sha256": "8ed807dcfbab2e13a61432f483ba69e5a9a7e3b1208e7f37f6a9940c89b6d22f",
   "validation": {
-    "upward_triangle_samples": 639706,
-    "weighted_upward_grass_fraction": 0.9886281490325928,
+    "upward_triangle_samples": 609127,
+    "weighted_upward_grass_fraction": 0.9879236817359924,
     "note": "Area-weighted triangle sampling, with overlapping source components; not an exact land-union percentage."
-  },
-  "cad_layer_organization": "review/cad_surface_layers.json"
+  }
 }

@@ -1,0 +1,75 @@
+{
+  "bodies": 197,
+  "camper_step_limit_m": 0.12,
+  "character_step_limit_m": 0.1,
+  "failures": [],
+  "grass_bake_signature": "71d4242bd86b32270ec0d7234ae412701bdd23be22c6799c02989dd495e48a88",
+  "grass_baked_cells": 11321,
+  "legacy_query_layers_preserved": true,
+  "markings": [
+    {
+      "actor_query_hits_road": true,
+      "id": "2a7b7ab7-4ab8-4e11-a718-766aba1e1ce0",
+      "legacy_query_hits_marking": true,
+      "name": "岸路_标线_0",
+      "paint_height_m": 0.0220916271209717
+    },
+    {
+      "actor_query_hits_road": true,
+      "id": "62c250f3-0db5-405a-8263-eb39194e5b5b",
+      "legacy_query_hits_marking": true,
+      "name": "岸路_标线_2",
+      "paint_height_m": 0.0220940709114075
+    },
+    {
+      "actor_query_hits_road": true,
+      "id": "82cdf608-1fb9-46d1-a8a7-a335a86b3d32",
+      "legacy_query_hits_marking": true,
+      "name": "沙嘴_道路标线_0",
+      "paint_height_m": 0.0261561870574951
+    },
+    {
+      "actor_query_hits_road": true,
+      "id": "93be5e0d-ce3a-41e1-ba16-1358ae2ba89a",
+      "legacy_query_hits_marking": true,
+      "name": "出口小桥_标线_1",
+      "paint_height_m": 0.0219995975494385
+    },
+    {
+      "actor_query_hits_road": true,
+      "id": "a68f5571-1272-49c1-be99-b39f1324018d",
+      "legacy_query_hits_marking": true,
+      "name": "出口小桥_标线_0",
+      "paint_height_m": 0.0219980478286743
+    },
+    {
+      "actor_query_hits_road": true,
+      "id": "d90b95c0-5c46-481c-bbe3-33e536429bb4",
+      "legacy_query_hits_marking": true,
+      "name": "出口小桥_标线_2",
+      "paint_height_m": 0.0220003128051758
+    },
+    {
+      "actor_query_hits_road": true,
+      "id": "e36a5352-73c4-4ab2-bf60-29b71693f90d",
+      "legacy_query_hits_marking": true,
+      "name": "岸路_标线_1",
+      "paint_height_m": 0.0220955014228821
+    },
+    {
+      "actor_query_hits_road": true,
+      "id": "e738bb0d-eb37-4e19-b49e-9c852c77b141",
+      "legacy_query_hits_marking": true,
+      "name": "沙嘴_道路标线_2",
+      "paint_height_m": 0.0248804092407227
+    },
+    {
+      "actor_query_hits_road": true,
+      "id": "e8a1c998-0124-40af-b3b1-b5f9b60c54b2",
+      "legacy_query_hits_marking": true,
+      "name": "沙嘴_道路标线_1",
+      "paint_height_m": 0.0266883373260498
+    }
+  ],
+  "passed": true
+}

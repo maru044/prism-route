@@ -1,0 +1,23 @@
+{
+  "source": "D:\\Prism Route\\map\\map_current.3dm", 
+  "attributes_names_layers_preserved": true, 
+  "orientation_before": -1, 
+  "attribute_properties_preserved": [
+    "ObjectId", 
+    "Name", 
+    "LayerIndex", 
+    "MaterialIndex", 
+    "MaterialSource", 
+    "ColorSource", 
+    "ObjectColor", 
+    "Visible", 
+    "Mode", 
+    "UserStrings"
+  ], 
+  "saved_shoulder_orientation": 1, 
+  "changed_geometry_ids": [
+    "9571ee7f-ce6e-40f7-b13a-d1a647bb9b66"
+  ], 
+  "saved_cad_objects": 263, 
+  "orientation_after": 1
+}

@@ -1,0 +1,29 @@
+{
+  "baked_cells": 11321,
+  "baked_reads": 306,
+  "camper_grounded": true,
+  "corrupt_cells": 0,
+  "engine": "4.7.2-stable (official)",
+  "failures": [],
+  "grass_signature": "7b9abac380b381e3caeb7c6437a5293c6c7170bf7483ebac6cbe8ee931df0b17",
+  "mesh_sha256": "56e1cb6bcd010a81b5bb095d1d07825598129647abede94868535ca40fe38789",
+  "missing_visible": 0,
+  "objects": 201.0,
+  "passed": true,
+  "renderer": "NVIDIA GeForce RTX 5070 Ti",
+  "spawns": [
+    {
+      "grounded": true,
+      "index": 1
+    },
+    {
+      "grounded": true,
+      "index": 3
+    },
+    {
+      "grounded": true,
+      "index": 8
+    }
+  ],
+  "trees": 19605
+}

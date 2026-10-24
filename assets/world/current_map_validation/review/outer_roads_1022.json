@@ -1,0 +1,89 @@
+{
+  "failures": [],
+  "mesh_sha256": "56e1cb6bcd010a81b5bb095d1d07825598129647abede94868535ca40fe38789",
+  "passed": true,
+  "roads": [
+    {
+      "drives": [
+        {
+          "completed": true,
+          "contacts": [
+            {
+              "normal": "(-0.000487, 0.999999, 0.000958)",
+              "point": "(200.5478, 60.2565, 1023.866)",
+              "source": "ee277b2d-e4eb-4d39-80e6-c5d8a5d87d70"
+            }
+          ],
+          "end_position": "(199.1477, 60.05694, 1026.293)",
+          "frames": 4682,
+          "max_airborne_frames": 0,
+          "max_waypoint_distance_m": 5.13053226470947,
+          "reverse": false,
+          "waypoint": "(201.3911, 60.259, 1021.882)"
+        },
+        {
+          "completed": true,
+          "contacts": [
+            {
+              "normal": "(-0.008303, 0.998795, -0.048366)",
+              "point": "(381.3571, 4.347048, -314.4204)",
+              "source": "ee277b2d-e4eb-4d39-80e6-c5d8a5d87d70"
+            }
+          ],
+          "end_position": "(380.7899, 4.146595, -317.1662)",
+          "frames": 4661,
+          "max_airborne_frames": 0,
+          "max_waypoint_distance_m": 5.07254266738892,
+          "reverse": true,
+          "waypoint": "(381.4966, 4.454852, -312.1915)"
+        }
+      ],
+      "grass_roots_near_road": 0,
+      "id": "ee277b2d-e4eb-4d39-80e6-c5d8a5d87d70",
+      "probes": 895,
+      "road_misses": 0,
+      "terrain_obstructions": 0
+    },
+    {
+      "drives": [
+        {
+          "completed": true,
+          "contacts": [
+            {
+              "normal": "(0.001854, 0.999998, 0.001053)",
+              "point": "(-771.3038, 60.07898, 1013.088)",
+              "source": "305479e8-59d9-4a89-bcf6-204f69186e51"
+            }
+          ],
+          "end_position": "(-768.3373, 59.87934, 1013.587)",
+          "frames": 4301,
+          "max_airborne_frames": 0,
+          "max_waypoint_distance_m": 4.17694520950317,
+          "reverse": false,
+          "waypoint": "(-772.6428, 60.08392, 1010.958)"
+        },
+        {
+          "completed": true,
+          "contacts": [
+            {
+              "normal": "(0.032095, 0.995651, -0.087464)",
+              "point": "(-1151.693, 5.226985, -112.5324)",
+              "source": "305479e8-59d9-4a89-bcf6-204f69186e51"
+            }
+          ],
+          "end_position": "(-1149.702, 5.025244, -114.7867)",
+          "frames": 4278,
+          "max_airborne_frames": 0,
+          "max_waypoint_distance_m": 4.12359571456909,
+          "reverse": true,
+          "waypoint": "(-1151.35, 5.430943, -110.1018)"
+        }
+      ],
+      "grass_roots_near_road": 0,
+      "id": "305479e8-59d9-4a89-bcf6-204f69186e51",
+      "probes": 830,
+      "road_misses": 0,
+      "terrain_obstructions": 0
+    }
+  ]
+}

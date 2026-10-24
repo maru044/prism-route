@@ -1,0 +1,4 @@
+{
+  "method": "All nine float32 coordinates compared exactly after canonical vertex sort; winding checked separately. This verifies candidate duplicates, not all coplanar overlaps.",
+  "pairs": []
+}

@@ -28,6 +28,10 @@ window/stretch/mode="canvas_items"
 
 enabled=PackedStringArray("res://addons/mtoon/plugin.cfg", "res://addons/vrm/plugin.cfg")
 
+[internationalization]
+
+locale/include_text_server_data=true
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

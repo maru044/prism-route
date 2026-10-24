@@ -1,4 +1,5 @@
 extends CharacterBody3D
+const SURFACE_MOTION := preload("res://scripts/surface_motion.gd")
 ## Basic camera-relative world controller using Ganyu's reviewed baked clips.
 
 const MOTIONS := {"idle": "A01", "walk": "A05", "run": "A06", "jump_start": "A18", "jump_air": "A19", "jump_land": "A20", "greet": "A25"}
@@ -7,6 +8,7 @@ const MOTION_LABELS := {"idle": "待机", "walk": "步行", "run": "奔跑", "ju
 @export var running_speed := 4.2
 @export var jump_speed := 7.0
 @export var gravity_strength := 22.0
+@export var surface_step_height := 0.0
 @onready var visual: Node3D = $Visual
 @onready var character: Node3D = $Visual/GanyuModel
 @onready var camera_pivot: Node3D = $CameraPivot
@@ -101,7 +103,7 @@ func _physics_process(delta: float) -> void:
 	if direction.length_squared() > 0.001:
 		visual.rotation.y = lerp_angle(visual.rotation.y, atan2(direction.x, direction.z), minf(delta * 12, 1))
 		greeting = false
-	move_and_slide()
+	SURFACE_MOTION.move(self,delta,surface_step_height)
 	if not was_grounded and is_on_floor():
 		landing_time = 0.22
 	var speed := Vector2(velocity.x, velocity.z).length()

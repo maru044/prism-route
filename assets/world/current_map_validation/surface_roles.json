@@ -10,7 +10,12 @@
     "de67bdb9-1d24-4d78-b864-a5f6bbd48ce6": {"kind": "Terrain", "role": "plantable_terraces", "reason": "User explicitly retained planting on the stepped core platforms; walls remain architectural through slope shading."},
     "c86d61c7-e5d9-4e6c-b3e5-21e29302b78a": {"kind": "Terrain", "role": "plantable_steps", "reason": "Keep the previously designated stepped planting surfaces."},
     "f07e4a21-03bf-45e1-8402-c8602446e69a": {"kind": "Terrain", "role": "plantable_steps", "reason": "Keep the previously designated stepped planting surfaces."},
-    "9885b6ab-30cd-4214-b68d-b5d1faa7c1d1": {"kind": "Structure", "role": "megastructure_shell", "reason": "User-selected perforated structural shell: architectural material on every face and no vegetation."}
+    "9885b6ab-30cd-4214-b68d-b5d1faa7c1d1": {"kind": "Structure", "role": "megastructure_shell", "reason": "User-selected perforated structural shell: architectural material on every face and no vegetation."},
+    "577d868b-7597-4058-83f8-4b630606b305": {"kind": "Terrain", "role": "plantable_spawn_roof", "reason": "Only the original upper land roof; the cave and cliff faces export as a separate architectural mesh."},
+    "f03d5707-4703-58a3-9c33-96106ea052be": {"kind": "Structure", "role": "spawn_cave_architecture", "reason": "Derived cave floor, ceiling, walls, cliff shell and roof-return cut: ordinary architectural material and no planting."}
+  },
+  "mesh_partitions": {
+    "577d868b-7597-4058-83f8-4b630606b305": {"architecture_id": "f03d5707-4703-58a3-9c33-96106ea052be", "selector": "raised_spit_land_roof", "reason": "Preserve one closed CAD solid; separate planting and architecture at export."}
   },
   "layer_defaults": {
     "地形::保留原地形": "Terrain",

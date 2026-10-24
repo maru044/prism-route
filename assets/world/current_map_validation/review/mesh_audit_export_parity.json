@@ -1,0 +1,7 @@
+{
+  "objects": 199,
+  "source_and_glb_positions_indices_exact": true,
+  "glb_sha256": "45eae060b42c582dc13143524313c9e8db81388ccee0d4a042a59692a0ee2df1",
+  "coordinate_mapping": "(Rhino X - 1450, Rhino Z, 1150 - Rhino Y), metres; proper rotation with determinant +1",
+  "mismatches": []
+}

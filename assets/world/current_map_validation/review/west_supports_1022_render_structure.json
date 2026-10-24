@@ -1,0 +1,30 @@
+{
+  "captures": [
+    {
+      "image": "west_supports_0498_structure.png",
+      "missing_visible": 0,
+      "station_m": 498.0,
+      "structure_only": true
+    },
+    {
+      "image": "west_supports_0110_structure.png",
+      "missing_visible": 0,
+      "station_m": 110.0,
+      "structure_only": true
+    },
+    {
+      "image": "west_supports_0725_structure.png",
+      "missing_visible": 0,
+      "station_m": 725.0,
+      "structure_only": true
+    },
+    {
+      "image": "west_supports_0980_structure.png",
+      "missing_visible": 0,
+      "station_m": 980.0,
+      "structure_only": true
+    }
+  ],
+  "mesh_sha256": "56e1cb6bcd010a81b5bb095d1d07825598129647abede94868535ca40fe38789",
+  "passed": true
+}

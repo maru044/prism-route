@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "unchanged_geometry_and_export_attributes": 189,
+  "failures": [],
+  "patched_ids": [
+    "012ab31c-3bd7-4f32-8676-9592c584ca4c",
+    "1df69efa-10ae-4af3-bf52-c8510f167429",
+    "305479e8-59d9-4a89-bcf6-204f69186e51",
+    "5182ccac-8e3b-4322-8826-976a9254271b",
+    "6ff4660f-d023-461f-a4ac-9f0038a79c6d",
+    "9c6e4638-fa65-4d06-b84d-21feb0ab3b1b",
+    "a2a15e34-a9db-4e6a-a4ce-be472804bd15",
+    "d01b8d98-9f3d-46e7-8737-7b60ad7a5657",
+    "d348f4df-9b88-42a1-b57e-64023ce5f1ad",
+    "de6391b1-e6fa-48bf-978c-b261e0d6d4b4",
+    "e4060746-a264-469e-a672-b7e6e5883133",
+    "ee277b2d-e4eb-4d39-80e6-c5d8a5d87d70"
+  ],
+  "cad_objects": 265
+}

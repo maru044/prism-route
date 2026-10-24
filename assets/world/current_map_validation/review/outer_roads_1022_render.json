@@ -1,0 +1,18 @@
+{
+  "captures": [
+    {
+      "active_grass_cells": 203,
+      "baked_cells": 11321,
+      "image": "outer_roads_east.png",
+      "missing_visible": 0
+    },
+    {
+      "active_grass_cells": 117,
+      "baked_cells": 11321,
+      "image": "outer_roads_west.png",
+      "missing_visible": 0
+    }
+  ],
+  "mesh_sha256": "a851428d91aae00226c7a299c2f3ea9595b2f102dddedf3554fc2a777efd8e1d",
+  "passed": true
+}

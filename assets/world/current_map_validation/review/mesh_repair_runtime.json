@@ -1,0 +1,81 @@
+{
+  "base_geometry_identical_to_direct_gltf": true,
+  "collision_shapes": 197,
+  "collision_triangles": 9322795,
+  "failures": [],
+  "lod_levels": 1319,
+  "lod_objects": 153,
+  "measurements": [
+    {
+      "draw_calls": 199.0,
+      "gpu_median_ms": 2.50600004196167,
+      "gpu_p95_ms": 2.67400002479553,
+      "lod_enabled": false,
+      "primitives": 9327755.0,
+      "view": "overview"
+    },
+    {
+      "draw_calls": 199.0,
+      "gpu_median_ms": 0.455000013113022,
+      "gpu_p95_ms": 0.469999998807907,
+      "lod_enabled": true,
+      "primitives": 95543.0,
+      "view": "overview"
+    },
+    {
+      "draw_calls": 188.0,
+      "gpu_median_ms": 2.16499996185303,
+      "gpu_p95_ms": 2.1710000038147,
+      "lod_enabled": false,
+      "primitives": 10477093.0,
+      "view": "bridge"
+    },
+    {
+      "draw_calls": 188.0,
+      "gpu_median_ms": 0.619000017642975,
+      "gpu_p95_ms": 0.635999977588654,
+      "lod_enabled": true,
+      "primitives": 377063.0,
+      "view": "bridge"
+    },
+    {
+      "draw_calls": 116.0,
+      "gpu_median_ms": 1.88100004196167,
+      "gpu_p95_ms": 1.9099999666214,
+      "lod_enabled": false,
+      "primitives": 10117461.0,
+      "view": "gallery"
+    },
+    {
+      "draw_calls": 116.0,
+      "gpu_median_ms": 1.68700003623962,
+      "gpu_p95_ms": 1.69700002670288,
+      "lod_enabled": true,
+      "primitives": 8122613.0,
+      "view": "gallery"
+    },
+    {
+      "draw_calls": 170.0,
+      "gpu_median_ms": 1.71800005435944,
+      "gpu_p95_ms": 1.72500002384186,
+      "lod_enabled": false,
+      "primitives": 8147194.0,
+      "view": "double_bridge"
+    },
+    {
+      "draw_calls": 170.0,
+      "gpu_median_ms": 0.647000014781952,
+      "gpu_p95_ms": 0.66100001335144,
+      "lod_enabled": true,
+      "primitives": 2060622.0,
+      "view": "double_bridge"
+    }
+  ],
+  "note": "Formal production scene loader, full-detail collision unchanged; LOD on/off changes rendering only. GPU figures exclude vegetation and startup.",
+  "objects": 199,
+  "passed": true,
+  "reordered_face_layouts": 195,
+  "resolution": "1600x900",
+  "shadow_meshes": 199,
+  "vegetation": false
+}

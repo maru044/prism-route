@@ -1,0 +1,51 @@
+{
+  "capture": true,
+  "default_spawn": [
+    -810.473937988281,
+    33.0006790161133,
+    1527.87023925781
+  ],
+  "failures": [],
+  "grass": {
+    "baked_cells": 10925,
+    "corrupt": 0,
+    "missing_visible": 0,
+    "signature": "b3f8cc2f8957e6b70ae3f4e2691ecc1debfcfcd1d9a1da524811694b43da4d31"
+  },
+  "grass_roots": {
+    "architecture_hits": {},
+    "cells_checked": 23,
+    "examples": [],
+    "roots_checked": 82112,
+    "roots_inside_cave": 0,
+    "roots_on_architecture": 0,
+    "side_seam_contacts": 1
+  },
+  "material": {
+    "cave_material": "architecture.tres",
+    "floor_and_ceiling_probes": 7,
+    "minimum_center_headroom_m": 2.99747467041016,
+    "roof_id": "577d868b-7597-4058-83f8-4b630606b305"
+  },
+  "mesh_sha256": "8ed807dcfbab2e13a61432f483ba69e5a9a7e3b1208e7f37f6a9940c89b6d22f",
+  "objects": 205.0,
+  "passed": true,
+  "spawn_checks": 0,
+  "trees": {
+    "invalid_roots": 0,
+    "maximum_root_error_m": 0.000091552734375,
+    "raised_roof_trees": 234
+  },
+  "triangles": 10144277.0,
+  "walk": {
+    "end_position": [
+      -886.672119140625,
+      35.0608825683594,
+      1408.65344238281
+    ],
+    "longest_air_frames": 0,
+    "physics_frames": 2279,
+    "waypoints": 40,
+    "waypoints_reached": 40
+  }
+}

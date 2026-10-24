@@ -1,0 +1,32 @@
+{
+  "baked_cells": 11321,
+  "captures": [
+    {
+      "image": "west_supports_0498.png",
+      "missing_visible": 0,
+      "station_m": 498.0,
+      "structure_only": false
+    },
+    {
+      "image": "west_supports_0110.png",
+      "missing_visible": 0,
+      "station_m": 110.0,
+      "structure_only": false
+    },
+    {
+      "image": "west_supports_0725.png",
+      "missing_visible": 0,
+      "station_m": 725.0,
+      "structure_only": false
+    },
+    {
+      "image": "west_supports_0980.png",
+      "missing_visible": 0,
+      "station_m": 980.0,
+      "structure_only": false
+    }
+  ],
+  "grass_signature": "7b9abac380b381e3caeb7c6437a5293c6c7170bf7483ebac6cbe8ee931df0b17",
+  "mesh_sha256": "56e1cb6bcd010a81b5bb095d1d07825598129647abede94868535ca40fe38789",
+  "passed": true
+}

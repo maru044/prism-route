@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-21",
+  "date": "2026-10-22",
   "engine": "4.7.2-stable (official)",
   "failures": [],
   "gallery_directions": [
@@ -8,7 +8,7 @@
         0.0,
         -1.0
       ],
-      "distance_m": 4.00370931625366,
+      "distance_m": 4.00135183334351,
       "grounded": true
     },
     {
@@ -16,7 +16,7 @@
         0.0,
         1.0
       ],
-      "distance_m": 4.00364875793457,
+      "distance_m": 4.00147294998169,
       "grounded": true
     },
     {
@@ -24,7 +24,7 @@
         -1.0,
         0.0
       ],
-      "distance_m": 4.00192880630493,
+      "distance_m": 4.00178575515747,
       "grounded": true
     },
     {
@@ -32,12 +32,12 @@
         1.0,
         0.0
       ],
-      "distance_m": 4.00192880630493,
+      "distance_m": 4.00166463851929,
       "grounded": true
     }
   ],
   "mask_resolution": 4096.0,
-  "objects": 199.0,
+  "objects": 201.0,
   "passed": true,
   "procedural_vegetation": {
     "candidate_rejections": {
@@ -54,13 +54,14 @@
     "edge_probe_distance_m": 4.0,
     "large_to_large_minimum_spacing_m": 22.0,
     "large_tree_count": 1960.0,
-    "layout_sha256": "47ee9efdad28b6fbb7d0a35f808118d2c877cb229115491eab62b9abf47ab548",
+    "layout_sha256": "98778bf9adfb0208269e5f209aa49ac697650340596ff0ba0090bef76286f90c",
     "minimum_horizontal_spacing_m": 9.0,
     "physics_conformity": {
       "engine": "Jolt",
-      "max_height_adjustment_m": 0.317687470702367,
-      "removed": 1.0,
-      "roots_adjusted": 18395.0,
+      "max_height_adjustment_m": 0.00616455078125,
+      "mesh_sha256": "a851428d91aae00226c7a299c2f3ea9595b2f102dddedf3554fc2a777efd8e1d",
+      "removed": 0.0,
+      "roots_adjusted": 7874.0,
       "xz_positions_and_spacing_unchanged": true
     },
     "reference": "tools/build_map_1012_test.py",
@@ -70,11 +71,11 @@
     "source_mesh_sha256": "45eae060b42c582dc13143524313c9e8db81388ccee0d4a042a59692a0ee2df1",
     "tree_count": 19605.0
   },
-  "renderer": "NVIDIA GeForce RTX 5070 Ti",
+  "renderer": "",
   "source": "D:\\Prism Route\\map\\map_current.3dm",
   "spawns": [
     {
-      "end_height_m": 63.0009269714355,
+      "end_height_m": 63.0034866333008,
       "floor": [
         -415.0,
         63.0,
@@ -84,10 +85,10 @@
       "grounded": true,
       "key": "south_roof",
       "name": "南部上层 · 屋顶花园",
-      "walk_distance_m": 2.66720581054688
+      "walk_distance_m": 2.66729736328125
     },
     {
-      "end_height_m": 60.1437110900879,
+      "end_height_m": 60.1462707519531,
       "floor": [
         -173.273895263672,
         60.1418228149414,
@@ -97,10 +98,10 @@
       "grounded": true,
       "key": "south_bridge",
       "name": "南部上层 · 环塔主桥",
-      "walk_distance_m": 2.665771484375
+      "walk_distance_m": 2.66708374023438
     },
     {
-      "end_height_m": 35.2509269714355,
+      "end_height_m": 35.2534866333008,
       "floor": [
         -900.0,
         35.25,
@@ -110,10 +111,10 @@
       "grounded": true,
       "key": "south_gallery",
       "name": "南部中层 · 开放隧道",
-      "walk_distance_m": 12.8123273849487
+      "walk_distance_m": 12.8050260543823
     },
     {
-      "end_height_m": 35.0009269714355,
+      "end_height_m": 35.0034866333008,
       "floor": [
         -254.227203369141,
         35.0,
@@ -123,10 +124,10 @@
       "grounded": true,
       "key": "south_middle",
       "name": "南部中层 · 台地道路",
-      "walk_distance_m": 2.6657919883728
+      "walk_distance_m": 2.66721844673157
     },
     {
-      "end_height_m": 1.60092711448669,
+      "end_height_m": 1.6034848690033,
       "floor": [
         -173.0,
         1.59999966621399,
@@ -136,10 +137,10 @@
       "grounded": true,
       "key": "south_waterfront",
       "name": "南部底层 · 临水平台",
-      "walk_distance_m": 2.6668701171875
+      "walk_distance_m": 2.66143798828125
     },
     {
-      "end_height_m": 16.1604785919189,
+      "end_height_m": 16.1625652313232,
       "floor": [
         250.0,
         16.0759887695313,
@@ -149,10 +150,10 @@
       "grounded": true,
       "key": "north_hill",
       "name": "北部 · 山坡草地",
-      "walk_distance_m": 2.63554954528809
+      "walk_distance_m": 2.63696885108948
     },
     {
-      "end_height_m": 0.0131055768579245,
+      "end_height_m": 0.0156523641198874,
       "floor": [
         -50.0,
         0.015838623046875,
@@ -162,10 +163,10 @@
       "grounded": true,
       "key": "north_lagoon",
       "name": "北部底层 · 泻湖草岸",
-      "walk_distance_m": 2.66756248474121
+      "walk_distance_m": 2.67103481292725
     },
     {
-      "end_height_m": 20.4259948730469,
+      "end_height_m": 20.4285449981689,
       "floor": [
         -356.898986816406,
         20.4646625518799,
@@ -175,21 +176,21 @@
       "grounded": true,
       "key": "north_ramp",
       "name": "中北部 · 下行坡道",
-      "walk_distance_m": 2.67853808403015
+      "walk_distance_m": 2.67929196357727
     }
   ],
   "surface_role_checks": {
-    "checked_objects": 199,
+    "checked_objects": 201,
     "counts": {
       "Road": 19,
       "Sand": 9,
-      "Structure": 109,
+      "Structure": 111,
       "Terrain": 55,
       "Water": 7
     },
     "explicit_policy": "surface_roles.json"
   },
-  "triangles": 9345058.0,
+  "triangles": 9877306.0,
   "vegetation_checks": {
     "blades_per_sample": 4,
     "grass_height_m": 1.14999997615814,
@@ -208,13 +209,13 @@
       "0c51b890-631a-4633-b1b4-1682b8736500": 104,
       "0cf9e262-25a0-46e5-a533-bb69fa30109c": 36,
       "1d532d53-1e77-48a8-97d9-8eff168923b9": 35,
-      "1df69efa-10ae-4af3-bf52-c8510f167429": 53,
+      "1df69efa-10ae-4af3-bf52-c8510f167429": 54,
       "211469c8-934a-40d3-ab57-a3fc82014e8e": 1,
       "3a784408-92fe-4bef-aa04-2c2e3f2bd05a": 16,
       "577d868b-7597-4058-83f8-4b630606b305": 619,
       "580b55d4-797c-49fa-ba1d-f2c9d74e4d03": 53,
       "63868f64-fba3-4988-aebd-1bb2ed0ffca3": 9,
-      "6ff4660f-d023-461f-a4ac-9f0038a79c6d": 401,
+      "6ff4660f-d023-461f-a4ac-9f0038a79c6d": 400,
       "78d43939-e418-428e-aad5-d51b08c73985": 103,
       "7d8bf20b-f7cf-4c78-abe8-214e29f82247": 69,
       "7f48c0e6-3eff-429b-b3b0-92d2ba679c0f": 65,
@@ -230,14 +231,14 @@
       "bbea2185-f5e3-4821-a363-63f19f463bc4": 969,
       "c1228167-d010-44ad-8775-757dd4984934": 2088,
       "ce36cdce-398b-44f5-b0b4-fe7f258106cf": 1112,
-      "d01b8d98-9f3d-46e7-8737-7b60ad7a5657": 555,
+      "d01b8d98-9f3d-46e7-8737-7b60ad7a5657": 28,
       "dde3c54b-940e-47f6-ae35-5b0c707872e4": 113,
-      "de6391b1-e6fa-48bf-978c-b261e0d6d4b4": 646,
+      "de6391b1-e6fa-48bf-978c-b261e0d6d4b4": 1173,
       "de67bdb9-1d24-4d78-b864-a5f6bbd48ce6": 231,
       "e7a0e133-f284-4cd4-8796-349bb8638efc": 279,
-      "ecb36196-315f-4c98-9a41-9fada2f0724f": 60,
+      "ecb36196-315f-4c98-9a41-9fada2f0724f": 56,
       "eda8bdb1-ff67-4448-a07f-e78e6914d209": 94,
-      "f0fd81ff-2de8-49cb-be97-a312dd9b3933": 65,
+      "f0fd81ff-2de8-49cb-be97-a312dd9b3933": 69,
       "f6bf901b-4e02-49c2-8a1c-6382c255c941": 222,
       "f81baad1-a64c-48e0-a17f-f3a3c620659a": 192,
       "ff65d92e-54e8-4420-94f7-6103ab69480c": 51
@@ -246,93 +247,94 @@
   },
   "vehicles": [
     {
-      "drive_m": 4.345458984375,
+      "drive_m": 4.34564208984375,
       "grounded": true,
       "key": "south_roof",
       "wheel_gaps_m": [
-        0.000003814697265625,
-        0.000003814697265625,
-        0.000003814697265625,
-        0.000003814697265625
+        3.814697265625e-06,
+        3.814697265625e-06,
+        3.814697265625e-06,
+        3.814697265625e-06
       ]
     },
     {
-      "drive_m": 4.34555053710938,
+      "drive_m": 4.34561157226563,
       "grounded": true,
       "key": "south_bridge",
       "wheel_gaps_m": [
+        -3.814697265625e-06,
         0.0,
         0.0,
-        0.0,
-        -0.000003814697265625
+        -3.814697265625e-06
       ]
     },
     {
-      "drive_m": 16.6821174621582,
+      "drive_m": 16.6817989349365,
       "grounded": true,
       "key": "south_gallery",
       "wheel_gaps_m": [
-        0.000003814697265625,
-        0.000003814697265625,
-        0.000003814697265625,
-        0.000003814697265625
+        3.814697265625e-06,
+        3.814697265625e-06,
+        3.814697265625e-06,
+        3.814697265625e-06
       ]
     },
     {
-      "drive_m": 4.34572172164917,
+      "drive_m": 4.34587669372559,
       "grounded": true,
       "key": "south_middle",
       "wheel_gaps_m": [
-        0.000003814697265625,
-        0.000003814697265625,
-        0.000003814697265625,
-        0.000003814697265625
+        3.814697265625e-06,
+        3.814697265625e-06,
+        3.814697265625e-06,
+        3.814697265625e-06
       ]
     },
     {
-      "drive_m": 4.345458984375,
+      "drive_m": 4.34576416015625,
       "grounded": true,
       "key": "south_waterfront",
       "wheel_gaps_m": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        -1.19209289550781e-07,
+        -1.19209289550781e-07,
+        -1.19209289550781e-07,
+        -1.19209289550781e-07
       ]
     },
     {
-      "drive_m": 4.32251977920532,
+      "drive_m": 4.32255554199219,
       "grounded": true,
       "key": "north_hill",
       "wheel_gaps_m": [
-        0.000019073486328125,
-        -0.0000019073486328125,
-        0.00000762939453125,
-        -0.0000171661376953125
+        0.000169754028320313,
+        1.9073486328125e-06,
+        0.000188827514648438,
+        1.52587890625e-05
       ]
     },
     {
-      "drive_m": 4.3470139503479,
+      "drive_m": 4.34595394134521,
       "grounded": true,
       "key": "north_lagoon",
       "wheel_gaps_m": [
-        -0.0000063776969909668,
-        0.0000188946723937988,
-        -0.0000240206718444824,
-        0.0000217556953430176
+        -6.9737434387207e-06,
+        1.96099281311035e-05,
+        -2.36034393310547e-05,
+        2.18749046325684e-05
       ]
     },
     {
-      "drive_m": 4.35188961029053,
+      "drive_m": 4.35135936737061,
       "grounded": true,
       "key": "north_ramp",
       "wheel_gaps_m": [
-        -0.000080108642578125,
-        -0.000123977661132813,
-        0.0000743865966796875,
-        -0.0000057220458984375
+        -6.4849853515625e-05,
+        -9.72747802734375e-05,
+        8.7738037109375e-05,
+        1.71661376953125e-05
       ]
     }
   ],
-  "visual_captures": true
+  "visual_captures": false,
+  "mesh_sha256": "56e1cb6bcd010a81b5bb095d1d07825598129647abede94868535ca40fe38789"
 }

@@ -1,0 +1,97 @@
+{
+  "passed": true,
+  "package_directory": "D:\\Prism Route\\builds\\windows_1021",
+  "files": [
+    {
+      "name": "libvrm_physics.windows.template_release.x86_64.dll",
+      "bytes": 1882112
+    },
+    {
+      "name": "PrismRoute1021.exe",
+      "bytes": 109168640
+    },
+    {
+      "name": "PrismRoute1021.pck",
+      "bytes": 1436911896
+    }
+  ],
+  "total_bytes": 1547962648,
+  "total_decimal_GB": 1.547962648,
+  "total_GiB": 1.4416525587439537,
+  "pck_files": 11523,
+  "all_pck_md5_verified": true,
+  "baked_cells": 11321,
+  "all_grass_sha256_verified": true,
+  "grass_signature": "7b9abac380b381e3caeb7c6437a5293c6c7170bf7483ebac6cbe8ee931df0b17",
+  "signature_inputs_byte_identical": true,
+  "unwanted_files": [],
+  "resource_bytes": {
+    "other_runtime_resources": 69273207,
+    "current_map_imported_mesh": 249483692,
+    "sky_lighting_texture": 134218000,
+    "grass_baked_cells": 977951050,
+    "grass_manifest": 4731534
+  },
+  "largest_resources": [
+    {
+      "path": ".godot/imported/current_region.glb-a05d49362076921aa28ad98fe635c7c2.scn",
+      "offset": 182984480,
+      "bytes": 249483692,
+      "md5": "f9e0ef6ea6e20e8945445b705b36ab1d"
+    },
+    {
+      "path": ".godot/imported/rosendal_park_sunset_puresky_4k.exr-f6b7c15da71e20f77cee3c59d4a437d1.ctex",
+      "offset": 26748768,
+      "bytes": 134217780,
+      "md5": "fc71efce01329ebca83b44b7fc83d345"
+    },
+    {
+      "path": ".godot/imported/ganyu.vrm-661a77aaac1df482f2f11e48e9fefc9b.scn",
+      "offset": 1794704,
+      "bytes": 24234599,
+      "md5": "f79caa57037b807f723314041e9eac3c"
+    },
+    {
+      "path": "assets/world/current_map_validation/landscape_mask.res",
+      "offset": 432470656,
+      "bytes": 12340266,
+      "md5": "d6e8f38055493ad9a5a0bbe1f8757a96"
+    },
+    {
+      "path": "icudt_godot.dat",
+      "offset": 1430933520,
+      "bytes": 4797472,
+      "md5": "ed8fa0468cee73524ffcb63b72d0a576"
+    },
+    {
+      "path": "assets/world/current_map_validation/grass_bake/manifest.json",
+      "offset": 664681648,
+      "bytes": 4731534,
+      "md5": "7e17fa99d6e868a6085f5ed432d2270b"
+    },
+    {
+      "path": ".godot/imported/grass_star_3card_v6_grass_tuft_straw_minimal_v5.png-e9f1d55ef266d95e250732b98a3bc968.s3tc.ctex",
+      "offset": 162024176,
+      "bytes": 2106020,
+      "md5": "2ac4cd05ad496aa5768f4cb5fe4502a8"
+    },
+    {
+      "path": ".godot/imported/tree_medium_broad_clustered_canopy_leaf_clusters_witness_sparse_flat_v11.png-b24c9ca3d84ebf078e656d730d3e3559.s3tc.ctex",
+      "offset": 164234992,
+      "bytes": 2106020,
+      "md5": "f946839ae3e8bdca03d251671935e06e"
+    },
+    {
+      "path": ".godot/imported/tree_medium_upright_asymmetric_canopy_leaf_clusters_witness_sparse_flat_v11.png-3f48d7752230699bdff2e802928bfe8b.s3tc.ctex",
+      "offset": 168343136,
+      "bytes": 2106020,
+      "md5": "f946839ae3e8bdca03d251671935e06e"
+    },
+    {
+      "path": ".godot/imported/tree_small_broad_canopy_leaf_clusters_witness_sparse_flat_v11.png-da396255c546db3a8d89ee9e403f672c.s3tc.ctex",
+      "offset": 172447552,
+      "bytes": 2106020,
+      "md5": "f946839ae3e8bdca03d251671935e06e"
+    }
+  ]
+}

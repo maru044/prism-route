@@ -3,6 +3,7 @@ extends "res://scripts/camper_controller.gd"
 
 @export var low_speed_turn_radius := 4.5
 @export var high_speed_turn_radius := 14.0
+@export_flags_3d_physics var ground_query_mask := 1
 
 var test_throttle := 0.0
 var test_steering := 0.0
@@ -13,10 +14,12 @@ var wheel_feet: Array[Vector3] = []
 var wheels: Array[MeshInstance3D] = []
 var wheel_parts: Array = []
 var wheel_rest_positions: Array = []
+var visual_rest_transform := Transform3D.IDENTITY
 
 func _ready() -> void:
 	super._ready()
 	visual = $Visual
+	visual_rest_transform = visual.transform
 	maximum_forward_speed = 18.0
 	maximum_reverse_speed = 5.0
 	floor_snap_length = 0.8
@@ -63,6 +66,14 @@ func calibrate_wheels() -> void:
 		wheel_parts.append(parts)
 		wheel_rest_positions.append(positions)
 
+func _reset_visual_pose() -> void:
+	if not is_instance_valid(visual):
+		return
+	visual.transform = visual_rest_transform
+	for index in wheel_parts.size():
+		for part_index in wheel_parts[index].size():
+			wheel_parts[index][part_index].position = wheel_rest_positions[index][part_index]
+
 func _align_wheels(delta: float) -> void:
 	if wheel_feet.size() != 4 or not is_on_floor():
 		return
@@ -93,18 +104,16 @@ func _align_wheels(delta: float) -> void:
 	# A long, upright collision box rests on the highest point underneath it.
 	# Correct the visible chassis height separately to keep tires on the road.
 	var correction := 0.0
-	for foot in wheel_feet:
+	for index in wheel_feet.size():
+		var foot := wheel_feet[index]
 		var world_foot := visual.global_transform * foot
-		var height := _ground_height(world_foot)
-		if not is_finite(height):
-			return
-		correction += (height - world_foot.y) * 0.25
+		correction += (heights[index] - world_foot.y) * 0.25
 	visual.position.y += correction
 	# Four terrain contacts need not be coplanar. Allow a small visual wheel
 	# travel, including the hub, without inventing a physical suspension.
 	for index in range(4):
 		var point := visual.global_transform * wheel_feet[index]
-		var travel := clampf(_ground_height(point) - point.y, -0.3, 0.3)
+		var travel := clampf(heights[index] - point.y, -0.3, 0.3)
 		for part_index in range(wheel_parts[index].size()):
 			var part: Node3D = wheel_parts[index][part_index]
 			var rest: Vector3 = wheel_rest_positions[index][part_index]
@@ -124,10 +133,15 @@ func wheel_ground_gaps() -> Array[float]:
 	return gaps
 
 func _ground_height(point: Vector3) -> float:
-	var query := PhysicsRayQueryParameters3D.create(point + Vector3.UP * 6.0, point - Vector3.UP * 10.0, 1)
+	# Anchor to the physical chassis, never to accumulated visual suspension.
+	# A six-metre ray above a tire can select the next storey's roof.
+	var query := PhysicsRayQueryParameters3D.create(
+		Vector3(point.x, global_position.y + 1.0, point.z),
+		Vector3(point.x, global_position.y - 2.0, point.z), ground_query_mask)
+	query.exclude = [get_rid()]
 	query.hit_back_faces = true
 	var hit := get_world_3d().direct_space_state.intersect_ray(query)
-	return float(hit.position.y) if not hit.is_empty() else INF
+	return float(hit.position.y) if not hit.is_empty() and hit.normal.y >= cos(floor_max_angle) else INF
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:

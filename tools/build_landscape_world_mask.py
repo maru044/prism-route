@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / '.landscape_mask_build'
 OUT = ROOT / 'assets/world/landscape_mask_test'
 
-def build_glb(source):
+def build_glb(source,triangle_mask=None):
     raw = (CACHE/'source.bin').read_bytes()
     center = np.asarray(source['native_center'], dtype=np.float32)
     blob = bytearray(); views=[]; accessors=[]; meshes=[]; nodes=[]; terrain=[]
@@ -36,6 +36,9 @@ def build_glb(source):
         normals=np.zeros_like(p)
         for j in range(3):np.add.at(normals,tri[:,j],face)
         normals/=np.maximum(np.linalg.norm(normals,axis=1,keepdims=True),1e-12)
+        if triangle_mask is not None:
+            keep=triangle_mask(item,p,tri)
+            tri=tri[keep];face=face[keep];ix=tri.reshape(-1)
         pi=array(p.astype('<f4'),5126,'VEC3',34962,True)
         ni=array(normals.astype('<f4'),5126,'VEC3',34962)
         ii=array(ix.astype('<u4'),5125,'SCALAR',34963)

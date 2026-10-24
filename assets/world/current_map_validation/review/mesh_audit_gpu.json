@@ -1,0 +1,88 @@
+{
+  "note": "Same source geometry and materials; imported mesh resources temporarily substituted on existing nodes. Imported LOD may change silhouettes and requires visual acceptance; this audit does not apply that change. Timings exclude startup. Repeat raw bounds drift.",
+  "resolution": "1600x900",
+  "variants": [
+    {
+      "draw_calls_median": 199.0,
+      "engine_primitives_median": 9345058.0,
+      "gpu_median_ms": 2.12599992752075,
+      "gpu_p95_ms": 2.53600001335144,
+      "mode": "runtime_raw",
+      "view": "overview",
+      "vram_mib": 1822.71484375
+    },
+    {
+      "draw_calls_median": 199.0,
+      "engine_primitives_median": 77524.0,
+      "gpu_median_ms": 0.382999986410141,
+      "gpu_p95_ms": 0.395000010728836,
+      "mode": "editor_import_lod",
+      "view": "overview",
+      "vram_mib": 1822.71484375
+    },
+    {
+      "draw_calls_median": 199.0,
+      "engine_primitives_median": 9345058.0,
+      "gpu_median_ms": 2.125,
+      "gpu_p95_ms": 2.12800002098084,
+      "mode": "runtime_raw_repeat",
+      "view": "overview",
+      "vram_mib": 1822.71484375
+    },
+    {
+      "draw_calls_median": 116.0,
+      "engine_primitives_median": 10150330.0,
+      "gpu_median_ms": 1.89300000667572,
+      "gpu_p95_ms": 1.89699995517731,
+      "mode": "runtime_raw",
+      "view": "west_gallery",
+      "vram_mib": 1822.71484375
+    },
+    {
+      "draw_calls_median": 116.0,
+      "engine_primitives_median": 8120740.0,
+      "gpu_median_ms": 1.68700003623962,
+      "gpu_p95_ms": 1.69799995422363,
+      "mode": "editor_import_lod",
+      "view": "west_gallery",
+      "vram_mib": 1822.71484375
+    },
+    {
+      "draw_calls_median": 116.0,
+      "engine_primitives_median": 10150330.0,
+      "gpu_median_ms": 1.89300000667572,
+      "gpu_p95_ms": 1.89600002765656,
+      "mode": "runtime_raw_repeat",
+      "view": "west_gallery",
+      "vram_mib": 1822.71484375
+    },
+    {
+      "draw_calls_median": 97.0,
+      "engine_primitives_median": 3617332.0,
+      "gpu_median_ms": 0.973999977111816,
+      "gpu_p95_ms": 0.987999975681305,
+      "mode": "runtime_raw",
+      "view": "north_hill",
+      "vram_mib": 1822.71484375
+    },
+    {
+      "draw_calls_median": 97.0,
+      "engine_primitives_median": 1658234.0,
+      "gpu_median_ms": 0.623000025749207,
+      "gpu_p95_ms": 0.638000011444092,
+      "mode": "editor_import_lod",
+      "view": "north_hill",
+      "vram_mib": 1822.71484375
+    },
+    {
+      "draw_calls_median": 97.0,
+      "engine_primitives_median": 3617332.0,
+      "gpu_median_ms": 0.97299998998642,
+      "gpu_p95_ms": 0.990000009536743,
+      "mode": "runtime_raw_repeat",
+      "view": "north_hill",
+      "vram_mib": 1822.71484375
+    }
+  ],
+  "vegetation": false
+}

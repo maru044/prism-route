@@ -1,0 +1,359 @@
+{
+  "method": "All nine float32 coordinates compared exactly after canonical vertex sort; winding checked separately. This verifies candidate duplicates, not all coplanar overlaps.",
+  "pairs": [
+    {
+      "a": "1df69efa-10ae-4af3-bf52-c8510f167429",
+      "b": "6ff4660f-d023-461f-a4ac-9f0038a79c6d",
+      "a_name": "T2_东侧实体主台_保留顶面",
+      "b_name": "陆侧主壳_顶面内切连续起伏_0_0",
+      "a_kind": "Terrain",
+      "b_kind": "Terrain",
+      "exact_duplicate_triangles": 192,
+      "same_winding": 192,
+      "opposite_winding": 0,
+      "overlap_area_m2": 917.06298828125,
+      "examples": [
+        {
+          "world_position": [
+            173.84423828125,
+            58.3074836730957,
+            503.6755676269531
+          ],
+          "triangle_a": 3977,
+          "triangle_b": 8354
+        },
+        {
+          "world_position": [
+            174.40234375,
+            57.03018569946289,
+            502.980712890625
+          ],
+          "triangle_a": 7495,
+          "triangle_b": 28542
+        },
+        {
+          "world_position": [
+            175.515625,
+            58.27470397949219,
+            501.5899963378906
+          ],
+          "triangle_a": 3975,
+          "triangle_b": 8361
+        },
+        {
+          "world_position": [
+            176.07080078125,
+            56.99652099609375,
+            500.8941650390625
+          ],
+          "triangle_a": 7493,
+          "triangle_b": 28549
+        },
+        {
+          "world_position": [
+            177.1782989501953,
+            58.239288330078125,
+            499.50146484375
+          ],
+          "triangle_a": 3978,
+          "triangle_b": 8356
+        }
+      ]
+    },
+    {
+      "a": "3a784408-92fe-4bef-aa04-2c2e3f2bd05a",
+      "b": "f6bf901b-4e02-49c2-8a1c-6382c255c941",
+      "a_name": "T1_湾缘实体低台_保留顶面",
+      "b_name": "湾缘低翼_内退曲面_0_0",
+      "a_kind": "Terrain",
+      "b_kind": "Terrain",
+      "exact_duplicate_triangles": 401,
+      "same_winding": 401,
+      "opposite_winding": 0,
+      "overlap_area_m2": 1557.447509765625,
+      "examples": [
+        {
+          "world_position": [
+            -559.5726928710938,
+            47.83456039428711,
+            642.6871337890625
+          ],
+          "triangle_a": 3834,
+          "triangle_b": 53978
+        },
+        {
+          "world_position": [
+            -558.8685302734375,
+            49.201297760009766,
+            642.79541015625
+          ],
+          "triangle_a": 6778,
+          "triangle_b": 30687
+        },
+        {
+          "world_position": [
+            -557.6703491210938,
+            24.824777603149414,
+            581.8019409179688
+          ],
+          "triangle_a": 6568,
+          "triangle_b": 53176
+        },
+        {
+          "world_position": [
+            -557.0112915039062,
+            26.368072509765625,
+            581.8480834960938
+          ],
+          "triangle_a": 3621,
+          "triangle_b": 29885
+        },
+        {
+          "world_position": [
+            -557.4602661132812,
+            48.12054443359375,
+            643.0107421875
+          ],
+          "triangle_a": 3837,
+          "triangle_b": 53979
+        }
+      ]
+    },
+    {
+      "a": "9f4e6ec5-912a-4884-9c5a-4be69f1ff211",
+      "b": "f6bf901b-4e02-49c2-8a1c-6382c255c941",
+      "a_name": "T2_湾缘实体低台_保留顶面",
+      "b_name": "湾缘低翼_内退曲面_0_0",
+      "a_kind": "Terrain",
+      "b_kind": "Terrain",
+      "exact_duplicate_triangles": 193,
+      "same_winding": 193,
+      "opposite_winding": 0,
+      "overlap_area_m2": 793.4490966796875,
+      "examples": [
+        {
+          "world_position": [
+            51.2083740234375,
+            29.53350830078125,
+            317.5987243652344
+          ],
+          "triangle_a": 2737,
+          "triangle_b": 30233
+        },
+        {
+          "world_position": [
+            55.61641311645508,
+            34.46528625488281,
+            402.3074645996094
+          ],
+          "triangle_a": 2670,
+          "triangle_b": 30852
+        },
+        {
+          "world_position": [
+            56.13663864135742,
+            33.184879302978516,
+            401.80712890625
+          ],
+          "triangle_a": 4963,
+          "triangle_b": 54136
+        },
+        {
+          "world_position": [
+            57.17655563354492,
+            34.425662994384766,
+            400.8058166503906
+          ],
+          "triangle_a": 2668,
+          "triangle_b": 30853
+        },
+        {
+          "world_position": [
+            57.69624710083008,
+            33.146854400634766,
+            400.3048400878906
+          ],
+          "triangle_a": 4961,
+          "triangle_b": 54137
+        }
+      ]
+    },
+    {
+      "a": "d01b8d98-9f3d-46e7-8737-7b60ad7a5657",
+      "b": "de6391b1-e6fa-48bf-978c-b261e0d6d4b4",
+      "a_name": "西侧主台低台_连续衔接实体",
+      "b_name": "陆侧主壳_顶面内切连续起伏_1_0",
+      "a_kind": "Terrain",
+      "b_kind": "Terrain",
+      "exact_duplicate_triangles": 16431,
+      "same_winding": 16431,
+      "opposite_winding": 0,
+      "overlap_area_m2": 166504.96875,
+      "examples": [
+        {
+          "world_position": [
+            -1373.7220458984375,
+            21.198556900024414,
+            74.65506744384766
+          ],
+          "triangle_a": 15885,
+          "triangle_b": 28093
+        },
+        {
+          "world_position": [
+            -1373.7198486328125,
+            21.3065185546875,
+            76.46671295166016
+          ],
+          "triangle_a": 15897,
+          "triangle_b": 8231
+        },
+        {
+          "world_position": [
+            -1373.7064208984375,
+            20.9754638671875,
+            70.9334716796875
+          ],
+          "triangle_a": 15886,
+          "triangle_b": 8229
+        },
+        {
+          "world_position": [
+            -1372.5372314453125,
+            21.088634490966797,
+            72.7293701171875
+          ],
+          "triangle_a": 15887,
+          "triangle_b": 8218
+        },
+        {
+          "world_position": [
+            -1373.70703125,
+            21.51655387878418,
+            80.01607513427734
+          ],
+          "triangle_a": 31195,
+          "triangle_b": 28096
+        }
+      ]
+    },
+    {
+      "a": "ecb36196-315f-4c98-9a41-9fada2f0724f",
+      "b": "f0fd81ff-2de8-49cb-be97-a312dd9b3933",
+      "a_name": "保留实体与恢复旧空廊_03",
+      "b_name": "陆侧主壳_顶面内切连续起伏_2_0",
+      "a_kind": "Terrain",
+      "b_kind": "Terrain",
+      "exact_duplicate_triangles": 7,
+      "same_winding": 7,
+      "opposite_winding": 0,
+      "overlap_area_m2": 26.448341369628906,
+      "examples": [
+        {
+          "world_position": [
+            -836.6627807617188,
+            27.60600471496582,
+            528.3029174804688
+          ],
+          "triangle_a": 948,
+          "triangle_b": 1948
+        },
+        {
+          "world_position": [
+            -836.0036010742188,
+            27.704404830932617,
+            529.4007568359375
+          ],
+          "triangle_a": 976,
+          "triangle_b": 2001
+        },
+        {
+          "world_position": [
+            -835.3207397460938,
+            27.80729103088379,
+            530.5394897460938
+          ],
+          "triangle_a": 977,
+          "triangle_b": 1996
+        },
+        {
+          "world_position": [
+            -833.8982543945312,
+            27.781837463378906,
+            530.5957641601562
+          ],
+          "triangle_a": 949,
+          "triangle_b": 1949
+        },
+        {
+          "world_position": [
+            -833.5961303710938,
+            27.9475154876709,
+            532.2536010742188
+          ],
+          "triangle_a": 979,
+          "triangle_b": 1999
+        }
+      ]
+    },
+    {
+      "a": "f0fd81ff-2de8-49cb-be97-a312dd9b3933",
+      "b": "ff65d92e-54e8-4420-94f7-6103ab69480c",
+      "a_name": "陆侧主壳_顶面内切连续起伏_2_0",
+      "b_name": "T1_中央实体连接_保留顶面",
+      "a_kind": "Terrain",
+      "b_kind": "Terrain",
+      "exact_duplicate_triangles": 71,
+      "same_winding": 71,
+      "opposite_winding": 0,
+      "overlap_area_m2": 363.0815124511719,
+      "examples": [
+        {
+          "world_position": [
+            -585.699462890625,
+            50.894012451171875,
+            734.943115234375
+          ],
+          "triangle_a": 10901,
+          "triangle_b": 2056
+        },
+        {
+          "world_position": [
+            -584.8711547851562,
+            49.61492919921875,
+            735.0446166992188
+          ],
+          "triangle_a": 6715,
+          "triangle_b": 3594
+        },
+        {
+          "world_position": [
+            -583.1845092773438,
+            50.854366302490234,
+            735.2413940429688
+          ],
+          "triangle_a": 6752,
+          "triangle_b": 2057
+        },
+        {
+          "world_position": [
+            -582.3261108398438,
+            49.572879791259766,
+            735.3366088867188
+          ],
+          "triangle_a": 6700,
+          "triangle_b": 3595
+        },
+        {
+          "world_position": [
+            -580.6080322265625,
+            50.80780029296875,
+            735.5171508789062
+          ],
+          "triangle_a": 6755,
+          "triangle_b": 2060
+        }
+      ]
+    }
+  ]
+}

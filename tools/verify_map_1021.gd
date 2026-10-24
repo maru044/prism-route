@@ -140,6 +140,8 @@ func run() -> void:
 				check(step>3.7 and actor.is_on_floor(),"Gallery direction blocked: "+str(direction))
 				gallery_directions.append({"direction":[direction.x,direction.y],"distance_m":step,"grounded":actor.is_on_floor()})
 		await scene.select_spawn(i);await frames(20)
+		if row.get("character_only",false):
+			print("CURRENT_MAP_CHARACTER_SPAWN_OK ",row.key);continue
 		await toggle_actor();check(not scene.character_mode,"C did not select camper at "+str(row.name))
 		if not scene.character_mode:
 			var p:Vector3=scene.camper.global_position
@@ -161,7 +163,7 @@ func run() -> void:
 	if not headless:
 		scene.camera.position=Vector3(350,125,600);scene.camera.look_at(Vector3(-150,35,770));await frames(30)
 		await shot("megastructure_architecture")
-	var report:Dictionary={"date":"2026-10-21","engine":Engine.get_version_info().string,"renderer":RenderingServer.get_video_adapter_name(),
+	var report:Dictionary={"date":Time.get_date_string_from_system(),"engine":Engine.get_version_info().string,"renderer":RenderingServer.get_video_adapter_name(),
 	"source":scene.metadata.source_document,"objects":scene.metadata.objects,"triangles":scene.metadata.triangles,
 	"mask_resolution":scene.metadata.resolution,"spawns":rows,"vehicles":vehicle_rows,"gallery_directions":gallery_directions,"surface_role_checks":surfaces,"vegetation_checks":population,"procedural_vegetation":scene.tree_placement_report,
 	"failures":failures,"passed":failures.is_empty(),"visual_captures":not headless}

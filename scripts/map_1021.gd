@@ -5,6 +5,11 @@ const VEGETATION := preload("res://scripts/map_1021_vegetation.gd")
 const PERFORMANCE_MONITOR := preload("res://scripts/performance_monitor_1021.gd")
 const FOLIAGE_STYLE := preload("res://scripts/foliage_style.gd")
 const SKY := preload("res://assets/environment/sky/fresh_cumulus_sky.tres")
+const ACTOR_SOLID_LAYER := 32
+# CAD north (+Y) exports to Godot -Z; azimuth runs clockwise from north.
+const SUN_AZIMUTH_DEGREES := 135.0
+# Measured bright horizon of rosendal_park_sunset_puresky_4k.exr (u ~= .6094).
+const HDRI_BRIGHT_AZIMUTH_DEGREES := 219.4
 @onready var character = $Character
 @onready var camper = $CamperVan
 @onready var chase_camera: Camera3D = $CamperVan/CameraPivot/SpringArm3D/Camera3D
@@ -36,16 +41,25 @@ func vec(value: Array) -> Vector3:
 	return Vector3(value[0],value[1],value[2])
 
 func _ready() -> void:
+	if "--verify-export" in OS.get_cmdline_user_args():automation_enabled=true
 	metadata=JSON.parse_string(FileAccess.get_file_as_string(ASSETS+"metadata.json"))
+	# Preserve legacy query layers for planting, while actors ignore paint.
+	character.collision_mask=ACTOR_SOLID_LAYER;camper.collision_mask=ACTOR_SOLID_LAYER
+	character.surface_step_height=.10;character.safe_margin=.004
+	camper.surface_step_height=.12;camper.safe_margin=.006;camper.ground_query_mask=ACTOR_SOLID_LAYER
 	character.automation_enabled=automation_enabled; character.set_control_enabled(false)
 	camper.automation_enabled=automation_enabled;camper.set_physics_process(false);camper.set_process_unhandled_input(false);camper.visible=false
 	camper.calibrate_wheels()
+	camper.respawn_resolver=_resolve_camper_respawn
 	_load_mask();_environment();_build_model();_hud()
 	camera=Camera3D.new();camera.near=0.15;camera.far=10000;camera.fov=58;add_child(camera)
 	await get_tree().physics_frame;await get_tree().physics_frame
 	for proposal: Dictionary in metadata.spawns:
 		resolved_spawns.append(resolve_spawn(proposal))
-	await select_spawn(0)
+	var initial_spawn:=0
+	for i in resolved_spawns.size():
+		if resolved_spawns[i].get("key","")==metadata.get("default_spawn_key",""):initial_spawn=i;break
+	await select_spawn(initial_spawn)
 	if vegetation_bake_only:
 		test_ready=true
 		return
@@ -58,6 +72,8 @@ func _ready() -> void:
 	_sync_actor_controls()
 	test_ready=true
 	print("CURRENT_MAP_READY objects=%d triangles=%d spawns=%d trees=%d" % [metadata.objects,metadata.triangles,resolved_spawns.size(),vegetation.tree_instance_count])
+	if "--verify-export" in OS.get_cmdline_user_args():
+		get_tree().root.call_deferred("add_child",load("res://tools/verify_export_1021.gd").new())
 
 func _sync_meadow_color() -> void:
 	# Match the accepted grass zones, including their actual noise resource.
@@ -98,9 +114,11 @@ func architectural_band(p: Vector3,margin:=0.0) -> bool:
 	return data.r<margin and absf(p.y-data.g)<3.2
 
 func _build_model() -> void:
-	var doc:=GLTFDocument.new();var state:=GLTFState.new()
-	assert(doc.append_from_file(ProjectSettings.globalize_path(ASSETS+"current_region.glb"),state)==OK)
-	model=doc.generate_scene(state);add_child(model)
+	# Use the imported scene: its ArrayMeshes contain generated LODs and
+	# shadow meshes. Runtime GLTFDocument parsing bypasses those import steps.
+	var packed: PackedScene=load(ASSETS+"current_region.glb")
+	assert(packed!=null)
+	model=packed.instantiate();add_child(model)
 	var architecture: Material=load("res://assets/world/cliff_b_test/architecture.tres")
 	var road:=StandardMaterial3D.new();road.albedo_color=Color(0.13,0.145,0.15);road.roughness=0.93
 	road.cull_mode=BaseMaterial3D.CULL_DISABLED
@@ -117,6 +135,9 @@ func _build_model() -> void:
 		if kind=="Water":mesh.cast_shadow=GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		if not row.get("collision",true) and kind!="Water":continue
 		var body:=StaticBody3D.new();body.collision_layer=4 if kind=="Water" else (9 if kind=="Road" else (17 if kind=="Terrain" else 1));body.collision_mask=0
+		var marking: bool="标线" in str(row.get("name",""))
+		if kind!="Water" and not marking:body.collision_layer|=ACTOR_SOLID_LAYER
+		body.set_meta("nonblocking_road_marking",marking)
 		body.set_meta("surface_kind",kind);body.set_meta("source_id",id)
 		mesh.add_child(body)
 		var shape:=mesh.mesh.create_trimesh_shape();shape.backface_collision=true
@@ -126,11 +147,13 @@ func _build_model() -> void:
 func _environment() -> void:
 	var sky:=Sky.new();sky.sky_material=SKY
 	var env:=Environment.new();env.background_mode=Environment.BG_SKY;env.sky=sky
+	# Rotate both the painted background and HDR environment toward the sun.
+	env.sky_rotation.y=deg_to_rad(HDRI_BRIGHT_AZIMUTH_DEGREES-SUN_AZIMUTH_DEGREES)
 	env.ambient_light_source=Environment.AMBIENT_SOURCE_SKY;env.ambient_light_energy=0.38
 	env.reflected_light_source=Environment.REFLECTION_SOURCE_SKY;env.tonemap_mode=Environment.TONE_MAPPER_ACES
 	env.tonemap_exposure=0.82;env.ssao_enabled=true;env.ssao_radius=1.1;env.ssao_intensity=0.85
 	var world:=WorldEnvironment.new();world.environment=env;add_child(world)
-	var sun:=DirectionalLight3D.new();sun.rotation_degrees=Vector3(-48,-125,0);sun.light_energy=0.72
+	var sun:=DirectionalLight3D.new();sun.rotation_degrees=Vector3(-48,180.0-SUN_AZIMUTH_DEGREES,0);sun.light_energy=0.72
 	sun.light_color=Color(1.0,0.95,0.86);sun.shadow_enabled=true;sun.directional_shadow_max_distance=180;add_child(sun)
 	get_viewport().msaa_3d=Viewport.MSAA_4X
 
@@ -150,7 +173,7 @@ func _hud() -> void:
 	for i in metadata.spawns.size():spawn_menu.add_item("%d  %s" % [i+1,metadata.spawns[i].name])
 	spawn_menu.item_selected.connect(select_spawn);box.add_child(spawn_menu)
 	status=Label.new();box.add_child(status)
-	var help:=Label.new();help.text="1–8 出生点   C 甘雨 / 房车\nF 自由观景 · V 全景 · B 植物开关\nH 隐藏 / 恢复全部界面\nWASD 移动 / 驾驶 · 空格跳跃 / 刹车\n右键转镜头 · 滚轮缩放 · R 复位";box.add_child(help)
+	var help:=Label.new();help.text="1–9 出生点   C 甘雨 / 房车\nF 自由观景 · V 全景 · B 植物开关\nH 隐藏 / 恢复全部界面\nWASD 移动 / 驾驶 · 空格跳跃 / 刹车\n右键转镜头 · 滚轮缩放 · R 复位";box.add_child(help)
 	var performance_monitor:=PERFORMANCE_MONITOR.new()
 	performance_monitor.world_scene=self;add_child(performance_monitor)
 	review_ui_layers.append(performance_monitor)
@@ -172,7 +195,7 @@ func _input(event: InputEvent) -> void:
 func _ray(p: Vector3,highest:=false) -> Dictionary:
 	var top:=400.0 if highest else p.y+2.2
 	var bottom:=-20.0 if highest else p.y-4.0
-	var q:=PhysicsRayQueryParameters3D.create(Vector3(p.x,top,p.z),Vector3(p.x,bottom,p.z),1)
+	var q:=PhysicsRayQueryParameters3D.create(Vector3(p.x,top,p.z),Vector3(p.x,bottom,p.z),ACTOR_SOLID_LAYER)
 	q.hit_back_faces=true
 	return get_world_3d().direct_space_state.intersect_ray(q)
 
@@ -182,9 +205,11 @@ func resolve_spawn(proposal: Dictionary) -> Dictionary:
 		for z in range(-10,11):offsets.append(Vector2(x*4,z*4))
 	offsets.sort_custom(func(a:Vector2,b:Vector2):return a.length_squared()<b.length_squared())
 	for offset in offsets:
+		if offset.length()>float(proposal.get("maximum_search_distance_m",INF)):continue
 		var hit:=_ray(base+Vector3(offset.x,0,offset.y),proposal.get("highest",false))
 		if hit.is_empty() or (hit.normal as Vector3).y<0.72:continue
 		if proposal.has("required_floor_kind") and hit.collider.get_meta("surface_kind", "")!=proposal.required_floor_kind:continue
+		if proposal.has("required_source_id") and hit.collider.get_meta("source_id", "")!=proposal.required_source_id:continue
 		var floor_point: Vector3=hit.position
 		var clearance: float=proposal.get("minimum_edge_clearance_m",0.0)
 		var supported:=true
@@ -194,7 +219,7 @@ func resolve_spawn(proposal: Dictionary) -> Dictionary:
 				if edge.is_empty() or absf(edge.position.y-floor_point.y)>.25 or edge.collider.get_meta("surface_kind", "")!=proposal.required_floor_kind:supported=false;break
 		if not supported:continue
 		var query:=PhysicsShapeQueryParameters3D.new();query.shape=character.get_node("CollisionShape3D").shape
-		query.transform=Transform3D(Basis.IDENTITY,floor_point+Vector3(0,0.88,0));query.collision_mask=1
+		query.transform=Transform3D(Basis.IDENTITY,floor_point+Vector3(0,0.88,0));query.collision_mask=ACTOR_SOLID_LAYER
 		query.exclude=[character.get_rid()]
 		if not get_world_3d().direct_space_state.intersect_shape(query,1).is_empty():continue
 		var result:=proposal.duplicate();result["floor_position"]=floor_point;result["floor_source"]=hit.collider.get_meta("source_id","")
@@ -239,9 +264,25 @@ func _sync_actor_controls() -> void:
 		vegetation.set_grass_actor(active_actor(),not character_mode)
 
 func _spawn_camper(point: Vector3,heading: float) -> void:
-	camper.global_position=point+Vector3.UP*.12;camper.rotation=Vector3(0,heading,0)
-	camper.velocity=Vector3.ZERO;camper.drive_speed=0;camper.set_respawn_transform(camper.global_transform)
+	camper.restore_pose(Transform3D(Basis(Vector3.UP,heading),point+Vector3.UP*.12))
+	camper.set_respawn_transform(camper.global_transform)
 	camper.camera_pivot.rotation=Vector3(-.20,0,0)
+
+func _resolve_camper_respawn(checkpoint: Transform3D) -> Variant:
+	# Use the saved storey, not the height of a vehicle launched by penetration.
+	var heading:=checkpoint.basis.get_euler().y
+	var floor_point:=_find_actor_floor(checkpoint.origin,heading,false)
+	if not floor_point.is_empty():
+		return Transform3D(Basis(Vector3.UP,heading),floor_point.position+Vector3.UP*.12)
+	# A stale/blocked checkpoint falls back to a validated spawn on this storey.
+	var row: Dictionary=resolved_spawns[spawn_index]
+	var direction:=vec(row.look_direction)
+	heading=atan2(-direction.x,-direction.z)
+	floor_point=_find_actor_floor(row.floor_position,heading,false)
+	if not floor_point.is_empty():
+		return Transform3D(Basis(Vector3.UP,heading),floor_point.position+Vector3.UP*.12)
+	status.text="此处没有可安全放置房车的路面，请切换出生点"
+	return null
 
 func _find_actor_floor(base: Vector3,heading: float,use_character: bool) -> Dictionary:
 	var offsets: Array[Vector2]=[]
@@ -256,7 +297,7 @@ func _find_actor_floor(base: Vector3,heading: float,use_character: bool) -> Dict
 		if hit.is_empty() or (hit.normal as Vector3).y<.72 or absf(hit.position.y-base.y)>1.3:continue
 		var p: Vector3=hit.position
 		var query:=PhysicsShapeQueryParameters3D.new();query.shape=collider.shape
-		query.transform=Transform3D(basis,p+Vector3.UP*.10)*collider.transform;query.collision_mask=1
+		query.transform=Transform3D(basis,p+Vector3.UP*.10)*collider.transform;query.collision_mask=ACTOR_SOLID_LAYER
 		if not get_world_3d().direct_space_state.intersect_shape(query,1).is_empty():continue
 		var supported:=true
 		if not use_character:
@@ -289,11 +330,13 @@ func show_overview() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		var key: int=event.physical_keycode if event.physical_keycode!=0 else event.keycode
-		if key>=KEY_1 and key<=KEY_8:select_spawn(key-KEY_1)
+		if key>=KEY_1 and key<=KEY_9:select_spawn(key-KEY_1)
 		elif key==KEY_F:set_free(not free_mode)
 		elif key==KEY_V:show_overview()
 		elif key==KEY_C:set_character_mode(not character_mode)
 		elif key==KEY_B and vegetation!=null:vegetation.set_vegetation_enabled(not vegetation.vegetation_enabled)
+		elif key==KEY_F6 and vegetation!=null:
+			vegetation.volume_streamer.collect_detailed_timings=not vegetation.volume_streamer.collect_detailed_timings
 	if event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_RIGHT:dragging=event.pressed
 	if event is InputEventMouseMotion and free_mode and dragging:
 		camera.rotation.y-=event.relative.x*.003;camera.rotation.x=clampf(camera.rotation.x-event.relative.y*.003,-1.5,1.5)

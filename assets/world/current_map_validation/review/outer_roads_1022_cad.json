@@ -1,0 +1,31 @@
+{
+  "unrelated_attribute_errors": [], 
+  "unrelated_geometry_errors": [], 
+  "hidden_objects": 42, 
+  "junction": [
+    "5182ccac-8e3b-4322-8826-976a9254271b"
+  ], 
+  "cad_objects": 265, 
+  "source": "D:\\Prism Route\\map\\map_current.3dm", 
+  "terrain_modified": [
+    "9c6e4638-fa65-4d06-b84d-21feb0ab3b1b", 
+    "6ff4660f-d023-461f-a4ac-9f0038a79c6d", 
+    "a2a15e34-a9db-4e6a-a4ce-be472804bd15", 
+    "012ab31c-3bd7-4f32-8676-9592c584ca4c", 
+    "1df69efa-10ae-4af3-bf52-c8510f167429", 
+    "d01b8d98-9f3d-46e7-8737-7b60ad7a5657", 
+    "de6391b1-e6fa-48bf-978c-b261e0d6d4b4"
+  ], 
+  "layers": 33, 
+  "new_objects": [
+    {
+      "roadbed": "e4060746-a264-469e-a672-b7e6e5883133", 
+      "pavement": "ee277b2d-e4eb-4d39-80e6-c5d8a5d87d70"
+    }, 
+    {
+      "roadbed": "d348f4df-9b88-42a1-b57e-64023ce5f1ad", 
+      "pavement": "305479e8-59d9-4a89-bcf6-204f69186e51"
+    }
+  ], 
+  "document_saved": true
+}

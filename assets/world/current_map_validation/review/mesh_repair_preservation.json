@@ -1,0 +1,1237 @@
+{
+  "passed": true,
+  "objects": 199,
+  "all_positions_unchanged": true,
+  "unrelated_indices_and_normals_unchanged": true,
+  "removed_triangles": 17303,
+  "source_sha256": "45eae060b42c582dc13143524313c9e8db81388ccee0d4a042a59692a0ee2df1",
+  "repaired_sha256": "e3bc6a70b163f740fd3e1f6899d302c309f58d2977f54734dc23d1701ab3aee5",
+  "coverage": [
+    {
+      "owner": "6ff4660f-d023-461f-a4ac-9f0038a79c6d",
+      "duplicate": "1df69efa-10ae-4af3-bf52-c8510f167429",
+      "surface_union_preserved": true
+    },
+    {
+      "owner": "f6bf901b-4e02-49c2-8a1c-6382c255c941",
+      "duplicate": "3a784408-92fe-4bef-aa04-2c2e3f2bd05a",
+      "surface_union_preserved": true
+    },
+    {
+      "owner": "f6bf901b-4e02-49c2-8a1c-6382c255c941",
+      "duplicate": "9f4e6ec5-912a-4884-9c5a-4be69f1ff211",
+      "surface_union_preserved": true
+    },
+    {
+      "owner": "de6391b1-e6fa-48bf-978c-b261e0d6d4b4",
+      "duplicate": "d01b8d98-9f3d-46e7-8737-7b60ad7a5657",
+      "surface_union_preserved": true
+    },
+    {
+      "owner": "f0fd81ff-2de8-49cb-be97-a312dd9b3933",
+      "duplicate": "ecb36196-315f-4c98-9a41-9fada2f0724f",
+      "surface_union_preserved": true
+    },
+    {
+      "owner": "f0fd81ff-2de8-49cb-be97-a312dd9b3933",
+      "duplicate": "ff65d92e-54e8-4420-94f7-6103ab69480c",
+      "surface_union_preserved": true
+    }
+  ],
+  "rows": [
+    {
+      "id": "012ab31c-3bd7-4f32-8676-9592c584ca4c",
+      "positions_unchanged": true,
+      "triangles_before": 9711,
+      "triangles_after": 9711
+    },
+    {
+      "id": "02590c34-07df-47ad-b3fa-e18bd74c8b3f",
+      "positions_unchanged": true,
+      "triangles_before": 21558,
+      "triangles_after": 21558
+    },
+    {
+      "id": "0295f8be-063a-4f5d-90ff-5dabbf9fad42",
+      "positions_unchanged": true,
+      "triangles_before": 10232,
+      "triangles_after": 10232
+    },
+    {
+      "id": "06337b14-e32e-4ae7-b5ff-8d54ff004ee8",
+      "positions_unchanged": true,
+      "triangles_before": 102,
+      "triangles_after": 102
+    },
+    {
+      "id": "06ed2b94-0622-4061-97ce-cf7cfd105e42",
+      "positions_unchanged": true,
+      "triangles_before": 6212,
+      "triangles_after": 6212
+    },
+    {
+      "id": "0808d32c-6ebc-4105-9258-a0f755ac2752",
+      "positions_unchanged": true,
+      "triangles_before": 1776,
+      "triangles_after": 1776
+    },
+    {
+      "id": "084f961d-d217-45ae-b4be-dd035138bb99",
+      "positions_unchanged": true,
+      "triangles_before": 23642,
+      "triangles_after": 23642
+    },
+    {
+      "id": "08732dcd-9477-40df-bf2c-892133e539a1",
+      "positions_unchanged": true,
+      "triangles_before": 6200,
+      "triangles_after": 6200
+    },
+    {
+      "id": "08ccf956-744b-4519-8985-8ee48205aa96",
+      "positions_unchanged": true,
+      "triangles_before": 102,
+      "triangles_after": 102
+    },
+    {
+      "id": "0935804c-cf79-4a2a-9319-feaf1bcf26fb",
+      "positions_unchanged": true,
+      "triangles_before": 1252,
+      "triangles_after": 1252
+    },
+    {
+      "id": "0a8d8005-6d57-439d-b9d2-f2015fc3cf3c",
+      "positions_unchanged": true,
+      "triangles_before": 1920,
+      "triangles_after": 1920
+    },
+    {
+      "id": "0bec2de6-c09c-4d63-86b6-3c6a48d6f3bb",
+      "positions_unchanged": true,
+      "triangles_before": 20828,
+      "triangles_after": 20828
+    },
+    {
+      "id": "0c51b890-631a-4633-b1b4-1682b8736500",
+      "positions_unchanged": true,
+      "triangles_before": 205682,
+      "triangles_after": 205682
+    },
+    {
+      "id": "0ca3494d-c2cb-4a06-bd27-eef387c1a3a8",
+      "positions_unchanged": true,
+      "triangles_before": 315,
+      "triangles_after": 315
+    },
+    {
+      "id": "0cf9e262-25a0-46e5-a533-bb69fa30109c",
+      "positions_unchanged": true,
+      "triangles_before": 1986,
+      "triangles_after": 1986
+    },
+    {
+      "id": "0d77ce97-6bf3-4510-ac44-12bb4d5d1e8d",
+      "positions_unchanged": true,
+      "triangles_before": 5974,
+      "triangles_after": 5974
+    },
+    {
+      "id": "113c5c2d-8fd8-458a-b2ee-80bb3b4daff8",
+      "positions_unchanged": true,
+      "triangles_before": 187114,
+      "triangles_after": 187114
+    },
+    {
+      "id": "128eeb8f-63cc-4d45-9780-00d332074cdf",
+      "positions_unchanged": true,
+      "triangles_before": 561,
+      "triangles_after": 561
+    },
+    {
+      "id": "13bfc807-3038-4b67-9182-4198021385aa",
+      "positions_unchanged": true,
+      "triangles_before": 4400,
+      "triangles_after": 4400
+    },
+    {
+      "id": "1631d3da-9603-464e-a9d4-cdb6f3433186",
+      "positions_unchanged": true,
+      "triangles_before": 154196,
+      "triangles_after": 154196
+    },
+    {
+      "id": "18cc1742-8ccc-4fab-a94e-9c64244b48d5",
+      "positions_unchanged": true,
+      "triangles_before": 2000,
+      "triangles_after": 2000
+    },
+    {
+      "id": "1b1a5d01-325c-4d3b-a683-5d58190f572b",
+      "positions_unchanged": true,
+      "triangles_before": 102,
+      "triangles_after": 102
+    },
+    {
+      "id": "1bc0034e-fd9a-41c2-8ed5-63bbd18d80f3",
+      "positions_unchanged": true,
+      "triangles_before": 2000,
+      "triangles_after": 2000
+    },
+    {
+      "id": "1c8f5896-5cce-41f1-a5fa-0b92fa589bbe",
+      "positions_unchanged": true,
+      "triangles_before": 800,
+      "triangles_after": 800
+    },
+    {
+      "id": "1cf9de79-eace-4bb0-b99f-06b7d29365c2",
+      "positions_unchanged": true,
+      "triangles_before": 1188,
+      "triangles_after": 1188
+    },
+    {
+      "id": "1d532d53-1e77-48a8-97d9-8eff168923b9",
+      "positions_unchanged": true,
+      "triangles_before": 37402,
+      "triangles_after": 37402
+    },
+    {
+      "id": "1da83a02-adcc-4ab8-9e5b-0beafdabdb96",
+      "positions_unchanged": true,
+      "triangles_before": 443458,
+      "triangles_after": 443458
+    },
+    {
+      "id": "1df69efa-10ae-4af3-bf52-c8510f167429",
+      "positions_unchanged": true,
+      "triangles_before": 7664,
+      "triangles_after": 7472
+    },
+    {
+      "id": "2068dd45-fc33-4cb3-b561-4cbfe1b7330a",
+      "positions_unchanged": true,
+      "triangles_before": 301452,
+      "triangles_after": 301452
+    },
+    {
+      "id": "211469c8-934a-40d3-ab57-a3fc82014e8e",
+      "positions_unchanged": true,
+      "triangles_before": 247218,
+      "triangles_after": 247218
+    },
+    {
+      "id": "2700848e-0f43-4970-a588-f13849745ffc",
+      "positions_unchanged": true,
+      "triangles_before": 9454,
+      "triangles_after": 9454
+    },
+    {
+      "id": "27172e67-243a-4398-9933-89de8ecae12d",
+      "positions_unchanged": true,
+      "triangles_before": 8294,
+      "triangles_after": 8294
+    },
+    {
+      "id": "27b8671e-bcb0-4727-a056-8f1737f830af",
+      "positions_unchanged": true,
+      "triangles_before": 10040,
+      "triangles_after": 10040
+    },
+    {
+      "id": "2a4cbd16-46aa-42b3-b67a-568cee933b38",
+      "positions_unchanged": true,
+      "triangles_before": 102,
+      "triangles_after": 102
+    },
+    {
+      "id": "2a7b7ab7-4ab8-4e11-a718-766aba1e1ce0",
+      "positions_unchanged": true,
+      "triangles_before": 528,
+      "triangles_after": 528
+    },
+    {
+      "id": "2cd121d2-5c17-479d-87bb-071f04a6c5d1",
+      "positions_unchanged": true,
+      "triangles_before": 9454,
+      "triangles_after": 9454
+    },
+    {
+      "id": "301ef8a8-0448-4086-b86d-3df7326e1caf",
+      "positions_unchanged": true,
+      "triangles_before": 42800,
+      "triangles_after": 42800
+    },
+    {
+      "id": "305479e8-59d9-4a89-bcf6-204f69186e51",
+      "positions_unchanged": true,
+      "triangles_before": 2472,
+      "triangles_after": 2472
+    },
+    {
+      "id": "32985af8-e779-4e49-8a87-cbb10f6ed39c",
+      "positions_unchanged": true,
+      "triangles_before": 204,
+      "triangles_after": 204
+    },
+    {
+      "id": "37cde2e1-e1e8-431f-a80a-697f4a61017a",
+      "positions_unchanged": true,
+      "triangles_before": 85528,
+      "triangles_after": 85520
+    },
+    {
+      "id": "3861e9e6-1993-4c9a-9445-ddd4e3b687a2",
+      "positions_unchanged": true,
+      "triangles_before": 2180,
+      "triangles_after": 2180
+    },
+    {
+      "id": "3a30b9b4-5323-484e-b06c-6e90087ce317",
+      "positions_unchanged": true,
+      "triangles_before": 7654,
+      "triangles_after": 7654
+    },
+    {
+      "id": "3a784408-92fe-4bef-aa04-2c2e3f2bd05a",
+      "positions_unchanged": true,
+      "triangles_before": 6792,
+      "triangles_after": 6391
+    },
+    {
+      "id": "3b615b62-6ef5-40bc-941c-f6bee7cb51cb",
+      "positions_unchanged": true,
+      "triangles_before": 2032,
+      "triangles_after": 2032
+    },
+    {
+      "id": "3f760bb7-a390-4660-9289-81f18adc3f48",
+      "positions_unchanged": true,
+      "triangles_before": 54632,
+      "triangles_after": 54632
+    },
+    {
+      "id": "40073513-6a9f-4fd8-b5ec-9439b6ec8178",
+      "positions_unchanged": true,
+      "triangles_before": 4,
+      "triangles_after": 4
+    },
+    {
+      "id": "40b737d0-1d2d-416d-a8b4-f494d8f31114",
+      "positions_unchanged": true,
+      "triangles_before": 151040,
+      "triangles_after": 151040
+    },
+    {
+      "id": "4282caf4-edc3-4273-a0b0-cd2e7bc42bd1",
+      "positions_unchanged": true,
+      "triangles_before": 102,
+      "triangles_after": 102
+    },
+    {
+      "id": "43a95a93-f015-4d31-902e-892640e449e4",
+      "positions_unchanged": true,
+      "triangles_before": 521868,
+      "triangles_after": 521868
+    },
+    {
+      "id": "44bbb3b1-b4cd-4858-9de2-5010f3d1ce15",
+      "positions_unchanged": true,
+      "triangles_before": 149540,
+      "triangles_after": 149540
+    },
+    {
+      "id": "451cad09-df16-4b77-b848-f459a0ec63bf",
+      "positions_unchanged": true,
+      "triangles_before": 102,
+      "triangles_after": 102
+    },
+    {
+      "id": "466b390c-0f7d-4c16-8f43-a8dcb7826972",
+      "positions_unchanged": true,
+      "triangles_before": 585008,
+      "triangles_after": 585008
+    },
+    {
+      "id": "47456112-e53f-4799-aa9b-cfcc656da2ca",
+      "positions_unchanged": true,
+      "triangles_before": 1484,
+      "triangles_after": 1484
+    },
+    {
+      "id": "47800a9c-ca72-4dc5-8203-d6d5d91d29a9",
+      "positions_unchanged": true,
+      "triangles_before": 7776,
+      "triangles_after": 7776
+    },
+    {
+      "id": "4cca625a-1399-4c40-bd6e-69e671d69c24",
+      "positions_unchanged": true,
+      "triangles_before": 163446,
+      "triangles_after": 163446
+    },
+    {
+      "id": "4df36f45-d898-40ce-8a5d-7802a8711ae2",
+      "positions_unchanged": true,
+      "triangles_before": 244852,
+      "triangles_after": 244852
+    },
+    {
+      "id": "5182ccac-8e3b-4322-8826-976a9254271b",
+      "positions_unchanged": true,
+      "triangles_before": 328,
+      "triangles_after": 328
+    },
+    {
+      "id": "577d868b-7597-4058-83f8-4b630606b305",
+      "positions_unchanged": true,
+      "triangles_before": 12070,
+      "triangles_after": 12070
+    },
+    {
+      "id": "580b55d4-797c-49fa-ba1d-f2c9d74e4d03",
+      "positions_unchanged": true,
+      "triangles_before": 158890,
+      "triangles_after": 158890
+    },
+    {
+      "id": "59dd95cc-d6f3-4378-ae67-d76fcbdf6ac8",
+      "positions_unchanged": true,
+      "triangles_before": 2088,
+      "triangles_after": 2088
+    },
+    {
+      "id": "59e98d31-4eab-4a62-a980-001674766351",
+      "positions_unchanged": true,
+      "triangles_before": 27230,
+      "triangles_after": 27230
+    },
+    {
+      "id": "5a5f3984-77f9-4f04-be1f-13927a172c37",
+      "positions_unchanged": true,
+      "triangles_before": 1060,
+      "triangles_after": 1060
+    },
+    {
+      "id": "5a63fdbf-8010-4d72-92bd-51d436c90954",
+      "positions_unchanged": true,
+      "triangles_before": 4684,
+      "triangles_after": 4684
+    },
+    {
+      "id": "5bac1c96-51fc-45b5-9237-bd4a7c7ff891",
+      "positions_unchanged": true,
+      "triangles_before": 204,
+      "triangles_after": 204
+    },
+    {
+      "id": "5bde180f-774c-4392-b562-4c24835b1af6",
+      "positions_unchanged": true,
+      "triangles_before": 564,
+      "triangles_after": 564
+    },
+    {
+      "id": "5d302055-d1b9-4cff-8925-4ff597f30a93",
+      "positions_unchanged": true,
+      "triangles_before": 2,
+      "triangles_after": 2
+    },
+    {
+      "id": "5da86bc1-390a-479c-9f61-55b740220570",
+      "positions_unchanged": true,
+      "triangles_before": 80520,
+      "triangles_after": 80520
+    },
+    {
+      "id": "62c250f3-0db5-405a-8263-eb39194e5b5b",
+      "positions_unchanged": true,
+      "triangles_before": 1040,
+      "triangles_after": 1040
+    },
+    {
+      "id": "63868f64-fba3-4988-aebd-1bb2ed0ffca3",
+      "positions_unchanged": true,
+      "triangles_before": 58188,
+      "triangles_after": 58188
+    },
+    {
+      "id": "63c66d8c-cc9e-4399-b804-6042fb2e4a40",
+      "positions_unchanged": true,
+      "triangles_before": 4800,
+      "triangles_after": 4800
+    },
+    {
+      "id": "64abb3ef-18a1-4f42-b9ea-f53214fda04e",
+      "positions_unchanged": true,
+      "triangles_before": 252688,
+      "triangles_after": 252688
+    },
+    {
+      "id": "655b1cf2-25c1-47d0-8809-c05130c9705d",
+      "positions_unchanged": true,
+      "triangles_before": 1252,
+      "triangles_after": 1252
+    },
+    {
+      "id": "65e339ae-787b-45ff-878a-860689777556",
+      "positions_unchanged": true,
+      "triangles_before": 44,
+      "triangles_after": 44
+    },
+    {
+      "id": "67c34dc5-33b8-423d-bbc1-2e220329cf6b",
+      "positions_unchanged": true,
+      "triangles_before": 1060,
+      "triangles_after": 1060
+    },
+    {
+      "id": "6bd87c3b-b7d6-4c78-bf38-cb5aca978042",
+      "positions_unchanged": true,
+      "triangles_before": 7008,
+      "triangles_after": 7008
+    },
+    {
+      "id": "6cb4c0d2-5099-476f-975f-f7cebcde49f0",
+      "positions_unchanged": true,
+      "triangles_before": 33692,
+      "triangles_after": 33692
+    },
+    {
+      "id": "6f618c07-01c4-485d-88e5-a487669c62f9",
+      "positions_unchanged": true,
+      "triangles_before": 7254,
+      "triangles_after": 7254
+    },
+    {
+      "id": "6ff4660f-d023-461f-a4ac-9f0038a79c6d",
+      "positions_unchanged": true,
+      "triangles_before": 38374,
+      "triangles_after": 38374
+    },
+    {
+      "id": "70d6268a-d023-434d-8726-1f012fd53f00",
+      "positions_unchanged": true,
+      "triangles_before": 9454,
+      "triangles_after": 9454
+    },
+    {
+      "id": "71cc7d42-4840-4888-a7fa-7155f815f067",
+      "positions_unchanged": true,
+      "triangles_before": 7254,
+      "triangles_after": 7254
+    },
+    {
+      "id": "72f25860-17b4-4870-995e-4339e71af14e",
+      "positions_unchanged": true,
+      "triangles_before": 5248,
+      "triangles_after": 5248
+    },
+    {
+      "id": "73e5d619-0b3e-4b57-ba79-be508a583cba",
+      "positions_unchanged": true,
+      "triangles_before": 268596,
+      "triangles_after": 268596
+    },
+    {
+      "id": "764a2a1c-08eb-449d-b9b6-0440cc3e273c",
+      "positions_unchanged": true,
+      "triangles_before": 102,
+      "triangles_after": 102
+    },
+    {
+      "id": "780daafa-7534-4dc9-8d37-2d14b6b046ea",
+      "positions_unchanged": true,
+      "triangles_before": 7254,
+      "triangles_after": 7254
+    },
+    {
+      "id": "78d43939-e418-428e-aad5-d51b08c73985",
+      "positions_unchanged": true,
+      "triangles_before": 1532,
+      "triangles_after": 1532
+    },
+    {
+      "id": "79d2ce03-2e53-4c69-9a13-a18da1838f89",
+      "positions_unchanged": true,
+      "triangles_before": 2589,
+      "triangles_after": 2589
+    },
+    {
+      "id": "7a02c1b0-0291-4731-babf-e0d3cd4a702d",
+      "positions_unchanged": true,
+      "triangles_before": 102,
+      "triangles_after": 102
+    },
+    {
+      "id": "7c8b47c4-6535-4419-8add-0b72fc0738f4",
+      "positions_unchanged": true,
+      "triangles_before": 231,
+      "triangles_after": 231
+    },
+    {
+      "id": "7cc3b006-6826-48f5-a8e3-53291456481e",
+      "positions_unchanged": true,
+      "triangles_before": 3720,
+      "triangles_after": 3720
+    },
+    {
+      "id": "7d8bf20b-f7cf-4c78-abe8-214e29f82247",
+      "positions_unchanged": true,
+      "triangles_before": 961,
+      "triangles_after": 961
+    },
+    {
+      "id": "7e98bb69-350b-4148-a048-dc70e16ff73b",
+      "positions_unchanged": true,
+      "triangles_before": 6154,
+      "triangles_after": 6154
+    },
+    {
+      "id": "7f48c0e6-3eff-429b-b3b0-92d2ba679c0f",
+      "positions_unchanged": true,
+      "triangles_before": 17136,
+      "triangles_after": 17136
+    },
+    {
+      "id": "8009b96a-6063-46bf-bc44-47c8d25ba1e6",
+      "positions_unchanged": true,
+      "triangles_before": 193,
+      "triangles_after": 193
+    },
+    {
+      "id": "805a3419-2a3f-4075-849a-babf6378ca5a",
+      "positions_unchanged": true,
+      "triangles_before": 6782,
+      "triangles_after": 6782
+    },
+    {
+      "id": "82cdf608-1fb9-46d1-a8a7-a335a86b3d32",
+      "positions_unchanged": true,
+      "triangles_before": 1144,
+      "triangles_after": 1144
+    },
+    {
+      "id": "84079531-a2cd-4d2b-a0b6-c85176863c4a",
+      "positions_unchanged": true,
+      "triangles_before": 102,
+      "triangles_after": 102
+    },
+    {
+      "id": "8411510d-cf83-4626-8202-b0bfe13ac32a",
+      "positions_unchanged": true,
+      "triangles_before": 9454,
+      "triangles_after": 9454
+    },
+    {
+      "id": "848a7344-684f-4d7a-bd50-36e8b4eeccb9",
+      "positions_unchanged": true,
+      "triangles_before": 328,
+      "triangles_after": 328
+    },
+    {
+      "id": "8540c7bb-0104-46f5-b3e2-24fa8d22424b",
+      "positions_unchanged": true,
+      "triangles_before": 8,
+      "triangles_after": 8
+    },
+    {
+      "id": "85809e1c-1be6-4d4a-b7a9-2469b0bc24d6",
+      "positions_unchanged": true,
+      "triangles_before": 128026,
+      "triangles_after": 128026
+    },
+    {
+      "id": "859c5d4b-7f1f-4b7e-8941-02122b518672",
+      "positions_unchanged": true,
+      "triangles_before": 588,
+      "triangles_after": 588
+    },
+    {
+      "id": "886652a9-6613-4f5e-b1fc-01aa8b5259d7",
+      "positions_unchanged": true,
+      "triangles_before": 340192,
+      "triangles_after": 340192
+    },
+    {
+      "id": "88e167e1-7ea9-4444-87d1-9c1f3a925aa5",
+      "positions_unchanged": true,
+      "triangles_before": 3,
+      "triangles_after": 3
+    },
+    {
+      "id": "88eb76d2-2c5c-4c70-b64a-dd922afa1433",
+      "positions_unchanged": true,
+      "triangles_before": 201056,
+      "triangles_after": 201056
+    },
+    {
+      "id": "8b86cdfc-7bf5-4509-bd4d-a74587a30640",
+      "positions_unchanged": true,
+      "triangles_before": 9454,
+      "triangles_after": 9454
+    },
+    {
+      "id": "8bd3306a-0a3e-4378-8495-c7484d991a95",
+      "positions_unchanged": true,
+      "triangles_before": 9454,
+      "triangles_after": 9454
+    },
+    {
+      "id": "8e201bb8-3707-456c-b3b8-e1eb29db4df8",
+      "positions_unchanged": true,
+      "triangles_before": 7254,
+      "triangles_after": 7254
+    },
+    {
+      "id": "8f348ab2-216d-4292-a943-701a4f605773",
+      "positions_unchanged": true,
+      "triangles_before": 800,
+      "triangles_after": 800
+    },
+    {
+      "id": "8febf846-e595-4c63-9db0-52af7190b07b",
+      "positions_unchanged": true,
+      "triangles_before": 224,
+      "triangles_after": 224
+    },
+    {
+      "id": "8ff1447e-88ce-4bdf-9789-63684036db7d",
+      "positions_unchanged": true,
+      "triangles_before": 7268,
+      "triangles_after": 7268
+    },
+    {
+      "id": "9178570a-b44f-4316-917c-0ce86332f3dd",
+      "positions_unchanged": true,
+      "triangles_before": 17640,
+      "triangles_after": 17640
+    },
+    {
+      "id": "92714fcc-8762-4105-8ee9-d6796c31dc9f",
+      "positions_unchanged": true,
+      "triangles_before": 15320,
+      "triangles_after": 15320
+    },
+    {
+      "id": "93be5e0d-ce3a-41e1-ba16-1358ae2ba89a",
+      "positions_unchanged": true,
+      "triangles_before": 582,
+      "triangles_after": 582
+    },
+    {
+      "id": "9571ee7f-ce6e-40f7-b13a-d1a647bb9b66",
+      "positions_unchanged": true,
+      "triangles_before": 1188,
+      "triangles_after": 1188
+    },
+    {
+      "id": "9640a34b-71de-42fc-9c39-84411563ed67",
+      "positions_unchanged": true,
+      "triangles_before": 6464,
+      "triangles_after": 6464
+    },
+    {
+      "id": "9699e298-26f6-495c-a0c3-e77d11213d61",
+      "positions_unchanged": true,
+      "triangles_before": 176678,
+      "triangles_after": 176678
+    },
+    {
+      "id": "96cf86e7-6e70-4f6d-9d49-14a22fbdef3c",
+      "positions_unchanged": true,
+      "triangles_before": 233794,
+      "triangles_after": 233794
+    },
+    {
+      "id": "9885b6ab-30cd-4214-b68d-b5d1faa7c1d1",
+      "positions_unchanged": true,
+      "triangles_before": 162052,
+      "triangles_after": 162052
+    },
+    {
+      "id": "99f7282d-6e88-4d60-9cf3-eb9a41abb35e",
+      "positions_unchanged": true,
+      "triangles_before": 1068,
+      "triangles_after": 1068
+    },
+    {
+      "id": "9a1978f8-f1dd-43db-8d9a-b25fdc8023b8",
+      "positions_unchanged": true,
+      "triangles_before": 66078,
+      "triangles_after": 66078
+    },
+    {
+      "id": "9bdd169a-e154-438d-8b7f-88774f808433",
+      "positions_unchanged": true,
+      "triangles_before": 2,
+      "triangles_after": 2
+    },
+    {
+      "id": "9be1b023-2109-48a9-b41a-358b28a1254f",
+      "positions_unchanged": true,
+      "triangles_before": 102,
+      "triangles_after": 102
+    },
+    {
+      "id": "9c6e4638-fa65-4d06-b84d-21feb0ab3b1b",
+      "positions_unchanged": true,
+      "triangles_before": 157328,
+      "triangles_after": 157328
+    },
+    {
+      "id": "9ed1bc59-e9fa-4024-8095-564d74c4c87c",
+      "positions_unchanged": true,
+      "triangles_before": 53034,
+      "triangles_after": 53034
+    },
+    {
+      "id": "9f4e6ec5-912a-4884-9c5a-4be69f1ff211",
+      "positions_unchanged": true,
+      "triangles_before": 5092,
+      "triangles_after": 4899
+    },
+    {
+      "id": "a2a15e34-a9db-4e6a-a4ce-be472804bd15",
+      "positions_unchanged": true,
+      "triangles_before": 36030,
+      "triangles_after": 36030
+    },
+    {
+      "id": "a2a4d836-b72f-42de-9092-a1fc1c740a9c",
+      "positions_unchanged": true,
+      "triangles_before": 334960,
+      "triangles_after": 334960
+    },
+    {
+      "id": "a4ba5835-fa34-4c44-871d-f1ce086cd6ce",
+      "positions_unchanged": true,
+      "triangles_before": 201,
+      "triangles_after": 201
+    },
+    {
+      "id": "a4c9a543-2d8a-401c-bebe-b21f45031605",
+      "positions_unchanged": true,
+      "triangles_before": 138620,
+      "triangles_after": 138620
+    },
+    {
+      "id": "a68f5571-1272-49c1-be99-b39f1324018d",
+      "positions_unchanged": true,
+      "triangles_before": 582,
+      "triangles_after": 582
+    },
+    {
+      "id": "a851549b-eb4e-4be2-bfc5-8052291a6c72",
+      "positions_unchanged": true,
+      "triangles_before": 1215,
+      "triangles_after": 1215
+    },
+    {
+      "id": "a85b54ee-f0b3-435b-b780-42caa5f3bc1b",
+      "positions_unchanged": true,
+      "triangles_before": 7254,
+      "triangles_after": 7254
+    },
+    {
+      "id": "a9cb81c3-c794-46d8-84e7-2b065b263dd1",
+      "positions_unchanged": true,
+      "triangles_before": 148,
+      "triangles_after": 148
+    },
+    {
+      "id": "aa0a6f09-e81f-4449-995c-d0dc494f9dd2",
+      "positions_unchanged": true,
+      "triangles_before": 2,
+      "triangles_after": 2
+    },
+    {
+      "id": "ad6cf1fe-75ad-440b-b725-788d88daa265",
+      "positions_unchanged": true,
+      "triangles_before": 102,
+      "triangles_after": 102
+    },
+    {
+      "id": "adac435c-fe23-4fb1-98d3-e151d881ee4c",
+      "positions_unchanged": true,
+      "triangles_before": 9954,
+      "triangles_after": 9954
+    },
+    {
+      "id": "b09a97de-0ef2-4c7c-ad9c-ca57e0f6544a",
+      "positions_unchanged": true,
+      "triangles_before": 3040,
+      "triangles_after": 3040
+    },
+    {
+      "id": "b4b5dca5-231e-4d08-8340-47c0edaeb02d",
+      "positions_unchanged": true,
+      "triangles_before": 1004,
+      "triangles_after": 1004
+    },
+    {
+      "id": "b5b7567d-7af6-4168-993a-022638d5ef88",
+      "positions_unchanged": true,
+      "triangles_before": 1420,
+      "triangles_after": 1420
+    },
+    {
+      "id": "b985864f-43cb-47b5-9d39-fa7dad328f00",
+      "positions_unchanged": true,
+      "triangles_before": 6234,
+      "triangles_after": 6234
+    },
+    {
+      "id": "bb727358-db62-43c0-8cd7-e43df763dc86",
+      "positions_unchanged": true,
+      "triangles_before": 4392,
+      "triangles_after": 4392
+    },
+    {
+      "id": "bbea2185-f5e3-4821-a363-63f19f463bc4",
+      "positions_unchanged": true,
+      "triangles_before": 4780,
+      "triangles_after": 4780
+    },
+    {
+      "id": "bcfed441-6a16-453c-bbdc-1d26efcf7dba",
+      "positions_unchanged": true,
+      "triangles_before": 7008,
+      "triangles_after": 7008
+    },
+    {
+      "id": "bd3ff7b1-e651-4cc0-add3-48e0155cfb81",
+      "positions_unchanged": true,
+      "triangles_before": 1,
+      "triangles_after": 1
+    },
+    {
+      "id": "bfe5d283-7800-4bd1-b0a7-985219835b4e",
+      "positions_unchanged": true,
+      "triangles_before": 7008,
+      "triangles_after": 7008
+    },
+    {
+      "id": "c013e670-e8a9-4025-bc5e-74a9576e335c",
+      "positions_unchanged": true,
+      "triangles_before": 102,
+      "triangles_after": 102
+    },
+    {
+      "id": "c1228167-d010-44ad-8775-757dd4984934",
+      "positions_unchanged": true,
+      "triangles_before": 18914,
+      "triangles_after": 18914
+    },
+    {
+      "id": "c34009e4-d6a5-420c-b0f9-f19d0f78cfc5",
+      "positions_unchanged": true,
+      "triangles_before": 3492,
+      "triangles_after": 3492
+    },
+    {
+      "id": "c5268510-5ebe-4a92-bbd0-83c6bcd4ade1",
+      "positions_unchanged": true,
+      "triangles_before": 7,
+      "triangles_after": 7
+    },
+    {
+      "id": "c5ae764e-2995-42f9-96a6-f0bf6c7420a6",
+      "positions_unchanged": true,
+      "triangles_before": 4265,
+      "triangles_after": 4265
+    },
+    {
+      "id": "c68be52a-34e5-4c4d-97ec-a4c3e96006a6",
+      "positions_unchanged": true,
+      "triangles_before": 236,
+      "triangles_after": 236
+    },
+    {
+      "id": "c86d61c7-e5d9-4e6c-b3e5-21e29302b78a",
+      "positions_unchanged": true,
+      "triangles_before": 2088,
+      "triangles_after": 2088
+    },
+    {
+      "id": "c92a65c2-822e-4dba-9a03-1037165d1340",
+      "positions_unchanged": true,
+      "triangles_before": 465664,
+      "triangles_after": 465664
+    },
+    {
+      "id": "ca5c92af-03c7-4b47-b332-504b2f368679",
+      "positions_unchanged": true,
+      "triangles_before": 247216,
+      "triangles_after": 247216
+    },
+    {
+      "id": "ce36cdce-398b-44f5-b0b4-fe7f258106cf",
+      "positions_unchanged": true,
+      "triangles_before": 6742,
+      "triangles_after": 6742
+    },
+    {
+      "id": "cfcee284-00f8-449f-ad18-60e47d35862e",
+      "positions_unchanged": true,
+      "triangles_before": 86580,
+      "triangles_after": 86580
+    },
+    {
+      "id": "d01b8d98-9f3d-46e7-8737-7b60ad7a5657",
+      "positions_unchanged": true,
+      "triangles_before": 31893,
+      "triangles_after": 15462
+    },
+    {
+      "id": "d05c0d78-6f0f-424e-8122-5b5ed360134e",
+      "positions_unchanged": true,
+      "triangles_before": 3714,
+      "triangles_after": 3714
+    },
+    {
+      "id": "d2d52e0d-ac53-4b9f-b92f-b83d7bf91bff",
+      "positions_unchanged": true,
+      "triangles_before": 208,
+      "triangles_after": 208
+    },
+    {
+      "id": "d8a66a8a-7ee4-4016-850f-5f54f10a5563",
+      "positions_unchanged": true,
+      "triangles_before": 66232,
+      "triangles_after": 66232
+    },
+    {
+      "id": "d8cf6376-ae53-42d9-844a-dbeb0d8d3327",
+      "positions_unchanged": true,
+      "triangles_before": 204,
+      "triangles_after": 204
+    },
+    {
+      "id": "d90b95c0-5c46-481c-bbe3-33e536429bb4",
+      "positions_unchanged": true,
+      "triangles_before": 582,
+      "triangles_after": 582
+    },
+    {
+      "id": "d93bc0f7-d2bc-430f-923f-a28f0097b891",
+      "positions_unchanged": true,
+      "triangles_before": 102,
+      "triangles_after": 102
+    },
+    {
+      "id": "d94f6a37-b2d5-4674-8dfc-1603ba27401e",
+      "positions_unchanged": true,
+      "triangles_before": 2848,
+      "triangles_after": 2848
+    },
+    {
+      "id": "da70b7ab-69ad-4e7c-82a0-8ae40a247d59",
+      "positions_unchanged": true,
+      "triangles_before": 6726,
+      "triangles_after": 6726
+    },
+    {
+      "id": "da8d27ad-9b73-4ff8-a23e-355ee9c669a9",
+      "positions_unchanged": true,
+      "triangles_before": 102,
+      "triangles_after": 102
+    },
+    {
+      "id": "daa455fc-1291-4e6b-a910-d8783c9151d5",
+      "positions_unchanged": true,
+      "triangles_before": 224206,
+      "triangles_after": 224206
+    },
+    {
+      "id": "dad27d98-7bbc-4981-aba5-8e3419f5baf9",
+      "positions_unchanged": true,
+      "triangles_before": 86500,
+      "triangles_after": 86500
+    },
+    {
+      "id": "db1b3c00-28e2-46a2-af08-3b43fac733cd",
+      "positions_unchanged": true,
+      "triangles_before": 5690,
+      "triangles_after": 5690
+    },
+    {
+      "id": "db7e4b10-6709-4819-ab56-e9cbd94e0d89",
+      "positions_unchanged": true,
+      "triangles_before": 102,
+      "triangles_after": 102
+    },
+    {
+      "id": "dc533d93-dff5-487c-9f4a-edb1ce64e76f",
+      "positions_unchanged": true,
+      "triangles_before": 4416,
+      "triangles_after": 4416
+    },
+    {
+      "id": "dde3c54b-940e-47f6-ae35-5b0c707872e4",
+      "positions_unchanged": true,
+      "triangles_before": 141962,
+      "triangles_after": 141962
+    },
+    {
+      "id": "de6391b1-e6fa-48bf-978c-b261e0d6d4b4",
+      "positions_unchanged": true,
+      "triangles_before": 37310,
+      "triangles_after": 37310
+    },
+    {
+      "id": "de67bdb9-1d24-4d78-b864-a5f6bbd48ce6",
+      "positions_unchanged": true,
+      "triangles_before": 111378,
+      "triangles_after": 111378
+    },
+    {
+      "id": "dfdd3256-08a1-46c3-b079-6adcc692058b",
+      "positions_unchanged": true,
+      "triangles_before": 7008,
+      "triangles_after": 7008
+    },
+    {
+      "id": "e233f406-c6db-4e22-a142-10c6afadc527",
+      "positions_unchanged": true,
+      "triangles_before": 144974,
+      "triangles_after": 144974
+    },
+    {
+      "id": "e2acaa46-927a-41de-ba08-f15ef13e3547",
+      "positions_unchanged": true,
+      "triangles_before": 256,
+      "triangles_after": 256
+    },
+    {
+      "id": "e36a5352-73c4-4ab2-bf60-29b71693f90d",
+      "positions_unchanged": true,
+      "triangles_before": 1040,
+      "triangles_after": 1040
+    },
+    {
+      "id": "e4f1e7fc-b603-4210-888e-ea849203d560",
+      "positions_unchanged": true,
+      "triangles_before": 800,
+      "triangles_after": 800
+    },
+    {
+      "id": "e738bb0d-eb37-4e19-b49e-9c852c77b141",
+      "positions_unchanged": true,
+      "triangles_before": 2294,
+      "triangles_after": 2294
+    },
+    {
+      "id": "e745bd85-690b-4fc7-ad80-d970f899da67",
+      "positions_unchanged": true,
+      "triangles_before": 6494,
+      "triangles_after": 6494
+    },
+    {
+      "id": "e7a0e133-f284-4cd4-8796-349bb8638efc",
+      "positions_unchanged": true,
+      "triangles_before": 10554,
+      "triangles_after": 10554
+    },
+    {
+      "id": "e8a1c998-0124-40af-b3b1-b5f9b60c54b2",
+      "positions_unchanged": true,
+      "triangles_before": 2300,
+      "triangles_after": 2300
+    },
+    {
+      "id": "eb4b29d2-2954-4ee4-bba3-6c802387a1e2",
+      "positions_unchanged": true,
+      "triangles_before": 6244,
+      "triangles_after": 6244
+    },
+    {
+      "id": "ecb36196-315f-4c98-9a41-9fada2f0724f",
+      "positions_unchanged": true,
+      "triangles_before": 7324,
+      "triangles_after": 7317
+    },
+    {
+      "id": "ed14467e-f1ed-4572-be06-7d44f914372c",
+      "positions_unchanged": true,
+      "triangles_before": 197120,
+      "triangles_after": 197120
+    },
+    {
+      "id": "eda8bdb1-ff67-4448-a07f-e78e6914d209",
+      "positions_unchanged": true,
+      "triangles_before": 244054,
+      "triangles_after": 244054
+    },
+    {
+      "id": "edcb244c-3a23-4a97-b31a-639b7d2296aa",
+      "positions_unchanged": true,
+      "triangles_before": 4,
+      "triangles_after": 4
+    },
+    {
+      "id": "ee277b2d-e4eb-4d39-80e6-c5d8a5d87d70",
+      "positions_unchanged": true,
+      "triangles_before": 3000,
+      "triangles_after": 3000
+    },
+    {
+      "id": "ee9f8298-1136-4afe-89e6-76d7ad9d59e3",
+      "positions_unchanged": true,
+      "triangles_before": 6168,
+      "triangles_after": 6168
+    },
+    {
+      "id": "f07e4a21-03bf-45e1-8402-c8602446e69a",
+      "positions_unchanged": true,
+      "triangles_before": 2900,
+      "triangles_after": 2900
+    },
+    {
+      "id": "f0fd81ff-2de8-49cb-be97-a312dd9b3933",
+      "positions_unchanged": true,
+      "triangles_before": 10902,
+      "triangles_after": 10902
+    },
+    {
+      "id": "f28fbf87-2b97-452e-afd0-d9625d711c7f",
+      "positions_unchanged": true,
+      "triangles_before": 74726,
+      "triangles_after": 74726
+    },
+    {
+      "id": "f2966c5a-fb5e-49d8-8a27-4e1f107dbdfb",
+      "positions_unchanged": true,
+      "triangles_before": 4400,
+      "triangles_after": 4400
+    },
+    {
+      "id": "f6bf901b-4e02-49c2-8a1c-6382c255c941",
+      "positions_unchanged": true,
+      "triangles_before": 54990,
+      "triangles_after": 54990
+    },
+    {
+      "id": "f81baad1-a64c-48e0-a17f-f3a3c620659a",
+      "positions_unchanged": true,
+      "triangles_before": 13392,
+      "triangles_after": 13392
+    },
+    {
+      "id": "fd3b1833-5662-4283-888f-36ac476092f6",
+      "positions_unchanged": true,
+      "triangles_before": 240,
+      "triangles_after": 240
+    },
+    {
+      "id": "ff65d92e-54e8-4420-94f7-6103ab69480c",
+      "positions_unchanged": true,
+      "triangles_before": 3776,
+      "triangles_after": 3705
+    },
+    {
+      "id": "fff5397d-d1f2-4712-b733-854969e1cafb",
+      "positions_unchanged": true,
+      "triangles_before": 102,
+      "triangles_after": 102
+    }
+  ]
+}

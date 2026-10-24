@@ -1,0 +1,43 @@
+{
+  "method": "Exact nine-coordinate triangle equality, same winding, explicit owner; no vertex displacement or normal recomputation after removal.",
+  "pairs": [
+    {
+      "owner": "6ff4660f-d023-461f-a4ac-9f0038a79c6d",
+      "duplicate": "1df69efa-10ae-4af3-bf52-c8510f167429",
+      "removed_triangles": 3524
+    },
+    {
+      "owner": "f6bf901b-4e02-49c2-8a1c-6382c255c941",
+      "duplicate": "3a784408-92fe-4bef-aa04-2c2e3f2bd05a",
+      "removed_triangles": 401
+    },
+    {
+      "owner": "f6bf901b-4e02-49c2-8a1c-6382c255c941",
+      "duplicate": "9f4e6ec5-912a-4884-9c5a-4be69f1ff211",
+      "removed_triangles": 193
+    },
+    {
+      "owner": "de6391b1-e6fa-48bf-978c-b261e0d6d4b4",
+      "duplicate": "d01b8d98-9f3d-46e7-8737-7b60ad7a5657",
+      "removed_triangles": 16502
+    },
+    {
+      "owner": "f0fd81ff-2de8-49cb-be97-a312dd9b3933",
+      "duplicate": "ecb36196-315f-4c98-9a41-9fada2f0724f",
+      "removed_triangles": 7
+    },
+    {
+      "owner": "f0fd81ff-2de8-49cb-be97-a312dd9b3933",
+      "duplicate": "ff65d92e-54e8-4420-94f7-6103ab69480c",
+      "removed_triangles": 71
+    },
+    {
+      "owner": "37cde2e1-e1e8-431f-a80a-697f4a61017a",
+      "duplicate": "37cde2e1-e1e8-431f-a80a-697f4a61017a",
+      "removed_triangles": 8
+    }
+  ],
+  "removed_triangles": 20706,
+  "cad_overlap_solids_preserved": true,
+  "all_object_ids_preserved": true
+}
