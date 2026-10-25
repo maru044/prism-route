@@ -53,6 +53,10 @@ var world_scene
 var columns: Dictionary = {}
 var indexed_cells_count:=0
 var render_configured:=false
+# Presentation hook: choose geometry BEFORE allocating/uploading a MultiMesh.
+# Generation and baked root buffers remain independent of display LOD.
+var presentation_mesh_selector: Callable
+var presentation_far_mesh: Mesh
 var active: Dictionary = {}
 var empty: Dictionary = {}
 var required: Dictionary = {}
@@ -396,32 +400,45 @@ func _upload_piece() -> void:
 		var source: PackedFloat32Array=data[group]
 		var offset: int=staging.offset
 		if offset>=source.size()/16:staging.group+=1;staging.offset=0;return
+		var slice_start:=Time.get_ticks_usec()
 		var buffer:=source.slice(offset*16,mini(source.size(),(offset+UPLOAD_INSTANCES)*16))
+		_record("buffer_slice_usec",Time.get_ticks_usec()-slice_start,false)
 		var b: Array=data.bounds[staging.group]
+		var bounds:=AABB(Vector3(b[0],b[1],b[2]),Vector3(b[3],b[4],b[5]))
+		var display_mesh: Mesh=vegetation.grass_mesh
+		if presentation_mesh_selector.is_valid():display_mesh=presentation_mesh_selector.call(chunk.global_transform*bounds)
 		var end:float=vegetation.GRASS_NEAR_FADE_END if group=="near" else vegetation.GRASS_FAR_FADE_END
 		var upload_start:=Time.get_ticks_usec()
 		var node: MultiMeshInstance3D
 		if use_bulk:
-			node=BUFFER.make_node("Grass_"+group,vegetation.grass_mesh,vegetation.grass_material,buffer,end+CELL*1.5,AABB(Vector3(b[0],b[1],b[2]),Vector3(b[3],b[4],b[5])))
+			if presentation_mesh_selector.is_valid():
+				node=_make_lod_node("Grass_"+group,display_mesh,buffer,end+CELL*1.5,bounds)
+			else:
+				node=BUFFER.make_node("Grass_"+group,display_mesh,vegetation.grass_material,buffer,end+CELL*1.5,bounds)
 		else:
 			var transforms: Array[Transform3D]=[];var custom: Array[Color]=[]
 			for at in range(0,buffer.size(),16):
 				transforms.append(Transform3D(Basis(Vector3(buffer[at],buffer[at+4],buffer[at+8]),Vector3(buffer[at+1],buffer[at+5],buffer[at+9]),Vector3(buffer[at+2],buffer[at+6],buffer[at+10])),Vector3(buffer[at+3],buffer[at+7],buffer[at+11])))
 				custom.append(Color(buffer[at+12],buffer[at+13],buffer[at+14],buffer[at+15]))
-			node=vegetation._make_multimesh_node("Grass_"+group,vegetation.grass_mesh,transforms,vegetation.grass_material,0,end+CELL*1.5,custom)
+			node=vegetation._make_multimesh_node("Grass_"+group,display_mesh,transforms,vegetation.grass_material,0,end+CELL*1.5,custom)
 		var upload_time:=Time.get_ticks_usec()-upload_start
 		staging.upload_usec+=upload_time;_record("upload_usec",upload_time,false)
 		node.set_meta("grass_population",group);node.cast_shadow=GeometryInstance3D.SHADOW_CASTING_SETTING_OFF;node.extra_cull_margin=1.5
+		node.set_meta("wind_source",{"cell":cell,"group":group,"offset":offset,"count":buffer.size()/16})
+		var attach_start:=Time.get_ticks_usec()
 		chunk.add_child(node)
+		_record("attach_configure_usec",Time.get_ticks_usec()-attach_start,false)
 		staging.offset+=buffer.size()/16
 		var piece_time:=Time.get_ticks_usec()-commit_start
 		staging.commit_usec+=piece_time;_record("commit_usec",piece_time,false)
 		return
 	# Activate a complete cell atomically, never an unfinished population.
+	var activate_start:=Time.get_ticks_usec()
 	for node: MultiMeshInstance3D in chunk.get_children():
 		if node.get_meta("grass_population")=="near":vegetation.grass_lod0_nodes.append(node)
 		else:vegetation.grass_lod1_nodes.append(node)
 	vegetation._apply_lod_state_to_chunk(chunk);chunk.visible=true
+	_record("activate_usec",Time.get_ticks_usec()-activate_start,false)
 	if not latest_record.has(cell):
 		var record: Dictionary={"cell":str(cell),"enqueue_usec":requested_at.get(cell,0),"first_visible_usec":visible_at.get(cell,0),"source":"baked_or_cpu_cache"}
 		latest_record[cell]=record
@@ -429,6 +446,27 @@ func _upload_piece() -> void:
 	latest_record[cell]["commit_usec"]=staging.commit_usec;latest_record[cell]["upload_usec"]=staging.upload_usec
 	active[cell]=chunk;total_built+=1;_served(cell)
 	staging={}
+
+func _make_lod_node(node_name: String, display_mesh: Mesh, buffer: PackedFloat32Array, end: float, bounds: AABB) -> MultiMeshInstance3D:
+	var keep_local:=display_mesh!=presentation_far_mesh
+	var mm:=make_display_multimesh(display_mesh,buffer,bounds,keep_local)
+	var node:=MultiMeshInstance3D.new();node.name=node_name;node.multimesh=mm
+	node.material_override=vegetation.grass_material;node.visibility_range_begin=0;node.visibility_range_end=end
+	node.set_meta("lod_begin",0.0);node.set_meta("lod_end",end)
+	node.set_meta("wind_cpu_cache_bytes",buffer.size()*4 if keep_local else 0)
+	return node
+
+func make_display_multimesh(display_mesh: Mesh, buffer: PackedFloat32Array, bounds: AABB, keep_local: bool) -> MultiMesh:
+	var mm:=MultiMesh.new();mm.transform_format=MultiMesh.TRANSFORM_3D
+	mm.use_custom_data=true;mm.mesh=display_mesh;mm.instance_count=buffer.size()/16
+	mm.custom_aabb=bounds
+	# Seed Godot's local transform cache BEFORE the first bulk upload. Otherwise
+	# changing a populated MultiMesh's mesh performs a synchronous GPU readback
+	# to rebuild its AABB, even though we supply a conservative custom AABB.
+	# The following full buffer overwrites this seed, preserving every instance.
+	if keep_local and mm.instance_count>0:mm.set_instance_transform(0,Transform3D.IDENTITY)
+	mm.buffer=buffer
+	return mm
 
 func pending_visible_count() -> int:
 	var count:=0

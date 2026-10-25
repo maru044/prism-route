@@ -17,6 +17,10 @@ uniform float biome_transition_half_width = 135.0;
 uniform float biome_center_x = 20.0;
 uniform vec4 ground_dry : source_color = vec4(0.588235, 0.541176, 0.333333, 1.0);
 uniform vec4 ground_green : source_color = vec4(0.447, 0.475, 0.255, 1.0);
+uniform bool use_far_meadow_color = false;
+uniform vec4 far_ground_dry : source_color = vec4(0.7, 0.63, 0.4, 1.0);
+uniform vec4 far_ground_green : source_color = vec4(0.44, 0.58, 0.29, 1.0);
+uniform vec2 meadow_color_fade = vec2(48.0, 128.0);
 varying vec3 world_position;
 varying vec3 world_normal;
 
@@ -52,6 +56,13 @@ void fragment() {
         float transition=smoothstep(-biome_transition_half_width,biome_transition_half_width,
             world_position.x-biome_center_x+(noise_value*2.0-1.0)*biome_warp_distance);
         meadow=mix(ground_dry.rgb,ground_green.rgb,transition);
+        if (use_far_meadow_color) {
+            // Match the loss of dense grass (48–76 m) and survivors (76–128 m).
+            // Use full 3D distance, including elevated roads and rooftops.
+            float far_mix=smoothstep(meadow_color_fade.x,meadow_color_fade.y,
+                distance(CAMERA_POSITION_WORLD,world_position));
+            meadow=mix(meadow,mix(far_ground_dry.rgb,far_ground_green.rgb,transition),far_mix);
+        }
     }
     meadow*=0.985+fine*0.015;
     ALBEDO=mix(vec3(0.92,0.90,0.86),meadow,grass);

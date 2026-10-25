@@ -87,7 +87,8 @@ func _ready() -> void:
 	_add_row(details,"visible","视锥缺块 · 0–48 / 48–76 / 76–128")
 	_add_row(details,"sampling","射线 / 遮罩 / 数学 · ms")
 	_add_row(details,"upload","提交当前 / 历史峰值 · ms")
-	_add_row(details,"cpu_cache","CPU缓存 MiB / 命中 / 磁盘读")
+	_add_row(details,"cpu_cache","草数据缓存 MiB / 命中 / 磁盘读")
+	_add_row(details,"lod_cpu_cache","↳ LOD实例CPU副本 · MiB")
 	_add_row(details,"source","草数据 · 烘焙 / 候选格")
 	_add_row(details,"refresh","面板刷新 · ms / Hz")
 	box.add_child(_label("显存为引擎分配量；CPU / GPU 耗时不可直接相加",12,MUTED))
@@ -221,6 +222,8 @@ func _refresh() -> void:
 		if not stream.collect_detailed_timings or not stream.profiling:_set_value("sampling","F6 开启细分计时")
 		_set_value("upload","%.2f / %.2f" % [m.commit_ms,m.max_commit_ms])
 		_set_value("cpu_cache","%.0f / %d / %d" % [m.cache.cache_mib,m.cache.cache_hits,m.cache.disk_reads])
+		var wind=world_scene.get("grass_wind")
+		_set_value("lod_cpu_cache","%.1f" % (wind.resident_cpu_cache_bytes/1048576.0) if wind!=null else "—")
 		_set_value("source","%d / %d" % [m.cache.baked_cells,m.indexed_cells],m.cache.baked_cells<m.indexed_cells)
 	_set_value("refresh","%.2f / 4" % refresh_cost_ms)
 

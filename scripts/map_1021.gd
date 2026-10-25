@@ -4,6 +4,8 @@ const ASSETS := "res://assets/world/current_map_validation/"
 const VEGETATION := preload("res://scripts/map_1021_vegetation.gd")
 const PERFORMANCE_MONITOR := preload("res://scripts/performance_monitor_1021.gd")
 const FOLIAGE_STYLE := preload("res://scripts/foliage_style.gd")
+const GRASS_WIND := preload("res://scripts/grass_wind_world.gd")
+const MEADOW_PALETTE := preload("res://scripts/meadow_palette.gd")
 const SKY := preload("res://assets/environment/sky/fresh_cumulus_sky.tres")
 const ACTOR_SOLID_LAYER := 32
 # CAD north (+Y) exports to Godot -Z; azimuth runs clockwise from north.
@@ -20,6 +22,8 @@ var mask_texture: Texture2D
 var terrain_material: ShaderMaterial
 var vegetation
 var foliage_style
+var grass_wind
+var wind_menu: OptionButton
 var test_ready := false
 var automation_enabled := false
 var free_mode := false
@@ -65,6 +69,8 @@ func _ready() -> void:
 		return
 	vegetation=VEGETATION.new();vegetation.world_scene=self;add_child(vegetation)
 	vegetation.initialize(character,_noise(),2)
+	grass_wind=GRASS_WIND.new();add_child(grass_wind)
+	grass_wind.initialize(vegetation);grass_wind.set_mode(wind_menu.selected)
 	_sync_meadow_color()
 	foliage_style=FOLIAGE_STYLE.new()
 	foliage_style.bind_streamer(vegetation)
@@ -76,18 +82,14 @@ func _ready() -> void:
 		get_tree().root.call_deferred("add_child",load("res://tools/verify_export_1021.gd").new())
 
 func _sync_meadow_color() -> void:
+	MEADOW_PALETTE.apply_grass(vegetation.grass_material)
 	# Match the accepted grass zones, including their actual noise resource.
 	# Per-blade overlap/value remains fine variation; the ground uses their mean.
 	for parameter: String in ["biome_noise_texture","biome_noise_scale","biome_warp_distance","biome_transition_half_width","biome_center_x"]:
 		terrain_material.set_shader_parameter(parameter,vegetation.grass_material.get_shader_parameter(parameter))
-	terrain_material.set_shader_parameter("ground_dry",Color("968a55"))
-	# Pair the root colour with the same linear dry/green tint ratio as blades.
-	var root_color:=Color("968a55").srgb_to_linear()
-	var dry_tint: Color=vegetation.grass_material.get_shader_parameter("palette_dry")
-	var green_tint: Color=vegetation.grass_material.get_shader_parameter("palette_green")
-	dry_tint=dry_tint.srgb_to_linear();green_tint=green_tint.srgb_to_linear()
-	var paired_green:=Color(root_color.r*green_tint.r/maxf(dry_tint.r,.001),root_color.g*green_tint.g/maxf(dry_tint.g,.001),root_color.b*green_tint.b/maxf(dry_tint.b,.001))
-	terrain_material.set_shader_parameter("ground_green",paired_green.linear_to_srgb())
+	# Absolute colours replace the old atlas-multiplier ratio. The distant
+	# surface is calibrated from rendered grass, not copied from its albedo.
+	MEADOW_PALETTE.apply_ground(terrain_material)
 	terrain_material.set_shader_parameter("use_shared_meadow_biome",true)
 
 func _load_mask() -> void:
@@ -174,6 +176,12 @@ func _hud() -> void:
 	spawn_menu.item_selected.connect(select_spawn);box.add_child(spawn_menu)
 	status=Label.new();box.add_child(status)
 	var help:=Label.new();help.text="1–9 出生点   C 甘雨 / 房车\nF 自由观景 · V 全景 · B 植物开关\nH 隐藏 / 恢复全部界面\nWASD 移动 / 驾驶 · 空格跳跃 / 刹车\n右键转镜头 · 滚轮缩放 · R 复位";box.add_child(help)
+	wind_menu=OptionButton.new();wind_menu.name="GrassWindMode"
+	for text: String in ["草地风力 · 微风","草地风力 · 大风（B）","草地风力 · 自动切换"]:wind_menu.add_item(text)
+	wind_menu.select(GRASS_WIND.Mode.AUTO)
+	wind_menu.item_selected.connect(func(value: int):
+		if grass_wind!=null:grass_wind.set_mode(value))
+	box.add_child(wind_menu)
 	var performance_monitor:=PERFORMANCE_MONITOR.new()
 	performance_monitor.world_scene=self;add_child(performance_monitor)
 	review_ui_layers.append(performance_monitor)

@@ -1,6 +1,5 @@
-@tool
 extends Node3D
-## Real Node3D handles in the Godot editor; generated visual children are not saved.
+## Runtime handles for the in-game planting editor; visual children are not saved.
 const LEAF_SHADER := preload("res://assets/vegetation/shaders/vegetation_wind_soft_backlight.gdshader")
 const STYLE := preload("res://scripts/foliage_style.gd")
 @export_storage var biome_source: ShaderMaterial
@@ -38,6 +37,7 @@ func refresh_visual() -> void:
 	if species==null or species.model==null:return
 	visual=species.model.instantiate();visual.name="TreeVisual";visual.scale=Vector3.ONE*species.model_scale
 	add_child(visual)
+	preload("res://scripts/tree_trunk_assets.gd").apply_visual(visual)
 	var material:=ShaderMaterial.new();material.shader=LEAF_SHADER
 	material.set_shader_parameter("albedo_texture",species.leaf_texture)
 	material.set_shader_parameter("atlas_grid",species.atlas_grid)

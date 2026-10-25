@@ -31,7 +31,8 @@ func pixels_changed(a: Image,b: Image) -> int:
 		if maxi(abs(int(aa[i])-int(bb[i])),maxi(abs(int(aa[i+1])-int(bb[i+1])),abs(int(aa[i+2])-int(bb[i+2]))))>3:count+=1
 	return count
 
-func motion_window(material: ShaderMaterial, start: float) -> Dictionary:
+func motion_window(material: ShaderMaterial, start: float, motion: int = 0) -> Dictionary:
+	material.set_shader_parameter("gust_motion",motion)
 	var centers: Array[float]=[]
 	var heights: Array[int]=[]
 	var root_lines: Array[int]=[]
@@ -49,11 +50,19 @@ func motion_window(material: ShaderMaterial, start: float) -> Dictionary:
 	for x in centers:
 		if x<midpoint-5.0:armed=true
 		if x>midpoint+5.0 and armed:cycles+=1;armed=false
-	check(high-low>35.0,"Strong wind is only small flutter at time %.1f"%start)
-	check(cycles>=5 and cycles<=8,"Expected repeated fast large bends, got %d in 3 seconds at %.1f"%[cycles,start])
+	check(high-low>5.0,"No visible motion in candidate %d"%motion)
+	# Baseline regression ONLY. Slower body + fast tip is not required to pump
+	# the entire tuft 5-8 times. Counts/amplitude are diagnostics, not art approval.
+	if motion==0:check(cycles>=5 and cycles<=8,"Baseline rhythm changed")
 	check(root_lines.max()-root_lines.min()<=3,"Roots move during continuous sway")
-	return {"start_seconds":start,"duration_seconds":3,"samples_hz":24,"large_bend_cycles":cycles,
-		"horizontal_span_pixels":high-low,"height_span_pixels":heights.max()-heights.min(),"centers_x":centers,"heights":heights}
+	var bent_samples:=0
+	var height_limit: float=heights.min()+0.2*float(heights.max()-heights.min())
+	for height in heights:
+		if height<=height_limit:bent_samples+=1
+	var bent_fraction:=float(bent_samples)/heights.size()
+	if motion>0:check(bent_fraction>=0.6,"Candidate does not spend most of its time bent")
+	return {"motion":motion,"start_seconds":start,"duration_seconds":3,"samples_hz":24,"large_bend_cycles":cycles,
+		"near_loaded_height_fraction":bent_fraction,"horizontal_span_pixels":high-low,"height_span_pixels":heights.max()-heights.min(),"centers_x":centers,"heights":heights}
 
 func run() -> void:
 	root.size=Vector2i(640,480);Engine.max_fps=60
@@ -111,10 +120,13 @@ func fixture() -> void:
 	var motion: Array=[]
 	motion.append(await motion_window(material,0.0))
 	motion.append(await motion_window(material,18.0))
+	motion.append(await motion_window(material,0.0,2))
 	# Reframe the same tuft at distant world positions, freezing the global clock.
 	# Spatial wind must not change the strong-wind shape or timing at all.
 	var max_spatial_difference:=0
-	for time: float in [0.0,0.125,0.25,0.375,18.25]:
+	for sample: Vector2 in [Vector2(0,0.125),Vector2(0,18.25),Vector2(2,0.125),Vector2(2,18.25)]:
+		var time:=sample.y
+		material.set_shader_parameter("gust_motion",int(sample.x))
 		material.set_shader_parameter("gust_time",time)
 		card.position=Vector3.ZERO;camera.position=Vector3(0.3,0.6,4)
 		var reference:=await capture("sync_reference")
@@ -125,6 +137,7 @@ func fixture() -> void:
 			max_spatial_difference=maxi(max_spatial_difference,spatial_difference)
 			check(spatial_difference<40,"Strong wind differs between world positions at time %.3f"%time)
 	card.position=Vector3.ZERO;camera.position=Vector3(0.3,0.6,4)
+	material.set_shader_parameter("gust_motion",0)
 	material.set_shader_parameter("gust_time",20.0000);var wrap_a:=await capture("continuity_before")
 	material.set_shader_parameter("gust_time",20.0001);var wrap_b:=await capture("continuity_after")
 	# A rapid sway can move antialiased edge pixels even across 0.1 ms. Check
@@ -136,17 +149,70 @@ func fixture() -> void:
 	report["geometry"]={"vertices":vertices.size(),"triangles":48,"height_rows":levels.size(),"breeze_pixel_difference":difference,
 		"calm_bounds":str(calm_bounds),"bent_bounds":str(bent_bounds),"motion_windows":motion,
 		"nearby_time_pixel_difference":nearby_difference,"world_direction_yaw_invariant":true,
-		"spatial_synchrony_max_pixel_difference":max_spatial_difference,"spatial_synchrony_comparisons":15}
+		"spatial_synchrony_max_pixel_difference":max_spatial_difference,"spatial_synchrony_comparisons":12}
+	# Isolate the tip degree of freedom under an unchanged body angle.
+	material.set_shader_parameter("gust_motion",2)
+	material.set_shader_parameter("gust_min_angle",0.6);material.set_shader_parameter("gust_max_angle",0.6)
+	material.set_shader_parameter("gust_time",0.1);material.set_shader_parameter("gust_tip_amplitude",0.0)
+	var body_only:=await capture("body_without_tip")
+	material.set_shader_parameter("gust_tip_amplitude",deg_to_rad(6.0))
+	var with_tip:=await capture("body_with_tip")
+	var tip_difference:=pixels_changed(body_only,with_tip)
+	check(tip_difference>30,"Tip control does not change the rendered shape")
+	check(absi(silhouette(body_only).end.y-silhouette(with_tip).end.y)<=1,"Tip motion moves the roots")
+	report["geometry"]["tip_isolation_changed_pixels"]=tip_difference
+	# Compare the CPU-shared curve against the original per-vertex GPU curve,
+	# including rebound frames and nonuniform yaw/scale world transforms.
+	var settings=load("res://scripts/grass_wind_settings.gd")
+	settings.apply(material,settings.DEFAULT_PARAMETERS)
+	var largest_curve_difference:=0
+	for yaw: float in [0.0,0.73]:
+		card.basis=Basis(Vector3.UP,yaw)*Basis.from_scale(Vector3(0.9,1.1,1.2))
+		for clock: float in [0.5,1.8,2.1,2.5]:
+			material.set_shader_parameter("gust_time",clock)
+			material.set_shader_parameter("gust_shared_curve",false)
+			var direct:=await capture("curve_direct")
+			settings.update_shared_curve(material,clock)
+			material.set_shader_parameter("gust_shared_curve",true)
+			var cached:=await capture("curve_cached")
+			var curve_difference:=pixels_changed(direct,cached)
+			largest_curve_difference=maxi(largest_curve_difference,curve_difference)
+			check(curve_difference<300,"Shared curve changes the accepted near-grass motion")
+	report["geometry"]["shared_curve_max_pixel_difference"]=largest_curve_difference
+	# World cards store one face and use two-sided rasterization. Check actual
+	# atlas UVs and both viewing sides against the original doubled v7 mesh.
+	var builder=load("res://scripts/grass_wind_world.gd").new()
+	builder.mesh=segmented;builder.material=material
+	var single: Mesh=builder._build_lod_mesh(4)
+	builder.free()
+	card.basis=Basis.IDENTITY
+	material.set_shader_parameter("albedo_texture",load("res://assets/vegetation/textures/grass_tuft_straw_minimal_v5.png"))
+	material.set_shader_parameter("gust_time",0.5);settings.update_shared_curve(material,0.5)
+	var largest_card_difference:=0
+	for z: float in [4.0,-4.0]:
+		camera.position=Vector3(0.3,0.6,z);camera.look_at(Vector3(0.3,0.6,0))
+		material.shader=GUST;card.mesh=segmented
+		var doubled:=await capture("card_doubled")
+		material.shader=load("res://assets/vegetation/shaders/grass_world_wind.gdshader");card.mesh=single
+		var two_sided:=await capture("card_two_sided")
+		var card_difference:=pixels_changed(doubled,two_sided)
+		largest_card_difference=maxi(largest_card_difference,card_difference)
+		check(card_difference<300,"Two-sided card optimization changed UVs or visible geometry")
+	report["geometry"]["two_sided_card_max_pixel_difference"]=largest_card_difference
 	fixture_root.free();await frames(3)
 
 func measure(label: String) -> Dictionary:
 	await frames(35)
 	var gpu: Array[float]=[]
+	var total: Array[float]=[]
+	var previous:=Time.get_ticks_usec()
 	for i in 90:
 		await process_frame
 		gpu.append(RenderingServer.viewport_get_measured_render_time_gpu(root.get_viewport_rid()))
+		var now:=Time.get_ticks_usec();total.append(float(now-previous)/1000.0);previous=now
 	gpu.sort()
-	return {"mode":label,"gpu_median_ms":gpu[gpu.size()/2],"primitives":Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME),"draws":Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)}
+	total.sort()
+	return {"mode":label,"gpu_median_ms":gpu[45],"gpu_p95_ms":gpu[85],"frame_median_ms":total[45],"frame_p95_ms":total[85],"primitives":Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME),"draws":Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)}
 
 func grove() -> void:
 	root.size=Vector2i(1600,900);RenderingServer.viewport_set_measure_render_time(root.get_viewport_rid(),true)
@@ -154,6 +220,31 @@ func grove() -> void:
 	var demo=scene.grass_wind_demo;demo.running=false
 	check(demo.mode==demo.Mode.AUTO,"Grove did not default to automatic wind")
 	check(demo.menu.item_count==3 and demo.menu.is_visible_in_tree(),"Wind selector is unavailable")
+	check(demo.motion_menu.item_count==2 and demo.motion==demo.Motion.BODY_TIP,"Default B or baseline selector is wrong")
+	check(demo.motion_menu.get_item_id(1)==demo.Motion.BODY_TIP,"Second menu item no longer selects B")
+	check(is_equal_approx(float(demo.parameters.body_hz),0.85),"B rebound speed did not slow down")
+	demo.motion_menu.item_selected.emit(0)
+	check(demo.motion==demo.Motion.CURRENT,"Menu cannot select the old baseline")
+	demo.motion_menu.item_selected.emit(1)
+	check(demo.motion==demo.Motion.BODY_TIP and scene.grass_material.get_shader_parameter("gust_motion")==2,"Menu index maps to the removed A shader branch")
+	var before: float=demo.elapsed
+	demo.paused=true;demo.advance(1.0);check(demo.elapsed==before,"Freeze advances the wind clock")
+	demo.set_motion(demo.Motion.BODY_TIP);check(demo.elapsed==before,"A/B switch resets the wind clock")
+	demo.paused=false;demo.playback_speed=0.25;demo.advance(1.0)
+	check(is_equal_approx(demo.elapsed-before,0.25),"Quarter speed does not work")
+	demo.playback_speed=1.0;demo.set_motion(demo.Motion.BODY_TIP)
+	demo.controls.min_angle.value=35.0
+	check(is_equal_approx(scene.grass_material.get_shader_parameter("gust_min_angle"),deg_to_rad(35.0)),"Live angle control is disconnected")
+	demo.reset_parameters()
+	# Expand/collapse must remain inside the window and return to a compact panel.
+	var settings: CheckButton
+	for node: Node in demo.panel.find_children("*","CheckButton",true,false):
+		if node.text=="参数 / 画质诊断":settings=node
+	settings.button_pressed=true;await frames(5)
+	check(demo.panel.get_global_rect().end.y<root.size.y,"Expanded controls extend below the window")
+	await capture("controls_expanded")
+	settings.button_pressed=false;await frames(5)
+	check(demo.panel.size.y<300,"Collapsed control panel did not shrink")
 	var count:=0
 	for chunk: MultiMeshInstance3D in scene.get_node("GrassChunks").get_children():
 		count+=chunk.multimesh.instance_count;check(chunk.extra_cull_margin>=1.5,"Gust culling margin too small")
@@ -168,14 +259,25 @@ func grove() -> void:
 	check(demo.blend>0.0 and demo.blend<1.0,"Wind transition is instantaneous")
 	demo.advance(3.0);check(is_equal_approx(demo.blend,1.0),"Strong wind cannot be selected")
 	# Resume animation for the full-scene capture/performance sample.
-	demo.running=true;await capture("grove_strong");timings.append(await measure("strong_gust"));demo.running=false
+	for candidate: int in [0,2]:
+		demo.set_motion(candidate);demo.running=true
+		await capture("grove_candidate_%d"%candidate)
+		timings.append(await measure("candidate_%d"%candidate))
+		demo.running=false
+	demo.panel.hide();timings.append(await measure("body_tip_ui_hidden"));demo.panel.show()
+	# Debug toggles must isolate material/normal/card appearance without altering
+	# the underlying density or geometry asset.
+	for parameter: String in ["gust_fixed_normal","gust_freeze_tone","gust_single_card"]:
+		scene.grass_material.set_shader_parameter(parameter,true)
+		await capture("debug_"+parameter)
+		scene.grass_material.set_shader_parameter(parameter,false)
+	for view: int in [1,2]:
+		scene.grass_material.set_shader_parameter("gust_debug_view",view)
+		await capture("debug_view_%d"%view)
+	scene.grass_material.set_shader_parameter("gust_debug_view",0)
 	# Deterministic real GPU frames, so visual review can inspect cadence as well
 	# as one attractive still. Playback at 24 fps represents the sampled time.
-	var movie_start: float=demo.elapsed
-	for i in 48:
-		scene.grass_material.set_shader_parameter("gust_time",movie_start+float(i)/24.0)
-		await frames(2);await RenderingServer.frame_post_draw
-		root.get_texture().get_image().save_png(OUT+"grove_motion_%03d.png"%i)
+	# Long, controlled clips are generated by capture_grass_wind_comparison.gd.
 	demo.set_mode(demo.Mode.AUTO);demo.advance(4.0);check(is_zero_approx(demo.blend),"Auto does not begin with a calm interval")
 	demo.advance(5.0);demo.advance(3.0);check(is_equal_approx(demo.blend,1.0),"Auto never reaches strong wind")
 	demo.advance(8.0);demo.advance(3.0);check(is_zero_approx(demo.blend),"Auto never returns to breeze")

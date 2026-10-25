@@ -1,4 +1,3 @@
-@tool
 class_name TreePlantingProfile
 extends Resource
 ## Test-only configuration. A new map/tree library can use another .tres.

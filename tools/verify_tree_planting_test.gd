@@ -26,7 +26,7 @@ func run() -> void:
 	var baseline_path:="res://assets/world/current_map_validation/tree_layout.json"
 	var baseline_sha:=FileAccess.get_sha256(baseline_path)
 	var main_scene:=FileAccess.get_sha256("res://scenes/map_1021.tscn")
-	var scene=SCENE.instantiate();scene.profile=scene.profile.duplicate()
+	var scene=SCENE.instantiate();scene.profile=load(scene.profile_path).duplicate()
 	scene.profile.test_edits_path=OUT+"edits.json";reset_test_file(scene.profile.test_edits_path)
 	root.add_child(scene)
 	for i in 600:

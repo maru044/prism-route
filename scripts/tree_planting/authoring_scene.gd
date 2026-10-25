@@ -3,7 +3,9 @@ extends Node3D
 signal status_changed(message: String)
 const STORE := preload("res://scripts/tree_planting/layout_store.gd")
 const TREE := preload("res://scripts/tree_planting/editable_tree.gd")
-@export var profile: Resource
+# A path keeps the full terrain/tree library out of the editor's scene load.
+@export_file("*.tres") var profile_path := "res://assets/world/tree_planting_test/current_map.tres"
+var profile: Resource
 @export_storage var active_ids: Array[String] = []
 @export_storage var edit_center := Vector3(-450,63,1050)
 var store=STORE.new()
@@ -24,6 +26,7 @@ func say(message: String) -> void:
 	last_status=message;status_changed.emit(message)
 
 func initialize() -> void:
+	if profile==null and not profile_path.is_empty():profile=load(profile_path)
 	if profile==null or profile.terrain==null:say("请在 Inspector 指定种植配置和地形");return
 	# Exported games cannot write into their resource pack.
 	if not OS.has_feature("editor") and profile.test_edits_path.begins_with("res://"):

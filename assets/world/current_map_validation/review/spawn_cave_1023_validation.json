@@ -12,8 +12,8 @@
     "minimum_center_headroom_m": 2.99747467041016,
     "roof_id": "577d868b-7597-4058-83f8-4b630606b305"
   },
-  "mesh_sha256": "8ed807dcfbab2e13a61432f483ba69e5a9a7e3b1208e7f37f6a9940c89b6d22f",
-  "objects": 205.0,
+  "mesh_sha256": "fdae80e03e06ed572843a59acaceb65cf7d05df172ab3bb4e7566f528395ad3a",
+  "objects": 202.0,
   "passed": true,
   "spawn_checks": 9,
   "trees": {
@@ -21,7 +21,7 @@
     "maximum_root_error_m": 0.000091552734375,
     "raised_roof_trees": 234
   },
-  "triangles": 10144277.0,
+  "triangles": 10350912.0,
   "walk": {
     "end_position": [
       -886.672119140625,

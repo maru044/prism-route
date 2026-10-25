@@ -1,0 +1,23 @@
+{
+  "routes": {
+    "continuous_lanes_per_exit": 3,
+    "centerline_min_overhead_m": {
+      "ramp": null,
+      "portal": 5.4413655215466541
+    },
+    "blockers": [],
+    "tested_height_m": 2.2999999999999998,
+    "samples_per_exit": 183
+  },
+  "floor_samples": 1659,
+  "naked_edges": 0,
+  "solid": true,
+  "filled_area_xy_m2": 21422.693563784287,
+  "valid": true,
+  "saved_document": "D:\\Prism Route\\map\\map_current.3dm",
+  "in_document_backups": 0,
+  "unrelated_geometry_changes": [],
+  "added_objects": 0,
+  "source_object": "9ed1bc59-e9fa-4024-8095-564d74c4c87c",
+  "floor_misses": []
+}

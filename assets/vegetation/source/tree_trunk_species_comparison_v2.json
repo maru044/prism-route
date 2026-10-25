@@ -1,0 +1,44 @@
+{
+  "small": {
+    "source_tree": "tree_small_broad_canopy",
+    "main_path_zxy": [[0,0,0],[0.70,0.018,0.003],[1.42,0.05,0.009],[2.18,0.085,0.014],[3.25,0.11,0.02]],
+    "main_tip_radius_m": 0.006,
+    "branch_segments": 9,
+    "branches": []
+  },
+  "upright": {
+    "source_tree": "tree_medium_upright_asymmetric_canopy",
+    "main_path_zxy": [[0,0,0],[1.48,-0.025,0.01],[2.42,-0.13,0.04],[3.46,-0.08,0.08],[4.62,0.17,0.10],[6.2,0.38,0.06],[7.6,0.54,-0.03],[9.2,0.68,-0.16]],
+    "main_tip_radius_m": 0.009,
+    "branch_segments": 12,
+    "branches": [
+      {"name":"UprightFork","height_m":2.0,"azimuth_degrees":165,"radius_ratio":0.48,"end_xyz":[-1.82,0.48,7.0],"first_handle_xyz":[-0.57,0.15,0.76],"last_handle_xyz":[0.16,-0.04,-1.4],"tip_radius_m":0.009},
+      {"name":"OffsetSide","height_m":3.9,"azimuth_degrees":18,"radius_ratio":0.36,"end_xyz":[1.66,0.58,7.55],"first_handle_xyz":[0.42,0.13,0.40],"last_handle_xyz":[-0.20,-0.11,-0.84],"tip_radius_m":0.007},
+      {"name":"RearSide","height_m":5.15,"azimuth_degrees":267,"radius_ratio":0.29,"end_xyz":[-0.20,-1.36,8.1],"first_handle_xyz":[-0.04,-0.30,0.28],"last_handle_xyz":[0.08,0.18,-0.90],"tip_radius_m":0.006}
+    ]
+  },
+  "birch": {
+    "source_tree": "tree_medium_birch_upright_canopy",
+    "bark_uv": true,
+    "main_path_zxy": [[0,0,0],[1.85,0.035,-0.015],[3.2,0.13,-0.04],[4.85,0.21,-0.01],[6.65,0.08,0.05],[8.65,-0.15,0.13],[10.25,-0.32,0.16]],
+    "main_tip_radius_m": 0.006,
+    "branch_segments": 11,
+    "branches": [
+      {"name":"BirchLowerBranch","height_m":2.55,"azimuth_degrees":12,"radius_ratio":0.43,"end_xyz":[1.58,0.28,6.10],"first_handle_xyz":[0.39,0.07,0.35],"last_handle_xyz":[-0.10,-0.04,-0.95],"tip_radius_m":0.006},
+      {"name":"BirchMiddleBranch","height_m":4.05,"azimuth_degrees":162,"radius_ratio":0.36,"end_xyz":[-1.45,0.54,7.40],"first_handle_xyz":[-0.38,0.14,0.35],"last_handle_xyz":[0.18,-0.08,-0.85],"tip_radius_m":0.005},
+      {"name":"BirchUpperBranch","height_m":5.70,"azimuth_degrees":273,"radius_ratio":0.30,"end_xyz":[0.30,-1.21,8.8],"first_handle_xyz":[0.03,-0.28,0.31],"last_handle_xyz":[-0.04,0.15,-0.85],"tip_radius_m":0.004}
+    ]
+  },
+  "cypress": {
+    "source_tree": "tree_medium_columnar_cypress",
+    "main_path_zxy": [[0,0,0],[1.85,0.018,0.008],[3.2,0.06,0.025],[4.85,0.10,0.018],[6.65,0.05,-0.018],[8.1,-0.03,-0.025],[10.4,-0.07,0.0],[11.35,-0.08,0.015]],
+    "main_tip_radius_m": 0.006,
+    "branch_segments": 9,
+    "branches": [
+      {"name":"CypressLower","height_m":2.5,"azimuth_degrees":25,"radius_ratio":0.32,"end_xyz":[0.77,0.37,4.25],"first_handle_xyz":[0.22,0.10,0.22],"last_handle_xyz":[-0.08,-0.04,-0.48],"tip_radius_m":0.005},
+      {"name":"CypressMiddle","height_m":4.1,"azimuth_degrees":172,"radius_ratio":0.30,"end_xyz":[-0.69,0.16,5.95],"first_handle_xyz":[-0.23,0.05,0.22],"last_handle_xyz":[0.08,-0.01,-0.49],"tip_radius_m":0.004},
+      {"name":"CypressUpper","height_m":5.65,"azimuth_degrees":278,"radius_ratio":0.28,"end_xyz":[0.20,-0.65,7.7],"first_handle_xyz":[0.05,-0.22,0.22],"last_handle_xyz":[-0.02,0.08,-0.50],"tip_radius_m":0.004},
+      {"name":"CypressTop","height_m":7.55,"azimuth_degrees":65,"radius_ratio":0.25,"end_xyz":[0.24,0.42,9.35],"first_handle_xyz":[0.08,0.17,0.22],"last_handle_xyz":[-0.02,-0.04,-0.45],"tip_radius_m":0.003}
+    ]
+  }
+}

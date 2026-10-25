@@ -1,0 +1,46 @@
+{
+  "description": "Connected slim trunk study; original trunk sections keep their radial dimensions.",
+  "main_path_zxy": [
+    [0.0, 0.0, 0.0],
+    [1.5, 0.045, 0.012],
+    [2.9, 0.20, 0.025],
+    [4.0, 0.11, -0.015],
+    [5.7, -0.30, -0.065],
+    [7.1, -0.73, -0.15],
+    [8.6, -1.14, -0.25]
+  ],
+  "main_tip_radius_m": 0.009,
+  "branch_segments": 12,
+  "branches": [
+    {
+      "name": "PrimaryFork",
+      "height_m": 2.0,
+      "azimuth_degrees": 5.0,
+      "radius_ratio": 0.52,
+      "end_xyz": [2.75, 0.32, 6.85],
+      "first_handle_xyz": [0.72, 0.03, 0.78],
+      "last_handle_xyz": [-0.24, -0.10, -1.15],
+      "tip_radius_m": 0.010
+    },
+    {
+      "name": "ShortSideBranch",
+      "height_m": 4.18,
+      "azimuth_degrees": 156.0,
+      "radius_ratio": 0.40,
+      "end_xyz": [-2.02, 1.02, 6.45],
+      "first_handle_xyz": [-0.46, 0.21, 0.33],
+      "last_handle_xyz": [0.37, -0.16, -0.70],
+      "tip_radius_m": 0.008
+    },
+    {
+      "name": "UpperSideBranch",
+      "height_m": 5.42,
+      "azimuth_degrees": 272.0,
+      "radius_ratio": 0.34,
+      "end_xyz": [0.45, -1.75, 7.75],
+      "first_handle_xyz": [0.08, -0.42, 0.27],
+      "last_handle_xyz": [-0.18, 0.28, -0.75],
+      "tip_radius_m": 0.007
+    }
+  ]
+}

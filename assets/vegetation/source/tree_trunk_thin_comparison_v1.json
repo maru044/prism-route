@@ -1,0 +1,12 @@
+{
+  "bend_m": 0.22,
+  "side_bend_m": 0.035,
+  "branch_sides": 7,
+  "branch_segments": 5,
+  "tip_radius_m": 0.009,
+  "branches": [
+    {"start_height": 0.30, "end_height": 0.96, "reach": 0.27, "azimuth_degrees": 15, "radius_ratio": 0.32, "control_drop": 0.18},
+    {"start_height": 0.48, "end_height": 1.07, "reach": 0.22, "azimuth_degrees": 168, "radius_ratio": 0.26},
+    {"start_height": 0.71, "end_height": 1.13, "reach": 0.16, "azimuth_degrees": 278, "radius_ratio": 0.21}
+  ]
+}

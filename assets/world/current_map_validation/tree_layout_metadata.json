@@ -12,15 +12,15 @@
   },
   "edge_probe_distance_m": 4.0,
   "large_to_large_minimum_spacing_m": 22.0,
-  "large_tree_count": 1960,
-  "layout_sha256": "d36c8291299a12dff3a90ff622b47d52895fbbdaf63615837dde2bd1561f4a45",
+  "large_tree_count": 1959,
+  "layout_sha256": "cf8098772b0a29241fa74ce8a8f637edc27b9e553f0349c4a685db772da13ef1",
   "minimum_horizontal_spacing_m": 9.0,
   "physics_conformity": {
-    "approved_spawn_tip_lifts": 144,
+    "approved_spawn_tip_lifts": 0,
     "engine": "Jolt",
-    "max_height_adjustment_m": 16.3046569824219,
-    "removed": 1,
-    "roots_adjusted": 610,
+    "max_height_adjustment_m": 0.0386962890625,
+    "removed": 19,
+    "roots_adjusted": 1760,
     "xz_positions_and_spacing_unchanged": true
   },
   "reference": "tools/build_map_1012_test.py",
@@ -28,5 +28,5 @@
   "road_projection_clearance_m": 6.0,
   "seed": 10122026.0,
   "source_mesh_sha256": "45eae060b42c582dc13143524313c9e8db81388ccee0d4a042a59692a0ee2df1",
-  "tree_count": 19604
+  "tree_count": 19585
 }

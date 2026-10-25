@@ -1,0 +1,35 @@
+{
+  "capture": true,
+  "failures": [],
+  "geometry": {
+    "beds": {
+      "north": {
+        "maximum_height_error_m": 0.00459108945813691,
+        "probes": 48
+      },
+      "south": {
+        "maximum_height_error_m": 0.00225574197838757,
+        "probes": 55
+      }
+    },
+    "exits": [
+      {
+        "maximum_height_difference_m": 0.203073740005493,
+        "probes": 177
+      },
+      {
+        "maximum_height_difference_m": 0.102365016937256,
+        "probes": 177
+      }
+    ],
+    "shore_supported_samples": 60
+  },
+  "grass": {
+    "cells": 10961,
+    "corrupt": 0,
+    "signature": "332104410f188f3a2eebca87c177bfc25c12f8de89c4941bb5fa414be7588b8d"
+  },
+  "mesh_sha256": "fdae80e03e06ed572843a59acaceb65cf7d05df172ab3bb4e7566f528395ad3a",
+  "objects": 202.0,
+  "passed": true
+}

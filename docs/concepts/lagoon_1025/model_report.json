@@ -1,0 +1,143 @@
+{
+  "beds": {
+    "north": {
+      "controls": [
+        50,
+        52
+      ],
+      "depth_bbox": [
+        -0.64000000000000001,
+        -0.19330159378688999
+      ]
+    },
+    "south": {
+      "controls": [
+        64,
+        50
+      ],
+      "depth_bbox": [
+        -0.64000000000000012,
+        -0.19901099094647989
+      ]
+    },
+    "water_z": 0.0,
+    "north_filled_holes": 6
+  },
+  "added": [
+    "e5841b7a-99aa-430f-bef8-daad1ce4bdb8",
+    "3ece7c15-82db-4301-920c-2f1cd7097101",
+    "a2b4d386-d01a-4559-a8f7-28e5c8b93563"
+  ],
+  "route_check": {
+    "continuous_lanes_per_exit": 3,
+    "centerline_min_overhead_m": {
+      "ramp": null,
+      "portal": 5.4413655215466541
+    },
+    "blockers": [],
+    "tested_height_m": 2.2999999999999998,
+    "samples_per_exit": 183
+  },
+  "excavation": [
+    {
+      "name": "07_西侧宽槽_跨槽连续曲面实体",
+      "before_faces": 6,
+      "before_solid": true,
+      "after_faces": 9,
+      "id": "0bec2de6-c09c-4d63-86b6-3c6a48d6f3bb",
+      "after_solid": true
+    },
+    {
+      "name": "03_滨水低丘连续地面_0_接缝顺接",
+      "before_faces": 7,
+      "before_solid": true,
+      "after_faces": 10,
+      "id": "c1228167-d010-44ad-8775-757dd4984934",
+      "after_solid": true
+    },
+    {
+      "name": "保留实体与恢复旧空廊_06",
+      "before_faces": 9,
+      "before_solid": true,
+      "after_faces": 12,
+      "id": "f81baad1-a64c-48e0-a17f-f3a3c620659a",
+      "after_solid": true
+    },
+    {
+      "name": "湾缘低翼_内退曲面_0_0",
+      "before_faces": 11,
+      "before_solid": true,
+      "after_faces": 17,
+      "id": "f6bf901b-4e02-49c2-8a1c-6382c255c941",
+      "after_solid": true
+    },
+    {
+      "name": "01_中部连续起伏与曲面坡岸_0_接缝顺接",
+      "before_faces": 9,
+      "before_solid": true,
+      "after_faces": 12,
+      "id": "9ed1bc59-e9fa-4024-8095-564d74c4c87c",
+      "after_solid": true
+    }
+  ],
+  "valid": true,
+  "modified": [
+    "0bec2de6-c09c-4d63-86b6-3c6a48d6f3bb",
+    "c1228167-d010-44ad-8775-757dd4984934",
+    "f81baad1-a64c-48e0-a17f-f3a3c620659a",
+    "9ed1bc59-e9fa-4024-8095-564d74c4c87c",
+    "f6bf901b-4e02-49c2-8a1c-6382c255c941",
+    "79d2ce03-2e53-4c69-9a13-a18da1838f89",
+    "c5ae764e-2995-42f9-96a6-f0bf6c7420a6",
+    "3861e9e6-1993-4c9a-9445-ddd4e3b687a2"
+  ],
+  "removed": [
+    "0ca3494d-c2cb-4a06-bd27-eef387c1a3a8",
+    "a4ba5835-fa34-4c44-871d-f1ce086cd6ce",
+    "a9cb81c3-c794-46d8-84e7-2b065b263dd1",
+    "8009b96a-6063-46bf-bc44-47c8d25ba1e6",
+    "7c8b47c4-6535-4419-8add-0b72fc0738f4",
+    "c68be52a-34e5-4c4d-97ec-a4c3e96006a6"
+  ],
+  "unrelated_changes": [],
+  "in_document_backups": 0,
+  "external_backup": "D:/Prism Route/prism-route/.lagoon_model_build/map_current_before_1025.3dm",
+  "exits": {
+    "ramp": {
+      "start": [
+        600.0,
+        500.0,
+        0.0
+      ],
+      "end": [
+        600.0,
+        740.0,
+        0.0
+      ],
+      "width": 14.0,
+      "max_grade": 0.042555119096762885,
+      "id": "3ece7c15-82db-4301-920c-2f1cd7097101",
+      "end_z": 4.7571148389177296,
+      "length_m": 240.91858960074180,
+      "crossfall": -0.030520649147107344
+    },
+    "portal": {
+      "start": [
+        1070.0,
+        470.0,
+        0.0
+      ],
+      "end": [
+        1070.0,
+        700.0,
+        0.0
+      ],
+      "width": 12.0,
+      "max_grade": 0.035058542050868877,
+      "id": "e5841b7a-99aa-430f-bef8-daad1ce4bdb8",
+      "end_z": 3.6105605065350548,
+      "length_m": 230.15392156711340,
+      "crossfall": -0.067647257612888992
+    }
+  }
+}

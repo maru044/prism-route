@@ -1,0 +1,64 @@
+{
+  "capture": false,
+  "failures": [],
+  "geometry": {
+    "beds": {
+      "north": {
+        "maximum_height_error_m": 0.00459108945813691,
+        "probes": 48
+      },
+      "south": {
+        "maximum_height_error_m": 0.00225574197838757,
+        "probes": 55
+      }
+    },
+    "exits": [
+      {
+        "maximum_height_difference_m": 0.203073740005493,
+        "probes": 177
+      },
+      {
+        "maximum_height_difference_m": 0.102365016937256,
+        "probes": 177
+      }
+    ],
+    "shore_supported_samples": 60
+  },
+  "mesh_sha256": "fdae80e03e06ed572843a59acaceb65cf7d05df172ab3bb4e7566f528395ad3a",
+  "objects": 202.0,
+  "passed": true,
+  "walks": [
+    {
+      "exit": 0,
+      "grounded": true,
+      "longest_air_frames": 0,
+      "reverse": false,
+      "waypoints": 39,
+      "waypoints_reached": 39
+    },
+    {
+      "exit": 0,
+      "grounded": true,
+      "longest_air_frames": 0,
+      "reverse": true,
+      "waypoints": 39,
+      "waypoints_reached": 39
+    },
+    {
+      "exit": 1,
+      "grounded": true,
+      "longest_air_frames": 0,
+      "reverse": false,
+      "waypoints": 38,
+      "waypoints_reached": 38
+    },
+    {
+      "exit": 1,
+      "grounded": true,
+      "longest_air_frames": 0,
+      "reverse": true,
+      "waypoints": 38,
+      "waypoints_reached": 38
+    }
+  ]
+}

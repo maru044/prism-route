@@ -52,6 +52,8 @@ var shared_trunk_material: StandardMaterial3D
 var foliage_style
 var grass_material: ShaderMaterial
 var grass_wind_demo
+var trunk_comparison
+var grass_color_study
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -102,6 +104,11 @@ func _ready() -> void:
 		add_child(grass_wind_demo);grass_wind_demo.initialize(grass_material)
 	foliage_style=preload("res://scripts/foliage_style.gd").new()
 	foliage_style.bind_grove(self)
+	if grove_demo:
+		trunk_comparison=load("res://scripts/tree_trunk_comparison.gd").new()
+		add_child(trunk_comparison);trunk_comparison.initialize(self)
+		grass_color_study=load("res://scripts/grass_color_study.gd").new()
+		add_child(grass_color_study);grass_color_study.initialize(self)
 	if grove_demo and "--capture-character" in arguments:
 		var camera := get_node("OrbitCamera") as Camera3D
 		camera.set_process(false)

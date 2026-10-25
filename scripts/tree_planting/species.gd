@@ -1,4 +1,3 @@
-@tool
 class_name TreePlantingSpecies
 extends Resource
 ## A replaceable tree asset; IDs are saved independently of list order.

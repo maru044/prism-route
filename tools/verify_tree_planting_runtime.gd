@@ -13,7 +13,7 @@ func run() -> void:
 	var baseline_path:="res://assets/world/current_map_validation/tree_layout.json"
 	var baseline_sha:=FileAccess.get_sha256(baseline_path)
 	var main_sha:=FileAccess.get_sha256("res://scenes/map_1021.tscn")
-	var scene=SCENE.instantiate();scene.profile=scene.profile.duplicate()
+	var scene=SCENE.instantiate();scene.profile=load(scene.profile_path).duplicate()
 	scene.profile.test_edits_path=OUT+"runtime_edits.json"
 	for suffix: String in ["",".bak"]:
 		if FileAccess.file_exists(scene.profile.test_edits_path+suffix):DirAccess.remove_absolute(scene.profile.test_edits_path+suffix)

@@ -14,6 +14,8 @@ __pycache__/
 /.road_projection_build/
 /.landscape_mask_build/
 /.current_map_build/
+# External Rhino safety snapshot; never import or distribute it as a game asset.
+/.lagoon_model_build/
 # Local Issue 13 pilot bake; regenerate with tools/bake_grass_issue13.gd.
 /assets/world/current_map_validation/grass_bake/
 /assets/vegetation/source/*.blend1

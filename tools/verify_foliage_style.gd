@@ -79,7 +79,8 @@ func run() -> void:
 		await tap(KEY_H);assert(not scene.review_ui_visible)
 		report["hide_ui_key_preserved"]=true
 		var grass: ShaderMaterial=scene.vegetation.grass_material
-		assert(grass.shader.resource_path=="res://assets/vegetation/shaders/vegetation_wind.gdshader")
+		assert(grass.shader.resource_path=="res://assets/vegetation/shaders/grass_world_wind.gdshader")
+		assert(grass.get_shader_parameter("gust_motion")==2)
 		# The style also supports the original online grass streamer.
 		if "store" in scene.vegetation.volume_streamer:
 			var signature: String=load("res://scripts/grass_baked_store.gd").signature(scene)

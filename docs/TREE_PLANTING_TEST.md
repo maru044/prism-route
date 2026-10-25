@@ -40,7 +40,9 @@ F5 仍运行正式的 `map_1021.tscn`。
 
 ## 换地形、树种与颜色
 
-场景根节点的 Profile 引用 `res://assets/world/tree_planting_test/current_map.tres`。
+场景根节点的 Profile Path 指向 `res://assets/world/tree_planting_test/current_map.tres`。
+配置、整张地形和树种资源仅在运行时载入。入口及种植脚本不使用 `@tool`，
+Godot 编辑器切换到该场景时不生成地形、树木或种植面板；按 F6 后使用游戏内编辑器。
 复制场景与配置后可用于其他地形，运行时面板从配置生成，无需修改插件或引擎。
 
 - 地形：替换 `terrain`，`terrain_metadata` 可留空；无元数据时，上向非水面可用于种树。

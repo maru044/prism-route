@@ -1,4 +1,3 @@
-@tool
 class_name TreePlantingPalette
 extends Resource
 ## Source colours, rather than baked screen colours.

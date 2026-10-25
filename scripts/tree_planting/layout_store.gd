@@ -1,4 +1,3 @@
-@tool
 extends RefCounted
 ## Baseline stays read-only. Only explicit, stable per-tree edits are saved.
 var baseline: Dictionary = {}

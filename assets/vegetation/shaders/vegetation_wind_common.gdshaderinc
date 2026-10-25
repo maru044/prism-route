@@ -1,4 +1,8 @@
+#ifdef GRASS_SINGLE_SIDED_GEOMETRY
+render_mode cull_disabled, depth_prepass_alpha, diffuse_burley, alpha_to_coverage;
+#else
 render_mode cull_back, depth_prepass_alpha, diffuse_burley, alpha_to_coverage;
+#endif
 
 #include "res://assets/vegetation/shaders/grass_interaction.gdshaderinc"
 
@@ -341,10 +345,16 @@ void vertex() {
 			// Sample by the complete instance world position so adjacent MultiMesh
 			// chunks share one continuous wind field instead of restarting in squares.
 			float wind_time = TIME * wind_speed;
+#ifdef GRASS_GUST_DEMO
+			wind_time = (gust_time < 0.0 ? TIME : gust_time) * wind_speed;
+#endif
 			// A separate, very slow noise trajectory gives the whole meadow calm and
 			// gust phases. Two differently oriented samples avoid a simple loop or
 			// sine-like pulse while remaining smooth and deterministic.
 			float slow_time = TIME * wind_variation_speed;
+#ifdef GRASS_GUST_DEMO
+			slow_time = (gust_time < 0.0 ? TIME : gust_time) * wind_variation_speed;
+#endif
 			float slow_primary = textureLod(
 				wind_noise_texture,
 				vec2(slow_time + 0.137, 0.319),
@@ -409,7 +419,7 @@ void vertex() {
 			) * wind_strength * wind_weight * temporal_wind_strength;
 #ifdef GRASS_GUST_DEMO
 			apply_grass_gust(VERTEX, NORMAL, mat3(MODEL_MATRIX), world_origin.xz,
-				direction, displacement, wind_weight);
+				direction, displacement, wind_weight, tree_camera_distance);
 #else
 			VERTEX.xz += displacement;
 #endif
@@ -472,8 +482,13 @@ void fragment() {
 	}
 	float cutout_alpha = tex.a * edge_mask * view_mask
 		* grass_lod_visibility * tree_lod_visibility;
-	// Preserve the volume normals authored on the mesh. Flipping a normal from
-	// FRONT_FACING would restore the original card-plane lighting artifact.
+	// Godot flips interpolated normals on rasterized backfaces when culling is
+	// disabled. Undo that flip for single-copy grass cards: both sides must keep
+	// the same authored upward/curved normal as the old duplicated-face mesh.
+#ifdef GRASS_SINGLE_SIDED_GEOMETRY
+	if (!FRONT_FACING) { NORMAL = -NORMAL; }
+#endif
+	// Other foliage keeps its existing volume-normal lighting.
 	vec3 lighting_normal = normalize(NORMAL);
 	if (use_tree_canopy_normal > 0.5 || use_tree_local_canopy_normal) {
 		lighting_normal = normalize(mix(
@@ -497,6 +512,9 @@ void fragment() {
 	// farther than the subpixel silhouette displacement. Keep it achromatic so
 	// the grass remains one restrained straw-yellow color family.
 	float animated_tone_strength = wind_tone_strength * temporal_wind_strength;
+#ifdef GRASS_GUST_DEMO
+	if (gust_freeze_tone) { animated_tone_strength = 0.0; }
+#endif
 	float wind_tone = mix(
 		1.0 - animated_tone_strength,
 		1.0 + animated_tone_strength * 0.30,
@@ -559,6 +577,13 @@ void fragment() {
 	ALPHA_TEXTURE_COORDINATE = sample_uv * vec2(textureSize(albedo_texture, 0));
 	ROUGHNESS = 0.9;
 	SPECULAR = 0.15;
+#ifdef GRASS_GUST_DEMO
+	if (gust_debug_view > 0) {
+		ALBEDO = vec3(0.0);
+		EMISSION = vec3(1.0);
+		if (gust_debug_view == 2) { ALPHA = 1.0; ALPHA_SCISSOR_THRESHOLD = 0.0; }
+	}
+#endif
 }
 
 void light() {

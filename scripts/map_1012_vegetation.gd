@@ -26,6 +26,9 @@ func _build_grass_chunk(cell: Vector2i) -> void:
 
 func _load_meshes_and_materials() -> void:
 	super._load_meshes_and_materials()
+	# Shared by the current 1021 map and its 1012 population reference. Swap
+	# wood before building MultiMeshes, preserving all existing crown resources.
+	preload("res://scripts/tree_trunk_assets.gd").apply_streamer(self)
 	# Retain crowns in the full-island view; near and medium LODs are unchanged.
 	for material in [tree_small_lod2_material, tree_broad_lod2_material, tree_upright_lod2_material]:
 		material.set_shader_parameter("tree_lod_fade", Vector4(280, 330, 5700, MAP_FAR_TREE_END))
