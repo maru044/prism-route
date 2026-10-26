@@ -1,0 +1,166 @@
+{
+	"adapter": "NVIDIA GeForce RTX 5070 Ti",
+	"engine": {
+		"build": "official",
+		"hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+		"hex": 263938,
+		"major": 4,
+		"minor": 7,
+		"patch": 2,
+		"status": "stable",
+		"string": "4.7.2-stable (official)",
+		"timestamp": 0
+	},
+	"failures": [],
+	"logic": {
+		"head_frame_follows_actor": true,
+		"instance_isolation": true,
+		"original_and_c0_unchanged": true,
+		"outline_surfaces": 8,
+		"sdf_fallback_switch": true,
+		"surfaces": 19
+	},
+	"outline_changed_pixels": 2775,
+	"passed": true,
+	"performance": [
+		{
+			"actors": 1,
+			"draw_calls": 61.0,
+			"gpu_median_ms": 0.333999991416931,
+			"gpu_p95_ms": 0.41499999165535,
+			"mode": "mtoon",
+			"render_memory_mib": 589.453125,
+			"wall_median_ms": 0.472
+		},
+		{
+			"actors": 1,
+			"draw_calls": 61.0,
+			"gpu_median_ms": 0.32600000500679,
+			"gpu_p95_ms": 0.330000013113022,
+			"mode": "custom",
+			"render_memory_mib": 589.453125,
+			"wall_median_ms": 0.444
+		},
+		{
+			"actors": 1,
+			"draw_calls": 69.0,
+			"gpu_median_ms": 0.342000007629395,
+			"gpu_p95_ms": 0.34400001168251,
+			"mode": "genshin",
+			"render_memory_mib": 589.453125,
+			"wall_median_ms": 0.456
+		},
+		{
+			"actors": 5,
+			"draw_calls": 289.0,
+			"gpu_median_ms": 0.430000007152557,
+			"gpu_p95_ms": 0.435999989509583,
+			"mode": "mtoon",
+			"render_memory_mib": 604.953125,
+			"wall_median_ms": 0.655
+		},
+		{
+			"actors": 5,
+			"draw_calls": 289.0,
+			"gpu_median_ms": 0.404000014066696,
+			"gpu_p95_ms": 0.449999988079071,
+			"mode": "custom",
+			"render_memory_mib": 609.703125,
+			"wall_median_ms": 0.686
+		},
+		{
+			"actors": 5,
+			"draw_calls": 329.0,
+			"gpu_median_ms": 0.462999999523163,
+			"gpu_p95_ms": 0.467999994754791,
+			"mode": "genshin",
+			"render_memory_mib": 614.453125,
+			"wall_median_ms": 0.83
+		},
+		{
+			"actors": 20,
+			"draw_calls": 1144.0,
+			"gpu_median_ms": 0.635999977588654,
+			"gpu_p95_ms": 0.640999972820282,
+			"mode": "mtoon",
+			"render_memory_mib": 672.578125,
+			"wall_median_ms": 2.076
+		},
+		{
+			"actors": 20,
+			"draw_calls": 1144.0,
+			"gpu_median_ms": 0.568000018596649,
+			"gpu_p95_ms": 0.570999979972839,
+			"mode": "custom",
+			"render_memory_mib": 690.390625,
+			"wall_median_ms": 2.271
+		},
+		{
+			"actors": 20,
+			"draw_calls": 1304.0,
+			"gpu_median_ms": 0.720000028610229,
+			"gpu_p95_ms": 0.72299998998642,
+			"mode": "genshin",
+			"render_memory_mib": 708.203125,
+			"wall_median_ms": 2.607
+		}
+	],
+	"performance_method": "1920x1080, Forward+/D3D12, 4x MSAA; uncapped, VSync off, 90 warmup +120 frames; static poses, no spring simulation. Same current process/camera per mode. C1 includes outline shell; mesh shared across actors; memory is process-level, not attributed to a mode.",
+	"rendered": true,
+	"rotations": [
+		{
+			"degrees": 0,
+			"forward": "(-0.179115, -0.042577, 0.982906)"
+		},
+		{
+			"degrees": 30,
+			"forward": "(0.336335, -0.042577, 0.940779)"
+		},
+		{
+			"degrees": 60,
+			"forward": "(0.761665, -0.042577, 0.646571)"
+		},
+		{
+			"degrees": 90,
+			"forward": "(0.982907, -0.042577, 0.179115)"
+		},
+		{
+			"degrees": 120,
+			"forward": "(0.940779, -0.042577, -0.336335)"
+		},
+		{
+			"degrees": 150,
+			"forward": "(0.646571, -0.042577, -0.761664)"
+		},
+		{
+			"degrees": 180,
+			"forward": "(0.179115, -0.042577, -0.982907)"
+		},
+		{
+			"degrees": 210,
+			"forward": "(-0.336335, -0.042577, -0.940779)"
+		},
+		{
+			"degrees": 240,
+			"forward": "(-0.761665, -0.042577, -0.646571)"
+		},
+		{
+			"degrees": 270,
+			"forward": "(-0.982907, -0.042577, -0.179115)"
+		},
+		{
+			"degrees": 300,
+			"forward": "(-0.940779, -0.042577, 0.336335)"
+		},
+		{
+			"degrees": 330,
+			"forward": "(-0.646571, -0.042577, 0.761664)"
+		},
+		{
+			"degrees": 360,
+			"forward": "(-0.179115, -0.042577, 0.982906)"
+		}
+	],
+	"sdf_changed_pixels": 2200,
+	"shadow_changed_pixels": 42186
+}

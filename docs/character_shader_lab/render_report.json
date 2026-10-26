@@ -1,0 +1,172 @@
+{
+	"adapter": "NVIDIA GeForce RTX 5070 Ti",
+	"engine": {
+		"build": "official",
+		"hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+		"hex": 263938,
+		"major": 4,
+		"minor": 7,
+		"patch": 2,
+		"status": "stable",
+		"string": "4.7.2-stable (official)",
+		"timestamp": 0
+	},
+	"failures": [],
+	"logic": {
+		"instance_isolation": true,
+		"mapped_surfaces": 19,
+		"motion_clips": [
+			"A01",
+			"A05",
+			"A06",
+			"A25"
+		],
+		"msaa": "4x",
+		"regions": {
+			"二重": "eye",
+			"发": "hair",
+			"口舌": "eye",
+			"新規": "body",
+			"服": "body",
+			"白目": "eye",
+			"目": "eye",
+			"目星": "eye",
+			"眉": "eye",
+			"睫": "eye",
+			"神之眼": "accessory",
+			"肌": "skin",
+			"脸红": "overlay",
+			"腰饰": "accessory",
+			"裙摆": "body",
+			"角": "body",
+			"面1": "face",
+			"面2": "face",
+			"齿": "eye"
+		},
+		"restores_original_references": true,
+		"source_mesh_blend_shapes": 60,
+		"unknown_region_fallback": true
+	},
+	"passed": true,
+	"performance": [
+		{
+			"actors": 1,
+			"draw_calls": 61.0,
+			"gpu_median_ms": 0.32600000500679,
+			"gpu_p95_ms": 0.330000013113022,
+			"mode": "standard",
+			"render_memory_mib": 592.703125,
+			"wall_median_ms": 0.435
+		},
+		{
+			"actors": 1,
+			"draw_calls": 61.0,
+			"gpu_median_ms": 0.337999999523163,
+			"gpu_p95_ms": 0.342000007629395,
+			"mode": "mtoon",
+			"render_memory_mib": 592.703125,
+			"wall_median_ms": 0.448
+		},
+		{
+			"actors": 1,
+			"draw_calls": 61.0,
+			"gpu_median_ms": 0.330000013113022,
+			"gpu_p95_ms": 0.333999991416931,
+			"mode": "custom",
+			"render_memory_mib": 592.703125,
+			"wall_median_ms": 0.439
+		},
+		{
+			"actors": 5,
+			"draw_calls": 289.0,
+			"gpu_median_ms": 0.400999993085861,
+			"gpu_p95_ms": 0.405000001192093,
+			"mode": "standard",
+			"render_memory_mib": 598.703125,
+			"wall_median_ms": 0.672
+		},
+		{
+			"actors": 5,
+			"draw_calls": 289.0,
+			"gpu_median_ms": 0.439000010490417,
+			"gpu_p95_ms": 0.442999988794327,
+			"mode": "mtoon",
+			"render_memory_mib": 603.453125,
+			"wall_median_ms": 0.695
+		},
+		{
+			"actors": 5,
+			"draw_calls": 289.0,
+			"gpu_median_ms": 0.414000004529953,
+			"gpu_p95_ms": 0.418000012636185,
+			"mode": "custom",
+			"render_memory_mib": 608.203125,
+			"wall_median_ms": 0.718
+		},
+		{
+			"actors": 20,
+			"draw_calls": 1144.0,
+			"gpu_median_ms": 0.569000005722046,
+			"gpu_p95_ms": 0.573000013828278,
+			"mode": "standard",
+			"render_memory_mib": 630.703125,
+			"wall_median_ms": 1.869
+		},
+		{
+			"actors": 20,
+			"draw_calls": 1144.0,
+			"gpu_median_ms": 0.639999985694885,
+			"gpu_p95_ms": 0.644999980926514,
+			"mode": "mtoon",
+			"render_memory_mib": 648.515625,
+			"wall_median_ms": 1.935
+		},
+		{
+			"actors": 20,
+			"draw_calls": 1144.0,
+			"gpu_median_ms": 0.573000013828278,
+			"gpu_p95_ms": 0.577000021934509,
+			"mode": "custom",
+			"render_memory_mib": 666.328125,
+			"wall_median_ms": 2.08
+		}
+	],
+	"performance_note": "1920x1080, Forward+/D3D12, 4x MSAA; vsync/FPS cap off; 90 warmup + 120 samples; frozen poses/no springs. Draw calls include stage/shadows. All candidate materials pre-created, so memory is process-level, not per-mode attribution.",
+	"rendered": true,
+	"shadow": {
+		"custom": {
+			"lit_luminance": 0.884439776167453,
+			"ratio": 0.895929510957106,
+			"roi": [
+				850,
+				320,
+				220,
+				200
+			],
+			"roof_luminance": 0.792395696132719
+		},
+		"mtoon": {
+			"lit_luminance": 0.830922045199783,
+			"ratio": 0.937916500683203,
+			"roi": [
+				850,
+				320,
+				220,
+				200
+			],
+			"roof_luminance": 0.77933549697431
+		},
+		"standard": {
+			"lit_luminance": 0.873472862172702,
+			"ratio": 0.926608022886342,
+			"roi": [
+				850,
+				320,
+				220,
+				200
+			],
+			"roof_luminance": 0.809366961862723
+		}
+	},
+	"shadow_method": "Same opaque roof and SSAO/environment in both images; only directional shadow_enabled toggled. ROI is face-view center, display-referred luminance, not radiometric measurement."
+}

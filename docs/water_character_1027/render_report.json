@@ -1,0 +1,130 @@
+{
+	"adapter": "NVIDIA GeForce RTX 5070 Ti",
+	"blend_shapes": [
+		"まばたき",
+		"笑い",
+		"ウィンク",
+		"ウィンク右",
+		"ウィンク２",
+		"ウィンク２右",
+		"なごみ",
+		"なごみ左",
+		"なごみ右",
+		"びっくり",
+		"じと目",
+		"喜び",
+		"怒り目",
+		"ジト目",
+		"眼角上",
+		"眼角下",
+		"下眼上",
+		"あ",
+		"い",
+		"う",
+		"え",
+		"お",
+		"にやり",
+		"ワ",
+		"ん",
+		"い１",
+		"い２",
+		"あ２",
+		"にやり２",
+		"にやり３",
+		"ω",
+		"てへぺろ",
+		"ぺろっ",
+		"口角上げ",
+		"口横広げ",
+		"口横狭め",
+		"舌広げ",
+		"困る左",
+		"困る右",
+		"にこり左",
+		"にこり右",
+		"怒り左",
+		"怒り右",
+		"真面目左",
+		"真面目右",
+		"上左",
+		"上右",
+		"下左",
+		"下右",
+		"前左",
+		"前右",
+		"困る",
+		"にこり",
+		"怒り",
+		"真面目",
+		"上",
+		"下",
+		"前",
+		"星目",
+		"照れ"
+	],
+	"coverage": {
+		"above_water_affected": 35,
+		"above_water_samples": 8407,
+		"formal_affected": 1685,
+		"legacy_affected": 132,
+		"submerged_samples": 1750
+	},
+	"depths": [
+		{
+			"feet_y": -0.121904761904762,
+			"water_y": 0.0
+		},
+		{
+			"feet_y": -0.340952380952381,
+			"water_y": 0.0
+		},
+		{
+			"feet_y": -0.56,
+			"water_y": 0.0
+		}
+	],
+	"driver": "d3d12",
+	"dry_body": {
+		"changed_pixels": 7,
+		"mean_rgb_error": 0.0000015488834422658
+	},
+	"dry_face": [
+		{
+			"angle": 0,
+			"changed_pixels": 26,
+			"mean_rgb_error": 0.0000129357298474946
+		},
+		{
+			"angle": 75,
+			"changed_pixels": 63,
+			"mean_rgb_error": 0.0000200603100036311
+		},
+		{
+			"angle": 180,
+			"changed_pixels": 105,
+			"mean_rgb_error": 0.0000199354915577342
+		}
+	],
+	"expressions": [
+		{
+			"changed_pixels": 26,
+			"expression": "照れ",
+			"mean_rgb_error": 0.00001292580110748,
+			"response_pixels": 117
+		},
+		{
+			"changed_pixels": 26,
+			"expression": "まばたき",
+			"mean_rgb_error": 0.0000129470769789397,
+			"response_pixels": 1016
+		}
+	],
+	"failures": [],
+	"materials": {
+		"blend": 1,
+		"cutout": 2,
+		"opaque": 16
+	},
+	"msaa": 2,
+	"passed": true
+}

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/characters/appearance_profile.gd" id="1"]
+[ext_resource type="Texture2D" path="res://materials/characters/ganyu_npr/face_sdf.png" id="2"]
+[ext_resource type="Texture2D" path="res://materials/characters/ganyu_npr/body_material_mask.png" id="3"]
+
+[resource]
+script = ExtResource("1")
+face_sdf = ExtResource("2")
+body_material_mask = ExtResource("3")
+regions = {"面1": "face", "面2": "face", "睫": "eye", "二重": "eye", "眉": "eye", "目": "eye", "目星": "eye", "口舌": "eye", "齿": "eye", "白目": "eye", "发": "hair", "角": "body", "服": "body", "新規": "body", "腰饰": "accessory", "神之眼": "accessory", "肌": "skin", "裙摆": "body", "脸红": "overlay"}

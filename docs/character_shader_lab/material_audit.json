@@ -1,0 +1,1089 @@
+{
+	"material_classes_by_surface": {
+		"StandardMaterial3D": 19
+	},
+	"note": "Counts are per drawn surface; source GLB texture semantics require separate inspection.",
+	"source_glb": {
+		"extensions_used": [
+			"VRMC_vrm",
+			"VRMC_springBone"
+		],
+		"images": [
+			{
+				"embedded": true,
+				"mime_type": "image/png",
+				"name": "面"
+			},
+			{
+				"embedded": true,
+				"mime_type": "image/png",
+				"name": "发"
+			},
+			{
+				"embedded": true,
+				"mime_type": "image/png",
+				"name": "服"
+			},
+			{
+				"embedded": true,
+				"mime_type": "image/png",
+				"name": "肌"
+			},
+			{
+				"embedded": true,
+				"mime_type": "image/png",
+				"name": "表情"
+			}
+		],
+		"mask_conclusion": "No named SDF/ILM/mask image or declared MToon extension. No custom packed-channel semantics supplied; C0 does not assume any.",
+		"materials": [
+			{
+				"alpha": "BLEND",
+				"extensions": [],
+				"name": "面1",
+				"pbr": {
+					"baseColorTexture": {
+						"index": 0.0
+					},
+					"metallicFactor": 0.0,
+					"roughnessFactor": 0.5
+				}
+			},
+			{
+				"alpha": "BLEND",
+				"extensions": [],
+				"name": "面2",
+				"pbr": {
+					"baseColorTexture": {
+						"index": 1.0
+					},
+					"metallicFactor": 0.0,
+					"roughnessFactor": 0.5
+				}
+			},
+			{
+				"alpha": "BLEND",
+				"extensions": [],
+				"name": "睫",
+				"pbr": {
+					"baseColorTexture": {
+						"index": 2.0
+					},
+					"metallicFactor": 0.0,
+					"roughnessFactor": 0.5
+				}
+			},
+			{
+				"alpha": "BLEND",
+				"extensions": [],
+				"name": "二重",
+				"pbr": {
+					"baseColorTexture": {
+						"index": 3.0
+					},
+					"metallicFactor": 0.0,
+					"roughnessFactor": 0.5
+				}
+			},
+			{
+				"alpha": "BLEND",
+				"extensions": [],
+				"name": "眉",
+				"pbr": {
+					"baseColorTexture": {
+						"index": 4.0
+					},
+					"metallicFactor": 0.0,
+					"roughnessFactor": 0.5
+				}
+			},
+			{
+				"alpha": "BLEND",
+				"extensions": [],
+				"name": "目",
+				"pbr": {
+					"baseColorTexture": {
+						"index": 5.0
+					},
+					"metallicFactor": 0.0,
+					"roughnessFactor": 0.5
+				}
+			},
+			{
+				"alpha": "BLEND",
+				"extensions": [],
+				"name": "目星",
+				"pbr": {
+					"baseColorTexture": {
+						"index": 6.0
+					},
+					"metallicFactor": 0.0,
+					"roughnessFactor": 0.5
+				}
+			},
+			{
+				"alpha": "BLEND",
+				"extensions": [],
+				"name": "口舌",
+				"pbr": {
+					"baseColorTexture": {
+						"index": 7.0
+					},
+					"metallicFactor": 0.0,
+					"roughnessFactor": 0.5
+				}
+			},
+			{
+				"alpha": "BLEND",
+				"extensions": [],
+				"name": "齿",
+				"pbr": {
+					"baseColorTexture": {
+						"index": 8.0
+					},
+					"metallicFactor": 0.0,
+					"roughnessFactor": 0.5
+				}
+			},
+			{
+				"alpha": "BLEND",
+				"extensions": [],
+				"name": "白目",
+				"pbr": {
+					"baseColorTexture": {
+						"index": 9.0
+					},
+					"metallicFactor": 0.0,
+					"roughnessFactor": 0.5
+				}
+			},
+			{
+				"alpha": "BLEND",
+				"extensions": [],
+				"name": "发",
+				"pbr": {
+					"baseColorTexture": {
+						"index": 10.0
+					},
+					"metallicFactor": 0.0,
+					"roughnessFactor": 0.5
+				}
+			},
+			{
+				"alpha": "BLEND",
+				"extensions": [],
+				"name": "角",
+				"pbr": {
+					"baseColorTexture": {
+						"index": 11.0
+					},
+					"metallicFactor": 0.0,
+					"roughnessFactor": 0.5
+				}
+			},
+			{
+				"alpha": "BLEND",
+				"extensions": [],
+				"name": "服",
+				"pbr": {
+					"baseColorTexture": {
+						"index": 12.0
+					},
+					"metallicFactor": 0.0,
+					"roughnessFactor": 0.5
+				}
+			},
+			{
+				"alpha": "BLEND",
+				"extensions": [],
+				"name": "新規",
+				"pbr": {
+					"baseColorTexture": {
+						"index": 13.0
+					},
+					"metallicFactor": 0.0,
+					"roughnessFactor": 0.5
+				}
+			},
+			{
+				"alpha": "BLEND",
+				"extensions": [],
+				"name": "腰饰",
+				"pbr": {
+					"baseColorTexture": {
+						"index": 14.0
+					},
+					"metallicFactor": 0.0,
+					"roughnessFactor": 0.5
+				}
+			},
+			{
+				"alpha": "BLEND",
+				"extensions": [],
+				"name": "神之眼",
+				"pbr": {
+					"baseColorTexture": {
+						"index": 15.0
+					},
+					"metallicFactor": 0.0,
+					"roughnessFactor": 0.5
+				}
+			},
+			{
+				"alpha": "BLEND",
+				"extensions": [],
+				"name": "肌",
+				"pbr": {
+					"baseColorTexture": {
+						"index": 16.0
+					},
+					"metallicFactor": 0.0,
+					"roughnessFactor": 0.5
+				}
+			},
+			{
+				"alpha": "BLEND",
+				"extensions": [],
+				"name": "裙摆",
+				"pbr": {
+					"baseColorTexture": {
+						"index": 17.0
+					},
+					"metallicFactor": 0.0,
+					"roughnessFactor": 0.5
+				}
+			},
+			{
+				"alpha": "BLEND",
+				"extensions": [],
+				"name": "脸红",
+				"pbr": {
+					"baseColorTexture": {
+						"index": 18.0
+					},
+					"metallicFactor": 0.0,
+					"roughnessFactor": 0.5
+				}
+			}
+		]
+	},
+	"surfaces": [
+		{
+			"albedo": "ffffffff",
+			"alpha_scissor": 0.5,
+			"attributes": {
+				"bones": true,
+				"color": false,
+				"custom0": false,
+				"custom1": false,
+				"custom2": false,
+				"custom3": false,
+				"normal": true,
+				"tangent": true,
+				"uv": true,
+				"uv2": false,
+				"weights": true
+			},
+			"blend_shapes": 60,
+			"class": "StandardMaterial3D",
+			"cull_mode": 2,
+			"emission_enabled": false,
+			"format": 34359745559,
+			"material_name": "面1",
+			"mesh": "甘雨/甘雨_arm/GeneralSkeleton/甘雨_mesh",
+			"metallic": 0.0,
+			"next_pass": false,
+			"normal_enabled": false,
+			"roughness": 0.5,
+			"surface": 0,
+			"surface_name": "面1",
+			"texture": {
+				"height": 2048,
+				"name": "面",
+				"path": "res://assets/characters/ganyu/ganyu.vrm::ImageTexture_upblj",
+				"width": 2048
+			},
+			"texture_filter": 3,
+			"texture_repeat": true,
+			"transparency": 4,
+			"uv_offset": "(0.0, 0.0, 0.0)",
+			"uv_scale": "(1.0, 1.0, 1.0)",
+			"vertex_color_albedo": false,
+			"vertices": 897
+		},
+		{
+			"albedo": "ffffffff",
+			"alpha_scissor": 0.5,
+			"attributes": {
+				"bones": true,
+				"color": false,
+				"custom0": false,
+				"custom1": false,
+				"custom2": false,
+				"custom3": false,
+				"normal": true,
+				"tangent": true,
+				"uv": true,
+				"uv2": false,
+				"weights": true
+			},
+			"blend_shapes": 60,
+			"class": "StandardMaterial3D",
+			"cull_mode": 2,
+			"emission_enabled": false,
+			"format": 34359745559,
+			"material_name": "面2",
+			"mesh": "甘雨/甘雨_arm/GeneralSkeleton/甘雨_mesh",
+			"metallic": 0.0,
+			"next_pass": false,
+			"normal_enabled": false,
+			"roughness": 0.5,
+			"surface": 1,
+			"surface_name": "面2",
+			"texture": {
+				"height": 2048,
+				"name": "面",
+				"path": "res://assets/characters/ganyu/ganyu.vrm::ImageTexture_upblj",
+				"width": 2048
+			},
+			"texture_filter": 3,
+			"texture_repeat": true,
+			"transparency": 4,
+			"uv_offset": "(0.0, 0.0, 0.0)",
+			"uv_scale": "(1.0, 1.0, 1.0)",
+			"vertex_color_albedo": false,
+			"vertices": 88
+		},
+		{
+			"albedo": "ffffffff",
+			"alpha_scissor": 0.5,
+			"attributes": {
+				"bones": true,
+				"color": false,
+				"custom0": false,
+				"custom1": false,
+				"custom2": false,
+				"custom3": false,
+				"normal": true,
+				"tangent": true,
+				"uv": true,
+				"uv2": false,
+				"weights": true
+			},
+			"blend_shapes": 60,
+			"class": "StandardMaterial3D",
+			"cull_mode": 2,
+			"emission_enabled": false,
+			"format": 34359745559,
+			"material_name": "睫",
+			"mesh": "甘雨/甘雨_arm/GeneralSkeleton/甘雨_mesh",
+			"metallic": 0.0,
+			"next_pass": false,
+			"normal_enabled": false,
+			"roughness": 0.5,
+			"surface": 2,
+			"surface_name": "睫",
+			"texture": {
+				"height": 2048,
+				"name": "面",
+				"path": "res://assets/characters/ganyu/ganyu.vrm::ImageTexture_upblj",
+				"width": 2048
+			},
+			"texture_filter": 3,
+			"texture_repeat": true,
+			"transparency": 4,
+			"uv_offset": "(0.0, 0.0, 0.0)",
+			"uv_scale": "(1.0, 1.0, 1.0)",
+			"vertex_color_albedo": false,
+			"vertices": 574
+		},
+		{
+			"albedo": "ffffffff",
+			"alpha_scissor": 0.5,
+			"attributes": {
+				"bones": true,
+				"color": false,
+				"custom0": false,
+				"custom1": false,
+				"custom2": false,
+				"custom3": false,
+				"normal": true,
+				"tangent": true,
+				"uv": true,
+				"uv2": false,
+				"weights": true
+			},
+			"blend_shapes": 60,
+			"class": "StandardMaterial3D",
+			"cull_mode": 2,
+			"emission_enabled": false,
+			"format": 34359745559,
+			"material_name": "二重",
+			"mesh": "甘雨/甘雨_arm/GeneralSkeleton/甘雨_mesh",
+			"metallic": 0.0,
+			"next_pass": false,
+			"normal_enabled": false,
+			"roughness": 0.5,
+			"surface": 3,
+			"surface_name": "二重",
+			"texture": {
+				"height": 2048,
+				"name": "面",
+				"path": "res://assets/characters/ganyu/ganyu.vrm::ImageTexture_upblj",
+				"width": 2048
+			},
+			"texture_filter": 3,
+			"texture_repeat": true,
+			"transparency": 4,
+			"uv_offset": "(0.0, 0.0, 0.0)",
+			"uv_scale": "(1.0, 1.0, 1.0)",
+			"vertex_color_albedo": false,
+			"vertices": 72
+		},
+		{
+			"albedo": "ffffffff",
+			"alpha_scissor": 0.5,
+			"attributes": {
+				"bones": true,
+				"color": false,
+				"custom0": false,
+				"custom1": false,
+				"custom2": false,
+				"custom3": false,
+				"normal": true,
+				"tangent": true,
+				"uv": true,
+				"uv2": false,
+				"weights": true
+			},
+			"blend_shapes": 60,
+			"class": "StandardMaterial3D",
+			"cull_mode": 2,
+			"emission_enabled": false,
+			"format": 34359745559,
+			"material_name": "眉",
+			"mesh": "甘雨/甘雨_arm/GeneralSkeleton/甘雨_mesh",
+			"metallic": 0.0,
+			"next_pass": false,
+			"normal_enabled": false,
+			"roughness": 0.5,
+			"surface": 4,
+			"surface_name": "眉",
+			"texture": {
+				"height": 2048,
+				"name": "面",
+				"path": "res://assets/characters/ganyu/ganyu.vrm::ImageTexture_upblj",
+				"width": 2048
+			},
+			"texture_filter": 3,
+			"texture_repeat": true,
+			"transparency": 4,
+			"uv_offset": "(0.0, 0.0, 0.0)",
+			"uv_scale": "(1.0, 1.0, 1.0)",
+			"vertex_color_albedo": false,
+			"vertices": 48
+		},
+		{
+			"albedo": "ffffffff",
+			"alpha_scissor": 0.5,
+			"attributes": {
+				"bones": true,
+				"color": false,
+				"custom0": false,
+				"custom1": false,
+				"custom2": false,
+				"custom3": false,
+				"normal": true,
+				"tangent": true,
+				"uv": true,
+				"uv2": false,
+				"weights": true
+			},
+			"blend_shapes": 60,
+			"class": "StandardMaterial3D",
+			"cull_mode": 2,
+			"emission_enabled": false,
+			"format": 34359745559,
+			"material_name": "目",
+			"mesh": "甘雨/甘雨_arm/GeneralSkeleton/甘雨_mesh",
+			"metallic": 0.0,
+			"next_pass": false,
+			"normal_enabled": false,
+			"roughness": 0.5,
+			"surface": 5,
+			"surface_name": "目",
+			"texture": {
+				"height": 2048,
+				"name": "发",
+				"path": "res://assets/characters/ganyu/ganyu.vrm::ImageTexture_t1lx0",
+				"width": 2048
+			},
+			"texture_filter": 3,
+			"texture_repeat": true,
+			"transparency": 4,
+			"uv_offset": "(0.0, 0.0, 0.0)",
+			"uv_scale": "(1.0, 1.0, 1.0)",
+			"vertex_color_albedo": false,
+			"vertices": 158
+		},
+		{
+			"albedo": "ffffffff",
+			"alpha_scissor": 0.5,
+			"attributes": {
+				"bones": true,
+				"color": false,
+				"custom0": false,
+				"custom1": false,
+				"custom2": false,
+				"custom3": false,
+				"normal": true,
+				"tangent": true,
+				"uv": true,
+				"uv2": false,
+				"weights": true
+			},
+			"blend_shapes": 60,
+			"class": "StandardMaterial3D",
+			"cull_mode": 2,
+			"emission_enabled": false,
+			"format": 34359745559,
+			"material_name": "目星",
+			"mesh": "甘雨/甘雨_arm/GeneralSkeleton/甘雨_mesh",
+			"metallic": 0.0,
+			"next_pass": false,
+			"normal_enabled": false,
+			"roughness": 0.5,
+			"surface": 6,
+			"surface_name": "目星",
+			"texture": {
+				"height": 2048,
+				"name": "面",
+				"path": "res://assets/characters/ganyu/ganyu.vrm::ImageTexture_upblj",
+				"width": 2048
+			},
+			"texture_filter": 3,
+			"texture_repeat": true,
+			"transparency": 4,
+			"uv_offset": "(0.0, 0.0, 0.0)",
+			"uv_scale": "(1.0, 1.0, 1.0)",
+			"vertex_color_albedo": false,
+			"vertices": 98
+		},
+		{
+			"albedo": "ffffffff",
+			"alpha_scissor": 0.5,
+			"attributes": {
+				"bones": true,
+				"color": false,
+				"custom0": false,
+				"custom1": false,
+				"custom2": false,
+				"custom3": false,
+				"normal": true,
+				"tangent": true,
+				"uv": true,
+				"uv2": false,
+				"weights": true
+			},
+			"blend_shapes": 60,
+			"class": "StandardMaterial3D",
+			"cull_mode": 2,
+			"emission_enabled": false,
+			"format": 34359745559,
+			"material_name": "口舌",
+			"mesh": "甘雨/甘雨_arm/GeneralSkeleton/甘雨_mesh",
+			"metallic": 0.0,
+			"next_pass": false,
+			"normal_enabled": false,
+			"roughness": 0.5,
+			"surface": 7,
+			"surface_name": "口舌",
+			"texture": {
+				"height": 2048,
+				"name": "面",
+				"path": "res://assets/characters/ganyu/ganyu.vrm::ImageTexture_upblj",
+				"width": 2048
+			},
+			"texture_filter": 3,
+			"texture_repeat": true,
+			"transparency": 4,
+			"uv_offset": "(0.0, 0.0, 0.0)",
+			"uv_scale": "(1.0, 1.0, 1.0)",
+			"vertex_color_albedo": false,
+			"vertices": 203
+		},
+		{
+			"albedo": "ffffffff",
+			"alpha_scissor": 0.5,
+			"attributes": {
+				"bones": true,
+				"color": false,
+				"custom0": false,
+				"custom1": false,
+				"custom2": false,
+				"custom3": false,
+				"normal": true,
+				"tangent": true,
+				"uv": true,
+				"uv2": false,
+				"weights": true
+			},
+			"blend_shapes": 60,
+			"class": "StandardMaterial3D",
+			"cull_mode": 2,
+			"emission_enabled": false,
+			"format": 34359745559,
+			"material_name": "齿",
+			"mesh": "甘雨/甘雨_arm/GeneralSkeleton/甘雨_mesh",
+			"metallic": 0.0,
+			"next_pass": false,
+			"normal_enabled": false,
+			"roughness": 0.5,
+			"surface": 8,
+			"surface_name": "齿",
+			"texture": {
+				"height": 2048,
+				"name": "面",
+				"path": "res://assets/characters/ganyu/ganyu.vrm::ImageTexture_upblj",
+				"width": 2048
+			},
+			"texture_filter": 3,
+			"texture_repeat": true,
+			"transparency": 4,
+			"uv_offset": "(0.0, 0.0, 0.0)",
+			"uv_scale": "(1.0, 1.0, 1.0)",
+			"vertex_color_albedo": false,
+			"vertices": 120
+		},
+		{
+			"albedo": "ffffffff",
+			"alpha_scissor": 0.5,
+			"attributes": {
+				"bones": true,
+				"color": false,
+				"custom0": false,
+				"custom1": false,
+				"custom2": false,
+				"custom3": false,
+				"normal": true,
+				"tangent": true,
+				"uv": true,
+				"uv2": false,
+				"weights": true
+			},
+			"blend_shapes": 60,
+			"class": "StandardMaterial3D",
+			"cull_mode": 2,
+			"emission_enabled": false,
+			"format": 34359745559,
+			"material_name": "白目",
+			"mesh": "甘雨/甘雨_arm/GeneralSkeleton/甘雨_mesh",
+			"metallic": 0.0,
+			"next_pass": false,
+			"normal_enabled": false,
+			"roughness": 0.5,
+			"surface": 9,
+			"surface_name": "白目",
+			"texture": {
+				"height": 2048,
+				"name": "面",
+				"path": "res://assets/characters/ganyu/ganyu.vrm::ImageTexture_upblj",
+				"width": 2048
+			},
+			"texture_filter": 3,
+			"texture_repeat": true,
+			"transparency": 4,
+			"uv_offset": "(0.0, 0.0, 0.0)",
+			"uv_scale": "(1.0, 1.0, 1.0)",
+			"vertex_color_albedo": false,
+			"vertices": 102
+		},
+		{
+			"albedo": "ffffffff",
+			"alpha_scissor": 0.5,
+			"attributes": {
+				"bones": true,
+				"color": false,
+				"custom0": false,
+				"custom1": false,
+				"custom2": false,
+				"custom3": false,
+				"normal": true,
+				"tangent": true,
+				"uv": true,
+				"uv2": false,
+				"weights": true
+			},
+			"blend_shapes": 60,
+			"class": "StandardMaterial3D",
+			"cull_mode": 2,
+			"emission_enabled": false,
+			"format": 34359745559,
+			"material_name": "发",
+			"mesh": "甘雨/甘雨_arm/GeneralSkeleton/甘雨_mesh",
+			"metallic": 0.0,
+			"next_pass": false,
+			"normal_enabled": false,
+			"roughness": 0.5,
+			"surface": 10,
+			"surface_name": "发",
+			"texture": {
+				"height": 2048,
+				"name": "发",
+				"path": "res://assets/characters/ganyu/ganyu.vrm::ImageTexture_t1lx0",
+				"width": 2048
+			},
+			"texture_filter": 3,
+			"texture_repeat": true,
+			"transparency": 4,
+			"uv_offset": "(0.0, 0.0, 0.0)",
+			"uv_scale": "(1.0, 1.0, 1.0)",
+			"vertex_color_albedo": false,
+			"vertices": 2703
+		},
+		{
+			"albedo": "ffffffff",
+			"alpha_scissor": 0.5,
+			"attributes": {
+				"bones": true,
+				"color": false,
+				"custom0": false,
+				"custom1": false,
+				"custom2": false,
+				"custom3": false,
+				"normal": true,
+				"tangent": true,
+				"uv": true,
+				"uv2": false,
+				"weights": true
+			},
+			"blend_shapes": 60,
+			"class": "StandardMaterial3D",
+			"cull_mode": 2,
+			"emission_enabled": false,
+			"format": 34359745559,
+			"material_name": "角",
+			"mesh": "甘雨/甘雨_arm/GeneralSkeleton/甘雨_mesh",
+			"metallic": 0.0,
+			"next_pass": false,
+			"normal_enabled": false,
+			"roughness": 0.5,
+			"surface": 11,
+			"surface_name": "角",
+			"texture": {
+				"height": 2048,
+				"name": "发",
+				"path": "res://assets/characters/ganyu/ganyu.vrm::ImageTexture_t1lx0",
+				"width": 2048
+			},
+			"texture_filter": 3,
+			"texture_repeat": true,
+			"transparency": 4,
+			"uv_offset": "(0.0, 0.0, 0.0)",
+			"uv_scale": "(1.0, 1.0, 1.0)",
+			"vertex_color_albedo": false,
+			"vertices": 236
+		},
+		{
+			"albedo": "ffffffff",
+			"alpha_scissor": 0.5,
+			"attributes": {
+				"bones": true,
+				"color": false,
+				"custom0": false,
+				"custom1": false,
+				"custom2": false,
+				"custom3": false,
+				"normal": true,
+				"tangent": true,
+				"uv": true,
+				"uv2": false,
+				"weights": true
+			},
+			"blend_shapes": 60,
+			"class": "StandardMaterial3D",
+			"cull_mode": 2,
+			"emission_enabled": false,
+			"format": 34359745559,
+			"material_name": "服",
+			"mesh": "甘雨/甘雨_arm/GeneralSkeleton/甘雨_mesh",
+			"metallic": 0.0,
+			"next_pass": false,
+			"normal_enabled": false,
+			"roughness": 0.5,
+			"surface": 12,
+			"surface_name": "服",
+			"texture": {
+				"height": 2048,
+				"name": "服",
+				"path": "res://assets/characters/ganyu/ganyu.vrm::ImageTexture_wku8x",
+				"width": 2048
+			},
+			"texture_filter": 3,
+			"texture_repeat": true,
+			"transparency": 4,
+			"uv_offset": "(0.0, 0.0, 0.0)",
+			"uv_scale": "(1.0, 1.0, 1.0)",
+			"vertex_color_albedo": false,
+			"vertices": 7469
+		},
+		{
+			"albedo": "ffffffff",
+			"alpha_scissor": 0.5,
+			"attributes": {
+				"bones": true,
+				"color": false,
+				"custom0": false,
+				"custom1": false,
+				"custom2": false,
+				"custom3": false,
+				"normal": true,
+				"tangent": true,
+				"uv": true,
+				"uv2": false,
+				"weights": true
+			},
+			"blend_shapes": 60,
+			"class": "StandardMaterial3D",
+			"cull_mode": 2,
+			"emission_enabled": false,
+			"format": 34359745559,
+			"material_name": "新規",
+			"mesh": "甘雨/甘雨_arm/GeneralSkeleton/甘雨_mesh",
+			"metallic": 0.0,
+			"next_pass": false,
+			"normal_enabled": false,
+			"roughness": 0.5,
+			"surface": 13,
+			"surface_name": "新規",
+			"texture": {
+				"height": 2048,
+				"name": "服",
+				"path": "res://assets/characters/ganyu/ganyu.vrm::ImageTexture_wku8x",
+				"width": 2048
+			},
+			"texture_filter": 3,
+			"texture_repeat": true,
+			"transparency": 4,
+			"uv_offset": "(0.0, 0.0, 0.0)",
+			"uv_scale": "(1.0, 1.0, 1.0)",
+			"vertex_color_albedo": false,
+			"vertices": 208
+		},
+		{
+			"albedo": "ffffffff",
+			"alpha_scissor": 0.5,
+			"attributes": {
+				"bones": true,
+				"color": false,
+				"custom0": false,
+				"custom1": false,
+				"custom2": false,
+				"custom3": false,
+				"normal": true,
+				"tangent": true,
+				"uv": true,
+				"uv2": false,
+				"weights": true
+			},
+			"blend_shapes": 60,
+			"class": "StandardMaterial3D",
+			"cull_mode": 2,
+			"emission_enabled": false,
+			"format": 34359745559,
+			"material_name": "腰饰",
+			"mesh": "甘雨/甘雨_arm/GeneralSkeleton/甘雨_mesh",
+			"metallic": 0.0,
+			"next_pass": false,
+			"normal_enabled": false,
+			"roughness": 0.5,
+			"surface": 14,
+			"surface_name": "腰饰",
+			"texture": {
+				"height": 2048,
+				"name": "服",
+				"path": "res://assets/characters/ganyu/ganyu.vrm::ImageTexture_wku8x",
+				"width": 2048
+			},
+			"texture_filter": 3,
+			"texture_repeat": true,
+			"transparency": 4,
+			"uv_offset": "(0.0, 0.0, 0.0)",
+			"uv_scale": "(1.0, 1.0, 1.0)",
+			"vertex_color_albedo": false,
+			"vertices": 1437
+		},
+		{
+			"albedo": "ffffffff",
+			"alpha_scissor": 0.5,
+			"attributes": {
+				"bones": true,
+				"color": false,
+				"custom0": false,
+				"custom1": false,
+				"custom2": false,
+				"custom3": false,
+				"normal": true,
+				"tangent": true,
+				"uv": true,
+				"uv2": false,
+				"weights": true
+			},
+			"blend_shapes": 60,
+			"class": "StandardMaterial3D",
+			"cull_mode": 2,
+			"emission_enabled": false,
+			"format": 34359745559,
+			"material_name": "神之眼",
+			"mesh": "甘雨/甘雨_arm/GeneralSkeleton/甘雨_mesh",
+			"metallic": 0.0,
+			"next_pass": false,
+			"normal_enabled": false,
+			"roughness": 0.5,
+			"surface": 15,
+			"surface_name": "神之眼",
+			"texture": {
+				"height": 2048,
+				"name": "服",
+				"path": "res://assets/characters/ganyu/ganyu.vrm::ImageTexture_wku8x",
+				"width": 2048
+			},
+			"texture_filter": 3,
+			"texture_repeat": true,
+			"transparency": 4,
+			"uv_offset": "(0.0, 0.0, 0.0)",
+			"uv_scale": "(1.0, 1.0, 1.0)",
+			"vertex_color_albedo": false,
+			"vertices": 32
+		},
+		{
+			"albedo": "ffffffff",
+			"alpha_scissor": 0.5,
+			"attributes": {
+				"bones": true,
+				"color": false,
+				"custom0": false,
+				"custom1": false,
+				"custom2": false,
+				"custom3": false,
+				"normal": true,
+				"tangent": true,
+				"uv": true,
+				"uv2": false,
+				"weights": true
+			},
+			"blend_shapes": 60,
+			"class": "StandardMaterial3D",
+			"cull_mode": 2,
+			"emission_enabled": false,
+			"format": 34359745559,
+			"material_name": "肌",
+			"mesh": "甘雨/甘雨_arm/GeneralSkeleton/甘雨_mesh",
+			"metallic": 0.0,
+			"next_pass": false,
+			"normal_enabled": false,
+			"roughness": 0.5,
+			"surface": 16,
+			"surface_name": "肌",
+			"texture": {
+				"height": 2048,
+				"name": "肌",
+				"path": "res://assets/characters/ganyu/ganyu.vrm::ImageTexture_i88fs",
+				"width": 2048
+			},
+			"texture_filter": 3,
+			"texture_repeat": true,
+			"transparency": 4,
+			"uv_offset": "(0.0, 0.0, 0.0)",
+			"uv_scale": "(1.0, 1.0, 1.0)",
+			"vertex_color_albedo": false,
+			"vertices": 766
+		},
+		{
+			"albedo": "ffffffff",
+			"alpha_scissor": 0.5,
+			"attributes": {
+				"bones": true,
+				"color": false,
+				"custom0": false,
+				"custom1": false,
+				"custom2": false,
+				"custom3": false,
+				"normal": true,
+				"tangent": true,
+				"uv": true,
+				"uv2": false,
+				"weights": true
+			},
+			"blend_shapes": 60,
+			"class": "StandardMaterial3D",
+			"cull_mode": 2,
+			"emission_enabled": false,
+			"format": 34359745559,
+			"material_name": "裙摆",
+			"mesh": "甘雨/甘雨_arm/GeneralSkeleton/甘雨_mesh",
+			"metallic": 0.0,
+			"next_pass": false,
+			"normal_enabled": false,
+			"roughness": 0.5,
+			"surface": 17,
+			"surface_name": "裙摆",
+			"texture": {
+				"height": 2048,
+				"name": "服",
+				"path": "res://assets/characters/ganyu/ganyu.vrm::ImageTexture_wku8x",
+				"width": 2048
+			},
+			"texture_filter": 3,
+			"texture_repeat": true,
+			"transparency": 4,
+			"uv_offset": "(0.0, 0.0, 0.0)",
+			"uv_scale": "(1.0, 1.0, 1.0)",
+			"vertex_color_albedo": false,
+			"vertices": 1091
+		},
+		{
+			"albedo": "ffffffff",
+			"alpha_scissor": 0.5,
+			"attributes": {
+				"bones": true,
+				"color": false,
+				"custom0": false,
+				"custom1": false,
+				"custom2": false,
+				"custom3": false,
+				"normal": true,
+				"tangent": true,
+				"uv": true,
+				"uv2": false,
+				"weights": true
+			},
+			"blend_shapes": 60,
+			"class": "StandardMaterial3D",
+			"cull_mode": 2,
+			"emission_enabled": false,
+			"format": 34359745559,
+			"material_name": "脸红",
+			"mesh": "甘雨/甘雨_arm/GeneralSkeleton/甘雨_mesh",
+			"metallic": 0.0,
+			"next_pass": false,
+			"normal_enabled": false,
+			"roughness": 0.5,
+			"surface": 18,
+			"surface_name": "脸红",
+			"texture": {
+				"height": 4096,
+				"name": "表情",
+				"path": "res://assets/characters/ganyu/ganyu.vrm::ImageTexture_se1e7",
+				"width": 4096
+			},
+			"texture_filter": 3,
+			"texture_repeat": true,
+			"transparency": 4,
+			"uv_offset": "(0.0, 0.0, 0.0)",
+			"uv_scale": "(1.0, 1.0, 1.0)",
+			"vertex_color_albedo": false,
+			"vertices": 48
+		}
+	]
+}

@@ -1,0 +1,45 @@
+{
+	"adapter": "NVIDIA GeForce RTX 5070 Ti",
+	"failures": [],
+	"passed": true,
+	"performance": [
+		{
+			"case": "upstream",
+			"draw_calls": 129.0,
+			"main_gpu_mean_ms": 0.421533333261808,
+			"main_gpu_p95_ms": 0.428000003099442,
+			"samples": 120
+		},
+		{
+			"case": "dry_extension",
+			"draw_calls": 129.0,
+			"main_gpu_mean_ms": 0.421558331449827,
+			"main_gpu_p95_ms": 0.426999986171722,
+			"samples": 120
+		},
+		{
+			"case": "fully_wet_extension",
+			"draw_calls": 129.0,
+			"main_gpu_mean_ms": 0.421816666424274,
+			"main_gpu_p95_ms": 0.428000003099442,
+			"samples": 120
+		}
+	],
+	"performance_conditions": {
+		"actor_count": 1,
+		"msaa": 2,
+		"resolution": "(1920.0, 1080.0)",
+		"uncapped": true,
+		"warmup_frames": 60,
+		"water_and_mirror_disabled": true,
+		"wet_case": "All height bands forced wet to exercise the full-body shader; state transitions are verified separately."
+	},
+	"wetness_cpu": {
+		"mean_us": 9.97333333333333,
+		"p95_us": 17.0,
+		"rays_per_query": 5,
+		"responsive_materials": 10,
+		"samples": 600,
+		"water_queries_hz": 15
+	}
+}

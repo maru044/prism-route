@@ -1,0 +1,52 @@
+{
+	"adapter": "",
+	"engine": {
+		"build": "official",
+		"hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+		"hex": 263938,
+		"major": 4,
+		"minor": 7,
+		"patch": 2,
+		"status": "stable",
+		"string": "4.7.2-stable (official)",
+		"timestamp": 0
+	},
+	"failures": [],
+	"logic": {
+		"instance_isolation": true,
+		"mapped_surfaces": 19,
+		"motion_clips": [
+			"A01",
+			"A05",
+			"A06",
+			"A25"
+		],
+		"msaa": "4x",
+		"regions": {
+			"二重": "eye",
+			"发": "hair",
+			"口舌": "eye",
+			"新規": "body",
+			"服": "body",
+			"白目": "eye",
+			"目": "eye",
+			"目星": "eye",
+			"眉": "eye",
+			"睫": "eye",
+			"神之眼": "accessory",
+			"肌": "skin",
+			"脸红": "overlay",
+			"腰饰": "accessory",
+			"裙摆": "body",
+			"角": "body",
+			"面1": "face",
+			"面2": "face",
+			"齿": "eye"
+		},
+		"restores_original_references": true,
+		"source_mesh_blend_shapes": 60,
+		"unknown_region_fallback": true
+	},
+	"passed": true,
+	"rendered": false
+}

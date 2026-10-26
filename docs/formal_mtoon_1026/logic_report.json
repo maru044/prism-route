@@ -1,0 +1,104 @@
+{
+	"adapter": "",
+	"export_resource_count": 180,
+	"failures": [],
+	"full_world": false,
+	"materials": [
+		{
+			"name": "面1",
+			"next_pass": false,
+			"shader": "res://shaders/characters/wet_mtoon_cull_off.gdshader"
+		},
+		{
+			"name": "面2",
+			"next_pass": false,
+			"shader": "res://shaders/characters/wet_mtoon_cull_off.gdshader"
+		},
+		{
+			"name": "睫",
+			"next_pass": false,
+			"shader": "res://addons/mtoon/mtoon_cull_off.gdshader"
+		},
+		{
+			"name": "二重",
+			"next_pass": false,
+			"shader": "res://addons/mtoon/mtoon_cull_off.gdshader"
+		},
+		{
+			"name": "眉",
+			"next_pass": false,
+			"shader": "res://addons/mtoon/mtoon_cull_off.gdshader"
+		},
+		{
+			"name": "目",
+			"next_pass": false,
+			"shader": "res://addons/mtoon/mtoon_cull_off.gdshader"
+		},
+		{
+			"name": "目星",
+			"next_pass": false,
+			"shader": "res://addons/mtoon/mtoon_cull_off.gdshader"
+		},
+		{
+			"name": "口舌",
+			"next_pass": false,
+			"shader": "res://addons/mtoon/mtoon_cull_off.gdshader"
+		},
+		{
+			"name": "齿",
+			"next_pass": false,
+			"shader": "res://addons/mtoon/mtoon_cull_off.gdshader"
+		},
+		{
+			"name": "白目",
+			"next_pass": false,
+			"shader": "res://addons/mtoon/mtoon_cull_off.gdshader"
+		},
+		{
+			"name": "发",
+			"next_pass": false,
+			"shader": "res://shaders/characters/wet_mtoon_cull_off.gdshader"
+		},
+		{
+			"name": "角",
+			"next_pass": false,
+			"shader": "res://shaders/characters/wet_mtoon_cull_off.gdshader"
+		},
+		{
+			"name": "服",
+			"next_pass": false,
+			"shader": "res://shaders/characters/wet_mtoon_cutout_cull_off.gdshader"
+		},
+		{
+			"name": "新規",
+			"next_pass": false,
+			"shader": "res://shaders/characters/wet_mtoon_cull_off.gdshader"
+		},
+		{
+			"name": "腰饰",
+			"next_pass": false,
+			"shader": "res://shaders/characters/wet_mtoon_cull_off.gdshader"
+		},
+		{
+			"name": "神之眼",
+			"next_pass": false,
+			"shader": "res://shaders/characters/wet_mtoon_cull_off.gdshader"
+		},
+		{
+			"name": "肌",
+			"next_pass": false,
+			"shader": "res://shaders/characters/wet_mtoon_cutout_cull_off.gdshader"
+		},
+		{
+			"name": "裙摆",
+			"next_pass": false,
+			"shader": "res://shaders/characters/wet_mtoon_cull_off.gdshader"
+		},
+		{
+			"name": "脸红",
+			"next_pass": false,
+			"shader": "res://shaders/characters/mtoon_prepass_cull_off.gdshader"
+		}
+	],
+	"passed": true
+}

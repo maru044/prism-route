@@ -1,8 +1,23 @@
 # Prism Route — world and vegetation prototype
 
+## Accepted character material: MToon, 2026-10-26
+
+F5 opens the current map directly with the accepted MToon appearance on all
+19 Ganyu surfaces (the reviewed option 2 / B). The formal HUD has no shader
+switcher or laboratory link. Source materials, animations and spring bones
+are preserved. See [the adoption and validation record](docs/CHARACTER_MTOON_1026.md).
+
+As of 2026-10-27, formal Ganyu materials use audited opaque/cutout paths so
+submerged parts receive the existing water absorption and scattering. Blush
+retains continuous transparency. See [the water integration record](docs/CHARACTER_WATER_1027.md).
+
+Local moisture and gradual drying are also active in F5. Immersed height bands
+retain restrained darkening and wet-film highlights, then dry over roughly 14 seconds.
+The dry appearance matches the accepted MToon baseline. See [wetness validation](docs/CHARACTER_WETNESS_1027.md).
+
 ## Current game entry: map 1021, 2026-10-22
 
-F5 opens `scenes/map_1021.tscn`, the current map with eight validation spawns,
+F5 opens `scenes/map_1021.tscn`, the current map with nine validation spawns,
 character / camper switching, fixed tree placement, predictive 3D grass streaming,
 and a transparent performance monitor at the bottom left. See the
 [scene and asset guide](assets/world/current_map_validation/README.md).

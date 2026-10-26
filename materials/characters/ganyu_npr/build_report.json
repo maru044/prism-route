@@ -1,0 +1,24 @@
+{
+  "size": 1024,
+  "source_geometry_sha256": "e5518fe17a836e1300db7b0177c87a67f57d06986b90c4a62a3c4afbe1ec8ff7",
+  "source_atlas_sha256": "42e6603ebe9f7f770e7e35fffb77f3268a70090fdef91c45b44f9fce04c53600",
+  "face_channels": {
+    "R": "+head-right light SDF",
+    "G": "-head-right light SDF",
+    "B": "face UV coverage",
+    "A": "1"
+  },
+  "body_channels": {
+    "R": "authored gold selection",
+    "G": "white cloth selection",
+    "B": "reserved"
+  },
+  "face_covered_pixels": 516228,
+  "face_sdf_range": [
+    0.04107782244682312,
+    0.9219136834144592
+  ],
+  "gold_fraction": 0.20496749877929688,
+  "white_cloth_fraction": 0.1469573974609375,
+  "method": "Authored side-light silhouette -> signed Euclidean distance -> rasterize through actual face UV; dual light sides avoid assuming mirrored UV islands."
+}

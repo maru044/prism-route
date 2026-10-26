@@ -1,5 +1,7 @@
 extends CharacterBody3D
 const SURFACE_MOTION := preload("res://scripts/surface_motion.gd")
+const MTOON_MATERIALS := preload("res://scripts/characters/mtoon_materials.gd")
+const WETNESS := preload("res://scripts/characters/character_wetness.gd")
 ## Basic camera-relative world controller using Ganyu's reviewed baked clips.
 
 const MOTIONS := {"idle": "A01", "walk": "A05", "run": "A06", "jump_start": "A18", "jump_air": "A19", "jump_land": "A20", "greet": "A25"}
@@ -9,6 +11,7 @@ const MOTION_LABELS := {"idle": "待机", "walk": "步行", "run": "奔跑", "ju
 @export var jump_speed := 7.0
 @export var gravity_strength := 22.0
 @export var surface_step_height := 0.0
+@export var use_mtoon := true
 @onready var visual: Node3D = $Visual
 @onready var character: Node3D = $Visual/GanyuModel
 @onready var camera_pivot: Node3D = $CameraPivot
@@ -27,8 +30,17 @@ var jump_requested := false
 var jump_time := 1.0
 var landing_time := 0.0
 var greeting := false
+var mtoon_report: Dictionary = {}
+var wetness: Node
 
 func _ready() -> void:
+	if use_mtoon:
+		mtoon_report = MTOON_MATERIALS.apply(character)
+		if not mtoon_report.skipped.is_empty(): push_warning("MToon kept unmapped source materials: " + str(mtoon_report.skipped))
+		wetness = WETNESS.new()
+		wetness.name = "CharacterWetness"
+		wetness.bind(self,character)
+		add_child(wetness)
 	floor_snap_length = 0.45
 	floor_max_angle = deg_to_rad(48)
 	respawn_transform = global_transform
@@ -152,6 +164,7 @@ func set_spawn(point: Vector3, heading: float) -> void:
 	_reset_springs.call_deferred()
 
 func reset_to_respawn() -> void:
+	if wetness != null: wetness.reset()
 	set_spawn(respawn_transform.origin, respawn_transform.basis.get_euler().y)
 
 func _reset_springs() -> void:

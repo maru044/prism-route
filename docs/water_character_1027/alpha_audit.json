@@ -1,0 +1,233 @@
+{
+  "source_geometry_sha256": "e5518fe17a836e1300db7b0177c87a67f57d06986b90c4a62a3c4afbe1ec8ff7",
+  "method": "Union of UV triangle rasterization at source texture resolution; inclusive texel edges. Material factor alpha is 1.0 for all 19 source surfaces. Fractional edge texels are not automatically classified as translucent fabric.",
+  "textures": {
+    "面": {
+      "sha256": "d83872227765cf3df54ea9d0774ea21d4dc30e051128e94f0f10b2e76a0cfa61",
+      "size": [
+        2048,
+        2048
+      ]
+    },
+    "发": {
+      "sha256": "c3efb3868a0bba2b89bc0c72503a0982d816ea076779ab7555bd28dcdb4a9854",
+      "size": [
+        2048,
+        2048
+      ]
+    },
+    "服": {
+      "sha256": "42e6603ebe9f7f770e7e35fffb77f3268a70090fdef91c45b44f9fce04c53600",
+      "size": [
+        2048,
+        2048
+      ]
+    },
+    "肌": {
+      "sha256": "965afede3c8b20339f20c542a4b12b36646cb1ff03bf3ab0448408c3da8ffc0d",
+      "size": [
+        2048,
+        2048
+      ]
+    },
+    "表情": {
+      "sha256": "bf74d2343a921fd08e8edafe98df6be4232f60d321fab95ef015fa3fc4bfd0b6",
+      "size": [
+        4096,
+        4096
+      ]
+    }
+  },
+  "surfaces": [
+    {
+      "name": "面1",
+      "texture": "面",
+      "covered_texels": 2057319,
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "opaque_fraction": 1.0
+    },
+    {
+      "name": "面2",
+      "texture": "面",
+      "covered_texels": 10660,
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "opaque_fraction": 1.0
+    },
+    {
+      "name": "睫",
+      "texture": "面",
+      "covered_texels": 24869,
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "opaque_fraction": 1.0
+    },
+    {
+      "name": "二重",
+      "texture": "面",
+      "covered_texels": 5953,
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "opaque_fraction": 1.0
+    },
+    {
+      "name": "眉",
+      "texture": "面",
+      "covered_texels": 14482,
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "opaque_fraction": 1.0
+    },
+    {
+      "name": "目",
+      "texture": "发",
+      "covered_texels": 60702,
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "opaque_fraction": 1.0
+    },
+    {
+      "name": "目星",
+      "texture": "面",
+      "covered_texels": 905,
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "opaque_fraction": 1.0
+    },
+    {
+      "name": "口舌",
+      "texture": "面",
+      "covered_texels": 56420,
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "opaque_fraction": 1.0
+    },
+    {
+      "name": "齿",
+      "texture": "面",
+      "covered_texels": 17152,
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "opaque_fraction": 1.0
+    },
+    {
+      "name": "白目",
+      "texture": "面",
+      "covered_texels": 40209,
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "opaque_fraction": 1.0
+    },
+    {
+      "name": "发",
+      "texture": "发",
+      "covered_texels": 2083941,
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "opaque_fraction": 1.0
+    },
+    {
+      "name": "角",
+      "texture": "发",
+      "covered_texels": 250249,
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "opaque_fraction": 1.0
+    },
+    {
+      "name": "服",
+      "texture": "服",
+      "covered_texels": 1739609,
+      "min_alpha": 0,
+      "max_alpha": 255,
+      "transparent_fraction": 0.11529142468221307,
+      "partial_fraction": 0.0006921095487549214,
+      "opaque_fraction": 0.884016465769032
+    },
+    {
+      "name": "新規",
+      "texture": "服",
+      "covered_texels": 57422,
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "opaque_fraction": 1.0
+    },
+    {
+      "name": "腰饰",
+      "texture": "服",
+      "covered_texels": 126036,
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "opaque_fraction": 1.0
+    },
+    {
+      "name": "神之眼",
+      "texture": "服",
+      "covered_texels": 13285,
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "opaque_fraction": 1.0
+    },
+    {
+      "name": "肌",
+      "texture": "肌",
+      "covered_texels": 236067,
+      "min_alpha": 0,
+      "max_alpha": 255,
+      "transparent_fraction": 0.14537821889548305,
+      "partial_fraction": 0.005023997424460005,
+      "opaque_fraction": 0.8495977836800569
+    },
+    {
+      "name": "裙摆",
+      "texture": "服",
+      "covered_texels": 637099,
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "opaque_fraction": 1.0
+    },
+    {
+      "name": "脸红",
+      "texture": "表情",
+      "covered_texels": 387686,
+      "min_alpha": 0,
+      "max_alpha": 80,
+      "transparent_fraction": 0.3512430162554232,
+      "partial_fraction": 0.6487569837445768,
+      "opaque_fraction": 0.0
+    }
+  ]
+}
