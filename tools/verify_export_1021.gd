@@ -25,6 +25,9 @@ func run() -> void:
 	if not failures.is_empty():finish({});return
 	world=get_tree().current_scene
 	while not world.test_ready: await get_tree().process_frame
+	check(world.water_manager!=null,"Default water manager missing in release")
+	if world.water_manager!=null:
+		check(world.water_manager.style==2 and world.water_manager.bodies.size()==7,"Formal planar water is not configured in release")
 	var stream=world.vegetation.volume_streamer
 	check(stream.store.last_error.is_empty(),stream.store.last_error)
 	check(stream.store.manifest.get("complete",false),"Complete bake did not open in release")

@@ -7,7 +7,9 @@ const FOLIAGE_STYLE := preload("res://scripts/foliage_style.gd")
 const GRASS_WIND := preload("res://scripts/grass_wind_world.gd")
 const MEADOW_PALETTE := preload("res://scripts/meadow_palette.gd")
 const SKY := preload("res://assets/environment/sky/fresh_cumulus_sky.tres")
+const WATER_MANAGER := preload("res://scripts/water/water_manager.gd")
 const ACTOR_SOLID_LAYER := 32
+var water_manager
 # CAD north (+Y) exports to Godot -Z; azimuth runs clockwise from north.
 const SUN_AZIMUTH_DEGREES := 135.0
 # Measured bright horizon of rosendal_park_sunset_puresky_4k.exr (u ~= .6094).
@@ -74,12 +76,48 @@ func _ready() -> void:
 	_sync_meadow_color()
 	foliage_style=FOLIAGE_STYLE.new()
 	foliage_style.bind_streamer(vegetation)
+	_initialize_water()
 	tree_placement_report=JSON.parse_string(FileAccess.get_file_as_string(ASSETS+"tree_layout_metadata.json"))
 	_sync_actor_controls()
 	test_ready=true
 	print("CURRENT_MAP_READY objects=%d triangles=%d spawns=%d trees=%d" % [metadata.objects,metadata.triangles,resolved_spawns.size(),vegetation.tree_instance_count])
 	if "--verify-export" in OS.get_cmdline_user_args():
 		get_tree().root.call_deferred("add_child",load("res://tools/verify_export_1021.gd").new())
+
+func _initialize_water() -> void:
+	water_manager=WATER_MANAGER.new()
+	water_manager.name="WaterManager";add_child(water_manager)
+	var environment: Environment
+	for node in get_children():
+		if node is WorldEnvironment:environment=node.environment;break
+	water_manager.initialize(environment,func():return active_actor(),func():return get_viewport().get_camera_3d())
+	water_manager.wind_source=grass_wind
+	var byid: Dictionary={}
+	for row: Dictionary in metadata.object_records:byid[row.id]=row
+	for mesh: MeshInstance3D in model.find_children("*","MeshInstance3D",true,false):
+		var id:=str(mesh.name).get_slice("_",1)
+		var kind: String=byid.get(id,{}).get("kind","")
+		if kind=="Water":water_manager.register_water(mesh,id)
+		elif kind!="Sand":
+			var color:=Color("91a46b") if kind=="Terrain" else (Color("3b4248") if kind=="Road" else Color("e8e4da"))
+			water_manager.register_reflector(mesh,color)
+	water_manager.register_tree_streamer(vegetation)
+
+func _water_review_view(which: int) -> void:
+	if which==0:return
+	if which==3:
+		if not character_mode:await set_character_mode(true)
+		free_mode=false;overview_mode=false
+		var p:=Vector3(1070-1450,-.30,1150-470)
+		var q:=PhysicsRayQueryParameters3D.create(p+Vector3.UP*.35,p+Vector3.DOWN,ACTOR_SOLID_LAYER)
+		var hit:=get_world_3d().direct_space_state.intersect_ray(q)
+		if not hit.is_empty():character.set_spawn(hit.position+Vector3.UP*.04,PI)
+		_sync_actor_controls()
+	else:
+		set_free(true)
+		camera.position=Vector3(1127.777-1450,2.4,1150-155.555) if which==1 else Vector3(844.444-1450,2.2,1150-1038.888)
+		camera.look_at(Vector3(1350-1450,40,1150-250) if which==1 else Vector3(900-1450,24,1150-850))
+	water_manager.interaction.reset()
 
 func _sync_meadow_color() -> void:
 	MEADOW_PALETTE.apply_grass(vegetation.grass_material)

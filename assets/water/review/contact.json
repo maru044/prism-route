@@ -1,0 +1,10 @@
+{
+  "contact": {
+    "emitted": 14,
+    "events": 13,
+    "grounded": true,
+    "position": "(-6.400213, -0.161066, 4.006711)"
+  },
+  "failures": [],
+  "passed": true
+}

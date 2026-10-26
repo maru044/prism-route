@@ -1,0 +1,139 @@
+{
+  "bottom_changed_pixels": 335519,
+  "contact": {
+    "emitted": 14,
+    "events": 13,
+    "grounded": true,
+    "position": "(-6.400213, -0.161066, 4.006711)"
+  },
+  "driver": "d3d12",
+  "failures": [],
+  "gpu_adapter": "NVIDIA GeForce RTX 5070 Ti",
+  "msaa": 2,
+  "passed": true,
+  "performance": [
+    {
+      "case": "original",
+      "main_gpu_ms": 0.218561108327574,
+      "main_p95_ms": 0.222000002861023,
+      "metrics": {
+        "bodies": 2,
+        "clock": 11.1564836666666,
+        "emitted": 15,
+        "events": 0,
+        "reflection_active": false,
+        "reflection_gpu_ms": 0.0,
+        "reflection_objects": 0,
+        "reflection_size": [
+          800,
+          450
+        ],
+        "reflection_weight": 0.0,
+        "style": 0,
+        "wind": 0.0
+      },
+      "reflection_gpu_ms": 0.0,
+      "reflection_p95_ms": 0.0,
+      "samples": 180,
+      "wall_p95_ms": 0.637
+    },
+    {
+      "case": "sky",
+      "main_gpu_ms": 0.313149999413225,
+      "main_p95_ms": 0.317999988794327,
+      "metrics": {
+        "bodies": 2,
+        "clock": 11.8016616666665,
+        "emitted": 15,
+        "events": 0,
+        "reflection_active": false,
+        "reflection_gpu_ms": 0.0,
+        "reflection_objects": 0,
+        "reflection_size": [
+          800,
+          450
+        ],
+        "reflection_weight": 0.0,
+        "style": 1,
+        "wind": 0.0
+      },
+      "reflection_gpu_ms": 0.0,
+      "reflection_p95_ms": 0.0,
+      "samples": 180,
+      "wall_p95_ms": 0.842
+    },
+    {
+      "case": "planar",
+      "main_gpu_ms": 0.314083333975739,
+      "main_p95_ms": 0.317999988794327,
+      "metrics": {
+        "bodies": 2,
+        "clock": 12.4768006666665,
+        "emitted": 15,
+        "events": 0,
+        "reflection_active": true,
+        "reflection_gpu_ms": 0.046000000089407,
+        "reflection_objects": 36,
+        "reflection_size": [
+          800,
+          450
+        ],
+        "reflection_weight": 1.0,
+        "style": 2,
+        "wind": 0.0
+      },
+      "reflection_gpu_ms": 0.0455666675128871,
+      "reflection_p95_ms": 0.0469999983906746,
+      "samples": 180,
+      "wall_p95_ms": 0.795
+    },
+    {
+      "case": "ssr_opaque",
+      "main_gpu_ms": 0.348772220313549,
+      "main_p95_ms": 0.354000002145767,
+      "metrics": {
+        "bodies": 2,
+        "clock": 13.1259956666665,
+        "emitted": 15,
+        "events": 0,
+        "reflection_active": false,
+        "reflection_gpu_ms": 0.0,
+        "reflection_objects": 0,
+        "reflection_size": [
+          800,
+          450
+        ],
+        "reflection_weight": 0.0,
+        "style": 3,
+        "wind": 0.0
+      },
+      "reflection_gpu_ms": 0.0,
+      "reflection_p95_ms": 0.0,
+      "samples": 180,
+      "wall_p95_ms": 0.751
+    }
+  ],
+  "reflection_changed_pixels": 52780,
+  "resolution": [
+    1600,
+    900
+  ],
+  "ripple_changed_pixels": 6075,
+  "sky_calibration_changed_pixels": 40504,
+  "strong_wind": {
+    "bodies": 2,
+    "clock": 17.611795,
+    "emitted": 15,
+    "events": 0,
+    "reflection_active": true,
+    "reflection_gpu_ms": 0.046000000089407,
+    "reflection_objects": 36,
+    "reflection_size": [
+      800,
+      450
+    ],
+    "reflection_weight": 1.0,
+    "style": 2,
+    "wind": 1.0
+  }
+}

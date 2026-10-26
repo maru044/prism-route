@@ -3,7 +3,7 @@ extends SceneTree
 const ROOTS := [
 	"res://scenes/map_1021.tscn", "res://assets/world/current_map_validation/current_region.glb",
 	"res://assets/world/current_map_validation/landscape_mask.res", "res://assets/world/current_map_validation/landscape.gdshader",
-	"res://assets/world/cliff_b_test/architecture.tres", "res://assets/world/map_1012_test/water.gdshader",
+	"res://assets/world/cliff_b_test/architecture.tres", "res://scripts/water/water_manager.gd",
 	"res://addons/vrm/bin/vrm_physics.gdextension", "res://tools/verify_export_1021.gd"]
 func _initialize() -> void: call_deferred("run")
 func run() -> void:
@@ -53,7 +53,7 @@ func run() -> void:
 			queue.append(resolved)
 	var files:=PackedStringArray(visited.keys());files.sort()
 	config.set_value("preset.0","export_files",files)
-	var exclusions: PackedStringArray=["docs/*","screenshots/*","archive/*","experiments/*","assets/world/current_map_validation/review/*","assets/world/current_map_validation/grass_bake/manifest_part_*.json","*.3dm","*.3dmbak","*.blend","*.blend1","*.TMP"]
+	var exclusions: PackedStringArray=["docs/*","screenshots/*","archive/*","experiments/*","assets/water/review/*","assets/world/current_map_validation/review/*","assets/world/current_map_validation/grass_bake/manifest_part_*.json","*.3dm","*.3dmbak","*.blend","*.blend1","*.TMP"]
 	var bake_root: String="res://assets/world/current_map_validation/grass_bake/"
 	var bake: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(bake_root+"manifest.json"))
 	for name in DirAccess.get_files_at(bake_root):
