@@ -1,0 +1,26 @@
+{
+  "art_target": {
+    "green_coverage_by_20_percent_height_from_top": [
+      0.915959747172322,
+      0.38942569406641264,
+      0.13863027869051966,
+      0.029272392600705854,
+      0.0
+    ],
+    "top_heavy_monotonic": true,
+    "bottom_20_percent_clear": true
+  },
+  "prototype_front": {
+    "green_coverage_by_20_percent_height_from_top": [
+      0.925029046125247,
+      0.37081445335192287,
+      0.16653305449053096,
+      0.03524747298710352,
+      0.0
+    ],
+    "top_heavy_monotonic": true,
+    "bottom_20_percent_clear": true
+  },
+  "implementation": "Independent flat leaf meshes with a three-solid-color shader; generated reference image appears only in an explicitly labelled UI reference view.",
+  "formal_map_modified_in_this_prototype_step": false
+}

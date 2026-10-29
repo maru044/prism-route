@@ -23,9 +23,9 @@
     1150,
     0
   ],
-  "objects": 202,
-  "triangles": 10350912,
-  "cad_object_count": 265,
+  "objects": 208,
+  "triangles": 10546371,
+  "cad_object_count": 233,
   "cad_geometry_and_attributes_unchanged": true,
   "object_records": [
     {
@@ -5096,6 +5096,156 @@
       "surface_role": "structure",
       "export_index_count": 51030,
       "source_index_count": 51030
+    },
+    {
+      "collision": true,
+      "kind": "Terrain",
+      "bounds": [
+        [
+          799.293701171875,
+          674.4475708007812,
+          -1.6123015880584717
+        ],
+        [
+          1159.5869140625,
+          1135.90771484375,
+          33.928096771240234
+        ]
+      ],
+      "id": "a26c788a-585d-4a98-befc-a6c7cc8083e7",
+      "offset": 194393808,
+      "vertex_count": 4170,
+      "layer": "手工地形",
+      "name": "UserAuthoredHill",
+      "index_count": 23463,
+      "surface_role": "plantable_host",
+      "export_index_count": 23463,
+      "source_index_count": 23463
+    },
+    {
+      "collision": true,
+      "kind": "Terrain",
+      "bounds": [
+        [
+          1775.0,
+          605.0,
+          13.914812088012695
+        ],
+        [
+          2155.0,
+          1255.0,
+          88.83271789550781
+        ]
+      ],
+      "id": "920c8a45-b23e-4260-9aab-86333f61b992",
+      "offset": 194537700,
+      "vertex_count": 24290,
+      "layer": "手工地形",
+      "name": "Macroterrain_01_EastLongRidge",
+      "index_count": 142938,
+      "surface_role": "plantable_host",
+      "export_index_count": 142938,
+      "source_index_count": 142938
+    },
+    {
+      "collision": true,
+      "kind": "Terrain",
+      "bounds": [
+        [
+          5.0,
+          695.0,
+          1.214900255203247
+        ],
+        [
+          275.0,
+          1315.0,
+          59.2132682800293
+        ]
+      ],
+      "id": "95094d17-bdb0-4407-bdca-d26ab1deaad7",
+      "offset": 195400932,
+      "vertex_count": 26175,
+      "layer": "手工地形",
+      "name": "Macroterrain_02_WestTwinRange",
+      "index_count": 154476,
+      "surface_role": "plantable_host",
+      "export_index_count": 154476,
+      "source_index_count": 154476
+    },
+    {
+      "collision": true,
+      "kind": "Terrain",
+      "bounds": [
+        [
+          1715.0,
+          -25.0,
+          58.992431640625
+        ],
+        [
+          1955.0,
+          455.0,
+          95.09900665283203
+        ]
+      ],
+      "id": "0280eafa-4058-40dd-8cf0-36b575adcb14",
+      "offset": 196332936,
+      "vertex_count": 13689,
+      "layer": "手工地形",
+      "name": "Macroterrain_03_SouthEastHighland",
+      "index_count": 80232,
+      "surface_role": "plantable_host",
+      "export_index_count": 80232,
+      "source_index_count": 80232
+    },
+    {
+      "collision": true,
+      "kind": "Terrain",
+      "bounds": [
+        [
+          335.0,
+          -405.0,
+          32.854164123535156
+        ],
+        [
+          625.0,
+          45.0,
+          60.186195373535156
+        ]
+      ],
+      "id": "0e79433e-80e9-48f1-ab77-3786fdc3819f",
+      "offset": 196818132,
+      "vertex_count": 17267,
+      "layer": "手工地形",
+      "name": "Macroterrain_04_SouthHeadland",
+      "index_count": 101226,
+      "surface_role": "plantable_host",
+      "export_index_count": 101226,
+      "source_index_count": 101226
+    },
+    {
+      "collision": true,
+      "kind": "Terrain",
+      "bounds": [
+        [
+          435.0,
+          455.0,
+          -0.7026209235191345
+        ],
+        [
+          845.0,
+          795.0,
+          45.507137298583984
+        ]
+      ],
+      "id": "b0a0f593-d5d4-40ae-b182-36858b4a653a",
+      "offset": 197430240,
+      "vertex_count": 14438,
+      "layer": "手工地形",
+      "name": "Macroterrain_05_CentralSaddle",
+      "index_count": 84042,
+      "surface_role": "plantable_host",
+      "export_index_count": 84042,
+      "source_index_count": 84042
     }
   ],
   "spawns": [
@@ -5306,10 +5456,19 @@
   ],
   "mesh_tolerance_m": 0.04,
   "subd_export_level": 2,
-  "mesh_sha256": "fdae80e03e06ed572843a59acaceb65cf7d05df172ab3bb4e7566f528395ad3a",
+  "mesh_sha256": "9539169f439699fb2112d7751b0728d0170ae4db0f8561a9235abf5b3522a0cb",
   "validation": {
-    "upward_triangle_samples": 619541,
-    "weighted_upward_grass_fraction": 0.9880328178405762,
+    "upward_triangle_samples": 626541,
+    "weighted_upward_grass_fraction": 0.9884937405586243,
     "note": "Area-weighted triangle sampling, with overlapping source components; not an exact land-union percentage."
+  },
+  "static_features": {
+    "initial_ruin_1029": {
+      "manifest": "res://assets/world/initial_ruin_1029/manifest.json",
+      "mesh_sha256": "2b53bdea720c27e30a6ce2a9a24fc383b4f25c80f8b977c171603fb3023bdc52",
+      "manifest_sha256": "bcf25c42d1dcf5847f99b147d5a80248bf65891bf1f78f1f47ba97dc6bafafb5",
+      "objects": 328,
+      "triangles": 6904
+    }
   }
 }

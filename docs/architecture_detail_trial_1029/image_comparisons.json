@@ -1,0 +1,18 @@
+{
+  "0": {
+    "changed_pixel_fraction": 0.009149305555555556,
+    "passed": true
+  },
+  "1": {
+    "changed_pixel_fraction": 0.047856944444444445,
+    "passed": true
+  },
+  "2": {
+    "changed_pixel_fraction": 0.1811590277777778,
+    "passed": true
+  },
+  "3": {
+    "changed_pixel_fraction": 0.07174305555555556,
+    "passed": true
+  }
+}

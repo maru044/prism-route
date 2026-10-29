@@ -1,0 +1,134 @@
+{
+  "passed": true,
+  "failures": [],
+  "sources": {
+    "seam": {
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "format": "RGB, red channel is linear data",
+      "sha256": "99f5c2258e7d5d23795a965a1ed4755eb86cf0b97a4c167811074ac21f1a5de4",
+      "active_bounds": [
+        560,
+        0,
+        699,
+        1254
+      ],
+      "samples_vertical_edges": [
+        20,
+        18
+      ]
+    },
+    "plants": {
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "format": "RGBA",
+      "filename": "foliage_leaf_mask_v2.png",
+      "color_mode": "alpha silhouette only; existing project palette controls RGB",
+      "sha256": "adb7676259be551fca92978aa3478b77b8a99d76ee2918154f71035c8f2e03c8",
+      "transparent_fraction": 0.7294895568630144,
+      "cells": [
+        {
+          "cell": [
+            0,
+            0
+          ],
+          "content_bounds": [
+            211,
+            146,
+            454,
+            593
+          ],
+          "padding_pixels": [
+            211,
+            146,
+            173,
+            34
+          ],
+          "border_alpha_max": 1
+        },
+        {
+          "cell": [
+            1,
+            0
+          ],
+          "content_bounds": [
+            44,
+            165,
+            524,
+            581
+          ],
+          "padding_pixels": [
+            44,
+            165,
+            103,
+            46
+          ],
+          "border_alpha_max": 1
+        },
+        {
+          "cell": [
+            0,
+            1
+          ],
+          "content_bounds": [
+            115,
+            168,
+            557,
+            494
+          ],
+          "padding_pixels": [
+            115,
+            168,
+            70,
+            133
+          ],
+          "border_alpha_max": 1
+        },
+        {
+          "cell": [
+            1,
+            1
+          ],
+          "content_bounds": [
+            53,
+            232,
+            523,
+            475
+          ],
+          "padding_pixels": [
+            53,
+            232,
+            104,
+            152
+          ],
+          "border_alpha_max": 1
+        }
+      ]
+    }
+  },
+  "formal_files_unchanged": {
+    "project.godot": true,
+    "scenes/map_1021.tscn": true,
+    "scripts/map_1021.gd": true,
+    "assets/world/cliff_b_test/architecture.gdshader": true,
+    "assets/world/cliff_b_test/architecture.tres": true,
+    "assets/world/current_map_validation/current_region.glb": true,
+    "assets/world/initial_ruin_1029/ruin.glb": true
+  },
+  "render_comparisons": {
+    "seams_visible": {
+      "changed_pixel_fraction": 0.015084027777777778
+    },
+    "plants_visible": {
+      "changed_pixel_fraction": 0.06855208333333333
+    },
+    "palette_recolor_visible": {
+      "changed_pixel_fraction": 0.06855069444444445
+    }
+  },
+  "longitudinal_repeat": "shader mirrored sampling; no resampling/editing of generated PNGs"
+}

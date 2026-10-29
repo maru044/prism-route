@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "master": 0.8,
+  "ambience": 0.85,
+  "actions": 0.85,
+  "waves_gain": 0.40,
+  "leaves_gain": 0.48,
+  "gull_db": -6.0,
+  "bird_db": -5.0,
+  "step_db": -4.0,
+  "startup_db": -6.0,
+  "shore_fade_m": 125.0,
+  "forest_radius_m": 48.0
+}

@@ -1,0 +1,132 @@
+{
+  "checked_on": "2026-10-30",
+  "status": "six files downloaded for local audition; two original WAV attachments and four public HQ MP3 previews; not integrated",
+  "candidates": [
+    {
+      "id": "sea_waves",
+      "category": "海浪",
+      "title": "Calm ocean waves",
+      "author": "SamsterBirdies",
+      "source": "https://freesound.org/people/SamsterBirdies/sounds/578524/",
+      "license": "CC0-1.0",
+      "duration_seconds": 179.71,
+      "original_format": "FLAC, 48 kHz, 16-bit, stereo",
+      "original_size_mb": 18.6,
+      "description_from_author": "Calm waves recorded at Whidbey Island; author states the sound loops.",
+      "intended_use": "Coast ambience bed, fade with coastal distance and indoor/cave state.",
+      "needs_audition": [
+        "Loop join",
+        "Unwanted voices/traffic",
+        "Low-frequency rumble"
+      ]
+    },
+    {
+      "id": "sea_gulls",
+      "category": "海鸟",
+      "title": "Seagulls / gaviotas clean wildtrack.WAV",
+      "author": "Soojay",
+      "source": "https://freesound.org/people/Soojay/sounds/462462/",
+      "license": "CC0-1.0",
+      "duration_seconds": 76.432,
+      "original_format": "WAV, 48 kHz, 24-bit, stereo",
+      "original_size_mb": 21,
+      "description_from_author": "Clean recording of a bunch of seagulls.",
+      "intended_use": "Extract several sparse call bouts; randomized interval and coastal emitters; independent of wave loop.",
+      "needs_audition": [
+        "Separability of calls",
+        "Group density",
+        "Background surf or voices"
+      ]
+    },
+    {
+      "id": "land_birds",
+      "category": "陆地鸟叫",
+      "title": "Bird chirping sounds",
+      "author": "syncopika",
+      "source": "https://opengameart.org/content/bird-chirping-sounds",
+      "license": "CC0-1.0",
+      "original_format": "WAV and MP3 available; select birdchirping071414.wav",
+      "original_size_kb": 528,
+      "description_from_author": "Short backyard bird recording.",
+      "intended_use": "Extract short phrases and play sparsely around woodland; avoid mechanical continuous looping.",
+      "needs_audition": [
+        "Background noise",
+        "Phrase endings",
+        "Whether enough different phrases exist"
+      ]
+    },
+    {
+      "id": "wind_leaves",
+      "category": "大风树叶",
+      "title": "Wind and Leaves.wav",
+      "author": "ecfike",
+      "source": "https://freesound.org/people/ecfike/sounds/183496/",
+      "license": "CC0-1.0",
+      "duration_seconds": 244.177,
+      "original_format": "WAV, 44.1 kHz, 16-bit, stereo",
+      "original_size_mb": 41.1,
+      "description_from_author": "Wind in a small clump of broad-leaf trees.",
+      "intended_use": "Extract a clean loop; gain follows grass_wind.blend and proximity to trees; fade instead of switching abruptly.",
+      "needs_audition": [
+        "Wind-mic buffeting",
+        "Strength of rustle versus wind",
+        "Unwanted traffic or birds",
+        "Loop join"
+      ]
+    },
+    {
+      "id": "vehicle_start",
+      "category": "车辆启动",
+      "title": "Car engine Start Up 02",
+      "author": "looneybits",
+      "source": "https://opengameart.org/content/car-engine-start-up-02",
+      "license": "CC0-1.0",
+      "original_format": "WAV; page attachment is named engine_start_up_01.wav",
+      "original_size_kb": 634.4,
+      "intended_use": "One startup per actual drive session; no steady engine loop in first version, per user preference.",
+      "needs_audition": [
+        "Fit for camper instead of sports car",
+        "Startup tail and silence",
+        "Peak level"
+      ]
+    },
+    {
+      "id": "wading_steps",
+      "category": "涉水",
+      "title": "Wading in Shallow Water.wav",
+      "author": "ryansitz",
+      "source": "https://freesound.org/people/ryansitz/sounds/342932/",
+      "license": "CC0-1.0",
+      "duration_seconds": 26.401,
+      "original_format": "WAV, 48 kHz, 32-bit, stereo",
+      "original_size_mb": 9.7,
+      "description_from_author": "Feet lifting out and returning into shallow water.",
+      "intended_use": "Extract 4–8 distinct one-shots; use existing water step/landing events, not a continuous movement loop.",
+      "needs_audition": [
+        "Clean cut boundaries",
+        "Splash weight",
+        "Step variety"
+      ]
+    }
+  ],
+  "backups": [
+    {
+      "category": "海鸟",
+      "title": "Seagull on beach",
+      "author": "squashy555",
+      "source": "https://freesound.org/people/squashy555/sounds/353416/",
+      "license": "CC0-1.0",
+      "note": "33.562 s; original uploaded file is 128 kbps MP3; lower original fidelity than primary WAV."
+    },
+    {
+      "category": "陆地鸟叫",
+      "title": "Ambient Bird Sounds",
+      "author": "isaiah658",
+      "source": "https://opengameart.org/content/ambient-bird-sounds",
+      "license": "CC0-1.0",
+      "note": "birds-isaiah658.ogg; author describes cleaned ambient recording and allows cutting individual calls."
+    }
+  ],
+  "audition_page": "audition/index.html",
+  "download_manifest": "audition/downloads.json"
+}

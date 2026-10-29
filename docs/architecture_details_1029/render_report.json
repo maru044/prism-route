@@ -1,0 +1,19 @@
+{
+  "actual_game_scene_modified": false,
+  "adapter": "NVIDIA GeForce RTX 5070 Ti",
+  "failures": [],
+  "host_uv_channels": 0,
+  "host_walls": 2,
+  "mipmaps": true,
+  "passed": true,
+  "plant_color_source": "foliage_style.GREEN_VALUES.species_mid_color",
+  "plant_rgb_from_texture": false,
+  "plant_texture_size": [
+    1254,
+    1254
+  ],
+  "seam_texture_size": [
+    1254,
+    1254
+  ]
+}

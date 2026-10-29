@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "scene": "res://scenes/map_1021.tscn",
+  "manual_world_matches_automated_world": true,
+  "clusters": {
+    "batches": 40,
+    "card_size_m": [
+      1.45,
+      2.2
+    ],
+    "clusters": {
+      "main": 2065,
+      "ruin": 553
+    },
+    "factory_sha256": "ebc0b61b90ce9d8e1d8784b7624e7838fa9fa77cc57e71b240eb8c74ac51e422",
+    "individual_leaves": 0,
+    "patches": {
+      "main": 46,
+      "ruin": 13
+    },
+    "placement": "irregular colonies along actual upper boundaries; original cluster proportions and outward volume normals",
+    "receiver_meshes": 63,
+    "revision": "cluster-v5-reuse",
+    "shader": "res://assets/vegetation/shaders/vegetation_wind_soft_backlight.gdshader",
+    "shader_sha256": "efd5703f08df5b60bde5881930cb641ad50a252da9c819e8b8b6b7d72ba98179",
+    "shared_factory": "res://scripts/world/wall_leaf_clusters.gd",
+    "texture": "res://assets/world/architecture_details_1029/foliage_leaf_mask_v2.png",
+    "texture_sha256": "adb7676259be551fca92978aa3478b77b8a99d76ee2918154f71035c8f2e03c8",
+    "upper_paths": {
+      "main": 7,
+      "ruin": 8
+    }
+  }
+}

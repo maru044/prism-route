@@ -1,0 +1,34 @@
+{
+  "failures": [],
+  "geometry": {
+    "anchor": [
+      -1015.28479003906,
+      61.5,
+      1255.7880859375
+    ],
+    "collision_samples": 649,
+    "keqing_surfaces": 20,
+    "max_height_error_m": 0.000213623046875,
+    "meshes": 328,
+    "missing": 0,
+    "overlapping_components_skipped": 86,
+    "source_triangles": 6904.0
+  },
+  "passed": true,
+  "render": {
+    "adapter": "NVIDIA GeForce RTX 5070 Ti",
+    "corrupt_cells": 0,
+    "grass_reads": 180,
+    "real_E_print_completed": true,
+    "visible_trees": 19558
+  },
+  "smooth_geometry": {
+    "collision_only_bodies": 6,
+    "max_height_error_m": 0.000057220458984375,
+    "missing": 0,
+    "replaced_actor_colliders": 206,
+    "top_samples": 430,
+    "triangles": 9692.0,
+    "visible_helpers": 0
+  }
+}

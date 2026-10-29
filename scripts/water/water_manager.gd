@@ -105,6 +105,23 @@ func register_reflector(source: MeshInstance3D, color: Color, leaf: Texture2D = 
 	proxy.visible = false
 	proxy_records.append({"source":source,"proxy":proxy,"bounds":source.global_transform * source.get_aabb()})
 
+func refresh_reflector_material(source: MeshInstance3D) -> void:
+	# A reversible surface trial may change the source override or its uniforms.
+	for record: Dictionary in proxy_records:
+		if record.source!=source:continue
+		var color:=Color("e8e4da")
+		var original:=source.material_override as ShaderMaterial
+		if original!=null:
+			var tint: Variant=original.get_shader_parameter("warm_white")
+			if tint is Color:color=tint
+		var material:=_reflection_material(source,color,null)
+		if original!=null:
+			for uniform: Dictionary in original.shader.get_shader_uniform_list():
+				var value: Variant=original.get_shader_parameter(uniform.name)
+				if value!=null:material.set_shader_parameter(uniform.name,value)
+		record.proxy.material_override=material
+		return
+
 func _reflection_material(source: MeshInstance3D, color: Color, leaf: Texture2D) -> ShaderMaterial:
 	var original := source.material_override as ShaderMaterial
 	if original != null and original.shader != null:

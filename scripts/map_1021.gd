@@ -8,8 +8,14 @@ const GRASS_WIND := preload("res://scripts/grass_wind_world.gd")
 const MEADOW_PALETTE := preload("res://scripts/meadow_palette.gd")
 const SKY := preload("res://assets/environment/sky/fresh_cumulus_sky.tres")
 const WATER_MANAGER := preload("res://scripts/water/water_manager.gd")
+const WORLD_AUDIO := preload("res://scripts/audio/world_audio_1030.gd")
+var world_audio
+const INITIAL_RUIN := preload("res://scenes/world/initial_ruin.tscn")
+const SURFACE_DETAIL_TRIAL := preload("res://scripts/world/architecture_detail_trial.gd")
 const ACTOR_SOLID_LAYER := 32
 var water_manager
+var initial_ruin
+var surface_detail_trial
 # CAD north (+Y) exports to Godot -Z; azimuth runs clockwise from north.
 const SUN_AZIMUTH_DEGREES := 135.0
 # Measured bright horizon of rosendal_park_sunset_puresky_4k.exr (u ~= .6094).
@@ -25,7 +31,6 @@ var terrain_material: ShaderMaterial
 var vegetation
 var foliage_style
 var grass_wind
-var wind_menu: OptionButton
 var test_ready := false
 var automation_enabled := false
 var free_mode := false
@@ -47,17 +52,17 @@ func vec(value: Array) -> Vector3:
 	return Vector3(value[0],value[1],value[2])
 
 func _ready() -> void:
-	if "--verify-export" in OS.get_cmdline_user_args():automation_enabled=true
+	if "--verify-export" in OS.get_cmdline_user_args() or "--verify-world-clusters" in OS.get_cmdline_user_args() or "--verify-world-audio" in OS.get_cmdline_user_args():automation_enabled=true
 	metadata=JSON.parse_string(FileAccess.get_file_as_string(ASSETS+"metadata.json"))
 	# Preserve legacy query layers for planting, while actors ignore paint.
 	character.collision_mask=ACTOR_SOLID_LAYER;camper.collision_mask=ACTOR_SOLID_LAYER
-	character.surface_step_height=.10;character.safe_margin=.004
+	character.surface_step_height=.18;character.safe_margin=.004
 	camper.surface_step_height=.12;camper.safe_margin=.006;camper.ground_query_mask=ACTOR_SOLID_LAYER
 	character.automation_enabled=automation_enabled; character.set_control_enabled(false)
 	camper.automation_enabled=automation_enabled;camper.set_physics_process(false);camper.set_process_unhandled_input(false);camper.visible=false
 	camper.calibrate_wheels()
 	camper.respawn_resolver=_resolve_camper_respawn
-	_load_mask();_environment();_build_model();_hud()
+	_load_mask();_environment();_build_model();_build_initial_ruin();_build_surface_detail_trial();_hud()
 	camera=Camera3D.new();camera.near=0.15;camera.far=10000;camera.fov=58;add_child(camera)
 	await get_tree().physics_frame;await get_tree().physics_frame
 	for proposal: Dictionary in metadata.spawns:
@@ -65,22 +70,36 @@ func _ready() -> void:
 	var initial_spawn:=0
 	for i in resolved_spawns.size():
 		if resolved_spawns[i].get("key","")==metadata.get("default_spawn_key",""):initial_spawn=i;break
+	if "--ruin-preview" in OS.get_cmdline_user_args() or "--ruin-stairs-preview" in OS.get_cmdline_user_args():initial_spawn=resolved_spawns.size()-1
 	await select_spawn(initial_spawn)
+	if "--ruin-preview" in OS.get_cmdline_user_args() or "--ruin-stairs-preview" in OS.get_cmdline_user_args():
+		var forward:=vec(initial_ruin.planting_mask.manifest.forward)
+		var near: Vector3=initial_ruin.avatar.global_position-forward*2.45
+		near.y=float(initial_ruin.planting_mask.manifest.placement.main_floor)+.04
+		if "--ruin-stairs-preview" in OS.get_cmdline_user_args():near=vec(initial_ruin.walk_manifest.routes.entry_1[0])+Vector3.UP*.04
+		character.set_spawn(near,atan2(-forward.x,-forward.z))
+		character.camera.h_offset=.55
 	if vegetation_bake_only:
 		test_ready=true
 		return
 	vegetation=VEGETATION.new();vegetation.world_scene=self;add_child(vegetation)
 	vegetation.initialize(character,_noise(),2)
 	grass_wind=GRASS_WIND.new();add_child(grass_wind)
-	grass_wind.initialize(vegetation);grass_wind.set_mode(wind_menu.selected)
+	grass_wind.initialize(vegetation);grass_wind.set_mode(GRASS_WIND.Mode.AUTO)
 	_sync_meadow_color()
 	foliage_style=FOLIAGE_STYLE.new()
 	foliage_style.bind_streamer(vegetation)
 	_initialize_water()
+	world_audio.initialize(self)
 	tree_placement_report=JSON.parse_string(FileAccess.get_file_as_string(ASSETS+"tree_layout_metadata.json"))
 	_sync_actor_controls()
 	test_ready=true
 	print("CURRENT_MAP_READY objects=%d triangles=%d spawns=%d trees=%d" % [metadata.objects,metadata.triangles,resolved_spawns.size(),vegetation.tree_instance_count])
+	if "--architecture-detail-preview" in OS.get_cmdline_user_args():surface_detail_trial.call_deferred("show_view",3)
+	if "--verify-world-clusters" in OS.get_cmdline_user_args():
+		var verifier: Node=load("res://tools/check_world_clusters_1029.gd").new();verifier.world=self;add_child(verifier);verifier.call_deferred("run")
+	if "--verify-world-audio" in OS.get_cmdline_user_args():
+		var verifier: Node=load("res://tools/check_world_audio_1030.gd").new();verifier.world=self;add_child(verifier);verifier.call_deferred("run")
 	if "--verify-export" in OS.get_cmdline_user_args():
 		get_tree().root.call_deferred("add_child",load("res://tools/verify_export_1021.gd").new())
 
@@ -102,6 +121,17 @@ func _initialize_water() -> void:
 			var color:=Color("91a46b") if kind=="Terrain" else (Color("3b4248") if kind=="Road" else Color("e8e4da"))
 			water_manager.register_reflector(mesh,color)
 	water_manager.register_tree_streamer(vegetation)
+	for mesh: MeshInstance3D in initial_ruin.geometry.find_children("*","MeshInstance3D",true,false):
+		if mesh.cast_shadow!=GeometryInstance3D.SHADOW_CASTING_SETTING_OFF:water_manager.register_reflector(mesh,Color("d8d2bf"))
+	surface_detail_trial.sync_reflections()
+
+func _build_initial_ruin() -> void:
+	initial_ruin=INITIAL_RUIN.instantiate();initial_ruin.world=self;add_child(initial_ruin)
+	var row: Dictionary=initial_ruin.planting_mask.manifest
+	metadata.spawns.append({"name":"初始遗迹 · 召唤台","key":"initial_ruin","position":row.spawn,"look_direction":row.forward,"required_floor_kind":"Structure","maximum_search_distance_m":2.,"character_only":true})
+
+func _build_surface_detail_trial() -> void:
+	surface_detail_trial=SURFACE_DETAIL_TRIAL.new();surface_detail_trial.name="ArchitectureDetailTrial";add_child(surface_detail_trial);surface_detail_trial.initialize(self)
 
 func _water_review_view(which: int) -> void:
 	if which==0:return
@@ -148,6 +178,7 @@ func _load_mask() -> void:
 	terrain_material.set_shader_parameter("mask_extent_xz",Vector2(metadata.extent_xz[0],metadata.extent_xz[1]))
 
 func architectural_band(p: Vector3,margin:=0.0) -> bool:
+	if initial_ruin!=null and initial_ruin.planting_mask.blocks(p,margin):return true
 	var uv: Vector2=(Vector2(p.x,p.z)-Vector2(metadata.origin_xz[0],metadata.origin_xz[1]))/Vector2(metadata.extent_xz[0],metadata.extent_xz[1])
 	if uv.x<0 or uv.y<0 or uv.x>=1 or uv.y>=1: return false
 	var data:=mask_image.get_pixel(clampi(int(uv.x*mask_image.get_width()),0,mask_image.get_width()-1),clampi(int(uv.y*mask_image.get_height()),0,mask_image.get_height()-1))
@@ -206,20 +237,21 @@ func _noise() -> NoiseTexture2D:
 func _hud() -> void:
 	var layer:=CanvasLayer.new();add_child(layer)
 	review_ui_layers.append(layer)
-	var panel:=PanelContainer.new();panel.position=Vector2(20,18);layer.add_child(panel)
+	var panel:=PanelContainer.new();panel.name="MapControls";panel.position=Vector2(20,18);layer.add_child(panel)
+	var style:=StyleBoxFlat.new();style.bg_color=Color(.055,.09,.11,.88)
+	style.content_margin_left=12;style.content_margin_right=12;style.content_margin_top=12;style.content_margin_bottom=12
+	for corner in ["top_left","top_right","bottom_left","bottom_right"]:style.set("corner_radius_"+corner,6)
+	panel.add_theme_stylebox_override("panel",style)
 	var box:=VBoxContainer.new();box.add_theme_constant_override("separation",8);panel.add_child(box)
-	var title:=Label.new();title.text="1021 地图 · 场景验证";title.add_theme_font_size_override("font_size",22);box.add_child(title)
+	var title:=Label.new();title.text="Prism Route · 场景预览";title.add_theme_font_size_override("font_size",20);box.add_child(title)
 	spawn_menu=OptionButton.new();spawn_menu.custom_minimum_size=Vector2(310,36)
 	for i in metadata.spawns.size():spawn_menu.add_item("%d  %s" % [i+1,metadata.spawns[i].name])
 	spawn_menu.item_selected.connect(select_spawn);box.add_child(spawn_menu)
-	status=Label.new();box.add_child(status)
-	var help:=Label.new();help.text="1–9 出生点   C 甘雨 / 房车\nF 自由观景 · V 全景 · B 植物开关\nH 隐藏 / 恢复全部界面\nWASD 移动 / 驾驶 · 空格跳跃 / 刹车\n右键转镜头 · 滚轮缩放 · R 复位";box.add_child(help)
-	wind_menu=OptionButton.new();wind_menu.name="GrassWindMode"
-	for text: String in ["草地风力 · 微风","草地风力 · 大风（B）","草地风力 · 自动切换"]:wind_menu.add_item(text)
-	wind_menu.select(GRASS_WIND.Mode.AUTO)
-	wind_menu.item_selected.connect(func(value: int):
-		if grass_wind!=null:grass_wind.set_mode(value))
-	box.add_child(wind_menu)
+	status=Label.new();status.add_theme_font_size_override("font_size",14);status.add_theme_color_override("font_color",Color("c2d0d9"));box.add_child(status)
+	world_audio=WORLD_AUDIO.new();world_audio.name="WorldAudio";add_child(world_audio);world_audio.add_controls(box)
+	surface_detail_trial.add_controls(box)
+	for control in box.get_children():
+		if control is BaseButton:control.custom_minimum_size.y=36;control.focus_mode=Control.FOCUS_NONE
 	var performance_monitor:=PERFORMANCE_MONITOR.new()
 	performance_monitor.world_scene=self;add_child(performance_monitor)
 	review_ui_layers.append(performance_monitor)
@@ -228,7 +260,10 @@ func _hud() -> void:
 func set_review_ui_visible(enabled: bool) -> void:
 	review_ui_visible=enabled
 	for layer in review_ui_layers:layer.visible=enabled
-	if not enabled: get_viewport().gui_release_focus()
+	if not enabled:
+		get_viewport().gui_release_focus()
+		if surface_detail_trial!=null:surface_detail_trial.hide_settings()
+		if world_audio!=null:world_audio.hide_settings()
 
 func _input(event: InputEvent) -> void:
 	# Handle globally so H also works while the spawn menu has keyboard focus.

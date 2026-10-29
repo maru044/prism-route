@@ -1,0 +1,34 @@
+{
+  "failures": [],
+  "models": [
+    {
+      "height_bounds": "(0.000034, 1.592449)",
+      "id": "ganyu",
+      "pause_replay_completion": true,
+      "progress_samples": 5,
+      "surfaces": 19
+    },
+    {
+      "height_bounds": "(-0.000367, 1.613868)",
+      "id": "keqing",
+      "pause_replay_completion": true,
+      "progress_samples": 5,
+      "surfaces": 20
+    },
+    {
+      "height_bounds": "(-0.000175, 1.445499)",
+      "id": "huahuo",
+      "pause_replay_completion": true,
+      "progress_samples": 5,
+      "surfaces": 40
+    },
+    {
+      "height_bounds": "(-0.002579, 1.561867)",
+      "id": "hutao",
+      "pause_replay_completion": true,
+      "progress_samples": 5,
+      "surfaces": 21
+    }
+  ],
+  "passed": true
+}

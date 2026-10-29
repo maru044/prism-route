@@ -28,6 +28,13 @@ window/stretch/mode="canvas_items"
 
 enabled=PackedStringArray("res://addons/mtoon/plugin.cfg", "res://addons/vrm/plugin.cfg")
 
+[input]
+
+interact={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"physical_keycode":69,"unicode":101)]
+}
+
 [internationalization]
 
 locale/include_text_server_data=true

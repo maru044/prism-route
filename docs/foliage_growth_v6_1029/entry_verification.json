@@ -1,0 +1,49 @@
+{
+  "adapter": "NVIDIA GeForce RTX 5070 Ti",
+  "aliases_same_script": {
+    "res://scenes/architecture_detail_lab.tscn": true,
+    "res://scenes/wall_foliage_cluster_preview.tscn": true
+  },
+  "checked_inside_launched_scene": true,
+  "failures": [],
+  "growth_paths": 8,
+  "launched_with_verification_flag": true,
+  "passed": true,
+  "placements_identical_across_sources": true,
+  "roles": {
+    "body": 14,
+    "connector": 12,
+    "tip": 7
+  },
+  "startup": {
+    "cluster_scale": 1.35,
+    "default_view": 0,
+    "factory_sha256": "e8e7c767659bf4bb53be77783f1aee1731a8b60f32bbeabfa8c4788cac9e0a5a",
+    "individual_leaves": 0,
+    "painted_color": true,
+    "parallax_enabled": false,
+    "revision": "cluster-v6-growth",
+    "scene": "res://scenes/wall_foliage_art_prototype.tscn",
+    "script": "res://scripts/world/wall_foliage_cluster_preview.gd",
+    "script_sha256": "d973507ae88884266734a841910fdb66c93e730d7a76107cf2acad93d7634c79",
+    "shader": "res://shaders/environment/wall_leaf_clusters_v6.gdshader",
+    "shader_sha256": "a3f42c36cd186232129410433a2e39c9217294b197e2c75aaa89ea239f85a081",
+    "texture": "res://assets/world/architecture_details_1029/foliage_leaf_clusters_v6.png",
+    "texture_sha256": "ae53a52ad0f4d92ec94d6b08962cb43b10e76824baa8871f32604f682b08aa74",
+    "volume_lighting": true,
+    "whole_groups": 33,
+    "window_title": "Prism Route | 叶团 V6 · 生长与尺度"
+  },
+  "unchanged_assets": {
+    "assets/vegetation/textures/shrub_leaf_lobes_billboard_flat_v3.png": true,
+    "assets/vegetation/textures/tree_broad_clump_unlit_4var_v1.png": true,
+    "assets/world/architecture_details_1029/foliage_leaf_mask_v2.png": true,
+    "assets/world/current_map_validation/current_region.glb": true
+  },
+  "volume_lighting_image_difference": {
+    "changed_fraction": 0.600127293423581,
+    "green_samples": 81701,
+    "mean_rgb_difference": 0.0556519962885078
+  },
+  "wall_shader_derived_from_tree_shader": true
+}

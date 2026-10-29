@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "failures": [],
+  "green_pixel_coverage": {
+    "plants_aspect_a": 0.017354329427083332,
+    "plants_aspect_b": 0.017354329427083332,
+    "plants_density_zero": 0.0,
+    "plants_new": 0.08358274860146606,
+    "plants_old": 0.01988088348765432,
+    "plants_seed_17_again": 0.08358274860146606,
+    "plants_seed_18": 0.10253077377507716,
+    "plants_without_loose_blades": 0.07850854190779322,
+    "plants_without_overlap": 0.06885895905671297
+  },
+  "coverage_multiplier": 4.204176773802304,
+  "off_seam_dark_pixels": {
+    "seams_old_bug": 6926,
+    "seams_fixed": 0
+  },
+  "aspect_swap_identical": true,
+  "seed_repeat_identical": true,
+  "seed_change_pixel_fraction": 0.1761987003279321,
+  "approved_masks_unchanged": {
+    "seam_wear_mask_v1.png": true,
+    "foliage_leaf_mask_v2.png": true
+  },
+  "method": "Actual production fragment functions, unlit orthographic no-UV quad, 1536x864 D3D12 render; read-only image analysis"
+}

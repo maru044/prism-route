@@ -1,0 +1,28 @@
+{
+  "1.6": {
+    "ascent": true,
+    "descent": true,
+    "longest_air_ticks": 3,
+    "step_events": 72
+  },
+  "4.2": {
+    "ascent": true,
+    "descent": true,
+    "longest_air_ticks": 3,
+    "step_events": 31
+  },
+  "ceiling": {
+    "blocked": true,
+    "position_z": 0.223333194851875
+  },
+  "failures": [],
+  "gap": {
+    "air_ticks": 77,
+    "minimum_y": -17.1733493804932
+  },
+  "high_riser": {
+    "blocked": true,
+    "position_z": 0.243503630161285
+  },
+  "passed": true
+}

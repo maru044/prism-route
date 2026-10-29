@@ -51,6 +51,11 @@ func _build_tree_lod() -> void:
 		if int(row[5]) == 1:
 			large_tree_instance_count += 1
 			model_id = 1 if palette in [1, 2] else (2 if palette in [3, 4] else (1 if rng.randf() < 0.58 else 2))
+		# Consume the original species RNG before exclusions; kept trees retain their exact models.
+		if _tree_root_excluded(position):
+			tree_instance_count-=1
+			if int(row[5])==1:large_tree_instance_count-=1
+			continue
 		var transform := Transform3D(Basis(Vector3.UP, row[3]).scaled(Vector3.ONE * float(row[4])), position)
 		if record_tree_layout_for_review:
 			review_tree_records.append({"transform": transform, "model": model_id, "palette": palette})
@@ -79,6 +84,9 @@ func _build_tree_lod() -> void:
 	for node in tree_lod2_nodes:
 		node.visibility_range_end = MAP_FAR_TREE_END + TREE_LOD2_CHUNK_SIZE * 1.45
 		node.set_meta("lod_end", node.visibility_range_end)
+
+func _tree_root_excluded(_point: Vector3) -> bool:
+	return false
 
 func _raycast_terrain(world_x: float, world_z: float) -> Dictionary:
 	# Match the tree layout's conservative road footprint exclusion, including

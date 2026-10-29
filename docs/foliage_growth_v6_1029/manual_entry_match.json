@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "manual_entry_matches_automated_entry": true,
+  "identity": {
+    "cluster_scale": 1.35,
+    "default_view": 0,
+    "factory_sha256": "e8e7c767659bf4bb53be77783f1aee1731a8b60f32bbeabfa8c4788cac9e0a5a",
+    "individual_leaves": 0,
+    "painted_color": true,
+    "parallax_enabled": false,
+    "revision": "cluster-v6-growth",
+    "scene": "res://scenes/wall_foliage_art_prototype.tscn",
+    "script": "res://scripts/world/wall_foliage_cluster_preview.gd",
+    "script_sha256": "d973507ae88884266734a841910fdb66c93e730d7a76107cf2acad93d7634c79",
+    "shader": "res://shaders/environment/wall_leaf_clusters_v6.gdshader",
+    "shader_sha256": "a3f42c36cd186232129410433a2e39c9217294b197e2c75aaa89ea239f85a081",
+    "texture": "res://assets/world/architecture_details_1029/foliage_leaf_clusters_v6.png",
+    "texture_sha256": "ae53a52ad0f4d92ec94d6b08962cb43b10e76824baa8871f32604f682b08aa74",
+    "volume_lighting": true,
+    "whole_groups": 33,
+    "window_title": "Prism Route | 叶团 V6 · 生长与尺度"
+  }
+}

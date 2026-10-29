@@ -1,0 +1,17 @@
+{
+  "wall_width": 12.0,
+  "wall_height": 6.3,
+  "seed": 41,
+  "canopy_depth": 1.05,
+  "leaf_size_range": [0.16, 0.23],
+  "leaf_spacing": 0.16,
+  "parallax_depth_m": 0.10,
+  "fold_height": 0.08,
+  "layer_separation_m": 0.028,
+  "cascades": [
+    {"center_x": -4.65, "depth": 3.4, "half_width": 0.68, "phase": 0.3},
+    {"center_x": -1.65, "depth": 4.9, "half_width": 1.0, "phase": 1.4},
+    {"center_x": 1.45, "depth": 3.3, "half_width": 0.68, "phase": 3.2},
+    {"center_x": 5.0, "depth": 4.05, "half_width": 0.68, "phase": 2.2}
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "enabled": true,
+  "joints_enabled": true,
+  "plants_enabled": true,
+  "cliff_plants_enabled": false,
+  "ruin_plants_enabled": true,
+  "panel_meters": [
+    32.0,
+    18.0
+  ],
+  "joint_width_m": 0.018,
+  "joint_strength": 0.48,
+  "plant_density": 1.0,
+  "plant_overlap": 0.65,
+  "plant_loose_leaves": 1.0,
+  "plant_seed": 17,
+  "plant_tile_meters": [
+    9.0,
+    9.0
+  ],
+  "plant_cluster_meters": [
+    7.0,
+    7.0
+  ],
+  "plant_color": "ffffff",
+  "plant_draw_distance_m": 300.0,
+  "main_hosts": {
+    "f03d5707-4703-58a3-9c33-96106ea052be": {}
+  },
+  "ruin_categories": [
+    "front",
+    "colonnade",
+    "highwall"
+  ],
+  "revision": "world-cluster-v6-growth",
+  "cluster_projection": {
+    "min_path_m": 4.5,
+    "cliff_native_bounds": [
+      340,
+      -370,
+      720,
+      -55
+    ],
+    "ruin_min_height_m": 64.0,
+    "cliff_min_height_m": 27.0
+  },
+  "plant_scale": 1.35,
+  "environment_look_enabled": true,
+  "surface_look_enabled": true,
+  "look_exposure": 0.74
+}

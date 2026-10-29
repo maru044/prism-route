@@ -1,0 +1,41 @@
+{
+  "failures": [],
+  "passed": true,
+  "render": {
+    "adapter": "NVIDIA GeForce RTX 5070 Ti",
+    "models": [
+      {
+        "completed_mtoon_max_rgb_error": 0.0,
+        "id": "ganyu",
+        "lower_hologram_pixels": 1523,
+        "lower_rgb_error": 0.00000257489717249329,
+        "upper_rgb_error": 0.0,
+        "upper_solid_pixels": 2320
+      },
+      {
+        "completed_mtoon_max_rgb_error": 0.0,
+        "id": "keqing",
+        "lower_hologram_pixels": 1509,
+        "lower_rgb_error": 0.0,
+        "upper_rgb_error": 0.0,
+        "upper_solid_pixels": 3011
+      },
+      {
+        "completed_mtoon_max_rgb_error": 0.0,
+        "id": "huahuo",
+        "lower_hologram_pixels": 1262,
+        "lower_rgb_error": 0.0,
+        "upper_rgb_error": 0.0,
+        "upper_solid_pixels": 2649
+      },
+      {
+        "completed_mtoon_max_rgb_error": 0.0,
+        "id": "hutao",
+        "lower_hologram_pixels": 2112,
+        "lower_rgb_error": 0.0,
+        "upper_rgb_error": 0.0,
+        "upper_solid_pixels": 2851
+      }
+    ]
+  }
+}

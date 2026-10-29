@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "manual_and_automatic_startup_identical": true,
+  "manual_launcher": "tools/run_wall_foliage_art_prototype.ps1",
+  "automatic_command": "tools/run_wall_foliage_art_prototype.ps1 -Verify",
+  "identity": {
+    "default_view": 0,
+    "individual_leaves": 0,
+    "painted_color": true,
+    "parallax_enabled": false,
+    "revision": "cluster-v4-r2",
+    "scene": "res://scenes/wall_foliage_art_prototype.tscn",
+    "script": "res://scripts/world/wall_foliage_cluster_preview.gd",
+    "script_sha256": "e06a87ae5f3dff9cfd731b9024505b212bda40cf1425ecf2b710257064a41fb8",
+    "shader": "res://shaders/environment/foliage_cluster_preview.gdshader",
+    "shader_sha256": "47a0fe9d039fdad0af229bcfc9bf85a9f3ab2b43b98ecb950748b04f0c8009ca",
+    "texture": "res://assets/world/architecture_details_1029/foliage_cluster_color_v4_draft.png",
+    "texture_sha256": "1514523d2e95a9b7360e276b87af9715828893b18acf2b1b2cf4c2b28631956d",
+    "whole_groups": 3,
+    "window_title": "Prism Route | 叶团 V4 · R2"
+  }
+}

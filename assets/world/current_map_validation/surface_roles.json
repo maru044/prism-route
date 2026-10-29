@@ -18,6 +18,7 @@
     "577d868b-7597-4058-83f8-4b630606b305": {"architecture_id": "f03d5707-4703-58a3-9c33-96106ea052be", "selector": "raised_spit_land_roof", "reason": "Preserve one closed CAD solid; separate planting and architecture at export."}
   },
   "layer_defaults": {
+    "手工地形": "Terrain",
     "地形::保留原地形": "Terrain",
     "建筑::崖壁B::种植承载面": "Terrain",
     "建筑::崖壁B::建筑构件": "Structure",

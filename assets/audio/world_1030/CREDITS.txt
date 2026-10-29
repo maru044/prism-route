@@ -1,0 +1,27 @@
+Project PR - world sound credits (CC0 1.0)
+Derived game files are edited from the following sources.
+Freesound materials use the public HQ compressed previews at this prototype stage.
+
+Calm ocean waves - SamsterBirdies
+https://freesound.org/people/SamsterBirdies/sounds/578524/
+License: CC0-1.0
+
+Seagulls / gaviotas clean wildtrack.WAV - Soojay
+https://freesound.org/people/Soojay/sounds/462462/
+License: CC0-1.0
+
+Bird chirping sounds - syncopika
+https://opengameart.org/content/bird-chirping-sounds
+License: CC0-1.0
+
+Wind and Leaves.wav - ecfike
+https://freesound.org/people/ecfike/sounds/183496/
+License: CC0-1.0
+
+Car engine Start Up 02 - looneybits
+https://opengameart.org/content/car-engine-start-up-02
+License: CC0-1.0
+
+Wading in Shallow Water.wav - ryansitz
+https://freesound.org/people/ryansitz/sounds/342932/
+License: CC0-1.0

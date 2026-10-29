@@ -1,0 +1,38 @@
+{
+  "capture": false,
+  "default_spawn": [
+    -810.473937988281,
+    33.0006790161133,
+    1527.87023925781
+  ],
+  "failures": [],
+  "material": {
+    "cave_material": "architecture.tres",
+    "floor_and_ceiling_probes": 7,
+    "minimum_center_headroom_m": 2.99747467041016,
+    "roof_id": "577d868b-7597-4058-83f8-4b630606b305"
+  },
+  "mesh_sha256": "9539169f439699fb2112d7751b0728d0170ae4db0f8561a9235abf5b3522a0cb",
+  "objects": 208.0,
+  "passed": true,
+  "spawn_checks": 10,
+  "trees": {
+    "invalid_roots": 0,
+    "maximum_root_error_m": 0.00006866455078125,
+    "raised_roof_trees": 204
+  },
+  "triangles": 10546371.0,
+  "walk": {
+    "end_position": [
+      -886.6923828125,
+      35.0607452392578,
+      1408.62097167969
+    ],
+    "longest_air_frames": 7,
+    "max_air_floor_gap_m": 0.221794128417969,
+    "physics_frames": 2280,
+    "unsupported_air_frames": 0,
+    "waypoints": 40,
+    "waypoints_reached": 40
+  }
+}

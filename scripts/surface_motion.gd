@@ -12,13 +12,14 @@ static func move(body: CharacterBody3D,delta: float,max_step_height: float) -> v
 	if motion.length_squared()<0.000001:return
 	var actual:=body.global_position-start.origin;actual.y=0
 	if actual.dot(motion.normalized())>=motion.length()*0.9:return
-	# Only retry motion blocked by a near-vertical edge, not ordinary slopes.
-	var blocked:=false
-	for i in body.get_slide_collision_count():
-		var hit:=body.get_slide_collision(i)
-		if hit.get_normal().y<cos(body.floor_max_angle) and hit.get_normal().dot(motion.normalized())<-.1:
-			blocked=true;break
-	if not blocked:return
+	if body.is_on_floor():
+		# Ordinary slope projection reduces horizontal travel even with no
+		# obstacle. Compare against that projected motion before retrying a step.
+		var floor_motion:=motion.slide(body.get_floor_normal());floor_motion.y=0.
+		if actual.dot(motion.normalized())>=floor_motion.dot(motion.normalized())*.9:return
+	# Jolt can report only an upward floor normal at a stair seam even when
+	# horizontal motion is blocked. Validate the full up/forward/down route
+	# instead of requiring a vertical contact normal before trying the step.
 	var margin:=body.safe_margin
 	var lift:=max_step_height+margin*2
 	var ceiling:=KinematicCollision3D.new()
@@ -30,16 +31,42 @@ static func move(body: CharacterBody3D,delta: float,max_step_height: float) -> v
 	var forward:=elevated;forward.origin+=motion
 	var landing:=KinematicCollision3D.new()
 	if not body.test_move(forward,Vector3.DOWN*(lift+margin*3),landing,margin,false):return
-	if landing.get_normal().y<cos(body.floor_max_angle):return
+	var support:=_landing_support(body,landing,motion.normalized())
+	if support.is_empty():
+		# At the rounded capsule/step corner, slide projection can erase all
+		# horizontal speed. Preserve the request while the clear sweep is valid
+		# so acceleration can reach a walkable contact on the next frames.
+		body.velocity.x=wanted.x;body.velocity.z=wanted.z
+		return
 	var target:=forward;target.origin+=landing.get_travel()
+	if support.has("position"):
+		# Fully clear the sharp riser rather than repeatedly sliding back from
+		# a shallow capsule-corner contact at low walking speed.
+		var bottom:=INF
+		for shape in body.get_children():
+			if shape is CollisionShape3D and not shape.disabled:
+				var bounds: AABB=shape.global_transform*shape.shape.get_debug_mesh().get_aabb()
+				bottom=minf(bottom,bounds.position.y)
+		var foot_offset:=body.global_position.y-bottom if is_finite(bottom) else 0.
+		target.origin.y=maxf(target.origin.y,support.position.y+foot_offset+margin)
 	var rise:=target.origin.y-start.origin.y
 	# A same-height landing also resolves a spurious seam edge. Require a
 	# supported landing; do not turn this into a jump across a real drop.
-	if rise< -margin*2 or rise>max_step_height+margin:return
+	if rise< -margin*2 or rise>minf(max_step_height+margin,lift):return
 	# The downward sweep already stops before penetration. A zero-motion
 	# recovery query here would incorrectly reject valid floor contact.
 	body.global_transform=target
 	body.set_meta("surface_steps",int(body.get_meta("surface_steps",0))+1)
-	body.velocity=Vector3(0,-.5,0)
-	body.move_and_slide()
-	body.velocity.x=wanted.x;body.velocity.z=wanted.z
+	# Keep the sweep landing: a second floor-snapped move can pull the capsule
+	# back onto the lower tread before it has crossed the rounded stair edge.
+	body.velocity=Vector3(wanted.x,0.,wanted.z)
+
+static func _landing_support(body: CharacterBody3D,hit: KinematicCollision3D,direction: Vector3) -> Dictionary:
+	if hit.get_normal().y>=cos(body.floor_max_angle):return {"walkable":true}
+	# Capsule corner normals at a sharp riser are not the supporting triangle's
+	# slope. Confirm the actual top face just inside the contact before stepping.
+	var contact:=hit.get_position()+direction*.006
+	var query:=PhysicsRayQueryParameters3D.create(contact+Vector3.UP*.025,contact-Vector3.UP*.025,body.collision_mask)
+	query.exclude=[body.get_rid()]
+	var support:=body.get_world_3d().direct_space_state.intersect_ray(query)
+	return support if not support.is_empty() and support.normal.y>=cos(body.floor_max_angle) else {}

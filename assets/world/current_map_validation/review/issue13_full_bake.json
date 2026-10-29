@@ -1,10 +1,11 @@
 {
+  "cells": 11436,
   "complete": true,
-  "cells": 10961,
-  "empty": 1403,
-  "instances": 196467768,
-  "compressed_bytes": 967353846,
-  "raw_root_bytes": 2750548752,
-  "expanded_matrix_bytes": 12573937152,
-  "signature": "332104410f188f3a2eebca87c177bfc25c12f8de89c4941bb5fa414be7588b8d"
+  "compressed_bytes": 1024143436,
+  "empty": 1424,
+  "expanded_matrix_bytes": 13283409152,
+  "instances": 207553268,
+  "raw_root_bytes": 2905745752,
+  "signature": "d68f3da96179ed63fc6f75d0c3c9f82d1ce33dc7e05efebda96b3f6b61aee3e7",
+  "static_feature_patch": "initial_ruin_1029"
 }

@@ -1,0 +1,25 @@
+{
+  "failures": [],
+  "geometry": {
+    "anchor": [
+      -1015.28479003906,
+      61.5,
+      1255.7880859375
+    ],
+    "collision_samples": 649,
+    "keqing_surfaces": 20,
+    "max_height_error_m": 0.000213623046875,
+    "meshes": 328,
+    "missing": 0,
+    "overlapping_components_skipped": 87,
+    "source_triangles": 6904.0
+  },
+  "passed": true,
+  "render": {
+    "adapter": "NVIDIA GeForce RTX 5070 Ti",
+    "corrupt_cells": 0,
+    "grass_reads": 179,
+    "real_E_print_completed": true,
+    "visible_trees": 19558
+  }
+}

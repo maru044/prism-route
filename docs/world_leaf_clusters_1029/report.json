@@ -1,0 +1,34 @@
+{
+  "actual_scene": "res://scenes/map_1021.tscn",
+  "adapter": "NVIDIA GeForce RTX 5070 Ti",
+  "clusters": {
+    "individual_leaves": 0,
+    "placement": "actual upper boundaries of vertical mesh surfaces",
+    "projectors": {
+      "main": 57,
+      "ruin": 30
+    },
+    "receiver_meshes": 63,
+    "texture": "res://assets/world/architecture_details_1029/foliage_cluster_color_v4_draft.png",
+    "texture_sha256": "1514523d2e95a9b7360e276b87af9715828893b18acf2b1b2cf4c2b28631956d",
+    "upper_paths": {
+      "main": 7,
+      "ruin": 8
+    }
+  },
+  "failures": [],
+  "grass_bake_valid": true,
+  "passed": true,
+  "revision": "world-cluster-v4-r1",
+  "summon_print_count": 1,
+  "unchanged_assets": {
+    "assets/world/current_map_validation/current_region.glb": true,
+    "assets/world/current_map_validation/grass_bake/manifest.json": true,
+    "assets/world/current_map_validation/metadata.json": true,
+    "assets/world/current_map_validation/tree_layout.json": true,
+    "assets/world/initial_ruin_1029/ruin.glb": true,
+    "assets/world/initial_ruin_1029/walk_collision.glb": true,
+    "project.godot": true
+  },
+  "window_title": "Prism Route | 大世界 · 叶团 V4"
+}

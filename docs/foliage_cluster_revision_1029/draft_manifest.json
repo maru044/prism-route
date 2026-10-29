@@ -1,0 +1,14 @@
+{
+  "status": "imported into independent preview; art review draft, not approved",
+  "unit": "one integrated leaf cluster",
+  "size": [
+    1466,
+    1073
+  ],
+  "mode": "RGBA",
+  "sha256": "1514523d2e95a9b7360e276b87af9715828893b18acf2b1b2cf4c2b28631956d",
+  "post_generation_pixel_edits": false,
+  "runtime_wiring": true,
+  "runtime_scene": "scenes/wall_foliage_cluster_preview.tscn",
+  "formal_map_wiring": false
+}

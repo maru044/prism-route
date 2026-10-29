@@ -1,0 +1,26 @@
+{
+  "generator": "built-in image_gen",
+  "type": "AI concept paintovers, not implemented game screenshots",
+  "outputs": [
+    {
+      "variant": "a_horizontal_strata",
+      "source": "C:\\Users\\PC\\.codex\\generated_images\\01a17e64-db04-7920-a085-78daf43992de\\exec-0ecbb07a-2029-46e7-b647-8e3378f3d5cb.png",
+      "saved": "D:\\Prism Route\\prism-route\\docs\\curved_architecture_concepts_1029\\a_horizontal_strata.png"
+    },
+    {
+      "variant": "b_gradient_ribs",
+      "source": "C:\\Users\\PC\\.codex\\generated_images\\01a17e64-db04-7920-a085-78daf43992de\\exec-757b022a-74d8-4d4e-b961-276af2e16aac.png",
+      "saved": "D:\\Prism Route\\prism-route\\docs\\curved_architecture_concepts_1029\\b_gradient_ribs.png"
+    },
+    {
+      "variant": "c_streamline_grooves",
+      "source": "C:\\Users\\PC\\.codex\\generated_images\\01a17e64-db04-7920-a085-78daf43992de\\exec-ef2ab62c-ec29-45a8-8723-2660b0099e99.png",
+      "saved": "D:\\Prism Route\\prism-route\\docs\\curved_architecture_concepts_1029\\c_streamline_grooves.png"
+    },
+    {
+      "variant": "d_peeling_shell",
+      "source": "C:\\Users\\PC\\.codex\\generated_images\\01a17e64-db04-7920-a085-78daf43992de\\exec-60394bb9-61f7-42c5-afe2-679530bc63fc.png",
+      "saved": "D:\\Prism Route\\prism-route\\docs\\curved_architecture_concepts_1029\\d_peeling_shell.png"
+    }
+  ]
+}

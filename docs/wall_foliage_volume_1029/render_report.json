@@ -1,0 +1,20 @@
+{
+  "adapter": "NVIDIA GeForce RTX 5070 Ti",
+  "atlas_sha256": "29623787b7016195882c1bbbdc08e44a4c6f8e3f1c4c9621d39bdf252c4dd1bf",
+  "atlas_size": [
+    1254,
+    1254
+  ],
+  "leaves": 1084,
+  "mipmaps": true,
+  "parallax_depth_m": 0.1,
+  "parallax_uses_main_camera_in_shadow_pass": true,
+  "source_layout_unchanged": true,
+  "unchanged_formal_files": {
+    "assets/world/current_map_validation/current_region.glb": true,
+    "assets/world/current_map_validation/grass_bake/manifest.json": true,
+    "assets/world/current_map_validation/metadata.json": true,
+    "scripts/map_1021.gd": true,
+    "shaders/environment/architecture_details_1029.gdshader": true
+  }
+}

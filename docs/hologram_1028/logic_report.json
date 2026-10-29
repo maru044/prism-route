@@ -1,0 +1,50 @@
+{
+  "failures": [],
+  "models": [
+    {
+      "animations": [
+        "A01",
+        "A25"
+      ],
+      "bones": 276,
+      "id": "ganyu",
+      "instance_isolation": true,
+      "source_restored": true,
+      "surfaces": 19
+    },
+    {
+      "animations": [
+        "A01",
+        "A25"
+      ],
+      "bones": 277,
+      "id": "keqing",
+      "instance_isolation": true,
+      "source_restored": true,
+      "surfaces": 20
+    },
+    {
+      "animations": [
+        "A01",
+        "A25"
+      ],
+      "bones": 719,
+      "id": "huahuo",
+      "instance_isolation": true,
+      "source_restored": true,
+      "surfaces": 40
+    },
+    {
+      "animations": [
+        "A01",
+        "A25"
+      ],
+      "bones": 251,
+      "id": "hutao",
+      "instance_isolation": true,
+      "source_restored": true,
+      "surfaces": 21
+    }
+  ],
+  "passed": true
+}

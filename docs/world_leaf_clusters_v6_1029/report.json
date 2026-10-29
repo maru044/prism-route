@@ -1,0 +1,56 @@
+{
+  "actual_scene": "res://scenes/map_1021.tscn",
+  "adapter": "NVIDIA GeForce RTX 5070 Ti",
+  "clusters": {
+    "batches": 40,
+    "card_size_m": [
+      1.9575,
+      2.97
+    ],
+    "cluster_scale": 1.35,
+    "clusters": {
+      "main": 1452,
+      "ruin": 436
+    },
+    "factory_sha256": "e8e7c767659bf4bb53be77783f1aee1731a8b60f32bbeabfa8c4788cac9e0a5a",
+    "individual_leaves": 0,
+    "patches": {
+      "main": 44,
+      "ruin": 13
+    },
+    "placement": "connected growth sources, branching guide paths, body/connector/tip modules along actual upper boundaries",
+    "receiver_meshes": 63,
+    "revision": "cluster-v6-growth",
+    "shader": "res://shaders/environment/wall_leaf_clusters_v6.gdshader",
+    "shader_sha256": "a3f42c36cd186232129410433a2e39c9217294b197e2c75aaa89ea239f85a081",
+    "shared_factory": "res://scripts/world/wall_leaf_clusters.gd",
+    "texture": "res://assets/world/architecture_details_1029/foliage_leaf_clusters_v6.png",
+    "texture_sha256": "ae53a52ad0f4d92ec94d6b08962cb43b10e76824baa8871f32604f682b08aa74",
+    "upper_paths": {
+      "main": 7,
+      "ruin": 8
+    }
+  },
+  "failures": [],
+  "grass_bake_valid": true,
+  "passed": true,
+  "revision": "world-cluster-v6-growth",
+  "summon_print_count": 1,
+  "unchanged_assets": {
+    "assets/vegetation/shaders/vegetation_wind_soft_backlight.gdshader": true,
+    "assets/world/architecture_details_1029/foliage_leaf_mask_v2.png": true,
+    "assets/world/current_map_validation/current_region.glb": true,
+    "assets/world/current_map_validation/grass_bake/manifest.json": true,
+    "assets/world/current_map_validation/metadata.json": true,
+    "assets/world/current_map_validation/tree_layout.json": true,
+    "assets/world/initial_ruin_1029/ruin.glb": true,
+    "assets/world/initial_ruin_1029/walk_collision.glb": true,
+    "project.godot": true,
+    "scripts/map_1021.gd": true
+  },
+  "visible_clusters": {
+    "main": 0,
+    "ruin": 436
+  },
+  "window_title": "Prism Route | 大世界 · 叶团 V6"
+}

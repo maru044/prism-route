@@ -1,0 +1,125 @@
+{
+  "version": 2,
+  "generation": "built-in image_gen",
+  "sources": {
+    "seam": {
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "format": "RGB, red channel is linear data",
+      "sha256": "99f5c2258e7d5d23795a965a1ed4755eb86cf0b97a4c167811074ac21f1a5de4",
+      "active_bounds": [
+        560,
+        0,
+        699,
+        1254
+      ],
+      "samples_vertical_edges": [
+        20,
+        18
+      ]
+    },
+    "plants": {
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "format": "RGBA",
+      "filename": "foliage_leaf_mask_v2.png",
+      "color_mode": "alpha silhouette only; existing project palette controls RGB",
+      "sha256": "adb7676259be551fca92978aa3478b77b8a99d76ee2918154f71035c8f2e03c8",
+      "transparent_fraction": 0.7294895568630144,
+      "cells": [
+        {
+          "cell": [
+            0,
+            0
+          ],
+          "content_bounds": [
+            211,
+            146,
+            454,
+            593
+          ],
+          "padding_pixels": [
+            211,
+            146,
+            173,
+            34
+          ],
+          "border_alpha_max": 1
+        },
+        {
+          "cell": [
+            1,
+            0
+          ],
+          "content_bounds": [
+            44,
+            165,
+            524,
+            581
+          ],
+          "padding_pixels": [
+            44,
+            165,
+            103,
+            46
+          ],
+          "border_alpha_max": 1
+        },
+        {
+          "cell": [
+            0,
+            1
+          ],
+          "content_bounds": [
+            115,
+            168,
+            557,
+            494
+          ],
+          "padding_pixels": [
+            115,
+            168,
+            70,
+            133
+          ],
+          "border_alpha_max": 1
+        },
+        {
+          "cell": [
+            1,
+            1
+          ],
+          "content_bounds": [
+            53,
+            232,
+            523,
+            475
+          ],
+          "padding_pixels": [
+            53,
+            232,
+            104,
+            152
+          ],
+          "border_alpha_max": 1
+        }
+      ]
+    }
+  },
+  "atlas_layout": [
+    "narrow_leaf_cluster",
+    "broad_leaf_cluster",
+    "hanging_leaf_cluster",
+    "low_leaf_cluster"
+  ],
+  "post_generation_pixel_edits": false,
+  "shape_revised_with_imagegen": true,
+  "shader_leaf_alpha_cutoff": 0.42,
+  "shader_leaf_alpha_feather": 0.06,
+  "runtime_uses_texture_rgb": false,
+  "palette_source": "scripts/foliage_style.gd:GREEN_VALUES.species_mid_color"
+}

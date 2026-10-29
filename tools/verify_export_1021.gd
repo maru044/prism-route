@@ -31,8 +31,18 @@ func run() -> void:
 	var stream=world.vegetation.volume_streamer
 	check(stream.store.last_error.is_empty(),stream.store.last_error)
 	check(stream.store.manifest.get("complete",false),"Complete bake did not open in release")
-	check(stream.store.manifest.get("cells",{}).size()==11321,"Wrong baked cell count")
-	check(world.vegetation.tree_instance_count==19605,"Wrong tree count")
+	var cell_index: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(asset+"grass_cells.json"))
+	check(stream.store.manifest.get("cells",{}).size()==cell_index.cells.size(),"Wrong baked cell count")
+	var tree_rows: Array=JSON.parse_string(FileAccess.get_file_as_string(asset+"tree_layout.json"))
+	var expected_trees:=0
+	for row: Array in tree_rows:
+		if not world.initial_ruin.planting_mask.blocks(Vector3(row[0],row[1],row[2]),3.):expected_trees+=1
+	check(world.vegetation.tree_instance_count==expected_trees,"Wrong visible tree count")
+	check(FileAccess.file_exists("res://assets/world/initial_ruin_1029/manifest.json"),"Missing ruin manifest")
+	check(FileAccess.file_exists("res://assets/world/initial_ruin_1029/walk_collision.json"),"Missing smooth walk manifest")
+	check(world.initial_ruin.walk_geometry.find_children("*","StaticBody3D",true,false).size()==6,"Smooth stair collision missing in release")
+	check(world.initial_ruin.walk_geometry.find_children("*","MeshInstance3D",true,false).is_empty(),"Collision helpers visible in release")
+	check(world.initial_ruin.ready_for_interaction and world.initial_ruin.avatar.effect.binding_report.converted==20,"Ruin/Keqing not ready in release")
 	var spawns: Array=[]
 	for index in [0,2,7]:
 		await world.select_spawn(index);await frames(65)

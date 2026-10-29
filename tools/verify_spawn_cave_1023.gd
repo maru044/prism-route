@@ -21,7 +21,7 @@ func ray(a: Vector3,b: Vector3) -> Dictionary:
 
 func walk_route() -> Dictionary:
 	var actor=world.character
-	var reached:=0;var total_frames:=0;var longest_air:=0;var air:=0
+	var reached:=0;var total_frames:=0;var longest_air:=0;var air:=0;var unsupported_air:=0;var max_air_gap:=0.
 	actor.test_running=true
 	for row: Array in route.native_waypoints:
 		var goal:=point(row);var success:=false
@@ -32,6 +32,10 @@ func walk_route() -> Dictionary:
 			actor.test_move=Vector2(local.x,local.z).normalized()
 			await physics_frame;total_frames+=1
 			air=0 if actor.is_on_floor()else air+1;longest_air=maxi(longest_air,air)
+			if not actor.is_on_floor():
+				var support:=ray(actor.position+Vector3.UP*.025,actor.position-Vector3.UP*.26)
+				if support.is_empty():unsupported_air+=1
+				else:max_air_gap=maxf(max_air_gap,actor.position.y-support.position.y)
 			if actor.position.y<30:break
 		actor.test_move=Vector2.ZERO
 		if not success:check(false,"Cave exit route blocked at waypoint %d"%reached);break
@@ -39,8 +43,10 @@ func walk_route() -> Dictionary:
 	actor.test_running=false;await frames(20)
 	check(reached==route.native_waypoints.size(),"Incomplete cave-to-roof walk")
 	check(actor.is_on_floor(),"Roof return is not grounded")
-	check(longest_air<=2,"Character lost floor along the new path")
-	return {"waypoints_reached":reached,"waypoints":route.native_waypoints.size(),"physics_frames":total_frames,"longest_air_frames":longest_air,"end_position":serial(actor.position)}
+	# The new ruin connector overlaps the last legacy waypoints. Leaving its
+	# shallow 0.2 m lip briefly loses floor; require nearby support throughout.
+	check(longest_air<=8 and unsupported_air==0,"Cave route lost nearby floor support")
+	return {"waypoints_reached":reached,"waypoints":route.native_waypoints.size(),"physics_frames":total_frames,"longest_air_frames":longest_air,"unsupported_air_frames":unsupported_air,"max_air_floor_gap_m":max_air_gap,"end_position":serial(actor.position)}
 
 func material_and_headroom() -> Dictionary:
 	var q:=point(route.mouth);var inward:=Vector3(route.inward[0],0,-route.inward[1])
@@ -71,6 +77,7 @@ func roots_check() -> Dictionary:
 	var bad:=0;var roof_count:=0;var max_error:=0.
 	for row: Array in rows:
 		var p:=Vector3(row[0],row[1],row[2]);var x:=p.x+1450.;var y:=1150.-p.z
+		if world.initial_ruin.planting_mask.blocks(p,3.):continue
 		if x<291 or x>736 or y> -220 or y< -484:continue
 		var hit:=ray(Vector3(p.x,100,p.z),Vector3(p.x,-1,p.z))
 		if hit.is_empty()or hit.collider.get_meta("surface_kind","")!="Terrain":bad+=1;continue

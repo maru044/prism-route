@@ -1,0 +1,40 @@
+{
+  "adapter": "NVIDIA GeForce RTX 5070 Ti",
+  "failures": [],
+  "interaction": {
+    "area_enter_exit": true,
+    "completed_solid_collision": true,
+    "free_camera_blocked": true,
+    "key": "E",
+    "materialization_seconds": 3.5,
+    "one_shot_print_count": 1,
+    "outside_blocked": true,
+    "printed_state_retained": true,
+    "vehicle_blocked": true
+  },
+  "passed": true,
+  "trial": {
+    "collision_count": 538,
+    "exact_material_restore": true,
+    "grass_bake_valid": true,
+    "hosts": {
+      "main": 3,
+      "ruin": 62
+    },
+    "independent_layer_controls": true,
+    "material_variants": 5,
+    "reflection_hosts": 65,
+    "source_mesh_identity_unchanged": true,
+    "unchanged_files": [
+      "project.godot",
+      "assets/world/cliff_b_test/architecture.tres",
+      "assets/world/cliff_b_test/architecture.gdshader",
+      "assets/world/current_map_validation/current_region.glb",
+      "assets/world/current_map_validation/metadata.json",
+      "assets/world/current_map_validation/grass_bake/manifest.json",
+      "assets/world/current_map_validation/tree_layout.json",
+      "assets/world/initial_ruin_1029/ruin.glb",
+      "assets/world/initial_ruin_1029/walk_collision.glb"
+    ]
+  }
+}

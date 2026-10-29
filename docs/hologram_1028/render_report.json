@@ -1,0 +1,43 @@
+{
+  "failures": [],
+  "passed": true,
+  "render": {
+    "adapter": "NVIDIA GeForce RTX 5070 Ti",
+    "background_leak_rgb_delta": 0.0,
+    "captures": [
+      "ganyu_interior",
+      "ganyu_daylight",
+      "keqing_interior",
+      "keqing_daylight",
+      "keqing_face_daylight",
+      "huahuo_interior",
+      "huahuo_daylight",
+      "hutao_interior",
+      "hutao_daylight",
+      "ganyu_greeting"
+    ],
+    "internal_head_checks": [
+      {
+        "camera_angles": 3,
+        "internal_marker_rgb_delta": 0.0,
+        "model": "ganyu"
+      },
+      {
+        "camera_angles": 3,
+        "internal_marker_rgb_delta": 0.0,
+        "model": "keqing"
+      },
+      {
+        "camera_angles": 3,
+        "internal_marker_rgb_delta": 0.0,
+        "model": "huahuo"
+      },
+      {
+        "camera_angles": 3,
+        "internal_marker_rgb_delta": 0.0,
+        "model": "hutao"
+      }
+    ],
+    "opaque_occlusion_rgb_delta": 0.0
+  }
+}

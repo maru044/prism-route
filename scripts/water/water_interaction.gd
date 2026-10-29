@@ -1,4 +1,5 @@
 extends RefCounted
+signal step_emitted(event: Dictionary)
 ## Bounded world-space events. No colliders, floats, or global fluid simulation.
 const MAX_EVENTS := 16
 const LIFETIME := 5.0
@@ -25,6 +26,7 @@ func add_event(position: Vector3, body_id: String, clock: float, amplitude: floa
 	if events.size() >= MAX_EVENTS:events.pop_front()
 	events.append({"xz": Vector2(position.x, position.z), "body": body_id, "birth": clock, "amplitude": amplitude})
 	emitted += 1
+	step_emitted.emit(events.back())
 
 func tick(actor: CharacterBody3D, clock: float, delta: float, space: PhysicsDirectSpaceState3D) -> void:
 	expire(clock)

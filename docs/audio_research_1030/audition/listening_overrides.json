@@ -1,0 +1,13 @@
+{
+  "wind_leaves": {
+    "listening_file": "files/wind_leaves_listen_v3.mp3",
+    "processing_note": "响度修正版：原录音非常小声；已提高响度并限制峰值，保留原下载文件。仅用于试听，不代表游戏最终混音。",
+    "source_file": "files/wind_leaves_preview.mp3",
+    "integrated_loudness_input_lufs": -51.8,
+    "integrated_loudness_output_lufs": -20.38,
+    "processing": "FFmpeg loudnorm, target -20 LUFS, true peak -2 dBTP; PCM16 intermediate removes inherited ReplayGain; MP3 listening copy",
+    "sha256": "96bc7e8eacfe3ed3c91844eb6e223ae70267fd86ee176882dbab8a6c69e054ce",
+    "bytes": 5763069,
+    "duration_seconds": 244.178413
+  }
+}

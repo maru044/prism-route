@@ -1,0 +1,111 @@
+{
+  "capture": false,
+  "failures": [],
+  "geometry": [
+    {
+      "id": "a26c788a-585d-4a98-befc-a6c7cc8083e7",
+      "max_height_error_m": 0.00571870803833008,
+      "missing": 0,
+      "samples": 1591
+    },
+    {
+      "id": "920c8a45-b23e-4260-9aab-86333f61b992",
+      "max_height_error_m": 0.00988006591796875,
+      "missing": 0,
+      "samples": 1011
+    },
+    {
+      "id": "95094d17-bdb0-4407-bdca-d26ab1deaad7",
+      "max_height_error_m": 0.009552001953125,
+      "missing": 0,
+      "samples": 1006
+    },
+    {
+      "id": "0280eafa-4058-40dd-8cf0-36b575adcb14",
+      "max_height_error_m": 0.00589752197265625,
+      "missing": 0,
+      "samples": 1194
+    },
+    {
+      "id": "0e79433e-80e9-48f1-ab77-3786fdc3819f",
+      "max_height_error_m": 0.0043487548828125,
+      "missing": 0,
+      "samples": 722
+    },
+    {
+      "id": "b0a0f593-d5d4-40ae-b182-36858b4a653a",
+      "max_height_error_m": 0.00633430480957031,
+      "missing": 0,
+      "samples": 824
+    }
+  ],
+  "mesh_sha256": "9539169f439699fb2112d7751b0728d0170ae4db0f8561a9235abf5b3522a0cb",
+  "objects": 208.0,
+  "passed": true,
+  "trees": {
+    "changed_horizontal_layout": 0,
+    "count": 19585,
+    "invalid_roots": 0,
+    "manual_terrain_tree_counts": {
+      "0280eafa-4058-40dd-8cf0-36b575adcb14": 320,
+      "0e79433e-80e9-48f1-ab77-3786fdc3819f": 133,
+      "920c8a45-b23e-4260-9aab-86333f61b992": 1016,
+      "95094d17-bdb0-4407-bdca-d26ab1deaad7": 501,
+      "a26c788a-585d-4a98-befc-a6c7cc8083e7": 466,
+      "b0a0f593-d5d4-40ae-b182-36858b4a653a": 100
+    },
+    "max_root_error_m": 0.0,
+    "removed": 0
+  },
+  "triangles": 10546371.0,
+  "walks": [
+    {
+      "grounded": true,
+      "horizontal_route_m": 12,
+      "id": "a26c788a-585d-4a98-befc-a6c7cc8083e7",
+      "longest_air_frames": 0,
+      "reached": 4,
+      "waypoints": 4
+    },
+    {
+      "grounded": true,
+      "horizontal_route_m": 12,
+      "id": "920c8a45-b23e-4260-9aab-86333f61b992",
+      "longest_air_frames": 0,
+      "reached": 4,
+      "waypoints": 4
+    },
+    {
+      "grounded": true,
+      "horizontal_route_m": 12,
+      "id": "95094d17-bdb0-4407-bdca-d26ab1deaad7",
+      "longest_air_frames": 0,
+      "reached": 4,
+      "waypoints": 4
+    },
+    {
+      "grounded": true,
+      "horizontal_route_m": 12,
+      "id": "0280eafa-4058-40dd-8cf0-36b575adcb14",
+      "longest_air_frames": 0,
+      "reached": 4,
+      "waypoints": 4
+    },
+    {
+      "grounded": true,
+      "horizontal_route_m": 12,
+      "id": "0e79433e-80e9-48f1-ab77-3786fdc3819f",
+      "longest_air_frames": 0,
+      "reached": 4,
+      "waypoints": 4
+    },
+    {
+      "grounded": true,
+      "horizontal_route_m": 12,
+      "id": "b0a0f593-d5d4-40ae-b182-36858b4a653a",
+      "longest_air_frames": 0,
+      "reached": 4,
+      "waypoints": 4
+    }
+  ]
+}

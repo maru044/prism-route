@@ -1,0 +1,382 @@
+{
+  "affected_candidates": 76,
+  "base_mesh_unchanged": true,
+  "cells": 11436,
+  "changed_cells": [
+    {
+      "after_sha256": "8f67fcefa89488617d5dd748e79fe135a758d14ebb831d48b21717a52dc28366",
+      "before_sha256": "2088612b70570777a8e375f49d667d967b3970ff817eaba3888abde583c2b855",
+      "cell": "-37_1_59",
+      "removed_roots": 500
+    },
+    {
+      "after_sha256": "b0c9285d4e4b22bfdf38b3cb2657c1c6f6f83b42199ced5f1acb3ce03ca28538",
+      "before_sha256": "613118b5fdd33d62c2d8554d735e2815b26584181d3f775505e367c9946b6d58",
+      "cell": "-42_2_51",
+      "removed_roots": 1
+    },
+    {
+      "after_sha256": "38eb59b46086d0022a5923e0e03bc19ba7dfc89ae373e064ce8296cd6eccaa5c",
+      "before_sha256": "cba00c01d42af5a710a01123195bdf6d1e90ad58f1e9a9d8d7ac05b99bfa3a06",
+      "cell": "-42_2_55",
+      "removed_roots": 1029
+    },
+    {
+      "after_sha256": "e218f08cf83cf29026663e5de85e6ecb3c61ae3820d139f4dbc600e47b6b1131",
+      "before_sha256": "8a445492e186862c003a2277bfe096d7f99e659c4dd526f7263a22d63bd4a505",
+      "cell": "-43_2_52",
+      "removed_roots": 3615
+    },
+    {
+      "after_sha256": "7f314c666f32efda8527336dc7c534090117ae13bdfd708f28ebea96a7b434d8",
+      "before_sha256": "8ce7c1aaab774b7ddf7d78f10384a77a019673dc93cdcbc0d833a3da59021de3",
+      "cell": "-38_1_58",
+      "removed_roots": 525
+    },
+    {
+      "after_sha256": "649a3accfd4e0cd45703e6774e1936ab3c84bb90ab8220534562be5a8b112ba3",
+      "before_sha256": "606e99696afbcc80463d9f38ceb2771c832cf9fc2c766dcaaeb743b44fa8201f",
+      "cell": "-39_1_57",
+      "removed_roots": 17
+    },
+    {
+      "after_sha256": "dfdcacb414245c5bdefc936f9a1d5ebf4bef86801d5741e2f735d1314e159002",
+      "before_sha256": "29512e8a4e13528007d0a4af54aa818b43b6ca7443fb62d722a92bd71c4fc854",
+      "cell": "-40_1_56",
+      "removed_roots": 16
+    },
+    {
+      "after_sha256": "9c5373e551cf6e2a2cc6b6795001021154e14d4780b21f3df0c764de7a232b6d",
+      "before_sha256": "1473384a7e7ee1086a93edc3266cd213bc95adeb890e632788fb0e3be5c8791a",
+      "cell": "-41_2_55",
+      "removed_roots": 17
+    },
+    {
+      "after_sha256": "e3b0bcf0574b095fd6da30cc0f64c7052c94ffe752227a17727cc39dd8e2f9a9",
+      "before_sha256": "aa07733a446ef48de0df2ffff6c7bd36e31f0564160c81c61d891e87ec413267",
+      "cell": "-42_2_52",
+      "removed_roots": 1965
+    },
+    {
+      "after_sha256": "24c03c5e2d4be6efb1c4a6e062fe7cae28c4c1840843cedafbbf294e667b1618",
+      "before_sha256": "f63824929444c9ce2eff0057af7183a7bd4b323f045c23563dd498414e96e237",
+      "cell": "-42_2_56",
+      "removed_roots": 82
+    },
+    {
+      "after_sha256": "2356d38e8412246df6aba32842de08992423c7f01001fa47981c44eeabf77164",
+      "before_sha256": "69f35c633c3aebfcbd86a910b31e519db98bf8b5fff66b386a1b5798cfd15486",
+      "cell": "-43_2_53",
+      "removed_roots": 1464
+    },
+    {
+      "after_sha256": "ff0fa8c5bd91579370784a8288bd49196d23973fbe74a29d8ad6c225570e2758",
+      "before_sha256": "37d5794e8e54c8753796d50a94c0716d97f9d281f8fda0469156397114482044",
+      "cell": "-38_1_59",
+      "removed_roots": 384
+    },
+    {
+      "after_sha256": "eb73d05da3efd8f070311e3fce32f669fba98cda54d83a3c8e179548413b6502",
+      "before_sha256": "a9056db111b5134ff0da599693c192876e9b7d54dc81aca5035d03c5310890a5",
+      "cell": "-39_1_58",
+      "removed_roots": 1304
+    },
+    {
+      "after_sha256": "11754375e7adbb05b5f50e66d06d7a4a832afa73893076216d89414bc3e00550",
+      "before_sha256": "2c990ad1a13dd8a6e0a05d6b94d33424b5aec1c84936fc0ac435f4f41ec5f9ea",
+      "cell": "-40_1_57",
+      "removed_roots": 1354
+    },
+    {
+      "after_sha256": "e245ff8d026a6bb53117ffbc601a0668ef5046d35f8bb0356891a966ce5e6c6b",
+      "before_sha256": "8d7ee059ddecf8408225caac02762d72e1f5156bb2c0be8bf13b3612f53c0d3f",
+      "cell": "-41_1_56",
+      "removed_roots": 590
+    },
+    {
+      "after_sha256": "05285718ddca366df3b14c3229a6e38ec4c7d83e97dccc2fbd54a7ef9ca80fc7",
+      "before_sha256": "42f709e3a90964a96860169fb86c9e92567912a722802e22eb953c87b53c4c09",
+      "cell": "-41_2_56",
+      "removed_roots": 571
+    },
+    {
+      "after_sha256": "27c83c4629e2e674e0d22837668151201e0daf3c6d575f85a058e0386bd64472",
+      "before_sha256": "bcb20c7c16817a967954c598b5d35b96023894fd93f5be6361aca7f23d5174fc",
+      "cell": "-42_2_53",
+      "removed_roots": 2279
+    },
+    {
+      "after_sha256": "f585116e6ab4f1bb12c8a6fb1ef00130cfb80556fd12fee3b741364902ce19a5",
+      "before_sha256": "01586ea74012d5e226a59ec2a6ce11e544ea1cc4cec577bfdc2440c963573dc7",
+      "cell": "-43_2_50",
+      "removed_roots": 23
+    },
+    {
+      "after_sha256": "9026b350a0fde0466ed43a59b0b589aeecd2d5bd11a343faf783ff3306201da9",
+      "before_sha256": "c497bd04b4c1c5c92ad8c17e9fad5a6f091459c5ceeb3db3171f79903c7e64c7",
+      "cell": "-37_1_58",
+      "removed_roots": 30
+    },
+    {
+      "after_sha256": "ad415bba3aba7a6165c56feb27790394e61957a55857d037f7aa6de5d77be8d8",
+      "before_sha256": "2d8666000f1919a876f8f6627a63b396321c7b14f54f03cc51232df4221a8c5c",
+      "cell": "-39_1_59",
+      "removed_roots": 1
+    },
+    {
+      "after_sha256": "d956f4c3934d5d962f77e18f50932b7bf285eb418472e8167d09a9b976c6150f",
+      "before_sha256": "e7410e88cfd4243410e5e1353e1d8d4564b0258d2a9e5f431edda6f0075af858",
+      "cell": "-40_1_58",
+      "removed_roots": 105
+    },
+    {
+      "after_sha256": "1343d71f2a955a7bfd7d30279b847bca49dbf417ab97dda2613c54d73c3ba281",
+      "before_sha256": "63efb255295539b5e75c5389c6bd339620319a2e6707bdf14e95cd0e88847735",
+      "cell": "-41_1_57",
+      "removed_roots": 87
+    },
+    {
+      "after_sha256": "3bf9d240f97c4b127228d0efb229257686295e0c8d49a9778792d7e1c01029a2",
+      "before_sha256": "5a781d30f44ebf52e35e9ee3de101c7a737f708b31356d1a3b31e2faad34eb2d",
+      "cell": "-42_2_54",
+      "removed_roots": 1186
+    },
+    {
+      "after_sha256": "070d260dc24cfd86c8418425bde853565ad695c523a8dafeb42bdce0011db6e0",
+      "before_sha256": "0af1efdab637653045417b644c84f1b60d7da59218b0364a7d4b37688bc158f6",
+      "cell": "-43_2_51",
+      "removed_roots": 2460
+    }
+  ],
+  "checked_source_files": 11436,
+  "compressed_bytes": 1024143436,
+  "excluded_trees": [
+    {
+      "index": 483,
+      "position": [
+        -931.3714,
+        35.015380859375,
+        1394.58168
+      ]
+    },
+    {
+      "index": 1739,
+      "position": [
+        -1003.21225,
+        58.2083740234375,
+        1253.18382
+      ]
+    },
+    {
+      "index": 2647,
+      "position": [
+        -995.9534,
+        53.3666381835938,
+        1331.24654
+      ]
+    },
+    {
+      "index": 2988,
+      "position": [
+        -1003.02847,
+        58.3098754882813,
+        1288.88728
+      ]
+    },
+    {
+      "index": 3455,
+      "position": [
+        -1024.97516,
+        58.0450744628906,
+        1245.44324
+      ]
+    },
+    {
+      "index": 3479,
+      "position": [
+        -1020.83249,
+        58.6884765625,
+        1262.52235
+      ]
+    },
+    {
+      "index": 4152,
+      "position": [
+        -924.04279,
+        35.0509338378906,
+        1407.09097
+      ]
+    },
+    {
+      "index": 4347,
+      "position": [
+        -995.77649,
+        52.5494689941406,
+        1307.09686
+      ]
+    },
+    {
+      "index": 4405,
+      "position": [
+        -914.62982,
+        35.0744323730469,
+        1412.14774
+      ]
+    },
+    {
+      "index": 4915,
+      "position": [
+        -998.48688,
+        55.1625671386719,
+        1317.86232
+      ]
+    },
+    {
+      "index": 5892,
+      "position": [
+        -1023.58701,
+        54.70947265625,
+        1272.89099
+      ]
+    },
+    {
+      "index": 6071,
+      "position": [
+        -953.76505,
+        39.6235961914063,
+        1380.16621
+      ]
+    },
+    {
+      "index": 6371,
+      "position": [
+        -1015.18198,
+        58.9840393066406,
+        1243.26738
+      ]
+    },
+    {
+      "index": 7926,
+      "position": [
+        -905.87469,
+        35.0909729003906,
+        1415.0593
+      ]
+    },
+    {
+      "index": 10816,
+      "position": [
+        -961.01566,
+        41.6877136230469,
+        1368.39011
+      ]
+    },
+    {
+      "index": 10892,
+      "position": [
+        -994.40054,
+        56.0324401855469,
+        1262.57486
+      ]
+    },
+    {
+      "index": 11082,
+      "position": [
+        -1013.13596,
+        59.175048828125,
+        1282.88603
+      ]
+    },
+    {
+      "index": 11326,
+      "position": [
+        -1006.61423,
+        60.0286560058594,
+        1274.55508
+      ]
+    },
+    {
+      "index": 13466,
+      "position": [
+        -998.46716,
+        53.7045593261719,
+        1298.25693
+      ]
+    },
+    {
+      "index": 14698,
+      "position": [
+        -1024.1384,
+        58.0996398925781,
+        1235.02918
+      ]
+    },
+    {
+      "index": 16013,
+      "position": [
+        -881.87714,
+        35.1036682128906,
+        1417.06339
+      ]
+    },
+    {
+      "index": 16384,
+      "position": [
+        -942.81039,
+        35.0010070800781,
+        1380.5036
+      ]
+    },
+    {
+      "index": 16884,
+      "position": [
+        -1031.03589,
+        55.8200073242188,
+        1227.12041
+      ]
+    },
+    {
+      "index": 17267,
+      "position": [
+        -1011.35895,
+        60.0881958007813,
+        1264.9042
+      ]
+    },
+    {
+      "index": 17964,
+      "position": [
+        -971.57574,
+        46.6482238769531,
+        1355.09338
+      ]
+    },
+    {
+      "index": 18133,
+      "position": [
+        -1012.0065,
+        59.7227783203125,
+        1255.42336
+      ]
+    },
+    {
+      "index": 19245,
+      "position": [
+        -996.43994,
+        56.5811767578125,
+        1272.44542
+      ]
+    }
+  ],
+  "failures": [],
+  "instances": 207553268,
+  "passed": true,
+  "previous_signature": "fbff5b4111f4a5b47d716476007ed1d2e00e83d3bf54219c60618738ab6daf9a",
+  "removed_blades": 78420,
+  "removed_roots": 19605,
+  "signature": "d68f3da96179ed63fc6f75d0c3c9f82d1ce33dc7e05efebda96b3f6b61aee3e7",
+  "source_layout_trees": 19585,
+  "surviving_root_states_preserved": true,
+  "unchanged_files": 11412,
+  "visible_trees": 19558
+}

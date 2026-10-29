@@ -80,7 +80,7 @@ func run() -> void:
 	check(material.shader == wind.SHADER, "World has no accepted gust shader")
 	check(material.get_shader_parameter("gust_motion") == 2, "World is not using B")
 	check(is_equal_approx(float(material.get_shader_parameter("gust_body_hz")), 0.85), "World uses a different rebound speed")
-	check(wind.mode == wind.Mode.AUTO and scene.wind_menu.item_count == 3, "World wind selector is incomplete")
+	check(wind.mode == wind.Mode.AUTO, "World automatic wind is not enabled")
 	var signature: String = load("res://scripts/grass_baked_store.gd").signature(scene)
 	check(signature == EXPECTED_BAKE and stream.store.manifest.signature == signature, "Wind invalidated the existing bake")
 	check(stream.store.manifest.get("complete", false), "Full bake was not reused")
@@ -90,22 +90,22 @@ func run() -> void:
 		check(wind.lod_meshes[level].surface_get_array_index_len(0)==level*18,"Incorrect grass LOD geometry")
 	for parameter: String in ["biome_noise_texture", "biome_noise_scale", "biome_warp_distance", "biome_transition_half_width", "biome_center_x"]:
 		check(material.get_shader_parameter(parameter) == scene.terrain_material.get_shader_parameter(parameter), "Shared terrain/grass colors changed")
-	# The actual HUD selection must reach the runtime, including when hidden.
-	scene.wind_menu.item_selected.emit(wind.Mode.STRONG)
+	# Wind controls are intentionally absent from the compact HUD.
+	wind.set_mode(wind.Mode.STRONG)
 	wind.advance(3.1)
-	check(is_equal_approx(wind.blend, 1.0), "Cannot select strong wind from the world HUD")
-	scene.wind_menu.item_selected.emit(wind.Mode.BREEZE)
+	check(is_equal_approx(wind.blend, 1.0), "Cannot enable strong wind")
+	wind.set_mode(wind.Mode.BREEZE)
 	wind.advance(3.1)
 	check(is_zero_approx(wind.blend), "Cannot return to breeze")
-	scene.wind_menu.item_selected.emit(wind.Mode.AUTO)
+	wind.set_mode(wind.Mode.AUTO)
 	wind.advance(11.1)
 	check(is_equal_approx(wind.blend, 1.0), "Automatic wind does not reach strong wind")
 	wind.advance(11.0)
 	check(is_zero_approx(wind.blend), "Automatic wind does not return to breeze")
 	scene.set_review_ui_visible(false)
-	check(not scene.wind_menu.is_visible_in_tree(), "H/no-UI cannot hide the wind selector")
+	check(not scene.spawn_menu.is_visible_in_tree(), "H/no-UI cannot hide the location selector")
 	scene.set_review_ui_visible(true)
-	check(scene.wind_menu.is_visible_in_tree(), "Cannot restore the wind selector")
+	check(scene.spawn_menu.is_visible_in_tree(), "Cannot restore the location selector")
 	var rows: Array = []
 	var extra_cpu_bytes:=0
 	for spawn: int in [1, 5, 7]:

@@ -1,0 +1,38 @@
+{
+  "failures": [],
+  "geometry": {
+    "anchor": [
+      -1015.28479003906,
+      61.5,
+      1255.7880859375
+    ],
+    "collision_samples": 649,
+    "keqing_surfaces": 20,
+    "max_height_error_m": 0.000213623046875,
+    "meshes": 328,
+    "missing": 0,
+    "overlapping_components_skipped": 87,
+    "source_triangles": 6904.0
+  },
+  "interaction": {
+    "area_enter_exit": true,
+    "completed_solid_collision": true,
+    "free_camera_blocked": true,
+    "key": "E",
+    "materialization_seconds": 3.5,
+    "one_shot_print_count": 1,
+    "outside_blocked": true,
+    "printed_state_retained": true,
+    "vehicle_blocked": true
+  },
+  "passed": true,
+  "walking": {
+    "grounded_at_end": true,
+    "longest_airborne_ticks": 0,
+    "max_target_height_gap_m": 1.04981231689453,
+    "reached": 148,
+    "surface_step_events": 442,
+    "targets": 148,
+    "wall_seconds": 55.604
+  }
+}

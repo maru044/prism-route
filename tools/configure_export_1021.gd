@@ -53,6 +53,10 @@ func run() -> void:
 			queue.append(resolved)
 	var files:=PackedStringArray(visited.keys());files.sort()
 	config.set_value("preset.0","export_files",files)
+	var includes: String=config.get_value("preset.0","include_filter","")
+	for feature_manifest: String in ["assets/world/initial_ruin_1029/manifest.json","assets/world/initial_ruin_1029/walk_collision.json","assets/world/architecture_details_1029/trial_settings.json","assets/audio/world_1030/settings.json","assets/audio/world_1030/manifest.json","assets/audio/world_1030/CREDITS.txt"]:
+		if not feature_manifest in includes.split(","):includes+=("," if not includes.is_empty() else "")+feature_manifest
+	config.set_value("preset.0","include_filter",includes)
 	var exclusions: PackedStringArray=["docs/*","screenshots/*","archive/*","experiments/*","assets/water/review/*","assets/world/current_map_validation/review/*","assets/world/current_map_validation/grass_bake/manifest_part_*.json","*.3dm","*.3dmbak","*.blend","*.blend1","*.TMP"]
 	var bake_root: String="res://assets/world/current_map_validation/grass_bake/"
 	var bake: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(bake_root+"manifest.json"))

@@ -1,0 +1,153 @@
+{
+  "revision": "cluster-v6-growth",
+  "display_name": "叶团 V6 · 生长与尺度",
+  "scene": "res://scenes/wall_foliage_art_prototype.tscn",
+  "aliases": [
+    "res://scenes/wall_foliage_cluster_preview.tscn",
+    "res://scenes/architecture_detail_lab.tscn"
+  ],
+  "script": "res://scripts/world/wall_foliage_cluster_preview.gd",
+  "shader": "res://shaders/environment/wall_leaf_clusters_v6.gdshader",
+  "texture": "res://assets/world/architecture_details_1029/foliage_leaf_clusters_v6.png",
+  "texture_sha256": "ae53a52ad0f4d92ec94d6b08962cb43b10e76824baa8871f32604f682b08aa74",
+  "default_view": 0,
+  "painted_color": true,
+  "parallax_enabled": false,
+  "volume_lighting": true,
+  "sources": [
+    {
+      "name": "V6 主体 / 连接 / 末端",
+      "texture": "res://assets/world/architecture_details_1029/foliage_leaf_clusters_v6.png",
+      "sha256": "ae53a52ad0f4d92ec94d6b08962cb43b10e76824baa8871f32604f682b08aa74",
+      "cell_bounds": [
+        [
+          0.20733652312599682,
+          0.20574162679425836,
+          0.8931419457735247,
+          0.9202551834130781
+        ],
+        [
+          0.11004784688995216,
+          0.2886762360446571,
+          0.8548644338118022,
+          0.8771929824561403
+        ],
+        [
+          0.2966507177033493,
+          0.1371610845295056,
+          0.7799043062200957,
+          0.7814992025518341
+        ],
+        [
+          0.10047846889952153,
+          0.21690590111642744,
+          0.8883572567783095,
+          0.7272727272727273
+        ]
+      ]
+    },
+    {
+      "name": "原墙面叶团 V2",
+      "texture": "res://assets/world/architecture_details_1029/foliage_leaf_mask_v2.png",
+      "sha256": "adb7676259be551fca92978aa3478b77b8a99d76ee2918154f71035c8f2e03c8",
+      "cell_bounds": [
+        [
+          0.3365231259968102,
+          0.23285486443381181,
+          0.722488038277512,
+          0.9457735247208932
+        ],
+        [
+          0.07017543859649122,
+          0.2647527910685805,
+          0.835725677830941,
+          0.9266347687400319
+        ],
+        [
+          0.18341307814992025,
+          0.2679425837320574,
+          0.8883572567783095,
+          0.7862838915470495
+        ],
+        [
+          0.08452950558213716,
+          0.3700159489633174,
+          0.8325358851674641,
+          0.7559808612440191
+        ]
+      ]
+    },
+    {
+      "name": "现有灌木叶团",
+      "texture": "res://assets/vegetation/textures/shrub_leaf_lobes_billboard_flat_v3.png",
+      "sha256": "f023714d7ca59f065a7ad18dc3de6bec16f82c06c6967202701e52c1c4451e99",
+      "cell_bounds": [
+        [
+          0.12109375,
+          0.16796875,
+          0.880859375,
+          0.921875
+        ],
+        [
+          0.052734375,
+          0.259765625,
+          0.923828125,
+          0.87890625
+        ],
+        [
+          0.142578125,
+          0.197265625,
+          0.94921875,
+          0.8125
+        ],
+        [
+          0.099609375,
+          0.185546875,
+          0.873046875,
+          0.8359375
+        ]
+      ]
+    },
+    {
+      "name": "现有树冠叶团",
+      "texture": "res://assets/vegetation/textures/tree_broad_clump_unlit_4var_v1.png",
+      "sha256": "d1a372aace31ec010965d9e1fc7196f6d1bfc11d948aceb921b4fcf0725249eb",
+      "cell_bounds": [
+        [
+          0.21614583333333334,
+          0.2630208333333333,
+          0.7890625,
+          0.7317708333333334
+        ],
+        [
+          0.2526041666666667,
+          0.2682291666666667,
+          0.7916666666666666,
+          0.7708333333333334
+        ],
+        [
+          0.1171875,
+          0.11979166666666667,
+          0.8958333333333334,
+          0.8619791666666666
+        ],
+        [
+          0.1953125,
+          0.18229166666666666,
+          0.8098958333333334,
+          0.8072916666666666
+        ]
+      ]
+    }
+  ],
+  "placement_seed": 731,
+  "target_clumps": 64,
+  "report_dir": "res://docs/foliage_growth_v6_1029/",
+  "factory": "res://scripts/world/wall_leaf_clusters.gd",
+  "default_scale": 1.35,
+  "scale_options": [
+    1.0,
+    1.35,
+    1.6
+  ]
+}

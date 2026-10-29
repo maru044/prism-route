@@ -1,0 +1,22 @@
+{
+  "existing_leaf_texture": "assets\\vegetation\\textures\\leaf_clusters_witness_sparse_flat_v11.png",
+  "opaque_rgb_values": [
+    [
+      91,
+      120,
+      75
+    ]
+  ],
+  "preparation_workflow": "tools/prepare_species_textures.py: generated alpha, flat RGB fill",
+  "existing_palette": "scripts/foliage_style.gd:GREEN_VALUES",
+  "runtime_default_color": "#66bb6a",
+  "runtime_texture_rgb_used": false,
+  "shape_requirements": [
+    "leaf blades only",
+    "no stems",
+    "no petioles",
+    "no branches",
+    "no baked leaf veins or light"
+  ],
+  "source_reference": "assets/vegetation/textures/shrub_leaf_lobes_billboard_flat_v3.png"
+}

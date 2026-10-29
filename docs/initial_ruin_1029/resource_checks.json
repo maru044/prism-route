@@ -1,0 +1,17 @@
+{
+  "base_glb_unchanged": true,
+  "tree_layout_unchanged": true,
+  "missing_export_dependencies": [],
+  "export_resources": 195,
+  "logic_passed": true,
+  "render_passed": true,
+  "surface_motion_passed": true,
+  "cave_regression_passed": true,
+  "preview_ready": true,
+  "smooth_logic_passed": true,
+  "smooth_cases": 25,
+  "smooth_render_passed": true,
+  "visual_ruin_mesh_unchanged": true,
+  "smooth_stair_gpu_grounded": true,
+  "smooth_stair_gpu_passed": true
+}
