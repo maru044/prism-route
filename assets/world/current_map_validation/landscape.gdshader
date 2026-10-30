@@ -15,6 +15,7 @@ uniform float biome_noise_scale = 0.00135;
 uniform float biome_warp_distance = 210.0;
 uniform float biome_transition_half_width = 135.0;
 uniform float biome_center_x = 20.0;
+#include "res://shaders/environment/meadow_zone.gdshaderinc"
 uniform vec4 ground_dry : source_color = vec4(0.588235, 0.541176, 0.333333, 1.0);
 uniform vec4 ground_green : source_color = vec4(0.447, 0.475, 0.255, 1.0);
 uniform bool use_far_meadow_color = false;
@@ -53,8 +54,7 @@ void fragment() {
     if (use_shared_meadow_biome) {
         float noise_value=textureLod(biome_noise_texture,
             world_position.xz*biome_noise_scale+vec2(0.137,0.411),0.0).r;
-        float transition=smoothstep(-biome_transition_half_width,biome_transition_half_width,
-            world_position.x-biome_center_x+(noise_value*2.0-1.0)*biome_warp_distance);
+        float transition=meadow_green_weight(world_position,noise_value,0.0);
         meadow=mix(ground_dry.rgb,ground_green.rgb,transition);
         if (use_far_meadow_color) {
             // Match the loss of dense grass (48–76 m) and survivors (76–128 m).

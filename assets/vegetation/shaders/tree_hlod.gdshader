@@ -50,6 +50,7 @@ uniform float biome_noise_scale = 0.014;
 uniform float biome_warp_distance = 4.0;
 uniform float biome_transition_half_width = 5.0;
 uniform float biome_center_x = 0.0;
+#include "res://shaders/environment/meadow_zone.gdshaderinc"
 
 uniform float use_species_palette = 0.0;
 uniform float species_palette_stage = 3.0;
@@ -179,12 +180,7 @@ void vertex() {
 			world_origin.xz * biome_noise_scale + vec2(0.137, 0.411),
 			0.0
 		).r;
-		float transition = smoothstep(
-			-biome_transition_half_width,
-			biome_transition_half_width,
-			world_origin.x - biome_center_x + (biome_noise * 2.0 - 1.0)
-				* biome_warp_distance
-		);
+		float transition = meadow_green_weight(world_origin,biome_noise,0.0);
 		palette_tint = mix(palette_dry.rgb, palette_green.rgb, transition);
 	}
 

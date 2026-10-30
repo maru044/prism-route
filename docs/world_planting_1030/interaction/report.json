@@ -1,0 +1,13 @@
+{
+  "alt_drag": true,
+  "axis_handles": true,
+  "failures": [],
+  "gesture_undo": true,
+  "incremental_undo": true,
+  "numeric_transaction": true,
+  "passed": true,
+  "persistent_tools_and_mode_switch": true,
+  "pointer_drag": true,
+  "save_unsubmitted_field": true,
+  "scene": "res://scenes/map_1021.tscn"
+}

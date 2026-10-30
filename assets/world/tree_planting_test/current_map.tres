@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=25 format=3]
+[gd_resource type="Resource" load_steps=28 format=3]
 
 [ext_resource type="Script" path="res://scripts/tree_planting/profile.gd" id="profile"]
 [ext_resource type="Script" path="res://scripts/tree_planting/species.gd" id="species"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" path="res://assets/vegetation/models/tree_small_broad_canopy.glb" id="small"]
 [ext_resource type="PackedScene" path="res://assets/vegetation/models/tree_medium_broad_clustered_canopy.glb" id="broad"]
 [ext_resource type="PackedScene" path="res://assets/vegetation/models/tree_medium_upright_asymmetric_canopy.glb" id="upright"]
+[ext_resource type="PackedScene" path="res://assets/vegetation/models/tree_medium_birch_upright_canopy.glb" id="birch"]
+[ext_resource type="Texture2D" path="res://assets/vegetation/textures/leaf_clusters_birch_sparse_flat_v1.png" id="birch_leaf"]
 [ext_resource type="Texture2D" path="res://assets/vegetation/textures/leaf_clusters_witness_sparse_flat_v11.png" id="leaf"]
 [ext_resource type="Shader" path="res://assets/world/current_map_validation/landscape.gdshader" id="ground_shader"]
 [ext_resource type="Texture2D" path="res://assets/world/current_map_validation/landscape_mask.res" id="mask"]
@@ -33,6 +35,14 @@ id = "upright"
 display_name = "大型直立树"
 model = ExtResource("upright")
 leaf_texture = ExtResource("leaf")
+
+[sub_resource type="Resource" id="species_birch"]
+script = ExtResource("species")
+id = "birch"
+display_name = "白桦树"
+model = ExtResource("birch")
+leaf_texture = ExtResource("birch_leaf")
+canopy_normal_weight = 0.30
 
 [sub_resource type="Resource" id="palette_green"]
 script = ExtResource("palette")
@@ -128,7 +138,7 @@ terrain = ExtResource("terrain")
 terrain_metadata = "res://assets/world/current_map_validation/metadata.json"
 baseline_layout = "res://assets/world/current_map_validation/tree_layout.json"
 test_edits_path = "res://assets/world/tree_planting_test/edits.json"
-species = Array[Resource]([SubResource("species_small"), SubResource("species_broad"), SubResource("species_upright")])
+species = Array[Resource]([SubResource("species_small"), SubResource("species_broad"), SubResource("species_upright"), SubResource("species_birch")])
 palettes = Array[Resource]([SubResource("palette_green"), SubResource("palette_cherry"), SubResource("palette_gold"), SubResource("palette_orange"), SubResource("palette_red"), SubResource("palette_legacy")])
 initial_center = Vector3(-415, 63, 910)
 architecture = ExtResource("architecture")

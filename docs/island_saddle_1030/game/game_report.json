@@ -1,0 +1,20 @@
+{
+  "actual_scene": "res://scenes/map_1021.tscn",
+  "failures": [],
+  "grass_signature": "ba956502a5277980535f7cf593721cb5134809971f52bead4c27ffa765ecd70a",
+  "maximum_collision_error_m": 0.00234222412109375,
+  "meshes": 173,
+  "mode": "render_review",
+  "partial_glass": {
+    "collision_geometry_sha256": "53862002ea06c29c68ebe0c5b36012a36d64f4b804f6e5277d4e730541256b7c",
+    "fraction": 0.324857558790266,
+    "visual_glass_meshes": 1
+  },
+  "passed": true,
+  "planting": {
+    "edits": 174,
+    "preserved": true,
+    "removed": 107
+  },
+  "walking_collision_samples": 37
+}

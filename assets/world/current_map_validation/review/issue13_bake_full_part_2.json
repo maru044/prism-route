@@ -1,13 +1,13 @@
 {
   "candidate_cells": 2859,
   "global_candidates": 11436,
-  "new_compressed_bytes": 257562912,
-  "new_instances": 52193932,
-  "new_raw_bytes": 730715048,
+  "new_compressed_bytes": 4924695,
+  "new_instances": 875496,
+  "new_raw_bytes": 12256944,
   "profile": {},
   "scope": "full",
-  "seconds": 322.269,
+  "seconds": 5.627,
   "shard_count": 4,
   "shard_index": 2,
-  "signature": "fbff5b4111f4a5b47d716476007ed1d2e00e83d3bf54219c60618738ab6daf9a"
+  "signature": "ba956502a5277980535f7cf593721cb5134809971f52bead4c27ffa765ecd70a"
 }

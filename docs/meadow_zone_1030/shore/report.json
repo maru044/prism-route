@@ -1,0 +1,16 @@
+{
+  "capture_root": "(-1128.524, 4.406464, -76.51355)",
+  "changed_samples": 2825,
+  "failures": [],
+  "grass_signature": "ba956502a5277980535f7cf593721cb5134809971f52bead4c27ffa765ecd70a",
+  "initial_maximum_change": 0.0,
+  "initial_samples": 3797,
+  "newly_green_shore_samples": 2109,
+  "outside_maximum_change": 0.0,
+  "outside_samples": 15772,
+  "passed": true,
+  "previous_green_reductions": 0,
+  "previous_lake_mask_unchanged": true,
+  "tree_count": 19470,
+  "upper_terrace_maximum_change": 0.0
+}

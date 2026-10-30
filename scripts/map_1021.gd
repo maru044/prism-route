@@ -1,7 +1,11 @@
 extends Node3D
 ## Full current map review; explicit-height spawn selection never snaps to a roof above.
 const ASSETS := "res://assets/world/current_map_validation/"
-const VEGETATION := preload("res://scripts/map_1021_vegetation.gd")
+const VEGETATION := preload("res://scripts/tree_planting/world_vegetation.gd")
+const PLANTING := preload("res://scripts/tree_planting/world_editor.gd")
+var planting
+var planting_edits_path := "res://assets/world/tree_planting/world_edits.json"
+@export var start_planting_editor:=false
 const PERFORMANCE_MONITOR := preload("res://scripts/performance_monitor_1021.gd")
 const FOLIAGE_STYLE := preload("res://scripts/foliage_style.gd")
 const GRASS_WIND := preload("res://scripts/grass_wind_world.gd")
@@ -11,6 +15,10 @@ const WATER_MANAGER := preload("res://scripts/water/water_manager.gd")
 const WORLD_AUDIO := preload("res://scripts/audio/world_audio_1030.gd")
 var world_audio
 const INITIAL_RUIN := preload("res://scenes/world/initial_ruin.tscn")
+const UPPER_RING := preload("res://scenes/world/upper_ring.tscn")
+const ISLAND_SADDLE := preload("res://scenes/world/island_saddle.tscn")
+var island_saddle
+var upper_ring
 const SURFACE_DETAIL_TRIAL := preload("res://scripts/world/architecture_detail_trial.gd")
 const ACTOR_SOLID_LAYER := 32
 var water_manager
@@ -62,7 +70,7 @@ func _ready() -> void:
 	camper.automation_enabled=automation_enabled;camper.set_physics_process(false);camper.set_process_unhandled_input(false);camper.visible=false
 	camper.calibrate_wheels()
 	camper.respawn_resolver=_resolve_camper_respawn
-	_load_mask();_environment();_build_model();_build_initial_ruin();_build_surface_detail_trial();_hud()
+	_load_mask();_environment();_build_model();_build_initial_ruin();_build_island_saddle();_build_upper_ring();_build_surface_detail_trial();_hud()
 	camera=Camera3D.new();camera.near=0.15;camera.far=10000;camera.fov=58;add_child(camera)
 	await get_tree().physics_frame;await get_tree().physics_frame
 	for proposal: Dictionary in metadata.spawns:
@@ -70,7 +78,14 @@ func _ready() -> void:
 	var initial_spawn:=0
 	for i in resolved_spawns.size():
 		if resolved_spawns[i].get("key","")==metadata.get("default_spawn_key",""):initial_spawn=i;break
-	if "--ruin-preview" in OS.get_cmdline_user_args() or "--ruin-stairs-preview" in OS.get_cmdline_user_args():initial_spawn=resolved_spawns.size()-1
+	if "--ruin-preview" in OS.get_cmdline_user_args() or "--ruin-stairs-preview" in OS.get_cmdline_user_args():
+		for i in resolved_spawns.size():
+			if resolved_spawns[i].get("key","")=="initial_ruin":initial_spawn=i;break
+	if "--upper-ring-preview" in OS.get_cmdline_user_args():initial_spawn=resolved_spawns.size()-1
+	if "--island-saddle-preview" in OS.get_cmdline_user_args():
+		for i in resolved_spawns.size():
+			if resolved_spawns[i].get("key","")=="island_saddle":initial_spawn=i;break
+	if start_planting_editor:initial_spawn=resolved_spawns.size()-1
 	await select_spawn(initial_spawn)
 	if "--ruin-preview" in OS.get_cmdline_user_args() or "--ruin-stairs-preview" in OS.get_cmdline_user_args():
 		var forward:=vec(initial_ruin.planting_mask.manifest.forward)
@@ -82,8 +97,10 @@ func _ready() -> void:
 	if vegetation_bake_only:
 		test_ready=true
 		return
+	planting=PLANTING.new();planting.name="WorldPlantingEditor";add_child(planting);planting.initialize(self)
 	vegetation=VEGETATION.new();vegetation.world_scene=self;add_child(vegetation)
 	vegetation.initialize(character,_noise(),2)
+	upper_ring.plant_courtyard(vegetation)
 	grass_wind=GRASS_WIND.new();add_child(grass_wind)
 	grass_wind.initialize(vegetation);grass_wind.set_mode(GRASS_WIND.Mode.AUTO)
 	_sync_meadow_color()
@@ -94,7 +111,13 @@ func _ready() -> void:
 	tree_placement_report=JSON.parse_string(FileAccess.get_file_as_string(ASSETS+"tree_layout_metadata.json"))
 	_sync_actor_controls()
 	test_ready=true
+	planting.finish()
+	if start_planting_editor or "--planting-editor" in OS.get_cmdline_user_args():planting.call_deferred("enter")
 	print("CURRENT_MAP_READY objects=%d triangles=%d spawns=%d trees=%d" % [metadata.objects,metadata.triangles,resolved_spawns.size(),vegetation.tree_instance_count])
+	if "--island-saddle-preview" in OS.get_cmdline_user_args():
+		set_free(true)
+		camera.global_position=vec(island_saddle.manifest.review_eye)
+		camera.look_at(vec(island_saddle.manifest.review_target))
 	if "--architecture-detail-preview" in OS.get_cmdline_user_args():surface_detail_trial.call_deferred("show_view",3)
 	if "--verify-world-clusters" in OS.get_cmdline_user_args():
 		var verifier: Node=load("res://tools/check_world_clusters_1029.gd").new();verifier.world=self;add_child(verifier);verifier.call_deferred("run")
@@ -124,6 +147,19 @@ func _initialize_water() -> void:
 	for mesh: MeshInstance3D in initial_ruin.geometry.find_children("*","MeshInstance3D",true,false):
 		if mesh.cast_shadow!=GeometryInstance3D.SHADOW_CASTING_SETTING_OFF:water_manager.register_reflector(mesh,Color("d8d2bf"))
 	surface_detail_trial.sync_reflections()
+	upper_ring.register_reflections(water_manager)
+	island_saddle.register_reflections(water_manager)
+
+func _build_island_saddle() -> void:
+	island_saddle=ISLAND_SADDLE.instantiate();add_child(island_saddle)
+	metadata.spawns.append({"name":"岛顶曲面遗址 · 曲面通路","key":"island_saddle","position":island_saddle.manifest.spawn,
+		"look_direction":island_saddle.manifest.look_direction,"required_floor_kind":"Structure",
+		"required_source_id":island_saddle.manifest.walking_surface_id,"maximum_search_distance_m":1.,"character_only":true})
+
+func _build_upper_ring() -> void:
+	upper_ring=UPPER_RING.instantiate();upper_ring.world=self;add_child(upper_ring)
+	var front: Array=upper_ring.manifest.front
+	metadata.spawns.append({"name":"上层环庭 · 中庭入口","key":"upper_ring","position":upper_ring.manifest.spawn,"look_direction":[-front[0],0,-front[2]],"required_floor_kind":"Terrain","maximum_search_distance_m":6.})
 
 func _build_initial_ruin() -> void:
 	initial_ruin=INITIAL_RUIN.instantiate();initial_ruin.world=self;add_child(initial_ruin)
@@ -153,7 +189,7 @@ func _sync_meadow_color() -> void:
 	MEADOW_PALETTE.apply_grass(vegetation.grass_material)
 	# Match the accepted grass zones, including their actual noise resource.
 	# Per-blade overlap/value remains fine variation; the ground uses their mean.
-	for parameter: String in ["biome_noise_texture","biome_noise_scale","biome_warp_distance","biome_transition_half_width","biome_center_x"]:
+	for parameter: String in MEADOW_PALETTE.BIOME_PARAMETERS:
 		terrain_material.set_shader_parameter(parameter,vegetation.grass_material.get_shader_parameter(parameter))
 	# Absolute colours replace the old atlas-multiplier ratio. The distant
 	# surface is calibrated from rendered grass, not copied from its albedo.
@@ -178,6 +214,7 @@ func _load_mask() -> void:
 	terrain_material.set_shader_parameter("mask_extent_xz",Vector2(metadata.extent_xz[0],metadata.extent_xz[1]))
 
 func architectural_band(p: Vector3,margin:=0.0) -> bool:
+	if upper_ring!=null and upper_ring.planting_mask.blocks(p,margin):return true
 	if initial_ruin!=null and initial_ruin.planting_mask.blocks(p,margin):return true
 	var uv: Vector2=(Vector2(p.x,p.z)-Vector2(metadata.origin_xz[0],metadata.origin_xz[1]))/Vector2(metadata.extent_xz[0],metadata.extent_xz[1])
 	if uv.x<0 or uv.y<0 or uv.x>=1 or uv.y>=1: return false
@@ -248,6 +285,8 @@ func _hud() -> void:
 	for i in metadata.spawns.size():spawn_menu.add_item("%d  %s" % [i+1,metadata.spawns[i].name])
 	spawn_menu.item_selected.connect(select_spawn);box.add_child(spawn_menu)
 	status=Label.new();status.add_theme_font_size_override("font_size",14);status.add_theme_color_override("font_color",Color("c2d0d9"));box.add_child(status)
+	var edit_button:=Button.new();edit_button.text="植物编辑 · F4";box.add_child(edit_button)
+	edit_button.pressed.connect(func():if planting!=null and test_ready:planting.toggle())
 	world_audio=WORLD_AUDIO.new();world_audio.name="WorldAudio";add_child(world_audio);world_audio.add_controls(box)
 	surface_detail_trial.add_controls(box)
 	for control in box.get_children():
@@ -269,6 +308,11 @@ func _input(event: InputEvent) -> void:
 	# Handle globally so H also works while the spawn menu has keyboard focus.
 	if event is InputEventKey and event.pressed and not event.echo:
 		var key: int=event.physical_keycode if event.physical_keycode!=0 else event.keycode
+		if key==KEY_F4 and not event.alt_pressed and not event.ctrl_pressed and planting!=null and test_ready:
+			planting.toggle();get_viewport().set_input_as_handled();return
+		if planting!=null and planting.active and event.ctrl_pressed and key==KEY_S:
+			planting.save_test();get_viewport().set_input_as_handled();return
+		if planting!=null and planting.active:return
 		if key==KEY_H:
 			set_review_ui_visible(not review_ui_visible)
 			get_viewport().set_input_as_handled()
@@ -333,7 +377,7 @@ func active_camera() -> Camera3D:
 
 func _sync_actor_controls() -> void:
 	character.visible=character_mode
-	character.process_mode=Node.PROCESS_MODE_INHERIT if character_mode else Node.PROCESS_MODE_DISABLED
+	character.process_mode=Node.PROCESS_MODE_INHERIT if character_mode and not (planting!=null and planting.active) else Node.PROCESS_MODE_DISABLED
 	character.set_control_enabled(character_mode and not free_mode)
 	camper.visible=not character_mode
 	camper.set_physics_process(not character_mode and not free_mode)
@@ -409,6 +453,7 @@ func show_overview() -> void:
 	camera.position=Vector3(-160,1800,2100);camera.look_at(Vector3(-250,15,400));camera.make_current()
 
 func _unhandled_input(event: InputEvent) -> void:
+	if planting!=null and planting.active:return
 	if event is InputEventKey and event.pressed and not event.echo:
 		var key: int=event.physical_keycode if event.physical_keycode!=0 else event.keycode
 		if key>=KEY_1 and key<=KEY_9:select_spawn(key-KEY_1)
@@ -423,6 +468,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		camera.rotation.y-=event.relative.x*.003;camera.rotation.x=clampf(camera.rotation.x-event.relative.y*.003,-1.5,1.5)
 
 func _process(delta: float) -> void:
+	if planting!=null and planting.active:return
 	if not free_mode or automation_enabled:return
 	var direction:=Vector3(float(Input.is_physical_key_pressed(KEY_D))-float(Input.is_physical_key_pressed(KEY_A)),float(Input.is_physical_key_pressed(KEY_E))-float(Input.is_physical_key_pressed(KEY_Q)),float(Input.is_physical_key_pressed(KEY_S))-float(Input.is_physical_key_pressed(KEY_W)))
 	camera.position+=camera.global_basis*direction*delta*(180 if Input.is_physical_key_pressed(KEY_SHIFT)else 50)

@@ -23,6 +23,7 @@ import argparse
 from pathlib import Path
 
 import bpy
+import bmesh
 from mathutils import Vector
 
 
@@ -33,6 +34,16 @@ TEXTURE_DIR = REPO / "assets" / "vegetation" / "textures"
 TEMP_DIR = REPO / ".tree_hlod_build"
 
 SPECS = (
+    {
+        "key": "birch",
+        "source": SOURCE_DIR / "tree_medium_birch_upright_canopy.blend",
+        "stem": "tree_medium_birch_upright_canopy",
+        "group_count": 24,
+        "joined_group_faces": 96,
+        "lod1_group_count": 12,
+        "lod1_card_width_scale": 1.0,
+        "lod1_card_height_scale": 1.10,
+    },
     {
         "key": "small",
         "source": SOURCE_DIR / "tree_small_broad_canopy.blend",
@@ -195,6 +206,43 @@ def foliage_objects():
         ],
         key=lambda obj: obj.name,
     )
+
+
+def source_foliage(spec):
+    """Recover the birch's authored contiguous groups in a bake-only scene.
+
+    Each authored volume contains 24 crossed cells, i.e. 96 quad faces.
+    Copying the mesh preserves its UVs; the accepted source is never saved.
+    """
+    objects = foliage_objects()
+    faces_per_group = spec.get("joined_group_faces")
+    if faces_per_group is None:
+        return objects
+    if len(objects) != 1 or len(objects[0].data.polygons) != faces_per_group * spec["group_count"]:
+        raise RuntimeError("Birch group topology changed; rebuild recipe must be reviewed")
+    original = objects[0]
+    result = []
+    for group in range(spec["group_count"]):
+        obj = original.copy()
+        obj.data = original.data.copy()
+        obj.name = f"Birch_Foliage_Group_{group:02d}"
+        bpy.context.scene.collection.objects.link(obj)
+        bm = bmesh.new()
+        bm.from_mesh(obj.data)
+        bm.faces.ensure_lookup_table()
+        removed = [face for index, face in enumerate(bm.faces)
+                   if not group * faces_per_group <= index < (group + 1) * faces_per_group]
+        bmesh.ops.delete(bm, geom=removed, context="FACES")
+        loose = [vertex for vertex in bm.verts if not vertex.link_faces]
+        if loose:
+            bmesh.ops.delete(bm, geom=loose, context="VERTS")
+        bm.to_mesh(obj.data)
+        bm.free()
+        obj.data.update()
+        result.append(obj)
+    bpy.data.objects.remove(original, do_unlink=True)
+    bpy.context.view_layer.update()
+    return result
 
 
 def trunk_object():
@@ -514,7 +562,7 @@ def export_selected(filepath, objects):
 
 def build_spec(spec, lod1_only=False, lod2_only=False):
     bpy.ops.wm.open_mainfile(filepath=str(spec["source"]))
-    foliage = foliage_objects()
+    foliage = source_foliage(spec)
     trunk = trunk_object()
     expected_groups = spec["group_count"]
     if len(foliage) != expected_groups:
@@ -541,7 +589,7 @@ def build_spec(spec, lod1_only=False, lod2_only=False):
         if len(ranked) == 1:
             representatives = [ranked[0]] * 4
         else:
-            representatives = [ranked[2], ranked[10], ranked[19], ranked[27]]
+            representatives = [ranked[min(index, len(ranked)-1)] for index in (2, 10, 19, 27)]
         clump_paths = []
         for index, obj in enumerate(representatives):
             minimum, maximum = object_world_bounds(obj)
@@ -589,7 +637,7 @@ def build_spec(spec, lod1_only=False, lod2_only=False):
     if not lod2_only:
         # Re-open to restore authored bounds and build a clean LOD1 scene.
         bpy.ops.wm.open_mainfile(filepath=str(spec["source"]))
-        foliage = foliage_objects()
+        foliage = source_foliage(spec)
         trunk = trunk_object()
         lod1_group_bounds = aggregate_crown_bounds(
             foliage, spec["lod1_group_count"]
@@ -618,7 +666,7 @@ def build_spec(spec, lod1_only=False, lod2_only=False):
             return
 
     bpy.ops.wm.open_mainfile(filepath=str(spec["source"]))
-    foliage = foliage_objects()
+    foliage = source_foliage(spec)
     trunk = trunk_object()
     lod2_material = image_material(f"M_{spec['key']}_TreeHLOD2", tree_atlas)
     lod2_foliage = create_lod2_foliage(foliage, lod2_material)

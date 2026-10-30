@@ -1,0 +1,63 @@
+{
+  "steel": {
+    "metallic": 0.17999999999999999,
+    "roughness": 0.83999999999999997,
+    "base_color_srgb": [
+      145,
+      94,
+      66
+    ],
+    "textured": false
+  },
+  "roof": 76.180000000000007,
+  "floor": 70.079999999999998,
+  "front_axis_degrees": -73.719213764305138,
+  "center": [
+    510.0,
+    115.0
+  ],
+  "hills": [
+    {
+      "crest_z": 70.0,
+      "radius": [
+        161,
+        147
+      ],
+      "rise": 9.7977920053859862,
+      "flat_crest_radius": 75.599999999999994,
+      "center": [
+        510,
+        115
+      ]
+    },
+    {
+      "radius": [
+        90,
+        85
+      ],
+      "rise": 5.2000000000000002,
+      "center": [
+        350,
+        265
+      ]
+    },
+    {
+      "radius": [
+        65,
+        65
+      ],
+      "rise": 4.2000000000000002,
+      "center": [
+        470,
+        270
+      ]
+    }
+  ],
+  "roof_outer_radius": 72.799999999999997,
+  "opposed_entrances": [
+    0,
+    180
+  ],
+  "shoulder_maximum_grade": 0.23999999999999999,
+  "courtyard_radius": 37.799999999999997
+}

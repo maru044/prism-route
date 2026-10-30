@@ -157,7 +157,11 @@ func register_tree_streamer(streamer: Node) -> void:
 	var sources: Array = streamer.get("tree_lod1_nodes").duplicate()
 	for node: MultiMeshInstance3D in streamer.get("tree_lod0_nodes"):
 		if str(node.name).ends_with("_Trunks"):sources.append(node)
+	register_tree_nodes(sources)
+
+func register_tree_nodes(sources: Array,dynamic:=false) -> void:
 	for source: MultiMeshInstance3D in sources:
+		if dynamic and not ("LOD1" in str(source.name) or "LOD0_Trunks" in str(source.name)):continue
 		var proxy := MultiMeshInstance3D.new()
 		proxy.multimesh = source.multimesh
 		proxy.layers = REFLECTION_LAYER
@@ -171,7 +175,7 @@ func register_tree_streamer(streamer: Node) -> void:
 		add_child(proxy)
 		proxy.global_transform = source.global_transform
 		proxy.visible = false
-		proxy_records.append({"source":source,"proxy":proxy,"bounds":source.global_transform * source.get_aabb()})
+		proxy_records.append({"source":source,"proxy":proxy,"bounds":source.global_transform * source.get_aabb(),"dynamic_tree":dynamic})
 
 func apply_style(value: int) -> void:
 	style = clampi(value,Style.ORIGINAL,Style.NATIVE_SSR)
@@ -190,6 +194,16 @@ func active_camera() -> Camera3D:
 	if camera_provider.is_valid():return camera_provider.call() as Camera3D
 	return get_viewport().get_camera_3d()
 
+func _update_tree_proxies() -> void:
+	# Editor handles can be replaced by undo, region changes or play-mode apply.
+	for i in range(proxy_records.size()-1,-1,-1):
+		var record: Dictionary=proxy_records[i]
+		if not is_instance_valid(record.source) or not record.source.is_inside_tree():
+			record.proxy.queue_free();proxy_records.remove_at(i)
+		elif record.get("dynamic_tree",false):
+			record.proxy.global_transform=record.source.global_transform
+			record.bounds=record.source.global_transform*record.source.get_aabb()
+
 func _physics_process(delta: float) -> void:
 	if not interactions_enabled or style in [Style.ORIGINAL,Style.NATIVE_SSR]:
 		interaction.expire(clock)
@@ -198,6 +212,7 @@ func _physics_process(delta: float) -> void:
 	interaction.tick(actor,clock,delta,get_world_3d().direct_space_state)
 
 func _process(delta: float) -> void:
+	_update_tree_proxies()
 	clock += delta
 	interaction.expire(clock)
 	wind_strength = wind_override if wind_override >= 0.0 else (float(wind_source.get("blend")) if is_instance_valid(wind_source) else 0.0)

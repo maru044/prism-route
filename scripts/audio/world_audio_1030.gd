@@ -5,7 +5,8 @@ const BED := preload("res://scripts/audio/ambient_bed.gd")
 const WAVES := preload("res://assets/audio/world_1030/sea_waves.ogg")
 const LEAVES := preload("res://assets/audio/world_1030/wind_leaves.ogg")
 const GULLS := [preload("res://assets/audio/world_1030/gull_01.wav"),preload("res://assets/audio/world_1030/gull_02.wav"),preload("res://assets/audio/world_1030/gull_03.wav"),preload("res://assets/audio/world_1030/gull_04.wav")]
-const BIRDS := [preload("res://assets/audio/world_1030/bird_01.wav"),preload("res://assets/audio/world_1030/bird_02.wav")]
+# Temporarily reuse the accepted gull calls for inland birds.
+const BIRDS := GULLS
 const STEPS := [preload("res://assets/audio/world_1030/water_step_01.wav"),preload("res://assets/audio/world_1030/water_step_02.wav"),preload("res://assets/audio/world_1030/water_step_03.wav"),preload("res://assets/audio/world_1030/water_step_04.wav"),preload("res://assets/audio/world_1030/water_step_05.wav"),preload("res://assets/audio/world_1030/water_step_06.wav")]
 const STARTUP := preload("res://assets/audio/world_1030/vehicle_start.wav")
 const TREE_CELL := 32.0
@@ -53,13 +54,7 @@ func initialize(scene: Node3D) -> void:
 	gull = _voice("PR_Ambience",60); bird = _voice("PR_Ambience",35)
 	startup = _voice("PR_Actions",30)
 	for i in 6:steps.append(_voice("PR_Actions",15))
-	var rows: Array = JSON.parse_string(FileAccess.get_file_as_string(world.ASSETS+"tree_layout.json"))
-	for row: Array in rows:
-		var p := Vector3(row[0],row[1],row[2])
-		if world.initial_ruin.planting_mask.blocks(p,3):continue
-		var cell := _tree_cell(p)
-		if not tree_grid.has(cell):tree_grid[cell] = []
-		tree_grid[cell].append(p)
+	rebuild_tree_grid()
 	for body: Dictionary in world.water_manager.bodies:_extract_shores(body)
 	world.water_manager.interaction.step_emitted.connect(_water_step)
 	last_character_mode = world.character_mode
@@ -79,6 +74,13 @@ func _voice(bus: StringName, distance: float) -> AudioStreamPlayer3D:
 
 func _tree_cell(p: Vector3) -> Vector2i:
 	return Vector2i(floori(p.x/TREE_CELL),floori(p.z/TREE_CELL))
+
+func rebuild_tree_grid() -> void:
+	tree_grid.clear()
+	for row: Dictionary in world.planting.store.all_records().values():
+		var p:=Vector3(row.position[0],row.position[1],row.position[2]);var cell:=_tree_cell(p)
+		if not tree_grid.has(cell):tree_grid[cell]=[]
+		tree_grid[cell].append(p)
 
 func _extract_shores(body: Dictionary) -> void:
 	var mesh: MeshInstance3D = body.mesh

@@ -1,9 +1,6 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://scripts/tree_planting/authoring_scene.gd" id="scene"]
+[ext_resource type="PackedScene" path="res://scenes/map_1021.tscn" id="world"]
 
-[node name="TreePlantingTest" type="Node3D"]
-script = ExtResource("scene")
-profile_path = "res://assets/world/tree_planting_test/current_map.tres"
-
-[node name="EditableTrees" type="Node3D" parent="."]
+[node name="TreePlantingWorld" instance=ExtResource("world")]
+start_planting_editor = true

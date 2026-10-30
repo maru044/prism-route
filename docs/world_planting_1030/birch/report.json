@@ -1,0 +1,239 @@
+{
+  "after_count": 19486.0,
+  "applied": true,
+  "applied_sha": "52027203e08c7525a464f3c50421df3283ac111dd7fcfb9a656d8b6f6632316c",
+  "backup": "res://assets/world/tree_planting/world_edits.json.bak",
+  "before_count": 19471.0,
+  "centers": [
+    [
+      -1145.86218261719,
+      5.3812255859375,
+      -69.4556884765625
+    ],
+    [
+      -1200.40087890625,
+      13.2870483398438,
+      19.6532001495361
+    ],
+    [
+      -1219.37963867188,
+      17.7221984863281,
+      129.423095703125
+    ]
+  ],
+  "draft": "res://.current_map_build/birch_planting_1030/edits.json",
+  "failures": [],
+  "first_pass": true,
+  "grass_signature": "ba956502a5277980535f7cf593721cb5134809971f52bead4c27ffa765ecd70a",
+  "lod_triangles": [
+    4608.0,
+    48.0,
+    4.0
+  ],
+  "official_sha": "a36a849144d329f5f9c104a9c6adc9f417332245487a8eefbb821e64c50b3725",
+  "passed": true,
+  "planted": [
+    {
+      "id": "lake_birch_1030_00_00",
+      "palette": "green",
+      "position": [
+        -1150.93737792969,
+        7.88470935821533,
+        -78.0984420776367
+      ],
+      "scale": 1.1,
+      "species": "birch",
+      "surface": "d348f4df-9b88-42a1-b57e-64023ce5f1ad",
+      "yaw": 0.0
+    },
+    {
+      "id": "lake_birch_1030_00_01",
+      "palette": "green",
+      "position": [
+        -1140.83837890625,
+        6.63445472717285,
+        -65.4918441772461
+      ],
+      "scale": 0.92,
+      "species": "birch",
+      "surface": "f81baad1-a64c-48e0-a17f-f3a3c620659a",
+      "yaw": 2.399
+    },
+    {
+      "id": "lake_birch_1030_00_02",
+      "palette": "green",
+      "position": [
+        -1133.86218261719,
+        5.52706146240234,
+        -78.4556884765625
+      ],
+      "scale": 1.22,
+      "species": "birch",
+      "surface": "f6bf901b-4e02-49c2-8a1c-6382c255c941",
+      "yaw": 4.798
+    },
+    {
+      "id": "lake_birch_1030_00_03",
+      "palette": "green",
+      "position": [
+        -1151.5556640625,
+        7.59285926818848,
+        -56.0992431640625
+      ],
+      "scale": 1.02,
+      "species": "birch",
+      "surface": "f6bf901b-4e02-49c2-8a1c-6382c255c941",
+      "yaw": 0.913814692820414
+    },
+    {
+      "id": "lake_birch_1030_00_04",
+      "palette": "green",
+      "position": [
+        -1129.45483398438,
+        4.11258125305176,
+        -54.4997367858887
+      ],
+      "scale": 1.16,
+      "species": "birch",
+      "surface": "f81baad1-a64c-48e0-a17f-f3a3c620659a",
+      "yaw": 3.31281469282041
+    },
+    {
+      "id": "lake_birch_1030_01_00",
+      "palette": "green",
+      "position": [
+        -1204.51831054688,
+        11.3245086669922,
+        9.25863170623779
+      ],
+      "scale": 0.92,
+      "species": "birch",
+      "surface": "d01b8d98-9f3d-46e7-8737-7b60ad7a5657",
+      "yaw": 1.1
+    },
+    {
+      "id": "lake_birch_1030_01_01",
+      "palette": "green",
+      "position": [
+        -1198.14208984375,
+        13.4407424926758,
+        24.8531761169434
+      ],
+      "scale": 1.22,
+      "species": "birch",
+      "surface": "f81baad1-a64c-48e0-a17f-f3a3c620659a",
+      "yaw": 3.499
+    },
+    {
+      "id": "lake_birch_1030_01_02",
+      "palette": "green",
+      "position": [
+        -1193.15441894531,
+        17.9209403991699,
+        18.6101779937744
+      ],
+      "scale": 1.02,
+      "species": "birch",
+      "surface": "d348f4df-9b88-42a1-b57e-64023ce5f1ad",
+      "yaw": 5.898
+    },
+    {
+      "id": "lake_birch_1030_01_03",
+      "palette": "green",
+      "position": [
+        -1215.078125,
+        12.2987947463989,
+        26.5197811126709
+      ],
+      "scale": 1.16,
+      "species": "birch",
+      "surface": "d01b8d98-9f3d-46e7-8737-7b60ad7a5657",
+      "yaw": 2.01381469282041
+    },
+    {
+      "id": "lake_birch_1030_01_04",
+      "palette": "green",
+      "position": [
+        -1195.7353515625,
+        19.8555221557617,
+        39.9320755004883
+      ],
+      "scale": 1.1,
+      "species": "birch",
+      "surface": "d348f4df-9b88-42a1-b57e-64023ce5f1ad",
+      "yaw": 4.41281469282041
+    },
+    {
+      "id": "lake_birch_1030_02_00",
+      "palette": "green",
+      "position": [
+        -1215.51599121094,
+        18.4034976959229,
+        118.931564331055
+      ],
+      "scale": 1.22,
+      "species": "birch",
+      "surface": "f81baad1-a64c-48e0-a17f-f3a3c620659a",
+      "yaw": 2.2
+    },
+    {
+      "id": "lake_birch_1030_02_01",
+      "palette": "green",
+      "position": [
+        -1227.310546875,
+        17.0994815826416,
+        137.413528442383
+      ],
+      "scale": 1.02,
+      "species": "birch",
+      "surface": "d01b8d98-9f3d-46e7-8737-7b60ad7a5657",
+      "yaw": 4.599
+    },
+    {
+      "id": "lake_birch_1030_02_02",
+      "palette": "green",
+      "position": [
+        -1204.18310546875,
+        18.6838264465332,
+        136.711639404297
+      ],
+      "scale": 1.16,
+      "species": "birch",
+      "surface": "f6bf901b-4e02-49c2-8a1c-6382c255c941",
+      "yaw": 0.714814692820414
+    },
+    {
+      "id": "lake_birch_1030_02_03",
+      "palette": "green",
+      "position": [
+        -1229.80505371094,
+        16.5717353820801,
+        123.463409423828
+      ],
+      "scale": 1.1,
+      "species": "birch",
+      "surface": "d01b8d98-9f3d-46e7-8737-7b60ad7a5657",
+      "yaw": 3.11381469282041
+    },
+    {
+      "id": "lake_birch_1030_02_04",
+      "palette": "green",
+      "position": [
+        -1237.12377929688,
+        17.6985511779785,
+        145.30680847168
+      ],
+      "scale": 0.92,
+      "species": "birch",
+      "surface": "de6391b1-e6fa-48bf-978c-b261e0d6d4b4",
+      "yaw": 5.51281469282041
+    }
+  ],
+  "protected": {
+    "assets/world/current_map_validation/grass_bake/manifest.json": "aba46312d63f429ba282c179ccc145a7a81f4f20b40f883b0036528ce8fd65f9",
+    "assets/world/current_map_validation/tree_layout.json": "c06e543e8d8dc30f2042bf930330362ea87cbf39d374c2e72e5a24914aaa9fe9",
+    "assets/world/meadow_zone_1030/lake_green_sdf.res": "e5e17b1ecd3b4426707f9f29cc7745c8cddb8984412fddca040e41a60186b904",
+    "assets/world/meadow_zone_1030/shore_green_sdf.res": "f04562317ccaa55c7c5ff8080b7102abd93925f515e277c159a19031fec353b0"
+  },
+  "reloaded": true
+}

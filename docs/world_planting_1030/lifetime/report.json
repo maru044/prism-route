@@ -1,0 +1,10 @@
+{
+  "delete_save_undo_redo_cycles": 3,
+  "exclusive_pick_ownership": true,
+  "failures": [],
+  "official_sha256": "3516165cf44f1b52cf812d36c28594058f1cf850d276c73f31e18c74aaefacfb",
+  "passed": true,
+  "region_mode_cycles": 3,
+  "stale_override_recovery": true,
+  "working_save": "res://.current_map_build/planting_lifetime_2173186.json"
+}

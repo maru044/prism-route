@@ -1,0 +1,60 @@
+{
+  "collision_crc_before": 461212732,
+  "backup": "D:/Prism Route/prism-route/.current_map_build/before_saddle_glass_20261031_020414.3dm",
+  "glass_fraction": 0.32485755879026618,
+  "glass_cells": [
+    [
+      -34,
+      82
+    ],
+    [
+      -34,
+      83
+    ],
+    [
+      -34,
+      84
+    ],
+    [
+      -33,
+      83
+    ],
+    [
+      -33,
+      84
+    ],
+    [
+      -33,
+      85
+    ],
+    [
+      -33,
+      86
+    ],
+    [
+      -32,
+      85
+    ],
+    [
+      -32,
+      86
+    ],
+    [
+      -32,
+      87
+    ]
+  ],
+  "collision_crc_after": 461212732,
+  "area_m2": {
+    "contact_glass": 2142.6190527153253,
+    "panel": 4452.9456639999116
+  },
+  "preserve_planting": true,
+  "continuous_collision_id": "154d55cd-5466-4ccc-9046-efb1e1b07477",
+  "new_render_object_ids": [
+    "d0769ee8-1dbb-4b8f-ba21-b6a487c803de",
+    "d1d6ddb6-dd11-4f75-a4b8-07bd52a60d0d"
+  ],
+  "source": "D:\\Prism Route\\map\\map_current.3dm",
+  "native_objects": 177
+}

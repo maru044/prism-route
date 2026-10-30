@@ -1,0 +1,82 @@
+{
+  "failures": [],
+  "glass_f0": 0.04,
+  "glass_panes": 114,
+  "grass_signature": "ba956502a5277980535f7cf593721cb5134809971f52bead4c27ffa765ecd70a",
+  "palette": {
+    "concrete": {
+      "clearcoat": 0.0,
+      "color": "c8c5b9",
+      "metallic": 0.0,
+      "normal_strength": 0.08,
+      "roughness": 0.83,
+      "roughness_variation": 0.1,
+      "specular": 0.3
+    },
+    "frame": {
+      "clearcoat": 0.0,
+      "color": "3e4547",
+      "metallic": 0.72,
+      "normal_strength": 0.018,
+      "roughness": 0.32,
+      "roughness_variation": 0.05,
+      "specular": 0.5
+    },
+    "glass": {
+      "density": 1.0,
+      "ior": 1.5,
+      "roughness": 0.075,
+      "thickness": 0.11,
+      "tint": "b9dce0"
+    },
+    "ivory": {
+      "clearcoat": 0.1,
+      "color": "e4e1d6",
+      "metallic": 0.0,
+      "normal_strength": 0.035,
+      "roughness": 0.48,
+      "roughness_variation": 0.08,
+      "specular": 0.45
+    },
+    "soil": {
+      "clearcoat": 0.0,
+      "color": "756b50",
+      "metallic": 0.0,
+      "normal_strength": 0.12,
+      "roughness": 0.98,
+      "roughness_variation": 0.04,
+      "specular": 0.16
+    },
+    "steel": {
+      "clearcoat": 0.0,
+      "color": "80583f",
+      "metallic": 0.04,
+      "normal_strength": 0.06,
+      "roughness": 0.78,
+      "roughness_variation": 0.12,
+      "specular": 0.38
+    },
+    "stone": {
+      "clearcoat": 0.0,
+      "color": "bdbbab",
+      "metallic": 0.0,
+      "normal_strength": 0.07,
+      "roughness": 0.86,
+      "roughness_variation": 0.1,
+      "specular": 0.28
+    },
+    "water": {
+      "density": 1.8,
+      "ior": 1.333,
+      "roughness": 0.085,
+      "thickness": 0.12,
+      "tint": "3e9fa0",
+      "wave_strength": 0.018
+    }
+  },
+  "passed": true,
+  "pool_collision_unchanged": 564,
+  "probe_origin": "(-953.5583, 70.32, 1051.938)",
+  "scene": "res://scenes/map_1021.tscn",
+  "water_f0": 0.0203731878419714
+}

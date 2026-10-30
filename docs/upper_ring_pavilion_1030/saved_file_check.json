@@ -1,0 +1,16 @@
+[
+  {
+    "path": "D:/Prism Route/prism-route/docs/upper_ring_pavilion_1030/upper_ring_pavilion.3dm",
+    "total_objects": 539,
+    "ring_objects": 539,
+    "all_ring_geometry_valid": true,
+    "bytes": 14730022
+  },
+  {
+    "path": "D:\\Prism Route\\map\\map_current.3dm",
+    "total_objects": 1148,
+    "ring_objects": 539,
+    "all_ring_geometry_valid": true,
+    "bytes": 202707499
+  }
+]

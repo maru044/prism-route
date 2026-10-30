@@ -1,0 +1,56 @@
+{
+  "actual_scene": "res://scenes/map_1021.tscn",
+  "collision": {
+    "maximum_height_error": 0.00656890869140625,
+    "samples": 709
+  },
+  "failures": [],
+  "front_entry": {
+    "distance": 52.9941062927246,
+    "reached": true,
+    "unsupported_frames": 0
+  },
+  "grass_cells": 11436,
+  "grass_signature": "ba956502a5277980535f7cf593721cb5134809971f52bead4c27ffa765ecd70a",
+  "passed": true,
+  "rear_entry": {
+    "distance": 52.9634246826172,
+    "reached": true,
+    "unsupported_frames": 0
+  },
+  "road_connection": {
+    "distance": 17.8938999176025,
+    "reached": true,
+    "unsupported_frames": 0
+  },
+  "trees": [
+    {
+      "crown_height": 18.2958984375,
+      "inside_courtyard": true,
+      "name": "HeroBroad",
+      "position": "(-923.9102, 70.45, 1039.833)",
+      "scale": 1.5
+    },
+    {
+      "crown_height": 4.36505126953125,
+      "inside_courtyard": true,
+      "name": "CompanionA",
+      "position": "(-923.8965, 70.45, 1015.617)",
+      "scale": 0.85
+    },
+    {
+      "crown_height": 4.10828399658203,
+      "inside_courtyard": true,
+      "name": "CompanionB",
+      "position": "(-957.4671, 70.45, 1023.342)",
+      "scale": 0.8
+    },
+    {
+      "crown_height": 4.62181854248047,
+      "inside_courtyard": true,
+      "name": "CompanionC",
+      "position": "(-965.1146, 70.45, 1032.927)",
+      "scale": 0.9
+    }
+  ]
+}

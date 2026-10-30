@@ -1,0 +1,30 @@
+{
+  "actual_scene": "res://scenes/map_1021.tscn",
+  "failures": [],
+  "grass_signature": "ba956502a5277980535f7cf593721cb5134809971f52bead4c27ffa765ecd70a",
+  "maximum_collision_error_m": 0.00234222412109375,
+  "meshes": 171,
+  "passed": true,
+  "planting": {
+    "edits": 169,
+    "preserved": true,
+    "removed": 67
+  },
+  "road_to_roof": {
+    "last_position": "(-228.9994, 63.00349, 712.4276)",
+    "physics_steps": 2434,
+    "reached": true,
+    "unsupported_frames": 0,
+    "waypoints_reached": 39,
+    "waypoints_total": 39
+  },
+  "roof_to_road": {
+    "last_position": "(-268.7955, 60.05526, 557.2155)",
+    "physics_steps": 2423,
+    "reached": true,
+    "unsupported_frames": 0,
+    "waypoints_reached": 39,
+    "waypoints_total": 39
+  },
+  "walking_collision_samples": 37
+}

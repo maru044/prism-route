@@ -41,7 +41,15 @@ func grass_coverage_unmasked(point: Vector3,normal: Vector3) -> float:
 	return super._grass_coverage(point,normal)
 
 func _tree_root_excluded(point: Vector3) -> bool:
-	return world_scene.initial_ruin!=null and world_scene.initial_ruin.planting_mask.blocks(point,3.)
+	return (world_scene.initial_ruin!=null and world_scene.initial_ruin.planting_mask.blocks(point,3.)) or (world_scene.upper_ring!=null and world_scene.upper_ring.planting_mask.excludes_tree(point))
+
+func _read_tree_records() -> Array:
+	var records: Array=super._read_tree_records()
+	if world_scene.upper_ring!=null:
+		for row: Array in records:
+			var p: Vector3=world_scene.upper_ring.adjusted_tree_position(Vector3(row[0],row[1],row[2]))
+			row[1]=p.y
+	return records
 
 func get_active_grass_chunk_count() -> int:
 	return 0 if volume_streamer == null else volume_streamer.active.size()

@@ -7,7 +7,7 @@ const SHADERS := {
 }
 const FILL_STRENGTH := 0.06
 const SHADOW_RELIEF := 0.0
-const BIOME_PARAMETERS := ["biome_noise_texture","biome_noise_scale","biome_warp_distance","biome_transition_half_width","biome_center_x"]
+const BIOME_PARAMETERS := preload("res://scripts/meadow_palette.gd").BIOME_PARAMETERS
 const TREE_DRY_TINT := Color(1.03,0.98,0.82)
 const TREE_GREEN_TINT := Color(0.83,0.97,0.89)
 const GREEN_VALUES := {
@@ -50,6 +50,7 @@ func _register(node: GeometryInstance3D) -> void:
 		# Keep source values available for future species and offline art review.
 		records.append({"material":material,"baseline":source.shader,"candidate":material.shader,
 			"parameters":parameters,"green":green,"nodes":[],
+			"green_palette":source.get_meta("foliage_green_palette",GREEN_VALUES),
 			"instance_palette":instance_palette,"node_parameters":{}})
 		copies[id]=records.back()
 	var row: Dictionary=copies[id]
@@ -63,11 +64,12 @@ func _register(node: GeometryInstance3D) -> void:
 
 func _apply_green(row: Dictionary) -> void:
 	var material: ShaderMaterial=row.material
-	for name: String in GREEN_VALUES:
+	var palette: Dictionary=row.get("green_palette",GREEN_VALUES)
+	for name: String in palette:
 		if row.instance_palette:
 			# Only the newly registered instance needs setting.
-			row.nodes.back().set_instance_shader_parameter(name,GREEN_VALUES[name])
-		else:material.set_shader_parameter(name,GREEN_VALUES[name])
+			row.nodes.back().set_instance_shader_parameter(name,palette[name])
+		else:material.set_shader_parameter(name,palette[name])
 	configure_green_biome(material,biome_source)
 
 static func configure_green_biome(material: ShaderMaterial, source: ShaderMaterial) -> void:

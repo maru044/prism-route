@@ -36,3 +36,5 @@ __pycache__/
 /assets/MIHOYO_ASSET_USAGE.local.md
 # Local package installation cache for the standalone Web modeling trial.
 /.web-terrace-build/
+# Runtime planting saves are versioned; their automatic safety copies stay local.
+/assets/world/tree_planting/*.bak

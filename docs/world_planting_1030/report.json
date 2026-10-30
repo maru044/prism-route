@@ -1,0 +1,39 @@
+{
+  "expected": {
+    "added_id": "tree_395e0e0810dd0d96b4b10542",
+    "deleted_id": "ring_CompanionA",
+    "hero": {
+      "id": "ring_HeroBroad",
+      "palette": "cherry",
+      "position": [
+        -921.400024414063,
+        70.4499969482422,
+        1039.8330078125
+      ],
+      "scale": 1.64999997615814,
+      "species": "broad",
+      "surface": "upper_ring_bed_0.0",
+      "yaw": 0.349999994039536
+    },
+    "hero_id": "ring_HeroBroad"
+  },
+  "failures": [],
+  "first_session": {
+    "active_handles_after_play": 0.0,
+    "deleted_records": 1.0,
+    "edited_records": 2.0,
+    "grass_signature": "ba956502a5277980535f7cf593721cb5134809971f52bead4c27ffa765ecd70a",
+    "population": 19418.0
+  },
+  "first_session_passed": true,
+  "passed": true,
+  "protected": {
+    "assets/world/current_map_validation/current_region.glb": "9539169f439699fb2112d7751b0728d0170ae4db0f8561a9235abf5b3522a0cb",
+    "assets/world/current_map_validation/grass_bake/manifest.json": "aba46312d63f429ba282c179ccc145a7a81f4f20b40f883b0036528ce8fd65f9",
+    "assets/world/current_map_validation/tree_layout.json": "c06e543e8d8dc30f2042bf930330362ea87cbf39d374c2e72e5a24914aaa9fe9",
+    "assets/world/upper_ring_1030/manifest.json": "229e2ae02fe5ee909b85421990e05117a95d639f37084b2d8b9b33d42e780805"
+  },
+  "save_reload": true,
+  "shared_scene": "res://scenes/map_1021.tscn",
+  "working_save": "res://.current_map_build/world_planting_1030/edits_4118907.json"
+}

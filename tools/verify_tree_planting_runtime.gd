@@ -1,5 +1,5 @@
 extends SceneTree
-const SCENE := preload("res://scenes/tree_planting_test.tscn")
+const SCENE := preload("res://scenes/tree_planting_legacy_fixture.tscn")
 const STORE := preload("res://scripts/tree_planting/layout_store.gd")
 const OUT := "res://.vegetation_art_build/tree_planting_test/"
 var failures: Array[String]=[]
@@ -32,7 +32,7 @@ func run() -> void:
 					check(material.get_shader_parameter(parameter)==scene.profile.terrain_material.get_shader_parameter(parameter),"Planting tree uses a different world zone")
 	var ui=scene.runtime_editor
 	check(ui.panel.is_visible_in_tree(),"Runtime controls are not visible")
-	check(ui.region.item_count==10 and ui.species.item_count==3 and ui.palette.item_count==6,"Configuration selectors are incomplete")
+	check(ui.region.item_count==10 and ui.species.item_count==4 and ui.palette.item_count==6,"Configuration selectors are incomplete")
 	var tree: Node3D=scene.trees()[0];var id: String=tree.tree_id
 	ui.select_tree(tree);ui.focus_selected();await frames(4)
 	var point: Vector3=tree.global_transform*tree.canopy_bounds.get_center()
@@ -61,7 +61,7 @@ func run() -> void:
 	var hit: Dictionary=scene.snap_position(ui.selected)
 	check(not hit.is_empty(),"Runtime terrain ray missed the current floor")
 	if not hit.is_empty():
-		ui.move_to_hit(hit);check(ui.mode=="select","Move did not finish in selection mode")
+		var tool: String=ui.mode;ui.move_to_hit(hit);check(ui.mode==tool,"Move changed the active tool")
 		ui.set_mode("place");ui.palette.select(2);ui.place_at_hit(hit)
 		check(scene.trees().size()==count+2 and ui.selected.palette.id=="gold","Click placement did not use the selected palette")
 		check(ui.mode=="place","Repeated planting mode was lost")

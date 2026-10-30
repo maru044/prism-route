@@ -5469,6 +5469,14 @@
       "manifest_sha256": "bcf25c42d1dcf5847f99b147d5a80248bf65891bf1f78f1f47ba97dc6bafafb5",
       "objects": 328,
       "triangles": 6904
+    },
+    "upper_ring_1030": {
+      "manifest": "res://assets/world/upper_ring_1030/manifest.json",
+      "mesh_sha256": "7c9b184a1d64772c1e4959e271e2be96e4a103b94d92eca094c1be6af93b82c0",
+      "manifest_sha256": "229e2ae02fe5ee909b85421990e05117a95d639f37084b2d8b9b33d42e780805",
+      "height_field_sha256": "63faedcff21977eb1b58003c9050b47f994ce4767ed60f08591c5d969b673dfe",
+      "objects": 539,
+      "triangles": 120878
     }
   }
 }

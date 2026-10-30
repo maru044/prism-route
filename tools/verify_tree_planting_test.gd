@@ -1,5 +1,5 @@
 extends SceneTree
-const SCENE := preload("res://scenes/tree_planting_test.tscn")
+const SCENE := preload("res://scenes/tree_planting_legacy_fixture.tscn")
 const STORE := preload("res://scripts/tree_planting/layout_store.gd")
 const PROFILE := preload("res://scripts/tree_planting/profile.gd")
 const SPECIES := preload("res://scripts/tree_planting/species.gd")

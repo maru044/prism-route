@@ -1,0 +1,15 @@
+{
+  "capture": "cave.png",
+  "target": [
+    510,
+    115,
+    73
+  ],
+  "roof_and_upper_facade_visible": true,
+  "eye": [
+    659.75,
+    -361.52999999999997,
+    34.799999999999997
+  ],
+  "method": "Rendered Rhino viewport inspected from the measured cave-exit eye point"
+}

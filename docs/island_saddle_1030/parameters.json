@@ -1,0 +1,123 @@
+{
+  "roof_id": "ce36cdce-398b-44f5-b0b4-fe7f258106cf",
+  "route_end_t": 0.34999999999999998,
+  "contact_landing_depth_m": 2.0699999999999998,
+  "feature": "island_saddle_1030",
+  "front_boundary": [
+    [
+      0.0,
+      1179.4762125748803,
+      590.55298407404598,
+      59.692718965071478
+    ],
+    [
+      0.16666666666666666,
+      1156.2539620853402,
+      529.30090369993093,
+      63.0
+    ],
+    [
+      0.33333333333333331,
+      1129.9406989413519,
+      466.78116768759810,
+      63.0
+    ],
+    [
+      0.5,
+      1127.2452681706930,
+      417.59481991769451,
+      63.0
+    ],
+    [
+      0.66666666666666663,
+      1177.0063998950754,
+      361.99058000723170,
+      63.0
+    ],
+    [
+      0.83333333333333337,
+      1320.0,
+      330.0,
+      63.0
+    ],
+    [
+      1.0,
+      1488.6923049122395,
+      334.60999502074696,
+      63.0
+    ]
+  ],
+  "chord_separation_m": 0.71999999999999997,
+  "target_rise_m": 25.0,
+  "grid_spacing_m": 10.400000000000000,
+  "height_graph": "height_graph.json",
+  "road_id": "0808d32c-6ebc-4105-9258-a0f755ac2752",
+  "design": "One continuous doubly curved shell with a collapsed corner touching the existing high-level road shoulder. Original oval and interior remain unchanged.",
+  "steel_radius_m": 0.19,
+  "contact_crest_chord_z_m": 64.650000000000006,
+  "roof_datum_m": 63.0,
+  "toe": [
+    1180.5880700293242,
+    591.00439630360734,
+    59.692718965071478
+  ],
+  "contact_skin": "Complete opaque watertight shell skin; narrow road lip, full suspended corner, smooth roof landing",
+  "plan_scale": 0.52000000000000002,
+  "toe_tangent": [
+    0.92654787870324107,
+    0.3761768579677966,
+    0.0
+  ],
+  "preserved_oval_id": "78d43939-e418-428e-aad5-d51b08c73985",
+  "contact_width_m": 2.3999999999999999,
+  "road_body_id": "a4c9a543-2d8a-401c-bebe-b21f45031605",
+  "placement_reference": "marked_placement.json",
+  "grid": {
+    "main_body_spacing_m": 10.400000000000000,
+    "source_spacing_m": 20,
+    "type": "two_diagonal_families"
+  },
+  "back_boundary": [
+    [
+      0.0,
+      1181.6999274837681,
+      591.45580853316869,
+      59.692718965071478
+    ],
+    [
+      0.20000000000000001,
+      1234.8306320888394,
+      555.91179273866373,
+      63.0
+    ],
+    [
+      0.40000000000000002,
+      1346.6004342565432,
+      555.82656733138151,
+      63.0
+    ],
+    [
+      0.59999999999999998,
+      1436.0899573514644,
+      531.82465304517746,
+      63.0
+    ],
+    [
+      0.80000000000000004,
+      1400.0,
+      435.0,
+      63.0
+    ],
+    [
+      1.0,
+      1488.6923049122395,
+      334.60999502074696,
+      63.0
+    ]
+  ],
+  "plan_center": [
+    1320.0,
+    415.0
+  ],
+  "contact_skin_end_t": 0.35199999999999998
+}

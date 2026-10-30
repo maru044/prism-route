@@ -1,0 +1,50 @@
+{
+  "actual_scene": "res://scenes/map_1021.tscn",
+  "failures": [],
+  "feather_inside_selection_m": 80,
+  "grass_signature": "ba956502a5277980535f7cf593721cb5134809971f52bead4c27ffa765ecd70a",
+  "height_feather": [
+    {
+      "green": 0.94,
+      "height": 2.0
+    },
+    {
+      "green": 0.94,
+      "height": 18.0
+    },
+    {
+      "green": 0.94,
+      "height": 28.0
+    },
+    {
+      "green": 0.94,
+      "height": 38.0
+    },
+    {
+      "green": 0.60912,
+      "height": 48.0
+    },
+    {
+      "green": 0.02632,
+      "height": 58.0
+    },
+    {
+      "green": 0.0,
+      "height": 64.0
+    }
+  ],
+  "initial_maximum_change": 0.0,
+  "initial_samples": 3797,
+  "outside_maximum_change": 0.0,
+  "outside_samples": 14975,
+  "passed": true,
+  "saved_edits": 117,
+  "saved_removed": 7,
+  "shore_capture_root": "(-392.8647, 1.758728, 399.0251)",
+  "shore_minimum_green": 0.939590305527036,
+  "shore_samples": 2644,
+  "tree_count": 19470,
+  "tree_root_sample_mean_after": 0.644169186595055,
+  "tree_root_sample_mean_before": 0.523052750013905,
+  "upper_terrace_maximum_change": 0.0
+}

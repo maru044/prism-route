@@ -31,6 +31,7 @@ static func signature(world) -> String:
 	if world.metadata.has("static_features"):
 		text+=JSON.stringify(world.metadata.static_features)
 		text+=FileAccess.get_sha256("res://scripts/world/initial_ruin_mask.gd")
+		if world.metadata.static_features.has("upper_ring_1030"):text+=FileAccess.get_sha256("res://scripts/world/upper_ring_mask.gd")
 	# Include generation code/constants and the actual SDF bytes, not only mesh.
 	for path in [root+"landscape_mask.res",root+"surface_roles.json","res://scripts/vegetation_lod_streamer.gd","res://scripts/map_1021_vegetation.gd","res://scripts/grass_instance_buffer.gd"]:
 		text+=FileAccess.get_sha256(path)

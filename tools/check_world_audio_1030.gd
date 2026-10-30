@@ -28,7 +28,7 @@ func run() -> void:
 	check(world == get_tree().current_scene,"Audio test is not running in the real F5 world")
 	check(audio.ready_audio and audio.shore_segments.size() > 10 and audio.tree_grid.size() > 10,"Missing location data")
 	check(audio.listener.is_current(),"Explicit actor listener not current")
-	check(audio.GULLS.size()+audio.BIRDS.size()+audio.STEPS.size()+3 == 15,"Unexpected audio resource count")
+	check(audio.GULLS.size()+audio.BIRDS.size()+audio.STEPS.size()+3 == 17,"Unexpected audio clip slot count")
 	await frames(20)
 	report.cave = audio.sample_context(world.character.global_position+Vector3.UP*1.6)
 	check(float(report.cave.cover) > .5,"Initial cave not acoustically covered")

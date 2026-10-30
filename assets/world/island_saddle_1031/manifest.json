@@ -1,0 +1,5019 @@
+{
+  "walking_surface_name": "PR_Saddle_ContactSkin_Continuous",
+  "materials": {
+    "panel": {
+      "metallic": 0.0,
+      "color": [
+        0.8745098039215686,
+        0.8627450980392157,
+        0.8
+      ],
+      "roughness": 0.83,
+      "opacity": 1.0
+    },
+    "weathered": {
+      "metallic": 0.28,
+      "color": [
+        0.592156862745098,
+        0.4823529411764706,
+        0.3686274509803922
+      ],
+      "roughness": 0.81,
+      "opacity": 1.0
+    },
+    "dark": {
+      "metallic": 0.32,
+      "color": [
+        0.3254901960784314,
+        0.33725490196078434,
+        0.3058823529411765
+      ],
+      "roughness": 0.8,
+      "opacity": 1.0
+    },
+    "contact_glass": {
+      "metallic": 0.0,
+      "color": [
+        0.5803921568627451,
+        0.7294117647058823,
+        0.7450980392156863
+      ],
+      "roughness": 0.17,
+      "opacity": 0.3
+    },
+    "glass": {
+      "metallic": 0.0,
+      "color": [
+        0.5882352941176471,
+        0.7019607843137254,
+        0.7019607843137254
+      ],
+      "roughness": 0.29,
+      "opacity": 0.62
+    },
+    "ivory": {
+      "metallic": 0.25,
+      "color": [
+        0.8549019607843137,
+        0.8549019607843137,
+        0.807843137254902
+      ],
+      "roughness": 0.72,
+      "opacity": 1.0
+    }
+  },
+  "source": "D:\\Prism Route\\map\\map_current.3dm",
+  "objects": [
+    {
+      "visual_only": false,
+      "index_count": 132,
+      "bounds": [
+        [
+          1400.9856497115745,
+          373.78564971157454,
+          86.31824476538262
+        ],
+        [
+          1403.3343502884252,
+          376.1343502884254,
+          86.86125064306562
+        ]
+      ],
+      "id": "f4bdaca3-67c4-4fca-ae29-414e1d43fb34",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 0,
+      "vertex_count": 24,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-1140",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 132,
+      "bounds": [
+        [
+          1401.2942160314112,
+          373.726828573452,
+          85.71565417024006
+        ],
+        [
+          1403.467530995897,
+          375.83950678148443,
+          86.14099189666257
+        ]
+      ],
+      "id": "d5e6d4a7-4170-4aac-ac88-3d7219246266",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 816,
+      "vertex_count": 24,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_1_-1140",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 420,
+      "bounds": [
+        [
+          1389.5456497115745,
+          372.7456497115745,
+          80.09559187359578
+        ],
+        [
+          1398.1343502884254,
+          381.3343502884254,
+          82.35909017840413
+        ]
+      ],
+      "id": "680cf09d-14ee-477f-9033-50b4e40f66d9",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 1632,
+      "vertex_count": 72,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-1120",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 708,
+      "bounds": [
+        [
+          1378.1056497115744,
+          371.7056497115745,
+          75.33198804907782
+        ],
+        [
+          1392.9343502884253,
+          386.53435028842557,
+          77.70980265271797
+        ]
+      ],
+      "id": "ef355530-02c5-48c2-ae5d-89e985761d8a",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 4176,
+      "vertex_count": 120,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-1100",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 708,
+      "bounds": [
+        [
+          1378.3246216256994,
+          371.7325842958818,
+          74.69300937413402
+        ],
+        [
+          1393.0634840536588,
+          386.19851786064373,
+          77.00989281648638
+        ]
+      ],
+      "id": "78ea92f9-d954-472f-a1d6-4321c12cb928",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 8448,
+      "vertex_count": 120,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_1_-1100",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 948,
+      "bounds": [
+        [
+          1367.7056497115748,
+          371.70564971157455,
+          73.83199152843879
+        ],
+        [
+          1387.7343502884255,
+          391.7343502884255,
+          74.9235351956316
+        ]
+      ],
+      "id": "3231d6e9-0793-47aa-90a6-faa49fcbde15",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 12720,
+      "vertex_count": 160,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-1080",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 1236,
+      "bounds": [
+        [
+          1356.2656497115747,
+          370.66564971157464,
+          73.22134194288412
+        ],
+        [
+          1382.5343502884252,
+          396.93435028842543,
+          73.82955375368996
+        ]
+      ],
+      "id": "ebc035bf-58c4-465e-88e1-ce1cdffb4fb7",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 18432,
+      "vertex_count": 208,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-1060",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 1236,
+      "bounds": [
+        [
+          1356.3231596935836,
+          370.6767397616074,
+          72.56375406325317
+        ],
+        [
+          1382.5229384547088,
+          396.8413577504364,
+          73.0503979109942
+        ]
+      ],
+      "id": "6dcc5be6-6d2b-4101-adf2-e0bf6713d62c",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 25872,
+      "vertex_count": 208,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_1_-1060",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 1476,
+      "bounds": [
+        [
+          1345.8656497115746,
+          370.6656497115745,
+          72.82494079055392
+        ],
+        [
+          1377.3343502884256,
+          402.1343502884255,
+          73.64545084916946
+        ]
+      ],
+      "id": "106af6d8-8b3b-44e3-88a8-538f186125ac",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 33312,
+      "vertex_count": 248,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-1040",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 1716,
+      "bounds": [
+        [
+          1335.4656497115739,
+          370.6656497115744,
+          72.49143583934712
+        ],
+        [
+          1372.1343502884254,
+          407.3343502884255,
+          73.49943163921279
+        ]
+      ],
+      "id": "8e604b4a-79f3-4b6a-aa23-f503f5044ecf",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 42192,
+      "vertex_count": 288,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-1020",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 1716,
+      "bounds": [
+        [
+          1335.5166331550365,
+          370.6691130381886,
+          71.83233856180222
+        ],
+        [
+          1372.1133668456318,
+          407.2786396446992,
+          72.72056149456306
+        ]
+      ],
+      "id": "765db860-2f95-4225-b100-b74b5e980eb4",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 52512,
+      "vertex_count": 288,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_1_-1020",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 1908,
+      "bounds": [
+        [
+          1325.0656497115747,
+          370.66564971157453,
+          72.09126381667699
+        ],
+        [
+          1365.8943502884251,
+          411.49435028842544,
+          73.40729183891042
+        ]
+      ],
+      "id": "0e12b677-c43c-4abd-b69e-c87fb0884718",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 62832,
+      "vertex_count": 320,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-1000",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 2004,
+      "bounds": [
+        [
+          1315.7056497115748,
+          371.70564971157455,
+          71.65570403276503
+        ],
+        [
+          1358.6143502884254,
+          414.6143502884254,
+          73.32732501247565
+        ]
+      ],
+      "id": "8218d22b-0383-432b-95eb-9b2a5079a710",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 74304,
+      "vertex_count": 336,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-980",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 2004,
+      "bounds": [
+        [
+          1315.7477069094352,
+          371.7099303802674,
+          70.9969648671988
+        ],
+        [
+          1358.6060167171,
+          414.56453951869275,
+          72.54837802144468
+        ]
+      ],
+      "id": "85ad0822-c987-46f8-9158-e73903db3c01",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 86352,
+      "vertex_count": 336,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_1_-980",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 2196,
+      "bounds": [
+        [
+          1306.3456497115744,
+          372.74564971157446,
+          71.23774408038035
+        ],
+        [
+          1353.4143502884253,
+          419.81435028842554,
+          73.30467348826633
+        ]
+      ],
+      "id": "74e446e9-8a20-476d-bac1-dd7e84165cba",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 98400,
+      "vertex_count": 368,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-960",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 2532,
+      "bounds": [
+        [
+          1296.9856497115745,
+          373.7856497115746,
+          70.90444130177588
+        ],
+        [
+          1351.3343502884254,
+          428.13435028842537,
+          73.32155165333548
+        ]
+      ],
+      "id": "f89d71ff-263f-4b4a-bb37-f3ea16626591",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 111600,
+      "vertex_count": 424,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-940",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 2532,
+      "bounds": [
+        [
+          1297.0227807681988,
+          373.7995981457295,
+          70.24492306129623
+        ],
+        [
+          1351.324845664186,
+          428.1071038018653,
+          72.54216892955574
+        ]
+      ],
+      "id": "1a6e1935-25e1-48a4-b24e-d699b9a64d69",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 126816,
+      "vertex_count": 424,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_1_-940",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 3192,
+      "bounds": [
+        [
+          1288.6656497115741,
+          375.8656497115745,
+          70.71871687401966
+        ],
+        [
+          1378.3743502884256,
+          465.57435028842553,
+          79.07118846693712
+        ]
+      ],
+      "id": "68736547-5031-44fe-87cb-541d590b4073",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 142032,
+      "vertex_count": 536,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-920",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 4104,
+      "bounds": [
+        [
+          1280.3456497115742,
+          377.94564971157445,
+          70.71812445842099
+        ],
+        [
+          1379.4143502884258,
+          477.0143502884256,
+          81.26142700977263
+        ]
+      ],
+      "id": "83d02de9-ada5-44df-a037-9f9ace59a824",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 161232,
+      "vertex_count": 688,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-900",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 4104,
+      "bounds": [
+        [
+          1280.3835654620839,
+          377.96971705890854,
+          70.05818462993547
+        ],
+        [
+          1379.4044308953298,
+          476.91361208400974,
+          80.4845495047251
+        ]
+      ],
+      "id": "2be85463-60c3-4d17-83e4-33950c7b16d2",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 185904,
+      "vertex_count": 688,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_1_-900",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 4740,
+      "bounds": [
+        [
+          1270.9856497115745,
+          378.9856497115746,
+          70.90249516435115
+        ],
+        [
+          1373.1743502884253,
+          481.1743502884254,
+          79.41645250694059
+        ]
+      ],
+      "id": "6fcebc09-1273-4c1c-b886-fe54f704bb76",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 210576,
+      "vertex_count": 792,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-880",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 4740,
+      "bounds": [
+        [
+          1263.7056497115743,
+          382.10564971157453,
+          65.62890006406445
+        ],
+        [
+          1365.8979168614305,
+          484.29791686143056,
+          75.30551671266237
+        ]
+      ],
+      "id": "40e57d4e-9c94-4732-b407-dd29781280f9",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 239040,
+      "vertex_count": 792,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-860",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 4740,
+      "bounds": [
+        [
+          1263.7783721413869,
+          382.12205658081126,
+          65.10851802456797
+        ],
+        [
+          1366.2464073737383,
+          484.25018056915536,
+          74.64802704386476
+        ]
+      ],
+      "id": "433381e2-4144-4037-8831-e29439e3e4fe",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 267504,
+      "vertex_count": 792,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_1_-860",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 4692,
+      "bounds": [
+        [
+          1255.3856497115748,
+          384.1856497115746,
+          63.29772080596468
+        ],
+        [
+          1356.5547629176226,
+          485.35476291762257,
+          73.013553584814
+        ]
+      ],
+      "id": "4eb7c91f-c11c-458e-9654-d5999df5c05d",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 295968,
+      "vertex_count": 784,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-840",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 3912,
+      "bounds": [
+        [
+          1248.1056497115749,
+          387.3056497115746,
+          67.31575917438121
+        ],
+        [
+          1347.1743502884253,
+          486.37435028842555,
+          73.34852187175495
+        ]
+      ],
+      "id": "dc51338a-d526-4a1e-ae6d-16287eb093d1",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 324144,
+      "vertex_count": 656,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-820",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 3912,
+      "bounds": [
+        [
+          1248.4511326298637,
+          387.1026569858279,
+          66.79816218092438
+        ],
+        [
+          1346.9752657861225,
+          486.7333890698266,
+          72.56952795538187
+        ]
+      ],
+      "id": "c8d5acf6-57d8-4118-88d3-0448564b47c5",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 347664,
+      "vertex_count": 656,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_1_-820",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 3672,
+      "bounds": [
+        [
+          1240.8256497115744,
+          390.4256497115746,
+          63.53641183428469
+        ],
+        [
+          1337.8143502884254,
+          487.4143502884255,
+          73.7686712207884
+        ]
+      ],
+      "id": "8203fde9-e715-42ff-8492-dd9b7a826934",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 371184,
+      "vertex_count": 616,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-800",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 3528,
+      "bounds": [
+        [
+          1234.585649711574,
+          394.5856497115745,
+          64.39164059628216
+        ],
+        [
+          1328.4543502884253,
+          488.45435028842536,
+          74.29539754323639
+        ]
+      ],
+      "id": "491d4935-cb76-4860-ae32-0d98f6378395",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 393264,
+      "vertex_count": 592,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-780",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 3528,
+      "bounds": [
+        [
+          1234.2814285500149,
+          394.69097789206086,
+          63.80489496707698
+        ],
+        [
+          1328.362242719125,
+          488.4642035200971,
+          73.51908178935372
+        ]
+      ],
+      "id": "20d208a8-aa33-449d-9bf2-b31e8df76dc1",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 414480,
+      "vertex_count": 592,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_1_-780",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 3480,
+      "bounds": [
+        [
+          1229.3856497115744,
+          399.7856497115745,
+          64.45999992665406
+        ],
+        [
+          1318.0543502884252,
+          488.4543502884254,
+          74.59904847591656
+        ]
+      ],
+      "id": "aa65fb78-a27e-4f3b-bbb6-fdc1a498ddcb",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 435696,
+      "vertex_count": 584,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-760",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 3780,
+      "bounds": [
+        [
+          1225.2256497115743,
+          406.0256497115744,
+          64.45991722438042
+        ],
+        [
+          1306.6074509378386,
+          487.4092481394649,
+          74.65806649632611
+        ]
+      ],
+      "id": "dad5ca4e-2ee0-45b7-9182-0bcbe82be963",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 456624,
+      "vertex_count": 632,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-740",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 3780,
+      "bounds": [
+        [
+          1225.1449402994263,
+          406.1719902975656,
+          63.799945248659135
+        ],
+        [
+          1306.559516700115,
+          487.4011486998385,
+          73.88110425312053
+        ]
+      ],
+      "id": "4fc01182-9e75-4d0b-8d76-180f20cb9313",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 479328,
+      "vertex_count": 632,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_1_-740",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 3444,
+      "bounds": [
+        [
+          1222.1056497115742,
+          413.30564971157435,
+          64.43672814276309
+        ],
+        [
+          1293.8958388268272,
+          498.75821376332306,
+          73.94963809207604
+        ]
+      ],
+      "id": "0d5327c2-660e-4f51-9c28-ef3acded2c83",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 502032,
+      "vertex_count": 576,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-720",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 3108,
+      "bounds": [
+        [
+          1218.983624557933,
+          420.58362455793286,
+          63.923982822825906
+        ],
+        [
+          1269.3433728363846,
+          522.5413381490077,
+          69.55121864501926
+        ]
+      ],
+      "id": "0e23f56c-5977-40be-b899-fbbff02a6b94",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 522720,
+      "vertex_count": 520,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-700",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 3108,
+      "bounds": [
+        [
+          1219.0238927878524,
+          420.2260165003685,
+          63.270042468228425
+        ],
+        [
+          1269.4962134064965,
+          522.5071652481934,
+          68.89904614251432
+        ]
+      ],
+      "id": "3d2016b3-0ca8-47d7-a079-55b5239c8eb3",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 541392,
+      "vertex_count": 520,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_1_-700",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 2628,
+      "bounds": [
+        [
+          1218.9856497115745,
+          430.9856497115746,
+          62.837156015655424
+        ],
+        [
+          1240.7195695325631,
+          543.5089676084156,
+          64.83979228881121
+        ]
+      ],
+      "id": "136ee8c2-3123-41a1-879a-c7f1741680f9",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 560064,
+      "vertex_count": 440,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-680",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 2148,
+      "bounds": [
+        [
+          1216.270308591921,
+          444.6744623605901,
+          62.92395882302596
+        ],
+        [
+          1224.5680388230755,
+          554.3157639191044,
+          64.83938269988697
+        ]
+      ],
+      "id": "94f273a5-3829-42c4-ad01-c4a325b8a15b",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 575856,
+      "vertex_count": 360,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-660",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 2148,
+      "bounds": [
+        [
+          1216.330124078306,
+          444.79545073396173,
+          62.26915198735508
+        ],
+        [
+          1224.5368955081149,
+          554.2431207594052,
+          64.05956419180644
+        ]
+      ],
+      "id": "2fd24f56-ab6a-458d-a465-9332024fc12a",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 588768,
+      "vertex_count": 360,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_1_-660",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 1524,
+      "bounds": [
+        [
+          1199.5527897320478,
+          473.58370914129426,
+          62.715049024172714
+        ],
+        [
+          1209.8997660444502,
+          565.7650995708176,
+          64.83999999808755
+        ]
+      ],
+      "id": "616d898b-42bd-43ec-88e3-9124b0880163",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 601680,
+      "vertex_count": 256,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-640",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 852,
+      "bounds": [
+        [
+          1182.1393787132567,
+          525.7071758661159,
+          61.25217237728428
+        ],
+        [
+          1196.517322594473,
+          575.6532841117196,
+          64.83999991462686
+        ]
+      ],
+      "id": "5c20e72d-abbd-4c67-983e-84e9b50bd768",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 610848,
+      "vertex_count": 144,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-620",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 852,
+      "bounds": [
+        [
+          1182.1993776983327,
+          525.7084509987576,
+          60.60043320577754
+        ],
+        [
+          1196.4694328711437,
+          575.5050184283264,
+          64.05999991462751
+        ]
+      ],
+      "id": "fcb3b2b9-6b2f-4b86-997a-3d212e0aebf4",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 615984,
+      "vertex_count": 144,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_1_-620",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 324,
+      "bounds": [
+        [
+          1174.5606608055543,
+          573.1307561219886,
+          59.86267422476939
+        ],
+        [
+          1186.1367110102904,
+          586.1317035083918,
+          61.99049311453895
+        ]
+      ],
+      "id": "a6132232-a2bb-4c87-a546-75dd2bc67f2f",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 621120,
+      "vertex_count": 56,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_1_-600",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 1140,
+      "bounds": [
+        [
+          1222.1056497115746,
+          387.2939804569192,
+          63.15205344247679
+        ],
+        [
+          1246.3060195430808,
+          411.4943502884254,
+          73.02138171517684
+        ]
+      ],
+      "id": "5a85a2b3-6f6d-49bb-8c20-c628f6454bd8",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 623088,
+      "vertex_count": 192,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_-1_1540",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 1140,
+      "bounds": [
+        [
+          1222.1169035642074,
+          387.0495845577432,
+          62.49342850244461
+        ],
+        [
+          1246.5243374485285,
+          411.4436858172293,
+          72.24225123945668
+        ]
+      ],
+      "id": "04f55a08-c4b0-4b24-b34e-c67b0cdae76c",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 629952,
+      "vertex_count": 192,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_-1_1540",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 2052,
+      "bounds": [
+        [
+          1217.9456497115743,
+          382.10564971157453,
+          65.60900457935345
+        ],
+        [
+          1261.8943502884256,
+          426.0543502884254,
+          73.02206094552992
+        ]
+      ],
+      "id": "99f0f1cb-5c90-4089-b82f-c827c72b8985",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 636816,
+      "vertex_count": 344,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_-1_1560",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 2628,
+      "bounds": [
+        [
+          1220.0256497115747,
+          377.9456497115745,
+          62.995771070191964
+        ],
+        [
+          1276.4543502884255,
+          434.3743502884253,
+          73.33187981559772
+        ]
+      ],
+      "id": "f6bbde00-ab17-465c-938a-16a26a6b6182",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 649152,
+      "vertex_count": 440,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_-1_1580",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 2628,
+      "bounds": [
+        [
+          1220.044584552038,
+          377.97161680056473,
+          62.343214026330735
+        ],
+        [
+          1276.4089339848083,
+          434.22921018015404,
+          72.55205442249353
+        ]
+      ],
+      "id": "ffa9f17c-94ae-4c33-b7c2-aab34bcf6c3f",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 664944,
+      "vertex_count": 440,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_-1_1580",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 3156,
+      "bounds": [
+        [
+          1222.0220940916422,
+          374.8256480672008,
+          62.65792069704591
+        ],
+        [
+          1289.974348579271,
+          442.72531128535667,
+          73.33742368140305
+        ]
+      ],
+      "id": "c55cb616-d7b4-45b3-a2c5-ca3f41afa512",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 680736,
+      "vertex_count": 528,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_-1_1600",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 3588,
+      "bounds": [
+        [
+          1219.9127111368846,
+          373.7856381791298,
+          63.63979194047301
+        ],
+        [
+          1301.4143368921643,
+          452.70052600833037,
+          73.29090138474251
+        ]
+      ],
+      "id": "7a59e7cf-95df-44df-97fb-2bafc9ab781b",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 699696,
+      "vertex_count": 600,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_-1_1620",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 3588,
+      "bounds": [
+        [
+          1219.9683151666616,
+          373.7969289598807,
+          62.98835883327684
+        ],
+        [
+          1301.3666895254416,
+          452.72465517501433,
+          72.51160578996802
+        ]
+      ],
+      "id": "dfc86669-ce3c-4b01-9249-16e985915434",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 721248,
+      "vertex_count": 600,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_-1_1620",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 3972,
+      "bounds": [
+        [
+          1216.0431987605375,
+          371.70564456569724,
+          64.31169259241638
+        ],
+        [
+          1313.89434497694,
+          463.03767577856485,
+          73.32973662403134
+        ]
+      ],
+      "id": "b7ba11e1-60e1-432a-a5ba-edb78390419c",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 742800,
+      "vertex_count": 664,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_-1_1640",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 4356,
+      "bounds": [
+        [
+          1206.4880467836258,
+          370.6656494699263,
+          64.4493456476921
+        ],
+        [
+          1325.334350046541,
+          478.634970101504,
+          73.40723424297431
+        ]
+      ],
+      "id": "42393697-f73e-4e9c-b835-7450a5e35b23",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 766656,
+      "vertex_count": 728,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_-1_1660",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 4356,
+      "bounds": [
+        [
+          1206.5239074376493,
+          370.66844529602815,
+          63.78935368912574
+        ],
+        [
+          1325.2959657883591,
+          478.587462132618,
+          72.6283789177383
+        ]
+      ],
+      "id": "f856b066-ba59-45a1-94d5-484200217331",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 792816,
+      "vertex_count": 728,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_-1_1660",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 4692,
+      "bounds": [
+        [
+          1195.7818052907853,
+          370.6656497092721,
+          64.45969589667781
+        ],
+        [
+          1335.7343502861222,
+          497.74854888812,
+          73.49930658434735
+        ]
+      ],
+      "id": "72c90596-c801-4aea-b0d3-1fa2060051cb",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 818976,
+      "vertex_count": 784,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_-1_1680",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 5028,
+      "bounds": [
+        [
+          1186.0821798183474,
+          370.66564923671694,
+          64.45999659113554
+        ],
+        [
+          1346.1343498127962,
+          519.4096938671256,
+          73.6452964839015
+        ]
+      ],
+      "id": "3e267fe5-3669-4a36-b740-0fa13d27ead3",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 847152,
+      "vertex_count": 840,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_-1_1700",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 5028,
+      "bounds": [
+        [
+          1186.1218096466598,
+          370.67234967964066,
+          63.799996591136804
+        ],
+        [
+          1346.1032153660672,
+          519.3646442023271,
+          72.86632844592302
+        ]
+      ],
+      "id": "a079270d-4ce6-4fb7-813c-74eb88936602",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 877344,
+      "vertex_count": 840,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_-1_1700",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 5412,
+      "bounds": [
+        [
+          1175.9370589882587,
+          370.66562526076694,
+          64.33267040762044
+        ],
+        [
+          1356.5343234962957,
+          545.1341679636365,
+          73.8293756925255
+        ]
+      ],
+      "id": "74376d62-1fd9-466a-9fc8-1484063a3518",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 907536,
+      "vertex_count": 904,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_-1_1720",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 5700,
+      "bounds": [
+        [
+          1174.1515326338135,
+          371.70568195736143,
+          62.71457280217893
+        ],
+        [
+          1365.8943806265422,
+          565.8133545041633,
+          74.08757100257553
+        ]
+      ],
+      "id": "7edbd48d-f0cf-4b5a-8fd1-8904afb813be",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 940032,
+      "vertex_count": 952,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_-1_1740",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 5700,
+      "bounds": [
+        [
+          1174.1942498542217,
+          371.72074326151727,
+          62.060522601269334
+        ],
+        [
+          1365.888897562057,
+          565.6770145972123,
+          73.309158353159
+        ]
+      ],
+      "id": "5c9026cc-cbb0-40b6-b6ab-4aa0c2b11668",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 974256,
+      "vertex_count": 952,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_-1_1740",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 6036,
+      "bounds": [
+        [
+          1177.9134384636766,
+          371.70585940812725,
+          60.305087683562924
+        ],
+        [
+          1376.294546853315,
+          582.0805199055387,
+          75.24021186591902
+        ]
+      ],
+      "id": "4081b697-7bd5-4fdb-bb37-1ccc539b2089",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 1008480,
+      "vertex_count": 1008,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_-1_1760",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 5160,
+      "bounds": [
+        [
+          1221.2157774727652,
+          372.7456497115746,
+          63.66069349915347
+        ],
+        [
+          1385.6543502884253,
+          557.350545084053,
+          78.27930125187659
+        ]
+      ],
+      "id": "686e72c6-f360-416b-b53a-36d11abbfaa0",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 1044720,
+      "vertex_count": 864,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_-1_1780",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 5160,
+      "bounds": [
+        [
+          1221.2607095078606,
+          372.7642822208877,
+          63.00348501322893
+        ],
+        [
+          1385.9153539136214,
+          557.2461875290196,
+          77.5707913405359
+        ]
+      ],
+      "id": "016c631a-ac19-4649-b7bd-0a27b28f050c",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 1075728,
+      "vertex_count": 864,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_-1_1780",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 4584,
+      "bounds": [
+        [
+          1257.01446019083,
+          372.74459844466156,
+          65.15080462540678
+        ],
+        [
+          1396.0554015553384,
+          532.9257158593946,
+          84.14764863681056
+        ]
+      ],
+      "id": "1aa40fef-1c06-40e6-b818-02bc65fe2e84",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 1106736,
+      "vertex_count": 768,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_-1_1800",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 3708,
+      "bounds": [
+        [
+          1285.3264610703209,
+          373.78564971157454,
+          71.50198058479953
+        ],
+        [
+          1405.4143502884249,
+          503.5491861602664,
+          87.85504725266969
+        ]
+      ],
+      "id": "9765acd5-23c3-4e00-8c0a-f0611512920b",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 1134288,
+      "vertex_count": 624,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_-1_1820",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 3708,
+      "bounds": [
+        [
+          1285.5965718491952,
+          373.71341005111054,
+          70.87571053357121
+        ],
+        [
+          1405.4760077095455,
+          503.54342512849075,
+          87.0942245500999
+        ]
+      ],
+      "id": "99aa96f0-02c0-4f16-a004-5dfae653b84e",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 1156608,
+      "vertex_count": 624,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_-1_1820",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 1464,
+      "bounds": [
+        [
+          1302.112848296257,
+          439.3056497115747,
+          71.9762097248842
+        ],
+        [
+          1350.2943502884254,
+          487.6392387878784,
+          74.70256624824427
+        ]
+      ],
+      "id": "fa44aee6-8aad-4c95-9a05-91081c642e67",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 1178928,
+      "vertex_count": 248,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_-1_1840",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 1476,
+      "bounds": [
+        [
+          1320.9056497115744,
+          447.6256497115745,
+          72.00267480728536
+        ],
+        [
+          1352.3743502884251,
+          479.09435028842546,
+          74.11155747402577
+        ]
+      ],
+      "id": "ec120a2a-7e68-4996-9690-52785417ecce",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 1187760,
+      "vertex_count": 248,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_-1_1860",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 1476,
+      "bounds": [
+        [
+          1320.9307713804196,
+          447.69786686018256,
+          71.35277611853958
+        ],
+        [
+          1352.3578993291899,
+          479.08541881570966,
+          73.33263054446365
+        ]
+      ],
+      "id": "d387526d-801c-4683-90fe-f2e8f41fb9f8",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 1196640,
+      "vertex_count": 248,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_-1_1860",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 1572,
+      "bounds": [
+        [
+          1321.9456497115746,
+          454.90564971157465,
+          69.25643466138185
+        ],
+        [
+          1355.4943502884255,
+          488.4543502884254,
+          74.53780601101124
+        ]
+      ],
+      "id": "6ead329b-fda7-42a1-b960-0e42996db9fd",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 1205520,
+      "vertex_count": 264,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_-1_1880",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 1284,
+      "bounds": [
+        [
+          1332.3456497115744,
+          461.14564971157466,
+          64.55705706096974
+        ],
+        [
+          1359.6543502884258,
+          488.4543502884253,
+          73.84321847265191
+        ]
+      ],
+      "id": "86b7c2fe-c1db-44ba-9cfe-8403d9afe6c2",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 1214976,
+      "vertex_count": 216,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_-1_1900",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 1284,
+      "bounds": [
+        [
+          1332.2791992702255,
+          461.10423671986996,
+          63.98245480800522
+        ],
+        [
+          1359.8233256105566,
+          488.50166343950457,
+          73.078630485253
+        ]
+      ],
+      "id": "3102afb9-3a39-4096-a2a5-60da248bbb80",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 1222704,
+      "vertex_count": 216,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_-1_1900",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 1332,
+      "bounds": [
+        [
+          1344.809576594196,
+          458.02564971157454,
+          63.666329893394014
+        ],
+        [
+          1373.1743502884253,
+          486.39042340580454,
+          76.39798009047804
+        ]
+      ],
+      "id": "8edb1065-e12a-479d-b936-907d57b0bfe6",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 1230432,
+      "vertex_count": 224,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_-1_1920",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 996,
+      "bounds": [
+        [
+          1356.2656497115747,
+          464.2656497115745,
+          68.59973821490844
+        ],
+        [
+          1377.3343502884254,
+          485.3343502884254,
+          79.24427587667998
+        ]
+      ],
+      "id": "cdf16c90-e9c9-4ee1-bc00-5877e15fa817",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 1238448,
+      "vertex_count": 168,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_-1_1940",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 996,
+      "bounds": [
+        [
+          1356.6340884719204,
+          464.5685647610719,
+          68.09965932482501
+        ],
+        [
+          1377.347613752889,
+          485.60662429235305,
+          78.5112000371701
+        ]
+      ],
+      "id": "13d0fd57-5775-49f1-a347-3027a0784f11",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 1244448,
+      "vertex_count": 168,
+      "visible": true,
+      "name": "PR_Saddle_LowerChord_-1_1940",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 564,
+      "bounds": [
+        [
+          1368.7448786308182,
+          471.54564971157464,
+          76.8846556445356
+        ],
+        [
+          1380.454350288425,
+          483.255121369182,
+          81.19964998899195
+        ]
+      ],
+      "id": "40555bdb-f24a-46fc-af68-91b790882ded",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 1250448,
+      "vertex_count": 96,
+      "visible": true,
+      "name": "PR_Saddle_Diagrid_-1_1960",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 14436,
+      "bounds": [
+        [
+          1181.536756547336,
+          373.0028688986517,
+          59.470959176863026
+        ],
+        [
+          1407.9312984532198,
+          591.6955484870851,
+          88.2060210000592
+        ]
+      ],
+      "id": "717cfc74-2194-47c5-a9e7-04f23c09f2cb",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 1253856,
+      "vertex_count": 2408,
+      "visible": true,
+      "name": "PR_Saddle_InnerRaisedEdge",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 14436,
+      "bounds": [
+        [
+          1181.6038883725867,
+          373.0284969734458,
+          58.87116434301868
+        ],
+        [
+          1407.829329312403,
+          591.5783269088199,
+          87.37008669445322
+        ]
+      ],
+      "id": "1289f660-2896-4acb-8056-55d2c0a28e27",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 1340496,
+      "vertex_count": 2408,
+      "visible": true,
+      "name": "PR_Saddle_InnerRaisedEdge_Lower",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 14436,
+      "bounds": [
+        [
+          1173.0463283831018,
+          369.7830571941757,
+          59.49674907362114
+        ],
+        [
+          1407.7341990645507,
+          590.6556910171265,
+          88.19276345136826
+        ]
+      ],
+      "id": "6b7f36d7-34db-4281-95df-00f7e38c4cfe",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "ivory",
+      "offset": 1427136,
+      "vertex_count": 2408,
+      "visible": true,
+      "name": "PR_Saddle_OuterCollapsedEdge",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 14436,
+      "bounds": [
+        [
+          1173.166169505331,
+          369.8575232608092,
+          58.89704830565923
+        ],
+        [
+          1407.7157898770597,
+          590.5895340211489,
+          87.36181626283309
+        ]
+      ],
+      "id": "1381f0e3-3f1f-410c-b267-08bc11ceb024",
+      "collision": true,
+      "category": "02_曲面钢网架",
+      "material_key": "weathered",
+      "offset": 1513776,
+      "vertex_count": 2408,
+      "visible": true,
+      "name": "PR_Saddle_OuterCollapsedEdge_Lower",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 4200,
+      "bounds": [
+        [
+          1191.0679826403523,
+          375.9344169379178,
+          62.06513477156586
+        ],
+        [
+          1390.5634131900936,
+          561.4963491164848,
+          80.27400566633499
+        ]
+      ],
+      "id": "5ed18a99-b594-4532-8b17-0b0f4c1e94ab",
+      "collision": false,
+      "category": "03_节点与腹杆",
+      "material_key": "dark",
+      "offset": 1600416,
+      "vertex_count": 840,
+      "visible": true,
+      "name": "PR_Saddle_WebDiagonals",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 10080,
+      "bounds": [
+        [
+          1190.912980218459,
+          375.76,
+          62.52723279924691
+        ],
+        [
+          1387.8400000000004,
+          554.4911116563904,
+          80.41297782973483
+        ]
+      ],
+      "id": "7d9d4e16-59dc-4f35-b5bb-3e5530ab00ab",
+      "collision": false,
+      "category": "03_节点与腹杆",
+      "material_key": "weathered",
+      "offset": 1627296,
+      "vertex_count": 1820,
+      "visible": true,
+      "name": "PR_Saddle_Nodes",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 24,
+      "bounds": [
+        [
+          1387.706927821224,
+          376.25945076230033,
+          77.75955920335802
+        ],
+        [
+          1397.7193170833277,
+          381.3472682847449,
+          82.04204722605846
+        ]
+      ],
+      "id": "c7059b71-14b9-4bb8-8f4d-202f9b52984d",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1689456,
+      "vertex_count": 6,
+      "visible": true,
+      "name": "PR_Saddle_Skin_19_23",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1351.4019736549776,
+          371.0180085364917,
+          73.41111620064957
+        ],
+        [
+          1361.3844219382904,
+          381.0053197295025,
+          73.9201816660122
+        ]
+      ],
+      "id": "8b230e32-46bf-48c8-8084-b91b6bee5aca",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1689624,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_22_19",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 24,
+      "bounds": [
+        [
+          1341.0030958184716,
+          371.0194143544808,
+          73.330692487357
+        ],
+        [
+          1350.9872576712849,
+          376.01601283340995,
+          73.73478316922373
+        ]
+      ],
+      "id": "52b72532-d930-4582-9bd4-9e15c62309c2",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1689864,
+      "vertex_count": 6,
+      "visible": true,
+      "name": "PR_Saddle_Skin_23_18",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 24,
+      "bounds": [
+        [
+          1346.2013242546846,
+          376.21913605116697,
+          73.1491539613668
+        ],
+        [
+          1356.1858648682044,
+          381.21560566471345,
+          73.57389758381186
+        ]
+      ],
+      "id": "e75a803b-4a79-4ec0-b7b9-7433c6ca48fe",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1690032,
+      "vertex_count": 6,
+      "visible": true,
+      "name": "PR_Saddle_Skin_23_19",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 24,
+      "bounds": [
+        [
+          1351.399536706897,
+          381.41856913623553,
+          73.01503957845568
+        ],
+        [
+          1361.3845235988738,
+          386.4143669796357,
+          73.45189031965118
+        ]
+      ],
+      "id": "032fcf86-2848-4ab3-aaa5-7019b7d95208",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1690200,
+      "vertex_count": 6,
+      "visible": true,
+      "name": "PR_Saddle_Skin_23_20",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1335.8033076076645,
+          376.22075635838297,
+          72.73715655302719
+        ],
+        [
+          1345.786743339063,
+          386.20919005667844,
+          73.37553315620588
+        ]
+      ],
+      "id": "87dcb8cf-cc8d-4513-b4f2-4b5d00f7c314",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1690368,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_24_18",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 24,
+      "bounds": [
+        [
+          1341.0009373182443,
+          381.4204301901866,
+          72.72985898582787
+        ],
+        [
+          1350.9853053566535,
+          386.41714342766863,
+          73.19300438012387
+        ]
+      ],
+      "id": "b4d355f5-1fb5-4cb9-aa00-e5477481c566",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1690608,
+      "vertex_count": 6,
+      "visible": true,
+      "name": "PR_Saddle_Skin_24_19",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1346.1985012048422,
+          386.61943154698474,
+          72.5228583225119
+        ],
+        [
+          1356.1841875069272,
+          396.60474942872344,
+          73.05850157082342
+        ]
+      ],
+      "id": "4a15bc6b-7f35-43ee-8d90-45cf700199bd",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1690776,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_24_20",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1351.3965653584548,
+          391.8178799119291,
+          72.52193806358964
+        ],
+        [
+          1361.3837363887967,
+          401.8015399551375,
+          72.98262455281828
+        ]
+      ],
+      "id": "6e8b21d0-414f-4bdd-8fce-50af63b1f485",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1691016,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_24_21",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1330.6045117259812,
+          381.4221078848478,
+          72.29845510297262
+        ],
+        [
+          1340.5864798675002,
+          391.40996625540004,
+          72.98357385708344
+        ]
+      ],
+      "id": "33737edd-0906-46f0-8291-7e9399c24565",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1691256,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_25_18",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1335.8015777620535,
+          386.6216364130132,
+          72.13693924785302
+        ],
+        [
+          1345.7845175411364,
+          396.60758275478867,
+          72.77231834428744
+        ]
+      ],
+      "id": "298a6a50-2df9-433f-b6c7-bda211602fe7",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1691496,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_25_19",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1340.998383237435,
+          391.82020683828716,
+          72.08392894330399
+        ],
+        [
+          1350.982934853936,
+          401.80406357829247,
+          72.62723899450718
+        ]
+      ],
+      "id": "52af6f2c-2a18-487f-aa60-e7236f0563bd",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1691736,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_25_20",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1346.1956574463234,
+          397.0180103211549,
+          72.08415473513038
+        ],
+        [
+          1356.1821306566906,
+          407.00007623298035,
+          72.58148497073473
+        ]
+      ],
+      "id": "cf540a21-feec-4715-8c04-028add91bc0d",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1691976,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_25_21",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1351.3940702788263,
+          402.2154326133094,
+          72.1440907317318
+        ],
+        [
+          1361.382299937904,
+          412.19634549726277,
+          72.6633796464675
+        ]
+      ],
+      "id": "9ea7b3c2-4dac-40ac-bc42-74e055ab20d3",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1692216,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_25_22",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1325.4069751039183,
+          386.6229698106276,
+          71.88304754241516
+        ],
+        [
+          1335.3870513709728,
+          396.6092705533471,
+          72.57827957932041
+        ]
+      ],
+      "id": "daa09505-76b5-4ffc-aefc-98b7c4519921",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1692456,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_26_18",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1330.6036916172013,
+          391.8221978516669,
+          71.70781712346816
+        ],
+        [
+          1340.5844922509286,
+          401.8061178555146,
+          72.33254584343337
+        ]
+      ],
+      "id": "36503c50-12dd-4ddb-bbf9-dda954767941",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1692696,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_26_19",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1335.7998531069222,
+          397.02024104429285,
+          71.66857565703172
+        ],
+        [
+          1345.7822782285396,
+          407.00179678225027,
+          72.17453349692495
+        ]
+      ],
+      "id": "d7f4d7dc-e01f-4629-9167-c917f5776905",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1692936,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_26_20",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 24,
+      "bounds": [
+        [
+          1340.996324455443,
+          402.2173978098135,
+          71.66994827971028
+        ],
+        [
+          1350.980952829832,
+          407.20961143989587,
+          72.18398424287737
+        ]
+      ],
+      "id": "3c8b8f5e-7b16-4bb4-b3b3-7df10dfeb479",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1693176,
+      "vertex_count": 6,
+      "visible": true,
+      "name": "PR_Saddle_Skin_26_21",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1346.1939666231333,
+          407.41421020197515,
+          71.77228601823796
+        ],
+        [
+          1356.180815409166,
+          417.39307932989726,
+          72.32913541831073
+        ]
+      ],
+      "id": "4b3b9d9d-6957-491f-818b-91ef6a31ac21",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1693344,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_26_22",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1320.2100536253433,
+          391.82280775235324,
+          71.54885483631236
+        ],
+        [
+          1330.1887926063523,
+          401.8067058901185,
+          72.19793116931734
+        ]
+      ],
+      "id": "007059a1-5d2c-4d15-b1ed-e71f2d9a8b03",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1693584,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_27_18",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1325.407290342409,
+          397.0215685333508,
+          71.36497429161581
+        ],
+        [
+          1335.38573797723,
+          407.00276546073053,
+          71.91823926008945
+        ]
+      ],
+      "id": "3b392141-9d56-4d39-b20f-35c2898999aa",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1693824,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_27_19",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1330.6030724162856,
+          402.2189952712215,
+          71.33955455415479
+        ],
+        [
+          1340.5828912903685,
+          412.1977810472586,
+          71.74763238926619
+        ]
+      ],
+      "id": "169a258e-c1fe-42f2-8956-6642540cad40",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1694064,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_27_20",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1335.7988825162852,
+          407.4155207606887,
+          71.34196788602549
+        ],
+        [
+          1345.780948241216,
+          417.3927641172723,
+          71.81212378391727
+        ]
+      ],
+      "id": "8e38d01e-9faf-4455-bba1-7e0c21553699",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1694304,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_27_21",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1340.9957347061982,
+          412.61183339820695,
+          71.48159797093119
+        ],
+        [
+          1350.980342098498,
+          422.5893560049922,
+          72.01997013416702
+        ]
+      ],
+      "id": "c2595942-edb8-4f06-85c9-504bf4b499ef",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1694544,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_27_22",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1346.1943233688269,
+          417.8086190344939,
+          71.74510182753367
+        ],
+        [
+          1356.1810966445407,
+          427.7872296018631,
+          72.28963924617362
+        ]
+      ],
+      "id": "f97d84d4-3521-4353-98bf-6fe12258d19c",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1694784,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_27_23",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1294.2112826956286,
+          376.2176776990702,
+          72.82047939984102
+        ],
+        [
+          1304.196065368176,
+          386.204556351563,
+          73.31038328089973
+        ]
+      ],
+      "id": "962af868-7c1d-4608-bd04-9e3475d5c70e",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1695024,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_28_14",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1320.2110583183703,
+          402.2194491442961,
+          71.16882986786827
+        ],
+        [
+          1330.188358759422,
+          412.19780469705427,
+          71.58786202286987
+        ]
+      ],
+      "id": "f5169805-17ff-4a8f-b0ab-82772d509bcf",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1695264,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_28_19",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1325.4076222120664,
+          407.4162544958698,
+          71.15742402010125
+        ],
+        [
+          1335.3850029192295,
+          417.3924319720699,
+          71.40973836348877
+        ]
+      ],
+      "id": "102ab1bd-11e9-41c3-9c17-7faf267e51ce",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1695504,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_28_20",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1330.6030483137913,
+          412.6122661142726,
+          71.16067855724273
+        ],
+        [
+          1340.5824360920562,
+          422.5883549847299,
+          71.52409018539096
+        ]
+      ],
+      "id": "ca4c63f8-59ac-40cd-ab13-a8393978eb11",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1695744,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_28_21",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1335.7992421004153,
+          417.8082987286787,
+          71.32768198797942
+        ],
+        [
+          1345.7812312775952,
+          427.7853780993892,
+          71.78546253567012
+        ]
+      ],
+      "id": "265aba89-76a7-4ebc-8001-70c6f20acf1d",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1695984,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_28_22",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1340.9970370338308,
+          423.0043374472473,
+          71.62852831749215
+        ],
+        [
+          1350.9815064400796,
+          432.9837144375626,
+          72.11815045554879
+        ]
+      ],
+      "id": "5e4c848c-3c09-454b-987a-f61a90358cbf",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1696224,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_28_23",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1283.8103521450278,
+          376.2154414192024,
+          73.025844944561
+        ],
+        [
+          1293.796110352024,
+          386.20097991992225,
+          73.40411996889203
+        ]
+      ],
+      "id": "f0d6f881-76a0-4069-b927-94c4b64dfe39",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1696464,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_29_13",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1289.0121513058355,
+          381.4165979186638,
+          72.73922945336422
+        ],
+        [
+          1298.9980992010487,
+          391.4021641515967,
+          73.16552694504583
+        ]
+      ],
+      "id": "846cf13a-a392-45c1-b52e-b3382dc7b7ff",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1696704,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_29_14",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1315.0147011867934,
+          407.415969060626,
+          71.15692642351837
+        ],
+        [
+          1324.9920044777598,
+          417.3920710583147,
+          71.39683583654102
+        ]
+      ],
+      "id": "7e3c6be6-99f1-42c6-a6ee-7fe47b915427",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1696944,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_29_19",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1320.211626792135,
+          412.61226227297374,
+          71.15361141602035
+        ],
+        [
+          1330.188362144927,
+          422.5877874557538,
+          71.22080613645204
+        ]
+      ],
+      "id": "09cd27d2-66f7-46f4-8920-b63bae420e7d",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1697184,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_29_20",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1325.4079830883393,
+          417.80798781314525,
+          71.15712340171456
+        ],
+        [
+          1335.3852881775867,
+          427.78408054350285,
+          71.39490260083853
+        ]
+      ],
+      "id": "1da46008-b3ac-4300-be66-7e7802084cde",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1697424,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_29_21",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1330.603792462479,
+          423.0030037999205,
+          71.32496436702603
+        ],
+        [
+          1340.5834568031191,
+          432.9816111738841,
+          71.70626287233885
+        ]
+      ],
+      "id": "31073d58-1624-45a4-84b7-1d26da4851c7",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1697664,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_29_22",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1335.800920867333,
+          428.19933376447017,
+          71.62685582852977
+        ],
+        [
+          1345.783088346579,
+          438.1805898355756,
+          72.09502339616961
+        ]
+      ],
+      "id": "112612fc-daeb-4a6b-ab4c-7c0b90ea8544",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1697904,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_29_23",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1278.6105507719228,
+          381.41423755263116,
+          72.98206867646634
+        ],
+        [
+          1288.5971695060916,
+          391.3987818505333,
+          73.2968054801812
+        ]
+      ],
+      "id": "d42bbc5d-fc90-45ea-9979-490b45335970",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1698144,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_30_13",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 24,
+      "bounds": [
+        [
+          1283.8125838109063,
+          386.6150937386384,
+          72.7374766425088
+        ],
+        [
+          1293.7996913946838,
+          391.6100566054345,
+          73.07294103552066
+        ]
+      ],
+      "id": "1a9c6640-4410-4153-ae50-c5826aeafa6f",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1698384,
+      "vertex_count": 6,
+      "visible": true,
+      "name": "PR_Saddle_Skin_30_14",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1289.014835031083,
+          391.81600887716166,
+          72.3899301230954
+        ],
+        [
+          1299.0019513630616,
+          401.7993440337598,
+          72.78462262525633
+        ]
+      ],
+      "id": "18334e94-ea55-4f8f-80c0-432ef49d906d",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1698552,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_30_15",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1320.2116302012419,
+          423.0022600673595,
+          71.16767746911275
+        ],
+        [
+          1330.1889299476013,
+          432.9805980275664,
+          71.58458408369687
+        ]
+      ],
+      "id": "16f158c0-a150-4a05-90c1-1efbbe7751b2",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1698792,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_30_21",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1325.4082938485756,
+          428.19765508167444,
+          71.34952743134775
+        ],
+        [
+          1335.3865855987308,
+          438.17875600053395,
+          71.88844043537243
+        ]
+      ],
+      "id": "3f763f7c-1a1f-4a95-a100-4e204e42f3ed",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1699032,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_30_22",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1330.6051188101585,
+          433.3946452739336,
+          71.66533378206344
+        ],
+        [
+          1340.585557630281,
+          443.37849624243233,
+          72.26340284922033
+        ]
+      ],
+      "id": "2b4e72ae-229a-487b-a514-f3ee6a9b0eb9",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1699272,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_30_23",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1268.2033246224046,
+          381.4127327678602,
+          73.12865141655577
+        ],
+        [
+          1278.1951091017872,
+          391.39647806190567,
+          73.37154420887083
+        ]
+      ],
+      "id": "e43d4ee4-0bf5-44e0-99cc-7439d2ecb42b",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1699512,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_31_12",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 24,
+      "bounds": [
+        [
+          1273.409486146876,
+          386.61287266064,
+          72.9813084035039
+        ],
+        [
+          1283.397678244089,
+          391.60669049544776,
+          73.22768624889208
+        ]
+      ],
+      "id": "984ff1d5-29bd-470d-9e21-4d752689569e",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1699752,
+      "vertex_count": 6,
+      "visible": true,
+      "name": "PR_Saddle_Skin_31_13",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1278.6124257081306,
+          391.81332583213356,
+          72.72897529938152
+        ],
+        [
+          1288.6005195371392,
+          401.7964520255371,
+          73.03494979592926
+        ]
+      ],
+      "id": "d016346f-1bc1-4d35-b948-fb8fb403074e",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1699920,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_31_14",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1320.2111953066196,
+          433.3933533918872,
+          71.54549085019951
+        ],
+        [
+          1330.1899254709829,
+          443.377242988129,
+          72.19252374080057
+        ]
+      ],
+      "id": "465bbe25-e7a7-44fa-9efe-9d4ee39404ac",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1700160,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_31_22",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 24,
+      "bounds": [
+        [
+          1257.7417731770602,
+          381.4177623630504,
+          72.16434163867301
+        ],
+        [
+          1267.7875743191178,
+          386.43069986261435,
+          73.2461116579608
+        ]
+      ],
+      "id": "08aaa7e1-9a1f-4cf4-bfa9-02ee82e28605",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1700400,
+      "vertex_count": 6,
+      "visible": true,
+      "name": "PR_Saddle_Skin_32_11",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1262.9758666967075,
+          386.6127430273071,
+          72.79602293425103
+        ],
+        [
+          1272.9935474325055,
+          396.5937331686177,
+          73.24564875805281
+        ]
+      ],
+      "id": "34ef1f52-7873-4e54-b0b8-183a90f1288e",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1700568,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_32_12",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1268.2029349168818,
+          391.8114839852123,
+          72.98286726752549
+        ],
+        [
+          1278.1974237929664,
+          401.79411187167585,
+          73.18228056339493
+        ]
+      ],
+      "id": "f6ba7626-c66a-418a-aa75-c2c94cb179b7",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1700808,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_32_13",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1273.4113256291384,
+          397.01149115558144,
+          72.77918765906539
+        ],
+        [
+          1283.4004537728347,
+          406.99388237025175,
+          73.06526770841316
+        ]
+      ],
+      "id": "53a55f61-5801-4329-91bb-5670166747c9",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1701048,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_32_14",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1278.6141350481682,
+          402.2114334828888,
+          72.52772245235559
+        ],
+        [
+          1288.6033473628365,
+          412.21726847730406,
+          72.9188503512035
+        ]
+      ],
+      "id": "78914101-9bfc-4881-9855-f8390c1439ca",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1701288,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_32_15",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 24,
+      "bounds": [
+        [
+          1315.012936871681,
+          438.59078941591804,
+          71.87833077883062
+        ],
+        [
+          1324.993008078591,
+          443.5857966007164,
+          72.33488025605625
+        ]
+      ],
+      "id": "3b96476f-fa14-4348-aa45-07eaa9b27301",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1701528,
+      "vertex_count": 6,
+      "visible": true,
+      "name": "PR_Saddle_Skin_32_22",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1257.723775546443,
+          391.81255294777515,
+          71.74249733314385
+        ],
+        [
+          1267.7870401107816,
+          401.7859199284854,
+          73.10055904632029
+        ]
+      ],
+      "id": "3a80b01a-f70d-492f-8da8-841eeb0f9e59",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1701696,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_33_12",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1262.9877599027593,
+          397.0092230671083,
+          72.86262314392165
+        ],
+        [
+          1272.995907528727,
+          406.9912604719008,
+          73.10496843806942
+        ]
+      ],
+      "id": "d212d7d9-13c7-42c6-882a-09412920a17d",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1701936,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_33_13",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1268.2091644044663,
+          402.20959849948,
+          72.85356874616153
+        ],
+        [
+          1278.1995689659745,
+          412.2222405832167,
+          73.10467463908354
+        ]
+      ],
+      "id": "99a78967-cd2a-416a-909a-0e90b08ab54f",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1702176,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_33_14",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1320.2104733561382,
+          454.19023063490994,
+          72.82811709638848
+        ],
+        [
+          1330.199166073931,
+          464.18161903018046,
+          73.42660172359652
+        ]
+      ],
+      "id": "47e2ee5f-6da8-40dd-951c-f3f008f7f24e",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1702416,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_33_24",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1257.7788421848625,
+          402.2001772403069,
+          72.67075831666085
+        ],
+        [
+          1267.7929651835009,
+          412.21852090676293,
+          73.1064265280524
+        ]
+      ],
+      "id": "ae5c7fbc-3996-48d5-91ab-e8419ef2faa7",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1702656,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_34_13",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 24,
+      "bounds": [
+        [
+          1263.0071633468383,
+          407.4070460016556,
+          72.83442942855376
+        ],
+        [
+          1272.9979697881054,
+          412.43394768108215,
+          73.1063210473827
+        ]
+      ],
+      "id": "ec472d24-9ae3-4ced-9843-12316879a5d8",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1702896,
+      "vertex_count": 6,
+      "visible": true,
+      "name": "PR_Saddle_Skin_34_14",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1320.211772337215,
+          464.5951124492359,
+          73.17161178389414
+        ],
+        [
+          1330.2311122450917,
+          474.58244580772504,
+          73.84772497864854
+        ]
+      ],
+      "id": "d03adc34-ba71-4625-8f5e-a15e6c0fef0f",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1703064,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_34_25",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1257.8074759343538,
+          412.63545652976416,
+          68.30829489930223
+        ],
+        [
+          1267.7951834617097,
+          422.7468812576158,
+          72.98030337438934
+        ]
+      ],
+      "id": "a1e37766-8f29-4312-bd7c-88b6c87cb60e",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1703304,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_35_14",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1320.2125429172982,
+          474.9957856212938,
+          73.44809486338325
+        ],
+        [
+          1330.2465115774737,
+          484.9791048704032,
+          74.3664434059514
+        ]
+      ],
+      "id": "3fd359ca-506c-4d21-a6d8-e8c4ddb1fb2b",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1703544,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_35_26",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1257.808165222113,
+          423.1296714744692,
+          64.9066718439105
+        ],
+        [
+          1267.7924022166005,
+          433.00063966416286,
+          68.0987826176463
+        ]
+      ],
+      "id": "7c6372fb-bf35-4c63-b11b-2860006ccfd8",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1703784,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_36_15",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1247.4078882253395,
+          423.12995963876745,
+          64.90662737425878
+        ],
+        [
+          1257.3922017048371,
+          433.0007520755474,
+          68.12563348765961
+        ]
+      ],
+      "id": "f3005f37-5ffb-4086-b40d-dfca7a244e97",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1704024,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_37_14",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1252.607953183207,
+          428.27287522608276,
+          64.87997548725465
+        ],
+        [
+          1262.5920089642643,
+          438.19200017699126,
+          65.58056319316138
+        ]
+      ],
+      "id": "22035f40-ed7c-4f8d-8f91-9028679ea09e",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1704264,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_37_15",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1257.8079962202175,
+          433.4129010573924,
+          64.87997828274149
+        ],
+        [
+          1267.7919999966275,
+          443.45080703080055,
+          64.95612458434543
+        ]
+      ],
+      "id": "ff78bb46-c593-484b-8324-ce66bd29e38c",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1704504,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_37_16",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1291.5530283480662,
+          470.585601500884,
+          72.76607494784264
+        ],
+        [
+          1304.1875558795048,
+          481.2535370613843,
+          74.37440835204794
+        ]
+      ],
+      "id": "e0358ca2-7a92-4bdc-be5f-d94059bc1b33",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1704744,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_37_23",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1298.9185641169754,
+          475.01454833123165,
+          74.1746273556251
+        ],
+        [
+          1309.3949613287195,
+          485.014071165546,
+          74.68468524412467
+        ]
+      ],
+      "id": "e1286569-b28f-47ed-b156-cfea0e789525",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1704984,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_37_24",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1242.2045332805512,
+          428.27337940651154,
+          64.86782354357611
+        ],
+        [
+          1252.1919535924787,
+          438.1920459730334,
+          65.58335409253822
+        ]
+      ],
+      "id": "6a8f8f1c-0c0c-4cd9-bedf-90f3869040a8",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1705224,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_38_14",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1247.4072575930657,
+          433.4129673002291,
+          64.87415716729897
+        ],
+        [
+          1257.3919960054604,
+          443.45079540517105,
+          64.95594087737175
+        ]
+      ],
+      "id": "b5861599-2eb3-4106-bf1e-cf429cf530fc",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "glass",
+      "offset": 1705464,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_38_15",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1252.4639545528598,
+          438.60800010195027,
+          64.8795965657219
+        ],
+        [
+          1262.4693493781213,
+          449.42658148391007,
+          64.93999917593239
+        ]
+      ],
+      "id": "8aa30cd8-1624-4449-9952-85204741afc1",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1705704,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_38_16",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1256.2317584371585,
+          443.8879783588002,
+          64.87998918311426
+        ],
+        [
+          1266.468802100655,
+          457.0245724197851,
+          64.9399999915839
+        ]
+      ],
+      "id": "fe1bd994-e28a-4480-beb1-dbfeefe2d971",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1705944,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_38_17",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1258.1917038718425,
+          449.96843138156476,
+          64.87999987855045
+        ],
+        [
+          1269.0443619911746,
+          466.5286537062676,
+          64.9400305952825
+        ]
+      ],
+      "id": "317b63c6-1252-42a8-bce7-f4c8469ff4e4",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1706184,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_38_18",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1280.232582414983,
+          481.1058623890736,
+          69.84644754996269
+        ],
+        [
+          1298.3904620381668,
+          497.9471478755156,
+          74.36547923792382
+        ]
+      ],
+      "id": "b94e5938-80f8-4504-962b-aab1a5f8dd57",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1706424,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_38_23",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1236.9895906523582,
+          433.4138970597115,
+          64.64172498600684
+        ],
+        [
+          1246.991300820221,
+          443.44978179951545,
+          64.93299504310413
+        ]
+      ],
+      "id": "7eb2b3fd-7dd0-4774-9f29-9ac62b9f709c",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1706664,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_39_14",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1242.03748431504,
+          438.6080264813578,
+          64.83825701374374
+        ],
+        [
+          1252.04706769016,
+          449.4263536701348,
+          64.93949379515969
+        ]
+      ],
+      "id": "d357978d-fef7-4fe0-b8e7-a8f2961719f6",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1706904,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_39_15",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1245.567814397554,
+          443.8879619149624,
+          64.87708991867872
+        ],
+        [
+          1255.805214923293,
+          457.0245627834972,
+          64.93998605594533
+        ]
+      ],
+      "id": "88d7969f-4662-49ad-a9a6-f7bd4992d0fb",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1707144,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_39_16",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1246.9128058869642,
+          449.9684301628562,
+          64.87991965388383
+        ],
+        [
+          1257.7405484255037,
+          466.5286535926263,
+          64.93999983588076
+        ]
+      ],
+      "id": "ae5b2e4e-05b0-4b99-9ca5-3ab6f2ea3e5f",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1707384,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_39_17",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1246.8913790340043,
+          457.7129857473404,
+          64.87999913998486
+        ],
+        [
+          1258.7507264912529,
+          477.9840991762402,
+          64.93999999933088
+        ]
+      ],
+      "id": "cfc22da6-bd39-4ec6-a875-c7f7aaa23de1",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1707624,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_39_18",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1246.8905029458786,
+          467.3739439550605,
+          64.87999999616828
+        ],
+        [
+          1259.7815273920055,
+          491.2575733423599,
+          64.9400319031337
+        ]
+      ],
+      "id": "d0f98d05-9af1-4e41-aecb-98dc6f804851",
+      "collision": true,
+      "category": "04_残存曲面表皮",
+      "material_key": "panel",
+      "offset": 1707864,
+      "vertex_count": 8,
+      "visible": true,
+      "name": "PR_Saddle_Skin_39_19",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1217.7286376953125,
+          430.5500183105469,
+          63.04999923706055
+        ],
+        [
+          1219.028564453125,
+          431.8500061035156,
+          63.209999084472656
+        ]
+      ],
+      "id": "4e5554fb-97da-4557-9bae-9074ea0c7e06",
+      "collision": true,
+      "category": "06_屋顶短支座",
+      "material_key": "weathered",
+      "offset": 1708104,
+      "vertex_count": 24,
+      "visible": true,
+      "name": "PR_Saddle_RoofShoe_0.4",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1233.09912109375,
+          394.1431884765625,
+          63.04999923706055
+        ],
+        [
+          1234.3990478515625,
+          395.44317626953125,
+          63.209999084472656
+        ]
+      ],
+      "id": "34f8934a-7bf7-40ef-a6ec-327a752a0fba",
+      "collision": true,
+      "category": "06_屋顶短支座",
+      "material_key": "weathered",
+      "offset": 1708536,
+      "vertex_count": 24,
+      "visible": true,
+      "name": "PR_Saddle_RoofShoe_0.62",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 84,
+      "bounds": [
+        [
+          1233.5490880834814,
+          394.5931911858228,
+          63.209999999999994
+        ],
+        [
+          1233.9490880834815,
+          394.99319118582275,
+          64.85551173966425
+        ]
+      ],
+      "id": "58b688e6-0311-4825-9e59-a855e8be021d",
+      "collision": true,
+      "category": "06_屋顶短支座",
+      "material_key": "ivory",
+      "offset": 1708968,
+      "vertex_count": 16,
+      "visible": true,
+      "name": "PR_Saddle_RoofFoot_0.62",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1239.3399658203125,
+          393.0799865722656,
+          63.029998779296875
+        ],
+        [
+          1241.5400390625,
+          394.2799987792969,
+          63.15999984741211
+        ]
+      ],
+      "id": "cbf65b1d-c731-4d28-995d-14cc9e61c140",
+      "collision": true,
+      "category": "06_屋顶短支座",
+      "material_key": "weathered",
+      "offset": 1709496,
+      "vertex_count": 24,
+      "visible": true,
+      "name": "PR_Saddle_CurvedShellShoe_0",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 84,
+      "bounds": [
+        [
+          1240.24,
+          393.4800000000001,
+          63.160000000000004
+        ],
+        [
+          1240.64,
+          393.88000000000005,
+          63.32505979084807
+        ]
+      ],
+      "id": "0b3acbff-5ea6-463d-91eb-baa24bba5c16",
+      "collision": true,
+      "category": "06_屋顶短支座",
+      "material_key": "ivory",
+      "offset": 1709928,
+      "vertex_count": 16,
+      "visible": true,
+      "name": "PR_Saddle_CurvedShellFoot_0",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 36,
+      "bounds": [
+        [
+          1350.0999755859375,
+          476.79998779296875,
+          63.029998779296875
+        ],
+        [
+          1352.300048828125,
+          478.0,
+          63.15999984741211
+        ]
+      ],
+      "id": "be66804c-9322-44df-b4f1-52c3288643b8",
+      "collision": true,
+      "category": "06_屋顶短支座",
+      "material_key": "weathered",
+      "offset": 1710456,
+      "vertex_count": 24,
+      "visible": true,
+      "name": "PR_Saddle_CurvedShellShoe_1",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 84,
+      "bounds": [
+        [
+          1351.0,
+          477.2,
+          63.160000000000004
+        ],
+        [
+          1351.4,
+          477.59999999999997,
+          63.440429565016274
+        ]
+      ],
+      "id": "e8ba0405-d5e9-4bf3-883c-f4e64020ee84",
+      "collision": true,
+      "category": "06_屋顶短支座",
+      "material_key": "ivory",
+      "offset": 1710888,
+      "vertex_count": 16,
+      "visible": true,
+      "name": "PR_Saddle_CurvedShellFoot_1",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": false
+    },
+    {
+      "visual_only": false,
+      "index_count": 64368,
+      "bounds": [
+        [
+          1173.3364732400646,
+          438.780521991786,
+          59.99085556720879
+        ],
+        [
+          1262.0168857057395,
+          591.4629596648344,
+          66.2743534397061
+        ]
+      ],
+      "id": "154d55cd-5466-4ccc-9046-efb1e1b07477",
+      "collision": true,
+      "category": "07_连续通行碰撞",
+      "material_key": "panel",
+      "offset": 1711416,
+      "vertex_count": 10730,
+      "visible": false,
+      "name": "PR_Saddle_ContactSkin_Continuous",
+      "kind": "Structure",
+      "watertight": true,
+      "collision_only": true
+    },
+    {
+      "visual_only": false,
+      "index_count": 7026,
+      "bounds": [
+        [
+          1173.5939599237645,
+          440.70317890457466,
+          60.27401782383417
+        ],
+        [
+          1261.5878260320214,
+          587.0498398217455,
+          66.24176098568081
+        ]
+      ],
+      "id": "d8bd2b60-a0ad-4a92-a486-0c72beb1b2fa",
+      "collision": false,
+      "category": "05_下垂角部残存面板",
+      "material_key": "weathered",
+      "offset": 2097648,
+      "vertex_count": 4684,
+      "visible": true,
+      "name": "PR_Saddle_ContactSkin_FlushPanelSeams",
+      "kind": "Structure",
+      "watertight": false,
+      "collision_only": false
+    },
+    {
+      "visual_only": true,
+      "index_count": 64398,
+      "bounds": [
+        [
+          1173.33642578125,
+          438.780517578125,
+          59.9908561706543
+        ],
+        [
+          1262.016845703125,
+          591.4629516601562,
+          66.27435302734375
+        ]
+      ],
+      "id": "d0769ee8-1dbb-4b8f-ba21-b6a487c803de",
+      "collision": false,
+      "category": "05_下垂角部残存面板",
+      "material_key": "panel",
+      "offset": 2181960,
+      "vertex_count": 11286,
+      "visible": true,
+      "name": "PR_Saddle_ContactSkin_OpaquePanes",
+      "kind": "Structure",
+      "watertight": false,
+      "collision_only": false
+    },
+    {
+      "visual_only": true,
+      "index_count": 12168,
+      "bounds": [
+        [
+          1182.327463251536,
+          449.68825866680993,
+          62.82943417114024
+        ],
+        [
+          1235.4239002729353,
+          568.353193528814,
+          64.94000244140625
+        ]
+      ],
+      "id": "d1d6ddb6-dd11-4f75-a4b8-07bd52a60d0d",
+      "collision": false,
+      "category": "05_下垂角部残存面板",
+      "material_key": "contact_glass",
+      "offset": 2574984,
+      "vertex_count": 2299,
+      "visible": true,
+      "name": "PR_Saddle_ContactSkin_GlassPanes",
+      "kind": "Structure",
+      "watertight": false,
+      "collision_only": false
+    }
+  ],
+  "native_center": [
+    1450.0,
+    1150.0,
+    0.0
+  ],
+  "partial_glass": {
+    "collision_crc_before": 461212732,
+    "backup": "D:/Prism Route/prism-route/.current_map_build/before_saddle_glass_20261031_020414.3dm",
+    "glass_fraction": 0.3248575587902662,
+    "glass_cells": [
+      [
+        -34,
+        82
+      ],
+      [
+        -34,
+        83
+      ],
+      [
+        -34,
+        84
+      ],
+      [
+        -33,
+        83
+      ],
+      [
+        -33,
+        84
+      ],
+      [
+        -33,
+        85
+      ],
+      [
+        -33,
+        86
+      ],
+      [
+        -32,
+        85
+      ],
+      [
+        -32,
+        86
+      ],
+      [
+        -32,
+        87
+      ]
+    ],
+    "collision_crc_after": 461212732,
+    "area_m2": {
+      "contact_glass": 2142.6190527153253,
+      "panel": 4452.945663999912
+    },
+    "preserve_planting": true,
+    "continuous_collision_id": "154d55cd-5466-4ccc-9046-efb1e1b07477",
+    "new_render_object_ids": [
+      "d0769ee8-1dbb-4b8f-ba21-b6a487c803de",
+      "d1d6ddb6-dd11-4f75-a4b8-07bd52a60d0d"
+    ],
+    "source": "D:\\Prism Route\\map\\map_current.3dm",
+    "native_objects": 177
+  },
+  "review_revision": "island_saddle_shell_v4.3dm",
+  "feature": "island_saddle_1030",
+  "preserve_planting": true,
+  "cad_unchanged": true,
+  "triangles": 143924,
+  "mesh_sha256": "693a4a51c920eb072c20cb7e9792891483fab6a16387b9b01ec6c0c8b2bc97fc",
+  "collision_geometry_sha256": "53862002ea06c29c68ebe0c5b36012a36d64f4b804f6e5277d4e730541256b7c",
+  "route": [
+    [
+      -269.41198935027046,
+      60.06276200591624,
+      558.9874117844294
+    ],
+    [
+      -270.77722543593063,
+      60.22723593942633,
+      562.5112036605183
+    ],
+    [
+      -272.1047633259716,
+      60.54908782050645,
+      566.075875449672
+    ],
+    [
+      -273.34601923772334,
+      61.01307725861968,
+      569.7242884642311
+    ],
+    [
+      -274.4237551422716,
+      61.58819324314882,
+      573.534611550268
+    ],
+    [
+      -275.2233065005448,
+      62.2289192291262,
+      577.6132994825713
+    ],
+    [
+      -275.6434360926146,
+      62.886619671968184,
+      582.0503856600941
+    ],
+    [
+      -275.6757282465892,
+      63.512802277678695,
+      586.8260711439095
+    ],
+    [
+      -275.33783272824644,
+      64.05947836983452,
+      591.8879731634314
+    ],
+    [
+      -274.65099232470425,
+      64.48212409689657,
+      597.1850325171553
+    ],
+    [
+      -273.63818632175094,
+      64.74525370610068,
+      602.6658318565894
+    ],
+    [
+      -272.323090803608,
+      64.87550581699105,
+      608.2809514770344
+    ],
+    [
+      -270.72964449915185,
+      64.92750813039243,
+      613.9860891555111
+    ],
+    [
+      -268.88295853717295,
+      64.9397480373743,
+      619.7412815685267
+    ],
+    [
+      -266.8089392989086,
+      64.9399998889734,
+      625.5077918972195
+    ],
+    [
+      -264.5345550350369,
+      64.93999948014621,
+      631.2508358100646
+    ],
+    [
+      -262.0876269450496,
+      64.93999802652544,
+      636.9366717088623
+    ],
+    [
+      -259.4971476761291,
+      64.93999210002843,
+      642.5344448751498
+    ],
+    [
+      -256.7978800523563,
+      64.93997274498778,
+      648.0390145474535
+    ],
+    [
+      -254.0234111607881,
+      64.93990425840305,
+      653.452902115791
+    ],
+    [
+      -251.1993103507682,
+      64.93969644387833,
+      658.7337819216275
+    ],
+    [
+      -248.35645624155745,
+      64.93906797307336,
+      663.8428496118398
+    ],
+    [
+      -245.53039351106986,
+      64.9373819981682,
+      668.7450021210682
+    ],
+    [
+      -242.76000402236127,
+      64.93309821434333,
+      673.4115986116573
+    ],
+    [
+      -240.0865337526336,
+      64.9232398183389,
+      677.8189194043345
+    ],
+    [
+      -237.55346598976416,
+      64.9023518660491,
+      681.9510325194744
+    ],
+    [
+      -235.20497337555003,
+      64.86187451137845,
+      685.7983050975367
+    ],
+    [
+      -233.08576110996182,
+      64.79063310817648,
+      689.359311184084
+    ],
+    [
+      -231.24024036683977,
+      64.67536564452226,
+      692.6386382564174
+    ],
+    [
+      -229.71328847737595,
+      64.506106669973,
+      695.6464729883631
+    ],
+    [
+      -228.54871114168554,
+      64.27891386847261,
+      698.394634288572
+    ],
+    [
+      -227.78625746758667,
+      64.00365697501938,
+      700.8922942303105
+    ],
+    [
+      -227.4524450664194,
+      63.707877757957775,
+      703.147090653302
+    ],
+    [
+      -227.47981386715833,
+      63.43109947261469,
+      705.1720289874183
+    ],
+    [
+      -227.72503180177114,
+      63.21292434908924,
+      707.0187890273799
+    ],
+    [
+      -228.08484996090692,
+      63.07707009747193,
+      708.7366794643012
+    ],
+    [
+      -228.5177268400098,
+      63.03058915862302,
+      710.3597201496616
+    ]
+  ],
+  "spawn": [
+    -264.5345550350369,
+    64.93999948014621,
+    631.2508358100646
+  ],
+  "look_direction": [
+    -2.2743842638717524,
+    0.0,
+    -5.74304391284511
+  ],
+  "walking_surface_id": "154d55cd-5466-4ccc-9046-efb1e1b07477",
+  "review_eye": [
+    0.0,
+    175.0,
+    415.0
+  ],
+  "review_target": [
+    -190.0,
+    68.0,
+    670.0
+  ]
+}

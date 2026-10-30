@@ -56,6 +56,9 @@ func refresh_visual() -> void:
 	noise.noise=generator;noise.width=128;noise.height=128;noise.seamless=true
 	material.set_shader_parameter("species_noise_texture",noise)
 	var trunk:=StandardMaterial3D.new();trunk.albedo_color=Color("342a24");trunk.roughness=0.95
+	if species.id=="birch":
+		trunk.albedo_texture=preload("res://assets/vegetation/textures/bark_birch_flat_v1.png")
+		trunk.albedo_color=Color("e2ded1");trunk.roughness=0.98
 	var have_bounds:=false
 	for mesh: MeshInstance3D in visual.find_children("*","MeshInstance3D",true,false):
 		if species.foliage_name_contains.to_lower() in mesh.name.to_lower():
@@ -98,6 +101,9 @@ func apply_palette() -> void:
 		mesh.set_instance_shader_parameter("species_accent_amount",0.0)
 		mesh.set_instance_shader_parameter("species_seed",palette.seed)
 		mesh.set_instance_shader_parameter("variant_tint",palette.texture_tint)
+		if species.id=="birch" and palette.follow_world_biome:
+			var birch_palette: Dictionary=preload("res://scripts/tree_planting/birch_assets.gd").GREEN_VALUES
+			for parameter: String in birch_palette:mesh.set_instance_shader_parameter(parameter,birch_palette[parameter])
 
 func _notification(what: int) -> void:
 	if what==NOTIFICATION_TRANSFORM_CHANGED and is_inside_tree():update_canopy()
