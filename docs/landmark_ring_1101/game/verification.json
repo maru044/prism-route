@@ -1,0 +1,37 @@
+{
+  "actual_scene": "res://scenes/map_1021.tscn",
+  "bridge_forward": {
+    "physics_steps": 1029,
+    "reached": true,
+    "total": 33,
+    "unsupported_frames": 0,
+    "waypoints_reached": 33
+  },
+  "bridge_reverse": {
+    "physics_steps": 1029,
+    "reached": true,
+    "total": 33,
+    "unsupported_frames": 0,
+    "waypoints_reached": 33
+  },
+  "bridge_samples": 33,
+  "collision_bodies": 3,
+  "failures": [],
+  "geometry_sha256": "5ff696cec3cd9673169085d253068e57745d91680209054d8aeb8ff23f99990d",
+  "grounded_cap_samples": 54,
+  "max_bounds_error_m": 0.0000786419986980036,
+  "max_deck_error_m": 0.000110626220703125,
+  "meshes": 7,
+  "minimum_runtime_embed_m": 0.508011072874069,
+  "passed": true,
+  "preserved_tree_edits": 222,
+  "preserved_tree_removals": 221,
+  "protected_resources": 13,
+  "ring_center_native": [
+    1020.24223143304,
+    521.301819819063,
+    104.0
+  ],
+  "shared_materials": true,
+  "triangles": 13160.0
+}

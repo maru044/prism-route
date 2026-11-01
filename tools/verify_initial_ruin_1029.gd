@@ -72,8 +72,12 @@ func interaction_checks() -> void:
 	var cast_a: Vector3=anchor+Vector3(-1.,.75,0);var cast_b: Vector3=anchor+Vector3(1.,.75,0)
 	var before:=ray(cast_a,cast_b,[actor.get_rid()])
 	check(ruin.solid_shape.disabled and (before.is_empty() or before.collider!=ruin.solid_body),"Hologram has a solid NPC collision")
+	world.set_review_ui_visible(false)
+	check(ruin.prompt_layer.visible and ruin.prompt.visible and ruin.can_interact(),"H hid the gameplay prompt or blocked interaction")
+	for layer: CanvasLayer in world.review_ui_layers:check(not layer.visible,"H left a review overlay visible")
 	key_e();await frames(4)
 	check(ruin.state==ruin.State.PRINTING and ruin.print_count==1,"Physical E did not start printing exactly once")
+	check(ruin.prompt_layer.visible and ruin.prompt.visible,"H hid printing progress")
 	key_e();key_e(true);await frames(3)
 	check(ruin.print_count==1,"Repeated/held E restarted printing")
 	for i in 150:
@@ -86,6 +90,7 @@ func interaction_checks() -> void:
 		await frames(1)
 	await frames(3)
 	check(ruin.state==ruin.State.PRINTED and ruin.avatar.effect.materialization_progress==1.,"Printing did not finish")
+	check(ruin.prompt_layer.visible and ruin.prompt.visible,"H hid the print completion message")
 	for material: ShaderMaterial in ruin.avatar.effect.base_materials:check(material.next_pass==null,"Printed character retains a hologram light pass")
 	var after:=ray(cast_a,cast_b,[actor.get_rid()])
 	check(not ruin.solid_shape.disabled and not after.is_empty() and after.collider==ruin.solid_body,"Printed character is not physically solid")
@@ -94,7 +99,7 @@ func interaction_checks() -> void:
 	check(not ruin.nearby,"Interaction box did not clear after leaving")
 	actor.set_spawn(near+Vector3.UP*.04,.38);await frames(8)
 	check(ruin.state==ruin.State.PRINTED,"Leaving the area reset the printed state")
-	world.set_review_ui_visible(false);check(not ruin.prompt_layer.visible,"H did not hide summon HUD")
+	world.set_review_ui_visible(false);check(ruin.prompt_layer.visible,"H hid the gameplay HUD")
 	world.set_review_ui_visible(true)
 	report.interaction={"key":"E","outside_blocked":true,"free_camera_blocked":true,"vehicle_blocked":true,"area_enter_exit":true,"one_shot_print_count":ruin.print_count,"materialization_seconds":3.5,"completed_solid_collision":true,"printed_state_retained":true}
 

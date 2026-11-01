@@ -15,14 +15,20 @@ v3 约 11.8 万三角形、175 个对象。v4 将渲染表皮分离为实心与�
 原有对象的几何 CRC 在建模前后逐项核对。`model_report.json` 记录新对象编号、三角形数、最高点、椭圆体平面净空与高架接触采样。`walking_surface_samples.json` 保留通行表皮的采样点。后续已导入正式 Godot 地图并通过双向行走测试，现有树木种植全部保留，详见 [实机导入记录](game/README.md)。
 
 - 主文件：`D:/Prism Route/map/map_current.3dm`。
-- 当前独立构件：`island_saddle_shell_v4.3dm`。v4 将约 32.5% 的衔接表皮改为错落的菱形玻璃带，原连续薄壳保留于隐藏锁定的 `07_连续通行碰撞` 图层。v3 保留全不透明的补面版，v2 保留抬升补面前的缩小版。
-- `transition_before.png`、`transition_after.png`：相同镜头下的抬升与补面对比。`contact.png` 是从高架方向观察的连续表皮。Rhino 当前停在命名视图 `IslandSaddle_transition_after_1030`。
+- 当前独立构件统一为 [island_saddle_shell.3dm](island_saddle_shell.3dm)，即正式局部玻璃版本，包含 177 个对象。约 32.5% 的衔接表皮为菱形玻璃带，原连续薄壳保留于隐藏锁定的 `07_连续通行碰撞` 图层。
+- 当前 Rhino 截图为 [partial_glass_rhino.png](partial_glass_rhino.png)，实机图片见 game/。旧版本模型、过渡截图和场地探针数据已移出工作目录，归档于 `D:/Prism Route/archive/modeling_cleanup_1031`。
 - `transition_verification.json` 是 CAD 几何验证：薄壳封闭、5184 个内部面格没有缺面、435 个通行面采样及两端高度。Godot 已使用 `PR_Saddle_ContactSkin_Continuous` 完整薄壳生成通行碰撞，实际行走报告位于 game/headless_report.json。
-- `compact_before.png`、`compact_after.png`：相同镜头下的缩小前后对比。
-- `marked.png`、`overview.png`：当前缩小版本的整体与较低视角。
-- Rhino 命名视图另有 `IslandSaddle_compact_after_1030`。
+- Rhino 保留正式整体、高架衔接和 `IslandSaddle_Current_1031` 当前视图。
 - 重建脚本：`tools/rhino_island_saddle_1030.py`，依次调用 `prepare()`、`make_surface()`、`frame()`、`skin()`、`supports()`、`audit()`、`capture()`、`save()`。已有构件时拒绝直接重复创建；修订只处理本 feature 的对象。
 
 `parameters.json`、`height_graph.json` 与脚本共同定义母面和派生构件。原始文档备份位置见 `model_report.json` 的 `backup` 字段。
 
 部分玻璃修订由 `tools/rhino_saddle_partial_glass_1031.py` 定义：使用原薄壳三角面，沿现有两组菱形网格精确裁切渲染表皮，保留 67.5% 浅色板材、32.5% 单层光学玻璃。原薄壳的几何与碰撞字节保持完全一致；新分离的显示片不创建碰撞。局部玻璃配置和 CAD 几何 CRC 见 `partial_glass_1031.json`，Rhino 预览见 `partial_glass_rhino.png`。从零重建时先执行原母面与表皮流程，再应用此局部玻璃修订。
+
+## 工作目录与场景清理 · 2026-10-31
+
+清除了 Rhino 中不在正式清单内的 18 个隐藏母面/控制线，以及 3 个过渡命名视图。清理前完整主场景已备份到归档目录的 map_before_cleanup.3dm；保留对象的几何和属性逐项核对不变，保存后回读主文件，正式构件仍为 177 件。其余场景对象和现有种植布局原样保留。
+
+25 个旧版模型、过渡图片、采样文件与早期大文件备份已移至项目外归档，移动前后逐文件核对 SHA-256。归档清单见该目录的 file_archive_manifest.json；清理验证见 [cleanup_report.json](cleanup_report.json)。原始概念参考、定位数据、当前参数、控制母面、正式碰撞、重建脚本及实机验证资料继续保留。
+
+以后只输出固定名称的正式独立模型，并在 .current_map_build/island_saddle_previous.3dm 保留一份滚动备份。保存/导出前会连同隐藏、锁定对象核对完整清单；发现未登记残留时直接停止，避免把失败版本混入后续工作。

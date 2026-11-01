@@ -1,0 +1,13 @@
+{
+  "existing_window_base_samples": 39,
+  "failures": [],
+  "floor_samples": 244,
+  "former_holes": 183,
+  "geometry_sha256": "5a2d071a44fed28d40b1bcd7ff984a5002ab2cab1237cce6079765d2e3a83a35",
+  "grass_cells": 258,
+  "max_floor_error_m": 0.00341033935546875,
+  "passed": true,
+  "protected_resources_unchanged": 17,
+  "remaining_holes": 0,
+  "tree_save_sha256": "07647c8b57bed6522a3cfa5231aec4ffedc0e74374d55a3af6a874d79dc64b5a"
+}

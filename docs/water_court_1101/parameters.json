@@ -1,0 +1,40 @@
+{
+  "feature": "water_court_1101",
+  "config": {
+    "water_level": 0.0,
+    "ramp_clear_width": 16.0,
+    "ellipse": [
+      36.0,
+      31.0
+    ],
+    "center": [
+      555.0,
+      510.0
+    ],
+    "main_height": 14.199999999999999,
+    "shell_thickness": 0.23999999999999999,
+    "vault_inner_x": 576.0,
+    "minimum_headroom": 5.0,
+    "main_angles": [
+      72.0,
+      270.0
+    ],
+    "vault_outer_x": 622.0,
+    "vault_y": [
+      520.0,
+      551.0
+    ],
+    "vault_height": [
+      8.5,
+      11.800000000000001,
+      9.4000000000000004
+    ]
+  },
+  "main_profile": "Cubic radial rolled shell: foot, vertical flank, rolled roof and inner eave",
+  "backup": "D:/Prism Route/archive/water_court_1101/map_before_20261101_224906.3dm",
+  "units": "Meters",
+  "lake_bed_id": "c5ae764e-2995-42f9-96a6-f0bf6c7420a6",
+  "ramp_id": "3ece7c15-82db-4301-920c-2f1cd7097101",
+  "vault_profile": "Asymmetric cubic transverse rolled shell, flared curved ends over unchanged exit ramp",
+  "reference": "concept_A.png; interpret geometry to fit the actual site and cross the ramp"
+}

@@ -1,0 +1,18 @@
+{
+  "source_hill_valid": true,
+  "walkable": true,
+  "routes": [
+    {
+      "samples": 101,
+      "minimum_headroom_m": 7.0787920517525436,
+      "max_surface_error_m": 0.024999999999995748,
+      "name": "entry"
+    },
+    {
+      "samples": 101,
+      "minimum_headroom_m": 7.2742801875356271,
+      "max_surface_error_m": 0.025001525878909081,
+      "name": "atrium"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "source": "D:\\Prism Route\\map\\map_current.3dm",
+  "source_id": "0280eafa-4058-40dd-8cf0-36b575adcb14",
+  "units": "meters",
+  "horizontal_area_m2": 71145.3125,
+  "projected_boundary_area_m2": 71145.31249999857,
+  "surface_area_m2": 77923.94665857103,
+  "mesh_surface_area_m2": 77920.9453125,
+  "bounds": [
+    [
+      1715.0,
+      -25.0,
+      58.992313385009766
+    ],
+    [
+      1955.0,
+      455.0,
+      95.09962463378906
+    ]
+  ],
+  "highest_mesh_point": [
+    1847.1658935546875,
+    156.1175994873047,
+    95.09962463378906
+  ],
+  "horizontal_area_slope_at_most_5deg_m2": 31008.380859375,
+  "placements_proposed": [
+    {
+      "id": "A",
+      "center_xy": [
+        1844,
+        160
+      ],
+      "extent_xy_m": [
+        16,
+        28
+      ],
+      "height_above_ground_m": 5,
+      "ground_range_m": [
+        94.627,
+        95.098
+      ],
+      "description": "主遗构：28 × 16 m，残壳最高约 5 m"
+    },
+    {
+      "id": "B",
+      "center_xy": [
+        1860,
+        235
+      ],
+      "extent_xy_m": [
+        11,
+        18
+      ],
+      "height_above_ground_m": 3.5,
+      "ground_range_m": [
+        91.027,
+        92.233
+      ],
+      "description": "次遗构：18 × 11 m，残壳最高约 3.5 m"
+    }
+  ],
+  "center_distance_m": 76.68767828015137,
+  "view_direction_native": [
+    1,
+    0,
+    0
+  ],
+  "lower_terrace_sample_height_m": 35,
+  "lower_road_sample_height_m": 35.241,
+  "notes": [
+    "Read-only measurement. No Rhino geometry or game resources changed.",
+    "Slope statistic is not a buildable-area assessment.",
+    "Footprints are dimensional planning envelopes, not final shell geometry.",
+    "28x16 and 18x11 are bounding rectangles; together 646 m2, 0.91% of the measured footprint; paths and foundations excluded."
+  ]
+}

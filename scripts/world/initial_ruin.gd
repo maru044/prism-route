@@ -100,7 +100,7 @@ func _build_trigger() -> void:
 
 func _build_prompt() -> void:
 	prompt_layer=CanvasLayer.new();prompt_layer.name="SummonPrompt";add_child(prompt_layer)
-	world.review_ui_layers.append(prompt_layer)
+	# Gameplay HUD: proximity and interaction state own its visibility, not H.
 	var root:=Control.new();root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);root.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	prompt_layer.add_child(root)
 	prompt=Label.new();prompt.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)

@@ -1,0 +1,54 @@
+{
+  "Exterior_sweeping_ramp": {
+    "last_position": "(-314.2481, 72.60282, 882.5661)",
+    "reached": true,
+    "steps": 794,
+    "unsupported_frames": 0,
+    "waypoints": 31,
+    "waypoints_reached": 31
+  },
+  "Helical_ramp_1": {
+    "last_position": "(-398.7656, 60.60444, 812.1449)",
+    "reached": true,
+    "steps": 524,
+    "unsupported_frames": 0,
+    "waypoints": 25,
+    "waypoints_reached": 25
+  },
+  "Helical_ramp_2": {
+    "last_position": "(-329.2174, 48.60447, 882.8163)",
+    "reached": true,
+    "steps": 513,
+    "unsupported_frames": 0,
+    "waypoints": 25,
+    "waypoints_reached": 25
+  },
+  "Helical_ramp_3": {
+    "last_position": "(-371.4, 35.00462, 805.6976)",
+    "reached": true,
+    "steps": 519,
+    "unsupported_frames": 0,
+    "waypoints": 25,
+    "waypoints_reached": 25
+  },
+  "actual_scene": "res://scenes/map_1021.tscn",
+  "automatic_interior_plants": 0,
+  "base_mesh_and_grass_bake_preserved": true,
+  "covered_landing_join_samples": 6,
+  "exit_to_middle_road": {
+    "last_position": "(-426.1378, 35.0035, 777.8516)",
+    "reached": true,
+    "steps": 843,
+    "unsupported_frames": 0,
+    "waypoints": 13,
+    "waypoints_reached": 13
+  },
+  "failures": [],
+  "grass_ground_collision_samples": 5,
+  "imported_meshes": 32,
+  "maximum_ramp_error_m": 0.000286102294921875,
+  "passed": true,
+  "ramp_collision_samples": 404,
+  "roof_trees_removed": 105.0,
+  "unrelated_saved_edits_preserved": 174.0
+}

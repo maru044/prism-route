@@ -11,6 +11,9 @@ def export():
     with io.open(ROOT+'/docs/island_saddle_1030/model_report.json','r',encoding='utf-8') as f:review=json.load(f)
     settings=Rhino.DocObjects.ObjectEnumeratorSettings()
     settings.NormalObjects=True;settings.HiddenObjects=True;settings.LockedObjects=True
+    actual=set(str(o.Id) for o in sc.doc.Objects.GetObjectList(settings)
+               if not o.IsDeleted and o.Attributes.GetUserString('feature')==TAG)
+    assert actual==set(review['object_ids']),'Stale or missing saddle objects: clean hidden controls before exporting'
     fingerprint=lambda:dict((str(o.Id),int(o.Geometry.DataCRC(0))) for o in sc.doc.Objects.GetObjectList(settings))
     before=fingerprint();modified=sc.doc.Modified;records=[];materials={}
     stream=System.IO.FileStream(CACHE+'/island_saddle_1031.bin',System.IO.FileMode.Create)

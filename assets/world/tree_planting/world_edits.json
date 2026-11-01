@@ -107,7 +107,143 @@
 		"base_018504",
 		"base_005647",
 		"base_013536",
-		"base_014665"
+		"base_014665",
+		"base_000509",
+		"base_000736",
+		"base_000855",
+		"base_001038",
+		"base_001619",
+		"base_001774",
+		"base_001991",
+		"base_002016",
+		"base_002170",
+		"base_002294",
+		"base_002481",
+		"base_002537",
+		"base_002617",
+		"base_002760",
+		"base_002922",
+		"base_004192",
+		"base_004215",
+		"base_004259",
+		"base_004511",
+		"base_004575",
+		"base_004783",
+		"base_004897",
+		"base_004937",
+		"base_005363",
+		"base_005374",
+		"base_005901",
+		"base_005988",
+		"base_006134",
+		"base_006161",
+		"base_006508",
+		"base_006599",
+		"base_006792",
+		"base_006995",
+		"base_007485",
+		"base_007585",
+		"base_007973",
+		"base_008182",
+		"base_008427",
+		"base_009277",
+		"base_009726",
+		"base_009825",
+		"base_010032",
+		"base_010292",
+		"base_010361",
+		"base_010496",
+		"base_010515",
+		"base_010666",
+		"base_010669",
+		"base_011047",
+		"base_011073",
+		"base_011300",
+		"base_012118",
+		"base_012220",
+		"base_012435",
+		"base_012755",
+		"base_013506",
+		"base_013577",
+		"base_013637",
+		"base_013833",
+		"base_013875",
+		"base_013954",
+		"base_013991",
+		"base_014083",
+		"base_014326",
+		"base_014539",
+		"base_014623",
+		"base_014639",
+		"base_014697",
+		"base_014752",
+		"base_014887",
+		"base_014944",
+		"base_014982",
+		"base_015083",
+		"base_015184",
+		"base_015372",
+		"base_015512",
+		"base_015642",
+		"base_016163",
+		"base_016209",
+		"base_016315",
+		"base_016362",
+		"base_016377",
+		"base_016591",
+		"base_016770",
+		"base_016935",
+		"base_016961",
+		"base_016969",
+		"base_016978",
+		"base_017013",
+		"base_017352",
+		"base_017449",
+		"base_017451",
+		"base_017468",
+		"base_017553",
+		"base_017695",
+		"base_018196",
+		"base_018445",
+		"base_018704",
+		"base_018909",
+		"base_018950",
+		"base_019023",
+		"base_019062",
+		"base_019151",
+		"base_019279",
+		"base_019475",
+		"base_001342",
+		"base_018726",
+		"base_013776",
+		"base_002109",
+		"base_006293",
+		"base_004308",
+		"base_016904",
+		"base_017721",
+		"base_012586",
+		"base_015892",
+		"base_012714",
+		"base_013354",
+		"base_002756",
+		"base_018107",
+		"base_009890",
+		"base_009238",
+		"base_010895",
+		"base_009909",
+		"base_006365",
+		"base_012432",
+		"base_010418",
+		"base_004660",
+		"base_001401",
+		"base_017251",
+		"base_009354",
+		"base_009317",
+		"base_002201",
+		"base_017585",
+		"base_010629",
+		"base_009568",
+		"base_018866"
 	],
 	"terrain": "res://assets/world/current_map_validation/current_region.glb",
 	"trees": [
@@ -2372,6 +2508,4517 @@
 			"species": "upright",
 			"surface": "ce36cdce-398b-44f5-b0b4-fe7f258106cf",
 			"yaw": 3.62146091461182
+		},
+		{
+			"id": "tree_5e54c6480dd8b199aeb16033",
+			"palette": "green",
+			"position": [
+				-387.348327636719,
+				35.0,
+				848.419555664063
+			],
+			"scale": 5.0,
+			"species": "broad",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_a3635f43dd9aa3723e6ec521",
+			"palette": "orange",
+			"position": [
+				-345.550903320313,
+				35.0,
+				846.114990234375
+			],
+			"scale": 3.0,
+			"species": "upright",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_118132b80311ff508fee943a",
+			"palette": "green",
+			"position": [
+				-371.041290283203,
+				35.0,
+				853.241088867188
+			],
+			"scale": 2.0,
+			"species": "broad",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_60803849e70037be4f9298d3",
+			"palette": "green",
+			"position": [
+				-393.635589599609,
+				35.0,
+				859.07568359375
+			],
+			"scale": 2.0,
+			"species": "broad",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_2e252609e7325536152e6a84",
+			"palette": "green",
+			"position": [
+				-374.836090087891,
+				35.0,
+				836.745483398438
+			],
+			"scale": 2.0,
+			"species": "broad",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_b2dab5ceb922c65a21e2259d",
+			"palette": "green",
+			"position": [
+				-403.006744384766,
+				35.0,
+				841.655456542969
+			],
+			"scale": 1.0,
+			"species": "broad",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_51b362a8fe200cd050915c1c",
+			"palette": "green",
+			"position": [
+				-398.699279785156,
+				35.0,
+				853.512084960938
+			],
+			"scale": 1.0,
+			"species": "broad",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_a16e021d92a6fd55c0c691b9",
+			"palette": "green",
+			"position": [
+				-376.08349609375,
+				35.0,
+				868.232238769531
+			],
+			"scale": 1.0,
+			"species": "broad",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_4a018bb22fed0657cfadf214",
+			"palette": "green",
+			"position": [
+				-360.000427246094,
+				35.0,
+				865.072692871094
+			],
+			"scale": 1.0,
+			"species": "broad",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_1bc3ecb93c14ff02ed774cb8",
+			"palette": "green",
+			"position": [
+				-347.393218994141,
+				35.0,
+				859.112060546875
+			],
+			"scale": 2.0,
+			"species": "broad",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_1a252f5f8b57690bd89ef8cf",
+			"palette": "green",
+			"position": [
+				-330.051330566406,
+				35.0,
+				839.250610351563
+			],
+			"scale": 1.5,
+			"species": "broad",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_819a0d2e7aeb56036dec9e26",
+			"palette": "green",
+			"position": [
+				-332.146484375,
+				35.0,
+				853.866516113281
+			],
+			"scale": 1.0,
+			"species": "broad",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_ab7cefb3ec1159ac5472ff4a",
+			"palette": "green",
+			"position": [
+				-329.283660888672,
+				35.0,
+				846.263916015625
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_6905906903f800de43d3f428",
+			"palette": "green",
+			"position": [
+				-324.243988037109,
+				35.0,
+				845.545715332031
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_2f3122096e364d2e75eaeda9",
+			"palette": "green",
+			"position": [
+				-322.327880859375,
+				35.0,
+				840.2373046875
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_295674b1c8e98309f0ae3c5a",
+			"palette": "green",
+			"position": [
+				-323.028228759766,
+				35.0,
+				842.918334960938
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_3ab5e93df8234276f28688b8",
+			"palette": "green",
+			"position": [
+				-326.227416992188,
+				35.0,
+				851.799682617188
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_eed21d03799f122a13b17c03",
+			"palette": "green",
+			"position": [
+				-325.070861816406,
+				35.0,
+				833.800903320313
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_b6bcb75065ac5ba524fe09f3",
+			"palette": "green",
+			"position": [
+				-330.005523681641,
+				35.0,
+				832.55224609375
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_cae92aef80b4dea59798abf3",
+			"palette": "green",
+			"position": [
+				-341.100219726563,
+				35.0,
+				828.54248046875
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_ae8b8f629ddf1ebc24ff4afb",
+			"palette": "orange",
+			"position": [
+				-347.189636230469,
+				35.0,
+				825.798645019531
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_41e08145d718eeb769bd48ce",
+			"palette": "orange",
+			"position": [
+				-354.091400146484,
+				34.9999961853027,
+				858.972534179688
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_c872d5d8cc730c0856d8c0b5",
+			"palette": "green",
+			"position": [
+				-351.636810302734,
+				35.0,
+				828.455139160156
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_047b45da48fe417043c52b36",
+			"palette": "green",
+			"position": [
+				-357.063812255859,
+				35.0,
+				827.688659667969
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_5c5179c8f51fe8a93e6be971",
+			"palette": "green",
+			"position": [
+				-364.16943359375,
+				35.0,
+				824.530822753906
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_643ef9e0056f26fc5244a8d0",
+			"palette": "green",
+			"position": [
+				-360.852081298828,
+				35.0,
+				838.574829101563
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_1302ec6467e596c254921400",
+			"palette": "green",
+			"position": [
+				-354.672393798828,
+				35.0,
+				839.249816894531
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_e56d17826502bd0e9321b5b3",
+			"palette": "green",
+			"position": [
+				-354.885589599609,
+				35.0,
+				835.2177734375
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_7a82eb623d8bf745e1b44f50",
+			"palette": "green",
+			"position": [
+				-341.060852050781,
+				35.0,
+				840.126159667969
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_2bd64d65ccf0610ea865b43f",
+			"palette": "green",
+			"position": [
+				-344.231353759766,
+				35.0,
+				843.243713378906
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_8f62c580462c28761dd38f94",
+			"palette": "green",
+			"position": [
+				-369.875213623047,
+				35.0,
+				823.760864257813
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_b64d270ea2352e38525eefaf",
+			"palette": "green",
+			"position": [
+				-377.892181396484,
+				35.0,
+				825.046691894531
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_b4808119e933740f30a22565",
+			"palette": "green",
+			"position": [
+				-383.545806884766,
+				35.0,
+				826.567199707031
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_901dd09632d26d08dab28f2b",
+			"palette": "green",
+			"position": [
+				-389.632995605469,
+				35.0,
+				827.673034667969
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_b429c119891ee8fea8884026",
+			"palette": "green",
+			"position": [
+				-389.425018310547,
+				35.0,
+				825.508972167969
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_7662d5d1239668c886be1a9e",
+			"palette": "green",
+			"position": [
+				-384.535308837891,
+				35.0,
+				835.070068359375
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_b4f2ceef43e5438a58cefca1",
+			"palette": "green",
+			"position": [
+				-393.108062744141,
+				35.0,
+				839.088073730469
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_67c527b34647806b10b97727",
+			"palette": "green",
+			"position": [
+				-397.224395751953,
+				35.0,
+				834.805603027344
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_420c8c38f8cd10dee8924b70",
+			"palette": "green",
+			"position": [
+				-396.163055419922,
+				35.0,
+				831.044372558594
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_1590d86fc8389811cf641c15",
+			"palette": "green",
+			"position": [
+				-401.847198486328,
+				35.0,
+				835.416015625
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_2be36c327320d7eb405ea5af",
+			"palette": "green",
+			"position": [
+				-387.733612060547,
+				35.0,
+				841.577026367188
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_f6b684eadb3c1438f914b678",
+			"palette": "green",
+			"position": [
+				-396.177947998047,
+				35.0,
+				848.759826660156
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_8612445ac0cd2509b8fea971",
+			"palette": "green",
+			"position": [
+				-365.048309326172,
+				35.0,
+				833.080749511719
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "7541036e-feb3-4fdb-be6e-e40e8008c9eb",
+			"yaw": 0.0
+		},
+		{
+			"id": "base_006022",
+			"palette": "green",
+			"position": [
+				391.484588623047,
+				95.0362777709961,
+				1004.61041259766
+			],
+			"scale": 1.07558703422546,
+			"species": "small",
+			"surface": "0280eafa-4058-40dd-8cf0-36b575adcb14",
+			"yaw": 1.18140184879303
+		},
+		{
+			"id": "base_006595",
+			"palette": "green",
+			"position": [
+				397.885467529297,
+				94.897819519043,
+				974.582336425781
+			],
+			"scale": 1.11699986457825,
+			"species": "small",
+			"surface": "0280eafa-4058-40dd-8cf0-36b575adcb14",
+			"yaw": 3.52323842048645
+		},
+		{
+			"id": "base_011479",
+			"palette": "green",
+			"position": [
+				391.290893554688,
+				94.79248046875,
+				974.827758789063
+			],
+			"scale": 0.963870823383331,
+			"species": "small",
+			"surface": "0280eafa-4058-40dd-8cf0-36b575adcb14",
+			"yaw": 0.00948844756931067
+		},
+		{
+			"id": "base_009875",
+			"palette": "green",
+			"position": [
+				406.842041015625,
+				90.9888076782227,
+				904.67041015625
+			],
+			"scale": 1.08823001384735,
+			"species": "small",
+			"surface": "0280eafa-4058-40dd-8cf0-36b575adcb14",
+			"yaw": 3.02376246452332
+		},
+		{
+			"id": "base_004202",
+			"palette": "green",
+			"position": [
+				413.463104248047,
+				92.3064880371094,
+				925.791687011719
+			],
+			"scale": 1.15581250190735,
+			"species": "small",
+			"surface": "0280eafa-4058-40dd-8cf0-36b575adcb14",
+			"yaw": 3.39632105827332
+		},
+		{
+			"id": "base_000121",
+			"palette": "green",
+			"position": [
+				439.474548339844,
+				70.3758239746094,
+				253.809616088867
+			],
+			"scale": 0.95488440990448,
+			"species": "broad",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 5.3327841758728
+		},
+		{
+			"id": "base_000229",
+			"palette": "green",
+			"position": [
+				330.072631835938,
+				54.6450881958008,
+				273.723022460938
+			],
+			"scale": 1.15462672710419,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 6.15098428726196
+		},
+		{
+			"id": "base_000239",
+			"palette": "green",
+			"position": [
+				428.619506835938,
+				58.6806488037109,
+				217.075988769531
+			],
+			"scale": 0.846183001995087,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 5.58994054794312
+		},
+		{
+			"id": "base_000263",
+			"palette": "cherry",
+			"position": [
+				524.816162109375,
+				78.6994247436523,
+				184.805236816406
+			],
+			"scale": 1.14967553140107,
+			"species": "small",
+			"surface": "5318606f-cfbb-482b-845a-7df3dfd80b08",
+			"yaw": 2.79500023744112
+		},
+		{
+			"id": "base_000289",
+			"palette": "cherry",
+			"position": [
+				375.756103515625,
+				43.0872650146484,
+				242.479248046875
+			],
+			"scale": 1.18615233898163,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 0.623220920562744
+		},
+		{
+			"id": "base_000382",
+			"palette": "green",
+			"position": [
+				499.92626953125,
+				80.3378753662109,
+				269.603576660156
+			],
+			"scale": 1.04176641565179,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 1.63790121496207
+		},
+		{
+			"id": "base_000410",
+			"palette": "green",
+			"position": [
+				388.6884765625,
+				57.8383026123047,
+				284.134948730469
+			],
+			"scale": 1.11814069747925,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 2.2319164276123
+		},
+		{
+			"id": "base_000616",
+			"palette": "green",
+			"position": [
+				445.352416992188,
+				79.6984405517578,
+				389.868225097656
+			],
+			"scale": 1.10062572435552,
+			"species": "small",
+			"surface": "dff8fbe5-3d2b-4370-b596-db37fbd102ce",
+			"yaw": 4.78890264982514
+		},
+		{
+			"id": "base_000674",
+			"palette": "green",
+			"position": [
+				384.83203125,
+				68.820068359375,
+				399.151794433594
+			],
+			"scale": 1.03678185228417,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 4.72197163053472
+		},
+		{
+			"id": "base_000700",
+			"palette": "cherry",
+			"position": [
+				545.972045898438,
+				83.1585845947266,
+				239.772338867188
+			],
+			"scale": 1.06277541350631,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 5.85449253268012
+		},
+		{
+			"id": "base_000712",
+			"palette": "green",
+			"position": [
+				471.294921875,
+				79.3967132568359,
+				338.712768554688
+			],
+			"scale": 1.06859567644085,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 3.42483858854004
+		},
+		{
+			"id": "base_000748",
+			"palette": "green",
+			"position": [
+				545.26708984375,
+				84.4613800048828,
+				288.418029785156
+			],
+			"scale": 1.14689933208459,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 0.755419615000145
+		},
+		{
+			"id": "base_000783",
+			"palette": "green",
+			"position": [
+				324.076110839844,
+				53.8092422485352,
+				273.496826171875
+			],
+			"scale": 0.96097457408905,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 0.962933480739594
+		},
+		{
+			"id": "base_000821",
+			"palette": "green",
+			"position": [
+				406.075073242188,
+				70.143913269043,
+				363.168212890625
+			],
+			"scale": 1.04182688133881,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 0.841577338790429
+		},
+		{
+			"id": "base_001000",
+			"palette": "green",
+			"position": [
+				308.0869140625,
+				52.1811828613281,
+				274.791015625
+			],
+			"scale": 0.861842930316925,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 2.82786345481873
+		},
+		{
+			"id": "base_001035",
+			"palette": "green",
+			"position": [
+				433.846435546875,
+				70.3838806152344,
+				345.694885253906
+			],
+			"scale": 1.14970099925995,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 4.93048191070557
+		},
+		{
+			"id": "base_001044",
+			"palette": "green",
+			"position": [
+				406.420654296875,
+				61.9524345397949,
+				317.511535644531
+			],
+			"scale": 1.15433466434479,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 0.858276188373566
+		},
+		{
+			"id": "base_001062",
+			"palette": "green",
+			"position": [
+				407.362060546875,
+				70.1660079956055,
+				397.351745605469
+			],
+			"scale": 1.0935352448882,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 3.61952140681631
+		},
+		{
+			"id": "base_001064",
+			"palette": "green",
+			"position": [
+				307.185546875,
+				50.7239379882813,
+				305.343383789063
+			],
+			"scale": 0.990687131881714,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 0.77204829454422
+		},
+		{
+			"id": "base_001079",
+			"palette": "green",
+			"position": [
+				472.2255859375,
+				85.4498596191406,
+				373.652282714844
+			],
+			"scale": 0.835292601595509,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 3.63281614470968
+		},
+		{
+			"id": "base_001091",
+			"palette": "green",
+			"position": [
+				483.508544921875,
+				81.6254959106445,
+				328.557250976563
+			],
+			"scale": 1.06823385342563,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 0.36394147035718
+		},
+		{
+			"id": "base_001116",
+			"palette": "green",
+			"position": [
+				415.109130859375,
+				61.7111549377441,
+				275.301696777344
+			],
+			"scale": 0.907963454723358,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 4.14778757095337
+		},
+		{
+			"id": "base_001117",
+			"palette": "green",
+			"position": [
+				280.799438476563,
+				50.4828872680664,
+				280.515808105469
+			],
+			"scale": 0.954167485237122,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 4.35256099700928
+		},
+		{
+			"id": "base_001222",
+			"palette": "green",
+			"position": [
+				495.2294921875,
+				71.4248809814453,
+				190.323120117188
+			],
+			"scale": 0.923012554645538,
+			"species": "small",
+			"surface": "5318606f-cfbb-482b-845a-7df3dfd80b08",
+			"yaw": 0.660131871700287
+		},
+		{
+			"id": "base_001232",
+			"palette": "cherry",
+			"position": [
+				545.107666015625,
+				81.8185577392578,
+				220.222900390625
+			],
+			"scale": 1.0674484340643,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 0.995432237942225
+		},
+		{
+			"id": "base_001233",
+			"palette": "green",
+			"position": [
+				519.131103515625,
+				85.5895080566406,
+				287.190551757813
+			],
+			"scale": 1.18927472918693,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 1.57705682802358
+		},
+		{
+			"id": "base_001302",
+			"palette": "green",
+			"position": [
+				491.262084960938,
+				72.4432525634766,
+				164.308288574219
+			],
+			"scale": 0.82667738199234,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 4.5835657119751
+		},
+		{
+			"id": "base_001336",
+			"palette": "green",
+			"position": [
+				425.294921875,
+				76.0217895507813,
+				408.704772949219
+			],
+			"scale": 0.938310079193459,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 4.4897707405544
+		},
+		{
+			"id": "base_001391",
+			"palette": "green",
+			"position": [
+				481.452514648438,
+				70.0500030517578,
+				180.49609375
+			],
+			"scale": 0.900878012180328,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 0.432303369045258
+		},
+		{
+			"id": "base_001550",
+			"palette": "green",
+			"position": [
+				432.17041015625,
+				70.4779663085938,
+				311.063659667969
+			],
+			"scale": 0.965445637702942,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 2.19985818862915
+		},
+		{
+			"id": "base_001606",
+			"palette": "green",
+			"position": [
+				483.1533203125,
+				79.288688659668,
+				306.74267578125
+			],
+			"scale": 1.13271872202151,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 1.09121871392384
+		},
+		{
+			"id": "base_001702",
+			"palette": "cherry",
+			"position": [
+				343.868774414063,
+				44.1352386474609,
+				247.314208984375
+			],
+			"scale": 0.954844653606415,
+			"species": "broad",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 6.11834144592285
+		},
+		{
+			"id": "base_001779",
+			"palette": "green",
+			"position": [
+				419.180053710938,
+				70.4356079101563,
+				298.0126953125
+			],
+			"scale": 0.877665579319,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 4.95624303817749
+		},
+		{
+			"id": "base_001807",
+			"palette": "green",
+			"position": [
+				453.482177734375,
+				70.6187744140625,
+				311.12353515625
+			],
+			"scale": 0.949927091598511,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 3.72769093513489
+		},
+		{
+			"id": "base_001844",
+			"palette": "green",
+			"position": [
+				342.300842285156,
+				54.6443824768066,
+				291.537567138672
+			],
+			"scale": 0.983007729053497,
+			"species": "upright",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 1.49254262447357
+		},
+		{
+			"id": "base_001860",
+			"palette": "green",
+			"position": [
+				431.664581298828,
+				70.4456100463867,
+				272.9619140625
+			],
+			"scale": 0.838637948036194,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 4.39623498916626
+		},
+		{
+			"id": "base_001863",
+			"palette": "green",
+			"position": [
+				465.677368164063,
+				85.8773956298828,
+				381.390014648438
+			],
+			"scale": 1.06702548354199,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 4.70298306310085
+		},
+		{
+			"id": "base_002104",
+			"palette": "green",
+			"position": [
+				471.877685546875,
+				70.3298950195313,
+				221.648986816406
+			],
+			"scale": 0.898753643035889,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 4.26805448532104
+		},
+		{
+			"id": "base_002120",
+			"palette": "green",
+			"position": [
+				464.724731445313,
+				70.0137786865234,
+				175.431274414063
+			],
+			"scale": 1.19970142841339,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 0.928438186645508
+		},
+		{
+			"id": "base_002137",
+			"palette": "green",
+			"position": [
+				429.169067382813,
+				70.4686813354492,
+				302.453491210938
+			],
+			"scale": 0.936196744441986,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 1.43764901161194
+		},
+		{
+			"id": "base_002141",
+			"palette": "green",
+			"position": [
+				334.308349609375,
+				51.5600051879883,
+				300.349975585938
+			],
+			"scale": 1.00151228904724,
+			"species": "broad",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 3.36326885223389
+		},
+		{
+			"id": "base_002149",
+			"palette": "green",
+			"position": [
+				393.50390625,
+				54.9484024047852,
+				311.694396972656
+			],
+			"scale": 1.05012249946594,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 1.27640271186829
+		},
+		{
+			"id": "base_002364",
+			"palette": "green",
+			"position": [
+				465.81884765625,
+				70.6883850097656,
+				283.581237792969
+			],
+			"scale": 1.03637003898621,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 4.25374174118042
+		},
+		{
+			"id": "base_002473",
+			"palette": "green",
+			"position": [
+				432.933044433594,
+				61.2222061157227,
+				233.494003295898
+			],
+			"scale": 0.922658443450928,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 0.453457295894623
+		},
+		{
+			"id": "base_002706",
+			"palette": "green",
+			"position": [
+				444.006713867188,
+				77.7292938232422,
+				365.600402832031
+			],
+			"scale": 0.820366995751823,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 5.58183845360812
+		},
+		{
+			"id": "base_002833",
+			"palette": "green",
+			"position": [
+				489.762084960938,
+				70.2695007324219,
+				200.609375
+			],
+			"scale": 0.952431738376617,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 2.52330660820007
+		},
+		{
+			"id": "base_002847",
+			"palette": "green",
+			"position": [
+				461.829833984375,
+				70.3203125,
+				230.901489257813
+			],
+			"scale": 0.959676027297974,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 4.29451990127563
+		},
+		{
+			"id": "base_002900",
+			"palette": "green",
+			"position": [
+				409.192993164063,
+				53.094108581543,
+				247.430114746094
+			],
+			"scale": 1.01055872440338,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 0.245479807257652
+		},
+		{
+			"id": "base_002915",
+			"palette": "green",
+			"position": [
+				486.732299804688,
+				78.3328247070313,
+				281.591491699219
+			],
+			"scale": 0.833351540831156,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 4.4984658608819
+		},
+		{
+			"id": "base_002944",
+			"palette": "green",
+			"position": [
+				417.659301757813,
+				70.7470703125,
+				398.23583984375
+			],
+			"scale": 0.875924962161677,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 4.02676946236482
+		},
+		{
+			"id": "base_002947",
+			"palette": "green",
+			"position": [
+				478.582763671875,
+				70.2908020019531,
+				206.63330078125
+			],
+			"scale": 1.18808126449585,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 2.86299848556519
+		},
+		{
+			"id": "base_002956",
+			"palette": "green",
+			"position": [
+				535.908813476563,
+				85.0723571777344,
+				281.671325683594
+			],
+			"scale": 0.824488037949032,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 5.53112465681791
+		},
+		{
+			"id": "base_002989",
+			"palette": "green",
+			"position": [
+				419.733154296875,
+				61.6987953186035,
+				260.515441894531
+			],
+			"scale": 0.93092268705368,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 4.06823587417603
+		},
+		{
+			"id": "base_003002",
+			"palette": "green",
+			"position": [
+				336.045654296875,
+				54.8791580200195,
+				290.09765625
+			],
+			"scale": 0.940997242927551,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 3.0103063583374
+		},
+		{
+			"id": "base_003021",
+			"palette": "green",
+			"position": [
+				452.932495117188,
+				77.8276062011719,
+				353.965393066406
+			],
+			"scale": 1.04307520389557,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 3.38645553588867
+		},
+		{
+			"id": "base_003115",
+			"palette": "green",
+			"position": [
+				451.626098632813,
+				70.0499877929688,
+				185.160461425781
+			],
+			"scale": 0.981287956237793,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 3.86621403694153
+		},
+		{
+			"id": "base_003193",
+			"palette": "green",
+			"position": [
+				316.285400390625,
+				53.5757369995117,
+				290.333190917969
+			],
+			"scale": 0.832535624504089,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 4.26015043258667
+		},
+		{
+			"id": "base_003290",
+			"palette": "green",
+			"position": [
+				473.042602539063,
+				82.0859069824219,
+				354.325622558594
+			],
+			"scale": 0.955681330404053,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 0.752860959630127
+		},
+		{
+			"id": "base_003334",
+			"palette": "green",
+			"position": [
+				400.17138671875,
+				70.080078125,
+				372.386474609375
+			],
+			"scale": 1.05528802441941,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 5.60322234253634
+		},
+		{
+			"id": "base_003362",
+			"palette": "green",
+			"position": [
+				463.875,
+				70.2020874023438,
+				209.337219238281
+			],
+			"scale": 1.02055859565735,
+			"species": "upright",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 4.75507831573486
+		},
+		{
+			"id": "base_003577",
+			"palette": "green",
+			"position": [
+				417.47265625,
+				50.6334838867188,
+				233.464538574219
+			],
+			"scale": 1.11414504051209,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 2.30227303504944
+		},
+		{
+			"id": "base_003627",
+			"palette": "green",
+			"position": [
+				375.3466796875,
+				53.2317581176758,
+				257.280151367188
+			],
+			"scale": 1.09546291828156,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 1.01006722450256
+		},
+		{
+			"id": "base_003704",
+			"palette": "green",
+			"position": [
+				426.155517578125,
+				60.6901321411133,
+				245.139129638672
+			],
+			"scale": 1.19345152378082,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 0.157908454537392
+		},
+		{
+			"id": "base_003891",
+			"palette": "green",
+			"position": [
+				450.435791015625,
+				70.0785675048828,
+				201.652770996094
+			],
+			"scale": 1.16450846195221,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 3.9088442325592
+		},
+		{
+			"id": "base_003896",
+			"palette": "green",
+			"position": [
+				504.286010742188,
+				84.9934005737305,
+				306.382141113281
+			],
+			"scale": 1.04861372889106,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 2.28009356860463
+		},
+		{
+			"id": "base_003902",
+			"palette": "green",
+			"position": [
+				280.070068359375,
+				49.9083938598633,
+				315.118591308594
+			],
+			"scale": 0.934801995754242,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 5.76150989532471
+		},
+		{
+			"id": "base_003906",
+			"palette": "green",
+			"position": [
+				505.488525390625,
+				84.2370147705078,
+				293.377685546875
+			],
+			"scale": 0.982601888858804,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 0.946972244518549
+		},
+		{
+			"id": "base_004001",
+			"palette": "green",
+			"position": [
+				445.938842773438,
+				69.472412109375,
+				173.272766113281
+			],
+			"scale": 0.846310257911682,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 5.88725519180298
+		},
+		{
+			"id": "base_004063",
+			"palette": "green",
+			"position": [
+				497.227172851563,
+				71.1096496582031,
+				174.000244140625
+			],
+			"scale": 0.923394799232483,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 2.89248371124268
+		},
+		{
+			"id": "base_004271",
+			"palette": "green",
+			"position": [
+				389.547729492188,
+				61.7891311645508,
+				353.77099609375
+			],
+			"scale": 0.862474313545933,
+			"species": "upright",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 3.80514089167336
+		},
+		{
+			"id": "base_004342",
+			"palette": "green",
+			"position": [
+				313.348052978516,
+				53.3771553039551,
+				278.466400146484
+			],
+			"scale": 0.876165449619293,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 2.10996842384338
+		},
+		{
+			"id": "base_004371",
+			"palette": "green",
+			"position": [
+				491.29736328125,
+				80.1211547851563,
+				293.009643554688
+			],
+			"scale": 1.03062445889757,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 2.70857094199996
+		},
+		{
+			"id": "base_004382",
+			"palette": "green",
+			"position": [
+				418.040649414063,
+				50.2694625854492,
+				221.729797363281
+			],
+			"scale": 0.875126242637634,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 1.90432500839233
+		},
+		{
+			"id": "base_004506",
+			"palette": "green",
+			"position": [
+				365.608734130859,
+				58.3135032653809,
+				269.840484619141
+			],
+			"scale": 1.1691370010376,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 0.638542175292969
+		},
+		{
+			"id": "base_004521",
+			"palette": "green",
+			"position": [
+				347.33251953125,
+				48.3756790161133,
+				309.131408691406
+			],
+			"scale": 0.917779564857483,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 2.12031126022339
+		},
+		{
+			"id": "base_004583",
+			"palette": "green",
+			"position": [
+				390.165405273438,
+				58.4366989135742,
+				332.246948242188
+			],
+			"scale": 1.0774108171463,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 1.00304043292999
+		},
+		{
+			"id": "base_004662",
+			"palette": "green",
+			"position": [
+				434.440185546875,
+				70.4874267578125,
+				283.502807617188
+			],
+			"scale": 1.00312387943268,
+			"species": "broad",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 2.49070692062378
+		},
+		{
+			"id": "base_004688",
+			"palette": "green",
+			"position": [
+				477.325561523438,
+				70.4184112548828,
+				171.00146484375
+			],
+			"scale": 1.19300210475922,
+			"species": "broad",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 4.55754518508911
+		},
+		{
+			"id": "base_004745",
+			"palette": "green",
+			"position": [
+				364.955810546875,
+				51.3240356445313,
+				359.414001464844
+			],
+			"scale": 0.823674911315215,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 4.29284811687339
+		},
+		{
+			"id": "base_005013",
+			"palette": "green",
+			"position": [
+				443.321411132813,
+				70.5134124755859,
+				326.783142089844
+			],
+			"scale": 1.18673288822174,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 5.06235122680664
+		},
+		{
+			"id": "base_005127",
+			"palette": "green",
+			"position": [
+				478.685424804688,
+				70.5545501708984,
+				245.783935546875
+			],
+			"scale": 0.833598256111145,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 1.88013792037964
+		},
+		{
+			"id": "base_005330",
+			"palette": "cherry",
+			"position": [
+				522.1982421875,
+				84.0113525390625,
+				254.340698242188
+			],
+			"scale": 0.904269456779952,
+			"species": "broad",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 3.00004221630646
+		},
+		{
+			"id": "base_005354",
+			"palette": "green",
+			"position": [
+				352.608642578125,
+				55.5744781494141,
+				266.880310058594
+			],
+			"scale": 1.19301319122314,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 5.0704345703125
+		},
+		{
+			"id": "base_005383",
+			"palette": "cherry",
+			"position": [
+				554.828247070313,
+				82.8443984985352,
+				253.516540527344
+			],
+			"scale": 0.891725929269919,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 0.531677324609413
+		},
+		{
+			"id": "base_005559",
+			"palette": "green",
+			"position": [
+				445.491455078125,
+				83.6328582763672,
+				407.618774414063
+			],
+			"scale": 1.01803538980273,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 1.83182178496479
+		},
+		{
+			"id": "base_005771",
+			"palette": "green",
+			"position": [
+				319.392333984375,
+				48.2885513305664,
+				260.880126953125
+			],
+			"scale": 0.992437660694122,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 1.58048295974731
+		},
+		{
+			"id": "base_005874",
+			"palette": "green",
+			"position": [
+				352.290649414063,
+				53.77880859375,
+				293.449645996094
+			],
+			"scale": 1.06988537311554,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 5.01512718200684
+		},
+		{
+			"id": "base_005908",
+			"palette": "cherry",
+			"position": [
+				516.66796875,
+				79.5120849609375,
+				208.336669921875
+			],
+			"scale": 1.11603403749423,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 0.729759425483806
+		},
+		{
+			"id": "base_006012",
+			"palette": "green",
+			"position": [
+				425.913818359375,
+				70.3431167602539,
+				341.31494140625
+			],
+			"scale": 0.928553819656372,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 2.66115808486938
+		},
+		{
+			"id": "base_006091",
+			"palette": "green",
+			"position": [
+				362.365600585938,
+				55.0129623413086,
+				262.823181152344
+			],
+			"scale": 0.8241868019104,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 2.87451124191284
+		},
+		{
+			"id": "base_006144",
+			"palette": "green",
+			"position": [
+				397.59375,
+				55.0745849609375,
+				299.343688964844
+			],
+			"scale": 0.828888773918152,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 1.95857346057892
+		},
+		{
+			"id": "base_006145",
+			"palette": "green",
+			"position": [
+				482.780883789063,
+				86.0151443481445,
+				361.627868652344
+			],
+			"scale": 1.1114672554064,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 3.82373513749186
+		},
+		{
+			"id": "base_006149",
+			"palette": "green",
+			"position": [
+				271.266967773438,
+				49.8146820068359,
+				299.737121582031
+			],
+			"scale": 1.0872597694397,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 4.76467227935791
+		},
+		{
+			"id": "base_006257",
+			"palette": "cherry",
+			"position": [
+				522.942260742188,
+				81.2996368408203,
+				226.073547363281
+			],
+			"scale": 0.83356257944942,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 4.67321406864302
+		},
+		{
+			"id": "base_006311",
+			"palette": "green",
+			"position": [
+				284.008544921875,
+				50.8514747619629,
+				296.266906738281
+			],
+			"scale": 0.820028007030487,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 2.17296099662781
+		},
+		{
+			"id": "base_006332",
+			"palette": "green",
+			"position": [
+				438.125122070313,
+				70.5304260253906,
+				298.303771972656
+			],
+			"scale": 1.0626392364502,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 4.15133857727051
+		},
+		{
+			"id": "base_006378",
+			"palette": "green",
+			"position": [
+				415.807495117188,
+				70.2488555908203,
+				347.834350585938
+			],
+			"scale": 0.921739152638032,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 4.2998093439438
+		},
+		{
+			"id": "base_006600",
+			"palette": "green",
+			"position": [
+				396.553466796875,
+				59.2825164794922,
+				261.318786621094
+			],
+			"scale": 1.1452317237854,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 1.71025669574738
+		},
+		{
+			"id": "base_006649",
+			"palette": "cherry",
+			"position": [
+				564.699340820313,
+				80.5929260253906,
+				229.564758300781
+			],
+			"scale": 0.917009395148955,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 2.46453491582273
+		},
+		{
+			"id": "base_006666",
+			"palette": "green",
+			"position": [
+				483.765747070313,
+				72.1670379638672,
+				156.870666503906
+			],
+			"scale": 0.842494487762451,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 0.0439610704779625
+		},
+		{
+			"id": "base_006835",
+			"palette": "green",
+			"position": [
+				379.800537109375,
+				53.335563659668,
+				291.604675292969
+			],
+			"scale": 0.964100956916809,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 5.59856271743774
+		},
+		{
+			"id": "base_006846",
+			"palette": "green",
+			"position": [
+				435.369018554688,
+				76.4166870117188,
+				401.5498046875
+			],
+			"scale": 1.09698664632547,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 1.12891099468158
+		},
+		{
+			"id": "base_006847",
+			"palette": "green",
+			"position": [
+				454.615844726563,
+				70.6441497802734,
+				292.29736328125
+			],
+			"scale": 0.870120823383331,
+			"species": "broad",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 5.42129373550415
+		},
+		{
+			"id": "base_006945",
+			"palette": "green",
+			"position": [
+				397.681884765625,
+				69.8440093994141,
+				397.008239746094
+			],
+			"scale": 0.990570130994556,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 0.541075015934803
+		},
+		{
+			"id": "base_007014",
+			"palette": "green",
+			"position": [
+				444.868286132813,
+				70.042610168457,
+				193.570495605469
+			],
+			"scale": 0.93895411491394,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 4.35352897644043
+		},
+		{
+			"id": "base_007045",
+			"palette": "green",
+			"position": [
+				465.802490234375,
+				70.4528503417969,
+				242.669921875
+			],
+			"scale": 1.0112783908844,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 0.978427529335022
+		},
+		{
+			"id": "base_007152",
+			"palette": "cherry",
+			"position": [
+				533.846801757813,
+				83.8479537963867,
+				243.07177734375
+			],
+			"scale": 0.820561518413125,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 4.66417959818528
+		},
+		{
+			"id": "base_007166",
+			"palette": "green",
+			"position": [
+				407.216674804688,
+				46.6673812866211,
+				238.420959472656
+			],
+			"scale": 0.921565711498261,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 4.27158451080322
+		},
+		{
+			"id": "base_007184",
+			"palette": "green",
+			"position": [
+				265.953369140625,
+				48.8897247314453,
+				281.464904785156
+			],
+			"scale": 0.843214213848114,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 4.63280487060547
+		},
+		{
+			"id": "base_007203",
+			"palette": "green",
+			"position": [
+				420.849243164063,
+				53.0377502441406,
+				198.431640625
+			],
+			"scale": 1.03348743915558,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 6.08715152740479
+		},
+		{
+			"id": "base_007229",
+			"palette": "green",
+			"position": [
+				424.193237304688,
+				70.0500030517578,
+				386.897338867188
+			],
+			"scale": 0.870796985934159,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 2.33132487847938
+		},
+		{
+			"id": "base_007252",
+			"palette": "green",
+			"position": [
+				464.118774414063,
+				77.7889251708984,
+				325.671264648438
+			],
+			"scale": 1.18792164325714,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 6.08384609222412
+		},
+		{
+			"id": "base_007301",
+			"palette": "green",
+			"position": [
+				486.392456054688,
+				70.5307083129883,
+				239.789855957031
+			],
+			"scale": 1.07074010372162,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 0.776489436626434
+		},
+		{
+			"id": "base_007400",
+			"palette": "green",
+			"position": [
+				424.41015625,
+				70.2805786132813,
+				360.272399902344
+			],
+			"scale": 1.17415738883869,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 2.00782961144221
+		},
+		{
+			"id": "base_007404",
+			"palette": "green",
+			"position": [
+				405.442687988281,
+				60.8290557861328,
+				278.825744628906
+			],
+			"scale": 0.940281450748444,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 3.20200848579407
+		},
+		{
+			"id": "base_007500",
+			"palette": "green",
+			"position": [
+				382.865844726563,
+				51.4413375854492,
+				388.094970703125
+			],
+			"scale": 1.18721716679058,
+			"species": "small",
+			"surface": "a2a15e34-a9db-4e6a-a4ce-be472804bd15",
+			"yaw": 0.479701797985796
+		},
+		{
+			"id": "base_007502",
+			"palette": "green",
+			"position": [
+				478.666259765625,
+				70.121955871582,
+				193.344543457031
+			],
+			"scale": 1.0586564540863,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 2.46076583862305
+		},
+		{
+			"id": "base_007520",
+			"palette": "green",
+			"position": [
+				400.514404296875,
+				70.1554412841797,
+				351.121337890625
+			],
+			"scale": 0.855241248647923,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 2.1109275057258
+		},
+		{
+			"id": "base_007534",
+			"palette": "green",
+			"position": [
+				416.434204101563,
+				70.3766174316406,
+				315.801330566406
+			],
+			"scale": 0.906513631343842,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 1.00422048568726
+		},
+		{
+			"id": "base_007561",
+			"palette": "green",
+			"position": [
+				500.298828125,
+				77.3858489990234,
+				201.485778808594
+			],
+			"scale": 1.14683079719543,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 3.55806469917297
+		},
+		{
+			"id": "base_007742",
+			"palette": "green",
+			"position": [
+				408.592041015625,
+				60.9621047973633,
+				261.963806152344
+			],
+			"scale": 1.06778526306152,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 4.40730333328247
+		},
+		{
+			"id": "base_007805",
+			"palette": "green",
+			"position": [
+				444.404907226563,
+				70.5738372802734,
+				306.898986816406
+			],
+			"scale": 0.842678964138031,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 0.795951664447784
+		},
+		{
+			"id": "base_007877",
+			"palette": "cherry",
+			"position": [
+				522.40869140625,
+				82.2745819091797,
+				238.1083984375
+			],
+			"scale": 1.11231765620922,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 1.37383472292197
+		},
+		{
+			"id": "base_008064",
+			"palette": "green",
+			"position": [
+				442.36279296875,
+				70.5523529052734,
+				289.270385742188
+			],
+			"scale": 1.17995631694794,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 5.85998821258545
+		},
+		{
+			"id": "base_008065",
+			"palette": "green",
+			"position": [
+				462.137939453125,
+				81.5960845947266,
+				370.002624511719
+			],
+			"scale": 1.08228222963182,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 3.63771813090904
+		},
+		{
+			"id": "base_008076",
+			"palette": "green",
+			"position": [
+				386.691375732422,
+				59.913818359375,
+				266.337463378906
+			],
+			"scale": 1.09641873836517,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 4.95621919631958
+		},
+		{
+			"id": "base_008254",
+			"palette": "green",
+			"position": [
+				445.242065429688,
+				70.473014831543,
+				337.574462890625
+			],
+			"scale": 0.877904891967773,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 5.89319086074829
+		},
+		{
+			"id": "base_008304",
+			"palette": "green",
+			"position": [
+				279.744873046875,
+				46.185676574707,
+				264.807373046875
+			],
+			"scale": 1.08496904373169,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 3.65293264389038
+		},
+		{
+			"id": "base_008589",
+			"palette": "green",
+			"position": [
+				333.366577148438,
+				50.2695770263672,
+				262.029724121094
+			],
+			"scale": 1.02318859100342,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 0.703285098075867
+		},
+		{
+			"id": "base_008800",
+			"palette": "green",
+			"position": [
+				498.5498046875,
+				86.7274475097656,
+				359.438598632813
+			],
+			"scale": 0.882539881415939,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 1.8034086739598
+		},
+		{
+			"id": "base_008848",
+			"palette": "green",
+			"position": [
+				517.93896484375,
+				84.4997177124023,
+				265.11865234375
+			],
+			"scale": 0.891525721938148,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 2.69337654879411
+		},
+		{
+			"id": "base_008945",
+			"palette": "green",
+			"position": [
+				454.427001953125,
+				70.1450042724609,
+				210.789611816406
+			],
+			"scale": 1.01189434528351,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 3.77563977241516
+		},
+		{
+			"id": "base_008952",
+			"palette": "green",
+			"position": [
+				436.90673828125,
+				70.9643096923828,
+				378.499145507813
+			],
+			"scale": 0.827908431311015,
+			"species": "small",
+			"surface": "dff8fbe5-3d2b-4370-b596-db37fbd102ce",
+			"yaw": 0.988880615497072
+		},
+		{
+			"id": "base_009062",
+			"palette": "green",
+			"position": [
+				425.747924804688,
+				70.2084655761719,
+				371.811340332031
+			],
+			"scale": 1.15809472551233,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 4.04864196803745
+		},
+		{
+			"id": "base_009103",
+			"palette": "green",
+			"position": [
+				471.401489257813,
+				87.3692779541016,
+				391.379333496094
+			],
+			"scale": 0.950989290400011,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 1.0603266294145
+		},
+		{
+			"id": "base_009150",
+			"palette": "green",
+			"position": [
+				301.628540039063,
+				52.2220153808594,
+				279.126251220703
+			],
+			"scale": 0.919491946697235,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 0.719748675823212
+		},
+		{
+			"id": "base_009158",
+			"palette": "green",
+			"position": [
+				303.726684570313,
+				47.1278533935547,
+				261.416198730469
+			],
+			"scale": 1.07462215423584,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 4.66842937469482
+		},
+		{
+			"id": "base_009169",
+			"palette": "green",
+			"position": [
+				500.952880859375,
+				81.6625213623047,
+				280.555480957031
+			],
+			"scale": 1.17669024893464,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 2.93081386490384
+		},
+		{
+			"id": "base_009198",
+			"palette": "cherry",
+			"position": [
+				364.47412109375,
+				48.1768112182617,
+				252.675231933594
+			],
+			"scale": 1.19556093215942,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 4.75209426879883
+		},
+		{
+			"id": "base_009390",
+			"palette": "green",
+			"position": [
+				445.255249023438,
+				70.2029190063477,
+				226.912414550781
+			],
+			"scale": 1.12820303440094,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 0.174706652760506
+		},
+		{
+			"id": "base_009399",
+			"palette": "green",
+			"position": [
+				393.070190429688,
+				70.0494003295898,
+				379.524230957031
+			],
+			"scale": 1.10343956391219,
+			"species": "broad",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 3.45673012717122
+		},
+		{
+			"id": "base_009441",
+			"palette": "green",
+			"position": [
+				477.384155273438,
+				79.0543670654297,
+				319.387145996094
+			],
+			"scale": 1.17959968399082,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 1.86248071356847
+		},
+		{
+			"id": "base_009567",
+			"palette": "green",
+			"position": [
+				463.981689453125,
+				70.0499954223633,
+				184.56494140625
+			],
+			"scale": 0.93352335691452,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 0.0880642458796501
+		},
+		{
+			"id": "base_009593",
+			"palette": "green",
+			"position": [
+				489.524047851563,
+				87.172721862793,
+				371.009643554688
+			],
+			"scale": 1.01981856100229,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 4.66892187404189
+		},
+		{
+			"id": "base_009601",
+			"palette": "green",
+			"position": [
+				415.880004882813,
+				70.334228515625,
+				325.643005371094
+			],
+			"scale": 1.11427056789398,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 0.218756556510925
+		},
+		{
+			"id": "base_009651",
+			"palette": "green",
+			"position": [
+				478.447998046875,
+				70.6605606079102,
+				264.382690429688
+			],
+			"scale": 1.11868023872375,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 5.42664432525635
+		},
+		{
+			"id": "base_009711",
+			"palette": "cherry",
+			"position": [
+				516.419677734375,
+				79.2262802124023,
+				190.2197265625
+			],
+			"scale": 0.900220992069812,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 1.86485536919105
+		},
+		{
+			"id": "base_009720",
+			"palette": "green",
+			"position": [
+				290.310913085938,
+				50.8199234008789,
+				301.20458984375
+			],
+			"scale": 1.18206560611725,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 3.87130522727966
+		},
+		{
+			"id": "base_009797",
+			"palette": "green",
+			"position": [
+				407.336303710938,
+				60.1238021850586,
+				287.249206542969
+			],
+			"scale": 1.1672443151474,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 4.95483589172363
+		},
+		{
+			"id": "base_010131",
+			"palette": "green",
+			"position": [
+				492.452758789063,
+				85.0052642822266,
+				337.543090820313
+			],
+			"scale": 0.954639160338727,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 0.275229344419762
+		},
+		{
+			"id": "base_010151",
+			"palette": "green",
+			"position": [
+				365.458251953125,
+				54.0226211547852,
+				291.906372070313
+			],
+			"scale": 1.07427775859833,
+			"species": "broad",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 3.19498920440674
+		},
+		{
+			"id": "base_010166",
+			"palette": "green",
+			"position": [
+				382.55419921875,
+				57.5270462036133,
+				346.277404785156
+			],
+			"scale": 1.00624855816762,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 1.1204374106453
+		},
+		{
+			"id": "base_010187",
+			"palette": "green",
+			"position": [
+				371.587158203125,
+				59.0210571289063,
+				373.591674804688
+			],
+			"scale": 0.898237466872989,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 0.189367531855486
+		},
+		{
+			"id": "base_010194",
+			"palette": "green",
+			"position": [
+				419.179931640625,
+				57.3491363525391,
+				245.875244140625
+			],
+			"scale": 1.0522186756134,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 1.59209156036377
+		},
+		{
+			"id": "base_010212",
+			"palette": "green",
+			"position": [
+				387.532958984375,
+				50.5559768676758,
+				298.980285644531
+			],
+			"scale": 1.10851347446442,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 2.11062812805176
+		},
+		{
+			"id": "base_010245",
+			"palette": "green",
+			"position": [
+				454.25146484375,
+				70.5389099121094,
+				329.060424804688
+			],
+			"scale": 0.850542485713959,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 5.19391965866089
+		},
+		{
+			"id": "base_010263",
+			"palette": "green",
+			"position": [
+				375.22412109375,
+				47.6261901855469,
+				316.106567382813
+			],
+			"scale": 1.04821693897247,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 0.165692299604416
+		},
+		{
+			"id": "base_010453",
+			"palette": "green",
+			"position": [
+				543.53173828125,
+				84.5656509399414,
+				298.2734375
+			],
+			"scale": 1.14886329496189,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 2.4726679307117
+		},
+		{
+			"id": "base_010494",
+			"palette": "green",
+			"position": [
+				369.261840820313,
+				50.2520446777344,
+				346.035827636719
+			],
+			"scale": 0.91521405915061,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 1.90656169443828
+		},
+		{
+			"id": "base_010541",
+			"palette": "green",
+			"position": [
+				551.645263671875,
+				83.8093185424805,
+				280.537231445313
+			],
+			"scale": 0.873376371265719,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 2.16592362197601
+		},
+		{
+			"id": "base_010553",
+			"palette": "cherry",
+			"position": [
+				555.475708007813,
+				80.1878890991211,
+				211.478393554688
+			],
+			"scale": 0.967939645853023,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 5.24272698495203
+		},
+		{
+			"id": "base_010566",
+			"palette": "green",
+			"position": [
+				407.640502929688,
+				70.2561264038086,
+				335.408386230469
+			],
+			"scale": 0.841609537601471,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 2.09357571601868
+		},
+		{
+			"id": "base_010690",
+			"palette": "green",
+			"position": [
+				288.899047851563,
+				45.5622787475586,
+				260.273071289063
+			],
+			"scale": 1.09435307979584,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 5.88301467895508
+		},
+		{
+			"id": "base_010724",
+			"palette": "cherry",
+			"position": [
+				563.987426757813,
+				81.2616729736328,
+				243.692810058594
+			],
+			"scale": 0.888603483182601,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 0.630809831328779
+		},
+		{
+			"id": "base_010962",
+			"palette": "green",
+			"position": [
+				489.730834960938,
+				82.2068786621094,
+				316.880676269531
+			],
+			"scale": 1.02741809355268,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 3.44969206013789
+		},
+		{
+			"id": "base_011007",
+			"palette": "green",
+			"position": [
+				459.698120117188,
+				86.3597793579102,
+				395.189147949219
+			],
+			"scale": 1.17100070887219,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 0.0388511406895483
+		},
+		{
+			"id": "base_011025",
+			"palette": "green",
+			"position": [
+				451.236206054688,
+				70.3664627075195,
+				244.734252929688
+			],
+			"scale": 0.884292423725128,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 2.78550958633423
+		},
+		{
+			"id": "base_011195",
+			"palette": "green",
+			"position": [
+				510.361694335938,
+				80.3055877685547,
+				244.951599121094
+			],
+			"scale": 1.01017568170801,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 6.14210784921654
+		},
+		{
+			"id": "base_011215",
+			"palette": "green",
+			"position": [
+				428.893188476563,
+				70.4220275878906,
+				324.051574707031
+			],
+			"scale": 0.955447196960449,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 0.543942153453827
+		},
+		{
+			"id": "base_011528",
+			"palette": "green",
+			"position": [
+				490.07080078125,
+				77.7732162475586,
+				252.703918457031
+			],
+			"scale": 0.996641755104065,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 3.68959999084473
+		},
+		{
+			"id": "base_011700",
+			"palette": "green",
+			"position": [
+				328.46533203125,
+				48.915657043457,
+				314.095703125
+			],
+			"scale": 1.05310440063477,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 5.58370733261108
+		},
+		{
+			"id": "base_011745",
+			"palette": "green",
+			"position": [
+				316.300659179688,
+				49.7815246582031,
+				310.306762695313
+			],
+			"scale": 0.947693526744843,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 3.01971292495728
+		},
+		{
+			"id": "base_011748",
+			"palette": "cherry",
+			"position": [
+				534.715209960938,
+				81.840576171875,
+				215.952270507813
+			],
+			"scale": 0.844215638591026,
+			"species": "broad",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 3.64243947959959
+		},
+		{
+			"id": "base_011759",
+			"palette": "green",
+			"position": [
+				533.984741210938,
+				84.5634155273438,
+				257.593872070313
+			],
+			"scale": 0.827381089841689,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 4.10081267737636
+		},
+		{
+			"id": "base_011902",
+			"palette": "green",
+			"position": [
+				504.111694335938,
+				85.5212326049805,
+				316.061279296875
+			],
+			"scale": 1.1114864927208,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 1.38815655381078
+		},
+		{
+			"id": "base_012036",
+			"palette": "green",
+			"position": [
+				315.860595703125,
+				51.8817367553711,
+				299.768493652344
+			],
+			"scale": 0.891330599784851,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 0.739327371120453
+		},
+		{
+			"id": "base_012104",
+			"palette": "green",
+			"position": [
+				445.056030273438,
+				70.4214630126953,
+				346.993713378906
+			],
+			"scale": 0.923766136169434,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 0.506511867046356
+		},
+		{
+			"id": "base_012143",
+			"palette": "green",
+			"position": [
+				452.734497070313,
+				81.5428466796875,
+				378.371826171875
+			],
+			"scale": 0.974142506685672,
+			"species": "upright",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 3.14148609049057
+		},
+		{
+			"id": "base_012153",
+			"palette": "green",
+			"position": [
+				501.79296875,
+				74.0843200683594,
+				164.752136230469
+			],
+			"scale": 0.986184060573578,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 3.28400683403015
+		},
+		{
+			"id": "base_012193",
+			"palette": "green",
+			"position": [
+				462.487548828125,
+				78.6912841796875,
+				350.311706542969
+			],
+			"scale": 0.905020808999006,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 0.651748797884994
+		},
+		{
+			"id": "base_012213",
+			"palette": "cherry",
+			"position": [
+				527.75634765625,
+				80.8129425048828,
+				206.567993164063
+			],
+			"scale": 1.12296694003572,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 3.50268048055459
+		},
+		{
+			"id": "base_012299",
+			"palette": "green",
+			"position": [
+				343.585693359375,
+				48.6773147583008,
+				257.128234863281
+			],
+			"scale": 1.02537357807159,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 3.30643749237061
+		},
+		{
+			"id": "base_012392",
+			"palette": "green",
+			"position": [
+				300.879638671875,
+				51.6442031860352,
+				298.518249511719
+			],
+			"scale": 1.17274820804596,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 0.743529796600342
+		},
+		{
+			"id": "base_012450",
+			"palette": "green",
+			"position": [
+				487.938720703125,
+				77.9976959228516,
+				269.2587890625
+			],
+			"scale": 1.05330979824066,
+			"species": "broad",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 2.79960799217224
+		},
+		{
+			"id": "base_012544",
+			"palette": "green",
+			"position": [
+				371.4755859375,
+				66.2626190185547,
+				388.925537109375
+			],
+			"scale": 0.828087005809001,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 3.75327634615264
+		},
+		{
+			"id": "base_012685",
+			"palette": "green",
+			"position": [
+				407.34765625,
+				70.0635528564453,
+				380.205810546875
+			],
+			"scale": 1.0052970336762,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 4.16688962467891
+		},
+		{
+			"id": "base_012771",
+			"palette": "green",
+			"position": [
+				374.036987304688,
+				57.4900817871094,
+				284.683715820313
+			],
+			"scale": 1.02933204174042,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 3.93716287612915
+		},
+		{
+			"id": "base_012920",
+			"palette": "green",
+			"position": [
+				424.98388671875,
+				56.2441253662109,
+				206.830810546875
+			],
+			"scale": 1.09577751159668,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 1.21280908584595
+		},
+		{
+			"id": "base_012952",
+			"palette": "green",
+			"position": [
+				365.322387695313,
+				49.3384246826172,
+				301.044006347656
+			],
+			"scale": 1.14557647705078,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 1.79211807250977
+		},
+		{
+			"id": "base_012953",
+			"palette": "green",
+			"position": [
+				516.351440429688,
+				85.6215209960938,
+				298.652648925781
+			],
+			"scale": 0.875526706972184,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 3.50552960792155
+		},
+		{
+			"id": "base_012964",
+			"palette": "green",
+			"position": [
+				380.635498046875,
+				61.5861473083496,
+				369.220764160156
+			],
+			"scale": 1.15385476476957,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 2.41764975531273
+		},
+		{
+			"id": "base_013005",
+			"palette": "green",
+			"position": [
+				397.666015625,
+				68.4845657348633,
+				409.031311035156
+			],
+			"scale": 1.0220965189683,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 2.22932839691446
+		},
+		{
+			"id": "base_013023",
+			"palette": "green",
+			"position": [
+				504.660766601563,
+				74.5367584228516,
+				184.440979003906
+			],
+			"scale": 0.908484697341919,
+			"species": "small",
+			"surface": "5318606f-cfbb-482b-845a-7df3dfd80b08",
+			"yaw": 2.3813419342041
+		},
+		{
+			"id": "base_013190",
+			"palette": "green",
+			"position": [
+				344.880126953125,
+				51.1512069702148,
+				300.224182128906
+			],
+			"scale": 1.13497960567474,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 4.02986717224121
+		},
+		{
+			"id": "base_013217",
+			"palette": "green",
+			"position": [
+				432.8017578125,
+				70.4213180541992,
+				332.97314453125
+			],
+			"scale": 0.831549286842346,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 5.49649477005005
+		},
+		{
+			"id": "base_013302",
+			"palette": "green",
+			"position": [
+				500.726440429688,
+				78.8955764770508,
+				252.619995117188
+			],
+			"scale": 1.01125775418337,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 5.68901560310333
+		},
+		{
+			"id": "base_013343",
+			"palette": "cherry",
+			"position": [
+				555.296752929688,
+				81.5402069091797,
+				226.720581054688
+			],
+			"scale": 1.03246135979751,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 1.29304884237638
+		},
+		{
+			"id": "base_013435",
+			"palette": "green",
+			"position": [
+				508.386962890625,
+				83.1231842041016,
+				272.792785644531
+			],
+			"scale": 1.19400300203121,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 5.56438554703723
+		},
+		{
+			"id": "base_013621",
+			"palette": "green",
+			"position": [
+				462.344360351563,
+				70.6749420166016,
+				299.594604492188
+			],
+			"scale": 0.916518926620483,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 3.01455926895142
+		},
+		{
+			"id": "base_013714",
+			"palette": "green",
+			"position": [
+				405.761962890625,
+				60.999828338623,
+				263.306823730469
+			],
+			"scale": 1.18482542037964,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 6.165452003479
+		},
+		{
+			"id": "base_013716",
+			"palette": "green",
+			"position": [
+				432.450805664063,
+				61.1553993225098,
+				198.093444824219
+			],
+			"scale": 1.11131238937378,
+			"species": "upright",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 1.60972821712494
+		},
+		{
+			"id": "base_013741",
+			"palette": "green",
+			"position": [
+				296.962310791016,
+				51.7552337646484,
+				295.367065429688
+			],
+			"scale": 1.105064868927,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 1.17327570915222
+		},
+		{
+			"id": "base_013790",
+			"palette": "green",
+			"position": [
+				442.37451171875,
+				70.0983276367188,
+				210.2822265625
+			],
+			"scale": 0.824329495429993,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 3.265549659729
+		},
+		{
+			"id": "base_013824",
+			"palette": "green",
+			"position": [
+				424.576416015625,
+				70.4535980224609,
+				287.291809082031
+			],
+			"scale": 1.16432070732117,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 1.80606627464294
+		},
+		{
+			"id": "base_013836",
+			"palette": "green",
+			"position": [
+				402.598999023438,
+				61.9491729736328,
+				326.393920898438
+			],
+			"scale": 0.825218617916107,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 2.06067991256714
+		},
+		{
+			"id": "base_013839",
+			"palette": "cherry",
+			"position": [
+				545.08251953125,
+				78.8064422607422,
+				189.72998046875
+			],
+			"scale": 1.08719077135561,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 0.572518359585241
+		},
+		{
+			"id": "base_013892",
+			"palette": "green",
+			"position": [
+				481.074462890625,
+				70.3820190429688,
+				220.831176757813
+			],
+			"scale": 1.12860405445099,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 3.23521137237549
+		},
+		{
+			"id": "base_013930",
+			"palette": "green",
+			"position": [
+				375.222412109375,
+				55.3274383544922,
+				354.908447265625
+			],
+			"scale": 0.949324750358244,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 1.44566446064563
+		},
+		{
+			"id": "base_013944",
+			"palette": "green",
+			"position": [
+				353.113342285156,
+				55.5356140136719,
+				289.33837890625
+			],
+			"scale": 1.14714789390564,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 4.72072839736938
+		},
+		{
+			"id": "base_013948",
+			"palette": "green",
+			"position": [
+				434.685302734375,
+				70.3133697509766,
+				365.369445800781
+			],
+			"scale": 1.1714215897121,
+			"species": "broad",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 2.57509596710399
+		},
+		{
+			"id": "base_013974",
+			"palette": "green",
+			"position": [
+				434.75634765625,
+				67.0365905761719,
+				181.992065429688
+			],
+			"scale": 0.969445824623108,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 1.31227445602417
+		},
+		{
+			"id": "base_014004",
+			"palette": "green",
+			"position": [
+				280.853515625,
+				50.2619171142578,
+				302.381958007813
+			],
+			"scale": 1.04247641563416,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 5.98232793807983
+		},
+		{
+			"id": "base_014168",
+			"palette": "green",
+			"position": [
+				391.549438476563,
+				61.1817779541016,
+				342.521911621094
+			],
+			"scale": 1.17078612103196,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 4.32187785438965
+		},
+		{
+			"id": "base_014194",
+			"palette": "green",
+			"position": [
+				471.935180664063,
+				70.5806274414063,
+				253.50146484375
+			],
+			"scale": 0.962117433547974,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 3.68887090682983
+		},
+		{
+			"id": "base_014222",
+			"palette": "green",
+			"position": [
+				398.735595703125,
+				46.4918975830078,
+				244.119445800781
+			],
+			"scale": 0.96308159828186,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 6.25301647186279
+		},
+		{
+			"id": "base_014419",
+			"palette": "green",
+			"position": [
+				427.824340820313,
+				59.019401550293,
+				235.088439941406
+			],
+			"scale": 0.845066606998444,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 1.28491818904877
+		},
+		{
+			"id": "base_014438",
+			"palette": "green",
+			"position": [
+				400.6572265625,
+				61.5575408935547,
+				324.635223388672
+			],
+			"scale": 0.946229457855225,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 3.61441898345947
+		},
+		{
+			"id": "base_014477",
+			"palette": "green",
+			"position": [
+				289.421630859375,
+				49.3462829589844,
+				271.620910644531
+			],
+			"scale": 0.885512411594391,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 3.30061078071594
+		},
+		{
+			"id": "base_014496",
+			"palette": "green",
+			"position": [
+				534.200927734375,
+				85.1843032836914,
+				296.431640625
+			],
+			"scale": 0.94248505492317,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 1.59420296237266
+		},
+		{
+			"id": "base_014583",
+			"palette": "green",
+			"position": [
+				517.017333984375,
+				85.2766036987305,
+				278.230224609375
+			],
+			"scale": 1.17664470780297,
+			"species": "broad",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 3.55513345399734
+		},
+		{
+			"id": "base_014610",
+			"palette": "cherry",
+			"position": [
+				543.765747070313,
+				83.9549026489258,
+				255.064270019531
+			],
+			"scale": 0.906458181877412,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 5.27955815216666
+		},
+		{
+			"id": "base_014714",
+			"palette": "cherry",
+			"position": [
+				527.862915039063,
+				79.8289794921875,
+				193.980102539063
+			],
+			"scale": 0.932312493588116,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 3.19824479327901
+		},
+		{
+			"id": "base_014786",
+			"palette": "green",
+			"position": [
+				490.383544921875,
+				70.4471969604492,
+				226.791870117188
+			],
+			"scale": 1.10561227798462,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 4.51275539398193
+		},
+		{
+			"id": "base_014822",
+			"palette": "cherry",
+			"position": [
+				317.016723632813,
+				45.0870742797852,
+				251.794555664063
+			],
+			"scale": 1.01392197608948,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 2.13481950759888
+		},
+		{
+			"id": "base_014897",
+			"palette": "cherry",
+			"position": [
+				351.797485351563,
+				46.7717132568359,
+				252.535583496094
+			],
+			"scale": 1.02603650093079,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 2.86532425880432
+		},
+		{
+			"id": "base_014971",
+			"palette": "green",
+			"position": [
+				526.941284179688,
+				85.4182281494141,
+				279.555053710938
+			],
+			"scale": 1.1737062660358,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 2.51571871760886
+		},
+		{
+			"id": "base_014983",
+			"palette": "green",
+			"position": [
+				486.474487304688,
+				70.5193557739258,
+				172.321655273438
+			],
+			"scale": 0.998820304870605,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 0.840548276901245
+		},
+		{
+			"id": "base_015040",
+			"palette": "green",
+			"position": [
+				414.73876953125,
+				70.1390533447266,
+				373.599304199219
+			],
+			"scale": 1.0564928006502,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 1.36044800129061
+		},
+		{
+			"id": "base_015201",
+			"palette": "green",
+			"position": [
+				471.587158203125,
+				70.4309539794922,
+				235.720458984375
+			],
+			"scale": 0.870504975318909,
+			"species": "broad",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 3.49552893638611
+		},
+		{
+			"id": "base_015250",
+			"palette": "green",
+			"position": [
+				317.954711914063,
+				52.0405044555664,
+				270.253784179688
+			],
+			"scale": 0.96131706237793,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 3.5207507610321
+		},
+		{
+			"id": "base_015299",
+			"palette": "green",
+			"position": [
+				459.140625,
+				68.5860748291016,
+				166.788513183594
+			],
+			"scale": 0.839360892772675,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 0.499042600393295
+		},
+		{
+			"id": "base_015316",
+			"palette": "green",
+			"position": [
+				399.243530273438,
+				59.7642211914063,
+				280.976135253906
+			],
+			"scale": 1.07709157466888,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 1.82420384883881
+		},
+		{
+			"id": "base_015361",
+			"palette": "green",
+			"position": [
+				445.31103515625,
+				70.5610656738281,
+				316.314758300781
+			],
+			"scale": 1.15287935733795,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 5.86297369003296
+		},
+		{
+			"id": "base_015464",
+			"palette": "green",
+			"position": [
+				379.693725585938,
+				64.586540222168,
+				378.660766601563
+			],
+			"scale": 0.850174145540039,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 2.29432609605295
+		},
+		{
+			"id": "base_015515",
+			"palette": "green",
+			"position": [
+				465.883666992188,
+				80.7051315307617,
+				360.156188964844
+			],
+			"scale": 0.857254696587185,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 3.44060046157716
+		},
+		{
+			"id": "base_015519",
+			"palette": "green",
+			"position": [
+				258.484741210938,
+				49.6951675415039,
+				288.427734375
+			],
+			"scale": 1.07146044451435,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 6.11940606451305
+		},
+		{
+			"id": "base_015536",
+			"palette": "green",
+			"position": [
+				472.690551757813,
+				77.7589569091797,
+				299.458435058594
+			],
+			"scale": 1.01756620407104,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 4.12450981140137
+		},
+		{
+			"id": "base_015584",
+			"palette": "green",
+			"position": [
+				496.585815429688,
+				78.7402496337891,
+				260.965270996094
+			],
+			"scale": 1.0290346375352,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 0.299358289577561
+		},
+		{
+			"id": "base_015740",
+			"palette": "green",
+			"position": [
+				275.555633544922,
+				50.3249244689941,
+				282.891296386719
+			],
+			"scale": 0.944962561130524,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 5.20427465438843
+		},
+		{
+			"id": "base_015764",
+			"palette": "green",
+			"position": [
+				462.012939453125,
+				70.2445907592773,
+				219.528991699219
+			],
+			"scale": 0.975341320037842,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 0.917818427085876
+		},
+		{
+			"id": "base_015790",
+			"palette": "green",
+			"position": [
+				482.812744140625,
+				83.3908386230469,
+				343.164123535156
+			],
+			"scale": 1.06205871768408,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 5.09304293134027
+		},
+		{
+			"id": "base_015798",
+			"palette": "cherry",
+			"position": [
+				383.0927734375,
+				46.674186706543,
+				248.015075683594
+			],
+			"scale": 1.16967570781708,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 1.49047458171844
+		},
+		{
+			"id": "base_015812",
+			"palette": "green",
+			"position": [
+				384.341430664063,
+				57.0,
+				260.615966796875
+			],
+			"scale": 0.829565405845642,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 0.00226895487867296
+		},
+		{
+			"id": "base_015825",
+			"palette": "green",
+			"position": [
+				510.668701171875,
+				81.5583801269531,
+				254.982727050781
+			],
+			"scale": 0.882695405673018,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 2.32010106348374
+		},
+		{
+			"id": "base_015870",
+			"palette": "green",
+			"position": [
+				325.6318359375,
+				54.3456726074219,
+				289.682678222656
+			],
+			"scale": 0.849653840065002,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 5.22748565673828
+		},
+		{
+			"id": "base_015940",
+			"palette": "cherry",
+			"position": [
+				517.312133789063,
+				79.9339447021484,
+				218.063415527344
+			],
+			"scale": 0.87398505276789,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 5.60261435134923
+		},
+		{
+			"id": "base_016103",
+			"palette": "green",
+			"position": [
+				398.81201171875,
+				70.0500030517578,
+				386.565185546875
+			],
+			"scale": 1.19502299145108,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 5.63057389344451
+		},
+		{
+			"id": "base_016181",
+			"palette": "green",
+			"position": [
+				443.367065429688,
+				70.3795928955078,
+				251.986755371094
+			],
+			"scale": 0.951210618019104,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 3.81155014038086
+		},
+		{
+			"id": "base_016390",
+			"palette": "green",
+			"position": [
+				498.066162109375,
+				78.0049896240234,
+				243.025329589844
+			],
+			"scale": 0.854280769824982,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 2.57883262634277
+		},
+		{
+			"id": "base_016396",
+			"palette": "green",
+			"position": [
+				392.038330078125,
+				70.074951171875,
+				364.825073242188
+			],
+			"scale": 1.08058050866849,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 1.27214748509956
+		},
+		{
+			"id": "base_016510",
+			"palette": "green",
+			"position": [
+				426.228302001953,
+				56.8502159118652,
+				226.948303222656
+			],
+			"scale": 1.03026592731476,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 0.0319167077541351
+		},
+		{
+			"id": "base_016568",
+			"palette": "green",
+			"position": [
+				374.5029296875,
+				47.1148452758789,
+				306.771789550781
+			],
+			"scale": 1.00913107395172,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 1.07712399959564
+		},
+		{
+			"id": "base_016666",
+			"palette": "green",
+			"position": [
+				558.695922851563,
+				82.7015228271484,
+				263.73828125
+			],
+			"scale": 0.889767339563114,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 2.67726505524592
+		},
+		{
+			"id": "base_016715",
+			"palette": "green",
+			"position": [
+				417.9599609375,
+				70.3045501708984,
+				335.754638671875
+			],
+			"scale": 0.969639182090759,
+			"species": "broad",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 1.70332813262939
+		},
+		{
+			"id": "base_016768",
+			"palette": "green",
+			"position": [
+				401.385986328125,
+				54.7745361328125,
+				253.007690429688
+			],
+			"scale": 0.942545115947723,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 2.00586271286011
+		},
+		{
+			"id": "base_016783",
+			"palette": "green",
+			"position": [
+				408.296142578125,
+				60.7933349609375,
+				296.353576660156
+			],
+			"scale": 0.848967492580414,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 6.22975063323975
+		},
+		{
+			"id": "base_016822",
+			"palette": "green",
+			"position": [
+				450.209228515625,
+				70.2841186523438,
+				235.686584472656
+			],
+			"scale": 0.917845189571381,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 6.18803977966309
+		},
+		{
+			"id": "base_016921",
+			"palette": "green",
+			"position": [
+				468.817504882813,
+				69.7664337158203,
+				165.097778320313
+			],
+			"scale": 0.931903481483459,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 3.20615696907043
+		},
+		{
+			"id": "base_017030",
+			"palette": "green",
+			"position": [
+				339.302490234375,
+				55.4545135498047,
+				272.081115722656
+			],
+			"scale": 0.826249241828918,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 1.60534656047821
+		},
+		{
+			"id": "base_017095",
+			"palette": "green",
+			"position": [
+				435.394165039063,
+				71.7632293701172,
+				391.009704589844
+			],
+			"scale": 0.822197941714541,
+			"species": "small",
+			"surface": "dff8fbe5-3d2b-4370-b596-db37fbd102ce",
+			"yaw": 5.46912790316351
+		},
+		{
+			"id": "base_017199",
+			"palette": "green",
+			"position": [
+				453.468383789063,
+				78.3066101074219,
+				364.114013671875
+			],
+			"scale": 1.16926570399746,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 2.66310034731211
+		},
+		{
+			"id": "base_017276",
+			"palette": "green",
+			"position": [
+				415.268432617188,
+				70.0499954223633,
+				388.34521484375
+			],
+			"scale": 0.823931057432632,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 2.75108633967611
+		},
+		{
+			"id": "base_017330",
+			"palette": "green",
+			"position": [
+				481.370971679688,
+				70.4482574462891,
+				230.477966308594
+			],
+			"scale": 1.08297562599182,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 0.134283512830734
+		},
+		{
+			"id": "base_017359",
+			"palette": "green",
+			"position": [
+				274.008911132813,
+				47.7943115234375,
+				272.593322753906
+			],
+			"scale": 1.12694120407104,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 2.83336997032166
+		},
+		{
+			"id": "base_017375",
+			"palette": "green",
+			"position": [
+				453.063232421875,
+				70.6348571777344,
+				301.624877929688
+			],
+			"scale": 0.882891178131104,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 3.67336511611938
+		},
+		{
+			"id": "base_017387",
+			"palette": "green",
+			"position": [
+				325.260375976563,
+				50.3908996582031,
+				305.391967773438
+			],
+			"scale": 0.873777210712433,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 1.29122173786163
+		},
+		{
+			"id": "base_017446",
+			"palette": "green",
+			"position": [
+				391.164428710938,
+				52.121452331543,
+				253.019470214844
+			],
+			"scale": 1.17410552501678,
+			"species": "upright",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 2.9998619556427
+		},
+		{
+			"id": "base_017502",
+			"palette": "green",
+			"position": [
+				298.798217773438,
+				50.4566192626953,
+				272.193969726563
+			],
+			"scale": 0.858735978603363,
+			"species": "broad",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 4.24648189544678
+		},
+		{
+			"id": "base_017533",
+			"palette": "green",
+			"position": [
+				409.230224609375,
+				70.1855621337891,
+				354.172607421875
+			],
+			"scale": 0.824340874476191,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 4.98633447799992
+		},
+		{
+			"id": "base_017616",
+			"palette": "green",
+			"position": [
+				357.094116210938,
+				47.9364929199219,
+				308.291625976563
+			],
+			"scale": 0.968932092189789,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 5.95112609863281
+		},
+		{
+			"id": "base_017619",
+			"palette": "green",
+			"position": [
+				388.090209960938,
+				52.8671646118164,
+				319.192749023438
+			],
+			"scale": 0.980662167072296,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 0.749433279037476
+		},
+		{
+			"id": "base_017675",
+			"palette": "green",
+			"position": [
+				496.939819335938,
+				73.7549209594727,
+				157.145202636719
+			],
+			"scale": 1.02556359767914,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 2.9926552772522
+		},
+		{
+			"id": "base_017714",
+			"palette": "green",
+			"position": [
+				398.630981445313,
+				61.9277877807617,
+				336.77099609375
+			],
+			"scale": 1.04380488395691,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 3.51715540885925
+		},
+		{
+			"id": "base_017745",
+			"palette": "green",
+			"position": [
+				347.696990966797,
+				56.5344009399414,
+				271.984130859375
+			],
+			"scale": 0.957847774028778,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 3.83789229393005
+		},
+		{
+			"id": "base_017866",
+			"palette": "cherry",
+			"position": [
+				514.556518554688,
+				79.2773895263672,
+				199.242126464844
+			],
+			"scale": 0.979415933773889,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 4.85412288522352
+		},
+		{
+			"id": "base_017868",
+			"palette": "cherry",
+			"position": [
+				531.964599609375,
+				82.4009017944336,
+				224.884155273438
+			],
+			"scale": 0.981503952012802,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 0.435088873021676
+		},
+		{
+			"id": "base_017941",
+			"palette": "green",
+			"position": [
+				381.886474609375,
+				53.859245300293,
+				337.040832519531
+			],
+			"scale": 1.08931098585153,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 0.465520344098579
+		},
+		{
+			"id": "base_017998",
+			"palette": "green",
+			"position": [
+				433.930419921875,
+				70.3493957519531,
+				355.196655273438
+			],
+			"scale": 0.895003020763397,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 0.980164885520935
+		},
+		{
+			"id": "base_018025",
+			"palette": "green",
+			"position": [
+				455.60546875,
+				69.9187774658203,
+				175.193603515625
+			],
+			"scale": 1.14482247829437,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 3.67476320266724
+		},
+		{
+			"id": "base_018060",
+			"palette": "green",
+			"position": [
+				298.452514648438,
+				50.1272048950195,
+				311.096069335938
+			],
+			"scale": 1.0961788892746,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 5.77219581604004
+		},
+		{
+			"id": "base_018096",
+			"palette": "green",
+			"position": [
+				509.671630859375,
+				84.4866333007813,
+				284.798034667969
+			],
+			"scale": 0.8699942222494,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 3.62402663570302
+		},
+		{
+			"id": "base_018267",
+			"palette": "green",
+			"position": [
+				411.919189453125,
+				71.7734756469727,
+				405.45263671875
+			],
+			"scale": 0.852732232861577,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 3.03940092638154
+		},
+		{
+			"id": "base_018313",
+			"palette": "green",
+			"position": [
+				452.977783203125,
+				70.1993408203125,
+				221.774169921875
+			],
+			"scale": 0.831685245037079,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 2.79723763465881
+		},
+		{
+			"id": "base_018378",
+			"palette": "green",
+			"position": [
+				528.040893554688,
+				85.0775299072266,
+				264.818542480469
+			],
+			"scale": 1.18857958001335,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 3.68869438375685
+		},
+		{
+			"id": "base_018496",
+			"palette": "green",
+			"position": [
+				473.326782226563,
+				78.9036560058594,
+				328.328186035156
+			],
+			"scale": 0.855272537684799,
+			"species": "broad",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 4.86721651349075
+		},
+		{
+			"id": "base_018610",
+			"palette": "green",
+			"position": [
+				426.71044921875,
+				71.3306579589844,
+				398.481872558594
+			],
+			"scale": 0.885421360956354,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 4.77537668877143
+		},
+		{
+			"id": "base_018835",
+			"palette": "green",
+			"position": [
+				419.077758789063,
+				70.4140625,
+				307.109680175781
+			],
+			"scale": 0.830359160900116,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 2.02296710014343
+		},
+		{
+			"id": "base_018969",
+			"palette": "green",
+			"position": [
+				492.801879882813,
+				81.8491668701172,
+				306.006774902344
+			],
+			"scale": 1.09685802994295,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 0.649279063030348
+		},
+		{
+			"id": "base_019056",
+			"palette": "green",
+			"position": [
+				415.908325195313,
+				70.2134857177734,
+				364.500305175781
+			],
+			"scale": 0.893580294705206,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 1.8807104885688
+		},
+		{
+			"id": "base_019099",
+			"palette": "green",
+			"position": [
+				543.300048828125,
+				84.4557495117188,
+				264.925842285156
+			],
+			"scale": 1.0350305348662,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 6.18168085950266
+		},
+		{
+			"id": "base_019212",
+			"palette": "cherry",
+			"position": [
+				543.170532226563,
+				81.1607818603516,
+				210.789672851563
+			],
+			"scale": 0.840392243367757,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 3.32465719317403
+		},
+		{
+			"id": "base_019270",
+			"palette": "green",
+			"position": [
+				396.771484375,
+				55.8911972045898,
+				290.347534179688
+			],
+			"scale": 1.07197284698486,
+			"species": "upright",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 2.05300569534302
+		},
+		{
+			"id": "base_019315",
+			"palette": "green",
+			"position": [
+				422.107421875,
+				61.2404289245605,
+				254.042617797852
+			],
+			"scale": 1.19311237335205,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 5.33523988723755
+		},
+		{
+			"id": "base_019338",
+			"palette": "green",
+			"position": [
+				344.980102539063,
+				55.7469940185547,
+				288.118103027344
+			],
+			"scale": 1.14067602157593,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 2.27699875831604
+		},
+		{
+			"id": "base_019350",
+			"palette": "green",
+			"position": [
+				291.041717529297,
+				51.4112968444824,
+				281.193756103516
+			],
+			"scale": 1.00253880023956,
+			"species": "small",
+			"surface": "d3fe4a64-2608-40d0-9347-87a53994c718",
+			"yaw": 0.783028483390808
+		},
+		{
+			"id": "base_019375",
+			"palette": "green",
+			"position": [
+				473.513305664063,
+				77.9796905517578,
+				309.92041015625
+			],
+			"scale": 1.02499008178711,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 1.80079734325409
+		},
+		{
+			"id": "base_019387",
+			"palette": "green",
+			"position": [
+				527.94287109375,
+				85.4389572143555,
+				289.956298828125
+			],
+			"scale": 0.94295450318249,
+			"species": "small",
+			"surface": "bf85e190-42a5-4272-8e68-011fd520bba7",
+			"yaw": 5.29785675672555
+		},
+		{
+			"id": "base_019420",
+			"palette": "green",
+			"position": [
+				455.342895507813,
+				70.0617065429688,
+				193.775146484375
+			],
+			"scale": 1.14334750175476,
+			"species": "small",
+			"surface": "a54fcd33-e699-48c3-8702-7c68ca52806c",
+			"yaw": 5.9911527633667
+		},
+		{
+			"id": "base_019530",
+			"palette": "green",
+			"position": [
+				481.70947265625,
+				78.1834487915039,
+				293.179077148438
+			],
+			"scale": 0.891058266162872,
+			"species": "small",
+			"surface": "b9539ada-2e69-4f44-b8eb-d4d2ea29936a",
+			"yaw": 3.94866895675659
 		}
 	],
 	"version": 1

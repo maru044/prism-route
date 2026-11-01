@@ -1,0 +1,83 @@
+{
+  "actual_scene": "res://scenes/map_1021.tscn",
+  "atrium_forward": {
+    "final_position": "(466.5208, 62.0285, 269.0045)",
+    "physics_steps": 1238,
+    "reached": true,
+    "total": 101,
+    "unsupported_frames": 0,
+    "waypoints_reached": 101
+  },
+  "atrium_reverse": {
+    "final_position": "(466.4656, 69.6043, 268.9958)",
+    "physics_steps": 1265,
+    "reached": true,
+    "total": 101,
+    "unsupported_frames": 0,
+    "waypoints_reached": 101
+  },
+  "collision_bodies": 47,
+  "entry_forward": {
+    "final_position": "(429.3071, 62.02802, 269.0018)",
+    "physics_steps": 2629,
+    "reached": true,
+    "total": 101,
+    "unsupported_frames": 0,
+    "waypoints_reached": 101
+  },
+  "entry_reverse": {
+    "final_position": "(249.7648, 49.65748, 290.0164)",
+    "physics_steps": 2587,
+    "reached": true,
+    "total": 101,
+    "unsupported_frames": 0,
+    "waypoints_reached": 101
+  },
+  "failures": [],
+  "floor_samples": 260,
+  "geometry_sha256": "7f81ea05170ea152a5de386908e7b4f80098310fb1facc7bbd9efe2b3fb3a103",
+  "glass_panes": 28,
+  "hall_forward": {
+    "final_position": "(455.2747, 62.0285, 268.9998)",
+    "physics_steps": 377,
+    "reached": true,
+    "total": 27,
+    "unsupported_frames": 0,
+    "waypoints_reached": 27
+  },
+  "hall_reverse": {
+    "final_position": "(429.3126, 62.02925, 268.9999)",
+    "physics_steps": 377,
+    "reached": true,
+    "total": 27,
+    "unsupported_frames": 0,
+    "waypoints_reached": 27
+  },
+  "max_bounds_error_m": 0.0000682393801980652,
+  "max_floor_error_m": 0.05999755859375,
+  "meshes": 89,
+  "minimum_headroom_below_5m": 3.44214248657227,
+  "passed": true,
+  "preserved_tree_edits": 222,
+  "preserved_tree_removals": 221,
+  "protected_resources": 17,
+  "terrain_surfaces": 7,
+  "triangles": 153527.0,
+  "upper_forward": {
+    "final_position": "(467.7545, 69.64349, 269.0003)",
+    "physics_steps": 214,
+    "reached": true,
+    "total": 31,
+    "unsupported_frames": 0,
+    "waypoints_reached": 31
+  },
+  "upper_reverse": {
+    "final_position": "(482.2786, 69.64349, 268.9999)",
+    "physics_steps": 213,
+    "reached": true,
+    "total": 31,
+    "unsupported_frames": 0,
+    "waypoints_reached": 31
+  },
+  "water_reflectors": 61
+}

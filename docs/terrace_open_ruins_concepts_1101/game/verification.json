@@ -1,0 +1,67 @@
+{
+  "North_ground_approach_forward": {
+    "last_position": "(407.05, 89.92906, 885.0923)",
+    "physics_steps": 316,
+    "reached": true,
+    "total": 26,
+    "unsupported_frames": 0,
+    "waypoints": 26
+  },
+  "North_ground_approach_reverse": {
+    "last_position": "(410.0449, 92.32336, 905.9526)",
+    "physics_steps": 325,
+    "reached": true,
+    "total": 26,
+    "unsupported_frames": 0,
+    "waypoints": 26
+  },
+  "Ridge_link_forward": {
+    "last_position": "(409.9995, 92.32356, 924.0212)",
+    "physics_steps": 804,
+    "reached": true,
+    "total": 26,
+    "unsupported_frames": 0,
+    "waypoints": 26
+  },
+  "Ridge_link_reverse": {
+    "last_position": "(393.9614, 95.18344, 975.9759)",
+    "physics_steps": 814,
+    "reached": true,
+    "total": 26,
+    "unsupported_frames": 0,
+    "waypoints": 26
+  },
+  "South_ground_approach_forward": {
+    "last_position": "(393.9948, 95.1834, 1004.033)",
+    "physics_steps": 246,
+    "reached": true,
+    "total": 26,
+    "unsupported_frames": 0,
+    "waypoints": 26
+  },
+  "South_ground_approach_reverse": {
+    "last_position": "(390.0273, 94.81261, 1019.971)",
+    "physics_steps": 247,
+    "reached": true,
+    "total": 26,
+    "unsupported_frames": 0,
+    "waypoints": 26
+  },
+  "actual_scene": "res://scenes/map_1021.tscn",
+  "collision_bodies": 18,
+  "collision_probes": 320,
+  "failures": [],
+  "global_grass_bake_preserved": true,
+  "main_deck": {
+    "last_position": "(394.0556, 95.18349, 976.2851)",
+    "physics_steps": 427,
+    "reached": true,
+    "total": 4,
+    "unsupported_frames": 0,
+    "waypoints": 4
+  },
+  "max_collision_error_m": 0.00006866455078125,
+  "meshes": 31,
+  "passed": true,
+  "saved_tree_edits_preserved": 217
+}

@@ -1,0 +1,15 @@
+{
+  "cells": 15,
+  "cells_with_courtyard_grass": 13,
+  "courtyard_blades": 125292,
+  "global_bake_unchanged": true,
+  "ground_color": "71944b",
+  "mesh": "res://assets/vegetation/models/grass_star_3card_v6.glb",
+  "palette": "green",
+  "passed": true,
+  "root_buffer_parity": true,
+  "seconds": 2.233,
+  "total_cell_blades": 125304,
+  "user_tree_save_sha256": "87a232733faf461f2cfe28b1a3ae139a4f782c3996f8c023243057296a934f51",
+  "user_trees_unchanged": true
+}

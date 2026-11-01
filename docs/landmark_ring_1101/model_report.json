@@ -1,0 +1,63 @@
+{
+  "ground_extension_report": "ground_extension_report.json",
+  "band_bounds_native": [
+    [
+      909.4352431733429,
+      416.5315707713216,
+      -10.060894966125488
+    ],
+    [
+      1131.0492196927307,
+      626.0720688668043,
+      253.9999999999999
+    ]
+  ],
+  "feature": "landmark_ring_1101",
+  "changed_object_ids": [
+    "90684d00-81de-4cc6-ac69-dfadb7115418",
+    "12b0d0a8-7baf-47dd-b90a-09de5216f0b7",
+    "b25197ef-8b96-44d0-921f-89d7c94912e7"
+  ],
+  "backup": "D:/Prism Route/archive/landmark_ring_1101/map_user_placement_before_extension_20261101_191043.3dm",
+  "center_native": [
+    1020.2422314330363,
+    521.301819819063,
+    104.00000000000023
+  ],
+  "circle_plane_normal_native": [
+    0.6863470913703557,
+    0.7272741368751214,
+    3.282803340968487E-16
+  ],
+  "objects": 7,
+  "original_pose_and_arc_preserved": true,
+  "note": "Current Rhino placement and extended bands imported into the formal game scene; runtime ground and bridge traversal checks passed.",
+  "outer_diameter_m": 300.0,
+  "bounds_native": [
+    [
+      909.4352431733429,
+      416.5315707713216,
+      -10.060894966125488
+    ],
+    [
+      1415.690109332809,
+      626.0720688668043,
+      253.9999999999999
+    ]
+  ],
+  "unrelated_objects_unchanged": 1389,
+  "game_import_updated": true,
+  "object_ids": [
+    "b25197ef-8b96-44d0-921f-89d7c94912e7",
+    "12b0d0a8-7baf-47dd-b90a-09de5216f0b7",
+    "90684d00-81de-4cc6-ac69-dfadb7115418",
+    "91301d84-27e8-4e2e-8013-938b18e8f142",
+    "cfbd3b39-912f-4948-8891-7001614c9577",
+    "d1a988e0-648f-4c29-86c2-ccb4a2f8503a",
+    "d13f2524-9e16-4d0a-8251-07f0b9235237"
+  ],
+  "materials_and_attributes_preserved": true,
+  "revision": "Manually repositioned hoop, current-pose end extension",
+  "game_geometry_sha256": "5ff696cec3cd9673169085d253068e57745d91680209054d8aeb8ff23f99990d",
+  "game_verification": "game/verification.json"
+}

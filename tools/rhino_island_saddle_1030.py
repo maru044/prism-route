@@ -5,7 +5,7 @@ One continuous NURBS patch defines shell, diagrid, torn infill and the narrow
 collapsed contact. No independent bridge, entry opening or interior is added.
 """
 from __future__ import division, unicode_literals
-import Rhino, scriptcontext as sc, System, math, json, io, os, time
+import Rhino, scriptcontext as sc, System, math, json, io, os, time, shutil
 from System.Drawing import Color
 G = Rhino.Geometry
 ROOT = 'D:/Prism Route/prism-route'
@@ -23,6 +23,16 @@ CONTACT_CREST_Z = 64.65
 CONTACT_LANDING_DEPTH = 2.07
 
 def state(): return sc.sticky[TAG]
+
+def feature_objects():
+    settings=Rhino.DocObjects.ObjectEnumeratorSettings()
+    settings.NormalObjects=True;settings.HiddenObjects=True;settings.LockedObjects=True
+    return [o for o in sc.doc.Objects.GetObjectList(settings)
+            if not o.IsDeleted and o.Attributes.GetUserString('feature')==TAG]
+
+def assert_feature_inventory():
+    actual=set(str(o.Id) for o in feature_objects());expected=set(state()['objects'])
+    assert actual==expected,'Untracked or missing saddle objects; inspect hidden controls before saving/exporting'
 def xyz(p): return [float(p.X),float(p.Y),float(p.Z)]
 def write(name,data):
     with io.open(OUT+'/'+name,'w',encoding='utf-8') as f:
@@ -84,7 +94,7 @@ def hermite(rows,t):
     return G.Point3d(*result)
 
 def prepare():
-    assert not any(o.Attributes.GetUserString('feature')==TAG for o in sc.doc.Objects),'Existing saddle found; revise its feature instead of duplicating'
+    assert not feature_objects(),'Existing saddle found, including hidden/locked controls; revise it instead of duplicating'
     assert str(sc.doc.ModelUnitSystem)=='Meters'
     options=Rhino.FileIO.FileWriteOptions();options.SuppressDialogBoxes=True
     backup=ROOT+'/.current_map_build/before_island_saddle_'+time.strftime('%Y%m%d_%H%M%S')+'.3dm'
@@ -598,19 +608,21 @@ def capture(which='overview'):
     vp.ChangeToPerspectiveProjection(True,38)
     vp.SetCameraLocations(target,eye);vp.DisplayMode=Rhino.Display.DisplayModeDescription.FindByName('Rendered')
     sc.doc.Objects.UnselectAll();sc.doc.Views.Redraw()
-    sc.doc.NamedViews.Add('IslandSaddle_'+which+'_1030',vp.Id)
+    if which in ['overview','contact']:
+        sc.doc.NamedViews.Add('IslandSaddle_'+which+'_1030',vp.Id)
     cap=Rhino.Display.ViewCapture();cap.Width=1700;cap.Height=1050
     cap.DrawGrid=False;cap.DrawAxes=False;cap.DrawGridAxes=False
     bitmap=cap.CaptureToBitmap(sc.doc.Views.ActiveView);assert bitmap
     path=OUT+'/'+which+'.png';bitmap.Save(path,System.Drawing.Imaging.ImageFormat.Png);bitmap.Dispose()
     return {'capture':path}
 def save():
+    assert_feature_inventory()
     report=audit();d=state()
     options=Rhino.FileIO.FileWriteOptions();options.SuppressDialogBoxes=True
     standalone=OUT+'/island_saddle_shell.3dm'
-    revision=2
-    while os.path.exists(standalone):
-        standalone=OUT+'/island_saddle_shell_v%d.3dm'%revision;revision+=1
+    # Publish one component and keep one rolling local backup.
+    if os.path.exists(standalone):
+        shutil.copy2(standalone,ROOT+'/.current_map_build/island_saddle_previous.3dm')
     temporary_layers=[]
     for item in sc.doc.Layers:
         if item.FullPath.startswith(LAYER+'::') and (item.Name.startswith('00_') or item.Name.startswith('07_')):

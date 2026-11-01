@@ -112,6 +112,22 @@ uniform bool use_grass_lod_density = false;
 // Enabled only by the 1021 streamer. Instances already fully alpha-discarded
 // by LOD collapse to degenerate triangles before wind/biome work and raster.
 uniform bool skip_invisible_grass = false;
+// Local presentation cut for the excavated atrium; immutable root caches stay reusable.
+uniform bool use_atrium_grass_cut = false;
+uniform vec4 atrium_roof_cut_xz = vec4(0.0, 0.0, 1.0, 1.0);
+uniform vec4 atrium_void_cut_xz = vec4(0.0, 0.0, 1.0, 1.0);
+uniform vec2 atrium_cut_min_y = vec2(60.0, 34.0);
+uniform vec4 atrium_green_bounds = vec4(0.0);
+uniform vec2 atrium_green_height = vec2(34.8,35.4);
+// Local deck/path footprint only; saved roots and existing planting are reusable.
+uniform bool use_terrace_grass_cut = false;
+uniform sampler2D terrace_grass_cut : filter_nearest, repeat_disable;
+uniform vec4 terrace_cut_bounds = vec4(0.0,0.0,1.0,1.0);
+uniform vec2 terrace_cut_height = vec2(85.0,101.0);
+// Local excavated earth: keep cached roots only while they still have support.
+uniform bool use_earth_pavilion_grass_support = false;
+uniform sampler2D earth_pavilion_grass_support : filter_nearest, repeat_disable;
+uniform vec4 earth_pavilion_support_bounds = vec4(0.0,0.0,1.0,1.0);
 uniform float grass_near_fade_start = 48.0;
 uniform float grass_near_fade_end = 76.0;
 uniform float grass_far_fade_start = 76.0;
@@ -248,7 +264,29 @@ void vertex() {
 		float density_keep = mix(near_keep, far_keep, survivor_group);
 		grass_lod_visibility = step(INSTANCE_CUSTOM.b, density_keep);
 	}
-	if (skip_invisible_grass && grass_lod_visibility < 0.5) {
+	if (use_atrium_grass_cut) {
+		vec2 roof_delta = (world_origin.xz - atrium_roof_cut_xz.xy) / atrium_roof_cut_xz.zw;
+		vec2 void_delta = (world_origin.xz - atrium_void_cut_xz.xy) / atrium_void_cut_xz.zw;
+		if ((world_origin.y >= atrium_cut_min_y.x && dot(roof_delta, roof_delta) <= 1.0)
+			|| (world_origin.y >= atrium_cut_min_y.y && dot(void_delta, void_delta) <= 1.0)) {
+			grass_lod_visibility = 0.0;
+		}
+	}
+	if (use_terrace_grass_cut && world_origin.y >= terrace_cut_height.x && world_origin.y <= terrace_cut_height.y) {
+		vec2 cut_uv = (world_origin.xz - terrace_cut_bounds.xy) / terrace_cut_bounds.zw;
+		if (all(greaterThanEqual(cut_uv,vec2(0.0))) && all(lessThanEqual(cut_uv,vec2(1.0)))
+			&& textureLod(terrace_grass_cut,cut_uv,0.0).r > 0.5) {
+			grass_lod_visibility = 0.0;
+		}
+	}
+	if (use_earth_pavilion_grass_support && world_origin.y >= 40.0 && world_origin.y <= 95.0) {
+		vec2 support_uv = (world_origin.xz - earth_pavilion_support_bounds.xy) / earth_pavilion_support_bounds.zw;
+		if (all(greaterThanEqual(support_uv,vec2(0.0))) && all(lessThan(support_uv,vec2(1.0)))) {
+			vec2 support = textureLod(earth_pavilion_grass_support,support_uv,0.0).rg;
+			if (support.g < 1.5 && (support.g < 0.5 || abs(world_origin.y - support.r) > 0.4)) { grass_lod_visibility = 0.0; }
+		}
+	}
+	if ((skip_invisible_grass || use_atrium_grass_cut || use_terrace_grass_cut || use_earth_pavilion_grass_support) && grass_lod_visibility < 0.5) {
 		VERTEX = vec3(0.0);
 	} else {
 		vec3 palette_origin = mix(
@@ -331,6 +369,11 @@ void vertex() {
 				subtle_value = mix(0.96, 1.04, INSTANCE_CUSTOM.g);
 			}
 			float transition = meadow_green_weight(palette_origin,noise_value,instance_shift);
+			if (use_atrium_grass_cut && world_origin.y >= atrium_green_height.x && world_origin.y <= atrium_green_height.y
+				&& all(greaterThanEqual(world_origin.xz,atrium_green_bounds.xy))
+				&& all(lessThanEqual(world_origin.xz,atrium_green_bounds.zw))) {
+				transition = 1.0;
+			}
 			palette_tint = mix(palette_dry.rgb, palette_green.rgb, transition)
 				* subtle_value;
 		}

@@ -1,0 +1,17 @@
+[
+  {
+    "length_m": 55.356856983975277,
+    "max_center_gradient": 0.11014038177046293,
+    "name": "Ridge_link"
+  },
+  {
+    "length_m": 17.225743387376760,
+    "max_center_gradient": 0.035446551059192359,
+    "name": "South_ground_approach"
+  },
+  {
+    "length_m": 22.430039392584884,
+    "max_center_gradient": 0.15053437762063826,
+    "name": "North_ground_approach"
+  }
+]

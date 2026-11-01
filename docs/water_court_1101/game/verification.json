@@ -1,0 +1,38 @@
+{
+  "actual_scene": "res://scenes/map_1021.tscn",
+  "collision_bodies": 13,
+  "covered_ramp_samples": 92,
+  "failures": [],
+  "gallery_floor_samples": 82,
+  "gallery_merges_into_lake_bed": 0,
+  "gallery_shell_foot_joins": 2,
+  "geometry_sha256": "0de23360a6f6ad1a09697a13eb541ec55ea9a7ea99a8de62c19aff48ffd10b80",
+  "glass_panes": 6,
+  "max_bounds_error_m": 0.0000610356219112873,
+  "max_gallery_floor_error_m": 0.0000576674938201904,
+  "max_ramp_error_m": 0.000374257564544678,
+  "meshes": 31,
+  "minimum_headroom_m": 8.29516309499741,
+  "passed": true,
+  "preserved_tree_edits": 222,
+  "preserved_tree_removals": 221,
+  "protected_resources": 15,
+  "ramp_forward": {
+    "physics_steps": 1170,
+    "reached": true,
+    "total": 41,
+    "unsupported_frames": 0,
+    "waypoints_reached": 41
+  },
+  "ramp_reverse": {
+    "physics_steps": 1166,
+    "reached": true,
+    "total": 41,
+    "unsupported_frames": 0,
+    "waypoints_reached": 41
+  },
+  "ramp_samples": 41,
+  "triangles": 86504.0,
+  "wading_contact": true,
+  "water_reflectors": 25
+}

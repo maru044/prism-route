@@ -1,0 +1,74 @@
+{
+  "units": "meters",
+  "source_document": "D:/Prism Route/map/map_current.3dm",
+  "measured": {
+    "oval_id": "78d43939-e418-428e-aad5-d51b08c73985",
+    "oval_bounds": [
+      [
+        1002.01,
+        246.72,
+        63.0
+      ],
+      [
+        1170.01,
+        358.32,
+        72.6
+      ]
+    ],
+    "oval_outer_size": [
+      168.0,
+      111.6
+    ],
+    "oval_center": [
+      1086.01,
+      302.52
+    ],
+    "host_roof_z": 63.0,
+    "oval_top_z": 72.6,
+    "middle_road_id": "0295f8be-063a-4f5d-90ff-5dabbf9fad42",
+    "middle_road_z": 35.0,
+    "nearest_road_edge": [
+      1025.9892,
+      369.7737,
+      35.0
+    ]
+  },
+  "proposed": {
+    "oculus_size": [
+      110.0,
+      66.0
+    ],
+    "entry_stair_width": 8.0,
+    "entry_drop": [
+      72.6,
+      69.8
+    ],
+    "stair_sequence": [
+      [
+        69.8,
+        60.6
+      ],
+      [
+        57.8,
+        48.6
+      ],
+      [
+        45.8,
+        35.0
+      ]
+    ],
+    "internal_drops": [
+      [
+        60.6,
+        57.8
+      ],
+      [
+        48.6,
+        45.8
+      ]
+    ],
+    "level_exit_connector_approx_length": 26.0,
+    "empty_side_bays": true
+  },
+  "geometry_modified": false
+}

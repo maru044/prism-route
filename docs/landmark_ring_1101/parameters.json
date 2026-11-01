@@ -1,0 +1,163 @@
+{
+  "ground_extension_report": "ground_extension_report.json",
+  "feature": "landmark_ring_1101",
+  "backup": "D:/Prism Route/archive/landmark_ring_1101/map_before_20261101_180414.3dm",
+  "connections": [
+    {
+      "ring_anchor": [
+        1415.5799999999999,
+        449.05747672955931,
+        91.231683687468106
+      ],
+      "chord_length_m": 42.743318491186578,
+      "saddle_anchor": [
+        1377.9910925013912,
+        464.23157679367216,
+        77.673955413736522
+      ],
+      "broken": false
+    },
+    {
+      "ring_anchor": [
+        1415.5799999999999,
+        451.70137649249750,
+        73.540937295198233
+      ],
+      "chord_length_m": 56.603378015035851,
+      "saddle_anchor": [
+        1366.6302490234375,
+        480.0,
+        76.196533203125
+      ],
+      "broken": true
+    }
+  ],
+  "center_native": [
+    1020.2422314330363,
+    521.30181981906298,
+    104.00000000000023
+  ],
+  "latest_revision": "User moved/rotated only the three rings; extend at current pose; connection remnants stay where authored.",
+  "concentric_bands": [
+    {
+      "material": "PR_Saddle_panel",
+      "name": "Outer_ivory",
+      "front_recess": 0.0,
+      "inner_radius": 142.0,
+      "depth": 5.0,
+      "outer_radius": 150.0
+    },
+    {
+      "material": "PR_Saddle_weathered",
+      "name": "Middle_weathered_metal",
+      "front_recess": 0.14999999999999999,
+      "inner_radius": 138.80000000000001,
+      "depth": 4.7000000000000002,
+      "outer_radius": 142.0
+    },
+    {
+      "material": "PR_Saddle_dark",
+      "name": "Inner_graphite",
+      "front_recess": 0.29999999999999999,
+      "inner_radius": 137.19999999999999,
+      "depth": 4.4000000000000004,
+      "outer_radius": 138.80000000000001
+    }
+  ],
+  "current_pose_bands": [
+    {
+      "x_axis": [
+        -0.59574809597976675,
+        0.5622226229878291,
+        -0.57357643635104805
+      ],
+      "id": "90684d00-81de-4cc6-ac69-dfadb7115418",
+      "normal": [
+        0.68634709137035566,
+        0.72727413687512144,
+        3.282803340968487e-16
+      ],
+      "front_center": [
+        1018.7322678320214,
+        519.70181671793762,
+        104.00000000000023
+      ],
+      "y_axis": [
+        -0.41714730767911667,
+        0.39367251876811554,
+        0.81915204428899036
+      ],
+      "end_radians": 4.0666171571467915,
+      "start_radians": -0.2530727415391778,
+      "inner_radius": 137.19999999999956,
+      "depth": 4.4000000000001851,
+      "outer_radius": 138.80000000000013
+    },
+    {
+      "x_axis": [
+        -0.59574809597976908,
+        0.56222262298782832,
+        -0.57357643635104649
+      ],
+      "id": "12b0d0a8-7baf-47dd-b90a-09de5216f0b7",
+      "normal": [
+        0.68634709137035477,
+        0.72727413687512221,
+        -3.7812408315695884e-15
+      ],
+      "front_center": [
+        1018.6293157683162,
+        519.59272559740657,
+        104.00000000000011
+      ],
+      "y_axis": [
+        -0.41714730767911368,
+        0.39367251876811649,
+        0.81915204428899158
+      ],
+      "end_radians": 4.0666171571467888,
+      "start_radians": -0.2530727415391778,
+      "inner_radius": 138.79999999999984,
+      "depth": 4.7000000000002249,
+      "outer_radius": 142.00000000000009
+    },
+    {
+      "x_axis": [
+        -0.59574809597976819,
+        0.56222262298782966,
+        -0.57357643635104616
+      ],
+      "id": "b25197ef-8b96-44d0-921f-89d7c94912e7",
+      "normal": [
+        0.68634709137035554,
+        0.72727413687512144,
+        -1.6552920949397913e-15
+      ],
+      "front_center": [
+        1018.5263637046106,
+        519.48363447687495,
+        104.0
+      ],
+      "y_axis": [
+        -0.41714730767911418,
+        0.39367251876811538,
+        0.8191520442889918
+      ],
+      "end_radians": 4.0666171571467880,
+      "start_radians": -0.2530727415391778,
+      "inner_radius": 142.00000000000003,
+      "depth": 5.0000000000000364,
+      "outer_radius": 149.99999999999997
+    }
+  ],
+  "depth_m": 5.0,
+  "inner_diameter_m": 274.39999999999998,
+  "circle_plane_normal_native": [
+    0.68634709137035566,
+    0.72727413687512144,
+    3.282803340968487e-16
+  ],
+  "buried_arc": "The non-visible lower arc is omitted below the roof/earth, to avoid introducing structure into the existing interior.",
+  "outer_diameter_m": 300.0,
+  "current_visible_arc_degrees": 247.50000000000023
+}

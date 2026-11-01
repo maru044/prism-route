@@ -1,0 +1,19 @@
+{
+  "actual_scene": "res://scenes/map_1021.tscn",
+  "collision_bodies": 47,
+  "failures": [],
+  "floor_samples": 260,
+  "geometry_sha256": "7f81ea05170ea152a5de386908e7b4f80098310fb1facc7bbd9efe2b3fb3a103",
+  "glass_panes": 28,
+  "max_bounds_error_m": 0.0000682393801980652,
+  "max_floor_error_m": 0.05999755859375,
+  "meshes": 89,
+  "minimum_headroom_below_5m": 3.44214248657227,
+  "passed": true,
+  "preserved_tree_edits": 222,
+  "preserved_tree_removals": 221,
+  "protected_resources": 17,
+  "terrain_surfaces": 7,
+  "triangles": 153527.0,
+  "water_reflectors": 61
+}

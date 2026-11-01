@@ -1,0 +1,13 @@
+{
+  "active_grass_blades": 125304,
+  "active_nonempty_local_cells": 13,
+  "actual_scene": "res://scenes/map_1021.tscn",
+  "global_bake_unchanged": true,
+  "ground_green": "(0.4431, 0.5804, 0.2941, 1.0)",
+  "ground_shader": "res://assets/world/current_map_validation/landscape.gdshader",
+  "installed_baked_cells": 15,
+  "mesh_unchanged": true,
+  "passed": true,
+  "same_world_grass_material": true,
+  "user_tree_save_unchanged": true
+}

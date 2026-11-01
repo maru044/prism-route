@@ -1,0 +1,22 @@
+{
+  "patched_ids": [
+    "bce7ca17-4e74-40ff-9854-3cfe83301610",
+    "d544245e-0e2b-4cff-8418-873ea916d171",
+    "c86703da-477f-4a74-ac94-64442f915c89"
+  ],
+  "full_validation_rerun": false,
+  "railing_setback_m": 0.22,
+  "change": "Deck trimmed by existing road solid; rail and brace ends follow curved road edge",
+  "road_edge_contacts": [
+    [
+      1028.8287576591924,
+      372.29896415198056,
+      34.600000000000001
+    ],
+    [
+      1023.1600315961393,
+      367.23679562937758,
+      34.600000000000001
+    ]
+  ]
+}

@@ -1,0 +1,587 @@
+{
+  "feature": "landmark_ring_1101",
+  "materials": {
+    "panel": {
+      "metallic": 0.0,
+      "roughness": 0.83,
+      "color": [
+        0.8745098039215686,
+        0.8627450980392157,
+        0.8
+      ],
+      "opacity": 1.0
+    },
+    "weathered": {
+      "metallic": 0.28,
+      "roughness": 0.81,
+      "color": [
+        0.592156862745098,
+        0.4823529411764706,
+        0.3686274509803922
+      ],
+      "opacity": 1.0
+    },
+    "dark": {
+      "metallic": 0.32,
+      "roughness": 0.8,
+      "color": [
+        0.3254901960784314,
+        0.33725490196078434,
+        0.3058823529411765
+      ],
+      "opacity": 1.0
+    }
+  },
+  "source": "D:\\Prism Route\\map\\map_current.3dm",
+  "objects": [
+    {
+      "id": "cfbd3b39-912f-4948-8891-7001614c9577",
+      "watertight": true,
+      "category": "02_connection_remnants",
+      "bounds": [
+        [
+          1393.4442335909628,
+          451.51091406883256,
+          73.33296234855695
+        ],
+        [
+          1415.690109332809,
+          464.625218855229,
+          75.86133778515155
+        ]
+      ],
+      "normal_offset": 32952,
+      "name": "PR_LandmarkRing_Broken_roof_rib_ring_end",
+      "vertex_count": 930,
+      "index_count": 5448,
+      "kind": "Structure",
+      "offset": 0,
+      "material_key": "weathered",
+      "collision": false
+    },
+    {
+      "id": "d1a988e0-648f-4c29-86c2-ccb4a2f8503a",
+      "watertight": true,
+      "category": "02_connection_remnants",
+      "bounds": [
+        [
+          1366.5201396906623,
+          466.35269257381896,
+          75.6700744143597
+        ],
+        [
+          1390.0174344170903,
+          480.1904624236845,
+          76.57433560021335
+        ]
+      ],
+      "normal_offset": 77064,
+      "name": "PR_LandmarkRing_Broken_roof_rib_saddle_end",
+      "vertex_count": 930,
+      "index_count": 5448,
+      "kind": "Structure",
+      "offset": 44112,
+      "material_key": "weathered",
+      "collision": false
+    },
+    {
+      "id": "90684d00-81de-4cc6-ac69-dfadb7115418",
+      "watertight": true,
+      "category": "01_concentric_bands",
+      "bounds": [
+        [
+          917.7869262695312,
+          424.4383544921875,
+          -1.5443480014801025
+        ],
+        [
+          1122.6962890625,
+          618.16650390625,
+          242.7975616455078
+        ]
+      ],
+      "normal_offset": 124560,
+      "name": "PR_LandmarkRing_Inner_graphite",
+      "vertex_count": 1520,
+      "index_count": 4524,
+      "kind": "Structure",
+      "offset": 88224,
+      "material_key": "dark",
+      "collision": true
+    },
+    {
+      "id": "12b0d0a8-7baf-47dd-b90a-09de5216f0b7",
+      "watertight": true,
+      "category": "01_concentric_bands",
+      "bounds": [
+        [
+          915.3582763671875,
+          422.135498046875,
+          -3.977647066116333
+        ],
+        [
+          1125.123779296875,
+          620.470458984375,
+          245.99749755859375
+        ]
+      ],
+      "normal_offset": 181440,
+      "name": "PR_LandmarkRing_Middle_weathered_metal",
+      "vertex_count": 1616,
+      "index_count": 4812,
+      "kind": "Structure",
+      "offset": 142800,
+      "material_key": "weathered",
+      "collision": true
+    },
+    {
+      "id": "b25197ef-8b96-44d0-921f-89d7c94912e7",
+      "watertight": true,
+      "category": "01_concentric_bands",
+      "bounds": [
+        [
+          909.4374389648438,
+          416.53216552734375,
+          -10.060894966125488
+        ],
+        [
+          1131.048583984375,
+          626.0700073242188,
+          253.9973602294922
+        ]
+      ],
+      "normal_offset": 262200,
+      "name": "PR_LandmarkRing_Outer_ivory",
+      "vertex_count": 2314,
+      "index_count": 8400,
+      "kind": "Structure",
+      "offset": 200832,
+      "material_key": "panel",
+      "collision": true
+    },
+    {
+      "id": "91301d84-27e8-4e2e-8013-938b18e8f142",
+      "watertight": true,
+      "category": "03_remaining_skin",
+      "bounds": [
+        [
+          1367.9674083918692,
+          459.27176468055825,
+          76.2740296155336
+        ],
+        [
+          1390.2774170901712,
+          479.226967067618,
+          83.17094512922517
+        ]
+      ],
+      "normal_offset": 324840,
+      "name": "PR_LandmarkRing_Remaining_roof_skin_tongue",
+      "vertex_count": 1106,
+      "index_count": 5400,
+      "kind": "Structure",
+      "offset": 289968,
+      "material_key": "panel",
+      "collision": false
+    },
+    {
+      "id": "d13f2524-9e16-4d0a-8251-07f0b9235237",
+      "watertight": true,
+      "category": "02_connection_remnants",
+      "bounds": [
+        [
+          1377.874552956563,
+          448.85347215350436,
+          77.48371165307721
+        ],
+        [
+          1415.6753086603755,
+          464.4355813697144,
+          91.4348419855402
+        ]
+      ],
+      "normal_offset": 371064,
+      "name": "PR_LandmarkRing_Surviving_roof_rib",
+      "vertex_count": 930,
+      "index_count": 5448,
+      "kind": "Structure",
+      "offset": 338112,
+      "material_key": "weathered",
+      "collision": false
+    }
+  ],
+  "native_center": [
+    1450.0,
+    1150.0,
+    0.0
+  ],
+  "cad_unchanged": true,
+  "parameters": {
+    "ground_extension_report": "ground_extension_report.json",
+    "feature": "landmark_ring_1101",
+    "backup": "D:/Prism Route/archive/landmark_ring_1101/map_before_20261101_180414.3dm",
+    "connections": [
+      {
+        "ring_anchor": [
+          1415.58,
+          449.0574767295593,
+          91.2316836874681
+        ],
+        "chord_length_m": 42.74331849118658,
+        "saddle_anchor": [
+          1377.9910925013912,
+          464.23157679367216,
+          77.67395541373652
+        ],
+        "broken": false
+      },
+      {
+        "ring_anchor": [
+          1415.58,
+          451.7013764924975,
+          73.54093729519823
+        ],
+        "chord_length_m": 56.60337801503585,
+        "saddle_anchor": [
+          1366.6302490234375,
+          480.0,
+          76.196533203125
+        ],
+        "broken": true
+      }
+    ],
+    "latest_revision": "User moved/rotated only the three rings; extend at current pose; connection remnants stay where authored.",
+    "center_native": [
+      1020.2422314330363,
+      521.301819819063,
+      104.00000000000023
+    ],
+    "concentric_bands": [
+      {
+        "material": "PR_Saddle_panel",
+        "name": "Outer_ivory",
+        "front_recess": 0.0,
+        "inner_radius": 142.0,
+        "depth": 5.0,
+        "outer_radius": 150.0
+      },
+      {
+        "material": "PR_Saddle_weathered",
+        "name": "Middle_weathered_metal",
+        "front_recess": 0.15,
+        "inner_radius": 138.8,
+        "depth": 4.7,
+        "outer_radius": 142.0
+      },
+      {
+        "material": "PR_Saddle_dark",
+        "name": "Inner_graphite",
+        "front_recess": 0.3,
+        "inner_radius": 137.2,
+        "depth": 4.4,
+        "outer_radius": 138.8
+      }
+    ],
+    "current_pose_bands": [
+      {
+        "x_axis": [
+          -0.5957480959797667,
+          0.5622226229878291,
+          -0.573576436351048
+        ],
+        "id": "90684d00-81de-4cc6-ac69-dfadb7115418",
+        "normal": [
+          0.6863470913703557,
+          0.7272741368751214,
+          3.282803340968487e-16
+        ],
+        "front_center": [
+          1018.7322678320214,
+          519.7018167179376,
+          104.00000000000023
+        ],
+        "y_axis": [
+          -0.4171473076791167,
+          0.39367251876811554,
+          0.8191520442889904
+        ],
+        "end_radians": 4.0666171571467915,
+        "start_radians": -0.2530727415391778,
+        "inner_radius": 137.19999999999956,
+        "depth": 4.400000000000185,
+        "outer_radius": 138.80000000000013
+      },
+      {
+        "x_axis": [
+          -0.5957480959797691,
+          0.5622226229878283,
+          -0.5735764363510465
+        ],
+        "id": "12b0d0a8-7baf-47dd-b90a-09de5216f0b7",
+        "normal": [
+          0.6863470913703548,
+          0.7272741368751222,
+          -3.781240831569588e-15
+        ],
+        "front_center": [
+          1018.6293157683162,
+          519.5927255974066,
+          104.00000000000011
+        ],
+        "y_axis": [
+          -0.4171473076791137,
+          0.3936725187681165,
+          0.8191520442889916
+        ],
+        "end_radians": 4.066617157146789,
+        "start_radians": -0.2530727415391778,
+        "inner_radius": 138.79999999999984,
+        "depth": 4.700000000000225,
+        "outer_radius": 142.00000000000009
+      },
+      {
+        "x_axis": [
+          -0.5957480959797682,
+          0.5622226229878297,
+          -0.5735764363510462
+        ],
+        "id": "b25197ef-8b96-44d0-921f-89d7c94912e7",
+        "normal": [
+          0.6863470913703555,
+          0.7272741368751214,
+          -1.6552920949397913e-15
+        ],
+        "front_center": [
+          1018.5263637046106,
+          519.483634476875,
+          104.0
+        ],
+        "y_axis": [
+          -0.4171473076791142,
+          0.3936725187681154,
+          0.8191520442889918
+        ],
+        "end_radians": 4.066617157146788,
+        "start_radians": -0.2530727415391778,
+        "inner_radius": 142.00000000000003,
+        "depth": 5.000000000000036,
+        "outer_radius": 149.99999999999997
+      }
+    ],
+    "depth_m": 5.0,
+    "inner_diameter_m": 274.4,
+    "circle_plane_normal_native": [
+      0.6863470913703557,
+      0.7272741368751214,
+      3.282803340968487e-16
+    ],
+    "buried_arc": "The non-visible lower arc is omitted below the roof/earth, to avoid introducing structure into the existing interior.",
+    "outer_diameter_m": 300.0,
+    "current_visible_arc_degrees": 247.50000000000023
+  },
+  "bridge_crossing_native": [
+    1013.6456978308521,
+    527.5271362732399,
+    60.2455866346544
+  ],
+  "mesh_sha256": "5ff696cec3cd9673169085d253068e57745d91680209054d8aeb8ff23f99990d",
+  "triangles": 13160,
+  "bridge_crossing_route": [
+    [
+      -468.0,
+      60.27687416565911,
+      638.5
+    ],
+    [
+      -466.0,
+      60.275429914953435,
+      637.5
+    ],
+    [
+      -464.0,
+      60.27392398790124,
+      636.5
+    ],
+    [
+      -462.0,
+      60.27231347246402,
+      635.5
+    ],
+    [
+      -460.0,
+      60.270623437906664,
+      634.5
+    ],
+    [
+      -458.0,
+      60.26887873643324,
+      633.5
+    ],
+    [
+      -456.0,
+      60.267033486663024,
+      632.5
+    ],
+    [
+      -454.0,
+      60.26512906413387,
+      631.5
+    ],
+    [
+      -452.0,
+      60.263177329733196,
+      630.5
+    ],
+    [
+      -450.0,
+      60.2611269830669,
+      629.5
+    ],
+    [
+      -448.0,
+      60.259032423894695,
+      628.5
+    ],
+    [
+      -446.0,
+      60.25689037069432,
+      627.5
+    ],
+    [
+      -444.0,
+      60.25467018486995,
+      626.5
+    ],
+    [
+      -442.0,
+      60.25241078064934,
+      625.5
+    ],
+    [
+      -440.0,
+      60.250101040074185,
+      624.5
+    ],
+    [
+      -438.0,
+      60.24773036450404,
+      623.5
+    ],
+    [
+      -436.0,
+      60.24532749040554,
+      622.5
+    ],
+    [
+      -434.0,
+      60.2428769401007,
+      621.5
+    ],
+    [
+      -432.0,
+      60.240377192323905,
+      620.5
+    ],
+    [
+      -430.0,
+      60.23785076870993,
+      619.5
+    ],
+    [
+      -428.0,
+      60.23528170069022,
+      618.5
+    ],
+    [
+      -426.0,
+      60.23267750455443,
+      617.5
+    ],
+    [
+      -424.0,
+      60.230050836824915,
+      616.5
+    ],
+    [
+      -422.0,
+      60.22738548877541,
+      615.5
+    ],
+    [
+      -420.0,
+      60.22469712485591,
+      614.5
+    ],
+    [
+      -418.0,
+      60.22199125287665,
+      613.5
+    ],
+    [
+      -416.0,
+      60.219254490446986,
+      612.5
+    ],
+    [
+      -414.0,
+      60.21650336454488,
+      611.5
+    ],
+    [
+      -412.0,
+      60.21373715654269,
+      610.5
+    ],
+    [
+      -410.0,
+      60.21094763864991,
+      609.5
+    ],
+    [
+      -408.0,
+      60.208149011402014,
+      608.5
+    ],
+    [
+      -406.0,
+      60.20533844573578,
+      607.5
+    ],
+    [
+      -404.0,
+      60.202511663783895,
+      606.5
+    ]
+  ],
+  "review_eye": [
+    -814.1121397343629,
+    314.00000000000006,
+    1035.971696831005
+  ],
+  "review_target": [
+    -429.7577685669637,
+    86.00000000000023,
+    628.698180180937
+  ],
+  "site_eye": [
+    -966.6582560795487,
+    624.0,
+    826.8807313560002
+  ],
+  "site_target": [
+    -349.7577685669637,
+    84.00000000000023,
+    608.698180180937
+  ],
+  "spawn_eye": [
+    -798.03,
+    34.8,
+    1517.813
+  ],
+  "spawn_target": [
+    -20.286000000000058,
+    34.8,
+    889.232
+  ],
+  "spawn_view_note": "Cave exit, 16 m along the existing spawn heading; floor measured at 33 m, overhead clear. Actual spawn remains unchanged."
+}

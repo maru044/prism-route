@@ -1,0 +1,15 @@
+{
+  "effective_tree_count": 19350,
+  "failures": [],
+  "geometry_sha256": "7f81ea05170ea152a5de386908e7b4f80098310fb1facc7bbd9efe2b3fb3a103",
+  "grass_cells": 258,
+  "local_blades": 2118428,
+  "passed": true,
+  "total_roots": 826226,
+  "tree_max_ground_error_m": 0.0002288818359375,
+  "tree_save_sha256": "1950243b5a08cf9e6c4c7ae5e97d8f45cd973b394471ebcfe29be2e4b8da2bb2",
+  "trees_repositioned": 321,
+  "unchanged_xz_overlaps_thin_paving": 12,
+  "unrelated_trees_unchanged": true,
+  "unsupported_roots": 0
+}

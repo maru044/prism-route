@@ -1,0 +1,14 @@
+{
+  "actual_scene": "res://scenes/map_1021.tscn",
+  "automatic_interior_plants": 0,
+  "base_mesh_and_grass_bake_preserved": true,
+  "covered_landing_join_samples": 6,
+  "failures": [],
+  "grass_ground_collision_samples": 5,
+  "imported_meshes": 32,
+  "maximum_ramp_error_m": 0.000286102294921875,
+  "passed": true,
+  "ramp_collision_samples": 404,
+  "roof_trees_removed": 105.0,
+  "unrelated_saved_edits_preserved": 174.0
+}

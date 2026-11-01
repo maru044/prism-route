@@ -1,0 +1,51 @@
+{
+  "shell": "Elliptic doubly curved rolled plate; radial contraction with upward curl and asymmetric twist",
+  "feature": "terrace_curved_ruins_1101",
+  "backup": "D:/Prism Route/archive/terrace_curved_ruins_1101/map_before_20261101_013856.3dm",
+  "terrain_id": "0280eafa-4058-40dd-8cf0-36b575adcb14",
+  "groups": {
+    "A": {
+      "curl": 0.28999999999999998,
+      "floor": 95.180000000000007,
+      "cx": 1844.0,
+      "ry": 14.0,
+      "height": 5.0,
+      "pocket": [
+        2.1000000000000001,
+        4.0999999999999996,
+        -1.0,
+        -0.40000000000000002
+      ],
+      "cy": 160.0,
+      "rx": 8.0,
+      "twist": 0.62,
+      "thickness": 0.17999999999999999
+    },
+    "B": {
+      "curl": 0.34000000000000002,
+      "floor": 92.319999999999993,
+      "cx": 1860.0,
+      "ry": 9.0,
+      "height": 3.5,
+      "pocket": [
+        1.3000000000000000,
+        2.5,
+        -0.69999999999999996,
+        0.29999999999999999
+      ],
+      "cy": 235.0,
+      "rx": 5.5,
+      "twist": -0.46000000000000002,
+      "thickness": 0.16
+    }
+  },
+  "floor": "Closed shallow foundation ring; bottom embeds 0.18 m into the unchanged source terrain; natural planting opening",
+  "ruin": "Large missing roof sectors, connected irregular shell edge, sparse rectangular curved steel members",
+  "units": "Meters",
+  "path_width_m": 2.2000000000000002,
+  "view_axis": [
+    1,
+    0,
+    0
+  ]
+}

@@ -17,6 +17,16 @@ var world_audio
 const INITIAL_RUIN := preload("res://scenes/world/initial_ruin.tscn")
 const UPPER_RING := preload("res://scenes/world/upper_ring.tscn")
 const ISLAND_SADDLE := preload("res://scenes/world/island_saddle.tscn")
+const OVAL_ATRIUM := preload("res://scripts/world/oval_atrium.gd")
+const TERRACE_RUINS := preload("res://scripts/world/terrace_ruins.gd")
+const LANDMARK_RING := preload("res://scripts/world/landmark_ring.gd")
+const WATER_COURT := preload("res://scripts/world/water_court.gd")
+const EARTH_PAVILION := preload("res://scripts/world/east_earth_pavilion.gd")
+var earth_pavilion
+var water_court
+var landmark_ring
+var terrace_ruins
+var oval_atrium
 var island_saddle
 var upper_ring
 const SURFACE_DETAIL_TRIAL := preload("res://scripts/world/architecture_detail_trial.gd")
@@ -54,6 +64,7 @@ var character_mode := true
 var switching_actor := false
 var vegetation_bake_only := false
 var review_ui_visible := true
+# Developer/review overlays only. Gameplay prompts must not register here.
 var review_ui_layers: Array[CanvasLayer] = []
 
 func vec(value: Array) -> Vector3:
@@ -70,7 +81,7 @@ func _ready() -> void:
 	camper.automation_enabled=automation_enabled;camper.set_physics_process(false);camper.set_process_unhandled_input(false);camper.visible=false
 	camper.calibrate_wheels()
 	camper.respawn_resolver=_resolve_camper_respawn
-	_load_mask();_environment();_build_model();_build_initial_ruin();_build_island_saddle();_build_upper_ring();_build_surface_detail_trial();_hud()
+	_load_mask();_environment();_build_model();_build_oval_atrium();_build_initial_ruin();_build_island_saddle();_build_landmark_ring();_build_terrace_ruins();_build_water_court();_build_earth_pavilion();_build_upper_ring();_build_surface_detail_trial();_hud()
 	camera=Camera3D.new();camera.near=0.15;camera.far=10000;camera.fov=58;add_child(camera)
 	await get_tree().physics_frame;await get_tree().physics_frame
 	for proposal: Dictionary in metadata.spawns:
@@ -85,7 +96,22 @@ func _ready() -> void:
 	if "--island-saddle-preview" in OS.get_cmdline_user_args():
 		for i in resolved_spawns.size():
 			if resolved_spawns[i].get("key","")=="island_saddle":initial_spawn=i;break
+	if "--oval-atrium-preview" in OS.get_cmdline_user_args():
+		for i in resolved_spawns.size():
+			if resolved_spawns[i].get("key","")=="oval_atrium":initial_spawn=i;break
+	if "--terrace-ruins-preview" in OS.get_cmdline_user_args():
+		for i in resolved_spawns.size():
+			if resolved_spawns[i].get("key","")=="terrace_ruins_a":initial_spawn=i;break
+	if "--landmark-ring-preview" in OS.get_cmdline_user_args():
+		for i in resolved_spawns.size():
+			if resolved_spawns[i].get("key","")=="spawn_cave":initial_spawn=i;break
+	if "--water-court-preview" in OS.get_cmdline_user_args():
+		for i in resolved_spawns.size():
+			if resolved_spawns[i].get("key","")=="water_court":initial_spawn=i;break
 	if start_planting_editor:initial_spawn=resolved_spawns.size()-1
+	if "--earth-pavilion-preview" in OS.get_cmdline_user_args():
+		for i in resolved_spawns.size():
+			if resolved_spawns[i].get("key","")=="earth_pavilion":initial_spawn=i;break
 	await select_spawn(initial_spawn)
 	if "--ruin-preview" in OS.get_cmdline_user_args() or "--ruin-stairs-preview" in OS.get_cmdline_user_args():
 		var forward:=vec(initial_ruin.planting_mask.manifest.forward)
@@ -100,6 +126,11 @@ func _ready() -> void:
 	planting=PLANTING.new();planting.name="WorldPlantingEditor";add_child(planting);planting.initialize(self)
 	vegetation=VEGETATION.new();vegetation.world_scene=self;add_child(vegetation)
 	vegetation.initialize(character,_noise(),2)
+	oval_atrium.bind_grass(vegetation.grass_material)
+	terrace_ruins.bind_grass(vegetation.grass_material)
+	earth_pavilion.bind_grass(vegetation.grass_material)
+	oval_atrium.install_grass_cells(vegetation.volume_streamer)
+	earth_pavilion.install_grass_cells(vegetation.volume_streamer)
 	upper_ring.plant_courtyard(vegetation)
 	grass_wind=GRASS_WIND.new();add_child(grass_wind)
 	grass_wind.initialize(vegetation);grass_wind.set_mode(GRASS_WIND.Mode.AUTO)
@@ -118,7 +149,23 @@ func _ready() -> void:
 		set_free(true)
 		camera.global_position=vec(island_saddle.manifest.review_eye)
 		camera.look_at(vec(island_saddle.manifest.review_target))
+	if "--oval-atrium-preview" in OS.get_cmdline_user_args():
+		set_free(true)
+		camera.global_position=vec(oval_atrium.manifest.review_eye)
+		camera.look_at(vec(oval_atrium.manifest.review_target))
+	if "--terrace-ruins-preview" in OS.get_cmdline_user_args():
+		set_free(true)
+		camera.global_position=vec(terrace_ruins.manifest.detail_eye)
+		camera.look_at(vec(terrace_ruins.manifest.detail_target))
+	if "--landmark-ring-preview" in OS.get_cmdline_user_args():
+		set_free(true)
+		camera.global_position=vec(landmark_ring.manifest.spawn_eye)
+		camera.look_at(vec(landmark_ring.manifest.spawn_target))
 	if "--architecture-detail-preview" in OS.get_cmdline_user_args():surface_detail_trial.call_deferred("show_view",3)
+	if "--water-court-preview" in OS.get_cmdline_user_args():
+		set_free(true)
+		camera.global_position=vec(water_court.manifest.review_eye)
+		camera.look_at(vec(water_court.manifest.review_target))
 	if "--verify-world-clusters" in OS.get_cmdline_user_args():
 		var verifier: Node=load("res://tools/check_world_clusters_1029.gd").new();verifier.world=self;add_child(verifier);verifier.call_deferred("run")
 	if "--verify-world-audio" in OS.get_cmdline_user_args():
@@ -149,6 +196,43 @@ func _initialize_water() -> void:
 	surface_detail_trial.sync_reflections()
 	upper_ring.register_reflections(water_manager)
 	island_saddle.register_reflections(water_manager)
+	oval_atrium.register_reflections(water_manager)
+	terrace_ruins.register_reflections(water_manager)
+	landmark_ring.register_reflections(water_manager)
+	water_court.register_reflections(water_manager)
+	earth_pavilion.register_reflections(water_manager)
+
+func _build_earth_pavilion() -> void:
+	earth_pavilion=EARTH_PAVILION.new();earth_pavilion.world=self;add_child(earth_pavilion)
+	metadata.spawns.append({"name":"东侧覆土庭院 · 入口与中庭","key":"earth_pavilion","position":earth_pavilion.manifest.spawn,
+		"look_direction":earth_pavilion.manifest.look_direction,"required_floor_kind":"Structure",
+		"required_source_id":earth_pavilion.manifest.spawn_source_id,"maximum_search_distance_m":1.,"character_only":true})
+
+func _build_water_court() -> void:
+	water_court=WATER_COURT.new();add_child(water_court)
+	metadata.spawns.append({"name":"浅水庭院 · 弧形展廊","key":"water_court","position":water_court.manifest.spawn,
+		"look_direction":water_court.manifest.look_direction,"required_floor_kind":"Structure",
+		"required_source_id":water_court.manifest.spawn_source_id,"maximum_search_distance_m":1.,"character_only":true})
+
+func _build_landmark_ring() -> void:
+	landmark_ring=LANDMARK_RING.new()
+	landmark_ring.materials=island_saddle.materials
+	add_child(landmark_ring)
+
+func _build_terrace_ruins() -> void:
+	terrace_ruins=TERRACE_RUINS.new();add_child(terrace_ruins)
+	for row: Dictionary in terrace_ruins.manifest.spawns:
+		metadata.spawns.append({"name":row.name,"key":row.key,"position":row.position,"look_direction":row.look_direction,
+			"required_floor_kind":"Structure","required_source_id":row.source_id,"maximum_search_distance_m":1.,"character_only":true})
+
+func _build_oval_atrium() -> void:
+	oval_atrium=OVAL_ATRIUM.new();oval_atrium.world=self;add_child(oval_atrium)
+	metadata.spawns.append({"name":"椭圆中庭 · 屋顶入口","key":"oval_atrium","position":oval_atrium.manifest.entry_spawn,
+		"look_direction":oval_atrium.manifest.look_direction,"required_floor_kind":"Structure",
+		"required_source_id":oval_atrium.manifest.entry_source_id,"maximum_search_distance_m":1.,"character_only":true})
+	metadata.spawns.append({"name":"椭圆中庭 · 底层出口","key":"oval_atrium_floor","position":oval_atrium.manifest.floor_spawn,
+		"look_direction":[-.7,0.,-.7],"required_floor_kind":"Structure","required_source_id":oval_atrium.manifest.floor_source_id,
+		"maximum_search_distance_m":1.,"character_only":true})
 
 func _build_island_saddle() -> void:
 	island_saddle=ISLAND_SADDLE.instantiate();add_child(island_saddle)
@@ -195,6 +279,7 @@ func _sync_meadow_color() -> void:
 	# surface is calibrated from rendered grass, not copied from its albedo.
 	MEADOW_PALETTE.apply_ground(terrain_material)
 	terrain_material.set_shader_parameter("use_shared_meadow_biome",true)
+	oval_atrium.sync_ground_palette()
 
 func _load_mask() -> void:
 	var path:=ASSETS+"landscape_mask.res"
@@ -214,6 +299,10 @@ func _load_mask() -> void:
 	terrain_material.set_shader_parameter("mask_extent_xz",Vector2(metadata.extent_xz[0],metadata.extent_xz[1]))
 
 func architectural_band(p: Vector3,margin:=0.0) -> bool:
+	if earth_pavilion!=null and earth_pavilion.blocks_grass(p):return true
+	if terrace_ruins!=null and terrace_ruins.blocks_grass(p):return true
+	if oval_atrium!=null and oval_atrium.ground_contains(p):
+		return not oval_atrium.ground_contains(p,maxf(margin,float(oval_atrium.ground_config.edge_inset_m)))
 	if upper_ring!=null and upper_ring.planting_mask.blocks(p,margin):return true
 	if initial_ruin!=null and initial_ruin.planting_mask.blocks(p,margin):return true
 	var uv: Vector2=(Vector2(p.x,p.z)-Vector2(metadata.origin_xz[0],metadata.origin_xz[1]))/Vector2(metadata.extent_xz[0],metadata.extent_xz[1])
@@ -236,6 +325,9 @@ func _build_model() -> void:
 	for row: Dictionary in metadata.object_records:byid[row.id]=row
 	for node in model.find_children("*","MeshInstance3D",true,false):
 		var mesh:=node as MeshInstance3D;var id:=str(mesh.name).get_slice("_",1)
+		# Remove both the old render mesh and its prospective collision before building the reviewed hosts.
+		if id in OVAL_ATRIUM.REPLACED_IDS or id in EARTH_PAVILION.REPLACED_IDS:
+			mesh.free();continue
 		# Object semantics can change without rebuilding or moving mesh geometry.
 		var row: Dictionary=byid.get(id,{})
 		var kind: String=row.get("kind",str(mesh.name).get_slice("_",0))

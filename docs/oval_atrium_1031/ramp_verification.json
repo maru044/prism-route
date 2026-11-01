@@ -1,0 +1,50 @@
+{
+  "obsolete_stairs_or_helpers": [],
+  "maximum_slope_degrees": {
+    "Helical_ramp_3": 25.344930909837306,
+    "Helical_ramp_2": 22.303402446855699,
+    "Exterior_sweeping_ramp": 17.085222646024679,
+    "Helical_ramp_1": 21.000952962775067
+  },
+  "maximum_grades": {
+    "Helical_ramp_3": 0.47365760520447348,
+    "Helical_ramp_2": 0.41019926380967048,
+    "Exterior_sweeping_ramp": 0.30735786900108097,
+    "Helical_ramp_1": 0.38388311829691313
+  },
+  "pod_step_checks": [
+    {
+      "next_z": 63.799999999999997,
+      "plan_overlap": true,
+      "drop_m": 3.0,
+      "top_z": 66.799999999999997,
+      "clear_height_m": 2.3499999999999943
+    },
+    {
+      "next_z": 60.799999999999997,
+      "plan_overlap": true,
+      "drop_m": 3.0,
+      "top_z": 63.799999999999997,
+      "clear_height_m": 2.3500000000000014
+    },
+    {
+      "next_z": 51.799999999999997,
+      "plan_overlap": true,
+      "drop_m": 3.0,
+      "top_z": 54.799999999999997,
+      "clear_height_m": 2.3500000000000014
+    },
+    {
+      "next_z": 48.799999999999997,
+      "plan_overlap": true,
+      "drop_m": 3.0,
+      "top_z": 51.799999999999997,
+      "clear_height_m": 2.3500000000000014
+    }
+  ],
+  "ramp_rails": false,
+  "ramps": 4,
+  "shortcut_terraces": 6,
+  "vegetation_texture": "D:\\Prism Route\\prism-route\\assets\\world\\landscape_pools\\grass_ground_albedo.png",
+  "unrelated_scene_changes": []
+}

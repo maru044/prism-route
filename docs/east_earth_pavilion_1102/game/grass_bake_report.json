@@ -1,0 +1,15 @@
+{
+  "cells": 258,
+  "cells_with_pavilion_grass": 190,
+  "global_bake_unchanged": true,
+  "ground_color": "project_green_meadow",
+  "mesh": "res://assets/vegetation/models/grass_star_3card_v6.glb",
+  "palette": "green",
+  "passed": true,
+  "pavilion_blades": 2118040,
+  "root_buffer_parity": true,
+  "seconds": 30.786,
+  "total_cell_blades": 3304516,
+  "user_tree_save_sha256": "07647c8b57bed6522a3cfa5231aec4ffedc0e74374d55a3af6a874d79dc64b5a",
+  "user_trees_unchanged": true
+}

@@ -1,0 +1,115 @@
+{
+  "removed_controls": [
+    {
+      "layer_index": 63,
+      "name": "PR_Saddle_OuterCollapsedEdge_Control",
+      "id": "858c4304-4ee3-40fe-a424-b6a2921ad65b"
+    },
+    {
+      "layer_index": 63,
+      "name": "PR_Saddle_InnerRaisedEdge_Control",
+      "id": "84e2950e-daf3-4864-a877-5e7aab282168"
+    },
+    {
+      "layer_index": 63,
+      "name": "PR_Saddle_ShellPlanBoundary",
+      "id": "07b2aa70-65ca-4547-9599-66f1f876e0ff"
+    },
+    {
+      "layer_index": 63,
+      "name": "PR_Saddle_MasterContinuousSurface",
+      "id": "5598a5e7-380b-43e3-89c4-f67e99509825"
+    },
+    {
+      "layer_index": 63,
+      "name": "PR_Saddle_OuterCollapsedEdge_Control",
+      "id": "b5c50e85-f246-467d-9a5a-8a3e109842e5"
+    },
+    {
+      "layer_index": 63,
+      "name": "PR_Saddle_InnerRaisedEdge_Control",
+      "id": "fb212515-9492-4a8f-935f-da2fa967081a"
+    },
+    {
+      "layer_index": 63,
+      "name": "PR_Saddle_ShellPlanBoundary",
+      "id": "6c10f61a-9a30-47cc-be1b-0a75223076fd"
+    },
+    {
+      "layer_index": 63,
+      "name": "PR_Saddle_MasterContinuousSurface",
+      "id": "22638914-0cfb-46be-ad38-6c5acb1d85d5"
+    },
+    {
+      "layer_index": 63,
+      "name": "PR_Saddle_OuterCollapsedEdge_Control",
+      "id": "9e03e2d5-dac0-4be5-ac8d-fae868be2db6"
+    },
+    {
+      "layer_index": 63,
+      "name": "PR_Saddle_InnerRaisedEdge_Control",
+      "id": "51d21f1f-c7c1-4383-b982-e18d0bcce513"
+    },
+    {
+      "layer_index": 63,
+      "name": "PR_Saddle_ShellPlanBoundary",
+      "id": "a7fe5f41-d968-4288-a9df-2ec884cea398"
+    },
+    {
+      "layer_index": 63,
+      "name": "PR_Saddle_MasterContinuousSurface",
+      "id": "f903d7db-ebf4-4719-ad62-f94f7dd80e18"
+    },
+    {
+      "layer_index": 63,
+      "name": "PR_Saddle_OuterCollapsedEdge_Control",
+      "id": "407f74a7-72c2-4570-8b2c-397103b5384e"
+    },
+    {
+      "layer_index": 63,
+      "name": "PR_Saddle_InnerRaisedEdge_Control",
+      "id": "abd34530-419a-4160-9162-b3d3a38b8234"
+    },
+    {
+      "layer_index": 63,
+      "name": "PR_Saddle_ShellPlanBoundary",
+      "id": "3a7d5cb4-0113-4716-8a09-e8a3f6dcb6ff"
+    },
+    {
+      "layer_index": 63,
+      "name": "PR_Saddle_MasterContinuousSurface",
+      "id": "aeaef35b-b6da-4799-9dd6-095178fcda8e"
+    },
+    {
+      "layer_index": 63,
+      "name": "PR_Saddle_ShellPlanBoundary",
+      "id": "808eef41-711b-4462-9d95-14f9f047f508"
+    },
+    {
+      "layer_index": 63,
+      "name": "PR_Saddle_MasterContinuousSurface",
+      "id": "37523d05-7748-43dc-ad06-352bab9cdfff"
+    }
+  ],
+  "saved_map_readback_verified": true,
+  "canonical_component": "island_saddle_shell.3dm",
+  "retained_objects_geometry_and_attributes_unchanged": true,
+  "backup": "D:/Prism Route/archive/modeling_cleanup_1031/map_before_cleanup.3dm",
+  "archived_bytes": 1049555944,
+  "no_unregistered_feature_objects": true,
+  "archive_root": "D:\\Prism Route\\archive\\modeling_cleanup_1031",
+  "remaining_control_objects": 4,
+  "document": "D:\\Prism Route\\map\\map_current.3dm",
+  "game_and_planting_files_unchanged": true,
+  "archived_files": 25,
+  "canonical_component_matches_live_geometry": true,
+  "retained_scene_objects": 1325,
+  "removed_named_views": [
+    "IslandSaddle_transition_after_1030",
+    "IslandSaddle_compact_after_1030",
+    "IslandSaddle_marked_1030"
+  ],
+  "removed_objects": 18,
+  "current_named_view": "IslandSaddle_Current_1031",
+  "retained_feature_objects": 177
+}

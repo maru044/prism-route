@@ -1,0 +1,21 @@
+{
+  "vegetation_floor_samples": 7,
+  "exit_clearance_rays": 9,
+  "vegetation_thickness_m": 0.80000000000000004,
+  "ramp_retreat_degrees": 25.0,
+  "unrelated_changes": [],
+  "exit_blockers": [],
+  "ramp_portal_intersections": 0,
+  "bottom_departure_removed": true,
+  "duplicate_floor_under_vegetation": false,
+  "vegetation_top_z_m": [
+    35.0,
+    35.0,
+    35.0,
+    35.0,
+    35.0,
+    35.0,
+    35.0
+  ],
+  "vegetation_solid_volume_m3": 2879.4234349459307
+}

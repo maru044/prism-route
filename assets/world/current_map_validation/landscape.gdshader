@@ -22,6 +22,9 @@ uniform bool use_far_meadow_color = false;
 uniform vec4 far_ground_dry : source_color = vec4(0.7, 0.63, 0.4, 1.0);
 uniform vec4 far_ground_green : source_color = vec4(0.44, 0.58, 0.29, 1.0);
 uniform vec2 meadow_color_fade = vec2(48.0, 128.0);
+uniform bool force_green_meadow = false;
+uniform bool force_grass_surface = false;
+uniform float meadow_detail_strength = 1.0;
 varying vec3 world_position;
 varying vec3 world_normal;
 
@@ -46,6 +49,7 @@ void fragment() {
     vec3 visible_normal=normalize(world_normal)*(FRONT_FACING ? 1.0 : -1.0);
     float top=smoothstep(0.30,0.67,visible_normal.y);
     float grass=top*(1.0-white);
+    if (force_grass_surface) { grass=top; }
     if(comparison_mode==2) { grass=0.0; }
     float broad=sin(world_position.x*0.019+sin(world_position.z*0.024))*0.5
         +sin(world_position.z*0.035-world_position.x*0.009)*0.5;
@@ -55,6 +59,7 @@ void fragment() {
         float noise_value=textureLod(biome_noise_texture,
             world_position.xz*biome_noise_scale+vec2(0.137,0.411),0.0).r;
         float transition=meadow_green_weight(world_position,noise_value,0.0);
+        if (force_green_meadow) { transition=1.0; }
         meadow=mix(ground_dry.rgb,ground_green.rgb,transition);
         if (use_far_meadow_color) {
             // Match the loss of dense grass (48–76 m) and survivors (76–128 m).
@@ -64,7 +69,7 @@ void fragment() {
             meadow=mix(meadow,mix(far_ground_dry.rgb,far_ground_green.rgb,transition),far_mix);
         }
     }
-    meadow*=0.985+fine*0.015;
+    meadow*=mix(1.0,0.985+fine*0.015,meadow_detail_strength);
     ALBEDO=mix(vec3(0.92,0.90,0.86),meadow,grass);
     ROUGHNESS=mix(0.28,0.95,grass);
     SPECULAR=mix(0.48,0.08,grass);

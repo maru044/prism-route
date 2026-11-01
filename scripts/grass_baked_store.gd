@@ -65,7 +65,7 @@ func request(cell: Vector3i) -> void:
 
 func _read(id: String,row: Dictionary) -> void:
 	var start:=Time.get_ticks_usec()
-	var path:=directory+"/"+id+".grass"
+	var path: String=row.get("resource_path",directory+"/"+id+".grass")
 	var bytes:=FileAccess.get_file_as_bytes(path) if FileAccess.file_exists(path) else PackedByteArray()
 	var read_time:=Time.get_ticks_usec()-start;start=Time.get_ticks_usec()
 	var hash:=HashingContext.new();hash.start(HashingContext.HASH_SHA256)

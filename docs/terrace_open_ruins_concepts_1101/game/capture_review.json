@@ -1,0 +1,11 @@
+{
+  "actual_scene": "res://scenes/map_1021.tscn",
+  "collision_bodies": 18,
+  "collision_probes": 320,
+  "failures": [],
+  "global_grass_bake_preserved": true,
+  "max_collision_error_m": 0.00006866455078125,
+  "meshes": 31,
+  "passed": true,
+  "saved_tree_edits_preserved": 217
+}

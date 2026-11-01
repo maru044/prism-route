@@ -1,0 +1,146 @@
+{
+  "openings_facing": "+X: lower crescent terrace",
+  "feature": "terrace_curved_ruins_1101",
+  "categories": {
+    "01_foundation": 2,
+    "04_metal": 13,
+    "05_paths": 3,
+    "02_shell": 8,
+    "03_ribs": 5
+  },
+  "bounds": [
+    [
+      1835.9100000000001,
+      129.50806504478226,
+      89.693440348153516
+    ],
+    [
+      1865.5,
+      265.34785054054731,
+      100.28998054495334
+    ]
+  ],
+  "unrelated_changes": [],
+  "groups": {
+    "A": {
+      "curl": 0.28999999999999998,
+      "floor": 95.180000000000007,
+      "cx": 1844.0,
+      "ry": 14.0,
+      "height": 5.0,
+      "pocket": [
+        2.1000000000000001,
+        4.0999999999999996,
+        -1.0,
+        -0.40000000000000002
+      ],
+      "cy": 160.0,
+      "rx": 8.0,
+      "twist": 0.62,
+      "thickness": 0.17999999999999999
+    },
+    "B": {
+      "curl": 0.34000000000000002,
+      "floor": 92.319999999999993,
+      "cx": 1860.0,
+      "ry": 9.0,
+      "height": 3.5,
+      "pocket": [
+        1.3000000000000000,
+        2.5,
+        -0.69999999999999996,
+        0.29999999999999999
+      ],
+      "cy": 235.0,
+      "rx": 5.5,
+      "twist": -0.46000000000000002,
+      "thickness": 0.16
+    }
+  },
+  "unchanged_original_objects": 1354,
+  "backup": "D:/Prism Route/archive/terrace_curved_ruins_1101/map_before_20261101_013856.3dm",
+  "closed_mesh_volumes_m3": {
+    "PR_TerraceRuins_A_Perimeter_metal_inlay": 0.20850795916093526,
+    "PR_TerraceRuins_B_Low_edge_18": 0.17846298363326721,
+    "PR_TerraceRuins_B_Panel_joint_219": 0.00053886026779094431,
+    "PR_TerraceRuins_B_Panel_joint_151": 0.00059993000658570739,
+    "PR_TerraceRuins_A_Exposed_curved_box_rib_1": 0.22847678449908351,
+    "PR_TerraceRuins_South_ground_approach": 7.9306747852101083,
+    "PR_TerraceRuins_B_Continuous_rolled_shell": 10.930799665099451,
+    "PR_TerraceRuins_B_Panel_joint_241": 0.0003944388731109254,
+    "PR_TerraceRuins_A_Exposed_curved_box_rib_2": 0.2835906384744164,
+    "PR_TerraceRuins_B_Exposed_curved_box_rib_1": 0.11021426045267131,
+    "PR_TerraceRuins_A_Panel_joint_237": 0.00071479922020565212,
+    "PR_TerraceRuins_A_Panel_joint_174": 0.00081142749812155668,
+    "PR_TerraceRuins_B_Perimeter_metal_inlay": 0.13724754933144823,
+    "PR_TerraceRuins_A_Low_edge_-46": 0.2565534457919848,
+    "PR_TerraceRuins_A_Remaining_canopy_strip": 4.0213502098638907,
+    "PR_TerraceRuins_B_Terrain_fitted_foundation": 126.13244747951893,
+    "PR_TerraceRuins_A_Panel_joint_199": 0.00082160696426425428,
+    "PR_TerraceRuins_A_Panel_joint_118": 0.00061241900565282836,
+    "PR_TerraceRuins_Ridge_link": 37.042615379344397,
+    "PR_TerraceRuins_A_Low_edge_18": 0.2757929364701151,
+    "PR_TerraceRuins_B_Exposed_curved_box_rib_0": 0.14395143446672712,
+    "PR_TerraceRuins_A_Exposed_curved_box_rib_0": 0.28924256179993674,
+    "PR_TerraceRuins_B_Remaining_canopy_strip": 1.3642402019481932,
+    "PR_TerraceRuins_A_Terrain_fitted_foundation": 113.90805728979338,
+    "PR_TerraceRuins_North_ground_approach": 30.980106732221827,
+    "PR_TerraceRuins_B_Low_edge_-46": 0.16634978476615028,
+    "PR_TerraceRuins_B_Panel_joint_126": 0.00051546266696247728,
+    "PR_TerraceRuins_A_Continuous_rolled_shell": 28.904702829404982
+  },
+  "objects": 31,
+  "paths": [
+    {
+      "length_m": 55.356856983975277,
+      "max_center_gradient": 0.11014038177046293,
+      "name": "Ridge_link"
+    },
+    {
+      "length_m": 17.225743387376760,
+      "max_center_gradient": 0.035446551059192359,
+      "name": "South_ground_approach"
+    },
+    {
+      "length_m": 22.430039392584884,
+      "max_center_gradient": 0.15053437762063826,
+      "name": "North_ground_approach"
+    }
+  ],
+  "terrain_modified": false,
+  "mesh_triangles": 115936,
+  "object_ids": [
+    "b26d8b37-1fae-43d8-b72c-3a9c4228822e",
+    "a33858e1-4da8-4337-8bc0-521934f0ee27",
+    "c6809c5b-8cfa-48bb-8aac-f4da0c2456ec",
+    "e73f131d-38b6-48d8-bb09-77d427a9420f",
+    "de0e6db5-f60f-4d8f-b60e-d3295e5cc7ee",
+    "bfa2d3f8-442b-4fc0-ad4c-0aaf5731f12c",
+    "36f8a06f-c704-4e16-95d4-2330493a44f6",
+    "48b6cfd8-d9f5-4301-a2e4-65852475276a",
+    "186d4053-02c7-4ec3-b628-27ead0dc1a0f",
+    "28a88292-8499-4d06-bb14-8a2d4f4b6f82",
+    "941b47f2-ce08-44a8-8ee9-164c65acad0d",
+    "d209f924-7b93-4281-a93d-ef0f416d6683",
+    "ffe7085e-f76a-49d1-a314-fdf226a98f6d",
+    "7053872d-d8b7-4895-86c9-59ea8f4aefbf",
+    "f9963e48-3fc2-4467-af2e-8daf06422dc4",
+    "4539ca69-1137-4058-b48f-e70d86e321b0",
+    "b6455666-8915-468e-84a9-026e9fd9acd5",
+    "bfd75716-6091-432b-bda1-a1e12d0ff6d4",
+    "244cc004-c8c0-43a2-9a33-b6381444df07",
+    "a3c89334-e65f-4121-9a58-6adeb9011d8b",
+    "0d40e876-91e9-4909-890d-4189ba5509d9",
+    "5b13da26-8b89-43a5-8340-7acf8b13b28b",
+    "7602a5ad-fd08-4540-bd78-93e0aa3525b3",
+    "ede35d7c-37fa-4860-b16f-9fc5e0ce9906",
+    "3fe92009-b3b7-4b7c-b4c2-c063fac24194",
+    "e00bfc30-7a49-484d-bc76-58d6fe284862",
+    "db1f4c34-f3e2-463b-be4f-1756ec4eff40",
+    "62297c38-844a-4e33-97cc-77189dd34bdc",
+    "aa287a60-3684-4723-881a-0369149b8707",
+    "8ecd14e0-93a2-4786-b4f4-edf8d1bee3b6",
+    "a2cf2362-655c-4b3a-b252-b07795bd8dda"
+  ],
+  "plants_added": 0
+}
