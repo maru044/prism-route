@@ -1,0 +1,9 @@
+{
+  "external_path": false,
+  "objects": 92,
+  "project_grass_in_godot": true,
+  "collision_only_ramps": 1,
+  "native_placeholder_grass": false,
+  "valid": true,
+  "all_added_solids_closed": true
+}

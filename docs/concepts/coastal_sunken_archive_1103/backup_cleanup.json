@@ -1,0 +1,17 @@
+{
+  "master": "D:/Prism Route/map/map_current.3dm",
+  "saved_master_geometry_checks": 96,
+  "deleted_files": [
+    {
+      "path": "D:\\Prism Route\\archive\\sunken_archive_1103\\map_before.3dm",
+      "bytes": 229747496
+    },
+    {
+      "path": "D:\\Prism Route\\map\\map_current.3dmbak",
+      "bytes": 233188894
+    }
+  ],
+  "freed_bytes": 462936390,
+  "full_document_backups_retained": 0,
+  "local_component_created": false
+}

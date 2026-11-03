@@ -14,6 +14,7 @@ func _build_tree_lod() -> void:
 	for row: Dictionary in editor.store.all_records().values():
 		if editor.ring_ids.has(row.id):continue
 		var p:=Vector3(row.position[0],row.position[1],row.position[2])
+		if editor.geometry_excludes_tree(p):continue
 		var model: int=editor.model_index(row.species);var palette: int=editor.palette_index(row.palette)
 		var transform:=Transform3D(Basis(Vector3.UP,float(row.yaw)).scaled(Vector3.ONE*float(row.scale)),p)
 		tree_instance_count+=1

@@ -92,6 +92,9 @@ func live_override(id: String) -> Node3D:
 	return null
 
 func set_source_visible(id: String,enabled: bool) -> void:
+	if enabled:
+		var row:Dictionary=store.all_records().get(id,{})
+		if not row.is_empty() and geometry_excludes_tree(Vector3(row.position[0],row.position[1],row.position[2])):enabled=false
 	var override_node:=live_override(id)
 	if override_node!=null:
 		override_node.visible=enabled
@@ -100,6 +103,9 @@ func set_source_visible(id: String,enabled: bool) -> void:
 		set_base_visible(id,enabled)
 	if enabled:hidden.erase(id)
 	else:hidden[id]=true
+
+func geometry_excludes_tree(p:Vector3) -> bool:
+	return world.sunken_archive!=null and world.sunken_archive.blocks_grass(p)
 
 func set_base_visible(id: String,enabled: bool) -> void:
 	for binding: Dictionary in bindings.get(id,[]):
@@ -169,10 +175,13 @@ func apply_world() -> void:
 	for id: String in rendered_records:
 		if not effective.has(id) or not STORE.same_tree(rendered_records[id],effective[id]):set_source_visible(id,false)
 	for id: String in effective:
+		var p:Array=effective[id].position
+		if geometry_excludes_tree(Vector3(p[0],p[1],p[2])):continue
 		if rendered_records.has(id) and STORE.same_tree(rendered_records[id],effective[id]):continue
 		var tree:=create_tree(effective[id]);add_child(tree);overrides[id]=tree
-	world.vegetation.tree_instance_count=effective.size()
-	world.vegetation.large_tree_instance_count=effective.values().filter(func(row: Dictionary):return row.species!="small").size()
+	var visible_records:Array=effective.values().filter(func(row:Dictionary):return not geometry_excludes_tree(Vector3(row.position[0],row.position[1],row.position[2])))
+	world.vegetation.tree_instance_count=visible_records.size()
+	world.vegetation.large_tree_instance_count=visible_records.filter(func(row: Dictionary):return row.species!="small").size()
 	if world.world_audio!=null and world.world_audio.ready_audio:world.world_audio.rebuild_tree_grid()
 	refresh_probe()
 
@@ -182,6 +191,7 @@ func load_nearby(center: Vector3) -> void:
 	var candidates: Array=[]
 	for row: Dictionary in store.all_records().values():
 		var p:=Vector3(row.position[0],row.position[1],row.position[2])
+		if geometry_excludes_tree(p):continue
 		if Vector2(p.x-center.x,p.z-center.z).length()<=profile.edit_radius and absf(p.y-center.y)<=profile.height_band:candidates.append(row)
 	candidates.sort_custom(func(a,b):return Vector3(a.position[0],a.position[1],a.position[2]).distance_squared_to(center)<Vector3(b.position[0],b.position[1],b.position[2]).distance_squared_to(center))
 	for i in mini(candidates.size(),profile.editable_limit):

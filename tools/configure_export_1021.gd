@@ -56,6 +56,8 @@ func run() -> void:
 	var includes: String=config.get_value("preset.0","include_filter","")
 	for feature_manifest: String in ["assets/world/initial_ruin_1029/manifest.json","assets/world/initial_ruin_1029/walk_collision.json","assets/world/architecture_details_1029/trial_settings.json","assets/audio/world_1030/settings.json","assets/audio/world_1030/manifest.json","assets/audio/world_1030/CREDITS.txt","assets/world/upper_ring_1030/manifest.json","assets/world/upper_ring_1030/height_field.json","assets/world/upper_ring_1030/materials.json","assets/world/tree_planting/world_edits.json","assets/world/island_saddle_1031/manifest.json"]:
 		if not feature_manifest in includes.split(","):includes+=("," if not includes.is_empty() else "")+feature_manifest
+	for feature_file:String in ["assets/world/sunken_archive_1103/manifest.json","assets/world/sunken_archive_1103/grass_cut.rf"]:
+		if not feature_file in includes.split(","):includes+=("," if not includes.is_empty() else "")+feature_file
 	config.set_value("preset.0","include_filter",includes)
 	var exclusions: PackedStringArray=["docs/*","screenshots/*","archive/*","experiments/*","assets/water/review/*","assets/world/current_map_validation/review/*","assets/world/current_map_validation/grass_bake/manifest_part_*.json","*.3dm","*.3dmbak","*.blend","*.blend1","*.TMP"]
 	var bake_root: String="res://assets/world/current_map_validation/grass_bake/"

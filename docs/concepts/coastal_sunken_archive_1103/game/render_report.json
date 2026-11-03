@@ -1,0 +1,16 @@
+{
+	"capture_mode": true,
+	"colonly_stair_ramps": 1,
+	"courtyard_project_grass_instances": 1500,
+	"covered_samples": 28,
+	"external_long_path": false,
+	"failures": [],
+	"gallery_floor_samples": 35,
+	"map_spawns_checked": 19,
+	"minimum_headroom_m": 4.09999656677246,
+	"native_meshes": 95,
+	"obsolete_host_meshes": 0,
+	"passed": true,
+	"replaced_hosts": 4,
+	"smooth_ramp_surface_samples": 16
+}

@@ -1,0 +1,51 @@
+{
+	"capture_mode": false,
+	"colonly_stair_ramps": 1,
+	"courtyard_project_grass_instances": 0,
+	"covered_samples": 28,
+	"external_long_path": false,
+	"failures": [],
+	"gallery_floor_samples": 35,
+	"gallery_forward": {
+		"physics_steps": 1041,
+		"reached": true,
+		"total": 35,
+		"unsupported_frames": 0,
+		"waypoints_reached": 35
+	},
+	"gallery_reverse": {
+		"physics_steps": 1041,
+		"reached": true,
+		"total": 35,
+		"unsupported_frames": 0,
+		"waypoints_reached": 35
+	},
+	"map_spawns_checked": 19,
+	"minimum_headroom_m": 4.09999656677246,
+	"native_meshes": 95,
+	"obsolete_host_meshes": 0,
+	"passed": true,
+	"replaced_hosts": 4,
+	"short_entry_landing": {
+		"physics_steps": 85,
+		"reached": true,
+		"total": 3,
+		"unsupported_frames": 0,
+		"waypoints_reached": 3
+	},
+	"smooth_ramp_surface_samples": 16,
+	"stairs_down": {
+		"physics_steps": 400,
+		"reached": true,
+		"total": 19,
+		"unsupported_frames": 0,
+		"waypoints_reached": 19
+	},
+	"stairs_up": {
+		"physics_steps": 412,
+		"reached": true,
+		"total": 19,
+		"unsupported_frames": 0,
+		"waypoints_reached": 19
+	}
+}
