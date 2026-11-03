@@ -1,0 +1,1026 @@
+{
+  "date": "2026-11-03",
+  "source": "D:\\模型\\20261008\\Public R-18 Motions",
+  "scope": "static audit only; no batch conversion or live Blender mutation",
+  "files": 317,
+  "bytes": 414684850,
+  "extensions": {
+    ".vmd": 285,
+    ".txt": 13,
+    ".wav": 6,
+    ".mvd": 5,
+    ".emm": 4,
+    ".pmm": 4
+  },
+  "top_directories": 79,
+  "vmd_parsed": 285,
+  "parse_errors": [],
+  "types": {
+    "body_motion": 211,
+    "prop_or_auxiliary": 24,
+    "camera": 43,
+    "auxiliary_pose": 2,
+    "body_pose": 1,
+    "morph_only": 4
+  },
+  "body_files": 212,
+  "body_families": {
+    "Izumi": 97,
+    "Maran": 32,
+    "David": 20,
+    "SinSack": 47,
+    "--罪袋": 4,
+    "Kaat": 5,
+    "ダイキ（名取P）　着�": 4,
+    "NTR Ikemen": 1,
+    "YYB式鏡音リン水着v1.": 1,
+    "tom": 1
+  },
+  "unique_body_ik_payloads": 194,
+  "body_directories": 86,
+  "multi_body_directories": 84,
+  "duration_body_seconds": {
+    "min": 0.0,
+    "median": 45.983333333333334,
+    "p90": 99.36666666666666,
+    "max": 255.96666666666667,
+    "sum": 12923.133333333335
+  },
+  "duration_unique_body_seconds": {
+    "min": 0.0,
+    "median": 37.333333333333336,
+    "p90": 88.33333333333333,
+    "max": 255.96666666666667,
+    "sum": 11175.866666666665
+  },
+  "bone_key_count": 2119578,
+  "morph_files": 220,
+  "camera_files": 43,
+  "property_files": 201,
+  "ik_toggle_files": 3,
+  "visibility_change_files": 0,
+  "nonfinite_files": [],
+  "duplicate_key_files": [
+    "Armchair Paizuri - By Ademar440/Armchair Paizuri - Izumi.vmd",
+    "Bath House Service/Bath house service - Izumi.vmd",
+    "Bath House Service V2/Missionary - Izumi.vmd",
+    "Couch Cowgirl/Couch Cowgirl - Izumi.vmd",
+    "Dominating FJ/izumi.vmd",
+    "Ecchi Monster/Ecchi Monster - Izumi.vmd",
+    "Just Tonight 1.1 - By Ademar440/Short Loops/Fondling 02 Izumi.vmd",
+    "Lap Sitting/Lap Sitting - Izumi.vmd",
+    "LHDS V2/Love Hotel DS Loop Bikini Izumi.vmd",
+    "LHDS V3 - By Ademar440/Love Hotel DS Loop Bikini Izumi alt arms.vmd",
+    "LHDS V3 - By Ademar440/Love Hotel DS Loop Bikini Izumi.vmd",
+    "Loop 01/Izumi.vmd",
+    "Loop 02/Izumi Enjoys.vmd",
+    "Loop 03/Izumi.vmd",
+    "Loop 04 Grind/Grind - Izumi.vmd",
+    "Loop 06/Izumi.vmd",
+    "Loop 07 - Spooning/Loop 07 - Spooning - Izumi.vmd",
+    "Loop 08/Izumi.vmd",
+    "Loop 08/Kaat.vmd",
+    "Loop 11 - Standing From Behind/Sin Sack Partner/Loop 11 - Izumi.vmd",
+    "Loop 12 - Hard Ride/Sin Sack Partner/Loop 12 - Izumi.vmd",
+    "Loop 13 - KBJ/Izumi.vmd",
+    "Loop 14 - Couch CG/Loop 14 - Izumi.vmd",
+    "Loop 15 - Sumata/Izumi.vmd",
+    "Loop 17 - Chikan 01/Loop 17 - Chickan 01 - Izumi.vmd",
+    "Loop 18 - Chikan 02/Loop 18 - Chickan 02 - Izumi.vmd",
+    "Loop 19 - Romantic Ride/Loop 19 - Romantic Ride - Izumi.vmd",
+    "Loop 20 - Chikan 03/Loop 20 - Chikan 03 - Izumi.vmd",
+    "Loop 21 - M/Loop 21 - M - Izumi.vmd",
+    "Loop 23 - Prone Bone/Loop 23 - Pronebone - Izumi.vmd",
+    "Loop 24 - Aphrodite/Loop 24 - Aphrodite - Izumi.vmd",
+    "Loop 33 - Suspended Congress/Loop 33 - Suspended Congress - Izumi.vmd",
+    "Loop 34 - Pile Driver/Loop 34 - Pile Driver - Izumi.vmd",
+    "Loop 38 - Energetic Ride/Loop 38 - Energetic Ride - Izumi.vmd",
+    "Love Hotel Night   Extra Loops/Extra Loops/Love Hotel DS Loop Izumi.vmd",
+    "Love Hotel Night + Extra Loops/Extra Loops/Love Hotel DS Loop Izumi.vmd",
+    "Marshmallow Butt/Marshmallow Butt - Izumi.vmd",
+    "Motorcycle Photoshoot 1st pose/Motorcycle Photoshoot 1st pose - Izumi.vmd",
+    "Motorcycle Photoshoot 2nd pose/Motorcycle Photoshoot 2nd pose - Izumi.vmd",
+    "Motorcycle Photoshoot 2nd pose/Motorcycle Photoshoot 2nd pose - Kaat.vmd",
+    "Mssg-Bj/Massage Blowjob - Izumi.vmd",
+    "Nice rear view/Nice rear view - Izumi.vmd",
+    "Pink lounge sex Update 1.1/Sex from behind - Izumi.vmd",
+    "RCG/Reverse cowgirl - Izumi.vmd",
+    "Reverse Stradle - By Ademar440/Reverse Stradle - Izumi.vmd",
+    "RS/MMD/RS2 - Kaat.vmd",
+    "Sitting FJ/Sitting Footjob - Izumi.vmd",
+    "SOTF V2/Sex on the floor - Izumi V2.vmd",
+    "Stand and Carry - Complete - By Ademar440/Maran Version/Stand and Carry - Izumi.vmd",
+    "Stand and Carry - Complete - By Ademar440/Sin Sack Version/Stand and Carry - Izumi.vmd",
+    "Taken From Behind - By Ademar440/Table Sex From Behind Loop Izumi School Girl.vmd",
+    "Thigh service/Thigh service - Izumi.vmd",
+    "TSFB V2/Table Sex From Behind Loop Izumi.vmd"
+  ],
+  "conflicting_duplicate_key_files": [],
+  "nonzero_trailing_bytes_files": [],
+  "encoding_replacement_files": [],
+  "body_start_nonzero": [],
+  "body_over_60s": 84,
+  "body_over_120s": 17,
+  "ik_variant_files": [
+    "Loop 21 - M/Loop 21 - M - SS 18-22 - IK Arms.vmd",
+    "Loop 22 - Aquarius/Loop 22 - Aquarius  - SS 18-22 IK arms.vmd",
+    "Loop 23 - Prone Bone/Loop 23 - Pronebone - Sin Sack 18-22.vmd",
+    "Loop 24 - Aphrodite/Loop 24 - Aphrodite - SS18-22 IK Arms.vmd",
+    "Loop 28 - 69-V2/Loop 28 - 69 - Maran.vmd",
+    "Loop 29 - Eagle/Loop 29 - Eagle - Daiki.vmd",
+    "Loop 33 - Suspended Congress/Loop 33 - Suspended Congress - Maran - IK Arms.vmd",
+    "Loop 34 - Pile Driver/Loop 34 - Pile Driver - SS-18-22 - IK Arms.vmd",
+    "Loop 35 - Fitness Ball/Loop 35 - Fitness Ball - SS-18-22 - IK Arms.vmd",
+    "Loop 37 - Soapy HJ/Loop 37 - Soapy Handjob - SS-18-22 IK Arms.vmd",
+    "Loop 38 - Energetic Ride/Loop 38 - Energetic Ride - Maran IK Arms.vmd",
+    "Love Hotel Night   Extra Loops/Extra Loops/Table Sex From Behind Loop Guy.vmd",
+    "Love Hotel Night   Extra Loops/Love Hotel CG Guy.vmd",
+    "Love Hotel Night + Extra Loops/Extra Loops/Table Sex From Behind Loop Guy.vmd",
+    "Love Hotel Night + Extra Loops/Love Hotel CG Guy.vmd",
+    "Pink lounge sex Update/Sex from behind - SinSack.vmd",
+    "Pink lounge sex Update 1.1/Sex from behind - SinSack.vmd",
+    "Stand and Carry - Complete - By Ademar440/Maran Version/Stand and Carry - Maran IK Arms.vmd",
+    "Stand and Carry - Complete - By Ademar440/Sin Sack Version/Stand and Carry - Sin Sack 2020 S1 IK Arms.vmd"
+  ],
+  "external_parent_documents": [
+    {
+      "file": "Loop 28 - 69-V2/Read me before use.txt",
+      "flags": [
+        "external_parent_dependency",
+        "arm_ik_dependency"
+      ],
+      "sha256": "2bcecd26ef956b92c229408c10288b166dd0f1ee9245f165322f67cec07be39f"
+    },
+    {
+      "file": "Loop 32 - One Leg Up/Read me before use.txt",
+      "flags": [
+        "external_parent_dependency",
+        "arm_ik_dependency"
+      ],
+      "sha256": "ab430d3422b58dbdd1db53a6aefc237f004f3ad1b19396ee2d1c9a2e8c94d74c"
+    },
+    {
+      "file": "Loop 33 - Suspended Congress/IK Arm Version Instructions.txt",
+      "flags": [
+        "external_parent_dependency",
+        "arm_ik_dependency"
+      ],
+      "sha256": "e21a23a9d2c8a488102fedb85c03f671c40ef72d7051b19fd94d2c460b4af3e3"
+    },
+    {
+      "file": "Loop 34 - Pile Driver/IK Arm Version Instructions.txt",
+      "flags": [
+        "external_parent_dependency",
+        "arm_ik_dependency"
+      ],
+      "sha256": "7eece65d371f3c975586cc42546c1455ec1ec9fee11e6e88bd09994ab67c0281"
+    },
+    {
+      "file": "Loop 35 - Fitness Ball/IK Arm Version Instructions.txt",
+      "flags": [
+        "external_parent_dependency",
+        "arm_ik_dependency"
+      ],
+      "sha256": "7eece65d371f3c975586cc42546c1455ec1ec9fee11e6e88bd09994ab67c0281"
+    },
+    {
+      "file": "Loop 38 - Energetic Ride/IK Arm Version Instructions.txt",
+      "flags": [
+        "external_parent_dependency",
+        "arm_ik_dependency"
+      ],
+      "sha256": "e1bb1f9f4bfdfc9bd724f45364a761e5a62805570c4ce1b1e5dcc72a8c3f84d9"
+    },
+    {
+      "file": "Love Hotel Night   Extra Loops/Sperm Motion.txt",
+      "flags": [
+        "external_parent_dependency"
+      ],
+      "sha256": "bd5c44d3d23d5eddffc729c7fbccb2cbd74d4412d43d0a80344ca3caee229dce"
+    },
+    {
+      "file": "Love Hotel Night + Extra Loops/Sperm Motion.txt",
+      "flags": [
+        "external_parent_dependency"
+      ],
+      "sha256": "bd5c44d3d23d5eddffc729c7fbccb2cbd74d4412d43d0a80344ca3caee229dce"
+    }
+  ],
+  "unique_body_bake_frames": 335470,
+  "raw_body_bake_frames": 387906,
+  "elapsed_audit_s": 2.4534771000035107,
+  "keqing_coverage": {
+    "body_files_no_core_dynamic_missing": 201,
+    "unique_body_no_core_dynamic_missing": 185,
+    "body_files_no_required_control_missing": 190,
+    "unique_body_no_required_control_missing": 175,
+    "dynamic_missing_frequencies": {
+      "Dick_01": 75,
+      "Dick_03": 53,
+      "Dick_02": 49,
+      "チンポＩＫ": 26,
+      "Dick_05": 22,
+      "Dick_04": 18,
+      "Dick_06": 18,
+      "右腕ＩＫ": 11,
+      "左腕ＩＫ": 11,
+      "左手首+": 7,
+      "Mouth Ctrl": 6,
+      "舌1": 5,
+      "右ひじ+": 5,
+      "右手首+": 5,
+      "右腕+": 5,
+      "左ひじ+": 5,
+      "右のおっぱい": 4,
+      "右Vagina ctrl": 4,
+      "左Vagina ctrl": 4,
+      "右のお尻": 4,
+      "右Mouth C": 4,
+      "右Upper Lip": 4,
+      "左Mouth C": 4,
+      "左Upper Lip": 4,
+      "左のおっぱい": 3,
+      "左のお尻": 3,
+      "Lower Lip_C": 3,
+      "Upper Lip_C": 3,
+      "右Lower Lip": 3,
+      "左Lower Lip": 3,
+      "Vagina": 3,
+      "右肩+": 3,
+      "左肩+": 3,
+      "左腕+": 3,
+      "舌2": 3,
+      "舌3": 3,
+      "右足_10": 3,
+      "右足_11": 3,
+      "右足_20": 3,
+      "右足_21": 3
+    },
+    "core_missing_files": [
+      {
+        "file": "Loop 23 - Prone Bone/Loop 23 - Pronebone - Sin Sack 18-22.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 28 - 69-V2/Loop 28 - 69 - Maran.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 29 - Eagle/Loop 29 - Eagle - Daiki.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Love Hotel Night   Extra Loops/Extra Loops/Table Sex From Behind Loop Guy.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Love Hotel Night   Extra Loops/Love Hotel CG Guy.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Love Hotel Night + Extra Loops/Extra Loops/Table Sex From Behind Loop Guy.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Love Hotel Night + Extra Loops/Love Hotel CG Guy.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Pink lounge sex Update/Sex from behind - SinSack.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Pink lounge sex Update 1.1/Sex from behind - SinSack.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Stand and Carry - Complete - By Ademar440/Maran Version/Stand and Carry - Maran IK Arms.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Stand and Carry - Complete - By Ademar440/Sin Sack Version/Stand and Carry - Sin Sack 2020 S1 IK Arms.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      }
+    ],
+    "required_control_missing_files": [
+      {
+        "file": "Loop 21 - M/Loop 21 - M - SS 18-22 - IK Arms.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 22 - Aquarius/Loop 22 - Aquarius  - SS 18-22 IK arms.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 23 - Prone Bone/Loop 23 - Pronebone - Sin Sack 18-22.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 24 - Aphrodite/Loop 24 - Aphrodite - SS18-22 IK Arms.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 28 - 69-V2/Loop 28 - 69 - Maran.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 29 - Eagle/Loop 29 - Eagle - Daiki.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 32 - One Leg Up/Loop 32 - One Leg Up - Maran IK.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 33 - Suspended Congress/Loop 33 - Suspended Congress - Maran - IK Arms.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 34 - Pile Driver/Loop 34 - Pile Driver - SS-18-22 - IK Arms.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 35 - Fitness Ball/Loop 35 - Fitness Ball - SS-18-22 - IK Arms.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 37 - Soapy HJ/Loop 37 - Soapy Handjob - SS-18-22 IK Arms.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 38 - Energetic Ride/Loop 38 - Energetic Ride - Maran IK Arms.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Love Hotel Night   Extra Loops/Extra Loops/Table Sex From Behind Loop Guy.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左手首+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Love Hotel Night   Extra Loops/Love Hotel CG Guy.vmd",
+        "missing": [
+          "右手首+",
+          "右腕ＩＫ",
+          "左手首+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Love Hotel Night + Extra Loops/Extra Loops/Table Sex From Behind Loop Guy.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左手首+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Love Hotel Night + Extra Loops/Love Hotel CG Guy.vmd",
+        "missing": [
+          "右手首+",
+          "右腕ＩＫ",
+          "左手首+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Pink lounge sex Update/Blowjob - SinSack.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Pink lounge sex Update/Sex from behind - SinSack.vmd",
+        "missing": [
+          "右ひじ+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Pink lounge sex Update 1.1/Blowjob - SinSack.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Pink lounge sex Update 1.1/Sex from behind - SinSack.vmd",
+        "missing": [
+          "右ひじ+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Stand and Carry - Complete - By Ademar440/Maran Version/Stand and Carry - Maran IK Arms.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Stand and Carry - Complete - By Ademar440/Sin Sack Version/Stand and Carry - Sin Sack 2020 S1 IK Arms.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      }
+    ]
+  },
+  "ganyu_coverage": {
+    "body_files_no_core_dynamic_missing": 201,
+    "unique_body_no_core_dynamic_missing": 185,
+    "body_files_no_required_control_missing": 190,
+    "unique_body_no_required_control_missing": 175,
+    "dynamic_missing_frequencies": {
+      "Dick_01": 75,
+      "Dick_03": 53,
+      "Dick_02": 49,
+      "チンポＩＫ": 26,
+      "Dick_05": 22,
+      "Dick_04": 18,
+      "Dick_06": 18,
+      "右腕ＩＫ": 11,
+      "左腕ＩＫ": 11,
+      "左手首+": 7,
+      "Mouth Ctrl": 6,
+      "舌1": 5,
+      "右ひじ+": 5,
+      "右手首+": 5,
+      "右腕+": 5,
+      "左ひじ+": 5,
+      "右のおっぱい": 4,
+      "右Vagina ctrl": 4,
+      "左Vagina ctrl": 4,
+      "右のお尻": 4,
+      "右Mouth C": 4,
+      "右Upper Lip": 4,
+      "左Mouth C": 4,
+      "左Upper Lip": 4,
+      "左のおっぱい": 3,
+      "左のお尻": 3,
+      "Lower Lip_C": 3,
+      "Upper Lip_C": 3,
+      "右Lower Lip": 3,
+      "左Lower Lip": 3,
+      "Vagina": 3,
+      "右肩+": 3,
+      "左肩+": 3,
+      "左腕+": 3,
+      "舌2": 3,
+      "舌3": 3,
+      "右足_10": 3,
+      "右足_11": 3,
+      "右足_20": 3,
+      "右足_21": 3
+    },
+    "core_missing_files": [
+      {
+        "file": "Loop 23 - Prone Bone/Loop 23 - Pronebone - Sin Sack 18-22.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 28 - 69-V2/Loop 28 - 69 - Maran.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 29 - Eagle/Loop 29 - Eagle - Daiki.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Love Hotel Night   Extra Loops/Extra Loops/Table Sex From Behind Loop Guy.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Love Hotel Night   Extra Loops/Love Hotel CG Guy.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Love Hotel Night + Extra Loops/Extra Loops/Table Sex From Behind Loop Guy.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Love Hotel Night + Extra Loops/Love Hotel CG Guy.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Pink lounge sex Update/Sex from behind - SinSack.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Pink lounge sex Update 1.1/Sex from behind - SinSack.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Stand and Carry - Complete - By Ademar440/Maran Version/Stand and Carry - Maran IK Arms.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Stand and Carry - Complete - By Ademar440/Sin Sack Version/Stand and Carry - Sin Sack 2020 S1 IK Arms.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      }
+    ],
+    "required_control_missing_files": [
+      {
+        "file": "Loop 21 - M/Loop 21 - M - SS 18-22 - IK Arms.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 22 - Aquarius/Loop 22 - Aquarius  - SS 18-22 IK arms.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 23 - Prone Bone/Loop 23 - Pronebone - Sin Sack 18-22.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 24 - Aphrodite/Loop 24 - Aphrodite - SS18-22 IK Arms.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 28 - 69-V2/Loop 28 - 69 - Maran.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 29 - Eagle/Loop 29 - Eagle - Daiki.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 32 - One Leg Up/Loop 32 - One Leg Up - Maran IK.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 33 - Suspended Congress/Loop 33 - Suspended Congress - Maran - IK Arms.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 34 - Pile Driver/Loop 34 - Pile Driver - SS-18-22 - IK Arms.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 35 - Fitness Ball/Loop 35 - Fitness Ball - SS-18-22 - IK Arms.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 37 - Soapy HJ/Loop 37 - Soapy Handjob - SS-18-22 IK Arms.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Loop 38 - Energetic Ride/Loop 38 - Energetic Ride - Maran IK Arms.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Love Hotel Night   Extra Loops/Extra Loops/Table Sex From Behind Loop Guy.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左手首+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Love Hotel Night   Extra Loops/Love Hotel CG Guy.vmd",
+        "missing": [
+          "右手首+",
+          "右腕ＩＫ",
+          "左手首+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Love Hotel Night + Extra Loops/Extra Loops/Table Sex From Behind Loop Guy.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左手首+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Love Hotel Night + Extra Loops/Love Hotel CG Guy.vmd",
+        "missing": [
+          "右手首+",
+          "右腕ＩＫ",
+          "左手首+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Pink lounge sex Update/Blowjob - SinSack.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Pink lounge sex Update/Sex from behind - SinSack.vmd",
+        "missing": [
+          "右ひじ+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Pink lounge sex Update 1.1/Blowjob - SinSack.vmd",
+        "missing": [
+          "右腕ＩＫ",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Pink lounge sex Update 1.1/Sex from behind - SinSack.vmd",
+        "missing": [
+          "右ひじ+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Stand and Carry - Complete - By Ademar440/Maran Version/Stand and Carry - Maran IK Arms.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      },
+      {
+        "file": "Stand and Carry - Complete - By Ademar440/Sin Sack Version/Stand and Carry - Sin Sack 2020 S1 IK Arms.vmd",
+        "missing": [
+          "右ひじ+",
+          "右手首+",
+          "右肩+",
+          "右腕+",
+          "右腕ＩＫ",
+          "左ひじ+",
+          "左手首+",
+          "左肩+",
+          "左腕+",
+          "左腕ＩＫ"
+        ]
+      }
+    ]
+  }
+}

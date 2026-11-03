@@ -1,0 +1,1218 @@
+{
+  "schema": 1,
+  "fps": 30,
+  "default_entry": "mmd_6e891982bb51_all",
+  "coordinate_policy": "preserve_authored_shared_world",
+  "packs": [
+    {
+      "id": "loop03",
+      "label": "Loop 03",
+      "duration": 16.0,
+      "frame_start": 0,
+      "frame_end": 480,
+      "source_tracks": [
+        {
+          "file": "Loop 03\\Izumi.vmd",
+          "model": "Izumi Shimizu",
+          "keys": 8105,
+          "bones": 350,
+          "frame_start": 0,
+          "frame_end": 480,
+          "animated_bones": 21,
+          "sha256": "72c8b919c6b5f50f9ce856cd0a562b3ebd03e680a33dbf0230d78e19d9ef5c9f"
+        },
+        {
+          "file": "Loop 03\\Kaat.vmd",
+          "model": "Kaat v2.0 (J&J Model",
+          "keys": 8019,
+          "bones": 149,
+          "frame_start": 0,
+          "frame_end": 480,
+          "animated_bones": 32,
+          "sha256": "656bfe4b2312d920b69cd9b2ace2f8695f3b044e2228adc1bdcdbba96d0640bc"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A · 刻晴",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/keqing_vrm_loop03.tres",
+          "report": "res://assets/characters/mmd_validation/keqing_vrm_build_report.json",
+          "profile": "keqing"
+        },
+        {
+          "id": "B",
+          "label": "角色 B · 甘雨",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/ganyu_role_b.tres",
+          "report": "res://assets/characters/mmd_validation/paired/ganyu_report.json",
+          "profile": "ganyu"
+        }
+      ]
+    },
+    {
+      "id": "shared_walk",
+      "label": "共享走路",
+      "duration": 0.7666666507720947,
+      "frame_start": 0,
+      "frame_end": 23,
+      "source_tracks": [
+        {
+          "file": "assets/characters/motion_sources/independent_cc0/walk.vrma"
+        },
+        {
+          "file": "assets/characters/motion_sources/independent_cc0/walk.vrma"
+        },
+        {
+          "file": "assets/characters/motion_sources/independent_cc0/walk.vrma"
+        },
+        {
+          "file": "assets/characters/motion_sources/independent_cc0/walk.vrma"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "刻晴",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/shared/shared_walk.tres",
+          "report": "res://assets/characters/mmd_validation/shared/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "presentation_offset": [
+            -1.7999999999999998,
+            0,
+            0
+          ],
+          "translation_policy": "height_scaled"
+        },
+        {
+          "id": "B",
+          "label": "甘雨",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/shared/shared_walk.tres",
+          "report": "res://assets/characters/mmd_validation/shared/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "presentation_offset": [
+            -0.6,
+            0,
+            0
+          ],
+          "translation_policy": "height_scaled"
+        },
+        {
+          "id": "C",
+          "label": "胡桃",
+          "model": "res://assets/characters/import_tests_local/hutao/hutao_fixed.vrm",
+          "motion": "res://assets/characters/mmd_validation/shared/shared_walk.tres",
+          "report": "res://assets/characters/mmd_validation/shared/manifest.json",
+          "profile": "hutao",
+          "shared": true,
+          "presentation_offset": [
+            0.6,
+            0,
+            0
+          ],
+          "translation_policy": "height_scaled"
+        },
+        {
+          "id": "D",
+          "label": "花火",
+          "model": "res://assets/characters/import_tests_local/huahuo/huahuo_fixed.vrm",
+          "motion": "res://assets/characters/mmd_validation/shared/shared_walk.tres",
+          "report": "res://assets/characters/mmd_validation/shared/manifest.json",
+          "profile": "huahuo",
+          "shared": true,
+          "presentation_offset": [
+            1.7999999999999998,
+            0,
+            0
+          ],
+          "translation_policy": "height_scaled"
+        }
+      ],
+      "shared": true,
+      "loop_preview": true
+    },
+    {
+      "id": "shared_mmd_role_a",
+      "label": "MMD 共享轨道 A",
+      "duration": 16.0,
+      "frame_start": 0,
+      "frame_end": 480,
+      "source_tracks": [
+        {
+          "file": "assets/characters/mmd_validation/keqing_vrm_loop03.tres"
+        },
+        {
+          "file": "assets/characters/mmd_validation/keqing_vrm_loop03.tres"
+        },
+        {
+          "file": "assets/characters/mmd_validation/keqing_vrm_loop03.tres"
+        },
+        {
+          "file": "assets/characters/mmd_validation/keqing_vrm_loop03.tres"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "刻晴",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/shared/shared_mmd_role_a.tres",
+          "report": "res://assets/characters/mmd_validation/shared/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "presentation_offset": [
+            -1.7999999999999998,
+            0,
+            0
+          ],
+          "translation_policy": "height_scaled"
+        },
+        {
+          "id": "B",
+          "label": "甘雨",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/shared/shared_mmd_role_a.tres",
+          "report": "res://assets/characters/mmd_validation/shared/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "presentation_offset": [
+            -0.6,
+            0,
+            0
+          ],
+          "translation_policy": "height_scaled"
+        },
+        {
+          "id": "C",
+          "label": "胡桃",
+          "model": "res://assets/characters/import_tests_local/hutao/hutao_fixed.vrm",
+          "motion": "res://assets/characters/mmd_validation/shared/shared_mmd_role_a.tres",
+          "report": "res://assets/characters/mmd_validation/shared/manifest.json",
+          "profile": "hutao",
+          "shared": true,
+          "presentation_offset": [
+            0.6,
+            0,
+            0
+          ],
+          "translation_policy": "height_scaled"
+        },
+        {
+          "id": "D",
+          "label": "花火",
+          "model": "res://assets/characters/import_tests_local/huahuo/huahuo_fixed.vrm",
+          "motion": "res://assets/characters/mmd_validation/shared/shared_mmd_role_a.tres",
+          "report": "res://assets/characters/mmd_validation/shared/manifest.json",
+          "profile": "huahuo",
+          "shared": true,
+          "presentation_offset": [
+            1.7999999999999998,
+            0,
+            0
+          ],
+          "translation_policy": "height_scaled"
+        }
+      ],
+      "shared": true,
+      "loop_preview": false
+    },
+    {
+      "id": "shared_mmd_role_b",
+      "label": "MMD 共享轨道 B",
+      "duration": 16.0,
+      "frame_start": 0,
+      "frame_end": 480,
+      "source_tracks": [
+        {
+          "file": "assets/characters/mmd_validation/paired/ganyu_role_b.tres"
+        },
+        {
+          "file": "assets/characters/mmd_validation/paired/ganyu_role_b.tres"
+        },
+        {
+          "file": "assets/characters/mmd_validation/paired/ganyu_role_b.tres"
+        },
+        {
+          "file": "assets/characters/mmd_validation/paired/ganyu_role_b.tres"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "刻晴",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/shared/shared_mmd_role_b.tres",
+          "report": "res://assets/characters/mmd_validation/shared/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "presentation_offset": [
+            -1.7999999999999998,
+            0,
+            0
+          ],
+          "translation_policy": "height_scaled"
+        },
+        {
+          "id": "B",
+          "label": "甘雨",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/shared/shared_mmd_role_b.tres",
+          "report": "res://assets/characters/mmd_validation/shared/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "presentation_offset": [
+            -0.6,
+            0,
+            0
+          ],
+          "translation_policy": "height_scaled"
+        },
+        {
+          "id": "C",
+          "label": "胡桃",
+          "model": "res://assets/characters/import_tests_local/hutao/hutao_fixed.vrm",
+          "motion": "res://assets/characters/mmd_validation/shared/shared_mmd_role_b.tres",
+          "report": "res://assets/characters/mmd_validation/shared/manifest.json",
+          "profile": "hutao",
+          "shared": true,
+          "presentation_offset": [
+            0.6,
+            0,
+            0
+          ],
+          "translation_policy": "height_scaled"
+        },
+        {
+          "id": "D",
+          "label": "花火",
+          "model": "res://assets/characters/import_tests_local/huahuo/huahuo_fixed.vrm",
+          "motion": "res://assets/characters/mmd_validation/shared/shared_mmd_role_b.tres",
+          "report": "res://assets/characters/mmd_validation/shared/manifest.json",
+          "profile": "huahuo",
+          "shared": true,
+          "presentation_offset": [
+            1.7999999999999998,
+            0,
+            0
+          ],
+          "translation_policy": "height_scaled"
+        }
+      ],
+      "shared": true,
+      "loop_preview": false
+    },
+    {
+      "id": "shared_pair",
+      "label": "Loop 03 · 共享人形转换",
+      "duration": 16.0,
+      "frame_start": 0,
+      "frame_end": 480,
+      "source_tracks": [
+        {
+          "file": "assets/characters/mmd_validation/keqing_vrm_loop03.tres"
+        },
+        {
+          "file": "assets/characters/mmd_validation/paired/ganyu_role_b.tres"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "刻晴",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/shared/shared_mmd_role_a.tres",
+          "report": "res://assets/characters/mmd_validation/shared/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "translation_policy": "shared_world"
+        },
+        {
+          "id": "B",
+          "label": "甘雨",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/shared/shared_mmd_role_b.tres",
+          "report": "res://assets/characters/mmd_validation/shared/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "translation_policy": "shared_world"
+        }
+      ],
+      "shared": true
+    },
+    {
+      "id": "mmd_0a3f6ba5f5de",
+      "label": "Armchair Paizuri - By Ademar440",
+      "selected": true,
+      "shared": true,
+      "duration": 84.93333333333334,
+      "frame_start": 0,
+      "frame_end": 2548,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Armchair Paizuri - By Ademar440/Armchair Paizuri - Izumi.vmd",
+          "sha256": "601f5b2f68662737558ab2f646df4cdb79a92ecb110fb1fd1b90f05e8633e153"
+        },
+        {
+          "file": "Armchair Paizuri - By Ademar440/Armchair Paizuri - Maran.vmd",
+          "sha256": "3fc15cf1cc0d051846ffb17c11731edef722143bff0b5677d41a976e71a68198"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_0a3f6ba5f5de_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_0a3f6ba5f5de_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_0a3f6ba5f5de_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_0a3f6ba5f5de_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_16a2ecfb7781",
+      "label": "BJ in Bed",
+      "selected": true,
+      "shared": true,
+      "duration": 66.33333333333333,
+      "frame_start": 0,
+      "frame_end": 1990,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "BJ in Bed/Blowjob in Bed - Izumi.vmd",
+          "sha256": "ec60c551dbd27fbf813e4011158b343fb0352e9dd5c95ef19756ae302266a5b9"
+        },
+        {
+          "file": "BJ in Bed/Blowjob in Bed - Maran.vmd",
+          "sha256": "e4b4203fd3d4d0e0cfd527765de1d6f38f74470c87f8065792f4c2feb9256334"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_16a2ecfb7781_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_16a2ecfb7781_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_16a2ecfb7781_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_16a2ecfb7781_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_67d58e9d607e",
+      "label": "Dominating FJ",
+      "selected": true,
+      "shared": true,
+      "duration": 37.333333333333336,
+      "frame_start": 0,
+      "frame_end": 1120,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Dominating FJ/izumi.vmd",
+          "sha256": "60f152b726c39020f8779030347c586ffa6b6faf8f2c180920449fcd9cc6a7ef"
+        },
+        {
+          "file": "Dominating FJ/guy.vmd",
+          "sha256": "902d48c973cb4735bf6796471136acb16272daac99f40b37b86a244dd4dd5300"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_67d58e9d607e_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_67d58e9d607e_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_67d58e9d607e_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_67d58e9d607e_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_6e891982bb51",
+      "label": "Loop 02",
+      "selected": true,
+      "shared": true,
+      "duration": 21.333333333333332,
+      "frame_start": 0,
+      "frame_end": 640,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Loop 02/Izumi Enjoys.vmd",
+          "sha256": "9f1cef1fe8b68bd93f4d3151dd9974ae9a8c0c077f95470eaea9e1214f73cd11"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_6e891982bb51_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_6e891982bb51_a_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_71dec5bd8390",
+      "label": "Loop 03",
+      "selected": true,
+      "shared": true,
+      "duration": 16.0,
+      "frame_start": 0,
+      "frame_end": 480,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Loop 03/Izumi.vmd",
+          "sha256": "72c8b919c6b5f50f9ce856cd0a562b3ebd03e680a33dbf0230d78e19d9ef5c9f"
+        },
+        {
+          "file": "Loop 03/Kaat.vmd",
+          "sha256": "656bfe4b2312d920b69cd9b2ace2f8695f3b044e2228adc1bdcdbba96d0640bc"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/shared/shared_mmd_role_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/shared/shared_mmd_role_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://assets/characters/mmd_validation/shared/shared_mmd_role_a_reference.json",
+        "res://assets/characters/mmd_validation/shared/shared_mmd_role_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_aec34d147925",
+      "label": "Loop 05",
+      "selected": true,
+      "shared": true,
+      "duration": 20.333333333333332,
+      "frame_start": 0,
+      "frame_end": 610,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Loop 05/Izumi.vmd",
+          "sha256": "e403de5641a9aa92f2093c4118dae941d7065fb8b28078cd4d8c5e714cd2e47e"
+        },
+        {
+          "file": "Loop 05/Kaat.vmd",
+          "sha256": "49fc9d824deb94fdef289c8055ce6a9da22ecea7f5bdf711ea2e82d1c6f84a77"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_aec34d147925_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_aec34d147925_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_aec34d147925_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_aec34d147925_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_9957977a1355",
+      "label": "Loop 08",
+      "selected": true,
+      "shared": true,
+      "duration": 33.4,
+      "frame_start": 0,
+      "frame_end": 1002,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Loop 08/Izumi.vmd",
+          "sha256": "cb56be8e601fa9effa62b342577134d949421ec2d29c4ea8ee7939e638284dff"
+        },
+        {
+          "file": "Loop 08/Kaat.vmd",
+          "sha256": "495a5f7e601081a7a06e4a9126d441608629ff303da0b92116797444af6bf17d"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_9957977a1355_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_9957977a1355_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_9957977a1355_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_9957977a1355_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_fcc0340f8227",
+      "label": "Loop 13 - KBJ",
+      "selected": true,
+      "shared": true,
+      "duration": 37.3,
+      "frame_start": 0,
+      "frame_end": 1119,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Loop 13 - KBJ/Izumi.vmd",
+          "sha256": "ccbb2e4281c9657858049259f9f494dda0450dc8e0ff9923e9f8e2fe70110cf8"
+        },
+        {
+          "file": "Loop 13 - KBJ/Sin Sack.vmd",
+          "sha256": "c0344ddc7c2b39861fa6cd54e2176693ccb825362f6e020e159fcdea71f5e7c1"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_fcc0340f8227_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_fcc0340f8227_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_fcc0340f8227_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_fcc0340f8227_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_8c5c490fb87c",
+      "label": "Loop 17 - Chikan 01",
+      "selected": true,
+      "shared": true,
+      "duration": 33.333333333333336,
+      "frame_start": 0,
+      "frame_end": 1000,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Loop 17 - Chikan 01/Loop 17 - Chickan 01 - Izumi.vmd",
+          "sha256": "a44c20ce24ca736e516536347a292c07e720c9c4dd34d3ec09c947225ab3bafc"
+        },
+        {
+          "file": "Loop 17 - Chikan 01/Loop 17 - Chickan 01 - SS 18-22.vmd",
+          "sha256": "ca868cfa6c53353c6feb081aa7a9732553d5e0b52a39075362255bb40e342e6e"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_8c5c490fb87c_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_8c5c490fb87c_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_8c5c490fb87c_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_8c5c490fb87c_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_beee0d2eb57b",
+      "label": "Loop 20 - Chikan 03",
+      "selected": true,
+      "shared": true,
+      "duration": 33.6,
+      "frame_start": 0,
+      "frame_end": 1008,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Loop 20 - Chikan 03/Loop 20 - Chikan 03 - Izumi.vmd",
+          "sha256": "059af21df0ed821017ee343ad187d98ba4908fb5c584197a9c4eb1a2159011ea"
+        },
+        {
+          "file": "Loop 20 - Chikan 03/Loop 20 - Chikan 03 - SS 18-22.vmd",
+          "sha256": "5a386b02e54b7dcf9bf6e639e3d74fb501f62b600bf0111361294d04fb2d8be9"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_beee0d2eb57b_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_beee0d2eb57b_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_beee0d2eb57b_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_beee0d2eb57b_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_7869c66910b9",
+      "label": "Loop 27 - Twin Angels-V2",
+      "selected": true,
+      "shared": true,
+      "duration": 66.66666666666667,
+      "frame_start": 0,
+      "frame_end": 2000,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Loop 27 - Twin Angels-V2/Loop 27 - Twin Angels - Izumi.vmd",
+          "sha256": "954da1c0447e4552384891378422378c3b97e04100674a68385488b1f7e2e355"
+        },
+        {
+          "file": "Loop 27 - Twin Angels-V2/Loop 27 - Twin Angels - Rin.vmd",
+          "sha256": "98027b4f0986a46e56a4cca4314180e2dbe2a94941ff0c980fd39b76a452c6cb"
+        },
+        {
+          "file": "Loop 27 - Twin Angels-V2/Loop 27 - Twin Angels - SS 18-22.vmd",
+          "sha256": "54a30eaa8bf403028add3247c0eceb77400a9e6ec73bad4187b8202ea738d08c"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_7869c66910b9_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_7869c66910b9_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "C",
+          "label": "角色 C",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_7869c66910b9_c.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_7869c66910b9_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_7869c66910b9_b_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_7869c66910b9_c_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    }
+  ],
+  "entries": [
+    {
+      "id": "loop03_pair",
+      "pack": "loop03",
+      "label": "Loop 03 · 双人同步",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "双人"
+    },
+    {
+      "id": "loop03_role_a",
+      "pack": "loop03",
+      "label": "Loop 03 · 角色 A 单独检查",
+      "roles": [
+        "A"
+      ],
+      "kind": "角色拆分"
+    },
+    {
+      "id": "loop03_role_b",
+      "pack": "loop03",
+      "label": "Loop 03 · 角色 B 单独检查",
+      "roles": [
+        "B"
+      ],
+      "kind": "角色拆分"
+    },
+    {
+      "id": "shared_walk_all",
+      "pack": "shared_walk",
+      "label": "共享走路 · 四角色共用",
+      "roles": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "kind": "共享动作"
+    },
+    {
+      "id": "shared_walk_keqing",
+      "pack": "shared_walk",
+      "label": "共享走路 · 刻晴单独检查",
+      "roles": [
+        "A"
+      ],
+      "kind": "共享动作"
+    },
+    {
+      "id": "shared_walk_ganyu",
+      "pack": "shared_walk",
+      "label": "共享走路 · 甘雨单独检查",
+      "roles": [
+        "B"
+      ],
+      "kind": "共享动作"
+    },
+    {
+      "id": "shared_walk_hutao",
+      "pack": "shared_walk",
+      "label": "共享走路 · 胡桃单独检查",
+      "roles": [
+        "C"
+      ],
+      "kind": "共享动作"
+    },
+    {
+      "id": "shared_walk_huahuo",
+      "pack": "shared_walk",
+      "label": "共享走路 · 花火单独检查",
+      "roles": [
+        "D"
+      ],
+      "kind": "共享动作"
+    },
+    {
+      "id": "shared_mmd_role_a_all",
+      "pack": "shared_mmd_role_a",
+      "label": "MMD 共享轨道 A · 四角色共用",
+      "roles": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "kind": "共享动作"
+    },
+    {
+      "id": "shared_mmd_role_b_all",
+      "pack": "shared_mmd_role_b",
+      "label": "MMD 共享轨道 B · 四角色共用",
+      "roles": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "kind": "共享动作"
+    },
+    {
+      "id": "shared_pair_all",
+      "pack": "shared_pair",
+      "label": "Loop 03 · 共享层双人同步",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "共享动作"
+    },
+    {
+      "id": "mmd_0a3f6ba5f5de_all",
+      "pack": "mmd_0a3f6ba5f5de",
+      "label": "Armchair Paizuri - By Ademar440",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作"
+    },
+    {
+      "id": "mmd_16a2ecfb7781_all",
+      "pack": "mmd_16a2ecfb7781",
+      "label": "BJ in Bed",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作"
+    },
+    {
+      "id": "mmd_67d58e9d607e_all",
+      "pack": "mmd_67d58e9d607e",
+      "label": "Dominating FJ",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作"
+    },
+    {
+      "id": "mmd_6e891982bb51_all",
+      "pack": "mmd_6e891982bb51",
+      "label": "Loop 02",
+      "roles": [
+        "A"
+      ],
+      "kind": "入选动作"
+    },
+    {
+      "id": "mmd_71dec5bd8390_all",
+      "pack": "mmd_71dec5bd8390",
+      "label": "Loop 03",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作"
+    },
+    {
+      "id": "mmd_aec34d147925_all",
+      "pack": "mmd_aec34d147925",
+      "label": "Loop 05",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作"
+    },
+    {
+      "id": "mmd_9957977a1355_all",
+      "pack": "mmd_9957977a1355",
+      "label": "Loop 08",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作"
+    },
+    {
+      "id": "mmd_fcc0340f8227_all",
+      "pack": "mmd_fcc0340f8227",
+      "label": "Loop 13 - KBJ",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作"
+    },
+    {
+      "id": "mmd_8c5c490fb87c_all",
+      "pack": "mmd_8c5c490fb87c",
+      "label": "Loop 17 - Chikan 01",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作"
+    },
+    {
+      "id": "mmd_beee0d2eb57b_all",
+      "pack": "mmd_beee0d2eb57b",
+      "label": "Loop 20 - Chikan 03",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作"
+    },
+    {
+      "id": "mmd_7869c66910b9_all",
+      "pack": "mmd_7869c66910b9",
+      "label": "Loop 27 - Twin Angels-V2",
+      "roles": [
+        "A",
+        "B",
+        "C"
+      ],
+      "kind": "入选动作"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "original_sha256": "0175283f206999a6525ae93411463e653625798570bd6aeab956eec7b763db5e",
+  "physics_variant_sha256": "46b7f282b78fd72b585207251c3be12bc8f8bc8f2a3b24c07698dec395d3ff01",
+  "same_binary_chunk": true,
+  "preserved_sections": {
+    "nodes": true,
+    "meshes": true,
+    "materials": true,
+    "skins": true,
+    "images": true,
+    "textures": true,
+    "accessors": true,
+    "bufferViews": true
+  }
+}

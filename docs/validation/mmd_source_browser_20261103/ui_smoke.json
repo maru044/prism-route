@@ -1,0 +1,15 @@
+{
+  "method": "Observed independent Blender UI through computer-use; not an automated full-library playback test",
+  "window": "mmd_source_browser",
+  "sidebar_opened": true,
+  "sidebar_resized": true,
+  "folder_list_and_role_controls_visible": true,
+  "play_button_started_animation": true,
+  "observed_running_frame": 23,
+  "observed_viewport_fps": 30,
+  "pause_button_stopped_animation_at_frame": 308,
+  "reset_to_frame_zero": true,
+  "preview_layout_saved": true,
+  "real_selection_entries_written_by_ui_test": 0,
+  "original_blender_window_kept_open": true
+}

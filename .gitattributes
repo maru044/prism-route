@@ -5,6 +5,11 @@ assets/world/road_projection_test/model_1006.gltf -text -diff
 # Preserve the pinned original motion bytes and their recorded SHA-256 values.
 assets/characters/motion_sources/independent_cc0/*.glb -text -diff
 assets/characters/motion_sources/independent_cc0/*.vrma -text -diff
+# Preserve shared-animation and user selection bytes referenced by SHA-256 reports.
+assets/characters/mmd_selected/animations/*.tres -text -diff
+assets/characters/mmd_validation/*.tres -text -diff
+assets/characters/mmd_validation/**/*.tres -text -diff
+docs/motion_selection/README.md -text
 # Preserve native Rhino concept archives without line-ending conversion.
 docs/concepts/**/*.3dm -text -diff
 # Full current-map mesh exceeds GitHub's regular Git object size limit.

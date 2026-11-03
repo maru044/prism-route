@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "keqing",
+      "label": "刻晴",
+      "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+      "model_sha256": "46b7f282b78fd72b585207251c3be12bc8f8bc8f2a3b24c07698dec395d3ff01"
+    },
+    {
+      "id": "ganyu",
+      "label": "甘雨",
+      "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+      "model_sha256": "03f292d54cb40da06c219e3b35e0b300e8f8b46de8f1e9bc0b13685b99279b72"
+    },
+    {
+      "id": "hutao",
+      "label": "胡桃",
+      "model": "res://assets/characters/import_tests_local/hutao/hutao_fixed.vrm",
+      "model_sha256": "a62ad4f384cc03f0b70937c5f9720036f98b8c5fed8ca6cb9a735a5ec07ab915"
+    },
+    {
+      "id": "huahuo",
+      "label": "花火",
+      "model": "res://assets/characters/import_tests_local/huahuo/huahuo_fixed.vrm",
+      "model_sha256": "60075651511ad4e94717c7c7cf56c663e19dc7cc81d2c8bf04a4e1b479d26108"
+    }
+  ],
+  "clips": [
+    {
+      "id": "shared_walk",
+      "resource": "res://assets/characters/mmd_validation/shared/shared_walk.tres",
+      "frames": 24,
+      "duration": 0.7666666507720947,
+      "tracks": 56,
+      "constant_rotation_tracks": 0,
+      "bytes": 97072,
+      "source": "assets/characters/motion_sources/independent_cc0/walk.vrma",
+      "source_sha256": "51c4158488a86a6bb99b978fb4d269e1798f9749bceaf0420473bae413fc3271",
+      "output_sha256": "a41895f5c00323a47019d5d48a8a6ec36336a79d6fc5adbe6ec4706ebc15dfcd",
+      "reference_height": 0.9079954028129578
+    },
+    {
+      "id": "shared_mmd_role_a",
+      "resource": "res://assets/characters/mmd_validation/shared/shared_mmd_role_a.tres",
+      "frames": 481,
+      "duration": 16.0,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 1743004,
+      "source": "assets/characters/mmd_validation/keqing_vrm_loop03.tres",
+      "source_sha256": "78aa229b809100f558d0339bebbf31557872712e16656427f04af435c934b8cf",
+      "output_sha256": "b624be654302b0a51e4504e82ee57f285b9de2f1de26f9b9b16bedfc88e80692",
+      "reference_height": 0.9838524702936413,
+      "source_semantic_pelvis": "下半身",
+      "source_body_root": "Hips"
+    },
+    {
+      "id": "shared_mmd_role_b",
+      "resource": "res://assets/characters/mmd_validation/shared/shared_mmd_role_b.tres",
+      "frames": 481,
+      "duration": 16.0,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 1715255,
+      "source": "assets/characters/mmd_validation/paired/ganyu_role_b.tres",
+      "source_sha256": "bb1c4987faaa3646eb726c89f1e89082c7ffc574eb56d825edfd97f4cea6feb8",
+      "output_sha256": "9edf2d92605ba1fe08e0c3d9008568ef0c73c89f6f0ef0dcadbfe794fb0c0aca",
+      "reference_height": 0.9769537867977787,
+      "source_semantic_pelvis": "下半身",
+      "source_body_root": "腰"
+    }
+  ],
+  "build_policy": "one resource per source role clip; no target-specific Blender bake or target animation files"
+}

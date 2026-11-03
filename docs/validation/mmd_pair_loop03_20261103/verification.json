@@ -1,0 +1,31 @@
+{
+	"contact_fit": "visual_reviewed; local garment overlap remains; not approved as final contact fit",
+	"disabled_partner_query_hits": 0,
+	"duration": 16.0,
+	"large_step_reset_tested": true,
+	"library_entries_tested": 3,
+	"master_clock_error_s": 0.0,
+	"native_spring_chains": [
+		21,
+		20
+	],
+	"pack": "loop03",
+	"partner_collision_masks": [
+		5,
+		3
+	],
+	"partner_query_hits": 1,
+	"partner_tail_response_m": 0.225786224007607,
+	"passed": true,
+	"physics_bone_frame_checks": 234240,
+	"profiles": [
+		"keqing",
+		"ganyu"
+	],
+	"relative_joint_checks": 121,
+	"relative_joint_vector_error_m": 0.00000129125248804485,
+	"roles": 2,
+	"source_joint_checks": 242,
+	"source_joint_position_error_m": 0.00000087815766391941,
+	"test_fps": 60
+}

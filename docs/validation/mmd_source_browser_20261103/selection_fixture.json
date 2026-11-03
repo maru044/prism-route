@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "source_root": "D:\\模型\\20261008\\Public R-18 Motions",
+  "takes": {
+    "5b27757c4f07ba1c259b": {
+      "id": "5b27757c4f07ba1c259b",
+      "source_key": "3728bffba786b12fe772",
+      "folder_id": "71dec5bd8390dfca",
+      "source_folder": "Loop 03",
+      "decision": "KEEP",
+      "roles": [
+        {
+          "slot": "A",
+          "file": "Loop 03/Izumi.vmd",
+          "sha256": "72c8b919c6b5f50f9ce856cd0a562b3ebd03e680a33dbf0230d78e19d9ef5c9f"
+        },
+        {
+          "slot": "B",
+          "file": "Loop 03/Kaat.vmd",
+          "sha256": "656bfe4b2312d920b69cd9b2ace2f8695f3b044e2228adc1bdcdbba96d0640bc"
+        }
+      ],
+      "fps": 30,
+      "frame_start": 0,
+      "frame_end": 120,
+      "note": "test fixture only",
+      "rough_special_preview": false,
+      "reference_models": {
+        "A": "D:/模型/20261008/刻晴_by_原神_b0f08721a7da17df599896ac40dd2f22/刻晴/刻晴/刻晴.pmx",
+        "B": "D:/模型/ganyu_by_原神_7381ccd84ee8763ce63b3ad638e1c49b/甘雨.pmx"
+      },
+      "updated_at": "2026-11-03T06:23:15.158914+00:00"
+    },
+    "a4da9abd4b4593f0b2f7": {
+      "id": "a4da9abd4b4593f0b2f7",
+      "source_key": "3728bffba786b12fe772",
+      "folder_id": "71dec5bd8390dfca",
+      "source_folder": "Loop 03",
+      "decision": "MAYBE",
+      "roles": [
+        {
+          "slot": "A",
+          "file": "Loop 03/Izumi.vmd",
+          "sha256": "72c8b919c6b5f50f9ce856cd0a562b3ebd03e680a33dbf0230d78e19d9ef5c9f"
+        },
+        {
+          "slot": "B",
+          "file": "Loop 03/Kaat.vmd",
+          "sha256": "656bfe4b2312d920b69cd9b2ace2f8695f3b044e2228adc1bdcdbba96d0640bc"
+        }
+      ],
+      "fps": 30,
+      "frame_start": 240,
+      "frame_end": 360,
+      "note": "test fixture only",
+      "rough_special_preview": false,
+      "reference_models": {
+        "A": "D:/模型/20261008/刻晴_by_原神_b0f08721a7da17df599896ac40dd2f22/刻晴/刻晴/刻晴.pmx",
+        "B": "D:/模型/ganyu_by_原神_7381ccd84ee8763ce63b3ad638e1c49b/甘雨.pmx"
+      },
+      "updated_at": "2026-11-03T06:23:15.166482+00:00"
+    }
+  }
+}

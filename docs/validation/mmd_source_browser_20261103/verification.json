@@ -1,0 +1,81 @@
+{
+  "passed": true,
+  "formal_bakes": 0,
+  "library_files": 212,
+  "candidate_folders": 86,
+  "constraints_and_drivers": {
+    "A": [
+      50,
+      0
+    ],
+    "B": [
+      52,
+      0
+    ]
+  },
+  "ik_iterations": {
+    "A": [
+      [
+        "ひざ.L",
+        200
+      ],
+      [
+        "足首.L",
+        200
+      ],
+      [
+        "ひざ.R",
+        200
+      ],
+      [
+        "足首.R",
+        200
+      ]
+    ],
+    "B": [
+      [
+        "ひざ.L",
+        200
+      ],
+      [
+        "足首.L",
+        200
+      ],
+      [
+        "ひざ.R",
+        200
+      ],
+      [
+        "足首.R",
+        200
+      ]
+    ]
+  },
+  "first_pair_load_s": 0.7189941999968141,
+  "source_comparison_a": {
+    "checks": 143,
+    "max_error_m": 0.0,
+    "worst": {}
+  },
+  "source_comparison_b": {
+    "checks": 121,
+    "max_error_m": 0.0,
+    "worst": {}
+  },
+  "multiple_segments_persisted": true,
+  "recall_preserved_roles_and_range": true,
+  "non_480_frame_range_tested": 610,
+  "static_third_role_preserved": true,
+  "unsupported_controls_blocked_before_mutation": true,
+  "ik_switch_then_reload_preserved_constraints": true,
+  "repeated_load_action_counts": [
+    2,
+    2,
+    2,
+    2
+  ],
+  "range_clamped_to_source": true,
+  "reference_models_and_test_sources_unchanged": true,
+  "real_selection_file_modified": false,
+  "preview_blend": "D:\\Prism Route\\research\\mmd_source_preview_20261103\\mmd_source_browser.blend"
+}

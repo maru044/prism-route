@@ -1,0 +1,93 @@
+[
+  {
+    "file": "Ecchi Monster/Read me.txt",
+    "flags": [],
+    "sha256": "d179416469bf06548a009d0480f51bc24764a1765af28a941b8e9e5df4c8fbd2"
+  },
+  {
+    "file": "Just Tonight - By Ademar440/Read Me.txt",
+    "flags": [],
+    "sha256": "9306b4073397ea4ade0ac66b06bd529197578c2cd1b8cff1743df1df473d4c0c"
+  },
+  {
+    "file": "Just Tonight 1.1 - By Ademar440/Read Me.txt",
+    "flags": [],
+    "sha256": "9306b4073397ea4ade0ac66b06bd529197578c2cd1b8cff1743df1df473d4c0c"
+  },
+  {
+    "file": "Loop 28 - 69-V2/Read me before use.txt",
+    "flags": [
+      "external_parent_dependency",
+      "arm_ik_dependency"
+    ],
+    "sha256": "2bcecd26ef956b92c229408c10288b166dd0f1ee9245f165322f67cec07be39f"
+  },
+  {
+    "file": "Loop 32 - One Leg Up/Read me before use.txt",
+    "flags": [
+      "external_parent_dependency",
+      "arm_ik_dependency"
+    ],
+    "sha256": "ab430d3422b58dbdd1db53a6aefc237f004f3ad1b19396ee2d1c9a2e8c94d74c"
+  },
+  {
+    "file": "Loop 33 - Suspended Congress/IK Arm Version Instructions.txt",
+    "flags": [
+      "external_parent_dependency",
+      "arm_ik_dependency"
+    ],
+    "sha256": "e21a23a9d2c8a488102fedb85c03f671c40ef72d7051b19fd94d2c460b4af3e3"
+  },
+  {
+    "file": "Loop 34 - Pile Driver/IK Arm Version Instructions.txt",
+    "flags": [
+      "external_parent_dependency",
+      "arm_ik_dependency"
+    ],
+    "sha256": "7eece65d371f3c975586cc42546c1455ec1ec9fee11e6e88bd09994ab67c0281"
+  },
+  {
+    "file": "Loop 35 - Fitness Ball/IK Arm Version Instructions.txt",
+    "flags": [
+      "external_parent_dependency",
+      "arm_ik_dependency"
+    ],
+    "sha256": "7eece65d371f3c975586cc42546c1455ec1ec9fee11e6e88bd09994ab67c0281"
+  },
+  {
+    "file": "Loop 38 - Energetic Ride/IK Arm Version Instructions.txt",
+    "flags": [
+      "external_parent_dependency",
+      "arm_ik_dependency"
+    ],
+    "sha256": "e1bb1f9f4bfdfc9bd724f45364a761e5a62805570c4ce1b1e5dcc72a8c3f84d9"
+  },
+  {
+    "file": "Love Hotel Night   Extra Loops/Sperm Motion.txt",
+    "flags": [
+      "external_parent_dependency"
+    ],
+    "sha256": "bd5c44d3d23d5eddffc729c7fbccb2cbd74d4412d43d0a80344ca3caee229dce"
+  },
+  {
+    "file": "Love Hotel Night + Extra Loops/Sperm Motion.txt",
+    "flags": [
+      "external_parent_dependency"
+    ],
+    "sha256": "bd5c44d3d23d5eddffc729c7fbccb2cbd74d4412d43d0a80344ca3caee229dce"
+  },
+  {
+    "file": "On the floor/Read me.txt",
+    "flags": [
+      "author_loop_range_0_2497"
+    ],
+    "sha256": "770e4214395dfd08df6ed7825aa9c1c743f90161846da0399dd8aa7233df1794"
+  },
+  {
+    "file": "RCG/About camera.txt",
+    "flags": [
+      "author_camera_group_offset_7_90"
+    ],
+    "sha256": "dccea35ada5528115ba13fdb41d06bbeb0872c61c022430298763e942b547163"
+  }
+]

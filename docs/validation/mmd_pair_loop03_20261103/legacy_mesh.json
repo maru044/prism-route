@@ -1,0 +1,62 @@
+{
+	"bones": 316,
+	"engine": "4.7.2-stable (official)",
+	"frames": [
+		{
+			"frame": 0.0,
+			"skin_bounds_error_m": 0.0000142922117447597
+		},
+		{
+			"frame": 1.0,
+			"skin_bounds_error_m": 0.0000142586595757166
+		},
+		{
+			"frame": 60.0,
+			"skin_bounds_error_m": 0.0000142925537147676
+		},
+		{
+			"frame": 120.0,
+			"skin_bounds_error_m": 0.0000142710268846713
+		},
+		{
+			"frame": 180.0,
+			"skin_bounds_error_m": 0.0000146015872815042
+		},
+		{
+			"frame": 240.0,
+			"skin_bounds_error_m": 0.0000143685547300265
+		},
+		{
+			"frame": 300.0,
+			"skin_bounds_error_m": 0.000000223517417907715
+		},
+		{
+			"frame": 360.0,
+			"skin_bounds_error_m": 0.00000564764332011691
+		},
+		{
+			"frame": 420.0,
+			"skin_bounds_error_m": 0.0000142667313411948
+		},
+		{
+			"frame": 479.0,
+			"skin_bounds_error_m": 0.000014223703146854
+		},
+		{
+			"frame": 480.0,
+			"skin_bounds_error_m": 0.0000143521083373344
+		}
+	],
+	"imported_vertices_including_uv_splits": 15985,
+	"joint_comparisons": 143,
+	"length_seconds": 16.0,
+	"max_bone_position_error_m": 0.000000793687945588317,
+	"max_skin_bounds_error_m": 0.0000146015872815042,
+	"max_vertex_motion_m": 0.119449958205223,
+	"max_weight_sum_error": 0.0000152885913848877,
+	"model": "res://assets/characters/mmd_validation/keqing_loop03.glb",
+	"passed": true,
+	"skin_vertex_frame_checks": 175835,
+	"surfaces": 20,
+	"tracks": 133
+}

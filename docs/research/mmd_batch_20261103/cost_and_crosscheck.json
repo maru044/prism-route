@@ -1,0 +1,51 @@
+{
+  "scope": "read existing resources only; no actual batch conversion",
+  "animations": [
+    {
+      "file": "assets\\characters\\mmd_validation\\keqing_vrm_loop03.tres",
+      "bytes": 7843371,
+      "tracks": 288,
+      "keys": 138528,
+      "constant_tracks_within_1e_5": 246,
+      "constant_by_kind": {
+        "rotation_3d": 103,
+        "position_3d": 143
+      },
+      "note": "Candidate single-key tracks only. Constant non-rest poses must remain; this is not a verified compression ratio."
+    },
+    {
+      "file": "assets\\characters\\mmd_validation\\paired\\ganyu_role_b.tres",
+      "bytes": 9043517,
+      "tracks": 326,
+      "keys": 156806,
+      "constant_tracks_within_1e_5": 280,
+      "constant_by_kind": {
+        "rotation_3d": 118,
+        "position_3d": 162
+      },
+      "note": "Candidate single-key tracks only. Constant non-rest poses must remain; this is not a verified compression ratio."
+    }
+  ],
+  "memory_snapshot": {
+    "logical_processors": 20,
+    "total_physical_bytes": 33974665216,
+    "available_physical_bytes": 8043380736
+  },
+  "retarget_microbenchmark": {
+    "sample_frames_per_repeat": 41,
+    "repeats": 3,
+    "elapsed_s": [
+      0.3497823999496177,
+      0.35424200003035367,
+      0.35354759998153895
+    ],
+    "median_seconds_per_frame": 0.008623112194671682,
+    "scope": "Existing Keqing GLB pose sampling + existing retarget math only; excludes Blender import/bake/export, output serialization and Godot QA."
+  },
+  "installed_reader_crosscheck": {
+    "reader": "C:\\Users\\PC\\AppData\\Roaming\\Blender Foundation\\Blender\\5.1\\extensions\\blender_org\\mmd_tools\\core\\vmd\\__init__.py",
+    "files_checked": 285,
+    "section_count_mismatches": [],
+    "elapsed_s": 4.586105700000189
+  }
+}

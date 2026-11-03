@@ -1,0 +1,1247 @@
+{
+  "classification": "Static planning candidates only; no conversion/visual acceptance. Required-control classification agrees for the two current proxy rigs.",
+  "source_body_files": 212,
+  "unique_bone_ik_payloads": 194,
+  "standard_candidate_files": 190,
+  "standard_candidate_unique_payloads": 175,
+  "special_files": 22,
+  "special_unique_payloads": 19,
+  "same_folder_same_model_same_end_fk_fallback_candidates": [
+    {
+      "file": "Loop 21 - M/Loop 21 - M - SS 18-22 - IK Arms.vmd",
+      "candidates": [
+        "Loop 21 - M/Loop 21 - M - SS 18-22.vmd"
+      ]
+    },
+    {
+      "file": "Loop 22 - Aquarius/Loop 22 - Aquarius  - SS 18-22 IK arms.vmd",
+      "candidates": [
+        "Loop 22 - Aquarius/Loop 22 - Aquarius  - SS 18-22.vmd"
+      ]
+    },
+    {
+      "file": "Loop 24 - Aphrodite/Loop 24 - Aphrodite - SS18-22 IK Arms.vmd",
+      "candidates": [
+        "Loop 24 - Aphrodite/Loop 24 - Aphrodite - SS18-22.vmd"
+      ]
+    },
+    {
+      "file": "Loop 32 - One Leg Up/Loop 32 - One Leg Up - Maran IK.vmd",
+      "candidates": [
+        "Loop 32 - One Leg Up/Loop 32 - One Leg Up - Maran.vmd"
+      ]
+    },
+    {
+      "file": "Loop 33 - Suspended Congress/Loop 33 - Suspended Congress - Maran - IK Arms.vmd",
+      "candidates": [
+        "Loop 33 - Suspended Congress/Loop 33 - Suspended Congress - Maran.vmd"
+      ]
+    },
+    {
+      "file": "Loop 34 - Pile Driver/Loop 34 - Pile Driver - SS-18-22 - IK Arms.vmd",
+      "candidates": [
+        "Loop 34 - Pile Driver/Loop 34 - Pile Driver - SS-18-22.vmd"
+      ]
+    },
+    {
+      "file": "Loop 35 - Fitness Ball/Loop 35 - Fitness Ball - SS-18-22 - IK Arms.vmd",
+      "candidates": [
+        "Loop 35 - Fitness Ball/Loop 35 - Fitness Ball - SS-18-22.vmd"
+      ]
+    },
+    {
+      "file": "Loop 38 - Energetic Ride/Loop 38 - Energetic Ride - Maran IK Arms.vmd",
+      "candidates": [
+        "Loop 38 - Energetic Ride/Loop 38 - Energetic Ride - Maran.vmd"
+      ]
+    },
+    {
+      "file": "Pink lounge sex Update 1.1/Sex from behind - SinSack.vmd",
+      "candidates": [
+        "Pink lounge sex Update 1.1/Sex from behind - SinSack no IK arms.vmd"
+      ]
+    }
+  ],
+  "special_tracks": [
+    {
+      "file": "Loop 21 - M/Loop 21 - M - SS 18-22 - IK Arms.vmd",
+      "missing_controls": [
+        "右ひじ+",
+        "右手首+",
+        "右肩+",
+        "右腕+",
+        "右腕ＩＫ",
+        "左ひじ+",
+        "左手首+",
+        "左肩+",
+        "左腕+",
+        "左腕ＩＫ"
+      ],
+      "payload": "be883b919a97c2fdc8b16c20d6701b5537f36e479a7cc5f4b43c0abf7314771a"
+    },
+    {
+      "file": "Loop 22 - Aquarius/Loop 22 - Aquarius  - SS 18-22 IK arms.vmd",
+      "missing_controls": [
+        "右ひじ+",
+        "右手首+",
+        "右肩+",
+        "右腕+",
+        "右腕ＩＫ",
+        "左ひじ+",
+        "左手首+",
+        "左肩+",
+        "左腕+",
+        "左腕ＩＫ"
+      ],
+      "payload": "6c1c2abe5a233aa644ddd0e84d2153150d6f616fcef2fc9fddfb77a50d4e2029"
+    },
+    {
+      "file": "Loop 23 - Prone Bone/Loop 23 - Pronebone - Sin Sack 18-22.vmd",
+      "missing_controls": [
+        "右ひじ+",
+        "右手首+",
+        "右肩+",
+        "右腕+",
+        "右腕ＩＫ",
+        "左ひじ+",
+        "左手首+",
+        "左肩+",
+        "左腕+",
+        "左腕ＩＫ"
+      ],
+      "payload": "c95f46949693481e9cd538c9860e7a7db7b3e2d95ca50c59a09388c88af6d388"
+    },
+    {
+      "file": "Loop 24 - Aphrodite/Loop 24 - Aphrodite - SS18-22 IK Arms.vmd",
+      "missing_controls": [
+        "右ひじ+",
+        "右手首+",
+        "右肩+",
+        "右腕+",
+        "右腕ＩＫ",
+        "左ひじ+",
+        "左手首+",
+        "左肩+",
+        "左腕+",
+        "左腕ＩＫ"
+      ],
+      "payload": "09f3d5cc8b55c70c53b33dc1cf36a2aab80926f4a93551418cec3f585e57c489"
+    },
+    {
+      "file": "Loop 28 - 69-V2/Loop 28 - 69 - Maran.vmd",
+      "missing_controls": [
+        "右ひじ+",
+        "右手首+",
+        "右肩+",
+        "右腕+",
+        "右腕ＩＫ",
+        "左ひじ+",
+        "左手首+",
+        "左肩+",
+        "左腕+",
+        "左腕ＩＫ"
+      ],
+      "payload": "6891392a3f535db7bebb0adb2200aaba1554e19f382860f529dea23ad9f712d9"
+    },
+    {
+      "file": "Loop 29 - Eagle/Loop 29 - Eagle - Daiki.vmd",
+      "missing_controls": [
+        "右ひじ+",
+        "右手首+",
+        "右肩+",
+        "右腕+",
+        "右腕ＩＫ",
+        "左ひじ+",
+        "左手首+",
+        "左肩+",
+        "左腕+",
+        "左腕ＩＫ"
+      ],
+      "payload": "f34924a1c7692e5cc31878f0d7c8cbfdf8af6b45f27492140b5f224a53e50ade"
+    },
+    {
+      "file": "Loop 32 - One Leg Up/Loop 32 - One Leg Up - Maran IK.vmd",
+      "missing_controls": [
+        "右ひじ+",
+        "右手首+",
+        "右肩+",
+        "右腕+",
+        "右腕ＩＫ",
+        "左ひじ+",
+        "左手首+",
+        "左肩+",
+        "左腕+",
+        "左腕ＩＫ"
+      ],
+      "payload": "6a19912506e1605856659be9333e4b620af5f92c584256d8509ee5ce0abca551"
+    },
+    {
+      "file": "Loop 33 - Suspended Congress/Loop 33 - Suspended Congress - Maran - IK Arms.vmd",
+      "missing_controls": [
+        "右ひじ+",
+        "右手首+",
+        "右肩+",
+        "右腕+",
+        "右腕ＩＫ",
+        "左ひじ+",
+        "左手首+",
+        "左肩+",
+        "左腕+",
+        "左腕ＩＫ"
+      ],
+      "payload": "ae3b875589327f0445231fef896fa9dc926b02230ae4ccb3906646c9abcf30de"
+    },
+    {
+      "file": "Loop 34 - Pile Driver/Loop 34 - Pile Driver - SS-18-22 - IK Arms.vmd",
+      "missing_controls": [
+        "右ひじ+",
+        "右手首+",
+        "右肩+",
+        "右腕+",
+        "右腕ＩＫ",
+        "左ひじ+",
+        "左手首+",
+        "左肩+",
+        "左腕+",
+        "左腕ＩＫ"
+      ],
+      "payload": "7ec60b39416d8ecf75d6babed61522bf353e9499068a663dc94b630c8f04426e"
+    },
+    {
+      "file": "Loop 35 - Fitness Ball/Loop 35 - Fitness Ball - SS-18-22 - IK Arms.vmd",
+      "missing_controls": [
+        "右ひじ+",
+        "右手首+",
+        "右肩+",
+        "右腕+",
+        "右腕ＩＫ",
+        "左ひじ+",
+        "左手首+",
+        "左肩+",
+        "左腕+",
+        "左腕ＩＫ"
+      ],
+      "payload": "a3dd1afaa6f8a3c2d6c38b3ab61cad03631c9426753514b8d16323fa0cb7f518"
+    },
+    {
+      "file": "Loop 37 - Soapy HJ/Loop 37 - Soapy Handjob - SS-18-22 IK Arms.vmd",
+      "missing_controls": [
+        "右ひじ+",
+        "右手首+",
+        "右肩+",
+        "右腕+",
+        "右腕ＩＫ",
+        "左ひじ+",
+        "左手首+",
+        "左肩+",
+        "左腕+",
+        "左腕ＩＫ"
+      ],
+      "payload": "5cf67e4f46ec4a4581b1a52f70c548b9df802a1a42d5b4c566601d3da7cec065"
+    },
+    {
+      "file": "Loop 38 - Energetic Ride/Loop 38 - Energetic Ride - Maran IK Arms.vmd",
+      "missing_controls": [
+        "右ひじ+",
+        "右手首+",
+        "右肩+",
+        "右腕+",
+        "右腕ＩＫ",
+        "左ひじ+",
+        "左手首+",
+        "左肩+",
+        "左腕+",
+        "左腕ＩＫ"
+      ],
+      "payload": "4f79b2744bca2e02d08b2377d911ac219f135307c47c9f70f3b15080f9a187a8"
+    },
+    {
+      "file": "Love Hotel Night   Extra Loops/Extra Loops/Table Sex From Behind Loop Guy.vmd",
+      "missing_controls": [
+        "右腕ＩＫ",
+        "左手首+",
+        "左腕ＩＫ"
+      ],
+      "payload": "194141259d26385b7b9103746fba84539b9d27578dfe7015baddc42ad29cec2e"
+    },
+    {
+      "file": "Love Hotel Night   Extra Loops/Love Hotel CG Guy.vmd",
+      "missing_controls": [
+        "右手首+",
+        "右腕ＩＫ",
+        "左手首+",
+        "左腕ＩＫ"
+      ],
+      "payload": "5c2478c9de1664a0543399914b002c4bbe01161f7833ef190116c38e3f92af53"
+    },
+    {
+      "file": "Love Hotel Night + Extra Loops/Extra Loops/Table Sex From Behind Loop Guy.vmd",
+      "missing_controls": [
+        "右腕ＩＫ",
+        "左手首+",
+        "左腕ＩＫ"
+      ],
+      "payload": "194141259d26385b7b9103746fba84539b9d27578dfe7015baddc42ad29cec2e"
+    },
+    {
+      "file": "Love Hotel Night + Extra Loops/Love Hotel CG Guy.vmd",
+      "missing_controls": [
+        "右手首+",
+        "右腕ＩＫ",
+        "左手首+",
+        "左腕ＩＫ"
+      ],
+      "payload": "5c2478c9de1664a0543399914b002c4bbe01161f7833ef190116c38e3f92af53"
+    },
+    {
+      "file": "Pink lounge sex Update/Blowjob - SinSack.vmd",
+      "missing_controls": [
+        "右腕ＩＫ",
+        "左腕ＩＫ"
+      ],
+      "payload": "ff257f07a209c90b5ed087fd5bfaee180395d4dfe41eb876d051c4d33d7c42ed"
+    },
+    {
+      "file": "Pink lounge sex Update/Sex from behind - SinSack.vmd",
+      "missing_controls": [
+        "右ひじ+",
+        "右腕+",
+        "右腕ＩＫ",
+        "左ひじ+",
+        "左腕ＩＫ"
+      ],
+      "payload": "2b95953f5891b28ce21ce891239439ef8c1ba10ff0620ce184a640c2cb550b11"
+    },
+    {
+      "file": "Pink lounge sex Update 1.1/Blowjob - SinSack.vmd",
+      "missing_controls": [
+        "右腕ＩＫ",
+        "左腕ＩＫ"
+      ],
+      "payload": "ff257f07a209c90b5ed087fd5bfaee180395d4dfe41eb876d051c4d33d7c42ed"
+    },
+    {
+      "file": "Pink lounge sex Update 1.1/Sex from behind - SinSack.vmd",
+      "missing_controls": [
+        "右ひじ+",
+        "右腕+",
+        "右腕ＩＫ",
+        "左ひじ+",
+        "左腕ＩＫ"
+      ],
+      "payload": "3ebea81b34d5fd4bd301923d482eb0148abab7cffd6a63a99d2fc295bfb3075f"
+    },
+    {
+      "file": "Stand and Carry - Complete - By Ademar440/Maran Version/Stand and Carry - Maran IK Arms.vmd",
+      "missing_controls": [
+        "右ひじ+",
+        "右手首+",
+        "右肩+",
+        "右腕+",
+        "右腕ＩＫ",
+        "左ひじ+",
+        "左手首+",
+        "左肩+",
+        "左腕+",
+        "左腕ＩＫ"
+      ],
+      "payload": "ba6e9e533827dca17bedcac8f90745ea51cf80b8e00e458adfcaaa1ed89edef7"
+    },
+    {
+      "file": "Stand and Carry - Complete - By Ademar440/Sin Sack Version/Stand and Carry - Sin Sack 2020 S1 IK Arms.vmd",
+      "missing_controls": [
+        "右ひじ+",
+        "右手首+",
+        "右肩+",
+        "右腕+",
+        "右腕ＩＫ",
+        "左ひじ+",
+        "左手首+",
+        "左肩+",
+        "左腕+",
+        "左腕ＩＫ"
+      ],
+      "payload": "095fa35e2a387cd067a10e85ac0533bd099927520ad7059e4808720785edb022"
+    }
+  ],
+  "candidate_queue": [
+    {
+      "file": "Armchair Paizuri - By Ademar440/Armchair Paizuri - Izumi.vmd",
+      "bone_end": 2548,
+      "payload": "c32d3ae096afa2d3f805b76915d13bb1266ba84b74c88d0a82fce690124b8390"
+    },
+    {
+      "file": "Armchair Paizuri - By Ademar440/Armchair Paizuri - Maran.vmd",
+      "bone_end": 2548,
+      "payload": "131d394f281f3a6a912ceac677d09b9388a90b9bc4cf150f11e3642a8e53fd33"
+    },
+    {
+      "file": "Bath House Service/Bath house service - guy.vmd",
+      "bone_end": 2158,
+      "payload": "ea17e72a12b4c7f8e5a0b5405c86a0084a11001a54b776445f8ef798fb215fc3"
+    },
+    {
+      "file": "Bath House Service/Bath house service - Izumi.vmd",
+      "bone_end": 2158,
+      "payload": "3197a33cf85192dc35cca997ceb5733015c46ce3c894c2403abd9bb43981b797"
+    },
+    {
+      "file": "Bath House Service V2/Missionary - Izumi.vmd",
+      "bone_end": 1834,
+      "payload": "2a8fdfff7cf449a5f7f78f5a2dd0872a5137821d4501766632e88a2c6e4923cd"
+    },
+    {
+      "file": "Bath House Service V2/Missionary - Maran.vmd",
+      "bone_end": 1834,
+      "payload": "a5277a3eca252b8cbdcf4a4445806dd073df3e0398b20e6efcc14a504c6b5a02"
+    },
+    {
+      "file": "Bath House Service V2/Missionary - Sin Sack 2018.vmd",
+      "bone_end": 1834,
+      "payload": "8984c3d529844297bf0ae34d26459e8748d7c1c84744a25f440e95653db3c6a8"
+    },
+    {
+      "file": "BJ in Bed/Blowjob in Bed - Izumi.vmd",
+      "bone_end": 1990,
+      "payload": "6acdbc93aba22b4d3a9bed5fe79528112bbbc591f58d1961c21dc071c07c4d6e"
+    },
+    {
+      "file": "BJ in Bed/Blowjob in Bed - Maran.vmd",
+      "bone_end": 1990,
+      "payload": "005b13a97ceff04dc339ebbb66130b9c96a586f02d67dcb5169a8c6931455c91"
+    },
+    {
+      "file": "BJ in Bed/Blowjob in Bed - Sin Sack.vmd",
+      "bone_end": 1990,
+      "payload": "e0e566a5ceb6b7899bc6a7497172c383658da8371d0619b86e7298eb96e55abc"
+    },
+    {
+      "file": "Couch Cowgirl/Couch Cowgirl - Guy.vmd",
+      "bone_end": 1670,
+      "payload": "6db088197282ec3f6e9798d33cadb0df534cca067cdd646e481ac3612c403b01"
+    },
+    {
+      "file": "Couch Cowgirl/Couch Cowgirl - Izumi.vmd",
+      "bone_end": 1670,
+      "payload": "527f5ab8b7735c5e806a85f90f4b82cf9a64a3bcc4ece074ef8dbd8362f8e5ba"
+    },
+    {
+      "file": "Couch Cowgirl V2 By Ademar440/Couch Cowgirl V2 - Izumi.vmd",
+      "bone_end": 1776,
+      "payload": "08f61052f023a512a4f045d506612b2c1aaf9879d0bf27b16c7014e6594a6ddc"
+    },
+    {
+      "file": "Couch Cowgirl V2 By Ademar440/Couch Cowgirl V2 - Maran.vmd",
+      "bone_end": 1776,
+      "payload": "2c75c3be004eb1821d853a379b73721807e9d814629e854328dc55a9a72e93c4"
+    },
+    {
+      "file": "Couch Cowgirl V2 By Ademar440/Couch Cowgirl V2 - Sin Sack.vmd",
+      "bone_end": 1776,
+      "payload": "30dde377b5b6d9e17ce58f50be94d008bffe326c159d6b5bbe7820c4a1ee64d8"
+    },
+    {
+      "file": "Dominating FJ/guy.vmd",
+      "bone_end": 1120,
+      "payload": "9163adeca2dc993565cde0252003ad2cfb68397acfa905af780121c46d6dde12"
+    },
+    {
+      "file": "Dominating FJ/izumi.vmd",
+      "bone_end": 1120,
+      "payload": "17616f501862f1f3fcd2064136462e658ee2a5bbc5ef04641f369cd083ca3954"
+    },
+    {
+      "file": "Ecchi Monster/Ecchi Monster - Izumi.vmd",
+      "bone_end": 1057,
+      "payload": "f6101ee46e5ba56d3f85f3d6a5265257aff50c986b94a7851f901ea658fd8ebf"
+    },
+    {
+      "file": "Ecchi Monster/Ecchi Monster - Sin Sack 2018.vmd",
+      "bone_end": 1057,
+      "payload": "01d93194481c55943bee02cb012d68eb908b28010d39256123ceb722ab087f57"
+    },
+    {
+      "file": "Emperor Position Izumi ver/Emperor position Izumi.vmd",
+      "bone_end": 2070,
+      "payload": "32b4a7018649dd2f9fe180e613791c135c27daf8481392912ca5ec5a6886ece7"
+    },
+    {
+      "file": "Emperor Position Izumi ver/Emperor position Maran.vmd",
+      "bone_end": 2070,
+      "payload": "fa777607dd1fcbba11ee6f25bd81abf105729d72b58a050ab5cc60144e172597"
+    },
+    {
+      "file": "Emperor Position Izumi ver/Emperor Position Sin Sack 2018.vmd",
+      "bone_end": 2070,
+      "payload": "39eae127476ee61812fa6985b7056abdcc49cb6fb0faf630d52d08ff38dae4cd"
+    },
+    {
+      "file": "Just Tonight 1.1 - By Ademar440/Just Tonight - Sin Sack partner version/Just Tonight - Izumi.vmd",
+      "bone_end": 7030,
+      "payload": "1658406cbacf7ca36a27635c667fb57dcff1b9bbe4e9bd0a766100e503b41e26"
+    },
+    {
+      "file": "Just Tonight 1.1 - By Ademar440/Just Tonight - Sin Sack partner version/Just Tonight - Sin Sack.vmd",
+      "bone_end": 7030,
+      "payload": "a9b3a03f8a5405d7e6f1297c0ccc200748f4e4ceaac1e1a34eeeaaba682fb05e"
+    },
+    {
+      "file": "Just Tonight 1.1 - By Ademar440/Short Loops/Fondling 01 Izumi.vmd",
+      "bone_end": 260,
+      "payload": "d779ae6b57722c6fc4954455c6fd068c038be9dfa022cb53ee7b268e25f49cd1"
+    },
+    {
+      "file": "Just Tonight 1.1 - By Ademar440/Short Loops/Fondling 01 SSS.vmd",
+      "bone_end": 260,
+      "payload": "391d9385c7bdd5fd9374cf603cf64fdf5f78038160b1576e06fcf8d990ddc238"
+    },
+    {
+      "file": "Just Tonight - By Ademar440/Short Loops/Fondling 02 Izumi.vmd",
+      "bone_end": 229,
+      "payload": "2b7ba9319f3153a667e3f936ac1f79e715e485053db99742d211a4e5e528ebea"
+    },
+    {
+      "file": "Just Tonight 1.1 - By Ademar440/Short Loops/Fondling 02 SSS.vmd",
+      "bone_end": 229,
+      "payload": "a4926c74a89b0fff8fe9aa3e8f2d5937c20b0fe03c689f2ba3b6d1b7c5b17ff6"
+    },
+    {
+      "file": "Just Tonight 1.1 - By Ademar440/Just Tonight - Maran partner version/Just Tonight - Izumi.vmd",
+      "bone_end": 7030,
+      "payload": "af2d08f2a0ef177997d11f20f621d730eeb4398ea0111baef73a21dcf1499a1d"
+    },
+    {
+      "file": "Just Tonight 1.1 - By Ademar440/Just Tonight - Maran partner version/Just Tonight - Maran.vmd",
+      "bone_end": 7030,
+      "payload": "2b15253af6a607b420f46e09fe73cbb148fe23ebd99abd3d466d3600b9aec916"
+    },
+    {
+      "file": "Just Tonight 1.1 - By Ademar440/Short Loops/Fondling 01 Maran.vmd",
+      "bone_end": 260,
+      "payload": "7c6f5700cf48cd198f98041829ab0a97829d0903c79484b1eb474980fd9dd595"
+    },
+    {
+      "file": "Just Tonight 1.1 - By Ademar440/Short Loops/Fondling 02 Izumi.vmd",
+      "bone_end": 229,
+      "payload": "639d7592c93290ad487c8b36341b160c3df7c0fb051685882cbd7241140d6efc"
+    },
+    {
+      "file": "Just Tonight 1.1 - By Ademar440/Short Loops/Fondling 02 Maran.vmd",
+      "bone_end": 229,
+      "payload": "a805802604a4cc03114bf2882627956f129bf1ffb62620dec6ca7bd55e092a99"
+    },
+    {
+      "file": "Lap Sitting/Lap Sitting - Guy.vmd",
+      "bone_end": 2340,
+      "payload": "bf237ba5577d7367180de9f6437f3190391b5f4693a3aa14f19909ad74c15ce2"
+    },
+    {
+      "file": "Lap Sitting/Lap Sitting - Izumi.vmd",
+      "bone_end": 2340,
+      "payload": "831d5f6b57917049d7f9d6af9e1a4d678f27c6a1dcaad4d19b713af29d806cf9"
+    },
+    {
+      "file": "LHDS V3 - By Ademar440/Love Hotel DS Loop Bikini Izumi.vmd",
+      "bone_end": 2007,
+      "payload": "aa4b8971fa0192ad250059037142a36caafb62df1587c7dccbd2385a7a8f58a7"
+    },
+    {
+      "file": "LHDS V3 - By Ademar440/Love Hotel DS Loop Maran.vmd",
+      "bone_end": 2007,
+      "payload": "ccb6834907950472d9969145bc6098b6686cab682d29790fd7152aa7da0a777d"
+    },
+    {
+      "file": "LHDS V3 - By Ademar440/Love Hotel DS Loop Sin Sack 2018.vmd",
+      "bone_end": 2007,
+      "payload": "4e3004b52c2f28c10c2ff70a43babbcc56bca306794420bf2ce07aa0001ff4d7"
+    },
+    {
+      "file": "LHDS V3 - By Ademar440/Love Hotel DS Loop Bikini Izumi alt arms.vmd",
+      "bone_end": 2007,
+      "payload": "83a523c33e159ed346f447d976a939018ea1da16ce38d2ec1b61ac49bbe09a9a"
+    },
+    {
+      "file": "Loop 01/Izumi.vmd",
+      "bone_end": 615,
+      "payload": "01ada7e269c8569e2f8870de9c9042c667b8d7e91a210c0e5264d6dbbbeaa31c"
+    },
+    {
+      "file": "Loop 01/Maran.vmd",
+      "bone_end": 615,
+      "payload": "242d85a437d8af527207100e710ff72604a205bf02d9a5b58cc56736d2d0f59b"
+    },
+    {
+      "file": "Loop 01/SS21.vmd",
+      "bone_end": 615,
+      "payload": "c4bea809209fb38a0945171d73fa008b6989921e9071c663d77b1709c99c06b9"
+    },
+    {
+      "file": "Loop 02/Izumi Enjoys.vmd",
+      "bone_end": 640,
+      "payload": "2cbed70aeee8bfe024fb2033e61406c51e4a05147bb7ed707233412b8277bd05"
+    },
+    {
+      "file": "Loop 03/Izumi.vmd",
+      "bone_end": 480,
+      "payload": "ed1fa55d4138897e6397db5c75ad9ac30cf30d16b076409501bc75d6a21f393b"
+    },
+    {
+      "file": "Loop 03/Kaat.vmd",
+      "bone_end": 480,
+      "payload": "7606333c2548929ee237507aeb999c2f6806dd8bb15e235502599d9d295aa3d1"
+    },
+    {
+      "file": "Loop 04 Grind/Grind - Izumi.vmd",
+      "bone_end": 2120,
+      "payload": "4773d91a44db41af438a07780235240b971e5c66a5ead5782462279ca889cf4b"
+    },
+    {
+      "file": "Loop 04 Grind/Grind - Maran.vmd",
+      "bone_end": 2120,
+      "payload": "efd7144d1659b7c33969b21142b4585ffd652b7915a14880f59f5a6db8818a6f"
+    },
+    {
+      "file": "Loop 05/Izumi.vmd",
+      "bone_end": 609,
+      "payload": "8b2f5b759f576db610c6a3c35596b942c41ea69693afd3476db3458ac8af623f"
+    },
+    {
+      "file": "Loop 05/Kaat.vmd",
+      "bone_end": 610,
+      "payload": "8b9e0afa28449aa88059e88922ae6073f25d12624cf44d228aa714418017e621"
+    },
+    {
+      "file": "Loop 06/Izumi.vmd",
+      "bone_end": 918,
+      "payload": "54514993f19b63a10f984ead9b4fe87d85ddaea1dc7ec7b49e2abf4e7de49663"
+    },
+    {
+      "file": "Loop 06/Maran.vmd",
+      "bone_end": 918,
+      "payload": "edc735d3f1a3440bc451dab92bf8dd41ecc07e3ba25333b277f6f577652acabc"
+    },
+    {
+      "file": "Loop 07 - Spooning/Loop 07 - Spooning - Izumi.vmd",
+      "bone_end": 909,
+      "payload": "f88668865b20992a688b6c297ee1437803c01fe936bba786ddbd17cf0932d23b"
+    },
+    {
+      "file": "Loop 07 - Spooning/Loop 07 - Spooning - Maran.vmd",
+      "bone_end": 909,
+      "payload": "58f83eb6adda804b2151049c6936055aec0241d2d732c729172947c875b3ec78"
+    },
+    {
+      "file": "Loop 08/Izumi.vmd",
+      "bone_end": 1002,
+      "payload": "bc343c80ed617043a8a93778c1fafffafe6257499417ccb1a98811f9f4ece12b"
+    },
+    {
+      "file": "Loop 08/Kaat.vmd",
+      "bone_end": 1372,
+      "payload": "b747c640d068c2febaa35d0231aa990156df26bbaa669b678c948a3a3bebecab"
+    },
+    {
+      "file": "Loop 09 - Romantic CG/RMC - Izumi.vmd",
+      "bone_end": 1144,
+      "payload": "5327c6beae12480372e1ffd29efb82994bac992e116adfc1f6828812e2335fab"
+    },
+    {
+      "file": "Loop 09 - Romantic CG/RMC - Maran.vmd",
+      "bone_end": 1144,
+      "payload": "3f3d5c3dfbf144e74db7e553a8f76e10555df914029dcd08a03e7cc03ef7a7f3"
+    },
+    {
+      "file": "Loop 10 - After Pole Dance V3/Daiki Partner/Loop 10 - Daiki.vmd",
+      "bone_end": 1019,
+      "payload": "d64e31381dc6b76b0e5208c6d5fe339db50ffab3f6637fd573fe728409fef5b5"
+    },
+    {
+      "file": "Loop 10 - After Pole Dance V3/Daiki Partner/Loop 10 - Izumi.vmd",
+      "bone_end": 1019,
+      "payload": "3aa3640fd96d6d963dfe439b1b835a4d0abe0811163569bcf4b351894a16eb1d"
+    },
+    {
+      "file": "Loop 10 - After Pole Dance V3/Maran Parner/Loop 10 - Izumi Alt Arms.vmd",
+      "bone_end": 1019,
+      "payload": "d2421a62399c96023ddd529ba36814a58e775b1c22bbd75bc6c9ee724d73e44e"
+    },
+    {
+      "file": "Loop 10 - After Pole Dance V3/Maran Parner/Loop 10 - Izumi.vmd",
+      "bone_end": 1019,
+      "payload": "6b42c81e600123fc3154140f54925f0b9213d90a72aa0ab7cfa6c4d1c1a2d308"
+    },
+    {
+      "file": "Loop 10 - After Pole Dance V3/Maran Parner/Loop 10 - Maran.vmd",
+      "bone_end": 1019,
+      "payload": "42af042a7d542fe00778f96a2231bc9666a58a9d961660a96d50024c4ee5e9f7"
+    },
+    {
+      "file": "Loop 11 - Standing From Behind/Daiki Partner/Loop 11 - Daiki.vmd",
+      "bone_end": 1048,
+      "payload": "84f1ab21253f0fe171a17b9ed140ebfc1cdf581d156f4bee28ffde0ca9c68730"
+    },
+    {
+      "file": "Loop 11 - Standing From Behind/Daiki Partner/Loop 11 - Izumi.vmd",
+      "bone_end": 1048,
+      "payload": "96236b3adad01a1cba1fa1c58e7229fbdd1da108f5649032cddbad22dd5f2d71"
+    },
+    {
+      "file": "Loop 11 - Standing From Behind/Sin Sack Partner/Loop 11 - Izumi.vmd",
+      "bone_end": 1048,
+      "payload": "24f8ebf4a86cbd6f14d37b772e5b3dc123aba51398d46d91f1fa77ab53cb53b2"
+    },
+    {
+      "file": "Loop 11 - Standing From Behind/Sin Sack Partner/Loop 11 - SS 18-22.vmd",
+      "bone_end": 1048,
+      "payload": "d865122130aba7c846e9f65b30906f5919afe523908f73ba1cb01a72731337d0"
+    },
+    {
+      "file": "Loop 12 - Hard Ride/Sin Sack Partner/Loop 12 - Izumi Reverse.vmd",
+      "bone_end": 1000,
+      "payload": "65afb7c2dd32f4cdc3c19e089637fd847b288f4273ec33993165688ef31350b1"
+    },
+    {
+      "file": "Loop 12 - Hard Ride/Sin Sack Partner/Loop 12 - Izumi.vmd",
+      "bone_end": 1000,
+      "payload": "e72874b55cc4228c7077600542ba9ca5a284c78c93162739f93f9f9fa3d2f24a"
+    },
+    {
+      "file": "Loop 12 - Hard Ride/Sin Sack Partner/Loop 12 - SS 18-22 Reverse.vmd",
+      "bone_end": 1000,
+      "payload": "db880213751c71c6b1a9f3e58b06affaac76e2ba5f65c8c04b8df62090ed184e"
+    },
+    {
+      "file": "Loop 12 - Hard Ride/Sin Sack Partner/Loop 12 - SS 18-22.vmd",
+      "bone_end": 1000,
+      "payload": "b784b15211d9cfe9d150d96f1a059bf991f23b4fbda1ea92fbb2bbedbf5a4390"
+    },
+    {
+      "file": "Loop 13 - KBJ/Izumi.vmd",
+      "bone_end": 1119,
+      "payload": "9d631d63e3a02044fb8b8718fff14df810781abec7cdbf271b93ca8f3f0fdeed"
+    },
+    {
+      "file": "Loop 13 - KBJ/Sin Sack.vmd",
+      "bone_end": 1119,
+      "payload": "2b0f12c2b6ce890fb6ebd89e500c182bae19575df7defd344775451df2c85bc3"
+    },
+    {
+      "file": "Loop 14 - Couch CG/Loop 14 - Izumi.vmd",
+      "bone_end": 1000,
+      "payload": "3acc014d37e790d61eecb61b7c810c8a52880749cf78625f99b130cb3df6efcd"
+    },
+    {
+      "file": "Loop 14 - Couch CG/Loop 14 - SS 18-22.vmd",
+      "bone_end": 1000,
+      "payload": "1639d133b011246d12c4564303b8f32b70610f6936ee5e0651c2a5e317d9e5c8"
+    },
+    {
+      "file": "Loop 15 - Sumata/Izumi.vmd",
+      "bone_end": 1100,
+      "payload": "b9e4afa93edb03cc57cb6308872b28a82a43d6c61e5548fa7730144b41193b92"
+    },
+    {
+      "file": "Loop 15 - Sumata/Sin Sack 18-22.vmd",
+      "bone_end": 1100,
+      "payload": "c99cb1ce66abf56ef118a807af0d5371e3a4db693d3497102495e96192e87213"
+    },
+    {
+      "file": "Loop 16 - Thighjob/Izumi.vmd",
+      "bone_end": 1000,
+      "payload": "6a779ba8e3c765cbda41123fe017dd55b597d6e803eaf557d007f6ac68f3374d"
+    },
+    {
+      "file": "Loop 16 - Thighjob/SS-18-21.vmd",
+      "bone_end": 1000,
+      "payload": "66daa349792108c90517240a9b524e17cb5882693ee6e897ac436108a183a42f"
+    },
+    {
+      "file": "Loop 17 - Chikan 01/Loop 17 - Chickan 01 - Izumi.vmd",
+      "bone_end": 1000,
+      "payload": "aca52c472f70d3ed0f7cc620ddf16e3f65de4c2cdbb34e79fb03e6771d436b23"
+    },
+    {
+      "file": "Loop 17 - Chikan 01/Loop 17 - Chickan 01 - SS 18-22.vmd",
+      "bone_end": 1000,
+      "payload": "e5b2602bf9eec8e0388e6990f79542936bda35c13b3b4e8436a81e3680a55d93"
+    },
+    {
+      "file": "Loop 18 - Chikan 02/Loop 18 - Chickan 02 - Izumi.vmd",
+      "bone_end": 1000,
+      "payload": "54f0936779ca572809d6855a52f8dfa47508a7f0420bc443bcfef8d99ebe7a03"
+    },
+    {
+      "file": "Loop 18 - Chikan 02/Loop 18 - Chickan 02 - SS 18-22.vmd",
+      "bone_end": 1000,
+      "payload": "1c3eec75796bce5ad1b22ad275b083f8bfb11b049ba46c14bd7138ced01d187b"
+    },
+    {
+      "file": "Loop 19 - Romantic Ride/Loop 19 - Romantic Ride - Izumi.vmd",
+      "bone_end": 1020,
+      "payload": "a23c9e363698b3da40aaaea52277f7dfa181abe4a0a65de1364457c20cc66f37"
+    },
+    {
+      "file": "Loop 19 - Romantic Ride/Loop 19 - Romantic Ride - Maran.vmd",
+      "bone_end": 1020,
+      "payload": "1b3c9f2a3fac993ba5d408c2f125e7e941d2e0298ef5575d3005422481ca69f6"
+    },
+    {
+      "file": "Loop 20 - Chikan 03/Loop 20 - Chikan 03 - Izumi.vmd",
+      "bone_end": 1008,
+      "payload": "8148c1d124ed0c106ae9c96c15f705c4e38ba951565956b4d6f454bd67977f2d"
+    },
+    {
+      "file": "Loop 20 - Chikan 03/Loop 20 - Chikan 03 - SS 18-22.vmd",
+      "bone_end": 1008,
+      "payload": "40071db9efde50528faa0e357403e80ca67b4a1a09bd35e767aa46f318d3b4a5"
+    },
+    {
+      "file": "Loop 21 - M/Loop 21 - M - Izumi.vmd",
+      "bone_end": 1036,
+      "payload": "6007893a45ce46cbc7064a31fec861d7ecd22a656ac8f0477cfa9e23f4c43e05"
+    },
+    {
+      "file": "Loop 21 - M/Loop 21 - M - SS 18-22.vmd",
+      "bone_end": 1036,
+      "payload": "b86595c6cd14bb62865e7d73d12f11812d705d2b1e6fc42765d3f9b63bad42db"
+    },
+    {
+      "file": "Loop 22 - Aquarius/Loop 22 - Aquarius  - Izumi.vmd",
+      "bone_end": 1002,
+      "payload": "9e6d82da8e3e111826e1cbf6265b74044a3996cc1a81ba362abcfde69c841a9b"
+    },
+    {
+      "file": "Loop 22 - Aquarius/Loop 22 - Aquarius  - SS 18-22.vmd",
+      "bone_end": 1002,
+      "payload": "41dc1d4c32893d7effabafafa8115489206b8d561f2594d1f353db3322442f4c"
+    },
+    {
+      "file": "Loop 23 - Prone Bone/Loop 23 - Pronebone - Izumi.vmd",
+      "bone_end": 1000,
+      "payload": "27b6eab4b791bed7239c15c65b2b5dc4a2e4d0c2fbdc8dd7d5d824b5dc26b4be"
+    },
+    {
+      "file": "Loop 24 - Aphrodite/Loop 24 - Aphrodite - Izumi.vmd",
+      "bone_end": 1000,
+      "payload": "2bbbb6204f5c4494ec9393c81c58235571e29287ff74c516e515decabe3f1ee1"
+    },
+    {
+      "file": "Loop 24 - Aphrodite/Loop 24 - Aphrodite - SS18-22.vmd",
+      "bone_end": 1000,
+      "payload": "c3ab595ea139afde5fdfe259ce66a853c65c1d61e6f0a0c71340816a917463fe"
+    },
+    {
+      "file": "Loop 25 - Swing/Loop 25 - Swing - Izumi.vmd",
+      "bone_end": 1000,
+      "payload": "56811c2ef958279042c565c5df8533972acda2756b07c7896bc7742c6b2a10ed"
+    },
+    {
+      "file": "Loop 25 - Swing/Loop 25 - Swing - SS18-22.vmd",
+      "bone_end": 1000,
+      "payload": "588d970196568b4bb51ec206e8545894ddc4687395ffa80f6fc4ccc6c847ddd2"
+    },
+    {
+      "file": "Loop 26 - Arch/Loop 26 - Arch - Izumi.vmd",
+      "bone_end": 1008,
+      "payload": "c36299bec6892fa24cb596c8c6f0ecd7602ba0ef14083cc54598c4a8c5dc3117"
+    },
+    {
+      "file": "Loop 26 - Arch/Loop 26 - Arch - SS18-22.vmd",
+      "bone_end": 1008,
+      "payload": "a799c8f99339652aa46e21af13c210d3882db1cf2d2991c52e13c3e1639a8ea2"
+    },
+    {
+      "file": "Loop 27 - Twin Angels-V2/Loop 27 - Twin Angels - Izumi.vmd",
+      "bone_end": 2000,
+      "payload": "8567808be4484f4ab9d91cd34aec38c431d6f679705f56fded75b41c33a07c8a"
+    },
+    {
+      "file": "Loop 27 - Twin Angels-V2/Loop 27 - Twin Angels - Rin.vmd",
+      "bone_end": 2000,
+      "payload": "477f28d8d9587e20e1682ec3779881d039e042380fbe1f22c73141be790452c2"
+    },
+    {
+      "file": "Loop 27 - Twin Angels-V2/Loop 27 - Twin Angels - SS 18-22.vmd",
+      "bone_end": 2000,
+      "payload": "9dac36220f5376edd3dfb76a3e9afc66c9a355a9dd5185d3340ed324a328e206"
+    },
+    {
+      "file": "Loop 28 - 69-V2/Loop 28 - 69 - Izumi.vmd",
+      "bone_end": 1000,
+      "payload": "e53edbd7006802aaefb0ebe5b5f700c87720754b5b1d7193430ecff0e4c7657e"
+    },
+    {
+      "file": "Loop 29 - Eagle/Loop 29 - Eagle - Izumi.vmd",
+      "bone_end": 1000,
+      "payload": "4b65faea6891f32002d1d0eb746bddc853b760a24639b6ead9ca56242b81f447"
+    },
+    {
+      "file": "Loop 30 - Spooning 02-V2/Loop 30 - Spooning 02 - Izumi.vmd",
+      "bone_end": 1000,
+      "payload": "77c668a7be0f01f6073e20ed4ef24a1a4947dd68489a1527c4265913edb7e662"
+    },
+    {
+      "file": "Loop 30 - Spooning 02-V2/Loop 30 - Spooning 02 - Maran.vmd",
+      "bone_end": 1000,
+      "payload": "79896cd4d33c1a3579f0e31f375a82b16480e6e60bde29f8accfe03157db61a2"
+    },
+    {
+      "file": "Loop 31 - Butterfly/Loop 31 - Butterfly - Daiki.vmd",
+      "bone_end": 1008,
+      "payload": "8838f47365ddda295ad55ad581b2606cf904cd542b9ae3b83c82e1c27d7a67e7"
+    },
+    {
+      "file": "Loop 31 - Butterfly/Loop 31 - Butterfly - Izumi.vmd",
+      "bone_end": 1008,
+      "payload": "092d341c3f9212712725880697a935b20c8108c61af4d00cb0c148aa9cd51d4f"
+    },
+    {
+      "file": "Loop 32 - One Leg Up/Loop 32 - One Leg Up - Izumi.vmd",
+      "bone_end": 1000,
+      "payload": "29a91f383ee7323ab70e4c565ea65341143cc118a26af784cf6e75f6549e7609"
+    },
+    {
+      "file": "Loop 32 - One Leg Up/Loop 32 - One Leg Up - Maran.vmd",
+      "bone_end": 1000,
+      "payload": "5d2a5bbc2c8e3cd0eaa43cbc5abca199497780d28770756454934346b6d1940e"
+    },
+    {
+      "file": "Loop 33 - Suspended Congress/Loop 33 - Suspended Congress - Izumi.vmd",
+      "bone_end": 1000,
+      "payload": "a08073ec27d9b3711af82367c66db4058b3c515d01c188fb8b2115fa7bc051e2"
+    },
+    {
+      "file": "Loop 33 - Suspended Congress/Loop 33 - Suspended Congress - Maran.vmd",
+      "bone_end": 1000,
+      "payload": "888f329a0826e1685fdc6aafc3c40c7d3d1a26474eaedbe1851b2a00f14460cb"
+    },
+    {
+      "file": "Loop 34 - Pile Driver/Loop 34 - Pile Driver - Izumi.vmd",
+      "bone_end": 1000,
+      "payload": "026387ec21a4b440ca3afd29cd53cfa2da88c0ee7f8f23f8223420d83e06bb1c"
+    },
+    {
+      "file": "Loop 34 - Pile Driver/Loop 34 - Pile Driver - SS-18-22.vmd",
+      "bone_end": 1000,
+      "payload": "43fdf57d2c2effa1ac2a0e7a12d0b58c074875e56ccccc87730531565fe9d14a"
+    },
+    {
+      "file": "Loop 35 - Fitness Ball/Loop 35 - Fitness Ball - Izumi.vmd",
+      "bone_end": 1009,
+      "payload": "021499c9ee3412162f97b6a2393e0eea095d5c5a1e98e9c86c2c098104191f69"
+    },
+    {
+      "file": "Loop 35 - Fitness Ball/Loop 35 - Fitness Ball - SS-18-22.vmd",
+      "bone_end": 1009,
+      "payload": "04bfb51781b592a7e95a292da7b52d41bfa321c94969388d3adb4f4b4518e29b"
+    },
+    {
+      "file": "Loop 36 - D on The Wall/Loop 36 - Dildo on The Wall - Izumi.vmd",
+      "bone_end": 1000,
+      "payload": "0987dd3858f98e90a73afacb6eeabdde73d80f3781fbb507880e88bf4d5a5d6f"
+    },
+    {
+      "file": "Loop 37 - Soapy HJ/Loop 37 - Soapy Handjob - Izumi.vmd",
+      "bone_end": 1000,
+      "payload": "2ef3bd894cab3b1e0e0bfcb6f28add150c55afe49b2733ea97b92745aa5b8c03"
+    },
+    {
+      "file": "Loop 38 - Energetic Ride/Loop 38 - Energetic Ride - Izumi.vmd",
+      "bone_end": 1000,
+      "payload": "28f072f7960b7228408b530462fd5a5c3584ab1e5378853ac80f266431158d6d"
+    },
+    {
+      "file": "Loop 38 - Energetic Ride/Loop 38 - Energetic Ride - Maran.vmd",
+      "bone_end": 1000,
+      "payload": "f08b13652f54d98bae866497c40d9881051e16278cc9fb1686075a9457b93f7c"
+    },
+    {
+      "file": "Love Hotel Night + Extra Loops/Extra Loops/Love Hotel DS Loop Guy.vmd",
+      "bone_end": 2362,
+      "payload": "c79f9ea3e7703e8513bdd019f011370a82f0ea414b698d8fad11d60059b9b3cd"
+    },
+    {
+      "file": "Love Hotel Night + Extra Loops/Extra Loops/Love Hotel DS Loop Izumi.vmd",
+      "bone_end": 2362,
+      "payload": "ce81369fc7c7980666d11be53f53295f041d52583e02dc4099cb8d72c581d235"
+    },
+    {
+      "file": "Love Hotel Night + Extra Loops/Extra Loops/Table Sex From Behind Loop Izumi.vmd",
+      "bone_end": 1891,
+      "payload": "962f3eb61b2a9949065f64353d7caed8ede0b56c2ed6fc78357bc18fd2964c52"
+    },
+    {
+      "file": "Love Hotel Night + Extra Loops/Extra Loops/Table Sex Missionary Loop Guy.vmd",
+      "bone_end": 2475,
+      "payload": "6bde3f4f066405bc1e54d87155abaae9df049e465f1ef204c536e35751710f0a"
+    },
+    {
+      "file": "Love Hotel Night + Extra Loops/Extra Loops/Table Sex Missionary Loop Izumi.vmd",
+      "bone_end": 2475,
+      "payload": "cbc399466675c2422d71cc233a5a55409db709dbe71632176d2522aba1da6466"
+    },
+    {
+      "file": "Love Hotel Night + Extra Loops/Love Hotel CG Izumi.vmd",
+      "bone_end": 7679,
+      "payload": "84a3ad4ca66e02a4e41093129516b243554d2703d8913a53023e246598d139e6"
+    },
+    {
+      "file": "Marshmallow Butt/Marshmallow Butt - Guy.vmd",
+      "bone_end": 2399,
+      "payload": "9864fb746b94c4fc892b7544e3e06f7f38b6ba625c08a4775df5b1d8bb4cda95"
+    },
+    {
+      "file": "Marshmallow Butt/Marshmallow Butt - Izumi.vmd",
+      "bone_end": 2573,
+      "payload": "e757f65986d16fc59b898aeefed6e574615f52f70007d4cb2e2f30b714b38a54"
+    },
+    {
+      "file": "Massage for a shy girl/Massage for a shy girl - Izumi.vmd",
+      "bone_end": 1989,
+      "payload": "717105cabf0a861a430e6ba5e414be502fee6b4eb7d3bcb7a24acf52576ed221"
+    },
+    {
+      "file": "Massage for a shy girl/Massage for a shy girl - Sin sack.vmd",
+      "bone_end": 1770,
+      "payload": "847957f8fa5ad064a764f7aa5e6140904dba9750b9b80bdde38d82325a1df03a"
+    },
+    {
+      "file": "Motorcycle Photoshoot 1st pose/Motorcycle Photoshoot 1st pose - Izumi.vmd",
+      "bone_end": 2573,
+      "payload": "93b46a3750345fa5379828dcbbd342c832e22fc7825fefc3a14ce3f74787a215"
+    },
+    {
+      "file": "Motorcycle Photoshoot 1st pose/Motorcycle Photoshoot 1st pose - Sin Sack 2017.vmd",
+      "bone_end": 2573,
+      "payload": "1a6a9e6040207bd8118d0bf0f851afbc6c5f86330a089ed254baef347b12c590"
+    },
+    {
+      "file": "Motorcycle Photoshoot 2nd pose/Motorcycle Photoshoot 2nd pose - Got Owned by Kaat.vmd",
+      "bone_end": 0,
+      "payload": "621a01262a5f1229e03ffdfbcb810c8c8f564951b5632ee5497a94903b1b84f4"
+    },
+    {
+      "file": "Motorcycle Photoshoot 2nd pose/Motorcycle Photoshoot 2nd pose - Izumi.vmd",
+      "bone_end": 1615,
+      "payload": "b666c01d19263e575b8368259248b5b0a46a52899506aa937212aaa61003c3e4"
+    },
+    {
+      "file": "Motorcycle Photoshoot 2nd pose/Motorcycle Photoshoot 2nd pose - Kaat.vmd",
+      "bone_end": 1615,
+      "payload": "9009643bb4dafffd48978d2d2c5ed343f6ed09403a276faabd004edc8472c431"
+    },
+    {
+      "file": "Mssg-Bj/Massage Blowjob - Guy.vmd",
+      "bone_end": 1654,
+      "payload": "9b83cde63cfe136c1ec7921b0e8f0d0f778f7cb88ccaf0af7fb014594e19b148"
+    },
+    {
+      "file": "Mssg-Bj/Massage Blowjob - Izumi.vmd",
+      "bone_end": 1654,
+      "payload": "c3d58e6eedfe4c81c2ad196d6fd3054d3bd380d0d224d159ea40136c37bffe75"
+    },
+    {
+      "file": "Nice rear view/Nice rear view - Guy.vmd",
+      "bone_end": 1600,
+      "payload": "06fad71009bb80d00cb3814b71e09760baf98e185cfa50301f6cd12efb25ee61"
+    },
+    {
+      "file": "Nice rear view/Nice rear view - Izumi.vmd",
+      "bone_end": 1600,
+      "payload": "d06bd63d5df4072fc42babfa419de52cce6025c9d69889596b7f48b82f9587ac"
+    },
+    {
+      "file": "On the floor/Sex on the floor - Guy.vmd",
+      "bone_end": 2529,
+      "payload": "e03ffc77aa2ea70e537da1f53a48dde570593ecab54a31768b21a120bb72e5a1"
+    },
+    {
+      "file": "On the floor/Sex on the floor - Izumi.vmd",
+      "bone_end": 2650,
+      "payload": "bbf5b956a98185764f3097074118707299cea2d650c5fc302ed0514729966e52"
+    },
+    {
+      "file": "Pink lounge sex Update 1.1/Blowjob - Izumi.vmd",
+      "bone_end": 1387,
+      "payload": "b1f387495adf71f1f865893fdda681228ece29de4e8bc709537f5c5f3f262cb4"
+    },
+    {
+      "file": "Pink lounge sex Update/Sex from behind - Izumi.vmd",
+      "bone_end": 2240,
+      "payload": "3bf848de21e156aa7f6110499b7be415d12a0d756319bfe533e073d5c82b3c23"
+    },
+    {
+      "file": "Pink lounge sex Update 1.1/Sex from behind - Izumi.vmd",
+      "bone_end": 2240,
+      "payload": "cffb5987985af24007888117626243c498e438c4f3e6ec3f2ae6788ddc337b75"
+    },
+    {
+      "file": "Pink lounge sex Update 1.1/Sex from behind - SinSack no IK arms.vmd",
+      "bone_end": 2244,
+      "payload": "6eda6b432b58f5e56cfaf27bc3daeae7bff874ed078234c6d253989f76c359d0"
+    },
+    {
+      "file": "RCG/Reverse cowgirl - Guy.vmd",
+      "bone_end": 2981,
+      "payload": "d5809bd67ea7b1d44fc45e5f822b9a189d7b2c1f7e3a59b11371f7f23383c177"
+    },
+    {
+      "file": "RCG/Reverse cowgirl - Izumi.vmd",
+      "bone_end": 2981,
+      "payload": "5f088b587524f07b550e5f1c1cc458e973ceb6281fb81719fb6012323a416e86"
+    },
+    {
+      "file": "Reverse Stradle - By Ademar440/Reverse Stradle - Izumi.vmd",
+      "bone_end": 3624,
+      "payload": "952f3a04aa5411f1b485fe48ae35c64c5b50f23c3d4b20a8ba93199cddce0609"
+    },
+    {
+      "file": "Reverse Stradle - By Ademar440/Reverse Stradle - Maran.vmd",
+      "bone_end": 3624,
+      "payload": "269db9f80c20d50de247828c7f2bd923fa6dfdd1e2bd7a6492ea5c3ddc93bfa8"
+    },
+    {
+      "file": "RS/MMD/RS2 - Kaat.vmd",
+      "bone_end": 1033,
+      "payload": "3c3097f621c5c263a2d77c8cdd710d258c1951dd58a5f048875943f0775de31c"
+    },
+    {
+      "file": "RS/MMD/RS2 - Tom.vmd",
+      "bone_end": 1033,
+      "payload": "7b4c969f6b6519ae4c04d489f5479fd98d2b9c6000b01fb4d71a7c03c08ea819"
+    },
+    {
+      "file": "Sitting FJ/Sitting Footjob - Izumi.vmd",
+      "bone_end": 2033,
+      "payload": "e6f147836a79e7eb1b324a8a749238ff2d866f3c09ac1e5f9107c958b0acfdd6"
+    },
+    {
+      "file": "Sitting FJ/Sitting Footjob - Sin Sack.vmd",
+      "bone_end": 2033,
+      "payload": "114eb99f04dfc31c2d2fd436358c6510b50562928c8de961d1cf86fae49d481c"
+    },
+    {
+      "file": "SOTF V2/Sex on the floor - Izumi V2.vmd",
+      "bone_end": 2650,
+      "payload": "4ef363f55717df9ad49f940e38cc36da9c23db40858489018c6082fd0378fd66"
+    },
+    {
+      "file": "SOTF V2/Sex on the floor - Maran.vmd",
+      "bone_end": 2529,
+      "payload": "cf667a87ff07ff1fceb2daca4e391c9b59c07873f45f8453cf990e92a3014546"
+    },
+    {
+      "file": "Stand and Carry - Complete - By Ademar440/Maran Version/Stand and Carry - Izumi.vmd",
+      "bone_end": 2638,
+      "payload": "2c7a1d26a5035799623a037f8e739dda6d05dbce6a700cefd067f5720d0b48a1"
+    },
+    {
+      "file": "Stand and Carry - Complete - By Ademar440/Sin Sack Version/Stand and Carry - Izumi.vmd",
+      "bone_end": 2638,
+      "payload": "42854f86c87e879ad6a048a0c53bcea3a7234d8b5ef01268a486f1d0b6ba7f17"
+    },
+    {
+      "file": "Taken From Behind - By Ademar440/Table Sex From Behind Loop Izumi School Girl.vmd",
+      "bone_end": 1703,
+      "payload": "0979b9c9cea743d7e0dc7e2843776622758af960b4590a3b3d423641de4d41f7"
+    },
+    {
+      "file": "Taken From Behind - By Ademar440/Table Sex From Behind Loop Maran With Schoolgirl Izumi.vmd",
+      "bone_end": 1703,
+      "payload": "4ac7f898b723a0fa5045fc683cd9a5799a4a7f2174bec444f2aab98ace78e0ba"
+    },
+    {
+      "file": "Thigh service/Thigh service - Izumi.vmd",
+      "bone_end": 1489,
+      "payload": "f834edc2101ef2574adf35e3a6e4e7aa36a4d1902480d49559c98baf8eb8a156"
+    },
+    {
+      "file": "Thigh service/Thigh service -Guy.vmd",
+      "bone_end": 1489,
+      "payload": "80e532f20036b21dfa6f3857645976e53df446e4d00249743a554783fabce832"
+    },
+    {
+      "file": "TSFB V2/Table Sex From Behind Loop Izumi.vmd",
+      "bone_end": 1701,
+      "payload": "cd07eba0172549282155184938a6af9001712244766e54dfe40d4566bf0e22b7"
+    },
+    {
+      "file": "TSFB V2/Table Sex From Behind Loop Maran.vmd",
+      "bone_end": 1701,
+      "payload": "304952e56f7b7704470d29437d5629c5a40452b9c291f886a6e8d7b37d819e49"
+    },
+    {
+      "file": "TSM V2/Table Sex Missionary Loop Izumi V2.vmd",
+      "bone_end": 2475,
+      "payload": "3d6d0c2e669b1493d267d3a40e0a40c510d6774ab42713545c9c61d2a8c2e195"
+    },
+    {
+      "file": "TSM V2/Table Sex Missionary Loop Maran.vmd",
+      "bone_end": 2475,
+      "payload": "c365b87775449eb3351302414d3cd374ce6d672410ac99a7ba31c83999beaeda"
+    },
+    {
+      "file": "Welcome/Blowjob/Welcome - Blowjob - Izumi.vmd",
+      "bone_end": 4201,
+      "payload": "c1857fe24e013591a219cd18893c82678db356ecc0683713cee1e5a949232014"
+    },
+    {
+      "file": "Welcome/Blowjob/Welcome - Blowjob - Sin Sack 2018S1.vmd",
+      "bone_end": 4201,
+      "payload": "bc56148579181d7773b41e07e589dbf1abd1e2d40cbd6dc9f622e4103f845720"
+    },
+    {
+      "file": "Welcome/Missionary/Welcome - Missionary - Izumi.vmd",
+      "bone_end": 3542,
+      "payload": "dd667496de3e4af502d0bb7625c51ebd147dbb3a3ef71cf5e674d5deff7bc356"
+    },
+    {
+      "file": "Welcome/Missionary/Welcome - Missionary - Sin Sack 2018S1.vmd",
+      "bone_end": 3542,
+      "payload": "101a846108261a2be01c4c2cedb55ee1117bf64e029b5af7f51a79e76511e79c"
+    },
+    {
+      "file": "Welcome/Prone bone/Prone bone - Izumi.vmd",
+      "bone_end": 3000,
+      "payload": "c401570375f3730ed82c5637fbf54fcaa6fbe305f077b101da237a8f3932a1a3"
+    },
+    {
+      "file": "Welcome/Prone bone/Prone bone - Sin Sack 2018 S1.vmd",
+      "bone_end": 3000,
+      "payload": "31079553a5878fceb5eb89fc2540b9967e96e50da67b1575bdb3b4ff0f034b70"
+    },
+    {
+      "file": "Welcome - BJV2 2021 Uptade/Welcome - Blowjob V2 - Izumi.vmd",
+      "bone_end": 4201,
+      "payload": "16fbbc598c91f57027c2ad1be07e8f4ec3df27e8fd3b0e906b0c62a25eee0fc0"
+    },
+    {
+      "file": "Welcome - BJV2 2021 Uptade/Welcome - Blowjob V2 - Maran.vmd",
+      "bone_end": 4201,
+      "payload": "08c728a1bdd144bfd45b701261c55abc162f6a67dbb5a98354158952baa670ff"
+    },
+    {
+      "file": "Welcome - BJV2 2021 Uptade/Welcome - Blowjob V2 - Sin Sack 2018S1.vmd",
+      "bone_end": 4201,
+      "payload": "515336dc3d30a26698083ad96504e1e34492b9030da8699fd0ab66a07fbcc05b"
+    },
+    {
+      "file": "What is this hard thing/What do you want me to do.vmd",
+      "bone_end": 500,
+      "payload": "4c62509a840308ffc17db35e05b9ae7357f4993b1278a3af0bd096accce7bfa0"
+    },
+    {
+      "file": "What is this hard thing/What is this hard thing - Guy.vmd",
+      "bone_end": 1236,
+      "payload": "ab7c4bfd34dfdb5ead9b11a9e274c99d1cda3a21fee813cdfe533f22a3388af8"
+    },
+    {
+      "file": "What is this hard thing/What is this hard thing - Izumi.vmd",
+      "bone_end": 1234,
+      "payload": "cb9f6536b1d017a57ea313864850223011d2f331e56098b8ec8911e98e131f5c"
+    }
+  ],
+  "body_morph_files": 202,
+  "body_nonzero_morph_files": 158,
+  "exact_duplicate_file_groups": 31
+}

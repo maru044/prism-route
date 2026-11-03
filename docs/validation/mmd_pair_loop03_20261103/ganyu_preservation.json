@@ -1,0 +1,15 @@
+{
+  "original_vrm_sha256": "05ff74d3ab414b1abb5fde01396eab66e624f0671f705f0361bb6eb1f28f1b9b",
+  "variant_vrm_sha256": "03f292d54cb40da06c219e3b35e0b300e8f8b46de8f1e9bc0b13685b99279b72",
+  "same_binary_chunk": true,
+  "preserved_sections": {
+    "nodes": true,
+    "meshes": true,
+    "materials": true,
+    "skins": true,
+    "images": true,
+    "textures": true,
+    "accessors": true,
+    "bufferViews": true
+  }
+}

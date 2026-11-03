@@ -1,0 +1,16 @@
+[
+  {
+    "fps": 30,
+    "passed": true,
+    "collision_clearance_passed": true,
+    "max_end_tail_delta_to_60fps_m": 0.0002897317851831726,
+    "max_collider_overlap_m": 0.00194190979003905
+  },
+  {
+    "fps": 120,
+    "passed": true,
+    "collision_clearance_passed": true,
+    "max_end_tail_delta_to_60fps_m": 0.00042423563759028354,
+    "max_collider_overlap_m": 0.00136943697929381
+  }
+]

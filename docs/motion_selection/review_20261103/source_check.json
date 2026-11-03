@@ -1,0 +1,644 @@
+{
+  "scope": "Read-only technical audit of user-written README; original README, decisions JSON and Blender left unchanged. Content classifications are user-authored and were not independently visually re-reviewed.",
+  "date": "2026-11-03",
+  "readme_sha256": "209a8afe976043207a76d5fd0d776884bc02af09fae671f5f07b3c60d8ef2b99",
+  "decisions_json_sha256": "adb5e0ada33479beb5143798e393e112feb6868e8bf95bcbd23518862e747225",
+  "shortlist_counts": {
+    "KEEP": 11,
+    "MAYBE": 2,
+    "SKIP": 0
+  },
+  "all_candidate_body_files": 29,
+  "all_candidate_sources_exist_and_hash_match": true,
+  "necessary_control_name_check_passed_for_current_two_reference_rigs": true,
+  "loops_revalidated": false,
+  "runtime_bakes_performed": 0,
+  "readme_update_markers_present": false,
+  "rows": [
+    {
+      "readme_decision": "KEEP",
+      "source_folder": "Armchair Paizuri - By Ademar440",
+      "readme_requested_range": [
+        0,
+        2548
+      ],
+      "fps": 30,
+      "body_candidates": [
+        {
+          "file": "Armchair Paizuri - By Ademar440/Armchair Paizuri - Izumi.vmd",
+          "source_range": [
+            0,
+            2548
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 2,
+          "nonzero_morph_names_count": 40,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        },
+        {
+          "file": "Armchair Paizuri - By Ademar440/Armchair Paizuri - Maran.vmd",
+          "source_range": [
+            0,
+            2548
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 6,
+          "nonzero_morph_names_count": 13,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        }
+      ],
+      "auxiliary_files": [
+        "Armchair Paizuri - By Ademar440/Armchair.vmd"
+      ],
+      "catalog_flags": [
+        "requires_prop_preview_omits"
+      ]
+    },
+    {
+      "readme_decision": "KEEP",
+      "source_folder": "BJ in Bed",
+      "readme_requested_range": [
+        0,
+        1990
+      ],
+      "fps": 30,
+      "body_candidates": [
+        {
+          "file": "BJ in Bed/Blowjob in Bed - Izumi.vmd",
+          "source_range": [
+            0,
+            1990
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 0,
+          "nonzero_morph_names_count": 28,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        },
+        {
+          "file": "BJ in Bed/Blowjob in Bed - Maran.vmd",
+          "source_range": [
+            0,
+            1990
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 6,
+          "nonzero_morph_names_count": 5,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        },
+        {
+          "file": "BJ in Bed/Blowjob in Bed - Sin Sack.vmd",
+          "source_range": [
+            0,
+            1990
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 6,
+          "nonzero_morph_names_count": 0,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        }
+      ],
+      "auxiliary_files": [],
+      "catalog_flags": [
+        "variants_or_multiple_clips"
+      ]
+    },
+    {
+      "readme_decision": "KEEP",
+      "source_folder": "Dominating FJ",
+      "readme_requested_range": [
+        0,
+        1120
+      ],
+      "fps": 30,
+      "body_candidates": [
+        {
+          "file": "Dominating FJ/guy.vmd",
+          "source_range": [
+            0,
+            1120
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 3,
+          "nonzero_morph_names_count": 0,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        },
+        {
+          "file": "Dominating FJ/izumi.vmd",
+          "source_range": [
+            0,
+            1120
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 5,
+          "nonzero_morph_names_count": 11,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        }
+      ],
+      "auxiliary_files": [
+        "Dominating FJ/Sperm 1.vmd",
+        "Dominating FJ/Sperm 2.vmd"
+      ],
+      "catalog_flags": [
+        "requires_prop_preview_omits"
+      ]
+    },
+    {
+      "readme_decision": "KEEP",
+      "source_folder": "Loop 02",
+      "readme_requested_range": [
+        0,
+        640
+      ],
+      "fps": 30,
+      "body_candidates": [
+        {
+          "file": "Loop 02/Izumi Enjoys.vmd",
+          "source_range": [
+            0,
+            640
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 1,
+          "nonzero_morph_names_count": 13,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        }
+      ],
+      "auxiliary_files": [],
+      "catalog_flags": []
+    },
+    {
+      "readme_decision": "KEEP",
+      "source_folder": "Loop 03",
+      "readme_requested_range": [
+        0,
+        480
+      ],
+      "fps": 30,
+      "body_candidates": [
+        {
+          "file": "Loop 03/Izumi.vmd",
+          "source_range": [
+            0,
+            480
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 0,
+          "nonzero_morph_names_count": 10,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": true
+        },
+        {
+          "file": "Loop 03/Kaat.vmd",
+          "source_range": [
+            0,
+            480
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 0,
+          "nonzero_morph_names_count": 4,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": true
+        }
+      ],
+      "auxiliary_files": [],
+      "catalog_flags": []
+    },
+    {
+      "readme_decision": "KEEP",
+      "source_folder": "Loop 05",
+      "readme_requested_range": [
+        0,
+        610
+      ],
+      "fps": 30,
+      "body_candidates": [
+        {
+          "file": "Loop 05/Izumi.vmd",
+          "source_range": [
+            0,
+            609
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 2,
+          "nonzero_morph_names_count": 19,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        },
+        {
+          "file": "Loop 05/Kaat.vmd",
+          "source_range": [
+            0,
+            610
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 0,
+          "nonzero_morph_names_count": 9,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        }
+      ],
+      "auxiliary_files": [],
+      "catalog_flags": [
+        "different_track_lengths"
+      ]
+    },
+    {
+      "readme_decision": "KEEP",
+      "source_folder": "Loop 08",
+      "readme_requested_range": [
+        0,
+        1002
+      ],
+      "fps": 30,
+      "body_candidates": [
+        {
+          "file": "Loop 08/Izumi.vmd",
+          "source_range": [
+            0,
+            1002
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 0,
+          "nonzero_morph_names_count": 14,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        },
+        {
+          "file": "Loop 08/Kaat.vmd",
+          "source_range": [
+            0,
+            1372
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 0,
+          "nonzero_morph_names_count": 14,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        }
+      ],
+      "auxiliary_files": [],
+      "catalog_flags": [
+        "different_track_lengths"
+      ],
+      "valid_range_user_confirmed": [
+        0,
+        1002
+      ],
+      "excluded_tail_on_kaat": [
+        1003,
+        1372
+      ],
+      "user_reported_tail_behavior": "Static/abnormal after frame 1002; no repair required. Keep original source and exclude this tail from conversion.",
+      "range_clarification_pending": false,
+      "timing_policy": "Sample both roles at the same original times 0..1002; no independent time scaling."
+    },
+    {
+      "readme_decision": "KEEP",
+      "source_folder": "Loop 13 - KBJ",
+      "readme_requested_range": [
+        0,
+        1119
+      ],
+      "fps": 30,
+      "body_candidates": [
+        {
+          "file": "Loop 13 - KBJ/Izumi.vmd",
+          "source_range": [
+            0,
+            1119
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 8,
+          "nonzero_morph_names_count": 10,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        },
+        {
+          "file": "Loop 13 - KBJ/Sin Sack.vmd",
+          "source_range": [
+            0,
+            1119
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 1,
+          "nonzero_morph_names_count": 3,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        }
+      ],
+      "auxiliary_files": [],
+      "catalog_flags": []
+    },
+    {
+      "readme_decision": "KEEP",
+      "source_folder": "Loop 17 - Chikan 01",
+      "readme_requested_range": [
+        0,
+        1000
+      ],
+      "fps": 30,
+      "body_candidates": [
+        {
+          "file": "Loop 17 - Chikan 01/Loop 17 - Chickan 01 - Izumi.vmd",
+          "source_range": [
+            0,
+            1000
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 1,
+          "nonzero_morph_names_count": 17,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        },
+        {
+          "file": "Loop 17 - Chikan 01/Loop 17 - Chickan 01 - SS 18-22.vmd",
+          "source_range": [
+            0,
+            1000
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 1,
+          "nonzero_morph_names_count": 0,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        }
+      ],
+      "auxiliary_files": [],
+      "catalog_flags": []
+    },
+    {
+      "readme_decision": "KEEP",
+      "source_folder": "Loop 20 - Chikan 03",
+      "readme_requested_range": [
+        0,
+        1008
+      ],
+      "fps": 30,
+      "body_candidates": [
+        {
+          "file": "Loop 20 - Chikan 03/Loop 20 - Chikan 03 - Izumi.vmd",
+          "source_range": [
+            0,
+            1008
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 3,
+          "nonzero_morph_names_count": 19,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        },
+        {
+          "file": "Loop 20 - Chikan 03/Loop 20 - Chikan 03 - SS 18-22.vmd",
+          "source_range": [
+            0,
+            1008
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 0,
+          "nonzero_morph_names_count": 0,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        }
+      ],
+      "auxiliary_files": [],
+      "catalog_flags": []
+    },
+    {
+      "readme_decision": "KEEP",
+      "source_folder": "Loop 27 - Twin Angels-V2",
+      "readme_requested_range": [
+        0,
+        2000
+      ],
+      "fps": 30,
+      "body_candidates": [
+        {
+          "file": "Loop 27 - Twin Angels-V2/Loop 27 - Twin Angels - Izumi.vmd",
+          "source_range": [
+            0,
+            2000
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 13,
+          "nonzero_morph_names_count": 17,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        },
+        {
+          "file": "Loop 27 - Twin Angels-V2/Loop 27 - Twin Angels - Rin.vmd",
+          "source_range": [
+            0,
+            2000
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 0,
+          "nonzero_morph_names_count": 12,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        },
+        {
+          "file": "Loop 27 - Twin Angels-V2/Loop 27 - Twin Angels - SS 18-22.vmd",
+          "source_range": [
+            0,
+            2000
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 6,
+          "nonzero_morph_names_count": 0,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        }
+      ],
+      "auxiliary_files": [],
+      "catalog_flags": [
+        "variants_or_multiple_clips",
+        "three_role_candidate"
+      ]
+    },
+    {
+      "readme_decision": "MAYBE",
+      "source_folder": "Motorcycle Photoshoot 2nd pose",
+      "readme_requested_range": [
+        0,
+        1615
+      ],
+      "fps": 30,
+      "body_candidates": [
+        {
+          "file": "Motorcycle Photoshoot 2nd pose/Motorcycle Photoshoot 2nd pose - Got Owned by Kaat.vmd",
+          "source_range": [
+            0,
+            0
+          ],
+          "kind": "body_pose",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 0,
+          "nonzero_morph_names_count": 0,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        },
+        {
+          "file": "Motorcycle Photoshoot 2nd pose/Motorcycle Photoshoot 2nd pose - Izumi.vmd",
+          "source_range": [
+            0,
+            1615
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 0,
+          "nonzero_morph_names_count": 15,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        },
+        {
+          "file": "Motorcycle Photoshoot 2nd pose/Motorcycle Photoshoot 2nd pose - Kaat.vmd",
+          "source_range": [
+            0,
+            1615
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 0,
+          "nonzero_morph_names_count": 10,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        }
+      ],
+      "auxiliary_files": [
+        "Motorcycle Photoshoot 2nd pose/Motorcycle Photoshoot 2nd pose - Motorcycle.vmd"
+      ],
+      "catalog_flags": [
+        "variants_or_multiple_clips",
+        "different_track_lengths",
+        "requires_prop_preview_omits",
+        "static_third_role_candidate"
+      ]
+    },
+    {
+      "readme_decision": "MAYBE",
+      "source_folder": "Welcome - BJV2 2021 Uptade",
+      "readme_requested_range": [
+        0,
+        4201
+      ],
+      "fps": 30,
+      "body_candidates": [
+        {
+          "file": "Welcome - BJV2 2021 Uptade/Welcome - Blowjob V2 - Izumi.vmd",
+          "source_range": [
+            0,
+            4201
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 3,
+          "nonzero_morph_names_count": 27,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        },
+        {
+          "file": "Welcome - BJV2 2021 Uptade/Welcome - Blowjob V2 - Maran.vmd",
+          "source_range": [
+            0,
+            4201
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 1,
+          "nonzero_morph_names_count": 10,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        },
+        {
+          "file": "Welcome - BJV2 2021 Uptade/Welcome - Blowjob V2 - Sin Sack 2018S1.vmd",
+          "source_range": [
+            0,
+            4201
+          ],
+          "kind": "body_motion",
+          "required_control_missing": [],
+          "exists_and_sha256_matches": true,
+          "unmatched_dynamic_bones_on_reference_count": 1,
+          "nonzero_morph_names_count": 0,
+          "full_effect_migration_verified": false,
+          "shared_body_sample_validated": false
+        }
+      ],
+      "auxiliary_files": [
+        "Welcome - BJV2 2021 Uptade/Welcome - Blowjob V2 - Sofa - Maran.vmd",
+        "Welcome - BJV2 2021 Uptade/Welcome - Blowjob V2 - Sofa - Sin Sack.vmd"
+      ],
+      "catalog_flags": [
+        "variants_or_multiple_clips",
+        "requires_prop_preview_omits"
+      ]
+    }
+  ],
+  "nonzero_morph_present_in_selected_folder_count": 13,
+  "readme_is_current_user_shortlist": true,
+  "formal_json_counts": {
+    "KEEP": 0,
+    "MAYBE": 1,
+    "SKIP": 0
+  },
+  "sync_performed": false
+}

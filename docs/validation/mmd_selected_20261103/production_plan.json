@@ -1,0 +1,446 @@
+{
+  "schema": 1,
+  "readme_sha256": "209a8afe976043207a76d5fd0d776884bc02af09fae671f5f07b3c60d8ef2b99",
+  "source_root": "D:\\模型\\20261008\\Public R-18 Motions",
+  "reference_models": {
+    "A": "D:/模型/20261008/刻晴_by_原神_b0f08721a7da17df599896ac40dd2f22/刻晴/刻晴/刻晴.pmx",
+    "B": "D:/模型/ganyu_by_原神_7381ccd84ee8763ce63b3ad638e1c49b/甘雨.pmx"
+  },
+  "reference_model_sha256": {
+    "A": "c2d2f2dd4e90023a0b59c6519968b5523bb5269b06bfd85cdb6dc9ee59413926",
+    "B": "ce2e4513ad77efb6e89f8fc50f53b5eaecfe3ac0d8f9076c1bd88baf9610754e"
+  },
+  "packs": [
+    {
+      "id": "mmd_0a3f6ba5f5de",
+      "label": "Armchair Paizuri - By Ademar440",
+      "decision": "KEEP",
+      "frame_start": 0,
+      "frame_end": 2548,
+      "fps": 30,
+      "duration": 84.93333333333334,
+      "roles": [
+        {
+          "id": "A",
+          "source_file": "Armchair Paizuri - By Ademar440/Armchair Paizuri - Izumi.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Armchair Paizuri - By Ademar440\\Armchair Paizuri - Izumi.vmd",
+          "source_sha256": "601f5b2f68662737558ab2f646df4cdb79a92ecb110fb1fd1b90f05e8633e153",
+          "source_frame_end": 2548,
+          "reference": "A",
+          "clip_id": "mmd_0a3f6ba5f5de_a",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_0a3f6ba5f5de_a.glb"
+        },
+        {
+          "id": "B",
+          "source_file": "Armchair Paizuri - By Ademar440/Armchair Paizuri - Maran.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Armchair Paizuri - By Ademar440\\Armchair Paizuri - Maran.vmd",
+          "source_sha256": "3fc15cf1cc0d051846ffb17c11731edef722143bff0b5677d41a976e71a68198",
+          "source_frame_end": 2548,
+          "reference": "B",
+          "clip_id": "mmd_0a3f6ba5f5de_b",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_0a3f6ba5f5de_b.glb"
+        }
+      ],
+      "loop_policy": "manual_preview_only; no source seam modification",
+      "translation_policy": "shared_world"
+    },
+    {
+      "id": "mmd_16a2ecfb7781",
+      "label": "BJ in Bed",
+      "decision": "KEEP",
+      "frame_start": 0,
+      "frame_end": 1990,
+      "fps": 30,
+      "duration": 66.33333333333333,
+      "roles": [
+        {
+          "id": "A",
+          "source_file": "BJ in Bed/Blowjob in Bed - Izumi.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\BJ in Bed\\Blowjob in Bed - Izumi.vmd",
+          "source_sha256": "ec60c551dbd27fbf813e4011158b343fb0352e9dd5c95ef19756ae302266a5b9",
+          "source_frame_end": 1990,
+          "reference": "A",
+          "clip_id": "mmd_16a2ecfb7781_a",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_16a2ecfb7781_a.glb"
+        },
+        {
+          "id": "B",
+          "source_file": "BJ in Bed/Blowjob in Bed - Maran.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\BJ in Bed\\Blowjob in Bed - Maran.vmd",
+          "source_sha256": "e4b4203fd3d4d0e0cfd527765de1d6f38f74470c87f8065792f4c2feb9256334",
+          "source_frame_end": 1990,
+          "reference": "B",
+          "clip_id": "mmd_16a2ecfb7781_b",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_16a2ecfb7781_b.glb"
+        }
+      ],
+      "loop_policy": "manual_preview_only; no source seam modification",
+      "translation_policy": "shared_world"
+    },
+    {
+      "id": "mmd_67d58e9d607e",
+      "label": "Dominating FJ",
+      "decision": "KEEP",
+      "frame_start": 0,
+      "frame_end": 1120,
+      "fps": 30,
+      "duration": 37.333333333333336,
+      "roles": [
+        {
+          "id": "A",
+          "source_file": "Dominating FJ/izumi.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Dominating FJ\\izumi.vmd",
+          "source_sha256": "60f152b726c39020f8779030347c586ffa6b6faf8f2c180920449fcd9cc6a7ef",
+          "source_frame_end": 1120,
+          "reference": "A",
+          "clip_id": "mmd_67d58e9d607e_a",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_67d58e9d607e_a.glb"
+        },
+        {
+          "id": "B",
+          "source_file": "Dominating FJ/guy.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Dominating FJ\\guy.vmd",
+          "source_sha256": "902d48c973cb4735bf6796471136acb16272daac99f40b37b86a244dd4dd5300",
+          "source_frame_end": 1120,
+          "reference": "B",
+          "clip_id": "mmd_67d58e9d607e_b",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_67d58e9d607e_b.glb"
+        }
+      ],
+      "loop_policy": "manual_preview_only; no source seam modification",
+      "translation_policy": "shared_world"
+    },
+    {
+      "id": "mmd_6e891982bb51",
+      "label": "Loop 02",
+      "decision": "KEEP",
+      "frame_start": 0,
+      "frame_end": 640,
+      "fps": 30,
+      "duration": 21.333333333333332,
+      "roles": [
+        {
+          "id": "A",
+          "source_file": "Loop 02/Izumi Enjoys.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Loop 02\\Izumi Enjoys.vmd",
+          "source_sha256": "9f1cef1fe8b68bd93f4d3151dd9974ae9a8c0c077f95470eaea9e1214f73cd11",
+          "source_frame_end": 640,
+          "reference": "A",
+          "clip_id": "mmd_6e891982bb51_a",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_6e891982bb51_a.glb"
+        }
+      ],
+      "loop_policy": "manual_preview_only; no source seam modification",
+      "translation_policy": "shared_world"
+    },
+    {
+      "id": "mmd_71dec5bd8390",
+      "label": "Loop 03",
+      "decision": "KEEP",
+      "frame_start": 0,
+      "frame_end": 480,
+      "fps": 30,
+      "duration": 16.0,
+      "roles": [
+        {
+          "id": "A",
+          "source_file": "Loop 03/Izumi.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Loop 03\\Izumi.vmd",
+          "source_sha256": "72c8b919c6b5f50f9ce856cd0a562b3ebd03e680a33dbf0230d78e19d9ef5c9f",
+          "source_frame_end": 480,
+          "reference": "A",
+          "clip_id": "mmd_71dec5bd8390_a",
+          "reused_resource": "res://assets/characters/mmd_validation/shared/shared_mmd_role_a.tres",
+          "reused_reference": "res://assets/characters/mmd_validation/shared/shared_mmd_role_a_reference.json"
+        },
+        {
+          "id": "B",
+          "source_file": "Loop 03/Kaat.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Loop 03\\Kaat.vmd",
+          "source_sha256": "656bfe4b2312d920b69cd9b2ace2f8695f3b044e2228adc1bdcdbba96d0640bc",
+          "source_frame_end": 480,
+          "reference": "B",
+          "clip_id": "mmd_71dec5bd8390_b",
+          "reused_resource": "res://assets/characters/mmd_validation/shared/shared_mmd_role_b.tres",
+          "reused_reference": "res://assets/characters/mmd_validation/shared/shared_mmd_role_b_reference.json"
+        }
+      ],
+      "loop_policy": "manual_preview_only; no source seam modification",
+      "translation_policy": "shared_world"
+    },
+    {
+      "id": "mmd_aec34d147925",
+      "label": "Loop 05",
+      "decision": "KEEP",
+      "frame_start": 0,
+      "frame_end": 610,
+      "fps": 30,
+      "duration": 20.333333333333332,
+      "roles": [
+        {
+          "id": "A",
+          "source_file": "Loop 05/Izumi.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Loop 05\\Izumi.vmd",
+          "source_sha256": "e403de5641a9aa92f2093c4118dae941d7065fb8b28078cd4d8c5e714cd2e47e",
+          "source_frame_end": 609,
+          "reference": "A",
+          "clip_id": "mmd_aec34d147925_a",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_aec34d147925_a.glb"
+        },
+        {
+          "id": "B",
+          "source_file": "Loop 05/Kaat.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Loop 05\\Kaat.vmd",
+          "source_sha256": "49fc9d824deb94fdef289c8055ce6a9da22ecea7f5bdf711ea2e82d1c6f84a77",
+          "source_frame_end": 610,
+          "reference": "B",
+          "clip_id": "mmd_aec34d147925_b",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_aec34d147925_b.glb"
+        }
+      ],
+      "loop_policy": "manual_preview_only; no source seam modification",
+      "translation_policy": "shared_world"
+    },
+    {
+      "id": "mmd_9957977a1355",
+      "label": "Loop 08",
+      "decision": "KEEP",
+      "frame_start": 0,
+      "frame_end": 1002,
+      "fps": 30,
+      "duration": 33.4,
+      "roles": [
+        {
+          "id": "A",
+          "source_file": "Loop 08/Izumi.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Loop 08\\Izumi.vmd",
+          "source_sha256": "cb56be8e601fa9effa62b342577134d949421ec2d29c4ea8ee7939e638284dff",
+          "source_frame_end": 1002,
+          "reference": "A",
+          "clip_id": "mmd_9957977a1355_a",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_9957977a1355_a.glb"
+        },
+        {
+          "id": "B",
+          "source_file": "Loop 08/Kaat.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Loop 08\\Kaat.vmd",
+          "source_sha256": "495a5f7e601081a7a06e4a9126d441608629ff303da0b92116797444af6bf17d",
+          "source_frame_end": 1372,
+          "reference": "B",
+          "clip_id": "mmd_9957977a1355_b",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_9957977a1355_b.glb"
+        }
+      ],
+      "loop_policy": "manual_preview_only; no source seam modification",
+      "translation_policy": "shared_world"
+    },
+    {
+      "id": "mmd_fcc0340f8227",
+      "label": "Loop 13 - KBJ",
+      "decision": "KEEP",
+      "frame_start": 0,
+      "frame_end": 1119,
+      "fps": 30,
+      "duration": 37.3,
+      "roles": [
+        {
+          "id": "A",
+          "source_file": "Loop 13 - KBJ/Izumi.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Loop 13 - KBJ\\Izumi.vmd",
+          "source_sha256": "ccbb2e4281c9657858049259f9f494dda0450dc8e0ff9923e9f8e2fe70110cf8",
+          "source_frame_end": 1119,
+          "reference": "A",
+          "clip_id": "mmd_fcc0340f8227_a",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_fcc0340f8227_a.glb"
+        },
+        {
+          "id": "B",
+          "source_file": "Loop 13 - KBJ/Sin Sack.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Loop 13 - KBJ\\Sin Sack.vmd",
+          "source_sha256": "c0344ddc7c2b39861fa6cd54e2176693ccb825362f6e020e159fcdea71f5e7c1",
+          "source_frame_end": 1119,
+          "reference": "B",
+          "clip_id": "mmd_fcc0340f8227_b",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_fcc0340f8227_b.glb"
+        }
+      ],
+      "loop_policy": "manual_preview_only; no source seam modification",
+      "translation_policy": "shared_world"
+    },
+    {
+      "id": "mmd_8c5c490fb87c",
+      "label": "Loop 17 - Chikan 01",
+      "decision": "KEEP",
+      "frame_start": 0,
+      "frame_end": 1000,
+      "fps": 30,
+      "duration": 33.333333333333336,
+      "roles": [
+        {
+          "id": "A",
+          "source_file": "Loop 17 - Chikan 01/Loop 17 - Chickan 01 - Izumi.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Loop 17 - Chikan 01\\Loop 17 - Chickan 01 - Izumi.vmd",
+          "source_sha256": "a44c20ce24ca736e516536347a292c07e720c9c4dd34d3ec09c947225ab3bafc",
+          "source_frame_end": 1000,
+          "reference": "A",
+          "clip_id": "mmd_8c5c490fb87c_a",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_8c5c490fb87c_a.glb"
+        },
+        {
+          "id": "B",
+          "source_file": "Loop 17 - Chikan 01/Loop 17 - Chickan 01 - SS 18-22.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Loop 17 - Chikan 01\\Loop 17 - Chickan 01 - SS 18-22.vmd",
+          "source_sha256": "ca868cfa6c53353c6feb081aa7a9732553d5e0b52a39075362255bb40e342e6e",
+          "source_frame_end": 1000,
+          "reference": "B",
+          "clip_id": "mmd_8c5c490fb87c_b",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_8c5c490fb87c_b.glb"
+        }
+      ],
+      "loop_policy": "manual_preview_only; no source seam modification",
+      "translation_policy": "shared_world"
+    },
+    {
+      "id": "mmd_beee0d2eb57b",
+      "label": "Loop 20 - Chikan 03",
+      "decision": "KEEP",
+      "frame_start": 0,
+      "frame_end": 1008,
+      "fps": 30,
+      "duration": 33.6,
+      "roles": [
+        {
+          "id": "A",
+          "source_file": "Loop 20 - Chikan 03/Loop 20 - Chikan 03 - Izumi.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Loop 20 - Chikan 03\\Loop 20 - Chikan 03 - Izumi.vmd",
+          "source_sha256": "059af21df0ed821017ee343ad187d98ba4908fb5c584197a9c4eb1a2159011ea",
+          "source_frame_end": 1008,
+          "reference": "A",
+          "clip_id": "mmd_beee0d2eb57b_a",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_beee0d2eb57b_a.glb"
+        },
+        {
+          "id": "B",
+          "source_file": "Loop 20 - Chikan 03/Loop 20 - Chikan 03 - SS 18-22.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Loop 20 - Chikan 03\\Loop 20 - Chikan 03 - SS 18-22.vmd",
+          "source_sha256": "5a386b02e54b7dcf9bf6e639e3d74fb501f62b600bf0111361294d04fb2d8be9",
+          "source_frame_end": 1008,
+          "reference": "B",
+          "clip_id": "mmd_beee0d2eb57b_b",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_beee0d2eb57b_b.glb"
+        }
+      ],
+      "loop_policy": "manual_preview_only; no source seam modification",
+      "translation_policy": "shared_world"
+    },
+    {
+      "id": "mmd_7869c66910b9",
+      "label": "Loop 27 - Twin Angels-V2",
+      "decision": "KEEP",
+      "frame_start": 0,
+      "frame_end": 2000,
+      "fps": 30,
+      "duration": 66.66666666666667,
+      "roles": [
+        {
+          "id": "A",
+          "source_file": "Loop 27 - Twin Angels-V2/Loop 27 - Twin Angels - Izumi.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Loop 27 - Twin Angels-V2\\Loop 27 - Twin Angels - Izumi.vmd",
+          "source_sha256": "954da1c0447e4552384891378422378c3b97e04100674a68385488b1f7e2e355",
+          "source_frame_end": 2000,
+          "reference": "A",
+          "clip_id": "mmd_7869c66910b9_a",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_7869c66910b9_a.glb"
+        },
+        {
+          "id": "B",
+          "source_file": "Loop 27 - Twin Angels-V2/Loop 27 - Twin Angels - Rin.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Loop 27 - Twin Angels-V2\\Loop 27 - Twin Angels - Rin.vmd",
+          "source_sha256": "98027b4f0986a46e56a4cca4314180e2dbe2a94941ff0c980fd39b76a452c6cb",
+          "source_frame_end": 2000,
+          "reference": "B",
+          "clip_id": "mmd_7869c66910b9_b",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_7869c66910b9_b.glb"
+        },
+        {
+          "id": "C",
+          "source_file": "Loop 27 - Twin Angels-V2/Loop 27 - Twin Angels - SS 18-22.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Loop 27 - Twin Angels-V2\\Loop 27 - Twin Angels - SS 18-22.vmd",
+          "source_sha256": "54a30eaa8bf403028add3247c0eceb77400a9e6ec73bad4187b8202ea738d08c",
+          "source_frame_end": 2000,
+          "reference": "A",
+          "clip_id": "mmd_7869c66910b9_c",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_7869c66910b9_c.glb"
+        }
+      ],
+      "loop_policy": "manual_preview_only; no source seam modification",
+      "translation_policy": "shared_world"
+    },
+    {
+      "id": "mmd_4f041b833292",
+      "label": "Motorcycle Photoshoot 2nd pose",
+      "decision": "MAYBE",
+      "frame_start": 0,
+      "frame_end": 1615,
+      "fps": 30,
+      "duration": 53.833333333333336,
+      "roles": [
+        {
+          "id": "A",
+          "source_file": "Motorcycle Photoshoot 2nd pose/Motorcycle Photoshoot 2nd pose - Izumi.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Motorcycle Photoshoot 2nd pose\\Motorcycle Photoshoot 2nd pose - Izumi.vmd",
+          "source_sha256": "baa3b8bdf872fd0b7a53e268204250032f275bb0eda74df2b4f25574bf35fb2b",
+          "source_frame_end": 1615,
+          "reference": "A",
+          "clip_id": "mmd_4f041b833292_a",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_4f041b833292_a.glb"
+        },
+        {
+          "id": "B",
+          "source_file": "Motorcycle Photoshoot 2nd pose/Motorcycle Photoshoot 2nd pose - Kaat.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Motorcycle Photoshoot 2nd pose\\Motorcycle Photoshoot 2nd pose - Kaat.vmd",
+          "source_sha256": "12b4bf62fd97d8389168bb90a5e1d42c7492a41c9c8b5dce5bca192d8538d5de",
+          "source_frame_end": 1615,
+          "reference": "B",
+          "clip_id": "mmd_4f041b833292_b",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_4f041b833292_b.glb"
+        }
+      ],
+      "loop_policy": "manual_preview_only; no source seam modification",
+      "translation_policy": "shared_world"
+    },
+    {
+      "id": "mmd_781d8c87fd79",
+      "label": "Welcome - BJV2 2021 Uptade",
+      "decision": "MAYBE",
+      "frame_start": 0,
+      "frame_end": 4201,
+      "fps": 30,
+      "duration": 140.03333333333333,
+      "roles": [
+        {
+          "id": "A",
+          "source_file": "Welcome - BJV2 2021 Uptade/Welcome - Blowjob V2 - Izumi.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Welcome - BJV2 2021 Uptade\\Welcome - Blowjob V2 - Izumi.vmd",
+          "source_sha256": "f1a9247add8211d0bfedfec6076b3d3a0ee347cff3bad191a953050c9eaa15ae",
+          "source_frame_end": 4201,
+          "reference": "A",
+          "clip_id": "mmd_781d8c87fd79_a",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_781d8c87fd79_a.glb"
+        },
+        {
+          "id": "B",
+          "source_file": "Welcome - BJV2 2021 Uptade/Welcome - Blowjob V2 - Maran.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Welcome - BJV2 2021 Uptade\\Welcome - Blowjob V2 - Maran.vmd",
+          "source_sha256": "972b43dea9f54516c3b9017822388dcd779bf1fbda32d232a0097088563f844a",
+          "source_frame_end": 4201,
+          "reference": "B",
+          "clip_id": "mmd_781d8c87fd79_b",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_781d8c87fd79_b.glb"
+        }
+      ],
+      "loop_policy": "manual_preview_only; no source seam modification",
+      "translation_policy": "shared_world"
+    }
+  ]
+}

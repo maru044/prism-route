@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "project_root": "D:\\Prism Route\\prism-route",
+  "catalog": "D:\\Prism Route\\prism-route\\tools\\mmd_preview\\catalog.json",
+  "selection_file": "D:\\Prism Route\\prism-route\\docs\\motion_selection\\mmd_source_selection.json",
+  "preview_blend": "D:\\Prism Route\\research\\mmd_source_preview_20261103\\mmd_source_browser.blend",
+  "reference_scale": 0.08,
+  "reference_models": {
+    "A": "D:/模型/20261008/刻晴_by_原神_b0f08721a7da17df599896ac40dd2f22/刻晴/刻晴/刻晴.pmx",
+    "B": "D:/模型/ganyu_by_原神_7381ccd84ee8763ce63b3ad638e1c49b/甘雨.pmx"
+  }
+}

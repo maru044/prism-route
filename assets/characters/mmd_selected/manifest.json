@@ -1,0 +1,1182 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "keqing",
+      "label": "刻晴",
+      "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+      "model_sha256": "46b7f282b78fd72b585207251c3be12bc8f8bc8f2a3b24c07698dec395d3ff01"
+    },
+    {
+      "id": "ganyu",
+      "label": "甘雨",
+      "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+      "model_sha256": "03f292d54cb40da06c219e3b35e0b300e8f8b46de8f1e9bc0b13685b99279b72"
+    },
+    {
+      "id": "hutao",
+      "label": "胡桃",
+      "model": "res://assets/characters/import_tests_local/hutao/hutao_fixed.vrm",
+      "model_sha256": "a62ad4f384cc03f0b70937c5f9720036f98b8c5fed8ca6cb9a735a5ec07ab915"
+    },
+    {
+      "id": "huahuo",
+      "label": "花火",
+      "model": "res://assets/characters/import_tests_local/huahuo/huahuo_fixed.vrm",
+      "model_sha256": "60075651511ad4e94717c7c7cf56c663e19dc7cc81d2c8bf04a4e1b479d26108"
+    }
+  ],
+  "readme_sha256": "209a8afe976043207a76d5fd0d776884bc02af09fae671f5f07b3c60d8ef2b99",
+  "packs": [
+    {
+      "id": "mmd_0a3f6ba5f5de",
+      "label": "Armchair Paizuri - By Ademar440",
+      "selected": true,
+      "shared": true,
+      "duration": 84.93333333333334,
+      "frame_start": 0,
+      "frame_end": 2548,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Armchair Paizuri - By Ademar440/Armchair Paizuri - Izumi.vmd",
+          "sha256": "601f5b2f68662737558ab2f646df4cdb79a92ecb110fb1fd1b90f05e8633e153"
+        },
+        {
+          "file": "Armchair Paizuri - By Ademar440/Armchair Paizuri - Maran.vmd",
+          "sha256": "3fc15cf1cc0d051846ffb17c11731edef722143bff0b5677d41a976e71a68198"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_0a3f6ba5f5de_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_0a3f6ba5f5de_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_0a3f6ba5f5de_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_0a3f6ba5f5de_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_16a2ecfb7781",
+      "label": "BJ in Bed",
+      "selected": true,
+      "shared": true,
+      "duration": 66.33333333333333,
+      "frame_start": 0,
+      "frame_end": 1990,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "BJ in Bed/Blowjob in Bed - Izumi.vmd",
+          "sha256": "ec60c551dbd27fbf813e4011158b343fb0352e9dd5c95ef19756ae302266a5b9"
+        },
+        {
+          "file": "BJ in Bed/Blowjob in Bed - Maran.vmd",
+          "sha256": "e4b4203fd3d4d0e0cfd527765de1d6f38f74470c87f8065792f4c2feb9256334"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_16a2ecfb7781_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_16a2ecfb7781_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_16a2ecfb7781_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_16a2ecfb7781_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_67d58e9d607e",
+      "label": "Dominating FJ",
+      "selected": true,
+      "shared": true,
+      "duration": 37.333333333333336,
+      "frame_start": 0,
+      "frame_end": 1120,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Dominating FJ/izumi.vmd",
+          "sha256": "60f152b726c39020f8779030347c586ffa6b6faf8f2c180920449fcd9cc6a7ef"
+        },
+        {
+          "file": "Dominating FJ/guy.vmd",
+          "sha256": "902d48c973cb4735bf6796471136acb16272daac99f40b37b86a244dd4dd5300"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_67d58e9d607e_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_67d58e9d607e_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_67d58e9d607e_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_67d58e9d607e_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_6e891982bb51",
+      "label": "Loop 02",
+      "selected": true,
+      "shared": true,
+      "duration": 21.333333333333332,
+      "frame_start": 0,
+      "frame_end": 640,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Loop 02/Izumi Enjoys.vmd",
+          "sha256": "9f1cef1fe8b68bd93f4d3151dd9974ae9a8c0c077f95470eaea9e1214f73cd11"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_6e891982bb51_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_6e891982bb51_a_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_71dec5bd8390",
+      "label": "Loop 03",
+      "selected": true,
+      "shared": true,
+      "duration": 16.0,
+      "frame_start": 0,
+      "frame_end": 480,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Loop 03/Izumi.vmd",
+          "sha256": "72c8b919c6b5f50f9ce856cd0a562b3ebd03e680a33dbf0230d78e19d9ef5c9f"
+        },
+        {
+          "file": "Loop 03/Kaat.vmd",
+          "sha256": "656bfe4b2312d920b69cd9b2ace2f8695f3b044e2228adc1bdcdbba96d0640bc"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/shared/shared_mmd_role_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/shared/shared_mmd_role_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://assets/characters/mmd_validation/shared/shared_mmd_role_a_reference.json",
+        "res://assets/characters/mmd_validation/shared/shared_mmd_role_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_aec34d147925",
+      "label": "Loop 05",
+      "selected": true,
+      "shared": true,
+      "duration": 20.333333333333332,
+      "frame_start": 0,
+      "frame_end": 610,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Loop 05/Izumi.vmd",
+          "sha256": "e403de5641a9aa92f2093c4118dae941d7065fb8b28078cd4d8c5e714cd2e47e"
+        },
+        {
+          "file": "Loop 05/Kaat.vmd",
+          "sha256": "49fc9d824deb94fdef289c8055ce6a9da22ecea7f5bdf711ea2e82d1c6f84a77"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_aec34d147925_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_aec34d147925_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_aec34d147925_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_aec34d147925_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_9957977a1355",
+      "label": "Loop 08",
+      "selected": true,
+      "shared": true,
+      "duration": 33.4,
+      "frame_start": 0,
+      "frame_end": 1002,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Loop 08/Izumi.vmd",
+          "sha256": "cb56be8e601fa9effa62b342577134d949421ec2d29c4ea8ee7939e638284dff"
+        },
+        {
+          "file": "Loop 08/Kaat.vmd",
+          "sha256": "495a5f7e601081a7a06e4a9126d441608629ff303da0b92116797444af6bf17d"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_9957977a1355_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_9957977a1355_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_9957977a1355_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_9957977a1355_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_fcc0340f8227",
+      "label": "Loop 13 - KBJ",
+      "selected": true,
+      "shared": true,
+      "duration": 37.3,
+      "frame_start": 0,
+      "frame_end": 1119,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Loop 13 - KBJ/Izumi.vmd",
+          "sha256": "ccbb2e4281c9657858049259f9f494dda0450dc8e0ff9923e9f8e2fe70110cf8"
+        },
+        {
+          "file": "Loop 13 - KBJ/Sin Sack.vmd",
+          "sha256": "c0344ddc7c2b39861fa6cd54e2176693ccb825362f6e020e159fcdea71f5e7c1"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_fcc0340f8227_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_fcc0340f8227_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_fcc0340f8227_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_fcc0340f8227_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_8c5c490fb87c",
+      "label": "Loop 17 - Chikan 01",
+      "selected": true,
+      "shared": true,
+      "duration": 33.333333333333336,
+      "frame_start": 0,
+      "frame_end": 1000,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Loop 17 - Chikan 01/Loop 17 - Chickan 01 - Izumi.vmd",
+          "sha256": "a44c20ce24ca736e516536347a292c07e720c9c4dd34d3ec09c947225ab3bafc"
+        },
+        {
+          "file": "Loop 17 - Chikan 01/Loop 17 - Chickan 01 - SS 18-22.vmd",
+          "sha256": "ca868cfa6c53353c6feb081aa7a9732553d5e0b52a39075362255bb40e342e6e"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_8c5c490fb87c_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_8c5c490fb87c_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_8c5c490fb87c_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_8c5c490fb87c_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_beee0d2eb57b",
+      "label": "Loop 20 - Chikan 03",
+      "selected": true,
+      "shared": true,
+      "duration": 33.6,
+      "frame_start": 0,
+      "frame_end": 1008,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Loop 20 - Chikan 03/Loop 20 - Chikan 03 - Izumi.vmd",
+          "sha256": "059af21df0ed821017ee343ad187d98ba4908fb5c584197a9c4eb1a2159011ea"
+        },
+        {
+          "file": "Loop 20 - Chikan 03/Loop 20 - Chikan 03 - SS 18-22.vmd",
+          "sha256": "5a386b02e54b7dcf9bf6e639e3d74fb501f62b600bf0111361294d04fb2d8be9"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_beee0d2eb57b_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_beee0d2eb57b_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_beee0d2eb57b_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_beee0d2eb57b_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_7869c66910b9",
+      "label": "Loop 27 - Twin Angels-V2",
+      "selected": true,
+      "shared": true,
+      "duration": 66.66666666666667,
+      "frame_start": 0,
+      "frame_end": 2000,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Loop 27 - Twin Angels-V2/Loop 27 - Twin Angels - Izumi.vmd",
+          "sha256": "954da1c0447e4552384891378422378c3b97e04100674a68385488b1f7e2e355"
+        },
+        {
+          "file": "Loop 27 - Twin Angels-V2/Loop 27 - Twin Angels - Rin.vmd",
+          "sha256": "98027b4f0986a46e56a4cca4314180e2dbe2a94941ff0c980fd39b76a452c6cb"
+        },
+        {
+          "file": "Loop 27 - Twin Angels-V2/Loop 27 - Twin Angels - SS 18-22.vmd",
+          "sha256": "54a30eaa8bf403028add3247c0eceb77400a9e6ec73bad4187b8202ea738d08c"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_7869c66910b9_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_7869c66910b9_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "C",
+          "label": "角色 C",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_7869c66910b9_c.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_7869c66910b9_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_7869c66910b9_b_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_7869c66910b9_c_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    }
+  ],
+  "clips": [
+    {
+      "id": "mmd_0a3f6ba5f5de_a",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_0a3f6ba5f5de_a.tres",
+      "frames": 2549,
+      "duration": 84.93333333333334,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 9246368,
+      "source": ".model_import_build/mmd_selected/mmd_0a3f6ba5f5de_a.glb",
+      "source_sha256": "053d62a05c37906104bcd010dfbc17604b3f7f2de30b44d456a9f0ce1b897449",
+      "output_sha256": "f9b2d72b5284a51b3f4f13043423b34e3af8aecd6635d26aa97ddd7c22bf0153",
+      "reference_height": 0.9838524702936413,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_0a3f6ba5f5de_a_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 1.6113547477158985e-06,
+      "standardize_elapsed_s": 2.462809299933724,
+      "bake_position_checks": 2844,
+      "max_bake_position_error_m": 5.900558791525164e-07,
+      "pack": "mmd_0a3f6ba5f5de",
+      "role": "A",
+      "source_file": "Armchair Paizuri - By Ademar440/Armchair Paizuri - Izumi.vmd",
+      "source_vmd_sha256": "601f5b2f68662737558ab2f646df4cdb79a92ecb110fb1fd1b90f05e8633e153"
+    },
+    {
+      "id": "mmd_0a3f6ba5f5de_b",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_0a3f6ba5f5de_b.tres",
+      "frames": 2549,
+      "duration": 84.93333333333334,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 9143613,
+      "source": ".model_import_build/mmd_selected/mmd_0a3f6ba5f5de_b.glb",
+      "source_sha256": "c86a5d12fbd1b034526dd42ff91f19598be911d4b45a1bbcaa660c9f5e76e085",
+      "output_sha256": "0d17006bf9a62a7e3f3d7135694574703ab9e835e1fedd23ecfa4a75009114a1",
+      "reference_height": 0.9769537867977787,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_0a3f6ba5f5de_b_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 1.5162664751371124e-08,
+      "standardize_elapsed_s": 2.440377000020817,
+      "bake_position_checks": 2835,
+      "max_bake_position_error_m": 4.498201265371913e-07,
+      "pack": "mmd_0a3f6ba5f5de",
+      "role": "B",
+      "source_file": "Armchair Paizuri - By Ademar440/Armchair Paizuri - Maran.vmd",
+      "source_vmd_sha256": "3fc15cf1cc0d051846ffb17c11731edef722143bff0b5677d41a976e71a68198"
+    },
+    {
+      "id": "mmd_16a2ecfb7781_a",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_16a2ecfb7781_a.tres",
+      "frames": 1991,
+      "duration": 66.33333333333333,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 7200374,
+      "source": ".model_import_build/mmd_selected/mmd_16a2ecfb7781_a.glb",
+      "source_sha256": "29b845f3c27b38dfaf1ff1fb1ba2dc7078f611c26742d1d8fdca51365918a168",
+      "output_sha256": "6509a1f3ff01dcccd443376da88c350dcdf3f6176390aea038779e94bf3df64b",
+      "reference_height": 0.9838524702936413,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_16a2ecfb7781_a_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 5.079500878739374e-06,
+      "standardize_elapsed_s": 1.9643128000898287,
+      "bake_position_checks": 2844,
+      "max_bake_position_error_m": 6.152934677023464e-07,
+      "pack": "mmd_16a2ecfb7781",
+      "role": "A",
+      "source_file": "BJ in Bed/Blowjob in Bed - Izumi.vmd",
+      "source_vmd_sha256": "ec60c551dbd27fbf813e4011158b343fb0352e9dd5c95ef19756ae302266a5b9"
+    },
+    {
+      "id": "mmd_16a2ecfb7781_b",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_16a2ecfb7781_b.tres",
+      "frames": 1991,
+      "duration": 66.33333333333333,
+      "tracks": 59,
+      "constant_rotation_tracks": 2,
+      "bytes": 7087799,
+      "source": ".model_import_build/mmd_selected/mmd_16a2ecfb7781_b.glb",
+      "source_sha256": "b70174a0ad373f8959371b37e44023157c2d8b7ad4e5dfc96c61e2c3dc4ea790",
+      "output_sha256": "cd1c26b11b46b3582cff095561a6da55d8b0e82ae2e0e123dc940f527398e923",
+      "reference_height": 0.9769537867977787,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_16a2ecfb7781_b_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 1.410317036071307e-07,
+      "standardize_elapsed_s": 1.9207505999365821,
+      "bake_position_checks": 2835,
+      "max_bake_position_error_m": 5.405651672845201e-07,
+      "pack": "mmd_16a2ecfb7781",
+      "role": "B",
+      "source_file": "BJ in Bed/Blowjob in Bed - Maran.vmd",
+      "source_vmd_sha256": "e4b4203fd3d4d0e0cfd527765de1d6f38f74470c87f8065792f4c2feb9256334"
+    },
+    {
+      "id": "mmd_67d58e9d607e_a",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_67d58e9d607e_a.tres",
+      "frames": 1121,
+      "duration": 37.333333333333336,
+      "tracks": 59,
+      "constant_rotation_tracks": 0,
+      "bytes": 4161188,
+      "source": ".model_import_build/mmd_selected/mmd_67d58e9d607e_a.glb",
+      "source_sha256": "1b89045328d2f1efa62069916474b6c71c695caaecc78ab5d3293c922de7224f",
+      "output_sha256": "779495c76e4ed5470f19cf12ec5e8321ee8fea8d224cd8e33ff682af5b915ca2",
+      "reference_height": 0.9838524702936413,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_67d58e9d607e_a_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 4.786801939861418e-07,
+      "standardize_elapsed_s": 1.1378793000476435,
+      "bake_position_checks": 2844,
+      "max_bake_position_error_m": 1.0185859287757791e-06,
+      "pack": "mmd_67d58e9d607e",
+      "role": "A",
+      "source_file": "Dominating FJ/izumi.vmd",
+      "source_vmd_sha256": "60f152b726c39020f8779030347c586ffa6b6faf8f2c180920449fcd9cc6a7ef"
+    },
+    {
+      "id": "mmd_67d58e9d607e_b",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_67d58e9d607e_b.tres",
+      "frames": 1121,
+      "duration": 37.333333333333336,
+      "tracks": 59,
+      "constant_rotation_tracks": 32,
+      "bytes": 1901205,
+      "source": ".model_import_build/mmd_selected/mmd_67d58e9d607e_b.glb",
+      "source_sha256": "64619d59b69f37086379efde398dabfad26fd23f72f93fdd081c0e7a9e3f3edf",
+      "output_sha256": "b8b673d90023ebec067532046429405242fe9dd6ad3556510192182e1712b94c",
+      "reference_height": 0.9769537867977787,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_67d58e9d607e_b_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 1.1200484983930892e-11,
+      "standardize_elapsed_s": 1.052219899953343,
+      "bake_position_checks": 2835,
+      "max_bake_position_error_m": 4.1201104410584245e-07,
+      "pack": "mmd_67d58e9d607e",
+      "role": "B",
+      "source_file": "Dominating FJ/guy.vmd",
+      "source_vmd_sha256": "902d48c973cb4735bf6796471136acb16272daac99f40b37b86a244dd4dd5300"
+    },
+    {
+      "id": "mmd_6e891982bb51_a",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_6e891982bb51_a.tres",
+      "frames": 641,
+      "duration": 21.333333333333332,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 2292980,
+      "source": ".model_import_build/mmd_selected/mmd_6e891982bb51_a.glb",
+      "source_sha256": "a5b14c744de09d404e864e3a73d4e2445642333b79d276e3af64bef12e9fbfc5",
+      "output_sha256": "d42727412b484ed269ad6ae788e17a905dd5a369fdd80d0b50ebf491d12688f5",
+      "reference_height": 0.9838524702936413,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_6e891982bb51_a_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 2.997630845213983e-07,
+      "standardize_elapsed_s": 0.6361397000728175,
+      "bake_position_checks": 2844,
+      "max_bake_position_error_m": 8.805565060790871e-07,
+      "pack": "mmd_6e891982bb51",
+      "role": "A",
+      "source_file": "Loop 02/Izumi Enjoys.vmd",
+      "source_vmd_sha256": "9f1cef1fe8b68bd93f4d3151dd9974ae9a8c0c077f95470eaea9e1214f73cd11"
+    },
+    {
+      "id": "mmd_71dec5bd8390_a",
+      "resource": "res://assets/characters/mmd_validation/shared/shared_mmd_role_a.tres",
+      "frames": 481,
+      "duration": 16.0,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 1743004,
+      "source": "assets/characters/mmd_validation/keqing_vrm_loop03.tres",
+      "source_sha256": "78aa229b809100f558d0339bebbf31557872712e16656427f04af435c934b8cf",
+      "output_sha256": "b624be654302b0a51e4504e82ee57f285b9de2f1de26f9b9b16bedfc88e80692",
+      "reference_height": 0.9838524702936413,
+      "source_semantic_pelvis": "下半身",
+      "source_body_root": "Hips",
+      "reference": "res://assets/characters/mmd_validation/shared/shared_mmd_role_a_reference.json",
+      "reused": true,
+      "pack": "mmd_71dec5bd8390",
+      "role": "A",
+      "source_file": "Loop 03/Izumi.vmd",
+      "source_vmd_sha256": "72c8b919c6b5f50f9ce856cd0a562b3ebd03e680a33dbf0230d78e19d9ef5c9f"
+    },
+    {
+      "id": "mmd_71dec5bd8390_b",
+      "resource": "res://assets/characters/mmd_validation/shared/shared_mmd_role_b.tres",
+      "frames": 481,
+      "duration": 16.0,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 1715255,
+      "source": "assets/characters/mmd_validation/paired/ganyu_role_b.tres",
+      "source_sha256": "bb1c4987faaa3646eb726c89f1e89082c7ffc574eb56d825edfd97f4cea6feb8",
+      "output_sha256": "9edf2d92605ba1fe08e0c3d9008568ef0c73c89f6f0ef0dcadbfe794fb0c0aca",
+      "reference_height": 0.9769537867977787,
+      "source_semantic_pelvis": "下半身",
+      "source_body_root": "腰",
+      "reference": "res://assets/characters/mmd_validation/shared/shared_mmd_role_b_reference.json",
+      "reused": true,
+      "pack": "mmd_71dec5bd8390",
+      "role": "B",
+      "source_file": "Loop 03/Kaat.vmd",
+      "source_vmd_sha256": "656bfe4b2312d920b69cd9b2ace2f8695f3b044e2228adc1bdcdbba96d0640bc"
+    },
+    {
+      "id": "mmd_aec34d147925_a",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_aec34d147925_a.tres",
+      "frames": 611,
+      "duration": 20.333333333333332,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 2233527,
+      "source": ".model_import_build/mmd_selected/mmd_aec34d147925_a.glb",
+      "source_sha256": "b411408bb345842e0bd02c1c6af3b3322557faac829dd11a3a4628f4e53f090f",
+      "output_sha256": "5d6b5eb079c031831c9a82bbbe78f88f64552005bbde763ea4ceb44451053ef7",
+      "reference_height": 0.9838524702936413,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_aec34d147925_a_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 7.15007179297178e-08,
+      "standardize_elapsed_s": 0.6390999999130145,
+      "bake_position_checks": 2844,
+      "max_bake_position_error_m": 6.920622896989061e-07,
+      "pack": "mmd_aec34d147925",
+      "role": "A",
+      "source_file": "Loop 05/Izumi.vmd",
+      "source_vmd_sha256": "e403de5641a9aa92f2093c4118dae941d7065fb8b28078cd4d8c5e714cd2e47e"
+    },
+    {
+      "id": "mmd_aec34d147925_b",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_aec34d147925_b.tres",
+      "frames": 611,
+      "duration": 20.333333333333332,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 2206861,
+      "source": ".model_import_build/mmd_selected/mmd_aec34d147925_b.glb",
+      "source_sha256": "e80360fcde29cca3f080d030a243a73dbc5e8e6995dce27191c5c3a645aa5d3c",
+      "output_sha256": "6fe37c73016fdc799102fa88a3cfe0ef7c9816029a49c42da7971fe70de58d81",
+      "reference_height": 0.9769537867977787,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_aec34d147925_b_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 3.834412578007651e-07,
+      "standardize_elapsed_s": 0.6508905999362469,
+      "bake_position_checks": 2835,
+      "max_bake_position_error_m": 6.492273648722308e-07,
+      "pack": "mmd_aec34d147925",
+      "role": "B",
+      "source_file": "Loop 05/Kaat.vmd",
+      "source_vmd_sha256": "49fc9d824deb94fdef289c8055ce6a9da22ecea7f5bdf711ea2e82d1c6f84a77"
+    },
+    {
+      "id": "mmd_9957977a1355_a",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_9957977a1355_a.tres",
+      "frames": 1003,
+      "duration": 33.4,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 3598089,
+      "source": ".model_import_build/mmd_selected/mmd_9957977a1355_a.glb",
+      "source_sha256": "5618d5af0bee93b53a937ad6066a68187be8f38c69ab6ddb5ae1a5620eab6e98",
+      "output_sha256": "dcb5cad5e1e6046ad6ad577dca1633d3b908aa89577fb618fad625f7d4471e7b",
+      "reference_height": 0.9838524702936413,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_9957977a1355_a_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 1.0041156443263421e-06,
+      "standardize_elapsed_s": 0.9842938000801951,
+      "bake_position_checks": 2844,
+      "max_bake_position_error_m": 7.336457744295103e-07,
+      "pack": "mmd_9957977a1355",
+      "role": "A",
+      "source_file": "Loop 08/Izumi.vmd",
+      "source_vmd_sha256": "cb56be8e601fa9effa62b342577134d949421ec2d29c4ea8ee7939e638284dff"
+    },
+    {
+      "id": "mmd_9957977a1355_b",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_9957977a1355_b.tres",
+      "frames": 1003,
+      "duration": 33.4,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 3673963,
+      "source": ".model_import_build/mmd_selected/mmd_9957977a1355_b.glb",
+      "source_sha256": "75779bcfb407becc060ec5dc07f4d3cce14be040e4f604e5826a3a0d624f3063",
+      "output_sha256": "51dbf6058562ccfb659801104b448acafe917b3cb0fc468c058853a3f8bae5a9",
+      "reference_height": 0.9769537867977787,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_9957977a1355_b_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 2.1134788726340226e-06,
+      "standardize_elapsed_s": 1.0076723999809474,
+      "bake_position_checks": 2835,
+      "max_bake_position_error_m": 7.133906604996815e-07,
+      "pack": "mmd_9957977a1355",
+      "role": "B",
+      "source_file": "Loop 08/Kaat.vmd",
+      "source_vmd_sha256": "495a5f7e601081a7a06e4a9126d441608629ff303da0b92116797444af6bf17d"
+    },
+    {
+      "id": "mmd_fcc0340f8227_a",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_fcc0340f8227_a.tres",
+      "frames": 1120,
+      "duration": 37.3,
+      "tracks": 59,
+      "constant_rotation_tracks": 0,
+      "bytes": 4094418,
+      "source": ".model_import_build/mmd_selected/mmd_fcc0340f8227_a.glb",
+      "source_sha256": "388dfbe48b9d807f6350018e297fc60c3a96f4138f515c7f210aae8ca256805f",
+      "output_sha256": "94987b4a67e735a4e9efee1b481d698e3699bb142cf3a37d9c04134fb40131ee",
+      "reference_height": 0.9838524702936413,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_fcc0340f8227_a_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 2.7014763825938815e-07,
+      "standardize_elapsed_s": 1.1317659999476746,
+      "bake_position_checks": 2844,
+      "max_bake_position_error_m": 6.294748585040695e-07,
+      "pack": "mmd_fcc0340f8227",
+      "role": "A",
+      "source_file": "Loop 13 - KBJ/Izumi.vmd",
+      "source_vmd_sha256": "ccbb2e4281c9657858049259f9f494dda0450dc8e0ff9923e9f8e2fe70110cf8"
+    },
+    {
+      "id": "mmd_fcc0340f8227_b",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_fcc0340f8227_b.tres",
+      "frames": 1120,
+      "duration": 37.3,
+      "tracks": 59,
+      "constant_rotation_tracks": 0,
+      "bytes": 4178146,
+      "source": ".model_import_build/mmd_selected/mmd_fcc0340f8227_b.glb",
+      "source_sha256": "81b438a092ed3352321897993b19697c3bc649aa718bd365b2fd486182f084f5",
+      "output_sha256": "057e2d8e27b846086fad49e6548f497e10f6be453c7012dfff9936a1dc89927b",
+      "reference_height": 0.9769537867977787,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_fcc0340f8227_b_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 1.8136065971230408e-07,
+      "standardize_elapsed_s": 1.1180829000659287,
+      "bake_position_checks": 2835,
+      "max_bake_position_error_m": 7.539457464619601e-07,
+      "pack": "mmd_fcc0340f8227",
+      "role": "B",
+      "source_file": "Loop 13 - KBJ/Sin Sack.vmd",
+      "source_vmd_sha256": "c0344ddc7c2b39861fa6cd54e2176693ccb825362f6e020e159fcdea71f5e7c1"
+    },
+    {
+      "id": "mmd_8c5c490fb87c_a",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_8c5c490fb87c_a.tres",
+      "frames": 1001,
+      "duration": 33.333333333333336,
+      "tracks": 59,
+      "constant_rotation_tracks": 0,
+      "bytes": 3707751,
+      "source": ".model_import_build/mmd_selected/mmd_8c5c490fb87c_a.glb",
+      "source_sha256": "ab34117a2bb5c1e1caaaac1d164a13d8c8f0b511e81e8eafb8ecd647835d1578",
+      "output_sha256": "7127130ba4dc48774189918f81e2ee988baf79796b5bcadca0bc7d91a6743938",
+      "reference_height": 0.9838524702936413,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_8c5c490fb87c_a_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 4.7451533805031865e-07,
+      "standardize_elapsed_s": 1.0075087000150234,
+      "bake_position_checks": 2844,
+      "max_bake_position_error_m": 7.646311476799563e-07,
+      "pack": "mmd_8c5c490fb87c",
+      "role": "A",
+      "source_file": "Loop 17 - Chikan 01/Loop 17 - Chickan 01 - Izumi.vmd",
+      "source_vmd_sha256": "a44c20ce24ca736e516536347a292c07e720c9c4dd34d3ec09c947225ab3bafc"
+    },
+    {
+      "id": "mmd_8c5c490fb87c_b",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_8c5c490fb87c_b.tres",
+      "frames": 1001,
+      "duration": 33.333333333333336,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 3677564,
+      "source": ".model_import_build/mmd_selected/mmd_8c5c490fb87c_b.glb",
+      "source_sha256": "5e2f53795fa0594817e7d7185605e870434c69e0c8b4a001d7b366d78abb90a3",
+      "output_sha256": "9a30099083814c5d2e635efe2334e79a1812ff2c7a75ee3c2ddfa95e1004fe35",
+      "reference_height": 0.9769537867977787,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_8c5c490fb87c_b_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 3.287396904694262e-07,
+      "standardize_elapsed_s": 0.9853141000494361,
+      "bake_position_checks": 2835,
+      "max_bake_position_error_m": 9.94701341884055e-07,
+      "pack": "mmd_8c5c490fb87c",
+      "role": "B",
+      "source_file": "Loop 17 - Chikan 01/Loop 17 - Chickan 01 - SS 18-22.vmd",
+      "source_vmd_sha256": "ca868cfa6c53353c6feb081aa7a9732553d5e0b52a39075362255bb40e342e6e"
+    },
+    {
+      "id": "mmd_beee0d2eb57b_a",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_beee0d2eb57b_a.tres",
+      "frames": 1009,
+      "duration": 33.6,
+      "tracks": 59,
+      "constant_rotation_tracks": 0,
+      "bytes": 3666078,
+      "source": ".model_import_build/mmd_selected/mmd_beee0d2eb57b_a.glb",
+      "source_sha256": "7a5329b1c22a077ae8f704d2d8d589ce0fa32e7b59de565d0af7cce9a6b436d6",
+      "output_sha256": "a57917af94c3cd4754c9d56d1a4f5f9e3ef785cae55c9b87574e9e7e1e68b90e",
+      "reference_height": 0.9838524702936413,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_beee0d2eb57b_a_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 6.465063901589518e-07,
+      "standardize_elapsed_s": 1.0004179999232292,
+      "bake_position_checks": 2844,
+      "max_bake_position_error_m": 7.030862473134451e-07,
+      "pack": "mmd_beee0d2eb57b",
+      "role": "A",
+      "source_file": "Loop 20 - Chikan 03/Loop 20 - Chikan 03 - Izumi.vmd",
+      "source_vmd_sha256": "059af21df0ed821017ee343ad187d98ba4908fb5c584197a9c4eb1a2159011ea"
+    },
+    {
+      "id": "mmd_beee0d2eb57b_b",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_beee0d2eb57b_b.tres",
+      "frames": 1009,
+      "duration": 33.6,
+      "tracks": 59,
+      "constant_rotation_tracks": 10,
+      "bytes": 3022712,
+      "source": ".model_import_build/mmd_selected/mmd_beee0d2eb57b_b.glb",
+      "source_sha256": "974afd65e894ad545afd4fc986010d34780f06fb32c4e815e84515263c189728",
+      "output_sha256": "081263a10e8cabc32ee3834f2aa1a43d0633561344777f0976b468fb9efc0ffd",
+      "reference_height": 0.9769537867977787,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_beee0d2eb57b_b_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 9.392884214864949e-07,
+      "standardize_elapsed_s": 0.9946572999469936,
+      "bake_position_checks": 2835,
+      "max_bake_position_error_m": 5.650359849187571e-07,
+      "pack": "mmd_beee0d2eb57b",
+      "role": "B",
+      "source_file": "Loop 20 - Chikan 03/Loop 20 - Chikan 03 - SS 18-22.vmd",
+      "source_vmd_sha256": "5a386b02e54b7dcf9bf6e639e3d74fb501f62b600bf0111361294d04fb2d8be9"
+    },
+    {
+      "id": "mmd_7869c66910b9_a",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_7869c66910b9_a.tres",
+      "frames": 2001,
+      "duration": 66.66666666666667,
+      "tracks": 59,
+      "constant_rotation_tracks": 0,
+      "bytes": 7313737,
+      "source": ".model_import_build/mmd_selected/mmd_7869c66910b9_a.glb",
+      "source_sha256": "c041f6843e2f998e083a6b116e54c517cdc8f48c66d86d4bdd4fada71eea2cd0",
+      "output_sha256": "04386c29a8deb89a2444cc5cc8c2c9f4b76260654f7e9f289f7171e31717cb35",
+      "reference_height": 0.9838524702936413,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_7869c66910b9_a_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 2.2700391915653206e-06,
+      "standardize_elapsed_s": 1.970634000026621,
+      "bake_position_checks": 2844,
+      "max_bake_position_error_m": 5.202970492296138e-07,
+      "pack": "mmd_7869c66910b9",
+      "role": "A",
+      "source_file": "Loop 27 - Twin Angels-V2/Loop 27 - Twin Angels - Izumi.vmd",
+      "source_vmd_sha256": "954da1c0447e4552384891378422378c3b97e04100674a68385488b1f7e2e355"
+    },
+    {
+      "id": "mmd_7869c66910b9_b",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_7869c66910b9_b.tres",
+      "frames": 2001,
+      "duration": 66.66666666666667,
+      "tracks": 59,
+      "constant_rotation_tracks": 0,
+      "bytes": 7299959,
+      "source": ".model_import_build/mmd_selected/mmd_7869c66910b9_b.glb",
+      "source_sha256": "e407b6b5a827615507a4b6c5d58d46ca824ac5be1b16748fa26932888f5a2b91",
+      "output_sha256": "bbbe4d23fccdfc279fa2321c1e1cdebb9e3825613d0d0991b1813d23fc8cfe07",
+      "reference_height": 0.9769537867977787,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_7869c66910b9_b_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 4.6699096206345714e-08,
+      "standardize_elapsed_s": 1.9484427999705076,
+      "bake_position_checks": 2835,
+      "max_bake_position_error_m": 6.320931322419289e-07,
+      "pack": "mmd_7869c66910b9",
+      "role": "B",
+      "source_file": "Loop 27 - Twin Angels-V2/Loop 27 - Twin Angels - Rin.vmd",
+      "source_vmd_sha256": "98027b4f0986a46e56a4cca4314180e2dbe2a94941ff0c980fd39b76a452c6cb"
+    },
+    {
+      "id": "mmd_7869c66910b9_c",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_7869c66910b9_c.tres",
+      "frames": 2001,
+      "duration": 66.66666666666667,
+      "tracks": 59,
+      "constant_rotation_tracks": 10,
+      "bytes": 6098581,
+      "source": ".model_import_build/mmd_selected/mmd_7869c66910b9_c.glb",
+      "source_sha256": "ed512b36ffd4ac830d84ac7396e874f4f3387362a5639c8950cef3db7cddbfcc",
+      "output_sha256": "9e68d1c5a08391f5ec13a0902249fe051d5a08213b8daeda7f7d4c060aac3827",
+      "reference_height": 0.9838524702936413,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_7869c66910b9_c_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 7.102068419473362e-08,
+      "standardize_elapsed_s": 1.9058029999723658,
+      "bake_position_checks": 2844,
+      "max_bake_position_error_m": 5.388294709156935e-07,
+      "pack": "mmd_7869c66910b9",
+      "role": "C",
+      "source_file": "Loop 27 - Twin Angels-V2/Loop 27 - Twin Angels - SS 18-22.vmd",
+      "source_vmd_sha256": "54a30eaa8bf403028add3247c0eceb77400a9e6ec73bad4187b8202ea738d08c"
+    }
+  ],
+  "counts": {
+    "groups": 11,
+    "tracks": 22,
+    "new_tracks": 20,
+    "reused_tracks": 2,
+    "deferred_groups": 2
+  },
+  "source_selection": "docs/motion_selection/README.md"
+}
