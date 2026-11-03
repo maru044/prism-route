@@ -1,6 +1,10 @@
 # 当前建模入口
 
-更新：2026-10-28。主文件是 **`D:/Prism Route/map/map_current.3dm`**，当前 Rhino 已切换到此文件。
+更新：2026-11-04。主文件是 **`D:/Prism Route/map/map_current.3dm`**，当前 Rhino 已切换到此文件。
+
+## 旧整图测试外部归档（2026-11-04）
+
+七个旧测试入口、专用模型与工具、四组历史 Rhino 试验稿及对应导入缓存，共 224 个文件、约 325 MB，已移到 `D:/Prism Route/archive/legacy_world_tests_20261104/`。当前 F5 与 `main.tscn` 统一使用正式地图，现用共享材质、车辆和植被代码保留。详见 [归档清单与验收](LEGACY_WORLD_SCENE_AUDIT_1104.md)。
 
 ## 下沉环庭遗址（2026-11-03）
 

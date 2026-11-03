@@ -112,7 +112,8 @@ def finish():
  d=sc.sticky[TAG];assert d['index']==len(d['ids'])
  opts=Rhino.FileIO.SerializationOptions();after={str(o.Id):(int(o.Geometry.DataCRC(0)),o.Attributes.ToJSON(opts))for o in objects()}
  assert after==d['before'],'CAD modified during read-only export'
- with io.open(ROOT+'/.landscape_mask_build/source.json','r',encoding='utf-8-sig')as f:mask=json.load(f)
+ with io.open(ROOT+'/assets/world/current_map_validation/cad_mask_curves.json','r',encoding='utf-8-sig')as f:mask=json.load(f)
+ assert mask['native_center']==d['center'],'Current mask curve coordinate origin changed'
  result={'source':sc.doc.Path,'native_center':d['center'],'mask_resolution':4096,'mesh_tolerance_m':.04,'mesh_max_edge_m':8.,'mesh_angle_rad':.10,
  'objects':d['records'],'curves':mask['curves'],'cad_object_count':len(after),'all_cad_geometry_and_attributes_unchanged':True}
  write('source.json',result)

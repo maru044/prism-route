@@ -60,7 +60,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.pressed or event.echo:
 		return
 	if event.keycode == KEY_TAB:
-		get_tree().change_scene_to_file("res://scenes/world_lod_test.tscn")
+		get_tree().change_scene_to_file("res://scenes/map_1021.tscn")
 
 
 func _ready() -> void:

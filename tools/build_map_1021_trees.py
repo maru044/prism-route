@@ -99,7 +99,7 @@ def main():
         if len(large)==min(LARGE_COUNT,len(points)//10):break
     records=[godot(p)+[rng.uniform(0,math.tau),rng.uniform(.82,1.20),int(i in large)] for i,p in enumerate(points)]
     layout_path=OUT/'tree_layout.json';layout_path.write_text(json.dumps(records,separators=(',',':')),encoding='utf-8')
-    report={'reference':'tools/build_map_1012_test.py','tree_count':len(points),'large_tree_count':len(large),'requested_tree_count':COUNT,'minimum_horizontal_spacing_m':SPACING,'large_to_large_minimum_spacing_m':LARGE_SPACING,'road_projection_clearance_m':ROAD_CLEARANCE,'edge_probe_distance_m':4,'seed':10122026,'candidate_rejections':dict(reject),'source_mesh_sha256':meta['mesh_sha256'],'layout_sha256':hashlib.sha256(layout_path.read_bytes()).hexdigest()}
+    report={'reference':'D:/Prism Route/archive/legacy_world_tests_20261104/project/tools/build_map_1012_test.py','tree_count':len(points),'large_tree_count':len(large),'requested_tree_count':COUNT,'minimum_horizontal_spacing_m':SPACING,'large_to_large_minimum_spacing_m':LARGE_SPACING,'road_projection_clearance_m':ROAD_CLEARANCE,'edge_probe_distance_m':4,'seed':10122026,'candidate_rejections':dict(reject),'source_mesh_sha256':meta['mesh_sha256'],'layout_sha256':hashlib.sha256(layout_path.read_bytes()).hexdigest()}
     (OUT/'tree_layout_metadata.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
     print('MAP_1021_TREES',json.dumps(report),flush=True)
 

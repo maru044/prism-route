@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-04",
+  "archive_root": "D:\\Prism Route\\archive\\legacy_world_tests_20261104",
+  "moved_files": 224,
+  "moved_bytes": 324933620,
+  "all_archive_hashes_verified": true,
+  "shared_hashes_unchanged": 18,
+  "export_resources_present": 294,
+  "old_scene_resource_paths_remaining": 0,
+  "legacy_verifier": {
+    "passed": false,
+    "explanation": "Old assertions reference replaced source meshes, the pre-editor tree layout/palette, and a character courtyard that does not permit a camper. Preserved as a limitation; no unrelated geometry or vehicle changes made.",
+    "failures": [
+      "Grass setting differs from 1012: canopy_base_color",
+      "Grass setting differs from 1012: canopy_color_uniformity",
+      "Invalid fixed tree roots: 998",
+      "Tree heights differ from imported collision",
+      "Rendered tree population differs from baked layout",
+      "C did not select camper at 上层环庭 · 中庭入口"
+    ],
+    "walking_spawns": 19,
+    "driving_locations": 8
+  }
+}

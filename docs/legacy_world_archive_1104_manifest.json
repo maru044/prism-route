@@ -1,0 +1,1353 @@
+{
+  "archive_root": "D:\\Prism Route\\archive\\legacy_world_tests_20261104",
+  "total_bytes": 324933620,
+  "moved_files": 224,
+  "source_root": "D:\\Prism Route\\prism-route",
+  "complete": true,
+  "files": [
+    {
+      "source": ".godot/imported/cad_mask.png-76fca178eb626e34ea1b01fe6f8d1c54.ctex",
+      "destination": "project/.godot/imported/cad_mask.png-76fca178eb626e34ea1b01fe6f8d1c54.ctex",
+      "bytes": 104702,
+      "sha256": "b400fd0a5558b2fd885f6a9ea50dfd1aa14ef30ae2dd2c4539594fe43bb1e90e"
+    },
+    {
+      "source": ".godot/imported/cad_mask.png-76fca178eb626e34ea1b01fe6f8d1c54.md5",
+      "destination": "project/.godot/imported/cad_mask.png-76fca178eb626e34ea1b01fe6f8d1c54.md5",
+      "bytes": 91,
+      "sha256": "ab316e8402511921093ffb5fcc838db77f0f92c7490774a53b4ea76b0f8da4ad"
+    },
+    {
+      "source": ".godot/imported/cliff_b_world.glb-70e4a47bba331d95e3c8b3a2d7c5b7bc.md5",
+      "destination": "project/.godot/imported/cliff_b_world.glb-70e4a47bba331d95e3c8b3a2d7c5b7bc.md5",
+      "bytes": 91,
+      "sha256": "d54066e8a8b05f50509f7fffe6e901bcc84df5e219d7e7972e01a0b88c9cf20e"
+    },
+    {
+      "source": ".godot/imported/cliff_b_world.glb-70e4a47bba331d95e3c8b3a2d7c5b7bc.scn",
+      "destination": "project/.godot/imported/cliff_b_world.glb-70e4a47bba331d95e3c8b3a2d7c5b7bc.scn",
+      "bytes": 6921730,
+      "sha256": "1ed54cbb5582ca973ec7c11ce328867e0b0f772e289184e22996618671ce2b28"
+    },
+    {
+      "source": ".godot/imported/current_region.glb-14c002722480c7f583eb943d9daf6fc3.md5",
+      "destination": "project/.godot/imported/current_region.glb-14c002722480c7f583eb943d9daf6fc3.md5",
+      "bytes": 91,
+      "sha256": "484818b344b937aab897a08fc553548cd28c4a61ce015c74368bf0890a63a4c7"
+    },
+    {
+      "source": ".godot/imported/current_region.glb-14c002722480c7f583eb943d9daf6fc3.scn",
+      "destination": "project/.godot/imported/current_region.glb-14c002722480c7f583eb943d9daf6fc3.scn",
+      "bytes": 11432840,
+      "sha256": "3b3559f1208eeb1aa0a24800923333664dfdeed7c08f0c81e4824fb38c7361e9"
+    },
+    {
+      "source": ".godot/imported/grass_placeholder.png-237e04dc8b780a22fb2a47ab3328da98.ctex",
+      "destination": "project/.godot/imported/grass_placeholder.png-237e04dc8b780a22fb2a47ab3328da98.ctex",
+      "bytes": 94,
+      "sha256": "386ea8ea2ec8395ea9925eeb62ad3b20c38907f801b50e81dadabea837c1da90"
+    },
+    {
+      "source": ".godot/imported/grass_placeholder.png-237e04dc8b780a22fb2a47ab3328da98.md5",
+      "destination": "project/.godot/imported/grass_placeholder.png-237e04dc8b780a22fb2a47ab3328da98.md5",
+      "bytes": 91,
+      "sha256": "b3f8d9d5541ea2e4c6e731b00489febf5690fc6ba3ee716769f31d28f457c4b4"
+    },
+    {
+      "source": ".godot/imported/grazing.png-0e3261eb9919451ec63f55fd0563e78d.ctex",
+      "destination": "project/.godot/imported/grazing.png-0e3261eb9919451ec63f55fd0563e78d.ctex",
+      "bytes": 225612,
+      "sha256": "e629bb839481252da66ef49be9fd9543677eae7b08c3561889274a9a61aeca3d"
+    },
+    {
+      "source": ".godot/imported/grazing.png-0e3261eb9919451ec63f55fd0563e78d.md5",
+      "destination": "project/.godot/imported/grazing.png-0e3261eb9919451ec63f55fd0563e78d.md5",
+      "bytes": 91,
+      "sha256": "99591df8df9b06f2a466d7d9251801efec1bcbf04ec58c2badf020c0b6bd0ab4"
+    },
+    {
+      "source": ".godot/imported/island_draft_rhino.gltf-05d86db957ed7ff648a6c8651215ea0f.md5",
+      "destination": "project/.godot/imported/island_draft_rhino.gltf-05d86db957ed7ff648a6c8651215ea0f.md5",
+      "bytes": 91,
+      "sha256": "90a1b633144d46a9a3e51ddbce65122d53077eba0c4ae33a68467c8a459ed861"
+    },
+    {
+      "source": ".godot/imported/island_draft_rhino.gltf-05d86db957ed7ff648a6c8651215ea0f.scn",
+      "destination": "project/.godot/imported/island_draft_rhino.gltf-05d86db957ed7ff648a6c8651215ea0f.scn",
+      "bytes": 222420,
+      "sha256": "a68d47ac3bb2866db413d5a2cee32ae5ddab78bc06504629eb096bff6783db59"
+    },
+    {
+      "source": ".godot/imported/map_1012.glb-bb8fcbed6f6fdbd8f5dce7e535a748e7.md5",
+      "destination": "project/.godot/imported/map_1012.glb-bb8fcbed6f6fdbd8f5dce7e535a748e7.md5",
+      "bytes": 91,
+      "sha256": "4630da3ba453d46689355f9a947ef24745ff0b2779cce2997cf8a0ab316d5bb6"
+    },
+    {
+      "source": ".godot/imported/map_1012.glb-bb8fcbed6f6fdbd8f5dce7e535a748e7.scn",
+      "destination": "project/.godot/imported/map_1012.glb-bb8fcbed6f6fdbd8f5dce7e535a748e7.scn",
+      "bytes": 7311206,
+      "sha256": "fa5cbca007eff50469a9ec3f5dbfc65083244ee4cd2d436a5a4ceefff5039cb0"
+    },
+    {
+      "source": ".godot/imported/model_1006.gltf-c205df6cb3938413d415a1775f52454f.md5",
+      "destination": "project/.godot/imported/model_1006.gltf-c205df6cb3938413d415a1775f52454f.md5",
+      "bytes": 91,
+      "sha256": "588d2750ba02e09d1f0e5c3028c293423dfa495452eb96604176f317198dd951"
+    },
+    {
+      "source": ".godot/imported/model_1006.gltf-c205df6cb3938413d415a1775f52454f.scn",
+      "destination": "project/.godot/imported/model_1006.gltf-c205df6cb3938413d415a1775f52454f.scn",
+      "bytes": 362834,
+      "sha256": "2acc8616cca1bee443bff0d7eec12926f95cceac3d40a29af19356dd06f168e9"
+    },
+    {
+      "source": ".godot/imported/near_coarse_diagnostic.png-acb7bbcac0e2b15aa02c5d0a4cf0ec18.ctex",
+      "destination": "project/.godot/imported/near_coarse_diagnostic.png-acb7bbcac0e2b15aa02c5d0a4cf0ec18.ctex",
+      "bytes": 137238,
+      "sha256": "aecc524d389576e2f3e73ee2566eb7e80fcf563fc0366a2c8fc2895409d3c91f"
+    },
+    {
+      "source": ".godot/imported/near_coarse_diagnostic.png-acb7bbcac0e2b15aa02c5d0a4cf0ec18.md5",
+      "destination": "project/.godot/imported/near_coarse_diagnostic.png-acb7bbcac0e2b15aa02c5d0a4cf0ec18.md5",
+      "bytes": 91,
+      "sha256": "4f464dd1c13ebe24c287d694ca06d944d534346fcde185759e6219f6b0c72f52"
+    },
+    {
+      "source": ".godot/imported/near_sdf.png-3d54c26a7f38f34884243e8c7629b57f.ctex",
+      "destination": "project/.godot/imported/near_sdf.png-3d54c26a7f38f34884243e8c7629b57f.ctex",
+      "bytes": 143344,
+      "sha256": "be1fedd5aa2c2388ffc1abf6858c27ba7659e21f02bdcaa426a02a5afd969ea2"
+    },
+    {
+      "source": ".godot/imported/near_sdf.png-3d54c26a7f38f34884243e8c7629b57f.md5",
+      "destination": "project/.godot/imported/near_sdf.png-3d54c26a7f38f34884243e8c7629b57f.md5",
+      "bytes": 91,
+      "sha256": "cc215e7e8c51ccc7b38fb58bfdfa6cece59962e859cddd2bac1803b36579602c"
+    },
+    {
+      "source": ".godot/imported/overview.png-452416ffb7469b77fc456e4a80c44f04.ctex",
+      "destination": "project/.godot/imported/overview.png-452416ffb7469b77fc456e4a80c44f04.ctex",
+      "bytes": 391570,
+      "sha256": "725c30bac38f6c0df4c2d3d5cfb474e05997902fc38913c719bffca0f70e4c42"
+    },
+    {
+      "source": ".godot/imported/overview.png-452416ffb7469b77fc456e4a80c44f04.md5",
+      "destination": "project/.godot/imported/overview.png-452416ffb7469b77fc456e4a80c44f04.md5",
+      "bytes": 91,
+      "sha256": "549cdb0e17b29317e9625d29f7b5f863b3a28c32daccf1449ef99e905ff9fd83"
+    },
+    {
+      "source": ".godot/imported/road_footprint.png-83454a7d0a0ea99af980987f80501f5f.ctex",
+      "destination": "project/.godot/imported/road_footprint.png-83454a7d0a0ea99af980987f80501f5f.ctex",
+      "bytes": 14386,
+      "sha256": "360ae54569aa8092ddd251339c8f80d0ca12c8bb7ada7550ad45d823fe3b6264"
+    },
+    {
+      "source": ".godot/imported/road_footprint.png-83454a7d0a0ea99af980987f80501f5f.md5",
+      "destination": "project/.godot/imported/road_footprint.png-83454a7d0a0ea99af980987f80501f5f.md5",
+      "bytes": 91,
+      "sha256": "6e97a5b052c92b33acdfd6a6d55c6b0ac76f10f01624291cd8c311e76da2100a"
+    },
+    {
+      "source": ".godot/imported/road_placeholder.png-c1d0acfb9fdc404ea31e8cd7cda98a8e.ctex",
+      "destination": "project/.godot/imported/road_placeholder.png-c1d0acfb9fdc404ea31e8cd7cda98a8e.ctex",
+      "bytes": 94,
+      "sha256": "5754244d650b2e375ff68deba94ec005a9527c74126baf267a3f3dc1cf11be66"
+    },
+    {
+      "source": ".godot/imported/road_placeholder.png-c1d0acfb9fdc404ea31e8cd7cda98a8e.md5",
+      "destination": "project/.godot/imported/road_placeholder.png-c1d0acfb9fdc404ea31e8cd7cda98a8e.md5",
+      "bytes": 91,
+      "sha256": "2346bbf1d445d2fbc855fb635560bde6ad4d04aa7045561bc38464ad56c08299"
+    },
+    {
+      "source": ".landscape_mask_build/.gdignore",
+      "destination": "project/.landscape_mask_build/.gdignore",
+      "bytes": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "source": ".landscape_mask_build/closed_band_check/cad_mask.png",
+      "destination": "project/.landscape_mask_build/closed_band_check/cad_mask.png",
+      "bytes": 36768,
+      "sha256": "3e35fffdf3492aabe4e88af258fd6271b5681f4a4b553a19e0749169abbd9f70"
+    },
+    {
+      "source": ".landscape_mask_build/closed_band_check/landscape_mask.rg16f",
+      "destination": "project/.landscape_mask_build/closed_band_check/landscape_mask.rg16f",
+      "bytes": 4194304,
+      "sha256": "c37fe7b2dfadfbfb57be87253bacca1431ffa69acc4a9af829de47774c4de3bf"
+    },
+    {
+      "source": ".landscape_mask_build/godot.log",
+      "destination": "project/.landscape_mask_build/godot.log",
+      "bytes": 697,
+      "sha256": "b3d720d55109a130b7dc89e200c13036bdff0cb0e4096f785a30c5ed62e0b78c"
+    },
+    {
+      "source": ".landscape_mask_build/landscape_mask.rg16f",
+      "destination": "project/.landscape_mask_build/landscape_mask.rg16f",
+      "bytes": 67108864,
+      "sha256": "6fd89a7706afc64584d9ee36a78d43863bf41d528cc0e3ad4037512f9d1ee4b1"
+    },
+    {
+      "source": ".landscape_mask_build/preview.log",
+      "destination": "project/.landscape_mask_build/preview.log",
+      "bytes": 388,
+      "sha256": "0d88bae019b0011404e6a53554fe7570a027e52a97c0dd94965a0b6bde7f81da"
+    },
+    {
+      "source": ".landscape_mask_build/source.bin",
+      "destination": "project/.landscape_mask_build/source.bin",
+      "bytes": 15398280,
+      "sha256": "a1a71766591a0d82e9eb3e51843eff12cc830db3701d2422d8a9f23ebcbc9828"
+    },
+    {
+      "source": ".landscape_mask_build/source.json",
+      "destination": "project/.landscape_mask_build/source.json",
+      "bytes": 612997,
+      "sha256": "1e37d112985513e814564abfc8ee338f6d058bc4df47261c3b512fb667d949fa"
+    },
+    {
+      "source": ".landscape_mask_build/verify_current_closed_bands.py",
+      "destination": "project/.landscape_mask_build/verify_current_closed_bands.py",
+      "bytes": 2994,
+      "sha256": "01743cc6c028d15ca73c36eecacee529d9db2849279b609e3d55b8096931ff9d"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/.gdignore",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/.gdignore",
+      "bytes": 80,
+      "sha256": "ed31b28486d4772caa219fad02f658bd2e45e0dbb3322b5bf0c424ef24f20f13"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/assets/world/map_1009_test/build_metadata.json",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/assets/world/map_1009_test/build_metadata.json",
+      "bytes": 1358,
+      "sha256": "9efac06e515160c6d5522ad580741ffbf4d03233e0c93b4e16580ef2c7ea7463"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/assets/world/map_1009_test/map_1009_natural.glb",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/assets/world/map_1009_test/map_1009_natural.glb",
+      "bytes": 9240304,
+      "sha256": "2b01df21dfda53eac05f62e7248a0e08b59f8a4b66a865406aa035bfabe3b6d1"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/assets/world/map_1009_test/map_1009_natural.glb.import",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/assets/world/map_1009_test/map_1009_natural.glb.import",
+      "bytes": 1190,
+      "sha256": "4260580009ef4af8034ffedc09ab84071ab7c715bb6438a0146bd1d14c0bb509"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/assets/world/map_1009_test/map_1009_original.glb",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/assets/world/map_1009_test/map_1009_original.glb",
+      "bytes": 494212,
+      "sha256": "fbea7c55757127cbd5096dfe6c3bcb76bb295319deab3704269e6df81a9b5e17"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/assets/world/map_1009_test/map_1009_original.glb.import",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/assets/world/map_1009_test/map_1009_original.glb.import",
+      "bytes": 1192,
+      "sha256": "6040618801812870d3f830a36c97f29f31032f0e1b287e28258ecd81b50ab227"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/assets/world/map_1009_test/terrain_review.gdshader",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/assets/world/map_1009_test/terrain_review.gdshader",
+      "bytes": 751,
+      "sha256": "a5ac935afe3dc3a13846082e46eb1216b5fc1859ac26b7442cd98a53634c43d4"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/assets/world/map_1009_test/terrain_review.gdshader.uid",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/assets/world/map_1009_test/terrain_review.gdshader.uid",
+      "bytes": 20,
+      "sha256": "bc1d9465b775ea92b22e6f123dd4379fb32bffc9e84185d4d063bdee1f4c5842"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/docs/MAP_1009_DRIVE_RELIEF_TEST.md",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/docs/MAP_1009_DRIVE_RELIEF_TEST.md",
+      "bytes": 6506,
+      "sha256": "075173ba077263eb0540c35a4a2d1f190445d8e8cc5cc49270c2e990986b5a38"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/evidence/verification.json",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/evidence/verification.json",
+      "bytes": 2900,
+      "sha256": "3ae77ed50a368e6139f11fd3048939c1be0dd16ff31d07da327072cb3dbc34d6"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/manifest.json",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/manifest.json",
+      "bytes": 4119,
+      "sha256": "cbf8ddf06ad93aff1c7ab317b97f708bd871e980e6224394340357e3423d7ee0"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/README.md",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/README.md",
+      "bytes": 1945,
+      "sha256": "9c25567d7ed323fc2463fa7d3ac28e0eeca9fe8dbdf5d8b25b64778f13f9a3a2"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/scenes/map_1009_drive_test.tscn",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/scenes/map_1009_drive_test.tscn",
+      "bytes": 1262,
+      "sha256": "5e354678d0740ffe498ac0d2914b28c82fee5901f4c85d0a7737a85bdc276572"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/screenshots/map_1009_drive_test.png",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/screenshots/map_1009_drive_test.png",
+      "bytes": 180426,
+      "sha256": "7316e60084e42479a98642a3bebc7e720975e7c1f4052ad49af7a163c3e231fc"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/screenshots/map_1009_drive_test.png.import",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/screenshots/map_1009_drive_test.png.import",
+      "bytes": 973,
+      "sha256": "5aed18ccca756ba969bb4ab441d87c9b64f5e5ab3f46f18473503d4afd5113d6"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/screenshots/map_1009_relief_comparison.png",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/screenshots/map_1009_relief_comparison.png",
+      "bytes": 697345,
+      "sha256": "aa47c0d4de072767370e1ee603f13e2b1c93b30c6292378baa1aac9f8d0a93ca"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/screenshots/map_1009_relief_comparison.png.import",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/screenshots/map_1009_relief_comparison.png.import",
+      "bytes": 993,
+      "sha256": "a8f1dc386007f5fed4d77c51cbf5b5d5d8d2a3c7ddb68e940df0c19d1292cd38"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/screenshots/map_1009_wheel_contact.png",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/screenshots/map_1009_wheel_contact.png",
+      "bytes": 409509,
+      "sha256": "5055a23df6dc508e478ba36c2e72c48185827b2dd2627900ac297f3d5c022064"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/screenshots/map_1009_wheel_contact.png.import",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/screenshots/map_1009_wheel_contact.png.import",
+      "bytes": 982,
+      "sha256": "626b9dfd7d5eaca0857b2d87bc77ba4eadede93c7b03e9a75dce7892821800a1"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/scripts/map_1009_camper.gd",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/scripts/map_1009_camper.gd",
+      "bytes": 5184,
+      "sha256": "661d9b0aff3eccb2324f1945bd27dc068654922381cf2589069e07ff33844bcc"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/scripts/map_1009_camper.gd.uid",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/scripts/map_1009_camper.gd.uid",
+      "bytes": 20,
+      "sha256": "d0fb6150ea165b86b004182788243f1123f5a64e259634cf9b1d268414afe7f0"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/scripts/map_1009_drive_test.gd",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/scripts/map_1009_drive_test.gd",
+      "bytes": 11371,
+      "sha256": "a0ebb3d151f0ef5333f9cd389690d699c14588890c05392d57c200c74b425b45"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/scripts/map_1009_drive_test.gd.uid",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/scripts/map_1009_drive_test.gd.uid",
+      "bytes": 20,
+      "sha256": "47e0aa1b77fb42daa78a875146ac8dc83aa55de6069d33d566bbd02833b5df0b"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/tools/build_map_1009_test.py",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/tools/build_map_1009_test.py",
+      "bytes": 11408,
+      "sha256": "8042c17334d063485bee18e5268f53535be644a9678f251a38c9e5438453f9c5"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/tools/compose_map_1009_captures.py",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/tools/compose_map_1009_captures.py",
+      "bytes": 1271,
+      "sha256": "864434a9a99536e5685fa28e2a58fe75a6cc74c863321b90311bd5bfaf44d863"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/tools/verify_map_1009_drive.gd",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/tools/verify_map_1009_drive.gd",
+      "bytes": 5218,
+      "sha256": "f7b5e769b7e451c64a947d5b074dfede11be0b6af25a91a78166f94905fadb34"
+    },
+    {
+      "source": "archive/map_1009_world_test_2026-10-09/tools/verify_map_1009_drive.gd.uid",
+      "destination": "project/archive/map_1009_world_test_2026-10-09/tools/verify_map_1009_drive.gd.uid",
+      "bytes": 20,
+      "sha256": "a15c7cc5f02fafa7ab6d20711af43f34694e92f454f1f5191c13767089d755a2"
+    },
+    {
+      "source": "assets/world/cliff_b_parametric_source/.gdignore",
+      "destination": "project/assets/world/cliff_b_parametric_source/.gdignore",
+      "bytes": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "source": "assets/world/cliff_b_parametric_source/cliff_b_parametric_v01.3dm",
+      "destination": "project/assets/world/cliff_b_parametric_source/cliff_b_parametric_v01.3dm",
+      "bytes": 8256407,
+      "sha256": "88ed0e92c23eed93332c59996601fa26e07b1e4ed1c867734f703c5641e0c4f2"
+    },
+    {
+      "source": "assets/world/cliff_b_parametric_source/generation_state.json",
+      "destination": "project/assets/world/cliff_b_parametric_source/generation_state.json",
+      "bytes": 46400,
+      "sha256": "18caf40e4cce3665413d34130e2429c28b3438972f500c3b6b91197a5f155ad5"
+    },
+    {
+      "source": "assets/world/cliff_b_shell_v02_source/.gdignore",
+      "destination": "project/assets/world/cliff_b_shell_v02_source/.gdignore",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "source": "assets/world/cliff_b_shell_v02_source/cliff_b_shell_v02.3dm",
+      "destination": "project/assets/world/cliff_b_shell_v02_source/cliff_b_shell_v02.3dm",
+      "bytes": 13118590,
+      "sha256": "f9933b48484d7065c2c3db28f23d7c37f4faccbedc2a8d46a20d0191bf4653c9"
+    },
+    {
+      "source": "assets/world/cliff_b_shell_v02_source/generation_state.json",
+      "destination": "project/assets/world/cliff_b_shell_v02_source/generation_state.json",
+      "bytes": 11746,
+      "sha256": "a695508ae2aebcdaafd38e7c06d519cd80168d7e695f7c4847afc4ec985c662d"
+    },
+    {
+      "source": "assets/world/cliff_b_shell_v02_source/road_frames.json",
+      "destination": "project/assets/world/cliff_b_shell_v02_source/road_frames.json",
+      "bytes": 80634,
+      "sha256": "b84704471ad58c02898e247d0ba83cdbb5f60964b32ef0c110c1ebbdf9d3383f"
+    },
+    {
+      "source": "assets/world/cliff_b_shell_v03_source/.gdignore",
+      "destination": "project/assets/world/cliff_b_shell_v03_source/.gdignore",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "source": "assets/world/cliff_b_shell_v03_source/cliff_b_shell_v03.3dm",
+      "destination": "project/assets/world/cliff_b_shell_v03_source/cliff_b_shell_v03.3dm",
+      "bytes": 18505448,
+      "sha256": "2dfd359eb3be452010b869b8f093ba3f8f358b0c5f14daa158c38ef53e0a354d"
+    },
+    {
+      "source": "assets/world/cliff_b_shell_v03_source/generation_state.json",
+      "destination": "project/assets/world/cliff_b_shell_v03_source/generation_state.json",
+      "bytes": 13326,
+      "sha256": "05740acf6a70fbca17d69ef496fa951ad70022a531aa7054665cd48447727119"
+    },
+    {
+      "source": "assets/world/cliff_b_shell_v03_source/road_frames.json",
+      "destination": "project/assets/world/cliff_b_shell_v03_source/road_frames.json",
+      "bytes": 80634,
+      "sha256": "b84704471ad58c02898e247d0ba83cdbb5f60964b32ef0c110c1ebbdf9d3383f"
+    },
+    {
+      "source": "assets/world/cliff_b_solid_nurbs_v01_source/.gdignore",
+      "destination": "project/assets/world/cliff_b_solid_nurbs_v01_source/.gdignore",
+      "bytes": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "source": "assets/world/cliff_b_solid_nurbs_v01_source/cliff_b_solid_nurbs_v01.3dm",
+      "destination": "project/assets/world/cliff_b_solid_nurbs_v01_source/cliff_b_solid_nurbs_v01.3dm",
+      "bytes": 37630070,
+      "sha256": "1cc2ebcb0d0b32d915b564b8d28d0c8488a9e95c5c7209cbe6db324e29b94cf9"
+    },
+    {
+      "source": "assets/world/cliff_b_solid_nurbs_v01_source/generation_state.json",
+      "destination": "project/assets/world/cliff_b_solid_nurbs_v01_source/generation_state.json",
+      "bytes": 24747,
+      "sha256": "24880f9273f7bea9f4587497b34d6c2138667120f244c41d764a7a2e203a41fe"
+    },
+    {
+      "source": "assets/world/cliff_b_solid_nurbs_v01_source/round_corner_state.json",
+      "destination": "project/assets/world/cliff_b_solid_nurbs_v01_source/round_corner_state.json",
+      "bytes": 4984,
+      "sha256": "242d2200aea4e06e721c0a6e96a341ea050414153a12437a26694fec45da39ae"
+    },
+    {
+      "source": "assets/world/cliff_b_solid_nurbs_v01_source/source_input.json",
+      "destination": "project/assets/world/cliff_b_solid_nurbs_v01_source/source_input.json",
+      "bytes": 149337,
+      "sha256": "ffe712230ca2a8c7488fd6dde61b62125f3d6bea59a25fcab69cb4337d2b92c9"
+    },
+    {
+      "source": "assets/world/cliff_b_test/architecture_toon.gdshader",
+      "destination": "project/assets/world/cliff_b_test/architecture_toon.gdshader",
+      "bytes": 5698,
+      "sha256": "b2cb81b1668fea198bbcb7fb62b52c38f58cc002afc5874942a5a21a8e9ee6ca"
+    },
+    {
+      "source": "assets/world/cliff_b_test/architecture_toon.gdshader.uid",
+      "destination": "project/assets/world/cliff_b_test/architecture_toon.gdshader.uid",
+      "bytes": 20,
+      "sha256": "c3772906f2ee57ff413f903a12563aafa3e9fc3b9c2851bb3a1f913dc09e1be0"
+    },
+    {
+      "source": "assets/world/cliff_b_test/architecture_toon.tres",
+      "destination": "project/assets/world/cliff_b_test/architecture_toon.tres",
+      "bytes": 1079,
+      "sha256": "1d6f1a407a0ef73560a234a733eee610e25323ad260b4b4a8840c66a148d0993"
+    },
+    {
+      "source": "assets/world/cliff_b_test/build_metadata.json",
+      "destination": "project/assets/world/cliff_b_test/build_metadata.json",
+      "bytes": 1968,
+      "sha256": "15efe2461d4163e528e457fe0d0759c689e95c9b37e83d3b96c3dbd526e8a65e"
+    },
+    {
+      "source": "assets/world/cliff_b_test/cliff_b_world.glb",
+      "destination": "project/assets/world/cliff_b_test/cliff_b_world.glb",
+      "bytes": 8460348,
+      "sha256": "90aab0e2d132565014893b6791c518ccee8ac3a6c2ba0d54fb4f564b429383ba"
+    },
+    {
+      "source": "assets/world/cliff_b_test/cliff_b_world.glb.import",
+      "destination": "project/assets/world/cliff_b_test/cliff_b_world.glb.import",
+      "bytes": 1180,
+      "sha256": "45f4f9b47e332d1ede76251b2227ca747c589238ac189889905e865eebf3cca4"
+    },
+    {
+      "source": "assets/world/cliff_b_test/meadow.gdshader",
+      "destination": "project/assets/world/cliff_b_test/meadow.gdshader",
+      "bytes": 749,
+      "sha256": "1196e514c203a25d4a61748d914fd9cca1881be615239d001721fccc81bfcfe9"
+    },
+    {
+      "source": "assets/world/cliff_b_test/meadow.gdshader.uid",
+      "destination": "project/assets/world/cliff_b_test/meadow.gdshader.uid",
+      "bytes": 20,
+      "sha256": "07cf6143b4916560aece0cf083da69f9771603d560d011e4f8e26ab9c1d5f486"
+    },
+    {
+      "source": "assets/world/cliff_b_test/road.gdshader",
+      "destination": "project/assets/world/cliff_b_test/road.gdshader",
+      "bytes": 1228,
+      "sha256": "e65916be37c1b902c6b51fd0594434b27d5c1b909450838c371f8b5b368aa183"
+    },
+    {
+      "source": "assets/world/cliff_b_test/road.gdshader.uid",
+      "destination": "project/assets/world/cliff_b_test/road.gdshader.uid",
+      "bytes": 20,
+      "sha256": "d6665b899fa8135c57f41838d311021af8211cc3c19712b038ec24f448eebc61"
+    },
+    {
+      "source": "assets/world/cliff_b_test/road_lighting.gdshaderinc",
+      "destination": "project/assets/world/cliff_b_test/road_lighting.gdshaderinc",
+      "bytes": 2291,
+      "sha256": "bec3a9b6a295d620d1246d9a940e5e5c177bc87edd9b668521353838f80793db"
+    },
+    {
+      "source": "assets/world/cliff_b_test/road_lighting.gdshaderinc.uid",
+      "destination": "project/assets/world/cliff_b_test/road_lighting.gdshaderinc.uid",
+      "bytes": 20,
+      "sha256": "7a8b11e107039e629e161da428dda8e388dd4f19c3926f1c5f28b7f43a89bf2d"
+    },
+    {
+      "source": "assets/world/cliff_b_test/road_projection.res",
+      "destination": "project/assets/world/cliff_b_test/road_projection.res",
+      "bytes": 1899529,
+      "sha256": "6bf37f229fd2faa76184344a6640fdbdc443957505a8b15f03cebdf16f51496b"
+    },
+    {
+      "source": "assets/world/cliff_b_test/road_projection_metadata.json",
+      "destination": "project/assets/world/cliff_b_test/road_projection_metadata.json",
+      "bytes": 305,
+      "sha256": "0cae08f36bbbb6f78cf2d8c456c91e04e6ebd4a52112cdde6e6216526cc96eb2"
+    },
+    {
+      "source": "assets/world/cliff_b_test/shrub_layout.json",
+      "destination": "project/assets/world/cliff_b_test/shrub_layout.json",
+      "bytes": 2132,
+      "sha256": "89550c54665ad5c0f2ec688b46b764b0367d25f9d583a53a43cf7a67b8f77690"
+    },
+    {
+      "source": "assets/world/cliff_b_test/source/.gdignore",
+      "destination": "project/assets/world/cliff_b_test/source/.gdignore",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "source": "assets/world/cliff_b_test/source/cliff_b_material_planting.3dm",
+      "destination": "project/assets/world/cliff_b_test/source/cliff_b_material_planting.3dm",
+      "bytes": 16720823,
+      "sha256": "70f4d34488a9bf518f42a9695fe2833efc9494d28d1fd63bb0eb26be8257bd0b"
+    },
+    {
+      "source": "assets/world/cliff_b_test/source/cliff_b_material_planting.blend",
+      "destination": "project/assets/world/cliff_b_test/source/cliff_b_material_planting.blend",
+      "bytes": 8871563,
+      "sha256": "a21327991b03a774e0c3009a70a4e2ba6e6813c2cc78799e124415a1bf615b49"
+    },
+    {
+      "source": "assets/world/cliff_b_test/source/cliff_b_native_snapshot.3dm",
+      "destination": "project/assets/world/cliff_b_test/source/cliff_b_native_snapshot.3dm",
+      "bytes": 15785799,
+      "sha256": "01e5d4dddce245526a8c41248c98d927eb7665860a0150bdcdf5de04d433e55a"
+    },
+    {
+      "source": "assets/world/cliff_b_test/source/rhino_scene.json",
+      "destination": "project/assets/world/cliff_b_test/source/rhino_scene.json",
+      "bytes": 14442476,
+      "sha256": "de436cff7e520807a052caf47bc286ab3e606f08f7f173becde8d29f8cb67c55"
+    },
+    {
+      "source": "assets/world/cliff_b_test/terrain.gdshader",
+      "destination": "project/assets/world/cliff_b_test/terrain.gdshader",
+      "bytes": 5006,
+      "sha256": "f98a32eff42cb4d24f9717531b941fd8fab0acc06fcfdb44953446b4a82b9a1f"
+    },
+    {
+      "source": "assets/world/cliff_b_test/terrain.gdshader.uid",
+      "destination": "project/assets/world/cliff_b_test/terrain.gdshader.uid",
+      "bytes": 20,
+      "sha256": "39ca96cbfaad3b996e542478ff3a3204430a17ad45b8d038ac9dd4b265cfd343"
+    },
+    {
+      "source": "assets/world/cliff_b_test/tree_layout.json",
+      "destination": "project/assets/world/cliff_b_test/tree_layout.json",
+      "bytes": 56132,
+      "sha256": "ef0ecdbfdbceb23b14cea7cae2ffac6170042381d2b36efe261f3287f08026a5"
+    },
+    {
+      "source": "assets/world/landscape_mask_test/cad_layout.json",
+      "destination": "project/assets/world/landscape_mask_test/cad_layout.json",
+      "bytes": 273769,
+      "sha256": "bca9a3a1b203497bcb12724e60f5d57ede08250a4d319ac335eb699a92ad0146"
+    },
+    {
+      "source": "assets/world/landscape_mask_test/cad_mask.png",
+      "destination": "project/assets/world/landscape_mask_test/cad_mask.png",
+      "bytes": 161287,
+      "sha256": "f31bc6f037996923df405c14d6228f08aedc983aa9ff5a77fee97e79f7deb4c5"
+    },
+    {
+      "source": "assets/world/landscape_mask_test/cad_mask.png.import",
+      "destination": "project/assets/world/landscape_mask_test/cad_mask.png.import",
+      "bytes": 960,
+      "sha256": "c4989f540f009c932aa4b9d56451db4af66e59afce7bba0c1974e9410d459f36"
+    },
+    {
+      "source": "assets/world/landscape_mask_test/current_region.glb",
+      "destination": "project/assets/world/landscape_mask_test/current_region.glb",
+      "bytes": 11182676,
+      "sha256": "1df3ee7c1b09c1c64655c3fd6ec258ab8c4ca1b837cd35eec9a29923a58980f5"
+    },
+    {
+      "source": "assets/world/landscape_mask_test/current_region.glb.import",
+      "destination": "project/assets/world/landscape_mask_test/current_region.glb.import",
+      "bytes": 1189,
+      "sha256": "3d5701376d11b0a084b556ea9467877ac4b578cd6cbd17293d5207c437547347"
+    },
+    {
+      "source": "assets/world/landscape_mask_test/landscape.gdshader",
+      "destination": "project/assets/world/landscape_mask_test/landscape.gdshader",
+      "bytes": 2084,
+      "sha256": "b59996f19d44770623ccb2fa203835fc6f484466dd0a7c79a4f3526cb4ea9971"
+    },
+    {
+      "source": "assets/world/landscape_mask_test/landscape.gdshader.uid",
+      "destination": "project/assets/world/landscape_mask_test/landscape.gdshader.uid",
+      "bytes": 20,
+      "sha256": "f0d18cc9d18503f894bdf92e8609728bb546d69bf74b7e78340416827e175e31"
+    },
+    {
+      "source": "assets/world/landscape_mask_test/landscape_mask.res",
+      "destination": "project/assets/world/landscape_mask_test/landscape_mask.res",
+      "bytes": 20557109,
+      "sha256": "84d44298f683ee2ec24ea818d3dd0ce4f65e575879077c13a55f717453b3f638"
+    },
+    {
+      "source": "assets/world/landscape_mask_test/metadata.json",
+      "destination": "project/assets/world/landscape_mask_test/metadata.json",
+      "bytes": 1076,
+      "sha256": "ee8eaf074b9f944af9568b92e86f6b2b25efae2d147efae7cdd350f84deb4155"
+    },
+    {
+      "source": "assets/world/landscape_mask_test/README.md",
+      "destination": "project/assets/world/landscape_mask_test/README.md",
+      "bytes": 3288,
+      "sha256": "161aad3a9f19c86bcd19ff81cbb9526be611eaecec9f0b93a2c76f0c76d37c8f"
+    },
+    {
+      "source": "assets/world/landscape_mask_test/review/grazing.png",
+      "destination": "project/assets/world/landscape_mask_test/review/grazing.png",
+      "bytes": 284604,
+      "sha256": "228cb93f094c143495e221b3e1ff1554e07d768805ae84a108777118a62a57ec"
+    },
+    {
+      "source": "assets/world/landscape_mask_test/review/grazing.png.import",
+      "destination": "project/assets/world/landscape_mask_test/review/grazing.png.import",
+      "bytes": 964,
+      "sha256": "506f67245f37843caa8877f31e18f117a9671092779d7a5579efe9d405bfd93d"
+    },
+    {
+      "source": "assets/world/landscape_mask_test/review/near_coarse_diagnostic.png",
+      "destination": "project/assets/world/landscape_mask_test/review/near_coarse_diagnostic.png",
+      "bytes": 212663,
+      "sha256": "ff5cf3fed8e1c3498fc3347742a7171b3e53b67b3688a82fca1bef1dc9579ff9"
+    },
+    {
+      "source": "assets/world/landscape_mask_test/review/near_coarse_diagnostic.png.import",
+      "destination": "project/assets/world/landscape_mask_test/review/near_coarse_diagnostic.png.import",
+      "bytes": 1010,
+      "sha256": "39c16fc6fea8ba4e16d6c30ab06fab35c8935b7b9fde591766859d1205cb04dc"
+    },
+    {
+      "source": "assets/world/landscape_mask_test/review/near_sdf.png",
+      "destination": "project/assets/world/landscape_mask_test/review/near_sdf.png",
+      "bytes": 222883,
+      "sha256": "9a60acabd4d236286689bd8f5d4bde2ef09ea9b5c469328f48986e3776b2098f"
+    },
+    {
+      "source": "assets/world/landscape_mask_test/review/near_sdf.png.import",
+      "destination": "project/assets/world/landscape_mask_test/review/near_sdf.png.import",
+      "bytes": 967,
+      "sha256": "572576714b8a84a2697665d756abb8d89bd35825320803c2c61c3c738ba506a9"
+    },
+    {
+      "source": "assets/world/landscape_mask_test/review/overview.png",
+      "destination": "project/assets/world/landscape_mask_test/review/overview.png",
+      "bytes": 540610,
+      "sha256": "1267d3d6cbec883dcbc2b77700c7231874fdbbf82ad44cce9c008393d20caa8d"
+    },
+    {
+      "source": "assets/world/landscape_mask_test/review/overview.png.import",
+      "destination": "project/assets/world/landscape_mask_test/review/overview.png.import",
+      "bytes": 967,
+      "sha256": "7dcf5896c4585eb0bc178ed9ab84e629a509c84e12a8a5b228fb725ae9f2fe6a"
+    },
+    {
+      "source": "assets/world/map_1012_test/build_metadata.json",
+      "destination": "project/assets/world/map_1012_test/build_metadata.json",
+      "bytes": 1708,
+      "sha256": "4b9403e3c6183d682d48a894749b94196fbfa5e9ea8e9ca4be0b01a9527fc123"
+    },
+    {
+      "source": "assets/world/map_1012_test/map_1012.glb",
+      "destination": "project/assets/world/map_1012_test/map_1012.glb",
+      "bytes": 12674296,
+      "sha256": "9f39059a59706377c7ccb9f0190d43dbad9702bbb64e4795846ac6fb8f78b459"
+    },
+    {
+      "source": "assets/world/map_1012_test/map_1012.glb.import",
+      "destination": "project/assets/world/map_1012_test/map_1012.glb.import",
+      "bytes": 1166,
+      "sha256": "13c47a6fdeb0a3ab08c70e8b3c189b84976e65d146c3dfd766d2238152300b6e"
+    },
+    {
+      "source": "assets/world/map_1012_test/road.gdshader",
+      "destination": "project/assets/world/map_1012_test/road.gdshader",
+      "bytes": 970,
+      "sha256": "c3240a6cdfc3171ea35075adec2c218f66377dfd633c864ac75f81e208c4492a"
+    },
+    {
+      "source": "assets/world/map_1012_test/road.gdshader.uid",
+      "destination": "project/assets/world/map_1012_test/road.gdshader.uid",
+      "bytes": 20,
+      "sha256": "d677433501dab34eedbf480b38bcea17240a53451a220c6d2e719a54eb47edf7"
+    },
+    {
+      "source": "assets/world/map_1012_test/road_projection.res",
+      "destination": "project/assets/world/map_1012_test/road_projection.res",
+      "bytes": 6534594,
+      "sha256": "432191f7fc887442f62e36c33b0f5ee30ee3523e4d43827fa79beb01510c47c4"
+    },
+    {
+      "source": "assets/world/map_1012_test/road_projection_metadata.json",
+      "destination": "project/assets/world/map_1012_test/road_projection_metadata.json",
+      "bytes": 720,
+      "sha256": "de4c35083b8291a213974b8ad725b62f6689269993bac948e4f4a82a9f564510"
+    },
+    {
+      "source": "assets/world/map_1012_test/sand.gdshader",
+      "destination": "project/assets/world/map_1012_test/sand.gdshader",
+      "bytes": 566,
+      "sha256": "839ffe531aa93594639372fe863c1829b646d3dcf2abee16215947f2e124ccdf"
+    },
+    {
+      "source": "assets/world/map_1012_test/sand.gdshader.uid",
+      "destination": "project/assets/world/map_1012_test/sand.gdshader.uid",
+      "bytes": 20,
+      "sha256": "2e6f17d8301bca9bbbb7feba1daf894e686aa3d208600e9f89e49a479783ffa4"
+    },
+    {
+      "source": "assets/world/road_projection_test/bake_metadata.json",
+      "destination": "project/assets/world/road_projection_test/bake_metadata.json",
+      "bytes": 1412,
+      "sha256": "bb14db54d6bad831dc1705df6512cd89bfbddb442c8e18d999b5e69a9b017a22"
+    },
+    {
+      "source": "assets/world/road_projection_test/grass_placeholder.png",
+      "destination": "project/assets/world/road_projection_test/grass_placeholder.png",
+      "bytes": 76,
+      "sha256": "c87d895472c755e76cf7293eb32c2205e4dd5c575120b0bc9bde875b2f8a5675"
+    },
+    {
+      "source": "assets/world/road_projection_test/grass_placeholder.png.import",
+      "destination": "project/assets/world/road_projection_test/grass_placeholder.png.import",
+      "bytes": 989,
+      "sha256": "581e8c3207f2a798bd7669cdc74eeb3cb9a54c52e2ad6b73c84ca054f24b9bf6"
+    },
+    {
+      "source": "assets/world/road_projection_test/model_1006.gltf",
+      "destination": "project/assets/world/road_projection_test/model_1006.gltf",
+      "bytes": 699605,
+      "sha256": "52155b6c7a6298d1e7b5c398055eb58f1b4d8a274589e8ce002f49a53a90084c"
+    },
+    {
+      "source": "assets/world/road_projection_test/model_1006.gltf.import",
+      "destination": "project/assets/world/road_projection_test/model_1006.gltf.import",
+      "bytes": 1182,
+      "sha256": "d191e3879cb402f2f3bcc74a5fe9fcca1ea3c5abe2ada29263a0e5ad6b7444c5"
+    },
+    {
+      "source": "assets/world/road_projection_test/road_footprint.png",
+      "destination": "project/assets/world/road_projection_test/road_footprint.png",
+      "bytes": 37364,
+      "sha256": "09dda2e7262ac319fbd53f9b2e1fa3dcc850325295a7a3b407642dd0aeccabe9"
+    },
+    {
+      "source": "assets/world/road_projection_test/road_footprint.png.import",
+      "destination": "project/assets/world/road_projection_test/road_footprint.png.import",
+      "bytes": 980,
+      "sha256": "fd6a8d1385f939373d85a0e7d2f55ca00f36e01512383cb1365f2f6751a66f32"
+    },
+    {
+      "source": "assets/world/road_projection_test/road_placeholder.png",
+      "destination": "project/assets/world/road_projection_test/road_placeholder.png",
+      "bytes": 76,
+      "sha256": "73a4d13c0f8752f8cbb8c4cb030d51e0ffd59b98c5d54b7152e49ecd9bce136b"
+    },
+    {
+      "source": "assets/world/road_projection_test/road_placeholder.png.import",
+      "destination": "project/assets/world/road_projection_test/road_placeholder.png.import",
+      "bytes": 985,
+      "sha256": "12086c80118d3a53e7fa539cb33488a460ba0cebdd6f3287572a51e563b600e0"
+    },
+    {
+      "source": "assets/world/road_projection_test/road_projection.res",
+      "destination": "project/assets/world/road_projection_test/road_projection.res",
+      "bytes": 872473,
+      "sha256": "0267aaf8899d3ec9565c3144f5910a80d2957be2431765ab796838cee935a6b9"
+    },
+    {
+      "source": "assets/world/road_projection_test/unsupported_road_triangles.json",
+      "destination": "project/assets/world/road_projection_test/unsupported_road_triangles.json",
+      "bytes": 9247,
+      "sha256": "dfbf9bebf1240e9878004add4657051d7d40f74115042b43838ea9186a99086c"
+    },
+    {
+      "source": "assets/world/road_projection_test/world_road_projection.gdshader",
+      "destination": "project/assets/world/road_projection_test/world_road_projection.gdshader",
+      "bytes": 1600,
+      "sha256": "ac38c59b603d65fc585df0dbac7b2aa3d2a2f289e6d1f60c66f406808119390c"
+    },
+    {
+      "source": "assets/world/road_projection_test/world_road_projection.gdshader.uid",
+      "destination": "project/assets/world/road_projection_test/world_road_projection.gdshader.uid",
+      "bytes": 20,
+      "sha256": "5b042bb04bb26ad312f6bc49781657fefcbe32f9373428de377ba491c522b545"
+    },
+    {
+      "source": "assets/world/terrain/models/island_draft_rhino.gltf",
+      "destination": "project/assets/world/terrain/models/island_draft_rhino.gltf",
+      "bytes": 405590,
+      "sha256": "09c815df0f19e9606c36cb9fed2e5ffe4d2d27dfc5473114bff1ea1fcad38c9b"
+    },
+    {
+      "source": "assets/world/terrain/models/island_draft_rhino.gltf.import",
+      "destination": "project/assets/world/terrain/models/island_draft_rhino.gltf.import",
+      "bytes": 1200,
+      "sha256": "775772def3d2653b47ca4b6672d13509744da2fba5cc944639a3bc4494dbc21b"
+    },
+    {
+      "source": "scenes/cliff_b_gameplay_test.tscn",
+      "destination": "project/scenes/cliff_b_gameplay_test.tscn",
+      "bytes": 1726,
+      "sha256": "4623ded17f335b3d3be58d4880f8d29d86554836b56fe77d32ee75747f270e8f"
+    },
+    {
+      "source": "scenes/landscape_mask_test.tscn",
+      "destination": "project/scenes/landscape_mask_test.tscn",
+      "bytes": 187,
+      "sha256": "302308250d5d7e4bb70a7682558a4a485b919bce608967a55e4574e13cef1736"
+    },
+    {
+      "source": "scenes/map_1009_drive_test.tscn",
+      "destination": "project/scenes/map_1009_drive_test.tscn",
+      "bytes": 1542,
+      "sha256": "4c9a5256a986be7dd8fe13892d5267ac69da7e253b0efc339cd7dac370be71ef"
+    },
+    {
+      "source": "scenes/map_1012_drive_test.tscn",
+      "destination": "project/scenes/map_1012_drive_test.tscn",
+      "bytes": 1675,
+      "sha256": "3fa1e712b30d00e4840d9f13622ab3e271c6e9481873ee84e13274cfbd3437cd"
+    },
+    {
+      "source": "scenes/road_projection_test.tscn",
+      "destination": "project/scenes/road_projection_test.tscn",
+      "bytes": 189,
+      "sha256": "eb1e9d777d05a72ec6bd79aa8a4fbf9d930c92706c4a7dba682477669a18a90a"
+    },
+    {
+      "source": "scenes/vegetation_art_review.tscn",
+      "destination": "project/scenes/vegetation_art_review.tscn",
+      "bytes": 284,
+      "sha256": "3b3aa7611108e62a65b90fc7287c2efd667f0a012e6b38ade1bb9071322930c9"
+    },
+    {
+      "source": "scenes/world_lod_test.tscn",
+      "destination": "project/scenes/world_lod_test.tscn",
+      "bytes": 3361,
+      "sha256": "e092b30f49bc5817d6c195cfff4f70cc38b87cf3d4f469e6d417cb6ce6612c3a"
+    },
+    {
+      "source": "scripts/cliff_b_gameplay_test.gd",
+      "destination": "project/scripts/cliff_b_gameplay_test.gd",
+      "bytes": 14064,
+      "sha256": "955aceb943bf22547b7cce3a24303cdf71529283b5e68b40c973721647636abd"
+    },
+    {
+      "source": "scripts/cliff_b_gameplay_test.gd.uid",
+      "destination": "project/scripts/cliff_b_gameplay_test.gd.uid",
+      "bytes": 20,
+      "sha256": "0f4dbad62cad2a9e199f748f13510bda3040572ae1cb14341c5c849b1033207c"
+    },
+    {
+      "source": "scripts/cliff_b_rendering.gd",
+      "destination": "project/scripts/cliff_b_rendering.gd",
+      "bytes": 2505,
+      "sha256": "f619a2031ac9fc5e0ef7e098672a1554dfdecef016e2dc8f0a8e04fa1387a3c6"
+    },
+    {
+      "source": "scripts/cliff_b_rendering.gd.uid",
+      "destination": "project/scripts/cliff_b_rendering.gd.uid",
+      "bytes": 19,
+      "sha256": "36ce49e567ac0eaca6dcb7adcea5c0fdc1e660f6f57bcc34dcf0c3a4c239349d"
+    },
+    {
+      "source": "scripts/cliff_b_vegetation.gd",
+      "destination": "project/scripts/cliff_b_vegetation.gd",
+      "bytes": 3448,
+      "sha256": "06fbb1415bd5a5818414d174696a56ed56a9ce2c87b87e52e7df56e8f5ac9c89"
+    },
+    {
+      "source": "scripts/cliff_b_vegetation.gd.uid",
+      "destination": "project/scripts/cliff_b_vegetation.gd.uid",
+      "bytes": 19,
+      "sha256": "8a565dc10cb42c8e1660f9e52143fb8339332b2127fb9785fbaf15e4ada8c197"
+    },
+    {
+      "source": "scripts/landscape_mask_test.gd",
+      "destination": "project/scripts/landscape_mask_test.gd",
+      "bytes": 5826,
+      "sha256": "418a38d0aaf16a6debcb27817488ebcd77fcd1dd3ec725a90a81b997c9b01740"
+    },
+    {
+      "source": "scripts/landscape_mask_test.gd.uid",
+      "destination": "project/scripts/landscape_mask_test.gd.uid",
+      "bytes": 20,
+      "sha256": "15f5de9f0e7fb859cde21ee95e178020c99112748744e06e5a8f032e95da9a9c"
+    },
+    {
+      "source": "scripts/map_1012_drive_test.gd",
+      "destination": "project/scripts/map_1012_drive_test.gd",
+      "bytes": 12453,
+      "sha256": "8ebca844abcb61d2e3d5413a01532d204e90ca29ced20ac370c4a80864d67c25"
+    },
+    {
+      "source": "scripts/map_1012_drive_test.gd.uid",
+      "destination": "project/scripts/map_1012_drive_test.gd.uid",
+      "bytes": 20,
+      "sha256": "7b50ddd619aa1185fe2465ee7f0e3743f1e5f7130c66099be0a22b64282a3289"
+    },
+    {
+      "source": "scripts/road_projection_test.gd",
+      "destination": "project/scripts/road_projection_test.gd",
+      "bytes": 7630,
+      "sha256": "911e08aeabad50efbbd104a720e5deaf498e9b3cd3cfed6bcc0e995cf8eb9610"
+    },
+    {
+      "source": "scripts/road_projection_test.gd.uid",
+      "destination": "project/scripts/road_projection_test.gd.uid",
+      "bytes": 19,
+      "sha256": "d53d472d462068e6536ceee57f683b26f809de28616f5b787780e2f9b124d0a2"
+    },
+    {
+      "source": "scripts/vegetation_art_review.gd",
+      "destination": "project/scripts/vegetation_art_review.gd",
+      "bytes": 4451,
+      "sha256": "a45868bf92a3decdd502363e08eae8039b0abe1d7c6a8bee88f1882a3709b592"
+    },
+    {
+      "source": "scripts/vegetation_art_review.gd.uid",
+      "destination": "project/scripts/vegetation_art_review.gd.uid",
+      "bytes": 20,
+      "sha256": "550695e7268f23a27455b1b0265b9bcce11c0fc7ff1c60f2e7669ca4cdf98533"
+    },
+    {
+      "source": "scripts/world_lod_test.gd",
+      "destination": "project/scripts/world_lod_test.gd",
+      "bytes": 15128,
+      "sha256": "2dc5546190b6a93886ffb8f7ba1c0d4caf3939b42e6c241d86868a352a36949c"
+    },
+    {
+      "source": "scripts/world_lod_test.gd.uid",
+      "destination": "project/scripts/world_lod_test.gd.uid",
+      "bytes": 20,
+      "sha256": "70d772f3ff00a79728a698ed78f3b4a334f3d93d05a75367d7a911592c1c23cc"
+    },
+    {
+      "source": "scripts/world_test_panel.gd",
+      "destination": "project/scripts/world_test_panel.gd",
+      "bytes": 13611,
+      "sha256": "0eebce02683a1df300338538a7456f53a586864c1e03b1f505d5b6d03cda71c4"
+    },
+    {
+      "source": "scripts/world_test_panel.gd.uid",
+      "destination": "project/scripts/world_test_panel.gd.uid",
+      "bytes": 20,
+      "sha256": "5fab19226e0c8dc4da8c755a88cd5610ff37dcbf2cf94a387948b363dfffdbfb"
+    },
+    {
+      "source": "tools/analyze_cliff_b_rendering.py",
+      "destination": "project/tools/analyze_cliff_b_rendering.py",
+      "bytes": 4564,
+      "sha256": "0489622cb7e3761e52d758c611cf2aa2cfb8516614b6ac838168f465df4a2c9e"
+    },
+    {
+      "source": "tools/audit_cliff_b_shell_mesh.py",
+      "destination": "project/tools/audit_cliff_b_shell_mesh.py",
+      "bytes": 2507,
+      "sha256": "5c7e631d10ed6bb5243bab07fa0d0159f99033ab53ec6c28c00a0928776c069e"
+    },
+    {
+      "source": "tools/build_cliff_b_gameplay.py",
+      "destination": "project/tools/build_cliff_b_gameplay.py",
+      "bytes": 17381,
+      "sha256": "056f7ef0478a391371623afc6194337573bfe36febfbe61b3db48892b2fc63f9"
+    },
+    {
+      "source": "tools/build_cliff_b_projection.py",
+      "destination": "project/tools/build_cliff_b_projection.py",
+      "bytes": 1929,
+      "sha256": "ae23c89287e741428a71f4dd149492674016467f11f9317b781914fce1b9ddfc"
+    },
+    {
+      "source": "tools/build_cliff_b_rendering.py",
+      "destination": "project/tools/build_cliff_b_rendering.py",
+      "bytes": 6596,
+      "sha256": "80f9781939d74aa5e203134851f9ff2d5933cc750487648e6e0c04dfe08bc585"
+    },
+    {
+      "source": "tools/build_cliff_b_shell_v02.py",
+      "destination": "project/tools/build_cliff_b_shell_v02.py",
+      "bytes": 9814,
+      "sha256": "b1c3c4da0aeed93d13404a1c4d3a0ea61a895bade3938f8404ddfc69e236ca1d"
+    },
+    {
+      "source": "tools/build_cliff_b_solid_side.py",
+      "destination": "project/tools/build_cliff_b_solid_side.py",
+      "bytes": 6825,
+      "sha256": "5f38b00565efbe9a2c237404ee2fc4c0b3553b68667338e336ce96df4ad3b614"
+    },
+    {
+      "source": "tools/build_map_1012_road_projection.py",
+      "destination": "project/tools/build_map_1012_road_projection.py",
+      "bytes": 3060,
+      "sha256": "e71053b95c3f2c7dccf2f0b6b282159e55c34fb6eb13d421304ab9357101a102"
+    },
+    {
+      "source": "tools/build_map_1012_test.py",
+      "destination": "project/tools/build_map_1012_test.py",
+      "bytes": 10818,
+      "sha256": "bc4470f4422b4c5da07d7c76693785fc807088fd1331cef274fd09c4722e0c41"
+    },
+    {
+      "source": "tools/build_road_projection_test.py",
+      "destination": "project/tools/build_road_projection_test.py",
+      "bytes": 10707,
+      "sha256": "b6e5369e098cf3182c2882eb9f6818c671f8bcbedfd4b0ef98aabadc255e2ef6"
+    },
+    {
+      "source": "tools/capture_map_1012_roads.gd",
+      "destination": "project/tools/capture_map_1012_roads.gd",
+      "bytes": 1317,
+      "sha256": "4a45d3422a9ec0ce0b511e1a717a27f00faf6b1aedc50e04834b2f780cf1baba"
+    },
+    {
+      "source": "tools/capture_map_1012_roads.gd.uid",
+      "destination": "project/tools/capture_map_1012_roads.gd.uid",
+      "bytes": 20,
+      "sha256": "fcb4964dac9f019f3d16411326178f764ec2ed51555cf9da0a33b9249fa58ead"
+    },
+    {
+      "source": "tools/capture_road_projection_test.gd",
+      "destination": "project/tools/capture_road_projection_test.gd",
+      "bytes": 1141,
+      "sha256": "ca7d1583b1086d12a5975fd5303ce5d8347f1d3ea015fd7d684a2bce8644d30e"
+    },
+    {
+      "source": "tools/capture_road_projection_test.gd.uid",
+      "destination": "project/tools/capture_road_projection_test.gd.uid",
+      "bytes": 20,
+      "sha256": "a3e6d064b304824645abf94bfef5a4e61f73b7f136a7ec7e95f95d00b094c457"
+    },
+    {
+      "source": "tools/capture_vegetation_art_review.gd",
+      "destination": "project/tools/capture_vegetation_art_review.gd",
+      "bytes": 2774,
+      "sha256": "8849bccdd666b45103f22ea9b5e3a81f3464f407786784ea54812bdedd545a2e"
+    },
+    {
+      "source": "tools/capture_vegetation_art_review.gd.uid",
+      "destination": "project/tools/capture_vegetation_art_review.gd.uid",
+      "bytes": 20,
+      "sha256": "f27342d96cb275f84aff99b11f6009050d808f054cc5a12ffd499379743ecb47"
+    },
+    {
+      "source": "tools/cliff_b_shell_v02.json",
+      "destination": "project/tools/cliff_b_shell_v02.json",
+      "bytes": 237,
+      "sha256": "19b640e482aa4d8c3a88c723924bd5b73c6f746d33e48852d519f93c4f19239c"
+    },
+    {
+      "source": "tools/cliff_b_shell_v03.json",
+      "destination": "project/tools/cliff_b_shell_v03.json",
+      "bytes": 276,
+      "sha256": "625e3f3cec1068c93d57c5afe7a586a7473f1f7368e16a41cbcfed4fc58b0154"
+    },
+    {
+      "source": "tools/cliff_b_solid_nurbs_v01.json",
+      "destination": "project/tools/cliff_b_solid_nurbs_v01.json",
+      "bytes": 1512,
+      "sha256": "c7bc520db3a80e568bfafd829f94984b279fd3b44b9a04d4d1b4de5a8dea9925"
+    },
+    {
+      "source": "tools/cliff_b_solid_side_v01.json",
+      "destination": "project/tools/cliff_b_solid_side_v01.json",
+      "bytes": 456,
+      "sha256": "2a6da29b55a615f95cae003f6fb6c0f01ba8aa1822d0f92c1f4e965d085af33d"
+    },
+    {
+      "source": "tools/compose_road_projection_captures.py",
+      "destination": "project/tools/compose_road_projection_captures.py",
+      "bytes": 2059,
+      "sha256": "c9353d09c568bc7ba91f4d52248d63ade510226d6451a5db780eb65727bc51ad"
+    },
+    {
+      "source": "tools/create_cliff_b_scene.py",
+      "destination": "project/tools/create_cliff_b_scene.py",
+      "bytes": 7238,
+      "sha256": "5e6150eef53f0ccaea3b80b6554c528ad35ea3759cc8935f52dd18846256c196"
+    },
+    {
+      "source": "tools/export_cliff_b_gameplay.py",
+      "destination": "project/tools/export_cliff_b_gameplay.py",
+      "bytes": 4145,
+      "sha256": "41bc3eaee0a59be3ea69f28338e36c0e27809860db9879a3401a0f21fec99413"
+    },
+    {
+      "source": "tools/export_cliff_b_native_planting.py",
+      "destination": "project/tools/export_cliff_b_native_planting.py",
+      "bytes": 3820,
+      "sha256": "135b11a043b2688a3114c1b0cd3aaaef17fc2ee50fd2410e40bd00d8103eb719"
+    },
+    {
+      "source": "tools/import_cliff_b_projection.gd",
+      "destination": "project/tools/import_cliff_b_projection.gd",
+      "bytes": 629,
+      "sha256": "365d6d273db2979c6f12e287628792b7b2548828abd3b011835bd92cfe356b36"
+    },
+    {
+      "source": "tools/import_cliff_b_projection.gd.uid",
+      "destination": "project/tools/import_cliff_b_projection.gd.uid",
+      "bytes": 20,
+      "sha256": "8bad8e5041f810619ea9fdceb498eb6532fe9ce35e308c09ce8f192105b38b7d"
+    },
+    {
+      "source": "tools/import_map_1012_road_projection.gd",
+      "destination": "project/tools/import_map_1012_road_projection.gd",
+      "bytes": 741,
+      "sha256": "0ef5c59f3445523784760af318f9278f309d7d47ffd9e2049c9af946757eb2e4"
+    },
+    {
+      "source": "tools/import_map_1012_road_projection.gd.uid",
+      "destination": "project/tools/import_map_1012_road_projection.gd.uid",
+      "bytes": 19,
+      "sha256": "fcd417536c1e10bbc1432807348bb1a03b03e517f5697eab51be41cdb6e8cc0b"
+    },
+    {
+      "source": "tools/import_road_projection_test.gd",
+      "destination": "project/tools/import_road_projection_test.gd",
+      "bytes": 851,
+      "sha256": "cb9fbcabca2a0872a8117addd0857cc1d8fe121d61e086b9d8ff22b8fbb98833"
+    },
+    {
+      "source": "tools/import_road_projection_test.gd.uid",
+      "destination": "project/tools/import_road_projection_test.gd.uid",
+      "bytes": 20,
+      "sha256": "200031be2cadf71883919a1a4eab2c8bd676e576f2d07addbc0b42332bd46710"
+    },
+    {
+      "source": "tools/inspect_map_1012.py",
+      "destination": "project/tools/inspect_map_1012.py",
+      "bytes": 1200,
+      "sha256": "c0e9339b86bf137db8ee25aeb9af307748490509bda5dacf28d8c8a292f35832"
+    },
+    {
+      "source": "tools/rhino_cliff_b_parametric.json",
+      "destination": "project/tools/rhino_cliff_b_parametric.json",
+      "bytes": 1209,
+      "sha256": "c9ace7dba839aee455982a03ace834a2c10f4799f6d7a3731580aa3faf498663"
+    },
+    {
+      "source": "tools/rhino_cliff_b_parametric.py",
+      "destination": "project/tools/rhino_cliff_b_parametric.py",
+      "bytes": 30695,
+      "sha256": "a39abfbd0d58407567a14146eda16af59814d3c8775d2523369431676bc264df"
+    },
+    {
+      "source": "tools/rhino_cliff_b_round_corner.py",
+      "destination": "project/tools/rhino_cliff_b_round_corner.py",
+      "bytes": 12076,
+      "sha256": "cb03a5baef29566cba8fb37632144ffcbc507b5f3da507b7740692e9878a77fb"
+    },
+    {
+      "source": "tools/rhino_cliff_b_shell_v02.py",
+      "destination": "project/tools/rhino_cliff_b_shell_v02.py",
+      "bytes": 12735,
+      "sha256": "eb47296f007bbf46f047e104e7cafe878b00ba03538c2512b76514866dded360"
+    },
+    {
+      "source": "tools/rhino_cliff_b_shell_v03.py",
+      "destination": "project/tools/rhino_cliff_b_shell_v03.py",
+      "bytes": 5725,
+      "sha256": "dd8651b093f6aa4fd26517f42a5fe81e11f3f11023bb65d1626e4ec36353b15b"
+    },
+    {
+      "source": "tools/rhino_cliff_b_solid_nurbs.py",
+      "destination": "project/tools/rhino_cliff_b_solid_nurbs.py",
+      "bytes": 21801,
+      "sha256": "7682c2192f4e59c890c87110dad05802de8161d5efe6914df281f166c0f3e2e3"
+    },
+    {
+      "source": "tools/rhino_cliff_b_solid_side.py",
+      "destination": "project/tools/rhino_cliff_b_solid_side.py",
+      "bytes": 14426,
+      "sha256": "869149c9d2ea262ea7385cc9067109004b87e517c8bf322926f88f1c3963aceb"
+    },
+    {
+      "source": "tools/verify_cliff_b_gameplay.gd",
+      "destination": "project/tools/verify_cliff_b_gameplay.gd",
+      "bytes": 5720,
+      "sha256": "47a2fbf01ec3f1451f7df82b97abb9c45d33a7875ab0fcd1f870fe401d1f896e"
+    },
+    {
+      "source": "tools/verify_cliff_b_gameplay.gd.uid",
+      "destination": "project/tools/verify_cliff_b_gameplay.gd.uid",
+      "bytes": 19,
+      "sha256": "53f532102d6b5bea5c7bfb06bb98abaf83ee79ad4a89dc1e26ea6d9af4e8175f"
+    },
+    {
+      "source": "tools/verify_cliff_b_rendering.gd",
+      "destination": "project/tools/verify_cliff_b_rendering.gd",
+      "bytes": 10162,
+      "sha256": "9b86a7cb63191fe2d8ccc9cbb567b892da744befcb3fc12b7ee141655a882083"
+    },
+    {
+      "source": "tools/verify_cliff_b_rendering.gd.uid",
+      "destination": "project/tools/verify_cliff_b_rendering.gd.uid",
+      "bytes": 20,
+      "sha256": "c71bb69481335a343c9a4829c82ad3bffb3a631149d0dbc1c1ab7b303d902530"
+    },
+    {
+      "source": "tools/verify_grass_interaction.gd",
+      "destination": "project/tools/verify_grass_interaction.gd",
+      "bytes": 11722,
+      "sha256": "19215d74e8fbd7178fb1da9b38ca73fa6d7200f394725e160977584fb525966b"
+    },
+    {
+      "source": "tools/verify_grass_interaction.gd.uid",
+      "destination": "project/tools/verify_grass_interaction.gd.uid",
+      "bytes": 19,
+      "sha256": "c449abc69b18008775cdde71ea0e1db192bc15c80a4e65e98a5d0d5d0f3d5753"
+    },
+    {
+      "source": "tools/verify_landscape_world_mask.gd",
+      "destination": "project/tools/verify_landscape_world_mask.gd",
+      "bytes": 1050,
+      "sha256": "c5afa21aae00b84478a4727198eda555efc130cde2b7a96643d86061794367b9"
+    },
+    {
+      "source": "tools/verify_landscape_world_mask.gd.uid",
+      "destination": "project/tools/verify_landscape_world_mask.gd.uid",
+      "bytes": 20,
+      "sha256": "d54e8b69086aadfc9f1daf179c1c292593210773dcf431e3696e023c1109d80e"
+    },
+    {
+      "source": "tools/verify_location_navigation.gd",
+      "destination": "project/tools/verify_location_navigation.gd",
+      "bytes": 4098,
+      "sha256": "23956e45c78522c4980cd8daf5a453e65ec5405ef3056397f3797031330a411d"
+    },
+    {
+      "source": "tools/verify_location_navigation.gd.uid",
+      "destination": "project/tools/verify_location_navigation.gd.uid",
+      "bytes": 19,
+      "sha256": "6ae5b7b56b9c6c7a0d939787bba4ed7107f93b381e0bf036c86b7596c1a24ac1"
+    },
+    {
+      "source": "tools/verify_map_1012_drive.gd",
+      "destination": "project/tools/verify_map_1012_drive.gd",
+      "bytes": 8614,
+      "sha256": "608cdb898e00983d7535feb0e79771fe0528adbdf1b4309f320c90967785cd96"
+    },
+    {
+      "source": "tools/verify_map_1012_drive.gd.uid",
+      "destination": "project/tools/verify_map_1012_drive.gd.uid",
+      "bytes": 20,
+      "sha256": "c70af97e7080ff9f31a5bb3154e1d9001481072ecbae2c80bdcd799b9c937997"
+    },
+    {
+      "source": "tools/verify_map_1012_turning.gd",
+      "destination": "project/tools/verify_map_1012_turning.gd",
+      "bytes": 4582,
+      "sha256": "d61d3bf5a9f5529a7271ef0d9c3786475a82d1436d0dcdcdaff0a8b943a2422f"
+    },
+    {
+      "source": "tools/verify_map_1012_turning.gd.uid",
+      "destination": "project/tools/verify_map_1012_turning.gd.uid",
+      "bytes": 20,
+      "sha256": "ce2e52600ee0db814f76e2710fecad081b3657f8643280034e6d3cc601b5d26a"
+    },
+    {
+      "source": "tools/verify_world_ganyu.gd",
+      "destination": "project/tools/verify_world_ganyu.gd",
+      "bytes": 8422,
+      "sha256": "b1b9275bbf5fce9608364967f501563ed4d8ab158b3eff7b4f8953be3ec6e020"
+    },
+    {
+      "source": "tools/verify_world_ganyu.gd.uid",
+      "destination": "project/tools/verify_world_ganyu.gd.uid",
+      "bytes": 20,
+      "sha256": "f8befe85e9aa3a2bc5473aa799acb1212bbe0042373af575be21ec8aff992078"
+    },
+    {
+      "source": "tools/verify_world_test_panel.gd",
+      "destination": "project/tools/verify_world_test_panel.gd",
+      "bytes": 8587,
+      "sha256": "529f828103995e91af640b096fe7679f67e102b903f70aa2970612155238e6f2"
+    },
+    {
+      "source": "tools/verify_world_test_panel.gd.uid",
+      "destination": "project/tools/verify_world_test_panel.gd.uid",
+      "bytes": 19,
+      "sha256": "afa67a0b71a52fc4205af35c265a75de2334f7a73b60ded65b65f3f047a61431"
+    }
+  ]
+}

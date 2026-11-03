@@ -1,0 +1,147 @@
+{
+  "engine": "4.7.2-stable (official)",
+  "entry": "res://scenes/main.tscn",
+  "failures": [],
+  "passed": true,
+  "script": "res://scripts/map_1021.gd",
+  "spawns": [
+    {
+      "grounded": true,
+      "key": "south_roof",
+      "walk_m": 2.66732788085938
+    },
+    {
+      "grounded": true,
+      "key": "south_bridge",
+      "walk_m": 2.66708374023438
+    },
+    {
+      "grounded": true,
+      "key": "south_gallery",
+      "walk_m": 2.66753721237183
+    },
+    {
+      "grounded": true,
+      "key": "south_middle",
+      "walk_m": 2.66721844673157
+    },
+    {
+      "grounded": true,
+      "key": "south_waterfront",
+      "walk_m": 2.66143798828125
+    },
+    {
+      "grounded": true,
+      "key": "north_hill",
+      "walk_m": 2.63696885108948
+    },
+    {
+      "grounded": true,
+      "key": "north_lagoon",
+      "walk_m": 2.70828723907471
+    },
+    {
+      "grounded": true,
+      "key": "north_ramp",
+      "walk_m": 2.67929196357727
+    },
+    {
+      "grounded": true,
+      "key": "spawn_cave",
+      "walk_m": 2.66102766990662
+    },
+    {
+      "grounded": true,
+      "key": "oval_atrium",
+      "walk_m": 2.66276741027832
+    },
+    {
+      "grounded": true,
+      "key": "oval_atrium_floor",
+      "walk_m": 2.66707968711853
+    },
+    {
+      "grounded": true,
+      "key": "initial_ruin",
+      "walk_m": 2.66812467575073
+    },
+    {
+      "grounded": true,
+      "key": "island_saddle",
+      "walk_m": 2.66480159759521
+    },
+    {
+      "grounded": true,
+      "key": "terrace_ruins_a",
+      "walk_m": 2.66729736328125
+    },
+    {
+      "grounded": true,
+      "key": "terrace_ruins_b",
+      "walk_m": 2.66729736328125
+    },
+    {
+      "grounded": true,
+      "key": "water_court",
+      "walk_m": 2.662109375
+    },
+    {
+      "grounded": true,
+      "key": "earth_pavilion",
+      "walk_m": 2.66726684570313
+    },
+    {
+      "grounded": true,
+      "key": "sunken_archive",
+      "walk_m": 2.66666316986084
+    },
+    {
+      "grounded": true,
+      "key": "upper_ring",
+      "walk_m": 2.34823536872864
+    }
+  ],
+  "trees": 19298,
+  "vehicles": [
+    {
+      "drive_m": 4.34567260742188,
+      "grounded": true,
+      "key": "south_roof"
+    },
+    {
+      "drive_m": 4.34561157226563,
+      "grounded": true,
+      "key": "south_bridge"
+    },
+    {
+      "drive_m": 4.34558391571045,
+      "grounded": true,
+      "key": "south_gallery"
+    },
+    {
+      "drive_m": 4.34587669372559,
+      "grounded": true,
+      "key": "south_middle"
+    },
+    {
+      "drive_m": 4.34576416015625,
+      "grounded": true,
+      "key": "south_waterfront"
+    },
+    {
+      "drive_m": 4.29348421096802,
+      "grounded": true,
+      "key": "north_hill"
+    },
+    {
+      "drive_m": 4.36618614196777,
+      "grounded": true,
+      "key": "north_lagoon"
+    },
+    {
+      "drive_m": 4.35135936737061,
+      "grounded": true,
+      "key": "north_ramp"
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 # 崖壁 B 暖白建筑与种植测试
 
+> **2026-11-04 状态更新：** 本文涉及的旧整图测试场景及专用资源已移到 `D:/Prism Route/archive/legacy_world_tests_20261104/`，后文为历史制作记录。当前游玩入口是 `scenes/map_1021.tscn`；现用共享代码和资源保留。见 [归档与验收记录](LEGACY_WORLD_SCENE_AUDIT_1104.md)。
+
 日期：2026-10-14。主入口 `scenes/main.tscn` 现指向 `scenes/cliff_b_gameplay_test.tscn`。这是可体验的材质和种植验证稿；原 `map_1012_drive_test.tscn` 继续保留，可独立运行。
 
 ## 打开与操作
