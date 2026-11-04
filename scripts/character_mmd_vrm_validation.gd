@@ -123,6 +123,21 @@ func _build_library_ui() -> void:
 	loop_toggle.text="循环预览（不修改动作）"
 	panel.add_child(loop_toggle)
 	loop_toggle.toggled.connect(func(value):pack["loop_preview"]=value)
+	var light_label := Label.new()
+	light_label.text = "光照曝光 (Exposure: 1.00)"
+	light_label.add_theme_font_size_override("font_size", 14)
+	panel.add_child(light_label)
+	var exposure_slider := HSlider.new()
+	exposure_slider.min_value = 0.5
+	exposure_slider.max_value = 1.6
+	exposure_slider.step = 0.05
+	exposure_slider.value = 1.0
+	panel.add_child(exposure_slider)
+	exposure_slider.value_changed.connect(func(v: float):
+		if environment:
+			environment.tonemap_exposure = v
+			light_label.text = "光照曝光 (Exposure: %.2f)" % v
+	)
 	details.custom_minimum_size=Vector2(330,150)
 	panel.add_child(details)
 	heading.position = Vector2(420,24)
@@ -502,4 +517,3 @@ func _capture_sequence() -> void:
 	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png(directory+("/paired_side_006.png" if current_pack=="shared_walk" else "/paired_side_060.png"))
 	get_tree().quit()
-

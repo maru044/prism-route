@@ -1483,31 +1483,6 @@
       "collision": true
     },
     {
-      "id": "0511ba39-173f-4035-a825-9c9d134728fb",
-      "category": "entry",
-      "bounds": [
-        [
-          450.1279602050781,
-          -158.4141387939453,
-          46.835975646972656
-        ],
-        [
-          459.04132080078125,
-          -152.509033203125,
-          55.04999923706055
-        ]
-      ],
-      "layer": "建筑::初始三角遗迹::02_入口台阶与通路",
-      "name": "PR_EntryLanding_Lower",
-      "vertex_count": 24,
-      "index_count": 36,
-      "kind": "Structure",
-      "offset": 35736,
-      "phase": "01_foundation_stairs",
-      "material_key": "base",
-      "collision": true
-    },
-    {
       "id": "bc332fd9-45e0-4246-8139-22cc96bf9905",
       "category": "entry",
       "bounds": [
@@ -1533,31 +1508,6 @@
       "collision": true
     },
     {
-      "id": "90e44921-4322-4a1a-8685-77ae80f7d56e",
-      "category": "entry",
-      "bounds": [
-        [
-          446.8968505859375,
-          -149.77931213378906,
-          49.59652328491211
-        ],
-        [
-          455.58740234375,
-          -144.43128967285156,
-          57.75
-        ]
-      ],
-      "layer": "建筑::初始三角遗迹::02_入口台阶与通路",
-      "name": "PR_EntryLanding_Middle",
-      "vertex_count": 24,
-      "index_count": 36,
-      "kind": "Structure",
-      "offset": 36600,
-      "phase": "01_foundation_stairs",
-      "material_key": "base",
-      "collision": true
-    },
-    {
       "id": "46104f0e-1fa4-42c3-9cb1-f59b3484521c",
       "category": "entry",
       "bounds": [
@@ -1580,31 +1530,6 @@
       "offset": 37032,
       "phase": "01_foundation_stairs",
       "material_key": "floor",
-      "collision": true
-    },
-    {
-      "id": "79c76214-16b7-44c8-8be8-f5c6862f6263",
-      "category": "entry",
-      "bounds": [
-        [
-          440.0818176269531,
-          -141.70156860351562,
-          54.45690155029297
-        ],
-        [
-          452.3562927246094,
-          -127.39373779296875,
-          60.45000076293945
-        ]
-      ],
-      "layer": "建筑::初始三角遗迹::02_入口台阶与通路",
-      "name": "PR_EntryLanding_Upper",
-      "vertex_count": 24,
-      "index_count": 36,
-      "kind": "Structure",
-      "offset": 37464,
-      "phase": "01_foundation_stairs",
-      "material_key": "base",
       "collision": true
     },
     {
@@ -8208,8 +8133,8 @@
       "collision": true
     }
   ],
-  "triangles": 6904,
-  "mesh_sha256": "2b53bdea720c27e30a6ce2a9a24fc383b4f25c80f8b977c171603fb3023bdc52",
+  "triangles": 6868,
+  "mesh_sha256": "2517c8c098f11065cb6fa7aafe2ec5b58e9a61795ebfbbbf7070cdccca39e65e",
   "summon_anchor": [
     -1015.2847900390625,
     61.5,
@@ -17036,22 +16961,6 @@
       ]
     },
     {
-      "name": "PR_EntryLanding_Lower",
-      "id": "0511ba39-173f-4035-a825-9c9d134728fb",
-      "samples": [
-        [
-          -996.529541015625,
-          55.04999923706055,
-          1306.44580078125
-        ],
-        [
-          -994.3011474609375,
-          55.04999923706055,
-          1304.4774169921875
-        ]
-      ]
-    },
-    {
       "name": "PR_EntryLandingCap_Lower",
       "id": "bc332fd9-45e0-4246-8139-22cc96bf9905",
       "samples": [
@@ -17068,22 +16977,6 @@
       ]
     },
     {
-      "name": "PR_EntryLanding_Middle",
-      "id": "90e44921-4322-4a1a-8685-77ae80f7d56e",
-      "samples": [
-        [
-          -1000.206298828125,
-          57.75,
-          1297.25390625
-        ],
-        [
-          -997.3094482421875,
-          57.75,
-          1296.956787109375
-        ]
-      ]
-    },
-    {
       "name": "PR_EntryLandingCap_Middle",
       "id": "46104f0e-1fa4-42c3-9cb1-f59b3484521c",
       "samples": [
@@ -17096,22 +16989,6 @@
           -997.3094482421875,
           57.75,
           1296.956787109375
-        ]
-      ]
-    },
-    {
-      "name": "PR_EntryLanding_Upper",
-      "id": "79c76214-16b7-44c8-8be8-f5c6862f6263",
-      "samples": [
-        [
-          -1005.82666015625,
-          60.45000076293945,
-          1283.202880859375
-        ],
-        [
-          -1001.7352294921875,
-          60.45000076293945,
-          1285.892333984375
         ]
       ]
     },
@@ -21427,5 +21304,14 @@
     "main_floor": 61.05,
     "entry_floor": 60.45,
     "length": 60
+  },
+  "render_sync_1105": {
+    "removed_source_ids": [
+      "0511ba39-173f-4035-a825-9c9d134728fb",
+      "79c76214-16b7-44c8-8be8-f5c6862f6263",
+      "90e44921-4322-4a1a-8685-77ae80f7d56e"
+    ],
+    "retained_geometry_byte_identical": true,
+    "planting_footprints_retained": true
   }
 }

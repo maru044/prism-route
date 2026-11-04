@@ -26,7 +26,7 @@
       "model_sha256": "60075651511ad4e94717c7c7cf56c663e19dc7cc81d2c8bf04a4e1b479d26108"
     }
   ],
-  "readme_sha256": "209a8afe976043207a76d5fd0d776884bc02af09fae671f5f07b3c60d8ef2b99",
+  "readme_sha256": "648879f160ad2df65549407ccf1844d0dba67da256c8f79e1aee892010d2162a",
   "packs": [
     {
       "id": "mmd_0a3f6ba5f5de",
@@ -665,6 +665,470 @@
         "res://docs/validation/mmd_selected_20261103/references/mmd_7869c66910b9_c_reference.json"
       ],
       "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_87e004f6db53",
+      "label": "Bath House Service V2",
+      "selected": true,
+      "shared": true,
+      "duration": 61.13333333333333,
+      "frame_start": 0,
+      "frame_end": 1834,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Bath House Service V2/Missionary - Izumi.vmd",
+          "sha256": "cbb6c6a90cf2798d7d846b2463abb5dc5b99ed711d847aad19a2341a9a772521"
+        },
+        {
+          "file": "Bath House Service V2/Missionary - Maran.vmd",
+          "sha256": "b92adbdf5926f12f2df0453a8b9a4b6e59dee55fcd02ffb587a823d6f52b4fa2"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_87e004f6db53_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_87e004f6db53_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_87e004f6db53_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_87e004f6db53_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_43916ffe3d35",
+      "label": "Just Tonight - By Ademar440",
+      "selected": true,
+      "shared": true,
+      "duration": 234.33333333333334,
+      "frame_start": 0,
+      "frame_end": 7030,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Just Tonight - By Ademar440/Just Tonight - Izumi.vmd",
+          "sha256": "3bc9566ddfeddae881c598494b5a5052060d5b20f37014a3c5504f5e63371d6c"
+        },
+        {
+          "file": "Just Tonight - By Ademar440/Just Tonight - Sin Sack.vmd",
+          "sha256": "28dd96746e8f2e53fa60daa7f243ebc02c57a81cb81bf2fb3c040cdd0780a4bc"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_43916ffe3d35_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_43916ffe3d35_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_43916ffe3d35_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_43916ffe3d35_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_2864892bd378",
+      "label": "LHDS V3 - By Ademar440",
+      "selected": true,
+      "shared": true,
+      "duration": 66.9,
+      "frame_start": 0,
+      "frame_end": 2007,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "LHDS V3 - By Ademar440/Love Hotel DS Loop Bikini Izumi.vmd",
+          "sha256": "1183fad9a11b0eac6b30a2b4f9443cb51b2b659596d4a5774f699101aa8ed80e"
+        },
+        {
+          "file": "LHDS V3 - By Ademar440/Love Hotel DS Loop Maran.vmd",
+          "sha256": "c0629dfbfb6b970a47eaffbe05d7f26a29f55b6ab98dd3110e995341f6fb618b"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_2864892bd378_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_2864892bd378_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_2864892bd378_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_2864892bd378_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_160b1e7a411c",
+      "label": "Lap Sitting",
+      "selected": true,
+      "shared": true,
+      "duration": 78.0,
+      "frame_start": 0,
+      "frame_end": 2340,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Lap Sitting/Lap Sitting - Izumi.vmd",
+          "sha256": "3f164d731c42479e19074e68499138ab0d4959d072fb121c23cf010d5f9fad96"
+        },
+        {
+          "file": "Lap Sitting/Lap Sitting - Guy.vmd",
+          "sha256": "8c2c6bda01d55645677747d401cd1c6367544ab5ac524d72b86952c77b3c9953"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_160b1e7a411c_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_160b1e7a411c_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_160b1e7a411c_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_160b1e7a411c_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_1256ad646811",
+      "label": "Loop 07 - Spooning",
+      "selected": true,
+      "shared": true,
+      "duration": 30.3,
+      "frame_start": 0,
+      "frame_end": 909,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Loop 07 - Spooning/Loop 07 - Spooning - Izumi.vmd",
+          "sha256": "30c415e937215f29f74b79469d7717ba99f699f0ee87cdbafa03994a56b1cb61"
+        },
+        {
+          "file": "Loop 07 - Spooning/Loop 07 - Spooning - Maran.vmd",
+          "sha256": "23bb3e3ac4fa296399d4f383737cb4c8abe722d414f66f4f83a8e22451061910"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_1256ad646811_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_1256ad646811_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_1256ad646811_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_1256ad646811_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_c63e75bc7057",
+      "label": "Loop 33 - Suspended Congress",
+      "selected": true,
+      "shared": true,
+      "duration": 33.333333333333336,
+      "frame_start": 0,
+      "frame_end": 1000,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Loop 33 - Suspended Congress/Loop 33 - Suspended Congress - Izumi.vmd",
+          "sha256": "3130e9f3270225568b3b23e30be87c955b0ad153c45fa3ef5f3e58a45f3dcae7"
+        },
+        {
+          "file": "Loop 33 - Suspended Congress/Loop 33 - Suspended Congress - Maran.vmd",
+          "sha256": "afc7a1f2353386d8b876bccbbb8195f86c276ad6e1da65a5b4abaaae2bd263d2"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_c63e75bc7057_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_c63e75bc7057_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_c63e75bc7057_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_c63e75bc7057_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_fca4bab1635f",
+      "label": "TSFB V2",
+      "selected": true,
+      "shared": true,
+      "duration": 56.7,
+      "frame_start": 0,
+      "frame_end": 1701,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "TSFB V2/Table Sex From Behind Loop Izumi.vmd",
+          "sha256": "7ab2e6adddccc53c7c870ba96e26f4634db9ad6bc66bf2393fd46d406dd3fd0e"
+        },
+        {
+          "file": "TSFB V2/Table Sex From Behind Loop Maran.vmd",
+          "sha256": "59ebc63506e67054596819c31060c399a5796478ce5f7cdbffb92ffe16f5701d"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_fca4bab1635f_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_fca4bab1635f_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_fca4bab1635f_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_fca4bab1635f_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_86e40adc8f14",
+      "label": "Thigh service",
+      "selected": true,
+      "shared": true,
+      "duration": 49.63333333333333,
+      "frame_start": 0,
+      "frame_end": 1489,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Thigh service/Thigh service - Izumi.vmd",
+          "sha256": "747f6029b0864c0adf940c994ce03bbeab90a26d8073ff6139f37efccd2a8370"
+        },
+        {
+          "file": "Thigh service/Thigh service -Guy.vmd",
+          "sha256": "554417aee5576d6828701c2b61d2c5304c6c3590b8bc49ea30d33afab0536c02"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_86e40adc8f14_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_86e40adc8f14_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_86e40adc8f14_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_86e40adc8f14_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
     }
   ],
   "clips": [
@@ -683,7 +1147,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_0a3f6ba5f5de_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 1.6113547477158985e-06,
-      "standardize_elapsed_s": 2.462809299933724,
+      "standardize_elapsed_s": 2.4320353999501094,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 5.900558791525164e-07,
       "pack": "mmd_0a3f6ba5f5de",
@@ -706,7 +1170,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_0a3f6ba5f5de_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 1.5162664751371124e-08,
-      "standardize_elapsed_s": 2.440377000020817,
+      "standardize_elapsed_s": 2.721813299925998,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 4.498201265371913e-07,
       "pack": "mmd_0a3f6ba5f5de",
@@ -729,7 +1193,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_16a2ecfb7781_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 5.079500878739374e-06,
-      "standardize_elapsed_s": 1.9643128000898287,
+      "standardize_elapsed_s": 2.1634097000351176,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 6.152934677023464e-07,
       "pack": "mmd_16a2ecfb7781",
@@ -752,7 +1216,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_16a2ecfb7781_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 1.410317036071307e-07,
-      "standardize_elapsed_s": 1.9207505999365821,
+      "standardize_elapsed_s": 2.2062472000252455,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 5.405651672845201e-07,
       "pack": "mmd_16a2ecfb7781",
@@ -775,7 +1239,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_67d58e9d607e_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 4.786801939861418e-07,
-      "standardize_elapsed_s": 1.1378793000476435,
+      "standardize_elapsed_s": 1.2746537000639364,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 1.0185859287757791e-06,
       "pack": "mmd_67d58e9d607e",
@@ -798,7 +1262,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_67d58e9d607e_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 1.1200484983930892e-11,
-      "standardize_elapsed_s": 1.052219899953343,
+      "standardize_elapsed_s": 1.2220517999958247,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 4.1201104410584245e-07,
       "pack": "mmd_67d58e9d607e",
@@ -821,7 +1285,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_6e891982bb51_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 2.997630845213983e-07,
-      "standardize_elapsed_s": 0.6361397000728175,
+      "standardize_elapsed_s": 0.7140136999078095,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 8.805565060790871e-07,
       "pack": "mmd_6e891982bb51",
@@ -886,7 +1350,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_aec34d147925_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 7.15007179297178e-08,
-      "standardize_elapsed_s": 0.6390999999130145,
+      "standardize_elapsed_s": 0.726564500015229,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 6.920622896989061e-07,
       "pack": "mmd_aec34d147925",
@@ -909,7 +1373,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_aec34d147925_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 3.834412578007651e-07,
-      "standardize_elapsed_s": 0.6508905999362469,
+      "standardize_elapsed_s": 0.7006007999880239,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 6.492273648722308e-07,
       "pack": "mmd_aec34d147925",
@@ -932,7 +1396,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_9957977a1355_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 1.0041156443263421e-06,
-      "standardize_elapsed_s": 0.9842938000801951,
+      "standardize_elapsed_s": 1.3242909999098629,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 7.336457744295103e-07,
       "pack": "mmd_9957977a1355",
@@ -955,7 +1419,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_9957977a1355_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 2.1134788726340226e-06,
-      "standardize_elapsed_s": 1.0076723999809474,
+      "standardize_elapsed_s": 1.4143256000243127,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 7.133906604996815e-07,
       "pack": "mmd_9957977a1355",
@@ -978,7 +1442,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_fcc0340f8227_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 2.7014763825938815e-07,
-      "standardize_elapsed_s": 1.1317659999476746,
+      "standardize_elapsed_s": 1.6076637000078335,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 6.294748585040695e-07,
       "pack": "mmd_fcc0340f8227",
@@ -1001,7 +1465,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_fcc0340f8227_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 1.8136065971230408e-07,
-      "standardize_elapsed_s": 1.1180829000659287,
+      "standardize_elapsed_s": 1.6077501999679953,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 7.539457464619601e-07,
       "pack": "mmd_fcc0340f8227",
@@ -1024,7 +1488,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_8c5c490fb87c_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 4.7451533805031865e-07,
-      "standardize_elapsed_s": 1.0075087000150234,
+      "standardize_elapsed_s": 1.3829905000748113,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 7.646311476799563e-07,
       "pack": "mmd_8c5c490fb87c",
@@ -1047,7 +1511,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_8c5c490fb87c_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 3.287396904694262e-07,
-      "standardize_elapsed_s": 0.9853141000494361,
+      "standardize_elapsed_s": 1.432116400101222,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 9.94701341884055e-07,
       "pack": "mmd_8c5c490fb87c",
@@ -1070,7 +1534,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_beee0d2eb57b_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 6.465063901589518e-07,
-      "standardize_elapsed_s": 1.0004179999232292,
+      "standardize_elapsed_s": 1.4422222999855876,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 7.030862473134451e-07,
       "pack": "mmd_beee0d2eb57b",
@@ -1093,7 +1557,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_beee0d2eb57b_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 9.392884214864949e-07,
-      "standardize_elapsed_s": 0.9946572999469936,
+      "standardize_elapsed_s": 1.4274896999122575,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 5.650359849187571e-07,
       "pack": "mmd_beee0d2eb57b",
@@ -1116,7 +1580,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_7869c66910b9_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 2.2700391915653206e-06,
-      "standardize_elapsed_s": 1.970634000026621,
+      "standardize_elapsed_s": 2.735755999921821,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 5.202970492296138e-07,
       "pack": "mmd_7869c66910b9",
@@ -1139,7 +1603,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_7869c66910b9_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 4.6699096206345714e-08,
-      "standardize_elapsed_s": 1.9484427999705076,
+      "standardize_elapsed_s": 2.715684900060296,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 6.320931322419289e-07,
       "pack": "mmd_7869c66910b9",
@@ -1162,19 +1626,387 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_7869c66910b9_c_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 7.102068419473362e-08,
-      "standardize_elapsed_s": 1.9058029999723658,
+      "standardize_elapsed_s": 2.707527399994433,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 5.388294709156935e-07,
       "pack": "mmd_7869c66910b9",
       "role": "C",
       "source_file": "Loop 27 - Twin Angels-V2/Loop 27 - Twin Angels - SS 18-22.vmd",
       "source_vmd_sha256": "54a30eaa8bf403028add3247c0eceb77400a9e6ec73bad4187b8202ea738d08c"
+    },
+    {
+      "id": "mmd_87e004f6db53_a",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_87e004f6db53_a.tres",
+      "frames": 1835,
+      "duration": 61.13333333333333,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 6603636,
+      "source": ".model_import_build/mmd_selected/mmd_87e004f6db53_a.glb",
+      "source_sha256": "f996003ad8fe6c3d0dbacb252ccb17828759adf83425a581a17c176be6f07a03",
+      "output_sha256": "5e5d65f9acf7a87886328cf853fef9abc4b740aba2092a9f8dda4011f175124d",
+      "reference_height": 0.9838524702936413,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_87e004f6db53_a_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 2.386212046984193e-06,
+      "standardize_elapsed_s": 2.55938300001435,
+      "bake_position_checks": 2844,
+      "max_bake_position_error_m": 4.851466594964178e-07,
+      "pack": "mmd_87e004f6db53",
+      "role": "A",
+      "source_file": "Bath House Service V2/Missionary - Izumi.vmd",
+      "source_vmd_sha256": "cbb6c6a90cf2798d7d846b2463abb5dc5b99ed711d847aad19a2341a9a772521"
+    },
+    {
+      "id": "mmd_87e004f6db53_b",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_87e004f6db53_b.tres",
+      "frames": 1835,
+      "duration": 61.13333333333333,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 6713491,
+      "source": ".model_import_build/mmd_selected/mmd_87e004f6db53_b.glb",
+      "source_sha256": "e6a2052e8c92ec9f55366b232873c0906d607a136ab18655b395dfb19f800adb",
+      "output_sha256": "0ec10b6f756c305a5195e57d5971ccde757ae0d0cc802c2f8beec870148535f4",
+      "reference_height": 0.9769537867977787,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_87e004f6db53_b_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 1.116561467506827e-06,
+      "standardize_elapsed_s": 2.5473994000349194,
+      "bake_position_checks": 2835,
+      "max_bake_position_error_m": 4.867209748165212e-07,
+      "pack": "mmd_87e004f6db53",
+      "role": "B",
+      "source_file": "Bath House Service V2/Missionary - Maran.vmd",
+      "source_vmd_sha256": "b92adbdf5926f12f2df0453a8b9a4b6e59dee55fcd02ffb587a823d6f52b4fa2"
+    },
+    {
+      "id": "mmd_43916ffe3d35_a",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_43916ffe3d35_a.tres",
+      "frames": 7031,
+      "duration": 234.33333333333334,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 25562355,
+      "source": ".model_import_build/mmd_selected/mmd_43916ffe3d35_a.glb",
+      "source_sha256": "4d9c9047921c1dca5bd382d9076947852f379d5a1c156d61b5c4c95863f4d659",
+      "output_sha256": "ebe1cb7384de73012713b009a50c386e83031f115de7447de2248f142ac1d870",
+      "reference_height": 0.9838524702936413,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_43916ffe3d35_a_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 1.2505270462481732e-06,
+      "standardize_elapsed_s": 9.355537399998866,
+      "bake_position_checks": 2844,
+      "max_bake_position_error_m": 7.450953116640914e-07,
+      "pack": "mmd_43916ffe3d35",
+      "role": "A",
+      "source_file": "Just Tonight - By Ademar440/Just Tonight - Izumi.vmd",
+      "source_vmd_sha256": "3bc9566ddfeddae881c598494b5a5052060d5b20f37014a3c5504f5e63371d6c"
+    },
+    {
+      "id": "mmd_43916ffe3d35_b",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_43916ffe3d35_b.tres",
+      "frames": 7031,
+      "duration": 234.33333333333334,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 25637877,
+      "source": ".model_import_build/mmd_selected/mmd_43916ffe3d35_b.glb",
+      "source_sha256": "3187abf950875ffce754dc8762607bcce2ef26715c2350aa089ae84e6207ffa8",
+      "output_sha256": "202c3a69de3983ec372dd3c2081ef3d6163a5bbae0650ab3b74fb05c1eee3933",
+      "reference_height": 0.9769537867977787,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_43916ffe3d35_b_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 4.769917640035093e-07,
+      "standardize_elapsed_s": 9.63675940001849,
+      "bake_position_checks": 2835,
+      "max_bake_position_error_m": 5.015740597160708e-07,
+      "pack": "mmd_43916ffe3d35",
+      "role": "B",
+      "source_file": "Just Tonight - By Ademar440/Just Tonight - Sin Sack.vmd",
+      "source_vmd_sha256": "28dd96746e8f2e53fa60daa7f243ebc02c57a81cb81bf2fb3c040cdd0780a4bc"
+    },
+    {
+      "id": "mmd_2864892bd378_a",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_2864892bd378_a.tres",
+      "frames": 2008,
+      "duration": 66.9,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 7350415,
+      "source": ".model_import_build/mmd_selected/mmd_2864892bd378_a.glb",
+      "source_sha256": "1abbcd5c9aaa1a0ce719629927882d99deb2e0ae7274942905e620737d6ab20b",
+      "output_sha256": "db3795c3c7ec0852156d4e4dd1268dd0e3aa07a866cbe0df23a0b7c1ff72f611",
+      "reference_height": 0.9838524702936413,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_2864892bd378_a_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 2.0007610289987654e-06,
+      "standardize_elapsed_s": 2.8371443999931216,
+      "bake_position_checks": 2844,
+      "max_bake_position_error_m": 4.3316012185062867e-07,
+      "pack": "mmd_2864892bd378",
+      "role": "A",
+      "source_file": "LHDS V3 - By Ademar440/Love Hotel DS Loop Bikini Izumi.vmd",
+      "source_vmd_sha256": "1183fad9a11b0eac6b30a2b4f9443cb51b2b659596d4a5774f699101aa8ed80e"
+    },
+    {
+      "id": "mmd_2864892bd378_b",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_2864892bd378_b.tres",
+      "frames": 2008,
+      "duration": 66.9,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 7322238,
+      "source": ".model_import_build/mmd_selected/mmd_2864892bd378_b.glb",
+      "source_sha256": "d8d2f203f0240c4878690db88001206a7c6b12e35303706c09de4c9a4c6c1cc0",
+      "output_sha256": "03f8e1924f622457084d7557b70c444cad6cb82ea14a924609d89a364606a1a6",
+      "reference_height": 0.9769537867977787,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_2864892bd378_b_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 3.29118228525882e-06,
+      "standardize_elapsed_s": 2.747484900057316,
+      "bake_position_checks": 2835,
+      "max_bake_position_error_m": 4.523219466850188e-07,
+      "pack": "mmd_2864892bd378",
+      "role": "B",
+      "source_file": "LHDS V3 - By Ademar440/Love Hotel DS Loop Maran.vmd",
+      "source_vmd_sha256": "c0629dfbfb6b970a47eaffbe05d7f26a29f55b6ab98dd3110e995341f6fb618b"
+    },
+    {
+      "id": "mmd_160b1e7a411c_a",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_160b1e7a411c_a.tres",
+      "frames": 2341,
+      "duration": 78.0,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 8516517,
+      "source": ".model_import_build/mmd_selected/mmd_160b1e7a411c_a.glb",
+      "source_sha256": "d8f729ca5a7ebd295aaa39ef6b394147aafee20288c1c3762f19cfaf4b30b5a8",
+      "output_sha256": "cb5b4c1cc060163480dbbcf6fe543ad770d59cfbbf581467f80455770ddf055e",
+      "reference_height": 0.9838524702936413,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_160b1e7a411c_a_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 1.4432899320127035e-15,
+      "standardize_elapsed_s": 3.243660500040278,
+      "bake_position_checks": 2844,
+      "max_bake_position_error_m": 7.233589091908914e-07,
+      "pack": "mmd_160b1e7a411c",
+      "role": "A",
+      "source_file": "Lap Sitting/Lap Sitting - Izumi.vmd",
+      "source_vmd_sha256": "3f164d731c42479e19074e68499138ab0d4959d072fb121c23cf010d5f9fad96"
+    },
+    {
+      "id": "mmd_160b1e7a411c_b",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_160b1e7a411c_b.tres",
+      "frames": 2341,
+      "duration": 78.0,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 8520669,
+      "source": ".model_import_build/mmd_selected/mmd_160b1e7a411c_b.glb",
+      "source_sha256": "e315a8f9f9ab5e68c4bd72ba35b783876bd842eff5af3ce686c385e2e1b8e81d",
+      "output_sha256": "07e71428cd927900fccfe8b1c966493aec51a72573ff2487ba2f5e1c980b2162",
+      "reference_height": 0.9769537867977787,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_160b1e7a411c_b_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 1.7763568394002505e-15,
+      "standardize_elapsed_s": 3.2539523999439552,
+      "bake_position_checks": 2835,
+      "max_bake_position_error_m": 4.6566128730773926e-07,
+      "pack": "mmd_160b1e7a411c",
+      "role": "B",
+      "source_file": "Lap Sitting/Lap Sitting - Guy.vmd",
+      "source_vmd_sha256": "8c2c6bda01d55645677747d401cd1c6367544ab5ac524d72b86952c77b3c9953"
+    },
+    {
+      "id": "mmd_1256ad646811_a",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_1256ad646811_a.tres",
+      "frames": 910,
+      "duration": 30.3,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 3287268,
+      "source": ".model_import_build/mmd_selected/mmd_1256ad646811_a.glb",
+      "source_sha256": "68714596f958c7479a9c8193421bd6fc48ab82a9add8940a6dce8c42b0343eb4",
+      "output_sha256": "d834edf5366914ba22961736ffa9722ae715624aadfe83b02e4269110d52a3c7",
+      "reference_height": 0.9838524702936413,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_1256ad646811_a_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 2.887597331246994e-07,
+      "standardize_elapsed_s": 1.3084285999648273,
+      "bake_position_checks": 2844,
+      "max_bake_position_error_m": 6.53658420757349e-07,
+      "pack": "mmd_1256ad646811",
+      "role": "A",
+      "source_file": "Loop 07 - Spooning/Loop 07 - Spooning - Izumi.vmd",
+      "source_vmd_sha256": "30c415e937215f29f74b79469d7717ba99f699f0ee87cdbafa03994a56b1cb61"
+    },
+    {
+      "id": "mmd_1256ad646811_b",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_1256ad646811_b.tres",
+      "frames": 910,
+      "duration": 30.3,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 3288988,
+      "source": ".model_import_build/mmd_selected/mmd_1256ad646811_b.glb",
+      "source_sha256": "7b9df4b2b1b974356e54ce005b708b37944d2a51e5a0a0059662bbe48e76c535",
+      "output_sha256": "fc25344e8849c9fe03011d9077cf7950fe1accd1163587ec4c1446c275485c09",
+      "reference_height": 0.9769537867977787,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_1256ad646811_b_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 2.4707961263081835e-07,
+      "standardize_elapsed_s": 1.2862198000075296,
+      "bake_position_checks": 2835,
+      "max_bake_position_error_m": 4.5783196376971053e-07,
+      "pack": "mmd_1256ad646811",
+      "role": "B",
+      "source_file": "Loop 07 - Spooning/Loop 07 - Spooning - Maran.vmd",
+      "source_vmd_sha256": "23bb3e3ac4fa296399d4f383737cb4c8abe722d414f66f4f83a8e22451061910"
+    },
+    {
+      "id": "mmd_c63e75bc7057_a",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_c63e75bc7057_a.tres",
+      "frames": 1001,
+      "duration": 33.333333333333336,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 3628760,
+      "source": ".model_import_build/mmd_selected/mmd_c63e75bc7057_a.glb",
+      "source_sha256": "c3878572e72a01bffc1218e32ddbbd01d4c43ecc5c8845b59faa2a0ccafa6cfb",
+      "output_sha256": "d6a766a48ee608b32bdfcff946a22ff26eadbd9658515f2880c36860d246b338",
+      "reference_height": 0.9838524702936413,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_c63e75bc7057_a_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 2.403445043597241e-06,
+      "standardize_elapsed_s": 1.4620999000035226,
+      "bake_position_checks": 2844,
+      "max_bake_position_error_m": 7.348554137908192e-07,
+      "pack": "mmd_c63e75bc7057",
+      "role": "A",
+      "source_file": "Loop 33 - Suspended Congress/Loop 33 - Suspended Congress - Izumi.vmd",
+      "source_vmd_sha256": "3130e9f3270225568b3b23e30be87c955b0ad153c45fa3ef5f3e58a45f3dcae7"
+    },
+    {
+      "id": "mmd_c63e75bc7057_b",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_c63e75bc7057_b.tres",
+      "frames": 1001,
+      "duration": 33.333333333333336,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 3635392,
+      "source": ".model_import_build/mmd_selected/mmd_c63e75bc7057_b.glb",
+      "source_sha256": "f99fa07e2a461c804516a8cc3e76dee904fc859373322e949c4609efaa648f6c",
+      "output_sha256": "098be85467923ef4bf86e9398b51e297ccaac367d2c8cb996fafd0c1444f188f",
+      "reference_height": 0.9769537867977787,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_c63e75bc7057_b_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 6.516454440497199e-07,
+      "standardize_elapsed_s": 1.4464822000591084,
+      "bake_position_checks": 2835,
+      "max_bake_position_error_m": 7.474477264526173e-07,
+      "pack": "mmd_c63e75bc7057",
+      "role": "B",
+      "source_file": "Loop 33 - Suspended Congress/Loop 33 - Suspended Congress - Maran.vmd",
+      "source_vmd_sha256": "afc7a1f2353386d8b876bccbbb8195f86c276ad6e1da65a5b4abaaae2bd263d2"
+    },
+    {
+      "id": "mmd_fca4bab1635f_a",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_fca4bab1635f_a.tres",
+      "frames": 1702,
+      "duration": 56.7,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 6220623,
+      "source": ".model_import_build/mmd_selected/mmd_fca4bab1635f_a.glb",
+      "source_sha256": "6a5812c50bece1a4af45bee1b60b4f761ea40e5ff87d426f19047502958eeb96",
+      "output_sha256": "2a105c617e5e88d4553e3e9955a8639764742c4cea455809edaf74cb0e6bf5d6",
+      "reference_height": 0.9838524702936413,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_fca4bab1635f_a_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 3.6010879921402617e-07,
+      "standardize_elapsed_s": 2.3805200000060722,
+      "bake_position_checks": 2844,
+      "max_bake_position_error_m": 8.379833310247953e-07,
+      "pack": "mmd_fca4bab1635f",
+      "role": "A",
+      "source_file": "TSFB V2/Table Sex From Behind Loop Izumi.vmd",
+      "source_vmd_sha256": "7ab2e6adddccc53c7c870ba96e26f4634db9ad6bc66bf2393fd46d406dd3fd0e"
+    },
+    {
+      "id": "mmd_fca4bab1635f_b",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_fca4bab1635f_b.tres",
+      "frames": 1702,
+      "duration": 56.7,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 6169055,
+      "source": ".model_import_build/mmd_selected/mmd_fca4bab1635f_b.glb",
+      "source_sha256": "16a228f7617a86130c947a32822aaffc8bdc036d70796a2019364b905d607618",
+      "output_sha256": "2ca5da0385161824ac21dc6321527f2a3e1b59072a26ebba6f2bbebb456b82fa",
+      "reference_height": 0.9769537867977787,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_fca4bab1635f_b_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 1.9719375164012343e-06,
+      "standardize_elapsed_s": 2.4068467000033706,
+      "bake_position_checks": 2835,
+      "max_bake_position_error_m": 6.976544803809897e-07,
+      "pack": "mmd_fca4bab1635f",
+      "role": "B",
+      "source_file": "TSFB V2/Table Sex From Behind Loop Maran.vmd",
+      "source_vmd_sha256": "59ebc63506e67054596819c31060c399a5796478ce5f7cdbffb92ffe16f5701d"
+    },
+    {
+      "id": "mmd_86e40adc8f14_a",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_86e40adc8f14_a.tres",
+      "frames": 1490,
+      "duration": 49.63333333333333,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 5376979,
+      "source": ".model_import_build/mmd_selected/mmd_86e40adc8f14_a.glb",
+      "source_sha256": "bdcf7ac26fbe7de29a77c90cbd5cef1ffb3e19728f6eefdac19d4121e766d0ed",
+      "output_sha256": "75c9ba6785e3bc4ca05bca987e93b09cda23f00d4503902c19eca3fae6b5b3dc",
+      "reference_height": 0.9838524702936413,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_86e40adc8f14_a_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 3.136857055774378e-07,
+      "standardize_elapsed_s": 2.112054800032638,
+      "bake_position_checks": 2844,
+      "max_bake_position_error_m": 8.654868426005061e-07,
+      "pack": "mmd_86e40adc8f14",
+      "role": "A",
+      "source_file": "Thigh service/Thigh service - Izumi.vmd",
+      "source_vmd_sha256": "747f6029b0864c0adf940c994ce03bbeab90a26d8073ff6139f37efccd2a8370"
+    },
+    {
+      "id": "mmd_86e40adc8f14_b",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_86e40adc8f14_b.tres",
+      "frames": 1490,
+      "duration": 49.63333333333333,
+      "tracks": 59,
+      "constant_rotation_tracks": 1,
+      "bytes": 5408944,
+      "source": ".model_import_build/mmd_selected/mmd_86e40adc8f14_b.glb",
+      "source_sha256": "cf5c5a038a9cb52159837bc8774256e59a227e9264cae10a551f533806f817b9",
+      "output_sha256": "6d38b015aeb9fc4696359193086b1f2d63ac04efa7bf8d717e020c4fc3fee464",
+      "reference_height": 0.9769537867977787,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_86e40adc8f14_b_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 2.2555754904118874e-07,
+      "standardize_elapsed_s": 2.118212000001222,
+      "bake_position_checks": 2835,
+      "max_bake_position_error_m": 8.02452088465541e-07,
+      "pack": "mmd_86e40adc8f14",
+      "role": "B",
+      "source_file": "Thigh service/Thigh service -Guy.vmd",
+      "source_vmd_sha256": "554417aee5576d6828701c2b61d2c5304c6c3590b8bc49ea30d33afab0536c02"
     }
   ],
   "counts": {
-    "groups": 11,
-    "tracks": 22,
-    "new_tracks": 20,
+    "groups": 19,
+    "tracks": 38,
+    "new_tracks": 36,
     "reused_tracks": 2,
     "deferred_groups": 2
   },

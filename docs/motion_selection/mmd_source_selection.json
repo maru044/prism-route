@@ -378,6 +378,238 @@
         "A": "D:/模型/20261008/刻晴_by_原神_b0f08721a7da17df599896ac40dd2f22/刻晴/刻晴/刻晴.pmx",
         "B": "D:/模型/ganyu_by_原神_7381ccd84ee8763ce63b3ad638e1c49b/甘雨.pmx"
       }
+    },
+    "1f8544e9eb36a4579679": {
+      "id": "1f8544e9eb36a4579679",
+      "source_key": "8776bd40749b9ce02c16",
+      "folder_id": "87e004f6db53fdae",
+      "source_folder": "Bath House Service V2",
+      "decision": "KEEP",
+      "roles": [
+        {
+          "slot": "A",
+          "file": "Bath House Service V2/Missionary - Izumi.vmd",
+          "sha256": "cbb6c6a90cf2798d7d846b2463abb5dc5b99ed711d847aad19a2341a9a772521"
+        },
+        {
+          "slot": "B",
+          "file": "Bath House Service V2/Missionary - Maran.vmd",
+          "sha256": "b92adbdf5926f12f2df0453a8b9a4b6e59dee55fcd02ffb587a823d6f52b4fa2"
+        }
+      ],
+      "fps": 30,
+      "frame_start": 0,
+      "frame_end": 1834,
+      "note": "README confirmed shortlist; first-listed partner variant.",
+      "rough_special_preview": false,
+      "authority": "docs/motion_selection/README.md",
+      "reference_models": {
+        "A": "D:/模型/20261008/刻晴_by_原神_b0f08721a7da17df599896ac40dd2f22/刻晴/刻晴/刻晴.pmx",
+        "B": "D:/模型/ganyu_by_原神_7381ccd84ee8763ce63b3ad638e1c49b/甘雨.pmx"
+      }
+    },
+    "87aac5c0ea8d3689d77d": {
+      "id": "87aac5c0ea8d3689d77d",
+      "source_key": "e005d08f0c19f75ae8b3",
+      "folder_id": "43916ffe3d35e98b",
+      "source_folder": "Just Tonight - By Ademar440",
+      "decision": "KEEP",
+      "roles": [
+        {
+          "slot": "A",
+          "file": "Just Tonight - By Ademar440/Just Tonight - Izumi.vmd",
+          "sha256": "3bc9566ddfeddae881c598494b5a5052060d5b20f37014a3c5504f5e63371d6c"
+        },
+        {
+          "slot": "B",
+          "file": "Just Tonight - By Ademar440/Just Tonight - Sin Sack.vmd",
+          "sha256": "28dd96746e8f2e53fa60daa7f243ebc02c57a81cb81bf2fb3c040cdd0780a4bc"
+        }
+      ],
+      "fps": 30,
+      "frame_start": 0,
+      "frame_end": 7030,
+      "note": "README confirmed shortlist; first-listed partner variant.",
+      "rough_special_preview": false,
+      "authority": "docs/motion_selection/README.md",
+      "reference_models": {
+        "A": "D:/模型/20261008/刻晴_by_原神_b0f08721a7da17df599896ac40dd2f22/刻晴/刻晴/刻晴.pmx",
+        "B": "D:/模型/ganyu_by_原神_7381ccd84ee8763ce63b3ad638e1c49b/甘雨.pmx"
+      }
+    },
+    "5996d461afc9254589c2": {
+      "id": "5996d461afc9254589c2",
+      "source_key": "1d218ad7bcd7e21c01ad",
+      "folder_id": "2864892bd3780b4d",
+      "source_folder": "LHDS V3 - By Ademar440",
+      "decision": "KEEP",
+      "roles": [
+        {
+          "slot": "A",
+          "file": "LHDS V3 - By Ademar440/Love Hotel DS Loop Bikini Izumi.vmd",
+          "sha256": "1183fad9a11b0eac6b30a2b4f9443cb51b2b659596d4a5774f699101aa8ed80e"
+        },
+        {
+          "slot": "B",
+          "file": "LHDS V3 - By Ademar440/Love Hotel DS Loop Maran.vmd",
+          "sha256": "c0629dfbfb6b970a47eaffbe05d7f26a29f55b6ab98dd3110e995341f6fb618b"
+        }
+      ],
+      "fps": 30,
+      "frame_start": 0,
+      "frame_end": 2007,
+      "note": "README confirmed shortlist; first-listed partner variant.",
+      "rough_special_preview": false,
+      "authority": "docs/motion_selection/README.md",
+      "reference_models": {
+        "A": "D:/模型/20261008/刻晴_by_原神_b0f08721a7da17df599896ac40dd2f22/刻晴/刻晴/刻晴.pmx",
+        "B": "D:/模型/ganyu_by_原神_7381ccd84ee8763ce63b3ad638e1c49b/甘雨.pmx"
+      }
+    },
+    "9749c661315320e49c53": {
+      "id": "9749c661315320e49c53",
+      "source_key": "8236dc0522d9b4eae2dd",
+      "folder_id": "160b1e7a411c14ba",
+      "source_folder": "Lap Sitting",
+      "decision": "KEEP",
+      "roles": [
+        {
+          "slot": "A",
+          "file": "Lap Sitting/Lap Sitting - Izumi.vmd",
+          "sha256": "3f164d731c42479e19074e68499138ab0d4959d072fb121c23cf010d5f9fad96"
+        },
+        {
+          "slot": "B",
+          "file": "Lap Sitting/Lap Sitting - Guy.vmd",
+          "sha256": "8c2c6bda01d55645677747d401cd1c6367544ab5ac524d72b86952c77b3c9953"
+        }
+      ],
+      "fps": 30,
+      "frame_start": 0,
+      "frame_end": 2340,
+      "note": "README confirmed shortlist; first-listed partner variant.",
+      "rough_special_preview": false,
+      "authority": "docs/motion_selection/README.md",
+      "reference_models": {
+        "A": "D:/模型/20261008/刻晴_by_原神_b0f08721a7da17df599896ac40dd2f22/刻晴/刻晴/刻晴.pmx",
+        "B": "D:/模型/ganyu_by_原神_7381ccd84ee8763ce63b3ad638e1c49b/甘雨.pmx"
+      }
+    },
+    "c5190e5e866245ab86ee": {
+      "id": "c5190e5e866245ab86ee",
+      "source_key": "cdf0a80726f93d590d1f",
+      "folder_id": "1256ad646811848c",
+      "source_folder": "Loop 07 - Spooning",
+      "decision": "KEEP",
+      "roles": [
+        {
+          "slot": "A",
+          "file": "Loop 07 - Spooning/Loop 07 - Spooning - Izumi.vmd",
+          "sha256": "30c415e937215f29f74b79469d7717ba99f699f0ee87cdbafa03994a56b1cb61"
+        },
+        {
+          "slot": "B",
+          "file": "Loop 07 - Spooning/Loop 07 - Spooning - Maran.vmd",
+          "sha256": "23bb3e3ac4fa296399d4f383737cb4c8abe722d414f66f4f83a8e22451061910"
+        }
+      ],
+      "fps": 30,
+      "frame_start": 0,
+      "frame_end": 909,
+      "note": "README confirmed shortlist; first-listed partner variant.",
+      "rough_special_preview": false,
+      "authority": "docs/motion_selection/README.md",
+      "reference_models": {
+        "A": "D:/模型/20261008/刻晴_by_原神_b0f08721a7da17df599896ac40dd2f22/刻晴/刻晴/刻晴.pmx",
+        "B": "D:/模型/ganyu_by_原神_7381ccd84ee8763ce63b3ad638e1c49b/甘雨.pmx"
+      }
+    },
+    "7798e48947c8e29a9802": {
+      "id": "7798e48947c8e29a9802",
+      "source_key": "68478a79a9d6fb05e86e",
+      "folder_id": "c63e75bc70573203",
+      "source_folder": "Loop 33 - Suspended Congress",
+      "decision": "KEEP",
+      "roles": [
+        {
+          "slot": "A",
+          "file": "Loop 33 - Suspended Congress/Loop 33 - Suspended Congress - Izumi.vmd",
+          "sha256": "3130e9f3270225568b3b23e30be87c955b0ad153c45fa3ef5f3e58a45f3dcae7"
+        },
+        {
+          "slot": "B",
+          "file": "Loop 33 - Suspended Congress/Loop 33 - Suspended Congress - Maran.vmd",
+          "sha256": "afc7a1f2353386d8b876bccbbb8195f86c276ad6e1da65a5b4abaaae2bd263d2"
+        }
+      ],
+      "fps": 30,
+      "frame_start": 0,
+      "frame_end": 1000,
+      "note": "README confirmed shortlist; first-listed partner variant.",
+      "rough_special_preview": false,
+      "authority": "docs/motion_selection/README.md",
+      "reference_models": {
+        "A": "D:/模型/20261008/刻晴_by_原神_b0f08721a7da17df599896ac40dd2f22/刻晴/刻晴/刻晴.pmx",
+        "B": "D:/模型/ganyu_by_原神_7381ccd84ee8763ce63b3ad638e1c49b/甘雨.pmx"
+      }
+    },
+    "9bb01742a34f5192d293": {
+      "id": "9bb01742a34f5192d293",
+      "source_key": "0054881dd7a1e3e4146a",
+      "folder_id": "fca4bab1635f8e8b",
+      "source_folder": "TSFB V2",
+      "decision": "KEEP",
+      "roles": [
+        {
+          "slot": "A",
+          "file": "TSFB V2/Table Sex From Behind Loop Izumi.vmd",
+          "sha256": "7ab2e6adddccc53c7c870ba96e26f4634db9ad6bc66bf2393fd46d406dd3fd0e"
+        },
+        {
+          "slot": "B",
+          "file": "TSFB V2/Table Sex From Behind Loop Maran.vmd",
+          "sha256": "59ebc63506e67054596819c31060c399a5796478ce5f7cdbffb92ffe16f5701d"
+        }
+      ],
+      "fps": 30,
+      "frame_start": 0,
+      "frame_end": 1701,
+      "note": "README confirmed shortlist; first-listed partner variant.",
+      "rough_special_preview": false,
+      "authority": "docs/motion_selection/README.md",
+      "reference_models": {
+        "A": "D:/模型/20261008/刻晴_by_原神_b0f08721a7da17df599896ac40dd2f22/刻晴/刻晴/刻晴.pmx",
+        "B": "D:/模型/ganyu_by_原神_7381ccd84ee8763ce63b3ad638e1c49b/甘雨.pmx"
+      }
+    },
+    "959df63951a70f2947a1": {
+      "id": "959df63951a70f2947a1",
+      "source_key": "a2b42a9c2e43d779b339",
+      "folder_id": "86e40adc8f14326e",
+      "source_folder": "Thigh service",
+      "decision": "KEEP",
+      "roles": [
+        {
+          "slot": "A",
+          "file": "Thigh service/Thigh service - Izumi.vmd",
+          "sha256": "747f6029b0864c0adf940c994ce03bbeab90a26d8073ff6139f37efccd2a8370"
+        },
+        {
+          "slot": "B",
+          "file": "Thigh service/Thigh service -Guy.vmd",
+          "sha256": "554417aee5576d6828701c2b61d2c5304c6c3590b8bc49ea30d33afab0536c02"
+        }
+      ],
+      "fps": 30,
+      "frame_start": 0,
+      "frame_end": 1489,
+      "note": "README confirmed shortlist; first-listed partner variant.",
+      "rough_special_preview": false,
+      "authority": "docs/motion_selection/README.md",
+      "reference_models": {
+        "A": "D:/模型/20261008/刻晴_by_原神_b0f08721a7da17df599896ac40dd2f22/刻晴/刻晴/刻晴.pmx",
+        "B": "D:/模型/ganyu_by_原神_7381ccd84ee8763ce63b3ad638e1c49b/甘雨.pmx"
+      }
     }
   }
 }

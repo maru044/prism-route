@@ -1,0 +1,16 @@
+{
+  "renderer": "Forward+ / D3D12",
+  "adapter": "NVIDIA GeForce RTX 5070 Ti",
+  "captures": [
+    "after_initial_ruin.png",
+    "after_church.png"
+  ],
+  "shader_compile_errors": 0,
+  "script_errors": 0,
+  "sandbox_environment_warnings": [
+    "user:// log directory unavailable",
+    "user:// shader cache directory unavailable"
+  ],
+  "shader_source_changes": false,
+  "signature_guard_test": "passed without loading world"
+}

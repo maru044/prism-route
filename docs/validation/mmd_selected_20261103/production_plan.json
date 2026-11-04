@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "readme_sha256": "209a8afe976043207a76d5fd0d776884bc02af09fae671f5f07b3c60d8ef2b99",
+  "readme_sha256": "648879f160ad2df65549407ccf1844d0dba67da256c8f79e1aee892010d2162a",
   "source_root": "D:\\模型\\20261008\\Public R-18 Motions",
   "reference_models": {
     "A": "D:/模型/20261008/刻晴_by_原神_b0f08721a7da17df599896ac40dd2f22/刻晴/刻晴/刻晴.pmx",
@@ -437,6 +437,270 @@
           "reference": "B",
           "clip_id": "mmd_781d8c87fd79_b",
           "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_781d8c87fd79_b.glb"
+        }
+      ],
+      "loop_policy": "manual_preview_only; no source seam modification",
+      "translation_policy": "shared_world"
+    },
+    {
+      "id": "mmd_87e004f6db53",
+      "label": "Bath House Service V2",
+      "decision": "KEEP",
+      "frame_start": 0,
+      "frame_end": 1834,
+      "fps": 30,
+      "duration": 61.13333333333333,
+      "roles": [
+        {
+          "id": "A",
+          "source_file": "Bath House Service V2/Missionary - Izumi.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Bath House Service V2\\Missionary - Izumi.vmd",
+          "source_sha256": "cbb6c6a90cf2798d7d846b2463abb5dc5b99ed711d847aad19a2341a9a772521",
+          "source_frame_end": 1834,
+          "reference": "A",
+          "clip_id": "mmd_87e004f6db53_a",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_87e004f6db53_a.glb"
+        },
+        {
+          "id": "B",
+          "source_file": "Bath House Service V2/Missionary - Maran.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Bath House Service V2\\Missionary - Maran.vmd",
+          "source_sha256": "b92adbdf5926f12f2df0453a8b9a4b6e59dee55fcd02ffb587a823d6f52b4fa2",
+          "source_frame_end": 1834,
+          "reference": "B",
+          "clip_id": "mmd_87e004f6db53_b",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_87e004f6db53_b.glb"
+        }
+      ],
+      "loop_policy": "manual_preview_only; no source seam modification",
+      "translation_policy": "shared_world"
+    },
+    {
+      "id": "mmd_43916ffe3d35",
+      "label": "Just Tonight - By Ademar440",
+      "decision": "KEEP",
+      "frame_start": 0,
+      "frame_end": 7030,
+      "fps": 30,
+      "duration": 234.33333333333334,
+      "roles": [
+        {
+          "id": "A",
+          "source_file": "Just Tonight - By Ademar440/Just Tonight - Izumi.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Just Tonight - By Ademar440\\Just Tonight - Izumi.vmd",
+          "source_sha256": "3bc9566ddfeddae881c598494b5a5052060d5b20f37014a3c5504f5e63371d6c",
+          "source_frame_end": 7030,
+          "reference": "A",
+          "clip_id": "mmd_43916ffe3d35_a",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_43916ffe3d35_a.glb"
+        },
+        {
+          "id": "B",
+          "source_file": "Just Tonight - By Ademar440/Just Tonight - Sin Sack.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Just Tonight - By Ademar440\\Just Tonight - Sin Sack.vmd",
+          "source_sha256": "28dd96746e8f2e53fa60daa7f243ebc02c57a81cb81bf2fb3c040cdd0780a4bc",
+          "source_frame_end": 7030,
+          "reference": "B",
+          "clip_id": "mmd_43916ffe3d35_b",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_43916ffe3d35_b.glb"
+        }
+      ],
+      "loop_policy": "manual_preview_only; no source seam modification",
+      "translation_policy": "shared_world"
+    },
+    {
+      "id": "mmd_2864892bd378",
+      "label": "LHDS V3 - By Ademar440",
+      "decision": "KEEP",
+      "frame_start": 0,
+      "frame_end": 2007,
+      "fps": 30,
+      "duration": 66.9,
+      "roles": [
+        {
+          "id": "A",
+          "source_file": "LHDS V3 - By Ademar440/Love Hotel DS Loop Bikini Izumi.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\LHDS V3 - By Ademar440\\Love Hotel DS Loop Bikini Izumi.vmd",
+          "source_sha256": "1183fad9a11b0eac6b30a2b4f9443cb51b2b659596d4a5774f699101aa8ed80e",
+          "source_frame_end": 2007,
+          "reference": "A",
+          "clip_id": "mmd_2864892bd378_a",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_2864892bd378_a.glb"
+        },
+        {
+          "id": "B",
+          "source_file": "LHDS V3 - By Ademar440/Love Hotel DS Loop Maran.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\LHDS V3 - By Ademar440\\Love Hotel DS Loop Maran.vmd",
+          "source_sha256": "c0629dfbfb6b970a47eaffbe05d7f26a29f55b6ab98dd3110e995341f6fb618b",
+          "source_frame_end": 2007,
+          "reference": "B",
+          "clip_id": "mmd_2864892bd378_b",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_2864892bd378_b.glb"
+        }
+      ],
+      "loop_policy": "manual_preview_only; no source seam modification",
+      "translation_policy": "shared_world"
+    },
+    {
+      "id": "mmd_160b1e7a411c",
+      "label": "Lap Sitting",
+      "decision": "KEEP",
+      "frame_start": 0,
+      "frame_end": 2340,
+      "fps": 30,
+      "duration": 78.0,
+      "roles": [
+        {
+          "id": "A",
+          "source_file": "Lap Sitting/Lap Sitting - Izumi.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Lap Sitting\\Lap Sitting - Izumi.vmd",
+          "source_sha256": "3f164d731c42479e19074e68499138ab0d4959d072fb121c23cf010d5f9fad96",
+          "source_frame_end": 2340,
+          "reference": "A",
+          "clip_id": "mmd_160b1e7a411c_a",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_160b1e7a411c_a.glb"
+        },
+        {
+          "id": "B",
+          "source_file": "Lap Sitting/Lap Sitting - Guy.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Lap Sitting\\Lap Sitting - Guy.vmd",
+          "source_sha256": "8c2c6bda01d55645677747d401cd1c6367544ab5ac524d72b86952c77b3c9953",
+          "source_frame_end": 2340,
+          "reference": "B",
+          "clip_id": "mmd_160b1e7a411c_b",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_160b1e7a411c_b.glb"
+        }
+      ],
+      "loop_policy": "manual_preview_only; no source seam modification",
+      "translation_policy": "shared_world"
+    },
+    {
+      "id": "mmd_1256ad646811",
+      "label": "Loop 07 - Spooning",
+      "decision": "KEEP",
+      "frame_start": 0,
+      "frame_end": 909,
+      "fps": 30,
+      "duration": 30.3,
+      "roles": [
+        {
+          "id": "A",
+          "source_file": "Loop 07 - Spooning/Loop 07 - Spooning - Izumi.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Loop 07 - Spooning\\Loop 07 - Spooning - Izumi.vmd",
+          "source_sha256": "30c415e937215f29f74b79469d7717ba99f699f0ee87cdbafa03994a56b1cb61",
+          "source_frame_end": 909,
+          "reference": "A",
+          "clip_id": "mmd_1256ad646811_a",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_1256ad646811_a.glb"
+        },
+        {
+          "id": "B",
+          "source_file": "Loop 07 - Spooning/Loop 07 - Spooning - Maran.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Loop 07 - Spooning\\Loop 07 - Spooning - Maran.vmd",
+          "source_sha256": "23bb3e3ac4fa296399d4f383737cb4c8abe722d414f66f4f83a8e22451061910",
+          "source_frame_end": 909,
+          "reference": "B",
+          "clip_id": "mmd_1256ad646811_b",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_1256ad646811_b.glb"
+        }
+      ],
+      "loop_policy": "manual_preview_only; no source seam modification",
+      "translation_policy": "shared_world"
+    },
+    {
+      "id": "mmd_c63e75bc7057",
+      "label": "Loop 33 - Suspended Congress",
+      "decision": "KEEP",
+      "frame_start": 0,
+      "frame_end": 1000,
+      "fps": 30,
+      "duration": 33.333333333333336,
+      "roles": [
+        {
+          "id": "A",
+          "source_file": "Loop 33 - Suspended Congress/Loop 33 - Suspended Congress - Izumi.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Loop 33 - Suspended Congress\\Loop 33 - Suspended Congress - Izumi.vmd",
+          "source_sha256": "3130e9f3270225568b3b23e30be87c955b0ad153c45fa3ef5f3e58a45f3dcae7",
+          "source_frame_end": 1000,
+          "reference": "A",
+          "clip_id": "mmd_c63e75bc7057_a",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_c63e75bc7057_a.glb"
+        },
+        {
+          "id": "B",
+          "source_file": "Loop 33 - Suspended Congress/Loop 33 - Suspended Congress - Maran.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Loop 33 - Suspended Congress\\Loop 33 - Suspended Congress - Maran.vmd",
+          "source_sha256": "afc7a1f2353386d8b876bccbbb8195f86c276ad6e1da65a5b4abaaae2bd263d2",
+          "source_frame_end": 1000,
+          "reference": "B",
+          "clip_id": "mmd_c63e75bc7057_b",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_c63e75bc7057_b.glb"
+        }
+      ],
+      "loop_policy": "manual_preview_only; no source seam modification",
+      "translation_policy": "shared_world"
+    },
+    {
+      "id": "mmd_fca4bab1635f",
+      "label": "TSFB V2",
+      "decision": "KEEP",
+      "frame_start": 0,
+      "frame_end": 1701,
+      "fps": 30,
+      "duration": 56.7,
+      "roles": [
+        {
+          "id": "A",
+          "source_file": "TSFB V2/Table Sex From Behind Loop Izumi.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\TSFB V2\\Table Sex From Behind Loop Izumi.vmd",
+          "source_sha256": "7ab2e6adddccc53c7c870ba96e26f4634db9ad6bc66bf2393fd46d406dd3fd0e",
+          "source_frame_end": 1701,
+          "reference": "A",
+          "clip_id": "mmd_fca4bab1635f_a",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_fca4bab1635f_a.glb"
+        },
+        {
+          "id": "B",
+          "source_file": "TSFB V2/Table Sex From Behind Loop Maran.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\TSFB V2\\Table Sex From Behind Loop Maran.vmd",
+          "source_sha256": "59ebc63506e67054596819c31060c399a5796478ce5f7cdbffb92ffe16f5701d",
+          "source_frame_end": 1701,
+          "reference": "B",
+          "clip_id": "mmd_fca4bab1635f_b",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_fca4bab1635f_b.glb"
+        }
+      ],
+      "loop_policy": "manual_preview_only; no source seam modification",
+      "translation_policy": "shared_world"
+    },
+    {
+      "id": "mmd_86e40adc8f14",
+      "label": "Thigh service",
+      "decision": "KEEP",
+      "frame_start": 0,
+      "frame_end": 1489,
+      "fps": 30,
+      "duration": 49.63333333333333,
+      "roles": [
+        {
+          "id": "A",
+          "source_file": "Thigh service/Thigh service - Izumi.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Thigh service\\Thigh service - Izumi.vmd",
+          "source_sha256": "747f6029b0864c0adf940c994ce03bbeab90a26d8073ff6139f37efccd2a8370",
+          "source_frame_end": 1489,
+          "reference": "A",
+          "clip_id": "mmd_86e40adc8f14_a",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_86e40adc8f14_a.glb"
+        },
+        {
+          "id": "B",
+          "source_file": "Thigh service/Thigh service -Guy.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Thigh service\\Thigh service -Guy.vmd",
+          "source_sha256": "554417aee5576d6828701c2b61d2c5304c6c3590b8bc49ea30d33afab0536c02",
+          "source_frame_end": 1489,
+          "reference": "B",
+          "clip_id": "mmd_86e40adc8f14_b",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_86e40adc8f14_b.glb"
         }
       ],
       "loop_policy": "manual_preview_only; no source seam modification",

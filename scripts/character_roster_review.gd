@@ -38,10 +38,10 @@ func _ready() -> void:
 	for clip: Dictionary in clips:shared_clips[clip.resource]=load(clip.resource)
 	var environment:=WorldEnvironment.new();var env:=Environment.new()
 	env.background_mode=Environment.BG_COLOR;env.background_color=Color("313c4a")
-	env.ambient_light_source=Environment.AMBIENT_SOURCE_COLOR;env.ambient_light_color=Color("c8d4e5");env.ambient_light_energy=.55
-	env.tonemap_mode=Environment.TONE_MAPPER_ACES;environment.environment=env;add_child(environment)
-	var sun:=DirectionalLight3D.new();sun.rotation_degrees=Vector3(-35,-25,0);sun.light_energy=.9;sun.shadow_enabled=true;add_child(sun)
-	var fill:=DirectionalLight3D.new();fill.rotation_degrees=Vector3(-15,135,0);fill.light_energy=.35;add_child(fill)
+	env.ambient_light_source=Environment.AMBIENT_SOURCE_COLOR;env.ambient_light_color=Color("c2cde0");env.ambient_light_energy=.30
+	env.tonemap_mode=Environment.TONE_MAPPER_ACES;env.tonemap_exposure=1.0;environment.environment=env;add_child(environment)
+	var sun:=DirectionalLight3D.new();sun.rotation_degrees=Vector3(-35,-25,0);sun.light_color=Color(1.0, 0.98, 0.95);sun.light_energy=.85;sun.shadow_enabled=true;sun.directional_shadow_mode=DirectionalLight3D.SHADOW_ORTHOGONAL;sun.directional_shadow_max_distance=14.0;sun.shadow_bias=0.04;add_child(sun)
+	var fill:=DirectionalLight3D.new();fill.rotation_degrees=Vector3(-15,135,0);fill.light_color=Color(0.92, 0.95, 1.0);fill.light_energy=.20;add_child(fill)
 	var floor_mesh:=MeshInstance3D.new();var plane:=PlaneMesh.new();plane.size=Vector2(20,20);floor_mesh.mesh=plane
 	var mat:=StandardMaterial3D.new();mat.albedo_color=Color("65717c");mat.roughness=.9;floor_mesh.material_override=mat;floor_mesh.position.y=-.015;add_child(floor_mesh)
 	var body:=StaticBody3D.new();body.collision_layer=1;body.collision_mask=0;floor_mesh.add_child(body)

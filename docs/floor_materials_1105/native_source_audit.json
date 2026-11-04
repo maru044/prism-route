@@ -1,0 +1,35 @@
+{
+  "source_document": "D:/Prism Route/map/map_current.3dm",
+  "baseline_object_count": 1715,
+  "current_object_count": 1712,
+  "added_objects": 0,
+  "deleted_objects": [
+    {
+      "id": "90e44921-4322-4a1a-8685-77ae80f7d56e",
+      "material_source": "MaterialFromObject",
+      "layer": "建筑::初始三角遗迹::02_入口台阶与通路",
+      "name": "PR_EntryLanding_Middle",
+      "material_index": 280,
+      "crc": 3241137089
+    },
+    {
+      "id": "0511ba39-173f-4035-a825-9c9d134728fb",
+      "material_source": "MaterialFromObject",
+      "layer": "建筑::初始三角遗迹::02_入口台阶与通路",
+      "name": "PR_EntryLanding_Lower",
+      "material_index": 278,
+      "crc": 1567381628
+    },
+    {
+      "id": "79c76214-16b7-44c8-8be8-f5c6862f6263",
+      "material_source": "MaterialFromObject",
+      "layer": "建筑::初始三角遗迹::02_入口台阶与通路",
+      "name": "PR_EntryLanding_Upper",
+      "material_index": 282,
+      "crc": 3752803676
+    }
+  ],
+  "retained_geometry_crc_changes": 0,
+  "material_index_changes": 1257,
+  "source_document_modified_by_sync": false
+}

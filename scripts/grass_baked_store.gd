@@ -29,7 +29,16 @@ static func signature(world) -> String:
 	var root: String=world.ASSETS
 	var text: String=str(FORMAT_VERSION)+str(world.metadata.get("mesh_sha256",""))+str(Engine.get_version_info().hash)+str(ProjectSettings.get_setting("physics/3d/physics_engine"))
 	if world.metadata.has("static_features"):
-		text+=JSON.stringify(world.metadata.static_features)
+		# Reuse only a verified render-only revision. A later feature edit must
+		# invalidate this exception rather than pinning future bake signatures.
+		var features: Dictionary=world.metadata.static_features.duplicate(true)
+		var overrides: Dictionary=world.metadata.get("grass_render_only_overrides",{})
+		for key: String in overrides:
+			var rule: Dictionary=overrides[key]
+			var current: Dictionary=features.get(key,{})
+			if current.get("mesh_sha256","")==rule.render_mesh_sha256 and current.get("manifest_sha256","")==rule.render_manifest_sha256:
+				features[key]=rule.generation_feature
+		text+=JSON.stringify(features)
 		text+=FileAccess.get_sha256("res://scripts/world/initial_ruin_mask.gd")
 		if world.metadata.static_features.has("upper_ring_1030"):text+=FileAccess.get_sha256("res://scripts/world/upper_ring_mask.gd")
 	# Include generation code/constants and the actual SDF bytes, not only mesh.

@@ -76,16 +76,26 @@ func _build_stage() -> void:
 	settings.background_mode = Environment.BG_COLOR
 	settings.background_color = Color("202b36")
 	settings.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	settings.ambient_light_color = Color("dbe6ff")
-	settings.ambient_light_energy = 0.65
-	settings.tonemap_mode = Environment.TONE_MAPPER_FILMIC
+	settings.ambient_light_color = Color("c2cde0")
+	settings.ambient_light_energy = 0.30
+	settings.tonemap_mode = Environment.TONE_MAPPER_ACES
+	settings.tonemap_exposure = 1.0
 	environment.environment = settings
 	add_child(environment)
 	var sun := DirectionalLight3D.new()
 	sun.rotation_degrees = Vector3(-38, -28, 0)
-	sun.light_energy = 1.4
+	sun.light_color = Color(1.0, 0.98, 0.95)
+	sun.light_energy = 0.85
 	sun.shadow_enabled = true
+	sun.directional_shadow_mode = DirectionalLight3D.SHADOW_ORTHOGONAL
+	sun.directional_shadow_max_distance = 14.0
+	sun.shadow_bias = 0.04
 	add_child(sun)
+	var fill := DirectionalLight3D.new()
+	fill.rotation_degrees = Vector3(-15, 140, 0)
+	fill.light_color = Color(0.92, 0.95, 1.0)
+	fill.light_energy = 0.20
+	add_child(fill)
 	_box(self, Vector3(8, 0.08, 8), Vector3(0, -0.04, 0), Color("586573"))
 	for i in range(-8, 9):
 		_box(self, Vector3(0.006,0.003,8), Vector3(i*0.5,0.002,0), Color("6b7884"))

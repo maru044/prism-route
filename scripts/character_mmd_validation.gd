@@ -18,6 +18,9 @@ var pitch := 0.15
 var distance := 3.0
 var camera_target := Vector3.ZERO
 var dragging := false
+var environment: Environment
+var sun_light: DirectionalLight3D
+var fill_light: DirectionalLight3D
 var overlay := MeshInstance3D.new()
 var overlay_lines := ImmediateMesh.new()
 var overlay_material := StandardMaterial3D.new()
@@ -67,19 +70,28 @@ func _build_stage(bounds: AABB) -> void:
 	env.background_mode = Environment.BG_COLOR
 	env.background_color = Color("192431")
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	env.ambient_light_color = Color("dce6f5")
-	env.ambient_light_energy = 0.7
-	env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
+	env.ambient_light_color = Color("c2cde0")
+	env.ambient_light_energy = 0.30
+	env.tonemap_mode = Environment.TONE_MAPPER_ACES
+	env.tonemap_exposure = 1.0
 	world.environment = env
+	environment = env
 	add_child(world)
 	var sun := DirectionalLight3D.new()
 	sun.rotation_degrees = Vector3(-40, -30, 0)
-	sun.light_energy = 1.15
+	sun.light_color = Color(1.0, 0.98, 0.95)
+	sun.light_energy = 0.85
 	sun.shadow_enabled = true
+	sun.directional_shadow_mode = DirectionalLight3D.SHADOW_ORTHOGONAL
+	sun.directional_shadow_max_distance = 14.0
+	sun.shadow_bias = 0.04
+	sun_light = sun
 	add_child(sun)
 	var fill := DirectionalLight3D.new()
 	fill.rotation_degrees = Vector3(-20, 145, 0)
-	fill.light_energy = 0.4
+	fill.light_color = Color(0.92, 0.95, 1.0)
+	fill.light_energy = 0.20
+	fill_light = fill
 	add_child(fill)
 	var floor_node := MeshInstance3D.new()
 	var floor_mesh := PlaneMesh.new()

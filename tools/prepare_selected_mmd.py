@@ -19,11 +19,13 @@ def main():
     config=json.loads((ROOT/'tools/mmd_preview/preview_config.json').read_text(encoding='utf-8'))
     source=Path(catalog['source_root']);files={r['file']:r for r in catalog['files']}
     packs=[];decision=None
-    for block in re.split(r'(?=^## |^### )',text,flags=re.M):
+    for block in re.split(r'(?=^## |^### |^#### )',text,flags=re.M):
         if block.startswith('## 二、'):decision='KEEP'
         elif block.startswith('## 三、'):decision='MAYBE'
+        elif block.startswith('## 六、'):decision='KEEP'
         elif block.startswith('## '):decision=None
-        if not block.startswith('### ') or decision is None:continue
+        if not (block.startswith('### ') or block.startswith('#### ')) or decision is None:continue
+        if '**目录 / 来源**' not in block:continue
         folder=re.search(r'\*\*目录 / 来源\*\*：`([^`]+)`',block).group(1)
         interval=re.search(r'\*\*帧区间\*\*：\s*(\d+)\s*~\s*(\d+)',block)
         start,end=map(int,interval.groups());roles=[]
@@ -46,8 +48,8 @@ def main():
                 role['reused_reference']='res://assets/characters/mmd_validation/shared/shared_mmd_role_'+role['id'].lower()+'_reference.json'
             else:role['baked_glb']=str(CACHE/(role['clip_id']+'.glb'))
         packs.append(pack)
-    assert sum(p['decision']=='KEEP' for p in packs)==11
-    assert sum(len(p['roles']) for p in packs if p['decision']=='KEEP')==22
+    assert sum(p['decision']=='KEEP' for p in packs)==19
+    assert sum(len(p['roles']) for p in packs if p['decision']=='KEEP')==38
     assert sum(p['decision']=='MAYBE' for p in packs)==2
     CACHE.mkdir(parents=True,exist_ok=True)
     plan={'schema':1,'readme_sha256':digest(readme),'source_root':str(source),'reference_models':config['reference_models'],
@@ -58,7 +60,7 @@ def main():
         if pack['decision']!='KEEP':continue
         for role in pack['roles']:
             if 'reused_resource' not in role:jobs.append({**role,'pack':pack['id'],'frame_start':pack['frame_start'],'frame_end':pack['frame_end']})
-    assert len(jobs)==20
+    assert len(jobs)==36
     (CACHE/'jobs.json').write_text(json.dumps({**plan,'jobs':jobs},ensure_ascii=False,indent=2),encoding='utf-8')
     selection_path=ROOT/'docs/motion_selection/mmd_source_selection.json'
     backup=selection_path.with_name('mmd_source_selection.before_import_20261103.json')
@@ -72,7 +74,7 @@ def main():
                      'fps':30,'frame_start':pack['frame_start'],'frame_end':pack['frame_end'],'note':'README confirmed shortlist; first-listed partner variant.',
                      'rough_special_preview':False,'authority':'docs/motion_selection/README.md','reference_models':config['reference_models']}
     selection_path.write_text(json.dumps({'schema':1,'source_root':str(source),'takes':takes},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    print(json.dumps({'keep_groups':11,'shared_tracks':22,'reuse_tracks':2,'new_jobs':20,'maybe_groups':2,'selection_backup':str(backup)}))
+    print(json.dumps({'keep_groups':19,'shared_tracks':38,'reuse_tracks':2,'new_jobs':36,'maybe_groups':2,'selection_backup':str(backup)}))
 
 
 if __name__=='__main__':main()

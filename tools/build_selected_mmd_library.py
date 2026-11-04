@@ -114,9 +114,9 @@ def main():
                       'source_tracks':[{'file':r['source_file'],'sha256':r['source_sha256']} for r in item['roles']],
                       'roles':roles,'references':[r['reference'] for r in clip_reports],
                       'dependency_note':'Body animation only; source expressions, custom deformations and props are separate.'})
-    assert len(packs)==11 and len(reports)==22 and sum(not r['reused'] for r in reports)==20
+    assert len(packs)==19 and len(reports)==38 and sum(not r['reused'] for r in reports)==36
     manifest={'schema':1,'profiles':existing['profiles'],'readme_sha256':plan['readme_sha256'],'packs':packs,'clips':reports,
-              'counts':{'groups':11,'tracks':22,'new_tracks':20,'reused_tracks':2,'deferred_groups':2},'source_selection':'docs/motion_selection/README.md'}
+              'counts':{'groups':19,'tracks':38,'new_tracks':36,'reused_tracks':2,'deferred_groups':2},'source_selection':'docs/motion_selection/README.md'}
     (DEST/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf-8')
     catalog_path=ROOT/'assets/characters/mmd_validation/paired/catalog.json';catalog=json.loads(catalog_path.read_text(encoding='utf-8'))
     ids={p['id'] for p in packs}

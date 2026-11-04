@@ -1,0 +1,22 @@
+{
+  "assets/world/cliff_b_test/architecture.gdshader": {
+    "sha256": "4f45d66e883aa00d765864ef4713d78730db9549f6889c8831f431fe490d2295",
+    "unchanged_from_commit": true
+  },
+  "assets/world/cliff_b_test/architecture.tres": {
+    "sha256": "68f30ecf5aa242e15955053f70d79a894dd56df47c7b59afabbbe308474351cb",
+    "unchanged_from_commit": true
+  },
+  "shaders/environment/church_stained_glass.gdshader": {
+    "sha256": "cd8c01831bc00394597f065abd8ced85f7e5cccc8fbc16cf2d42722bc0bc5c43",
+    "unchanged_from_commit": true
+  },
+  "assets/world/tree_planting/world_edits.json": {
+    "sha256": "b30f25dd5fa50492635345ce757ef18e054859e322e976c2736a710272d3bbd8",
+    "unchanged_from_commit": true
+  },
+  "assets/world/current_map_validation/current_region.glb": {
+    "sha256": "9539169f439699fb2112d7751b0728d0170ae4db0f8561a9235abf5b3522a0cb",
+    "unchanged_from_commit": true
+  }
+}

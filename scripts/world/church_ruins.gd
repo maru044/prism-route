@@ -3,6 +3,7 @@ extends Node3D
 const GEOMETRY = preload("res://assets/world/church_ruins_1105/church.glb")
 const MANIFEST = "res://assets/world/church_ruins_1105/manifest.json"
 const GLASS = preload("res://shaders/environment/church_stained_glass.gdshader")
+const ARCHITECTURE = preload("res://assets/world/cliff_b_test/architecture.tres")
 const GRASS_CONFIG = "res://assets/world/church_ruins_1105/ground_grass.json"
 const GRASS_BAKE = "res://assets/world/church_ruins_1105/grass_bake/manifest.json"
 const STORE = preload("res://scripts/grass_baked_store.gd")
@@ -29,6 +30,13 @@ func _ready() -> void:
 			glass.resource_name = "ChurchRuins_" + key
 			glass.shader = GLASS
 			materials[key] = glass
+			continue
+		if key in ["path_flagstone", "pavement_marble_ivory", "weathered_limestone"]:
+			var stone := ARCHITECTURE.duplicate() as ShaderMaterial
+			stone.resource_name = "ChurchRuins_" + key
+			if key == "path_flagstone":
+				stone.set_shader_parameter("warm_white", Color(row.color[0], row.color[1], row.color[2]))
+			materials[key] = stone
 			continue
 		var material := StandardMaterial3D.new()
 		material.resource_name = "ChurchRuins_" + key

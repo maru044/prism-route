@@ -3,8 +3,8 @@ extends "res://tools/verify_shared_humanoid_validation.gd"
 
 func _run() -> void:
 	var manifest:Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://assets/characters/mmd_selected/manifest.json"))
-	check(manifest.packs.size()==11 and manifest.clips.size()==22,"Selected library count mismatch")
-	check(manifest.counts.new_tracks==20 and manifest.counts.reused_tracks==2,"Unexpected per-target or repeated bakes")
+	check(manifest.packs.size()==19 and manifest.clips.size()==38,"Selected library count mismatch")
+	check(manifest.counts.new_tracks==36 and manifest.counts.reused_tracks==2,"Unexpected per-target or repeated bakes")
 	var scene=load("res://scenes/character_mmd_vrm_validation.tscn").instantiate()
 	root.add_child(scene)
 	for i in 300:
@@ -13,7 +13,7 @@ func _run() -> void:
 	check(scene.initialized,"Preview did not initialize")
 	if not scene.initialized:quit(1);return
 	scene.playing=false
-	check(scene.scope_select.selected==0 and scene.filtered_entries.size()==11,"Main list must contain eleven groups")
+	check(scene.scope_select.selected==0 and scene.filtered_entries.size()==19,"Main list must contain nineteen groups")
 	var group_ids:={}
 	for entry in scene.filtered_entries:
 		check(not group_ids.has(entry.pack),"Group appears more than once")
@@ -22,7 +22,7 @@ func _run() -> void:
 	for people in [1,2,3]:
 		scene.category.select(people);scene._filter_entries()
 		filtered_counts.append(scene.filtered_entries.size())
-	check(filtered_counts==[1,9,1],"Solo/pair/triple group filter failed")
+	check(filtered_counts==[1,17,1],"Solo/pair/triple group filter failed")
 	scene.category.select(0);scene.search.text="Loop 08";scene._filter_entries()
 	check(scene.filtered_entries.size()==1,"Group search failed")
 	scene.search.text="";scene._filter_entries()
@@ -116,7 +116,7 @@ func _run() -> void:
 	check(max_body_rotation_error<deg_to_rad(.01),"Major body quaternion mapping error")
 	check(max_pelvis_error<.00001 and max_clock_error<.000001,"Shared pelvis or clock error")
 	for error in source_position_errors.values():check(error<.0001,"Source joint geometry differs from shared result")
-	var report:={"passed":failures.is_empty(),"failures":failures,"groups":group_checks,"clips":manifest.clips.size(),"avatar_profiles":manifest.profiles.size(),"resource_identity_checks":identity_checks,"rotation_checks":sample_checks,"isolated_role_mode_checks":isolated_checks,"selected_main_rows":11,"people_filter_counts":filtered_counts,"model_switch_checks":manifest.profiles.size(),"max_rest_position_error_m":max_rest_position_error,"max_rotation_error_rad":max_rotation_error,"max_axis_error_rad":max_axis_error,"max_body_rotation_error_rad":max_body_rotation_error,"max_pelvis_error_m":max_pelvis_error,"max_clock_error_s":max_clock_error,"source_reference_max_position_error_m":source_position_errors,"source_joint_position_errors_m":source_joint_errors,"worst_rotation":worst_rotation,"physics_smoke_frames_per_group":12,"physics_steps_observed":physics_steps,"new_target_specific_animation_files":0,"contact_fit":"not approved; body transfer and finite spring simulation do not guarantee contact or cloth art quality"}
+	var report:={"passed":failures.is_empty(),"failures":failures,"groups":group_checks,"clips":manifest.clips.size(),"avatar_profiles":manifest.profiles.size(),"resource_identity_checks":identity_checks,"rotation_checks":sample_checks,"isolated_role_mode_checks":isolated_checks,"selected_main_rows":19,"people_filter_counts":filtered_counts,"model_switch_checks":manifest.profiles.size(),"max_rest_position_error_m":max_rest_position_error,"max_rotation_error_rad":max_rotation_error,"max_axis_error_rad":max_axis_error,"max_body_rotation_error_rad":max_body_rotation_error,"max_pelvis_error_m":max_pelvis_error,"max_clock_error_s":max_clock_error,"source_reference_max_position_error_m":source_position_errors,"source_joint_position_errors_m":source_joint_errors,"worst_rotation":worst_rotation,"physics_smoke_frames_per_group":12,"physics_steps_observed":physics_steps,"new_target_specific_animation_files":0,"contact_fit":"not approved; body transfer and finite spring simulation do not guarantee contact or cloth art quality"}
 	FileAccess.open("res://docs/validation/mmd_selected_20261103/verification.json",FileAccess.WRITE).store_string(JSON.stringify(report,"\t"))
 	print("SELECTED_LIBRARY_VALIDATION ",JSON.stringify(report))
 	quit(0 if failures.is_empty() else 1)

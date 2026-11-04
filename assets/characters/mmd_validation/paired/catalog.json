@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "fps": 30,
-  "default_entry": "mmd_0a3f6ba5f5de_all",
+  "default_entry": "mmd_6e891982bb51_all",
   "coordinate_policy": "preserve_authored_shared_world",
   "packs": [
     {
@@ -991,6 +991,470 @@
         "res://docs/validation/mmd_selected_20261103/references/mmd_7869c66910b9_c_reference.json"
       ],
       "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_87e004f6db53",
+      "label": "Bath House Service V2",
+      "selected": true,
+      "shared": true,
+      "duration": 61.13333333333333,
+      "frame_start": 0,
+      "frame_end": 1834,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Bath House Service V2/Missionary - Izumi.vmd",
+          "sha256": "cbb6c6a90cf2798d7d846b2463abb5dc5b99ed711d847aad19a2341a9a772521"
+        },
+        {
+          "file": "Bath House Service V2/Missionary - Maran.vmd",
+          "sha256": "b92adbdf5926f12f2df0453a8b9a4b6e59dee55fcd02ffb587a823d6f52b4fa2"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_87e004f6db53_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_87e004f6db53_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_87e004f6db53_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_87e004f6db53_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_43916ffe3d35",
+      "label": "Just Tonight - By Ademar440",
+      "selected": true,
+      "shared": true,
+      "duration": 234.33333333333334,
+      "frame_start": 0,
+      "frame_end": 7030,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Just Tonight - By Ademar440/Just Tonight - Izumi.vmd",
+          "sha256": "3bc9566ddfeddae881c598494b5a5052060d5b20f37014a3c5504f5e63371d6c"
+        },
+        {
+          "file": "Just Tonight - By Ademar440/Just Tonight - Sin Sack.vmd",
+          "sha256": "28dd96746e8f2e53fa60daa7f243ebc02c57a81cb81bf2fb3c040cdd0780a4bc"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_43916ffe3d35_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_43916ffe3d35_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_43916ffe3d35_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_43916ffe3d35_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_2864892bd378",
+      "label": "LHDS V3 - By Ademar440",
+      "selected": true,
+      "shared": true,
+      "duration": 66.9,
+      "frame_start": 0,
+      "frame_end": 2007,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "LHDS V3 - By Ademar440/Love Hotel DS Loop Bikini Izumi.vmd",
+          "sha256": "1183fad9a11b0eac6b30a2b4f9443cb51b2b659596d4a5774f699101aa8ed80e"
+        },
+        {
+          "file": "LHDS V3 - By Ademar440/Love Hotel DS Loop Maran.vmd",
+          "sha256": "c0629dfbfb6b970a47eaffbe05d7f26a29f55b6ab98dd3110e995341f6fb618b"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_2864892bd378_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_2864892bd378_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_2864892bd378_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_2864892bd378_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_160b1e7a411c",
+      "label": "Lap Sitting",
+      "selected": true,
+      "shared": true,
+      "duration": 78.0,
+      "frame_start": 0,
+      "frame_end": 2340,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Lap Sitting/Lap Sitting - Izumi.vmd",
+          "sha256": "3f164d731c42479e19074e68499138ab0d4959d072fb121c23cf010d5f9fad96"
+        },
+        {
+          "file": "Lap Sitting/Lap Sitting - Guy.vmd",
+          "sha256": "8c2c6bda01d55645677747d401cd1c6367544ab5ac524d72b86952c77b3c9953"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_160b1e7a411c_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_160b1e7a411c_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_160b1e7a411c_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_160b1e7a411c_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_1256ad646811",
+      "label": "Loop 07 - Spooning",
+      "selected": true,
+      "shared": true,
+      "duration": 30.3,
+      "frame_start": 0,
+      "frame_end": 909,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Loop 07 - Spooning/Loop 07 - Spooning - Izumi.vmd",
+          "sha256": "30c415e937215f29f74b79469d7717ba99f699f0ee87cdbafa03994a56b1cb61"
+        },
+        {
+          "file": "Loop 07 - Spooning/Loop 07 - Spooning - Maran.vmd",
+          "sha256": "23bb3e3ac4fa296399d4f383737cb4c8abe722d414f66f4f83a8e22451061910"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_1256ad646811_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_1256ad646811_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_1256ad646811_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_1256ad646811_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_c63e75bc7057",
+      "label": "Loop 33 - Suspended Congress",
+      "selected": true,
+      "shared": true,
+      "duration": 33.333333333333336,
+      "frame_start": 0,
+      "frame_end": 1000,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Loop 33 - Suspended Congress/Loop 33 - Suspended Congress - Izumi.vmd",
+          "sha256": "3130e9f3270225568b3b23e30be87c955b0ad153c45fa3ef5f3e58a45f3dcae7"
+        },
+        {
+          "file": "Loop 33 - Suspended Congress/Loop 33 - Suspended Congress - Maran.vmd",
+          "sha256": "afc7a1f2353386d8b876bccbbb8195f86c276ad6e1da65a5b4abaaae2bd263d2"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_c63e75bc7057_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_c63e75bc7057_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_c63e75bc7057_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_c63e75bc7057_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_fca4bab1635f",
+      "label": "TSFB V2",
+      "selected": true,
+      "shared": true,
+      "duration": 56.7,
+      "frame_start": 0,
+      "frame_end": 1701,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "TSFB V2/Table Sex From Behind Loop Izumi.vmd",
+          "sha256": "7ab2e6adddccc53c7c870ba96e26f4634db9ad6bc66bf2393fd46d406dd3fd0e"
+        },
+        {
+          "file": "TSFB V2/Table Sex From Behind Loop Maran.vmd",
+          "sha256": "59ebc63506e67054596819c31060c399a5796478ce5f7cdbffb92ffe16f5701d"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_fca4bab1635f_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_fca4bab1635f_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_fca4bab1635f_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_fca4bab1635f_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+    },
+    {
+      "id": "mmd_86e40adc8f14",
+      "label": "Thigh service",
+      "selected": true,
+      "shared": true,
+      "duration": 49.63333333333333,
+      "frame_start": 0,
+      "frame_end": 1489,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Thigh service/Thigh service - Izumi.vmd",
+          "sha256": "747f6029b0864c0adf940c994ce03bbeab90a26d8073ff6139f37efccd2a8370"
+        },
+        {
+          "file": "Thigh service/Thigh service -Guy.vmd",
+          "sha256": "554417aee5576d6828701c2b61d2c5304c6c3590b8bc49ea30d33afab0536c02"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_86e40adc8f14_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_86e40adc8f14_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_86e40adc8f14_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_86e40adc8f14_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
     }
   ],
   "entries": [
@@ -1211,6 +1675,86 @@
         "A",
         "B",
         "C"
+      ],
+      "kind": "入选动作"
+    },
+    {
+      "id": "mmd_87e004f6db53_all",
+      "pack": "mmd_87e004f6db53",
+      "label": "Bath House Service V2",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作"
+    },
+    {
+      "id": "mmd_43916ffe3d35_all",
+      "pack": "mmd_43916ffe3d35",
+      "label": "Just Tonight - By Ademar440",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作"
+    },
+    {
+      "id": "mmd_2864892bd378_all",
+      "pack": "mmd_2864892bd378",
+      "label": "LHDS V3 - By Ademar440",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作"
+    },
+    {
+      "id": "mmd_160b1e7a411c_all",
+      "pack": "mmd_160b1e7a411c",
+      "label": "Lap Sitting",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作"
+    },
+    {
+      "id": "mmd_1256ad646811_all",
+      "pack": "mmd_1256ad646811",
+      "label": "Loop 07 - Spooning",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作"
+    },
+    {
+      "id": "mmd_c63e75bc7057_all",
+      "pack": "mmd_c63e75bc7057",
+      "label": "Loop 33 - Suspended Congress",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作"
+    },
+    {
+      "id": "mmd_fca4bab1635f_all",
+      "pack": "mmd_fca4bab1635f",
+      "label": "TSFB V2",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作"
+    },
+    {
+      "id": "mmd_86e40adc8f14_all",
+      "pack": "mmd_86e40adc8f14",
+      "label": "Thigh service",
+      "roles": [
+        "A",
+        "B"
       ],
       "kind": "入选动作"
     }
