@@ -12,7 +12,7 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 DEST = ROOT / 'assets/characters/motion_review'
-WALK_PIVOT_FIX = {'A05', 'A39'}
+LOCOMOTION_PIVOT_FIX = {'A05', 'A06', 'A39'}
 
 
 def rotation(q):
@@ -227,7 +227,7 @@ def main():
                     u,_,vt=np.linalg.svd(desired); value[:3,:3]=u@vt
                     if i==hips:
                         value[:3,3]=rest[i][:3,3]+(pose[j][:3,3]-src.rest[j][:3,3])*scale
-                        if action['id'] in WALK_PIVOT_FIX:
+                        if action['id'] in LOCOMOTION_PIVOT_FIX:
                             # The MMD Hips pivot lies ~24 cm below the leg roots.
                             # Align the anatomical pelvis in X/Z instead of rotating
                             # this extra lever arm; retain the accepted vertical motion.
@@ -243,27 +243,31 @@ def main():
                 output[i]=value; return value
             for i in range(len(bones)): solve(i)
         assert all(np.isfinite(q).all() for rows in rotations.values() for q in rows)
-        if action['id'] in WALK_PIVOT_FIX:
+        if action['id'] in LOCOMOTION_PIVOT_FIX:
             rotations, positions = close_walk_loop(times,rotations,positions)
         lines=['[gd_resource type="Animation" format=3]','', '[resource]',f'resource_name = "{action["id"]}"',f'length = {length:.8g}']
         tracks=[(i,'rotation_3d',qs) for i,qs in rotations.items()]+[(hips,'position_3d',positions)]
         for track,(i,kind,values) in enumerate(tracks):
             path=target['path']+':'+bones[i]['name']
             keys = np.column_stack((times, np.ones(len(times)), np.asarray(values)))
-            wrap = 'true' if action['id'] in WALK_PIVOT_FIX else 'false'
+            wrap = 'true' if action['id'] in LOCOMOTION_PIVOT_FIX else 'false'
             lines += [f'tracks/{track}/type = "{kind}"',f'tracks/{track}/path = NodePath("{path}")',f'tracks/{track}/interp = 1',f'tracks/{track}/loop_wrap = {wrap}',f'tracks/{track}/keys = PackedFloat32Array('+numbers(keys.ravel())+')']
         (destination/f'{action["id"]}.tres').write_text('\n'.join(lines)+'\n',encoding='utf8')
         entry = dict(action,status="retarget_baked_review_pending",duration=length,tracks=len(tracks),frames=len(times),retarget_hip_scale=scale)
-        if action['id'] in WALK_PIVOT_FIX:
+        if action['id'] in LOCOMOTION_PIVOT_FIX:
             entry.update(horizontal_pelvis_scale=pelvis_scale,
                          in_place_anchor_xz=np.mean(global_hips,axis=0)[[0,2]].tolist(),
                          loop_closure='matched_endpoints_and_segment_velocity_short_hermite_windows')
-            if destination.resolve() == DEST.resolve():
+            if destination.resolve() == DEST.resolve() and action['id'] in {'A05','A39'}:
                 entry.update(before_walk_fix_path=f'res://assets/characters/motion_review/archive/{action["id"]}_before_walk_fix.tres',
                              before_loop_fix_path=f'res://assets/characters/motion_review/archive/{action["id"]}_before_loop_fix.tres')
         metadata.append(entry)
         print(action['id'],action['label_zh'],round(length,3),len(tracks),flush=True)
-    (destination/'catalog.json').write_text(json.dumps(metadata,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+    catalog_path=destination/'catalog.json'
+    if args.ids and catalog_path.exists():
+        existing=json.loads(catalog_path.read_text(encoding='utf8'));updates={r['id']:r for r in metadata}
+        metadata=[updates.pop(r['id'],r) for r in existing]+list(updates.values())
+    catalog_path.write_text(json.dumps(metadata,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 
 
 if __name__ == '__main__': main()

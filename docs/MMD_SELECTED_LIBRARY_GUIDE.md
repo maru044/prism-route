@@ -2,6 +2,8 @@
 
 更新：2026-11-03。这是当前已执行的生产流程，接续 [共享人形规范](MMD_SHARED_HUMANOID_VALIDATION.md) 和 [总制作指南](MMD_TO_VRM_PRODUCTION_GUIDE.md)。
 
+2026-11-04：角色选择新增八重神子、雷电将军、芙宁娜、镜流、星见雅，共 9 个可选模型。新五个已通过中性共享样本与原预览器选择验证；下文四模型全库结果仍是原验收范围，不代表新增模型的全部接触组合已获验收。见 [首批角色制作与验收](CHARACTER_BATCH_IMPORT_GUIDE.md)。
+
 以用户手写的 [选片 README](motion_selection/README.md) 为制作依据，已导入 **11 组 KEEP、22 条角色位轨道**。其中 Loop 03 的两条共享资源继续复用，新增源角色烘焙 20 次；两个 MAYBE 没有导入。没有按目标 VRM 分别制作动作。
 
 ## 在哪里查看

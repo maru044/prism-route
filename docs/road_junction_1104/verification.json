@@ -1,0 +1,109 @@
+{
+  "capture": "",
+  "drives": [
+    {
+      "completed": true,
+      "contacts": [
+        {
+          "normal": "(0.007659, 0.998267, -0.058343)",
+          "source": "ee277b2d-e4eb-4d39-80e6-c5d8a5d87d70"
+        }
+      ],
+      "end_position": "(232.352, 52.75858, 335.7908)",
+      "frames": 923,
+      "max_airborne_frames": 0,
+      "max_path_distance_m": 0.756841659545898,
+      "route": "bridge_to_north",
+      "speed_limit_mps": 8.0
+    },
+    {
+      "completed": true,
+      "contacts": [
+        {
+          "normal": "(0.0279, 0.999588, -0.006794)",
+          "source": "0808d32c-6ebc-4105-9258-a0f755ac2752"
+        },
+        {
+          "normal": "(0.0279, 0.999588, -0.006794)",
+          "source": "0808d32c-6ebc-4105-9258-a0f755ac2752"
+        }
+      ],
+      "end_position": "(166.9537, 57.69387, 407.8915)",
+      "frames": 928,
+      "max_airborne_frames": 0,
+      "max_path_distance_m": 0.746864855289459,
+      "route": "north_to_bridge",
+      "speed_limit_mps": 8.0
+    },
+    {
+      "completed": true,
+      "contacts": [
+        {
+          "normal": "(-0.001166, 0.999619, -0.027578)",
+          "source": "ee277b2d-e4eb-4d39-80e6-c5d8a5d87d70"
+        },
+        {
+          "normal": "(-0.001166, 0.999619, -0.027578)",
+          "source": "ee277b2d-e4eb-4d39-80e6-c5d8a5d87d70"
+        }
+      ],
+      "end_position": "(228.2767, 57.73838, 450.907)",
+      "frames": 905,
+      "max_airborne_frames": 0,
+      "max_path_distance_m": 1.21218383312225,
+      "route": "bridge_to_south",
+      "speed_limit_mps": 8.0
+    },
+    {
+      "completed": true,
+      "contacts": [
+        {
+          "normal": "(0.0279, 0.999588, -0.006794)",
+          "source": "0808d32c-6ebc-4105-9258-a0f755ac2752"
+        },
+        {
+          "normal": "(0.0279, 0.999588, -0.006794)",
+          "source": "0808d32c-6ebc-4105-9258-a0f755ac2752"
+        }
+      ],
+      "end_position": "(166.8978, 57.69554, 407.907)",
+      "frames": 905,
+      "max_airborne_frames": 0,
+      "max_path_distance_m": 1.2281711101532,
+      "route": "south_to_bridge",
+      "speed_limit_mps": 8.0
+    },
+    {
+      "completed": true,
+      "contacts": [],
+      "end_position": "(233.0093, 52.45551, 330.7717)",
+      "frames": 489,
+      "max_airborne_frames": 0,
+      "max_path_distance_m": 0.513064682483673,
+      "route": "coast_north",
+      "speed_limit_mps": 18.0
+    },
+    {
+      "completed": true,
+      "contacts": [
+        {
+          "normal": "(-0.001467, 0.999658, -0.02611)",
+          "source": "ee277b2d-e4eb-4d39-80e6-c5d8a5d87d70"
+        },
+        {
+          "normal": "(-0.001467, 0.999658, -0.02611)",
+          "source": "ee277b2d-e4eb-4d39-80e6-c5d8a5d87d70"
+        }
+      ],
+      "end_position": "(228.4794, 57.8751, 455.9616)",
+      "frames": 491,
+      "max_airborne_frames": 0,
+      "max_path_distance_m": 0.509094297885895,
+      "route": "coast_south",
+      "speed_limit_mps": 18.0
+    }
+  ],
+  "failures": [],
+  "passed": true,
+  "scene": "res://scenes/map_1021.tscn"
+}

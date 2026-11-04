@@ -1,0 +1,17 @@
+{
+  "archive": "D:\\模型\\20261008\\【模之屋】雷电将军_by_原神_535ff740fe45cbd49822311479d93d94.zip",
+  "archive_sha256": "14a3cdc510ebfccea584e71a30488332246cb82afa616a75da61e307ffbb845c",
+  "body_pmx": "雷电将军.pmx",
+  "source_sha256": "80f12e5db89d3f6b9d43cfdfccc20364e0828d369cb31a9d8e1c56feb680b448",
+  "pmx_name": "RaiDenShougun",
+  "pmx_english_name": "",
+  "pmx_comment": "感谢下载本模型\r\n\r\n◆允许完善物理，修正模型权重、表情等bug\r\n\r\n  允许改色，适度更改衣装，添加spa、toon等\r\n\r\n◆请勿二次配布，以及拆取部件以用于改造其他模型\r\n\r\n  请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n  请勿用于商业用途\r\n\r\n◆他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n◆模型提供：miHoYo\r\n\r\n◆模型改造：观海\r\n\r\n  联系我【BiliBili：观海子】\r\n\r\n◆最终解释权归属：miHoYo\r\n\r\n请遵守本规则使用",
+  "pmx_english_comment": "\b",
+  "authors": [
+    "miHoYo",
+    "观海"
+  ],
+  "excluded_pmx": [
+    "武器.pmx"
+  ]
+}

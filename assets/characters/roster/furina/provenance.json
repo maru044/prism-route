@@ -1,0 +1,17 @@
+{
+  "archive": "D:\\模型\\20261008\\【芙宁娜】_by_原神_dd7a8a03e7a7dfa6593053d639fa3025.zip",
+  "archive_sha256": "1c093f39543c5ef0bfab8e7dcff24060874f5009387821dcb5f414fbf7586614",
+  "body_pmx": "【芙宁娜】.pmx",
+  "source_sha256": "b975976e65769d93a84bc78be865398af3dea6feff14a9c181413552fbae74a1",
+  "pmx_name": "Funingna",
+  "pmx_english_name": "Avatar_Girl_Sword_Furina_Model",
+  "pmx_comment": "感谢下载本模型\r\n\r\n◆允许完善物理，修正模型权重、表情等bug\r\n\r\n  允许改色，适度更改衣装，添加spa、toon等\r\n\r\n◆请勿二次配布，以及拆取部件以用于改造其他模型\r\n\r\n  请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n  请勿用于商业用途\r\n\r\n◆他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n◆模型提供：miHoYo\r\n\r\n◆模型改造：观海\r\n\r\n  联系我【BiliBili：观海子】\r\n\r\n◆最终解释权归属：miHoYo\r\n\r\n请遵守本规则使用",
+  "pmx_english_comment": "",
+  "authors": [
+    "miHoYo",
+    "观海"
+  ],
+  "excluded_pmx": [
+    "【芙宁娜_荒】.pmx"
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "yae_miko",
+      "label": "八重神子",
+      "game": "原神",
+      "model": "res://assets/characters/roster/yae_miko/yae_miko.vrm",
+      "model_sha256": "d2bef2d58fa7ce3ee9cf6f64071f3134efa2c5dbe4f60499b64c6cc76bef0a5a",
+      "source_archive": "D:\\模型\\20261008\\模之屋【八重神子】_by_原神_b9696a3134514f269ccb9003230bfe45.zip",
+      "source_sha256": "77d7fdb8f36abdfd01cc6a1fb7c38645ef40885a556987e9181844f3552f3423",
+      "body_pmx": "八重神子.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 7,
+        "clothes_chains": 19,
+        "colliders": 12,
+        "joints": 265
+      },
+      "bytes": 49365332
+    },
+    {
+      "id": "raiden_shogun",
+      "label": "雷电将军",
+      "game": "原神",
+      "model": "res://assets/characters/roster/raiden_shogun/raiden_shogun.vrm",
+      "model_sha256": "ed31d5e1cd901844fd5b414ba92e81fa7d19a2514d6e48cd287197913f25fe25",
+      "source_archive": "D:\\模型\\20261008\\【模之屋】雷电将军_by_原神_535ff740fe45cbd49822311479d93d94.zip",
+      "source_sha256": "80f12e5db89d3f6b9d43cfdfccc20364e0828d369cb31a9d8e1c56feb680b448",
+      "body_pmx": "雷电将军.pmx",
+      "excluded_pmx": [
+        "武器.pmx"
+      ],
+      "physics": {
+        "hair_chains": 3,
+        "clothes_chains": 22,
+        "colliders": 12,
+        "joints": 156
+      },
+      "bytes": 39847740
+    },
+    {
+      "id": "furina",
+      "label": "芙宁娜",
+      "game": "原神",
+      "model": "res://assets/characters/roster/furina/furina.vrm",
+      "model_sha256": "fa6342f37020251a94811bddf412ebb797ee2c8f65bdb0bcf4f5669e5e3ccad4",
+      "source_archive": "D:\\模型\\20261008\\【芙宁娜】_by_原神_dd7a8a03e7a7dfa6593053d639fa3025.zip",
+      "source_sha256": "b975976e65769d93a84bc78be865398af3dea6feff14a9c181413552fbae74a1",
+      "body_pmx": "【芙宁娜】.pmx",
+      "excluded_pmx": [
+        "【芙宁娜_荒】.pmx"
+      ],
+      "physics": {
+        "hair_chains": 3,
+        "clothes_chains": 25,
+        "colliders": 12,
+        "joints": 246
+      },
+      "bytes": 56212964
+    },
+    {
+      "id": "jingliu",
+      "label": "镜流",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/jingliu/jingliu.vrm",
+      "model_sha256": "6444fcd63a195249a5eb5f2a581a1aabbd3e791ede266c5fb616c13ef4cde927",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—镜流_by_崩坏：星穹铁道_de62c564ed1d1d2fdbefb3857942a506.zip",
+      "source_sha256": "aed89d3d6e94a9a620621cd6255a6649cca58c5536ee04a0916587c44f3e3431",
+      "body_pmx": "镜流2.0.pmx",
+      "excluded_pmx": [
+        "大剑.pmx",
+        "小剑.pmx",
+        "裙子.pmx"
+      ],
+      "physics": {
+        "hair_chains": 15,
+        "clothes_chains": 23,
+        "colliders": 12,
+        "joints": 295
+      },
+      "bytes": 53729216
+    },
+    {
+      "id": "miyabi",
+      "label": "星见雅",
+      "game": "绝区零",
+      "model": "res://assets/characters/roster/miyabi/miyabi.vrm",
+      "model_sha256": "40817605ce1419c978a13276e7030c7497d3457cce4927be2743c33dcdc88bbe",
+      "source_archive": "D:\\模型\\20261008\\星见雅_by_绝区零_5497f7f98efc5b2a7cb509961638d435.zip",
+      "source_sha256": "56ffc00d398b0a3c5a9340b6357e1089fb468c6879fdead145fc4baceba01b96",
+      "body_pmx": "星见雅.pmx",
+      "excluded_pmx": [
+        "幽灵.pmx",
+        "武器.pmx"
+      ],
+      "physics": {
+        "hair_chains": 9,
+        "clothes_chains": 24,
+        "colliders": 12,
+        "joints": 257
+      },
+      "bytes": 42814724
+    }
+  ]
+}

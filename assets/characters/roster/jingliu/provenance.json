@@ -1,0 +1,19 @@
+{
+  "archive": "D:\\模型\\20261008\\星穹铁道—镜流_by_崩坏：星穹铁道_de62c564ed1d1d2fdbefb3857942a506.zip",
+  "archive_sha256": "0d83260c18ec2d0b18b065fde7b27046d5ef103e070f8d560c0c4309d4aa2277",
+  "body_pmx": "镜流2.0.pmx",
+  "source_sha256": "aed89d3d6e94a9a620621cd6255a6649cca58c5536ee04a0916587c44f3e3431",
+  "pmx_name": "镜流",
+  "pmx_english_name": "镜流",
+  "pmx_comment": "\r\n允许改造，优化骨骼和刚体，重制UV\r\n\r\n===================\r\n请勿二次配布\r\n\r\n请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n请勿用于商业用途\r\n\r\n他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n模型编辑：神帝宇\r\n\r\n模型版权所属miHoYo",
+  "pmx_english_comment": "\r\n允许改造，优化骨骼和刚体，重制UV\r\n\r\n===================\r\n请勿二次配布\r\n\r\n请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n请勿用于商业用途\r\n\r\n他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n模型编辑：神帝宇\r\n\r\n模型版权所属miHoYo",
+  "authors": [
+    "miHoYo",
+    "神帝宇"
+  ],
+  "excluded_pmx": [
+    "大剑.pmx",
+    "小剑.pmx",
+    "裙子.pmx"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "archive": "D:\\模型\\20261008\\琴_by_原神_61c2f285c133b7376c176b9869edafe2.zip",
+  "archive_sha256": "e5b71ff8242d9739371e945bbb5f25c5f1992761bd78d263b771c0c183a47882",
+  "body_pmx": "琴.pmx",
+  "source_sha256": "f6814bcd259b93a82b6e0c13d274e9bf0079eb92cf02b5f84a40daa9e9779c3f",
+  "pmx_name": "琴",
+  "pmx_english_name": "琴",
+  "pmx_comment": "\r\n允许改造，优化骨骼和刚体，重制UV\r\n\r\n===================\r\n请勿二次配布\r\n\r\n请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n请勿用于商业用途\r\n\r\n他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n模型编辑：神帝宇\r\n\r\n模型版权所属miHoYo",
+  "pmx_english_comment": "\r\n允许改造，优化骨骼和刚体，重制UV\r\n\r\n===================\r\n请勿二次配布\r\n\r\n请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n请勿用于商业用途\r\n\r\n他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n模型编辑：神帝宇\r\n\r\n模型版权所属miHoYo",
+  "authors": [
+    "miHoYo",
+    "神帝宇"
+  ],
+  "excluded_pmx": [],
+  "archive_path_overrides": {
+    "ï╒/Texture/ê▀ò₧.jpg": "琴/Texture/衣服.jpg",
+    "ï╒/Texture/ò/Åε.png": "琴/Texture/表情.png"
+  }
+}

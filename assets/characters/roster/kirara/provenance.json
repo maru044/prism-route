@@ -1,0 +1,17 @@
+{
+  "archive": "D:\\模型\\20261008\\【绮良良】_by_原神_3ae87334e869b584e1e665d027c956ee.zip",
+  "archive_sha256": "7fd69cbe94b372b397b0b15390d0bb39ef9f6774698d1fa23ba16253a940f803",
+  "body_pmx": "绮良良.pmx",
+  "source_sha256": "be3a1a7c550bd13f9d8670a83eebb1e5fa46d18a9f45e64bb8c69390ab3f84ef",
+  "pmx_name": "Momoka",
+  "pmx_english_name": "Model name",
+  "pmx_comment": "\r\n【更新修复】\r\n\r\n◆肩膀骨骼\t亲子错误\r\n\r\n——————————————————————————\r\n感谢下载本模型\r\n\r\n◆允许完善物理，修正模型权重、表情等bug\r\n\r\n  允许改色，适度更改衣装，添加spa、toon等\r\n\r\n◆请勿二次配布，以及拆取部件以用于改造其他模型\r\n\r\n  请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n  请勿用于商业用途\r\n\r\n◆他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n◆模型提供：miHoYo\r\n\r\n◆模型改造：观海\r\n\r\n  联系我【BiliBili：观海子】\r\n\r\n◆最终解释权归属：miHoYo\r\n\r\n请遵守本规则使用",
+  "pmx_english_comment": "comment",
+  "authors": [
+    "miHoYo",
+    "观海"
+  ],
+  "excluded_pmx": [
+    "变身形态.pmx"
+  ]
+}

@@ -1,0 +1,366 @@
+{
+  "id": "kuki_shinobu",
+  "label": "久岐忍",
+  "vertices": 24041,
+  "bones": 271,
+  "morphs": 65,
+  "materials": 18,
+  "alpha": [
+    {
+      "name": "颜",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "颜2",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "睫",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "二重",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "眉",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "白目",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "齿",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "口舌",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "星目",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "目",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "髪",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "髪+",
+      "mode": "MASK",
+      "min_alpha": 0,
+      "max_alpha": 133,
+      "transparent_fraction": 0.9918433352746925,
+      "partial_fraction": 0.009049492832245877,
+      "middle_fraction": 0.007760509207659401
+    },
+    {
+      "name": "饰",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "神之眼AL",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "体",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "肌",
+      "mode": "MASK",
+      "min_alpha": 0,
+      "max_alpha": 255,
+      "transparent_fraction": 0.10905181714497086,
+      "partial_fraction": 0.023257606115717765,
+      "middle_fraction": 0.015628371505194045
+    },
+    {
+      "name": "爪",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "面具",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    }
+  ],
+  "physics": {
+    "hair_chains": 6,
+    "clothes_chains": 6,
+    "colliders": 12,
+    "joints": 75
+  },
+  "source_sha256": "020f48fa8873ddab0a7f4422ab4150c20865b61c0df1c9cfda06ea3cfd468c12",
+  "source_unchanged": true,
+  "max_weight_total_error": 0.0,
+  "foot_test": {
+    "bone": "足首.L",
+    "angle_deg": 25,
+    "moved_vertices_over_0_1mm": 1215,
+    "max_displacement_m": 0.07205870846368907
+  },
+  "helper_links": [
+    [
+      "足D.L",
+      "足.L"
+    ],
+    [
+      "ひざD.L",
+      "ひざ.L"
+    ],
+    [
+      "足首D.L",
+      "足首.L"
+    ],
+    [
+      "足D.R",
+      "足.R"
+    ],
+    [
+      "ひざD.R",
+      "ひざ.R"
+    ],
+    [
+      "足首D.R",
+      "足首.R"
+    ]
+  ],
+  "chains": [
+    {
+      "group": "Clothes",
+      "attachment": "YJ_0_1.R",
+      "nodes": [
+        "YJ_1_1.R",
+        "YJ_2_1.R",
+        "YJ_3_1.R",
+        "YJ_4_1.R"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "YD_0_1.R",
+      "nodes": [
+        "YD_1_1.R",
+        "YD_2_1.R",
+        "YD_3_1.R",
+        "YD_4_1.R"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "YJ_0_1.L",
+      "nodes": [
+        "YJ_1_1.L",
+        "YJ_2_1.L",
+        "YJ_3_1.L",
+        "YJ_4_1.L"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "YD_0_1.L",
+      "nodes": [
+        "YD_1_1.L",
+        "YD_2_1.L",
+        "YD_3_1.L",
+        "YD_4_1.L"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "TD_0_1.R",
+      "nodes": [
+        "TD_1_1.R",
+        "TD_2_1.R",
+        "TD_3_1.R",
+        "TD_4_1.R",
+        "TD_5_1.R"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "TJ_0_1.R",
+      "nodes": [
+        "TJ_1_1.R",
+        "TJ_2_1.R",
+        "TJ_3_1.R",
+        "TJ_4_1.R",
+        "TJ_5_1.R"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "TD_0_1.L",
+      "nodes": [
+        "TD_1_1.L",
+        "TD_2_1.L",
+        "TD_3_1.L",
+        "TD_4_1.L",
+        "TD_5_1.L"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "TJ_0_1.L",
+      "nodes": [
+        "TJ_1_1.L",
+        "TJ_2_1.L",
+        "TJ_3_1.L",
+        "TJ_4_1.L",
+        "TJ_5_1.L"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "CF_0_1.R",
+      "nodes": [
+        "CF_1_1.R",
+        "CF_2_1.R",
+        "CF_3_1.R",
+        "CF_4_1.R",
+        "CF_5_1.R"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "CF_0_1.L",
+      "nodes": [
+        "CF_1_1.L",
+        "CF_2_1.L",
+        "CF_3_1.L",
+        "CF_4_1.L",
+        "CF_5_1.L"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "带1_0_1.L",
+      "nodes": [
+        "带1_1_1.L",
+        "带1_2_1.L",
+        "带1_3_1.L",
+        "带1_4_1.L",
+        "带1_5_1.L",
+        "带1_6_1.L",
+        "带1_7_1.L",
+        "带1_8_1.L",
+        "带1_9_1.L",
+        "带1_10_1.L",
+        "带1_11_1.L",
+        "带1_12_1.L",
+        "带1_13_1.L",
+        "带1_14_1.L"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "带2_0_1.L",
+      "nodes": [
+        "带2_1_1.L",
+        "带2_2_1.L",
+        "带2_3_1.L",
+        "带2_4_1.L",
+        "带2_5_1.L",
+        "带2_6_1.L",
+        "带2_7_1.L",
+        "带2_8_1.L",
+        "带2_9_1.L",
+        "带2_10_1.L",
+        "带2_11_1.L",
+        "带2_12_1.L",
+        "带2_13_1.L",
+        "带2_14_1.L",
+        "带2_15_1.L"
+      ]
+    }
+  ],
+  "mesh_binary_preserved": true,
+  "output_sha256": "f667241f66488d5f18afad4f6ed708b8ac6833b68e5c78c8c5b36d49859faba8",
+  "mesh_binary_sha256": "833a3dd87016d13e1e4c51a5d4cd52f09fc9c821b66c16e9e724e1c5be66fab1",
+  "alpha_method": "UV triangle coverage on RGBA texture thumbnails with maximum edge 1024; material factor alpha preserved; validated in Godot."
+}

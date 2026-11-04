@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "yoimiya",
+      "label": "宵宫",
+      "game": "原神",
+      "model": "res://assets/characters/roster/yoimiya/yoimiya.vrm",
+      "model_sha256": "3af659593ad36b4bf335eaa1c23ae651399ae93122ba20ac36ff45860f4495cf",
+      "source_archive": "D:\\模型\\20261008\\【宵宫】_by_原神_e080d489ea2562e9ec8e2da37d3d1290.zip",
+      "source_sha256": "015e668c334d4aa36820f9ca6100656d2824ac1203cc43708f5bb0f1ca115bb7",
+      "body_pmx": "宵宫.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 7,
+        "clothes_chains": 25,
+        "colliders": 12,
+        "joints": 170
+      },
+      "bytes": 38173980
+    },
+    {
+      "id": "yunjin",
+      "label": "云堇",
+      "game": "原神",
+      "model": "res://assets/characters/roster/yunjin/yunjin.vrm",
+      "model_sha256": "72d1b77d4c320be042cbd8342ee5449ee70f16cebaca44e3c9def81ce20c96ed",
+      "source_archive": "D:\\模型\\20261008\\【模之屋】云堇_by_原神_75b1340f08dbb67a6829348136e453c2.zip",
+      "source_sha256": "bb8972aee772b847e7e585ddfb9db505f30d0b46192ae776db8946f9ac7cd12c",
+      "body_pmx": "云堇.pmx",
+      "excluded_pmx": [
+        "花枪.pmx"
+      ],
+      "physics": {
+        "hair_chains": 8,
+        "clothes_chains": 40,
+        "colliders": 12,
+        "joints": 380
+      },
+      "bytes": 41733428
+    },
+    {
+      "id": "fischl",
+      "label": "菲谢尔",
+      "game": "原神",
+      "model": "res://assets/characters/roster/fischl/fischl.vrm",
+      "model_sha256": "008037598fdeb8da2bd2c2cf7321ff57226d6a04e0ee7ccbe9d388c2bf3a2e28",
+      "source_archive": "D:\\模型\\20261008\\菲谢尔_by_原神_a720c397edb9e54a0b1e676eda2ab14e.zip",
+      "source_sha256": "cf3922d7136ddeaf4de9b17080ba8558127885982aa85ede7f7e2d9b93bd7102",
+      "body_pmx": "菲谢尔.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 4,
+        "clothes_chains": 16,
+        "colliders": 12,
+        "joints": 173
+      },
+      "bytes": 42784340
+    },
+    {
+      "id": "noelle",
+      "label": "诺艾尔",
+      "game": "原神",
+      "model": "res://assets/characters/roster/noelle/noelle.vrm",
+      "model_sha256": "cdc49ba54481dd040cacb8e930e48f018dcad9135a2cea934ef15cf6776ad5e0",
+      "source_archive": "D:\\模型\\20261008\\诺艾尔_by_原神_3cccac1569c27994fc57f52955b2ff67.zip",
+      "source_sha256": "150f54b75a835060af8d99280e1895d635f78c8ead164cb8120bd26cb2703031",
+      "body_pmx": "诺艾尔.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 1,
+        "clothes_chains": 12,
+        "colliders": 12,
+        "joints": 171
+      },
+      "bytes": 20359776
+    },
+    {
+      "id": "kuki_shinobu",
+      "label": "久岐忍",
+      "game": "原神",
+      "model": "res://assets/characters/roster/kuki_shinobu/kuki_shinobu.vrm",
+      "model_sha256": "f667241f66488d5f18afad4f6ed708b8ac6833b68e5c78c8c5b36d49859faba8",
+      "source_archive": "D:\\模型\\20261008\\【久岐忍】_by_原神_09d1482901922fa6ce46c659d49bdd2d.zip",
+      "source_sha256": "020f48fa8873ddab0a7f4422ab4150c20865b61c0df1c9cfda06ea3cfd468c12",
+      "body_pmx": "久岐忍.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 6,
+        "clothes_chains": 6,
+        "colliders": 12,
+        "joints": 75
+      },
+      "bytes": 45136968
+    }
+  ]
+}

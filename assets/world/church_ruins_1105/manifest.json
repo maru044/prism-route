@@ -1,0 +1,2610 @@
+{
+  "source": "D:\\Prism Route\\map\\map_current.3dm",
+  "spawn": [
+    107.64,
+    1031.65,
+    43.5
+  ],
+  "spawn_look_direction": [
+    0.4104,
+    0.9119,
+    0.0
+  ],
+  "feature": "church_ruins_1105",
+  "native_center": [
+    1450.0,
+    1150.0,
+    0.0
+  ],
+  "materials": {
+    "path_flagstone": {
+      "metallic": 0.02,
+      "color": [
+        0.72,
+        0.7,
+        0.65
+      ],
+      "roughness": 0.9,
+      "opacity": 1.0
+    },
+    "pavement_marble_ivory": {
+      "metallic": 0.02,
+      "color": [
+        0.84,
+        0.82,
+        0.76
+      ],
+      "roughness": 0.8,
+      "opacity": 1.0
+    },
+    "ancient_bronze": {
+      "metallic": 0.85,
+      "color": [
+        0.32,
+        0.35,
+        0.3
+      ],
+      "roughness": 0.45,
+      "opacity": 1.0
+    },
+    "stained_glass_azure": {
+      "metallic": 0.1,
+      "color": [
+        0.22,
+        0.65,
+        0.82
+      ],
+      "roughness": 0.15,
+      "opacity": 0.6
+    },
+    "sacred_gold_ivory": {
+      "metallic": 0.4,
+      "color": [
+        0.85,
+        0.76,
+        0.55
+      ],
+      "roughness": 0.6,
+      "opacity": 1.0
+    },
+    "weathered_limestone": {
+      "metallic": 0.02,
+      "color": [
+        0.86,
+        0.83,
+        0.77
+      ],
+      "roughness": 0.88,
+      "opacity": 1.0
+    },
+    "weathered_timber": {
+      "metallic": 0.0,
+      "color": [
+        0.42,
+        0.36,
+        0.3
+      ],
+      "roughness": 0.92,
+      "opacity": 1.0
+    }
+  },
+  "objects": [
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          117.20696258544922,
+          1052.465087890625,
+          55.167964935302734
+        ],
+        [
+          119.67769622802734,
+          1057.5836181640625,
+          55.95071792602539
+        ]
+      ],
+      "vertex_count": 1637,
+      "id": "2d801154-bff1-4ad9-b8f1-78464f813aee",
+      "kind": "Structure",
+      "index_count": 9168,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 0,
+      "name": "PR_Church_RoofBatten_L_5_98",
+      "normal_offset": 56316,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          117.67538452148438,
+          1052.2545166015625,
+          54.926692962646484
+        ],
+        [
+          120.13621520996094,
+          1057.3770751953125,
+          55.697364807128906
+        ]
+      ],
+      "vertex_count": 1637,
+      "id": "4b68a87d-e09e-43c2-9dba-9d7384bdeae6",
+      "kind": "Structure",
+      "index_count": 9168,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 75960,
+      "name": "PR_Church_RoofBatten_L_5_94",
+      "normal_offset": 132276,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          115.57714080810547,
+          1053.1981201171875,
+          54.770233154296875
+        ],
+        [
+          117.05307006835938,
+          1056.0511474609375,
+          55.29193115234375
+        ]
+      ],
+      "vertex_count": 1019,
+      "id": "cc1c7fd9-f108-47b1-a49f-b9767894c05f",
+      "kind": "Structure",
+      "index_count": 5568,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 151920,
+      "name": "PR_Church_RoofBatten_R_5_88",
+      "normal_offset": 186420,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          118.36369323730469,
+          1051.9451904296875,
+          54.53889846801758
+        ],
+        [
+          120.81050109863281,
+          1057.0733642578125,
+          55.29193115234375
+        ]
+      ],
+      "vertex_count": 1625,
+      "id": "21a015f9-441c-4a71-b7e5-6a49c132a1c1",
+      "kind": "Structure",
+      "index_count": 9096,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 198648,
+      "name": "PR_Church_RoofBatten_L_5_88",
+      "normal_offset": 254532,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          114.91023254394531,
+          1053.498046875,
+          54.336910247802734
+        ],
+        [
+          116.39324188232422,
+          1056.34814453125,
+          54.84893798828125
+        ]
+      ],
+      "vertex_count": 1019,
+      "id": "60790f73-706e-4c2d-aeb9-ec543ed40f61",
+      "kind": "Structure",
+      "index_count": 5568,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 274032,
+      "name": "PR_Church_RoofBatten_R_5_82",
+      "normal_offset": 308532,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          119.03060150146484,
+          1051.645263671875,
+          54.11354446411133
+        ],
+        [
+          121.46430969238281,
+          1056.77880859375,
+          54.84893798828125
+        ]
+      ],
+      "vertex_count": 1613,
+      "id": "78e9a38e-fd30-4a6f-a2a2-9beb39dd3863",
+      "kind": "Structure",
+      "index_count": 9024,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 320760,
+      "name": "PR_Church_RoofBatten_L_5_82",
+      "normal_offset": 376212,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          114.16553497314453,
+          1053.8330078125,
+          53.77375411987305
+        ],
+        [
+          115.65625,
+          1056.6800537109375,
+          54.274024963378906
+        ]
+      ],
+      "vertex_count": 1019,
+      "id": "d469c18b-c97c-4f07-bb83-d08dffcccc70",
+      "kind": "Structure",
+      "index_count": 5568,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 395568,
+      "name": "PR_Church_RoofBatten_R_5_75",
+      "normal_offset": 430068,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          119.77531433105469,
+          1051.310546875,
+          53.56007385253906
+        ],
+        [
+          122.19475555419922,
+          1056.4498291015625,
+          54.274024963378906
+        ]
+      ],
+      "vertex_count": 1637,
+      "id": "911e1aa0-bc7b-41b6-9b02-cdfaad0d28d5",
+      "kind": "Structure",
+      "index_count": 9168,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 442296,
+      "name": "PR_Church_RoofBatten_L_5_75",
+      "normal_offset": 498612,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          114.95088958740234,
+          1047.4490966796875,
+          55.92877197265625
+        ],
+        [
+          116.5234375,
+          1050.559326171875,
+          56.492958068847656
+        ]
+      ],
+      "vertex_count": 1097,
+      "id": "f8b39856-8543-478b-8f05-bbca6377486d",
+      "kind": "Structure",
+      "index_count": 6024,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 518256,
+      "name": "PR_Church_RoofBatten_L_4_98",
+      "normal_offset": 555516,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          115.42061614990234,
+          1047.23779296875,
+          55.66946029663086
+        ],
+        [
+          116.9924545288086,
+          1050.3482666015625,
+          56.2248420715332
+        ]
+      ],
+      "vertex_count": 1109,
+      "id": "c3801d32-f187-408d-89d3-b62f5e5ef8fc",
+      "kind": "Structure",
+      "index_count": 6096,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 568680,
+      "name": "PR_Church_RoofBatten_L_4_94",
+      "normal_offset": 606372,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          113.31707763671875,
+          1048.184326171875,
+          55.05295944213867
+        ],
+        [
+          115.79568481445312,
+          1053.29931640625,
+          55.79936218261719
+        ]
+      ],
+      "vertex_count": 1637,
+      "id": "cacc46ab-1a4f-48f0-aee8-4082aa38c9fb",
+      "kind": "Structure",
+      "index_count": 9168,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 619680,
+      "name": "PR_Church_RoofBatten_R_4_88",
+      "normal_offset": 675996,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          116.10974884033203,
+          1046.927734375,
+          55.25592803955078
+        ],
+        [
+          117.68118286132812,
+          1050.0382080078125,
+          55.79936218261719
+        ]
+      ],
+      "vertex_count": 1085,
+      "id": "7181645e-33d8-489e-b5d9-5a9aac8ec393",
+      "kind": "Structure",
+      "index_count": 5952,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 695640,
+      "name": "PR_Church_RoofBatten_L_4_88",
+      "normal_offset": 732468,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          112.65036010742188,
+          1048.4844970703125,
+          54.609893798828125
+        ],
+        [
+          115.12864685058594,
+          1053.599365234375,
+          55.33791732788086
+        ]
+      ],
+      "vertex_count": 1625,
+      "id": "79e40ec6-9510-40b7-8ee0-41c4fbac9415",
+      "kind": "Structure",
+      "index_count": 9096,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 745488,
+      "name": "PR_Church_RoofBatten_R_4_82",
+      "normal_offset": 801372,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          116.77645874023438,
+          1046.6278076171875,
+          54.609893798828125
+        ],
+        [
+          119.24990844726562,
+          1051.7447509765625,
+          55.33791732788086
+        ]
+      ],
+      "vertex_count": 1613,
+      "id": "655315a1-a334-4398-9963-c856b88e4db6",
+      "kind": "Structure",
+      "index_count": 9024,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 820872,
+      "name": "PR_Church_RoofBatten_L_4_82",
+      "normal_offset": 876324,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          111.90664672851562,
+          1048.8192138671875,
+          54.03490447998047
+        ],
+        [
+          114.3838119506836,
+          1053.9344482421875,
+          54.74213409423828
+        ]
+      ],
+      "vertex_count": 1613,
+      "id": "b5973eb8-e8c6-4554-8f32-0dd056ff2c35",
+      "kind": "Structure",
+      "index_count": 9024,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 895680,
+      "name": "PR_Church_RoofBatten_R_4_75",
+      "normal_offset": 951132,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          117.52017211914062,
+          1046.293212890625,
+          54.03490447998047
+        ],
+        [
+          119.99474334716797,
+          1051.4095458984375,
+          54.74213409423828
+        ]
+      ],
+      "vertex_count": 1625,
+      "id": "2557ca55-b630-4bc4-9e7e-c3b583d59fe3",
+      "kind": "Structure",
+      "index_count": 9096,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 970488,
+      "name": "PR_Church_RoofBatten_L_4_75",
+      "normal_offset": 1026372,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          112.69039154052734,
+          1042.43505859375,
+          56.254112243652344
+        ],
+        [
+          115.16972351074219,
+          1047.5499267578125,
+          57.03355026245117
+        ]
+      ],
+      "vertex_count": 1625,
+      "id": "a5d03021-1808-48e0-8359-1ed5c61c7eca",
+      "kind": "Structure",
+      "index_count": 9096,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 1045872,
+      "name": "PR_Church_RoofBatten_L_3_98",
+      "normal_offset": 1101756,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          113.1524429321289,
+          1042.22705078125,
+          55.985931396484375
+        ],
+        [
+          115.63938903808594,
+          1047.338623046875,
+          56.74809265136719
+        ]
+      ],
+      "vertex_count": 1625,
+      "id": "2baeffc9-57d0-44e6-bafd-61f6e2223a48",
+      "kind": "Structure",
+      "index_count": 9096,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 1121256,
+      "name": "PR_Church_RoofBatten_L_3_94",
+      "normal_offset": 1177140,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          111.0841064453125,
+          1043.158447265625,
+          55.7857666015625
+        ],
+        [
+          112.53142547607422,
+          1046.0224609375,
+          56.300270080566406
+        ]
+      ],
+      "vertex_count": 1043,
+      "id": "c854fa88-51cd-47cc-8398-659a5523c5fe",
+      "kind": "Structure",
+      "index_count": 5712,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 1196640,
+      "name": "PR_Church_RoofBatten_R_3_88",
+      "normal_offset": 1232004,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          113.82870483398438,
+          1041.922607421875,
+          55.56036376953125
+        ],
+        [
+          116.3283920288086,
+          1047.0286865234375,
+          56.300270080566406
+        ]
+      ],
+      "vertex_count": 1637,
+      "id": "7bbb7b4c-84a4-41ab-bf84-d0c71a5cd5f3",
+      "kind": "Structure",
+      "index_count": 9168,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 1244520,
+      "name": "PR_Church_RoofBatten_L_3_88",
+      "normal_offset": 1300836,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          110.43128967285156,
+          1043.4525146484375,
+          55.31562042236328
+        ],
+        [
+          111.87117004394531,
+          1046.3192138671875,
+          55.81964874267578
+        ]
+      ],
+      "vertex_count": 1031,
+      "id": "afca5138-a060-40a0-8c51-e72a24facd80",
+      "kind": "Structure",
+      "index_count": 5640,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 1320480,
+      "name": "PR_Church_RoofBatten_R_3_82",
+      "normal_offset": 1355412,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          114.48152160644531,
+          1041.628662109375,
+          55.098846435546875
+        ],
+        [
+          116.99496459960938,
+          1046.7288818359375,
+          55.81964874267578
+        ]
+      ],
+      "vertex_count": 1637,
+      "id": "a23db753-b851-4797-af88-07a2c5b12703",
+      "kind": "Structure",
+      "index_count": 9168,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 1367784,
+      "name": "PR_Church_RoofBatten_L_3_82",
+      "normal_offset": 1424100,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          109.70419311523438,
+          1043.7801513671875,
+          54.71065139770508
+        ],
+        [
+          111.13516998291016,
+          1046.650146484375,
+          55.2036247253418
+        ]
+      ],
+      "vertex_count": 1031,
+      "id": "590a4e7b-5ba6-43cc-b7ee-960dc83ed844",
+      "kind": "Structure",
+      "index_count": 5640,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 1443744,
+      "name": "PR_Church_RoofBatten_R_3_75",
+      "normal_offset": 1478676,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          115.20863342285156,
+          1041.30126953125,
+          54.502986907958984
+        ],
+        [
+          117.7385025024414,
+          1046.39453125,
+          55.2036247253418
+        ]
+      ],
+      "vertex_count": 1637,
+      "id": "ce3e3708-f0a2-4b7b-a516-e1faba740e9a",
+      "kind": "Structure",
+      "index_count": 9168,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 1491048,
+      "name": "PR_Church_RoofBatten_L_3_75",
+      "normal_offset": 1547364,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          110.42681884765625,
+          1037.42236328125,
+          57.01051712036133
+        ],
+        [
+          112.00370788574219,
+          1040.5308837890625,
+          57.57310104370117
+        ]
+      ],
+      "vertex_count": 1097,
+      "id": "ee3c5595-1cf7-49ac-b969-81d175bff7af",
+      "kind": "Structure",
+      "index_count": 6024,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 1567008,
+      "name": "PR_Church_RoofBatten_L_2_98",
+      "normal_offset": 1604268,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          110.87500762939453,
+          1037.220458984375,
+          56.7173957824707
+        ],
+        [
+          112.4599838256836,
+          1040.3258056640625,
+          57.268672943115234
+        ]
+      ],
+      "vertex_count": 1109,
+      "id": "ac4e3c3f-bd84-4b97-bef1-280902697bad",
+      "kind": "Structure",
+      "index_count": 6096,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 1617432,
+      "name": "PR_Church_RoofBatten_L_2_94",
+      "normal_offset": 1655124,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          108.86968994140625,
+          1038.1240234375,
+          56.061248779296875
+        ],
+        [
+          111.30361938476562,
+          1043.2574462890625,
+          56.79705810546875
+        ]
+      ],
+      "vertex_count": 1625,
+      "id": "b5a338d7-43d7-4b55-a119-81a3b026691d",
+      "kind": "Structure",
+      "index_count": 9096,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 1668432,
+      "name": "PR_Church_RoofBatten_R_2_88",
+      "normal_offset": 1724316,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          111.52912139892578,
+          1036.9259033203125,
+          56.25996398925781
+        ],
+        [
+          113.12699127197266,
+          1040.02587890625,
+          56.79705810546875
+        ]
+      ],
+      "vertex_count": 1109,
+      "id": "fe207542-67ac-403d-9114-ed0195201f73",
+      "kind": "Structure",
+      "index_count": 6096,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 1743816,
+      "name": "PR_Church_RoofBatten_L_2_88",
+      "normal_offset": 1781508,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          108.23994445800781,
+          1038.407958984375,
+          55.5805549621582
+        ],
+        [
+          110.65116119384766,
+          1043.5506591796875,
+          56.29679870605469
+        ]
+      ],
+      "vertex_count": 1625,
+      "id": "e4dba773-6475-4787-ab8a-4fcb1d94178d",
+      "kind": "Structure",
+      "index_count": 9096,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 1794816,
+      "name": "PR_Church_RoofBatten_R_2_82",
+      "normal_offset": 1850700,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          112.15887451171875,
+          1036.6422119140625,
+          55.5805549621582
+        ],
+        [
+          114.69934844970703,
+          1041.731201171875,
+          56.29679870605469
+        ]
+      ],
+      "vertex_count": 1625,
+      "id": "3f5d9177-64b5-481f-93b7-64f233ee2306",
+      "kind": "Structure",
+      "index_count": 9096,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 1870200,
+      "name": "PR_Church_RoofBatten_L_2_82",
+      "normal_offset": 1926084,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          107.53982543945312,
+          1038.7235107421875,
+          54.96445846557617
+        ],
+        [
+          109.92448425292969,
+          1043.8770751953125,
+          55.660926818847656
+        ]
+      ],
+      "vertex_count": 1625,
+      "id": "fea68d6e-fb8b-46c9-a8f4-21cd9bfb2acd",
+      "kind": "Structure",
+      "index_count": 9096,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 1945584,
+      "name": "PR_Church_RoofBatten_R_2_75",
+      "normal_offset": 2001468,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          112.8590087890625,
+          1036.3267822265625,
+          54.96445846557617
+        ],
+        [
+          115.42601013183594,
+          1041.404541015625,
+          55.660926818847656
+        ]
+      ],
+      "vertex_count": 1613,
+      "id": "471d9fb5-dac3-4cea-bc99-d329153e5540",
+      "kind": "Structure",
+      "index_count": 9024,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 2020968,
+      "name": "PR_Church_RoofBatten_L_2_75",
+      "normal_offset": 2076420,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          108.1637191772461,
+          1032.4024658203125,
+          57.338035583496094
+        ],
+        [
+          110.64606475830078,
+          1037.5301513671875,
+          59.09346008300781
+        ]
+      ],
+      "vertex_count": 1646,
+      "id": "1f6e429e-8a53-4e93-82ed-4b9c4724b4ba",
+      "kind": "Structure",
+      "index_count": 9216,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 2095776,
+      "name": "PR_Church_RoofBatten_L_1_98",
+      "normal_offset": 2152392,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          108.5993881225586,
+          1032.206787109375,
+          57.03330993652344
+        ],
+        [
+          111.09393310546875,
+          1037.328369140625,
+          58.741397857666016
+        ]
+      ],
+      "vertex_count": 1646,
+      "id": "f5df6829-0403-40c0-8391-e0edeada6e7c",
+      "kind": "Structure",
+      "index_count": 9216,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 2172144,
+      "name": "PR_Church_RoofBatten_L_1_94",
+      "normal_offset": 2228760,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          106.65221405029297,
+          1033.08447265625,
+          56.561317443847656
+        ],
+        [
+          109.08963012695312,
+          1038.2288818359375,
+          58.206722259521484
+        ]
+      ],
+      "vertex_count": 1646,
+      "id": "d904ffa1-749a-4cba-890d-a7c2bc4afb1c",
+      "kind": "Structure",
+      "index_count": 9216,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 2248512,
+      "name": "PR_Church_RoofBatten_R_1_88",
+      "normal_offset": 2305128,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          109.23192596435547,
+          1031.9224853515625,
+          56.561317443847656
+        ],
+        [
+          111.7475357055664,
+          1037.0338134765625,
+          58.206722259521484
+        ]
+      ],
+      "vertex_count": 1646,
+      "id": "3250e59c-67d3-4a0d-83d0-258cd5103f8d",
+      "kind": "Structure",
+      "index_count": 9216,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 2324880,
+      "name": "PR_Church_RoofBatten_L_1_88",
+      "normal_offset": 2381496,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          106.04635620117188,
+          1033.3580322265625,
+          56.06073760986328
+        ],
+        [
+          108.46022033691406,
+          1038.5111083984375,
+          57.650306701660156
+        ]
+      ],
+      "vertex_count": 1646,
+      "id": "b04e2629-f3d7-49cc-92de-0babdecb424c",
+      "kind": "Structure",
+      "index_count": 9216,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 2401248,
+      "name": "PR_Church_RoofBatten_R_1_82",
+      "normal_offset": 2457864,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          109.83797454833984,
+          1031.6500244140625,
+          56.06073760986328
+        ],
+        [
+          112.37675476074219,
+          1036.7503662109375,
+          57.650306701660156
+        ]
+      ],
+      "vertex_count": 1658,
+      "id": "367e6c12-8590-4773-ac74-e767c9bdafc2",
+      "kind": "Structure",
+      "index_count": 9288,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 2477616,
+      "name": "PR_Church_RoofBatten_L_1_82",
+      "normal_offset": 2534664,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          105.37499237060547,
+          1033.6611328125,
+          55.424530029296875
+        ],
+        [
+          107.760498046875,
+          1038.824951171875,
+          56.95288848876953
+        ]
+      ],
+      "vertex_count": 1670,
+      "id": "06fe87ad-0f08-4484-92b6-d74a0dd42894",
+      "kind": "Structure",
+      "index_count": 9360,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 2554560,
+      "name": "PR_Church_RoofBatten_R_1_75",
+      "normal_offset": 2612040,
+      "collision": false
+    },
+    {
+      "category": "03_battens",
+      "bounds": [
+        [
+          110.50955200195312,
+          1031.347900390625,
+          55.424530029296875
+        ],
+        [
+          113.07626342773438,
+          1036.435546875,
+          56.95288848876953
+        ]
+      ],
+      "vertex_count": 1670,
+      "id": "1973e7a8-278c-4989-ac2e-5f2d57286e66",
+      "kind": "Structure",
+      "index_count": 9360,
+      "layer": "建筑::孤顶教堂遗迹遗址::03_节点与屋檐",
+      "material_key": "weathered_timber",
+      "offset": 2632080,
+      "name": "PR_Church_RoofBatten_L_1_75",
+      "normal_offset": 2689560,
+      "collision": false
+    },
+    {
+      "category": "04_cross",
+      "bounds": [
+        [
+          122.84546661376953,
+          1066.888916015625,
+          42.70000076293945
+        ],
+        [
+          124.56900024414062,
+          1067.8099365234375,
+          46.5
+        ]
+      ],
+      "vertex_count": 160,
+      "id": "a5c96847-1db4-4f4f-a0f3-8615fcc8c0b7",
+      "kind": "Prop",
+      "index_count": 372,
+      "layer": "建筑::孤顶教堂遗迹遗址::04_拓扑表面表达",
+      "material_key": "sacred_gold_ivory",
+      "offset": 2709600,
+      "name": "PR_Church_AltarCross",
+      "normal_offset": 2713008,
+      "collision": false
+    },
+    {
+      "category": "04_structure",
+      "bounds": [
+        [
+          100.072509765625,
+          1025.3326416015625,
+          51.099998474121094
+        ],
+        [
+          112.23526000976562,
+          1031.351318359375,
+          67.5999984741211
+        ]
+      ],
+      "vertex_count": 550,
+      "id": "f168bd11-8782-439b-9dba-548413dbdf37",
+      "kind": "Structure",
+      "index_count": 2256,
+      "layer": "建筑::孤顶教堂遗迹遗址::04_拓扑表面表达",
+      "material_key": "weathered_limestone",
+      "offset": 2714928,
+      "name": "PR_Church_BellTowerGableStone",
+      "normal_offset": 2730552,
+      "collision": true
+    },
+    {
+      "category": "04_structure",
+      "bounds": [
+        [
+          103.69088561236295,
+          1026.6886899556696,
+          43.6
+        ],
+        [
+          107.94434578689814,
+          1029.475455914663,
+          51.1
+        ]
+      ],
+      "vertex_count": 84,
+      "id": "acfd1b3d-bd6e-4001-b230-c6e7f911dc9f",
+      "kind": "Structure",
+      "index_count": 480,
+      "layer": "建筑::孤顶教堂遗迹遗址::04_拓扑表面表达",
+      "material_key": "weathered_limestone",
+      "offset": 2737152,
+      "name": "PR_Church_PortalArchJamb",
+      "normal_offset": 2740080,
+      "collision": true
+    },
+    {
+      "category": "04_structure",
+      "bounds": [
+        [
+          127.74932789842629,
+          1059.67787328602,
+          42.80789005638351
+        ],
+        [
+          129.80115128507026,
+          1064.6478454892247,
+          47.05348423587381
+        ]
+      ],
+      "vertex_count": 8,
+      "id": "05ce06b6-bfe2-4893-a750-f9e400c4c01a",
+      "kind": "Structure",
+      "index_count": 30,
+      "layer": "建筑::孤顶教堂遗迹遗址::04_拓扑表面表达",
+      "material_key": "weathered_limestone",
+      "offset": 2741088,
+      "name": "PR_Church_LeftWall_Bay_7",
+      "normal_offset": 2741304,
+      "collision": true
+    },
+    {
+      "category": "04_structure",
+      "bounds": [
+        [
+          125.72030254941168,
+          1054.559713838225,
+          42.85348423587381
+        ],
+        [
+          128.20528865101383,
+          1059.8830556246846,
+          47.10363783331312
+        ]
+      ],
+      "vertex_count": 8,
+      "id": "44ab581c-7444-496a-bc31-bf8024789b6c",
+      "kind": "Structure",
+      "index_count": 30,
+      "layer": "建筑::孤顶教堂遗迹遗址::04_拓扑表面表达",
+      "material_key": "weathered_limestone",
+      "offset": 2741400,
+      "name": "PR_Church_LeftWall_Bay_6",
+      "normal_offset": 2741616,
+      "collision": true
+    },
+    {
+      "category": "04_structure",
+      "bounds": [
+        [
+          123.60008504987957,
+          1049.4825908581624,
+          42.90363783331312
+        ],
+        [
+          126.17626330199923,
+          1054.7648961768896,
+          47.15379143075244
+        ]
+      ],
+      "vertex_count": 8,
+      "id": "78c898f8-4dee-4a4d-ae18-e0bd21a4ec50",
+      "kind": "Structure",
+      "index_count": 30,
+      "layer": "建筑::孤顶教堂遗迹遗址::04_拓扑表面表达",
+      "material_key": "weathered_limestone",
+      "offset": 2741712,
+      "name": "PR_Church_LeftWall_Bay_5",
+      "normal_offset": 2741928,
+      "collision": true
+    },
+    {
+      "category": "04_structure",
+      "bounds": [
+        [
+          121.34307932457116,
+          1044.4670225796995,
+          42.95379143075244
+        ],
+        [
+          124.05604580246711,
+          1049.687773196827,
+          47.20394502819176
+        ]
+      ],
+      "vertex_count": 8,
+      "id": "c30e33be-4569-498f-9304-0cfbbe0b09ff",
+      "kind": "Structure",
+      "index_count": 30,
+      "layer": "建筑::孤顶教堂遗迹遗址::04_拓扑表面表达",
+      "material_key": "weathered_limestone",
+      "offset": 2742024,
+      "name": "PR_Church_LeftWall_Bay_4",
+      "normal_offset": 2742240,
+      "collision": true
+    },
+    {
+      "category": "04_structure",
+      "bounds": [
+        [
+          118.94928537348652,
+          1039.5130090028356,
+          43.00394502819176
+        ],
+        [
+          121.79904007715871,
+          1044.672204918364,
+          47.25409862563108
+        ]
+      ],
+      "vertex_count": 8,
+      "id": "b1489e9a-8007-491e-933f-eb120487f096",
+      "kind": "Structure",
+      "index_count": 30,
+      "layer": "建筑::孤顶教堂遗迹遗址::04_拓扑表面表达",
+      "material_key": "weathered_limestone",
+      "offset": 2742336,
+      "name": "PR_Church_LeftWall_Bay_3",
+      "normal_offset": 2742552,
+      "collision": true
+    },
+    {
+      "category": "04_structure",
+      "bounds": [
+        [
+          116.46429927188436,
+          1034.6000318937047,
+          43.05409862563108
+        ],
+        [
+          119.40524612607406,
+          1039.7181913415002,
+          47.3042522230704
+        ]
+      ],
+      "vertex_count": 8,
+      "id": "0e2e4bc3-c226-47d7-a389-946562a1c128",
+      "kind": "Structure",
+      "index_count": 30,
+      "layer": "建筑::孤顶教堂遗迹遗址::04_拓扑表面表达",
+      "material_key": "weathered_limestone",
+      "offset": 2742648,
+      "name": "PR_Church_LeftWall_Bay_2",
+      "normal_offset": 2742864,
+      "collision": true
+    },
+    {
+      "category": "04_structure",
+      "bounds": [
+        [
+          113.97931317028218,
+          1029.6870547845738,
+          43.1042522230704
+        ],
+        [
+          116.9202600244719,
+          1034.8052142323693,
+          47.35440582050972
+        ]
+      ],
+      "vertex_count": 8,
+      "id": "ad3253af-7f69-4ee2-8d48-de4911ec131d",
+      "kind": "Structure",
+      "index_count": 30,
+      "layer": "建筑::孤顶教堂遗迹遗址::04_拓扑表面表达",
+      "material_key": "weathered_limestone",
+      "offset": 2742960,
+      "name": "PR_Church_LeftWall_Bay_1",
+      "normal_offset": 2743176,
+      "collision": true
+    },
+    {
+      "category": "04_cross",
+      "bounds": [
+        [
+          104.6047592163086,
+          1026.35400390625,
+          54.29999923706055
+        ],
+        [
+          106.32829284667969,
+          1027.2750244140625,
+          54.70000076293945
+        ]
+      ],
+      "vertex_count": 56,
+      "id": "30b5cd48-eb65-4d5c-ad36-18cee528f641",
+      "kind": "Prop",
+      "index_count": 132,
+      "layer": "建筑::孤顶教堂遗迹遗址::04_拓扑表面表达",
+      "material_key": "sacred_gold_ivory",
+      "offset": 2743272,
+      "name": "PR_Church_FacadeCross_H",
+      "normal_offset": 2744472,
+      "collision": false
+    },
+    {
+      "category": "04_cross",
+      "bounds": [
+        [
+          105.24310302734375,
+          1026.6412353515625,
+          52.599998474121094
+        ],
+        [
+          105.68994903564453,
+          1026.98779296875,
+          55.599998474121094
+        ]
+      ],
+      "vertex_count": 56,
+      "id": "8b85d44f-6ce3-4852-9d4a-72ad6cc415f6",
+      "kind": "Prop",
+      "index_count": 132,
+      "layer": "建筑::孤顶教堂遗迹遗址::04_拓扑表面表达",
+      "material_key": "sacred_gold_ivory",
+      "offset": 2745144,
+      "name": "PR_Church_FacadeCross_V",
+      "normal_offset": 2746344,
+      "collision": false
+    },
+    {
+      "category": "04_structure",
+      "bounds": [
+        [
+          117.51773245442561,
+          1064.1459634253124,
+          41.95789005638351
+        ],
+        [
+          129.77362979637633,
+          1070.2792860195104,
+          53.80789005638351
+        ]
+      ],
+      "vertex_count": 116,
+      "id": "f8e60bd5-aa19-471f-977d-5122af30c058",
+      "kind": "Structure",
+      "index_count": 684,
+      "layer": "建筑::孤顶教堂遗迹遗址::04_拓扑表面表达",
+      "material_key": "weathered_limestone",
+      "offset": 2747016,
+      "name": "PR_Church_StoneArchRib_08",
+      "normal_offset": 2751144,
+      "collision": true
+    },
+    {
+      "category": "04_structure",
+      "bounds": [
+        [
+          115.00527402130051,
+          1059.3790701285468,
+          42.003484235873806
+        ],
+        [
+          128.18244145615395,
+          1065.9269642645513,
+          54.85348423587381
+        ]
+      ],
+      "vertex_count": 116,
+      "id": "39e517e4-45f9-43a1-9b3d-4f96def1f488",
+      "kind": "Structure",
+      "index_count": 684,
+      "layer": "建筑::孤顶教堂遗迹遗址::04_拓扑表面表达",
+      "material_key": "weathered_limestone",
+      "offset": 2752536,
+      "name": "PR_Church_StoneArchRib_07",
+      "normal_offset": 2756664,
+      "collision": true
+    },
+    {
+      "category": "04_structure",
+      "bounds": [
+        [
+          112.5179640474604,
+          1054.259864938259,
+          42.05363783331312
+        ],
+        [
+          126.15573997934558,
+          1061.0150328979275,
+          55.40363783331312
+        ]
+      ],
+      "vertex_count": 116,
+      "id": "6282aeea-0b18-4903-bd0d-3509699e4d5d",
+      "kind": "Structure",
+      "index_count": 684,
+      "layer": "建筑::孤顶教堂遗迹遗址::04_拓扑表面表达",
+      "material_key": "weathered_limestone",
+      "offset": 2758056,
+      "name": "PR_Church_StoneArchRib_06",
+      "normal_offset": 2762184,
+      "collision": true
+    },
+    {
+      "category": "04_structure",
+      "bounds": [
+        [
+          110.11940045529232,
+          1049.1805956197816,
+          42.10379143075244
+        ],
+        [
+          124.04029212073553,
+          1056.0631656595513,
+          55.95379143075244
+        ]
+      ],
+      "vertex_count": 116,
+      "id": "99691a2d-1044-4343-a817-edc6452e7e52",
+      "kind": "Structure",
+      "index_count": 684,
+      "layer": "建筑::孤顶教堂遗迹遗址::04_拓扑表面表达",
+      "material_key": "weathered_limestone",
+      "offset": 2763576,
+      "name": "PR_Church_StoneArchRib_05",
+      "normal_offset": 2767704,
+      "collision": true
+    },
+    {
+      "category": "04_structure",
+      "bounds": [
+        [
+          107.85420901208875,
+          1044.1613437686015,
+          42.15394502819176
+        ],
+        [
+          121.79147211257623,
+          1051.0512809541412,
+          56.50394502819176
+        ]
+      ],
+      "vertex_count": 116,
+      "id": "72e4ff53-6b7d-4769-94bb-aa384a3a69d3",
+      "kind": "Structure",
+      "index_count": 684,
+      "layer": "建筑::孤顶教堂遗迹遗址::04_拓扑表面表达",
+      "material_key": "weathered_limestone",
+      "offset": 2769096,
+      "name": "PR_Church_StoneArchRib_04",
+      "normal_offset": 2773224,
+      "collision": true
+    },
+    {
+      "category": "04_structure",
+      "bounds": [
+        [
+          105.72296327043753,
+          1039.2023674825366,
+          42.204098625631076
+        ],
+        [
+          119.40870640416057,
+          1045.9791206830323,
+          57.05409862563108
+        ]
+      ],
+      "vertex_count": 116,
+      "id": "d5cfbfa4-fc61-422e-b6c7-cb4ece453961",
+      "kind": "Structure",
+      "index_count": 684,
+      "layer": "建筑::孤顶教堂遗迹遗址::04_拓扑表面表达",
+      "material_key": "weathered_limestone",
+      "offset": 2774616,
+      "name": "PR_Church_StoneArchRib_03",
+      "normal_offset": 2778744,
+      "collision": true
+    },
+    {
+      "category": "04_structure",
+      "bounds": [
+        [
+          103.6818767069175,
+          1034.2839628268362,
+          42.254252223070395
+        ],
+        [
+          116.93578151715747,
+          1040.8663887817647,
+          57.6042522230704
+        ]
+      ],
+      "vertex_count": 116,
+      "id": "51f9a8b9-1451-4c6c-91d6-035d9a4d90b5",
+      "kind": "Structure",
+      "index_count": 684,
+      "layer": "建筑::孤顶教堂遗迹遗址::04_拓扑表面表达",
+      "material_key": "weathered_limestone",
+      "offset": 2780136,
+      "name": "PR_Church_StoneArchRib_02",
+      "normal_offset": 2784264,
+      "collision": true
+    },
+    {
+      "category": "04_structure",
+      "bounds": [
+        [
+          101.63022193055652,
+          1029.3608024752991,
+          42.304405820509714
+        ],
+        [
+          114.47342484312392,
+          1035.758412576275,
+          59.154405820509716
+        ]
+      ],
+      "vertex_count": 116,
+      "id": "ae566e8d-2d5f-4db5-a64d-3b1e332b95cc",
+      "kind": "Structure",
+      "index_count": 684,
+      "layer": "建筑::孤顶教堂遗迹遗址::04_拓扑表面表达",
+      "material_key": "weathered_limestone",
+      "offset": 2785656,
+      "name": "PR_Church_StoneArchRib_01",
+      "normal_offset": 2789784,
+      "collision": true
+    },
+    {
+      "category": "04_structure",
+      "bounds": [
+        [
+          99.50212851089113,
+          1024.4214261695638,
+          42.35
+        ],
+        [
+          112.4978714891037,
+          1031.5785738304382,
+          67.2
+        ]
+      ],
+      "vertex_count": 116,
+      "id": "0f83a1b5-7733-4eab-a027-9e25c95a570d",
+      "kind": "Structure",
+      "index_count": 684,
+      "layer": "建筑::孤顶教堂遗迹遗址::04_拓扑表面表达",
+      "material_key": "weathered_limestone",
+      "offset": 2791176,
+      "name": "PR_Church_StoneArchRib_00",
+      "normal_offset": 2795304,
+      "collision": true
+    },
+    {
+      "category": "05_interior",
+      "bounds": [
+        [
+          120.42203521728516,
+          1056.424560546875,
+          42.29999923706055
+        ],
+        [
+          122.78619384765625,
+          1057.961181640625,
+          43.150001525878906
+        ]
+      ],
+      "vertex_count": 583,
+      "id": "24a09407-bc66-4a86-8379-51ee82c3c7a9",
+      "kind": "Structure",
+      "index_count": 1902,
+      "layer": "建筑::孤顶教堂遗迹遗址::05_下层地面与内部结构",
+      "material_key": "pavement_marble_ivory",
+      "offset": 2796696,
+      "name": "PR_Church_StonePew_12",
+      "normal_offset": 2811300,
+      "collision": true
+    },
+    {
+      "category": "05_interior",
+      "bounds": [
+        [
+          116.31838989257812,
+          1058.271240234375,
+          42.29999923706055
+        ],
+        [
+          118.68254852294922,
+          1059.807861328125,
+          43.150001525878906
+        ]
+      ],
+      "vertex_count": 583,
+      "id": "affb874d-8fd3-4df8-98bc-58fb4502ced8",
+      "kind": "Structure",
+      "index_count": 1902,
+      "layer": "建筑::孤顶教堂遗迹遗址::05_下层地面与内部结构",
+      "material_key": "pavement_marble_ivory",
+      "offset": 2818296,
+      "name": "PR_Church_StonePew_11",
+      "normal_offset": 2832900,
+      "collision": true
+    },
+    {
+      "category": "05_interior",
+      "bounds": [
+        [
+          118.98576354980469,
+          1053.23291015625,
+          42.29999923706055
+        ],
+        [
+          121.34992218017578,
+          1054.7694091796875,
+          43.150001525878906
+        ]
+      ],
+      "vertex_count": 596,
+      "id": "7a78d2f0-bdf7-43bf-8a9d-28e0554c09f4",
+      "kind": "Structure",
+      "index_count": 1956,
+      "layer": "建筑::孤顶教堂遗迹遗址::05_下层地面与内部结构",
+      "material_key": "pavement_marble_ivory",
+      "offset": 2839896,
+      "name": "PR_Church_StonePew_10",
+      "normal_offset": 2854872,
+      "collision": true
+    },
+    {
+      "category": "05_interior",
+      "bounds": [
+        [
+          114.88211822509766,
+          1055.0794677734375,
+          42.29999923706055
+        ],
+        [
+          117.24626922607422,
+          1056.6160888671875,
+          43.150001525878906
+        ]
+      ],
+      "vertex_count": 596,
+      "id": "e7bbea44-d283-40a9-8031-49d41abe75e3",
+      "kind": "Structure",
+      "index_count": 1956,
+      "layer": "建筑::孤顶教堂遗迹遗址::05_下层地面与内部结构",
+      "material_key": "pavement_marble_ivory",
+      "offset": 2862024,
+      "name": "PR_Church_StonePew_09",
+      "normal_offset": 2877000,
+      "collision": true
+    },
+    {
+      "category": "05_interior",
+      "bounds": [
+        [
+          116.31838989257812,
+          1047.305419921875,
+          42.849998474121094
+        ],
+        [
+          118.68254852294922,
+          1048.8419189453125,
+          43.70000076293945
+        ]
+      ],
+      "vertex_count": 558,
+      "id": "12439715-5208-44b3-8dba-70459bae838d",
+      "kind": "Structure",
+      "index_count": 1812,
+      "layer": "建筑::孤顶教堂遗迹遗址::05_下层地面与内部结构",
+      "material_key": "pavement_marble_ivory",
+      "offset": 2884152,
+      "name": "PR_Church_StonePew_08",
+      "normal_offset": 2898096,
+      "collision": true
+    },
+    {
+      "category": "05_interior",
+      "bounds": [
+        [
+          112.2147445678711,
+          1049.1519775390625,
+          42.849998474121094
+        ],
+        [
+          114.57890319824219,
+          1050.6885986328125,
+          43.70000076293945
+        ]
+      ],
+      "vertex_count": 566,
+      "id": "f64dafc6-1442-4970-8d6b-445a4a6c6ebb",
+      "kind": "Structure",
+      "index_count": 1836,
+      "layer": "建筑::孤顶教堂遗迹遗址::05_下层地面与内部结构",
+      "material_key": "pavement_marble_ivory",
+      "offset": 2904792,
+      "name": "PR_Church_StonePew_07",
+      "normal_offset": 2918928,
+      "collision": true
+    },
+    {
+      "category": "05_interior",
+      "bounds": [
+        [
+          114.88211822509766,
+          1044.1136474609375,
+          42.849998474121094
+        ],
+        [
+          117.24626922607422,
+          1045.6502685546875,
+          43.70000076293945
+        ]
+      ],
+      "vertex_count": 620,
+      "id": "2874e4d2-2513-4607-88f5-16d2d6f8a98c",
+      "kind": "Structure",
+      "index_count": 2040,
+      "layer": "建筑::孤顶教堂遗迹遗址::05_下层地面与内部结构",
+      "material_key": "pavement_marble_ivory",
+      "offset": 2925720,
+      "name": "PR_Church_StonePew_06",
+      "normal_offset": 2941320,
+      "collision": true
+    },
+    {
+      "category": "05_interior",
+      "bounds": [
+        [
+          110.7784652709961,
+          1045.9603271484375,
+          42.849998474121094
+        ],
+        [
+          113.14262390136719,
+          1047.496826171875,
+          43.70000076293945
+        ]
+      ],
+      "vertex_count": 620,
+      "id": "a0383f1e-6fa3-4811-9680-b4c7a8cae508",
+      "kind": "Structure",
+      "index_count": 2040,
+      "layer": "建筑::孤顶教堂遗迹遗址::05_下层地面与内部结构",
+      "material_key": "pavement_marble_ivory",
+      "offset": 2948760,
+      "name": "PR_Church_StonePew_05",
+      "normal_offset": 2964360,
+      "collision": true
+    },
+    {
+      "category": "05_interior",
+      "bounds": [
+        [
+          113.44583892822266,
+          1040.921875,
+          42.849998474121094
+        ],
+        [
+          115.80999755859375,
+          1042.45849609375,
+          43.70000076293945
+        ]
+      ],
+      "vertex_count": 583,
+      "id": "8a06c24d-a176-42e6-9949-9613e49941a3",
+      "kind": "Structure",
+      "index_count": 1902,
+      "layer": "建筑::孤顶教堂遗迹遗址::05_下层地面与内部结构",
+      "material_key": "pavement_marble_ivory",
+      "offset": 2971800,
+      "name": "PR_Church_StonePew_04",
+      "normal_offset": 2986404,
+      "collision": true
+    },
+    {
+      "category": "05_interior",
+      "bounds": [
+        [
+          109.34219360351562,
+          1042.7685546875,
+          42.849998474121094
+        ],
+        [
+          111.70635223388672,
+          1044.30517578125,
+          43.70000076293945
+        ]
+      ],
+      "vertex_count": 575,
+      "id": "264614fb-c6bc-47d2-9242-700cbc01ef7f",
+      "kind": "Structure",
+      "index_count": 1878,
+      "layer": "建筑::孤顶教堂遗迹遗址::05_下层地面与内部结构",
+      "material_key": "pavement_marble_ivory",
+      "offset": 2993400,
+      "name": "PR_Church_StonePew_03",
+      "normal_offset": 3007812,
+      "collision": true
+    },
+    {
+      "category": "05_interior",
+      "bounds": [
+        [
+          110.7784652709961,
+          1034.994384765625,
+          43.400001525878906
+        ],
+        [
+          113.14262390136719,
+          1036.531005859375,
+          44.25
+        ]
+      ],
+      "vertex_count": 583,
+      "id": "e667141b-8ba5-4a03-b2f8-7ddf1aa8669f",
+      "kind": "Structure",
+      "index_count": 1902,
+      "layer": "建筑::孤顶教堂遗迹遗址::05_下层地面与内部结构",
+      "material_key": "pavement_marble_ivory",
+      "offset": 3014712,
+      "name": "PR_Church_StonePew_02",
+      "normal_offset": 3029316,
+      "collision": true
+    },
+    {
+      "category": "05_interior",
+      "bounds": [
+        [
+          106.67481994628906,
+          1036.841064453125,
+          43.400001525878906
+        ],
+        [
+          109.03897857666016,
+          1038.377685546875,
+          44.25
+        ]
+      ],
+      "vertex_count": 583,
+      "id": "c6e00123-0967-4ca9-adcb-6d4c48e5afb6",
+      "kind": "Structure",
+      "index_count": 1902,
+      "layer": "建筑::孤顶教堂遗迹遗址::05_下层地面与内部结构",
+      "material_key": "pavement_marble_ivory",
+      "offset": 3036312,
+      "name": "PR_Church_StonePew_01",
+      "normal_offset": 3050916,
+      "collision": true
+    },
+    {
+      "category": "05_interior",
+      "bounds": [
+        [
+          120.88939666748047,
+          1063.754150390625,
+          42.70000076293945
+        ],
+        [
+          124.39117431640625,
+          1066.20263671875,
+          43.72999954223633
+        ]
+      ],
+      "vertex_count": 499,
+      "id": "6613fc88-1391-4338-a09a-4b026df904f9",
+      "kind": "Structure",
+      "index_count": 1476,
+      "layer": "建筑::孤顶教堂遗迹遗址::05_下层地面与内部结构",
+      "material_key": "pavement_marble_ivory",
+      "offset": 3057912,
+      "name": "PR_Church_AltarTable",
+      "normal_offset": 3069804,
+      "collision": true
+    },
+    {
+      "category": "05_interior",
+      "bounds": [
+        [
+          119.12255096435547,
+          1061.6864013671875,
+          41.0
+        ],
+        [
+          125.95284271240234,
+          1067.814453125,
+          42.70000076293945
+        ]
+      ],
+      "vertex_count": 307,
+      "id": "c8ecc449-a2a7-4152-89b3-5ae70bab55ce",
+      "kind": "Structure",
+      "index_count": 1002,
+      "layer": "建筑::孤顶教堂遗迹遗址::05_下层地面与内部结构",
+      "material_key": "pavement_marble_ivory",
+      "offset": 3075792,
+      "name": "PR_Church_AltarDais",
+      "normal_offset": 3083484,
+      "collision": true
+    },
+    {
+      "category": "05_interior",
+      "bounds": [
+        [
+          100.84764099121094,
+          1024.9542236328125,
+          41.0
+        ],
+        [
+          128.79803466796875,
+          1070.2584228515625,
+          43.400001525878906
+        ]
+      ],
+      "vertex_count": 3419,
+      "id": "341ed473-83dd-4ec6-90c5-e9ab0f4cc316",
+      "kind": "Structure",
+      "index_count": 15204,
+      "layer": "建筑::孤顶教堂遗迹遗址::05_下层地面与内部结构",
+      "material_key": "pavement_marble_ivory",
+      "offset": 3087168,
+      "name": "PR_Church_MainFloorPlinth",
+      "normal_offset": 3189012,
+      "collision": true
+    },
+    {
+      "category": "06_glazing",
+      "bounds": [
+        [
+          112.72542110066641,
+          1059.6605260920276,
+          43.35348423587381
+        ],
+        [
+          117.25301774559912,
+          1065.5255699379557,
+          51.77769578518921
+        ]
+      ],
+      "vertex_count": 4,
+      "id": "3521f3c7-0974-4c38-82f8-1c9e425beadb",
+      "kind": "Glazing",
+      "index_count": 6,
+      "layer": "建筑::孤顶教堂遗迹遗址::06_屋顶与立面",
+      "material_key": "stained_glass_azure",
+      "offset": 3230040,
+      "name": "PR_Church_StainedGlass_Bay_6",
+      "normal_offset": 3230112,
+      "collision": false
+    },
+    {
+      "category": "06_glazing",
+      "bounds": [
+        [
+          110.33162714958175,
+          1054.686597580834,
+          43.40363783331312
+        ],
+        [
+          114.84112496021545,
+          1060.6125928288247,
+          52.181513079913486
+        ]
+      ],
+      "vertex_count": 4,
+      "id": "c5e76ed8-9bde-4bf7-b6a0-708ec49c95e4",
+      "kind": "Glazing",
+      "index_count": 6,
+      "layer": "建筑::孤顶教堂遗迹遗址::06_屋顶与立面",
+      "material_key": "stained_glass_azure",
+      "offset": 3230160,
+      "name": "PR_Church_StainedGlass_Bay_5",
+      "normal_offset": 3230232,
+      "collision": false
+    },
+    {
+      "category": "06_glazing",
+      "bounds": [
+        [
+          108.07462142427337,
+          1049.670582084853,
+          43.45379143075244
+        ],
+        [
+          112.4915864187532,
+          1055.6585792519609,
+          52.58394894908387
+        ]
+      ],
+      "vertex_count": 4,
+      "id": "50e8fbd9-b3fe-482f-aabb-f1016ac958d9",
+      "kind": "Glazing",
+      "index_count": 6,
+      "layer": "建筑::孤顶教堂遗迹遗址::06_屋顶与立面",
+      "material_key": "stained_glass_azure",
+      "offset": 3230280,
+      "name": "PR_Church_StainedGlass_Bay_4",
+      "normal_offset": 3230352,
+      "collision": false
+    },
+    {
+      "category": "06_glazing",
+      "bounds": [
+        [
+          105.95440392474124,
+          1044.6124869605808,
+          43.50394502819176
+        ],
+        [
+          110.23557451015098,
+          1050.643010973498,
+          52.985024810012796
+        ]
+      ],
+      "vertex_count": 4,
+      "id": "291309b5-dbbd-49c0-9a12-f00fb9bcd005",
+      "kind": "Glazing",
+      "index_count": 6,
+      "layer": "建筑::孤顶教堂遗迹遗址::06_屋顶与立面",
+      "material_key": "stained_glass_azure",
+      "offset": 3230400,
+      "name": "PR_Church_StainedGlass_Bay_3",
+      "normal_offset": 3230472,
+      "collision": false
+    },
+    {
+      "category": "06_glazing",
+      "bounds": [
+        [
+          103.92537857572663,
+          1039.526355521037,
+          43.55409862563108
+        ],
+        [
+          108.07307288664028,
+          1045.5658879934354,
+          53.38522793983481
+        ]
+      ],
+      "vertex_count": 4,
+      "id": "563377f5-cffe-4cb3-a7e9-7768c7f7e446",
+      "kind": "Glazing",
+      "index_count": 6,
+      "layer": "建筑::孤顶教堂遗迹遗址::06_屋顶与立面",
+      "material_key": "stained_glass_azure",
+      "offset": 3230520,
+      "name": "PR_Church_StainedGlass_Bay_2",
+      "normal_offset": 3230592,
+      "collision": false
+    },
+    {
+      "category": "06_bronze",
+      "bounds": [
+        [
+          102.03516532868848,
+          1028.5445131835063,
+          54.45
+        ],
+        [
+          103.33516532868849,
+          1029.7808866546902,
+          55.75
+        ]
+      ],
+      "vertex_count": 92,
+      "id": "50467e79-7bb6-40ba-88fa-44847f461357",
+      "kind": "Prop",
+      "index_count": 540,
+      "layer": "建筑::孤顶教堂遗迹遗址::06_屋顶与立面",
+      "material_key": "ancient_bronze",
+      "offset": 3230640,
+      "name": "PR_Church_SecondaryBronzeBell",
+      "normal_offset": 3233904,
+      "collision": false
+    },
+    {
+      "category": "06_bronze",
+      "bounds": [
+        [
+          104.97689059680135,
+          1026.8264235484473,
+          60.2
+        ],
+        [
+          106.77689059680137,
+          1028.6264235484475,
+          62.0
+        ]
+      ],
+      "vertex_count": 134,
+      "id": "b30f8e38-613d-4048-a18b-36a1dc2f69d1",
+      "kind": "Prop",
+      "index_count": 792,
+      "layer": "建筑::孤顶教堂遗迹遗址::06_屋顶与立面",
+      "material_key": "ancient_bronze",
+      "offset": 3235008,
+      "name": "PR_Church_MainBronzeBell",
+      "normal_offset": 3239784,
+      "collision": false
+    },
+    {
+      "category": "07_pathway",
+      "bounds": [
+        [
+          98.7646073766635,
+          1013.0899567945258,
+          43.432500000000005
+        ],
+        [
+          100.51408762614375,
+          1014.6404765450455,
+          43.807500000000005
+        ]
+      ],
+      "vertex_count": 58,
+      "id": "f855c9f8-1d08-4435-bd8c-df68c29bfc9d",
+      "kind": "Structure",
+      "index_count": 336,
+      "layer": "建筑::孤顶教堂遗迹遗址::07_海风漫行路线",
+      "material_key": "path_flagstone",
+      "offset": 3241392,
+      "name": "PR_Church_SteppingStone_04",
+      "normal_offset": 3243432,
+      "collision": true
+    },
+    {
+      "category": "07_pathway",
+      "bounds": [
+        [
+          100.47446019886684,
+          1013.965401439494,
+          43.432500000000005
+        ],
+        [
+          102.2239404483471,
+          1015.5159211900137,
+          43.807500000000005
+        ]
+      ],
+      "vertex_count": 58,
+      "id": "19b4a535-822e-49a6-8b58-a36b22e82185",
+      "kind": "Structure",
+      "index_count": 336,
+      "layer": "建筑::孤顶教堂遗迹遗址::07_海风漫行路线",
+      "material_key": "path_flagstone",
+      "offset": 3244128,
+      "name": "PR_Church_SteppingStone_03",
+      "normal_offset": 3246168,
+      "collision": true
+    },
+    {
+      "category": "07_pathway",
+      "bounds": [
+        [
+          99.53974065606234,
+          1016.0309036487158,
+          43.432500000000005
+        ],
+        [
+          101.28922090554258,
+          1017.5814233992355,
+          43.807500000000005
+        ]
+      ],
+      "vertex_count": 58,
+      "id": "e7e9ef49-a5b0-4b00-874b-ad2b85372faa",
+      "kind": "Structure",
+      "index_count": 336,
+      "layer": "建筑::孤顶教堂遗迹遗址::07_海风漫行路线",
+      "material_key": "path_flagstone",
+      "offset": 3246864,
+      "name": "PR_Church_SteppingStone_02",
+      "normal_offset": 3248904,
+      "collision": true
+    },
+    {
+      "category": "07_pathway",
+      "bounds": [
+        [
+          101.34078562878318,
+          1016.8653118259508,
+          43.432500000000005
+        ],
+        [
+          103.09026587826344,
+          1018.4158315764705,
+          43.807500000000005
+        ]
+      ],
+      "vertex_count": 58,
+      "id": "3e9a9fbb-f01f-4587-b0d2-2538121a2754",
+      "kind": "Structure",
+      "index_count": 336,
+      "layer": "建筑::孤顶教堂遗迹遗址::07_海风漫行路线",
+      "material_key": "path_flagstone",
+      "offset": 3249600,
+      "name": "PR_Church_SteppingStone_01",
+      "normal_offset": 3251640,
+      "collision": true
+    },
+    {
+      "category": "07_pathway",
+      "bounds": [
+        [
+          100.3148739354612,
+          1018.9718505029052,
+          43.432500000000005
+        ],
+        [
+          102.06435418494144,
+          1020.5223702534252,
+          43.807500000000005
+        ]
+      ],
+      "vertex_count": 58,
+      "id": "2f15f860-1dd0-4d0d-b942-80346e1ada3a",
+      "kind": "Structure",
+      "index_count": 336,
+      "layer": "建筑::孤顶教堂遗迹遗址::07_海风漫行路线",
+      "material_key": "path_flagstone",
+      "offset": 3252336,
+      "name": "PR_Church_SteppingStone_00",
+      "normal_offset": 3254376,
+      "collision": true
+    },
+    {
+      "category": "07_pathway",
+      "bounds": [
+        [
+          116.84141540527344,
+          1066.8372802734375,
+          42.150001525878906
+        ],
+        [
+          133.89434814453125,
+          1077.7119140625,
+          42.400001525878906
+        ]
+      ],
+      "vertex_count": 366,
+      "id": "01f00604-e1ce-481c-ace4-1f51c1b8a712",
+      "kind": "Structure",
+      "index_count": 1152,
+      "layer": "建筑::孤顶教堂遗迹遗址::07_海风漫行路线",
+      "material_key": "path_flagstone",
+      "offset": 3255072,
+      "name": "PR_Church_AltarLookoutPath",
+      "normal_offset": 3264072,
+      "collision": true
+    },
+    {
+      "category": "07_pathway",
+      "bounds": [
+        [
+          112.01868438720703,
+          1022.072509765625,
+          42.400001525878906
+        ],
+        [
+          133.8963623046875,
+          1067.86767578125,
+          43.7999382019043
+        ]
+      ],
+      "vertex_count": 1033,
+      "id": "7f13c239-5a44-46bc-9e01-b25eb1cf3f54",
+      "kind": "Structure",
+      "index_count": 3894,
+      "layer": "建筑::孤顶教堂遗迹遗址::07_海风漫行路线",
+      "material_key": "path_flagstone",
+      "offset": 3268464,
+      "name": "PR_Church_RightPerimeterPath",
+      "normal_offset": 3296436,
+      "collision": true
+    },
+    {
+      "category": "07_pathway",
+      "bounds": [
+        [
+          96.24042510986328,
+          1029.2493896484375,
+          42.2000617980957
+        ],
+        [
+          118.84764099121094,
+          1074.5111083984375,
+          43.599998474121094
+        ]
+      ],
+      "vertex_count": 760,
+      "id": "ec3e1283-8f1c-4660-9c1a-577404b19ffc",
+      "kind": "Structure",
+      "index_count": 2820,
+      "layer": "建筑::孤顶教堂遗迹遗址::07_海风漫行路线",
+      "material_key": "path_flagstone",
+      "offset": 3308832,
+      "name": "PR_Church_LeftPerimeterPath",
+      "normal_offset": 3329232,
+      "collision": true
+    },
+    {
+      "category": "07_pathway",
+      "bounds": [
+        [
+          97.76990509033203,
+          1018.11474609375,
+          43.41999816894531
+        ],
+        [
+          108.07462310791016,
+          1024.2064208984375,
+          43.599998474121094
+        ]
+      ],
+      "vertex_count": 234,
+      "id": "36b6ddec-88c3-4693-94cc-b1ffd337787d",
+      "kind": "Structure",
+      "index_count": 912,
+      "layer": "建筑::孤顶教堂遗迹遗址::07_海风漫行路线",
+      "material_key": "path_flagstone",
+      "offset": 3338352,
+      "name": "PR_Church_EntranceStep",
+      "normal_offset": 3344808,
+      "collision": true
+    },
+    {
+      "category": "07_pathway",
+      "bounds": [
+        [
+          99.2289810180664,
+          1020.2258911132812,
+          43.349998474121094
+        ],
+        [
+          109.28292083740234,
+          1028.0228271484375,
+          43.599998474121094
+        ]
+      ],
+      "vertex_count": 380,
+      "id": "d59854ed-79af-4f2c-8638-a2f38a8b118f",
+      "kind": "Structure",
+      "index_count": 1740,
+      "layer": "建筑::孤顶教堂遗迹遗址::07_海风漫行路线",
+      "material_key": "path_flagstone",
+      "offset": 3347616,
+      "name": "PR_Church_EntranceLanding",
+      "normal_offset": 3359136,
+      "collision": true
+    },
+    {
+      "category": "collision_helpers",
+      "bounds": [
+        [
+          123.32650859832702,
+          1053.3354592175274,
+          41.699999999999996
+        ],
+        [
+          127.29336714583873,
+          1058.7568325657933,
+          42.312
+        ]
+      ],
+      "vertex_count": 16,
+      "id": "8cf1642d-4294-47f7-83d3-d07c9119cc4f",
+      "kind": "CollisionHelper",
+      "index_count": 84,
+      "layer": "建筑::孤顶教堂遗迹遗址::08_碰撞体",
+      "material_key": "weathered_limestone",
+      "offset": 3363696,
+      "name": "PR_Church_SeawardMargin-colonly",
+      "normal_offset": 3364224,
+      "collision": true
+    },
+    {
+      "category": "collision_helpers",
+      "bounds": [
+        [
+          103.46029860808733,
+          1025.911699753149,
+          43.199999999999996
+        ],
+        [
+          108.12933671458387,
+          1029.176378741676,
+          43.612
+        ]
+      ],
+      "vertex_count": 16,
+      "id": "9581a207-30f9-4af8-8c9d-e461ab64d577",
+      "kind": "CollisionHelper",
+      "index_count": 84,
+      "layer": "建筑::孤顶教堂遗迹遗址::08_碰撞体",
+      "material_key": "weathered_limestone",
+      "offset": 3364416,
+      "name": "PR_Church_EntranceStep-colonly",
+      "normal_offset": 3364944,
+      "collision": true
+    },
+    {
+      "category": "collision_helpers",
+      "bounds": [
+        [
+          123.45417760905154,
+          1061.6658621673018,
+          42.099999999999994
+        ],
+        [
+          125.83429273755856,
+          1065.5004920965634,
+          42.712
+        ]
+      ],
+      "vertex_count": 16,
+      "id": "efece200-d0dc-4c17-a9d2-1197d136f753",
+      "kind": "CollisionHelper",
+      "index_count": 84,
+      "layer": "建筑::孤顶教堂遗迹遗址::08_碰撞体",
+      "material_key": "weathered_limestone",
+      "offset": 3365136,
+      "name": "PR_Church_AltarDais_Right-colonly",
+      "normal_offset": 3365664,
+      "collision": true
+    },
+    {
+      "category": "collision_helpers",
+      "bounds": [
+        [
+          119.07695438421104,
+          1063.63561261848,
+          42.099999999999994
+        ],
+        [
+          121.45706951271805,
+          1067.4702425477417,
+          42.712
+        ]
+      ],
+      "vertex_count": 16,
+      "id": "1d31b09c-db5b-4907-969f-90af69dd31ef",
+      "kind": "CollisionHelper",
+      "index_count": 84,
+      "layer": "建筑::孤顶教堂遗迹遗址::08_碰撞体",
+      "material_key": "weathered_limestone",
+      "offset": 3365856,
+      "name": "PR_Church_AltarDais_Left-colonly",
+      "normal_offset": 3366384,
+      "collision": true
+    },
+    {
+      "category": "collision_helpers",
+      "bounds": [
+        [
+          119.55571317442796,
+          1061.517674922711,
+          42.099999999999994
+        ],
+        [
+          124.1039216814888,
+          1064.8370692015485,
+          42.712
+        ]
+      ],
+      "vertex_count": 16,
+      "id": "62b54d49-73f0-40c5-b2bb-c31d7e26ae27",
+      "kind": "CollisionHelper",
+      "index_count": 84,
+      "layer": "建筑::孤顶教堂遗迹遗址::08_碰撞体",
+      "material_key": "weathered_limestone",
+      "offset": 3366576,
+      "name": "PR_Church_AltarDais_Front-colonly",
+      "normal_offset": 3367104,
+      "collision": true
+    },
+    {
+      "category": "collision_helpers",
+      "bounds": [
+        [
+          111.824898614306,
+          1049.3480824361493,
+          42.099999999999994
+        ],
+        [
+          122.3347939614491,
+          1055.8956788433063,
+          42.862
+        ]
+      ],
+      "vertex_count": 16,
+      "id": "1c6b40fe-7985-4807-910d-e118b4190a0d",
+      "kind": "CollisionHelper",
+      "index_count": 84,
+      "layer": "建筑::孤顶教堂遗迹遗址::08_碰撞体",
+      "material_key": "weathered_limestone",
+      "offset": 3367296,
+      "name": "PR_Church_NaveStair_02-colonly",
+      "normal_offset": 3367824,
+      "collision": true
+    },
+    {
+      "category": "collision_helpers",
+      "bounds": [
+        [
+          106.07979313170283,
+          1036.5811813636979,
+          42.65
+        ],
+        [
+          116.58968847884591,
+          1043.1287777708549,
+          43.412
+        ]
+      ],
+      "vertex_count": 16,
+      "id": "6d716f0d-dd6d-4be4-9186-ba0a752b106b",
+      "kind": "CollisionHelper",
+      "index_count": 84,
+      "layer": "建筑::孤顶教堂遗迹遗址::08_碰撞体",
+      "material_key": "weathered_limestone",
+      "offset": 3368016,
+      "name": "PR_Church_NaveStair_01-colonly",
+      "normal_offset": 3368544,
+      "collision": true
+    }
+  ],
+  "triangle_count": 130268,
+  "object_count": 100,
+  "colonly_count": 7,
+  "spawn_godot": [
+    -1342.36,
+    43.5,
+    118.34999999999991
+  ],
+  "spawn_look_direction_godot": [
+    0.4104,
+    0.0,
+    -0.9119
+  ],
+  "spawn_source_id": "341ed473-83dd-4ec6-90c5-e9ab0f4cc316",
+  "triangles": 130268,
+  "mesh_sha256": "b3ef488b999da83c1781148a3a3eb720d3d715eb7c90c80183d586256cc00e06",
+  "glb_bytes": 3436624
+}

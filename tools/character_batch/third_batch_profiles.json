@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "kafka",
+      "label": "卡芙卡",
+      "game": "崩坏：星穹铁道",
+      "archive_glob": "*卡芙卡*.zip",
+      "body_pmx": "卡芙卡.pmx",
+      "zip_encoding": "utf-8",
+      "physics_prefixes": [
+        "Hair",
+        "Belt",
+        "wt_",
+        "xj_",
+        "xk_",
+        "yb_",
+        "ys_",
+        "yxz_",
+        "zb_",
+        "zxk_",
+        "zxz_"
+      ]
+    },
+    {
+      "id": "silver_wolf",
+      "label": "银狼",
+      "game": "崩坏：星穹铁道",
+      "archive_glob": "*银狼*.zip",
+      "body_pmx": "银狼.pmx",
+      "zip_encoding": "utf-8",
+      "physics_prefixes": [
+        "Hair",
+        "Belt",
+        "Button",
+        "QH_",
+        "QZ_",
+        "bz_"
+      ]
+    },
+    {
+      "id": "march7th",
+      "label": "三月七",
+      "game": "崩坏：星穹铁道",
+      "archive_glob": "*三月七*.zip",
+      "body_pmx": "三月七 1.0.pmx",
+      "zip_encoding": "utf-8",
+      "physics_prefixes": [
+        "Hair",
+        "Sleeves",
+        "Xiudai_",
+        "belt",
+        "cuff",
+        "earring",
+        "qz_",
+        "ribbon",
+        "rosette_"
+      ]
+    },
+    {
+      "id": "bronya",
+      "label": "布洛妮娅",
+      "game": "崩坏：星穹铁道",
+      "archive_glob": "*布洛妮娅*.zip",
+      "body_pmx": "布洛妮娅 1.0.pmx",
+      "zip_encoding": "utf-8",
+      "physics_prefixes": [
+        "Hair",
+        "Hairband",
+        "M-",
+        "earring_",
+        "qz_"
+      ]
+    },
+    {
+      "id": "seele",
+      "label": "希儿",
+      "game": "崩坏：星穹铁道",
+      "archive_glob": "*希儿*.zip",
+      "body_pmx": "希儿1.0.pmx",
+      "zip_encoding": "utf-8",
+      "physics_prefixes": [
+        "Hair",
+        "Cuff",
+        "Sleeves",
+        "bs_",
+        "qh_",
+        "qs_",
+        "zqz_"
+      ]
+    }
+  ]
+}

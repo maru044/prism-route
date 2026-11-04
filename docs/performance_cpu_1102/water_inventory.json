@@ -1,0 +1,29 @@
+{
+  "active_reflection": {
+    "bodies": 7,
+    "clock": 6.83484848484851,
+    "emitted": 0,
+    "events": 0,
+    "reflection_active": true,
+    "reflection_gpu_ms": 0.0869999974966049,
+    "reflection_objects": 404,
+    "reflection_size": [
+      960,
+      540
+    ],
+    "reflection_weight": 1.0,
+    "style": 2,
+    "wind": 0.0
+  },
+  "dynamic": 0,
+  "proxy_records": 5666,
+  "proxy_sweep_ms": {
+    "max": 3.812,
+    "mean": 1.9076,
+    "p95": 3.21,
+    "samples": 25
+  },
+  "static": 5666,
+  "tree_save_sha256": "07647c8b57bed6522a3cfa5231aec4ffedc0e74374d55a3af6a874d79dc64b5a",
+  "water_bodies": 7
+}

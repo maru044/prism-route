@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "shenhe",
+      "label": "申鹤",
+      "game": "原神",
+      "model": "res://assets/characters/roster/shenhe/shenhe.vrm",
+      "model_sha256": "306666c2ce1e4fa3eceae3849191c6af084f77ac7cddec2d419d48818d10c82d",
+      "source_archive": "D:\\模型\\20261008\\【模之屋】申鹤_by_原神_add938b763d11efe56328b5364e5c826.zip",
+      "source_sha256": "2a175553f6f045a2a208eba1c155832f7e7c9d911853ad61c53d53945e70e0e7",
+      "body_pmx": "申鹤.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 3,
+        "clothes_chains": 5,
+        "colliders": 12,
+        "joints": 73
+      },
+      "bytes": 41804944
+    },
+    {
+      "id": "yelan",
+      "label": "夜兰",
+      "game": "原神",
+      "model": "res://assets/characters/roster/yelan/yelan.vrm",
+      "model_sha256": "be769aa2d1bd8eacd44ebb54ce88f03c53860206b1fb0481691e411076d2a67d",
+      "source_archive": "D:\\模型\\20261008\\【夜兰】_by_原神_99af257187d8989a5ff579c1c6904044.zip",
+      "source_sha256": "4540aa7c38e6e59faa14f1031681c1e87ae380aaa2d5faa71e2f30771ce1cee8",
+      "body_pmx": "夜兰.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 12,
+        "clothes_chains": 25,
+        "colliders": 12,
+        "joints": 199
+      },
+      "bytes": 39574072
+    },
+    {
+      "id": "eula",
+      "label": "优菈",
+      "game": "原神",
+      "model": "res://assets/characters/roster/eula/eula.vrm",
+      "model_sha256": "cdacab2b07b679f5a05c3689b06aeb6ef3761ad1dda407da7917ad920355dd4b",
+      "source_archive": "D:\\模型\\20261008\\优菈_by_原神_339146e6e418d79e85a515b26414c0b0.zip",
+      "source_sha256": "733b271d45a057b7b6c4a56316341002c0fd741ef56043dfe15b8549da49a6b9",
+      "body_pmx": "优菈.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 6,
+        "clothes_chains": 8,
+        "colliders": 12,
+        "joints": 77
+      },
+      "bytes": 36614300
+    },
+    {
+      "id": "lisa",
+      "label": "丽莎",
+      "game": "原神",
+      "model": "res://assets/characters/roster/lisa/lisa.vrm",
+      "model_sha256": "d54367a1da7c3ca089f24dfce6977d3c92432679ce59f01fc054d81c131b3698",
+      "source_archive": "D:\\模型\\20261008\\丽莎_by_原神_17d19b5d32960eb9b71bf04f798b9d4e.zip",
+      "source_sha256": "fdd0bacdce5105b853f64f87bd54c74eedf2d5d68521adf86ed67df116c9ca27",
+      "body_pmx": "丽莎.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 2,
+        "clothes_chains": 22,
+        "colliders": 12,
+        "joints": 255
+      },
+      "bytes": 28496816
+    },
+    {
+      "id": "ningguang",
+      "label": "凝光",
+      "game": "原神",
+      "model": "res://assets/characters/roster/ningguang/ningguang.vrm",
+      "model_sha256": "c2b4cb15d74a74cc02d9f776651dfbac606f8b2b68b65462fd6a5b5636a0650b",
+      "source_archive": "D:\\模型\\20261008\\凝光_by_原神_e4422eb14f2a1d586516c2e3c8d7e6f9.zip",
+      "source_sha256": "088d610d7b8ec7536e0d52d42778039f46de998add1b4ac18691b5e8a2440273",
+      "body_pmx": "凝光.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 5,
+        "clothes_chains": 30,
+        "colliders": 12,
+        "joints": 456
+      },
+      "bytes": 29095968
+    }
+  ]
+}

@@ -1,0 +1,160 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "sucrose",
+      "label": "砂糖",
+      "game": "原神",
+      "model": "res://assets/characters/roster/sucrose/sucrose.vrm",
+      "model_sha256": "cb8e091d1a57cb0818fbfcd1f28f1e7b67d4f60b97b30fb69151287d0ff1de6c",
+      "source_archive": "D:\\模型\\20261008\\【模之屋】砂糖_by_原神_b7478ddcd12885599962e204eb493614.zip",
+      "source_sha256": "bd2553531295528ff9703afc4d3a7d597f7badcdaade6efd48a55ad27b486350",
+      "body_pmx": "砂糖.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 3,
+        "clothes_chains": 16,
+        "colliders": 12,
+        "joints": 121
+      },
+      "bytes": 30706652
+    },
+    {
+      "id": "faruzan",
+      "label": "珐露珊",
+      "game": "原神",
+      "model": "res://assets/characters/roster/faruzan/faruzan.vrm",
+      "model_sha256": "cf168e60f7532c1fd14c8601649311c0b5b7dc529b32c2f775bf55a86303d813",
+      "source_archive": "D:\\模型\\20261008\\【珐露珊】_by_原神_ec582320e20f08a4764706eac3f2c654.zip",
+      "source_sha256": "6e3190e4dfa24a0138bcf536a1e60f17d7b66999f418c4ae8bfab8e040aa3595",
+      "body_pmx": "珐露珊.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 5,
+        "clothes_chains": 17,
+        "colliders": 12,
+        "joints": 219
+      },
+      "bytes": 43720460
+    },
+    {
+      "id": "lynette",
+      "label": "琳妮特",
+      "game": "原神",
+      "model": "res://assets/characters/roster/lynette/lynette.vrm",
+      "model_sha256": "9b55c3ee5cfd5d36d5125cc5aa0b64bc81abcca269de427c3726184b349d076e",
+      "source_archive": "D:\\模型\\20261008\\【琳妮特】_by_原神_82c4527df590fc2b1a28c26b93cbeeac.zip",
+      "source_sha256": "c8ae596cd241eef8bbd553b6f2c4b6c4fcdda7e5dfdb4414d7f43b6553990f81",
+      "body_pmx": "【琳妮特】.pmx",
+      "excluded_pmx": [
+        "帽.pmx",
+        "托盘.pmx",
+        "杯.pmx",
+        "茶匙.pmx"
+      ],
+      "physics": {
+        "hair_chains": 10,
+        "clothes_chains": 41,
+        "colliders": 12,
+        "joints": 360
+      },
+      "bytes": 48851552
+    },
+    {
+      "id": "kirara",
+      "label": "绮良良",
+      "game": "原神",
+      "model": "res://assets/characters/roster/kirara/kirara.vrm",
+      "model_sha256": "37673ad287a573c2bec97c1b11bc13861f4cdf58e1c0a9e5b146e88e1bd6f907",
+      "source_archive": "D:\\模型\\20261008\\【绮良良】_by_原神_3ae87334e869b584e1e665d027c956ee.zip",
+      "source_sha256": "be3a1a7c550bd13f9d8670a83eebb1e5fa46d18a9f45e64bb8c69390ab3f84ef",
+      "body_pmx": "绮良良.pmx",
+      "excluded_pmx": [
+        "变身形态.pmx"
+      ],
+      "physics": {
+        "hair_chains": 8,
+        "clothes_chains": 33,
+        "colliders": 12,
+        "joints": 294
+      },
+      "bytes": 47073720
+    },
+    {
+      "id": "rosaria",
+      "label": "罗莎莉亚",
+      "game": "原神",
+      "model": "res://assets/characters/roster/rosaria/rosaria.vrm",
+      "model_sha256": "1f581d007f9311bd86549fadd5a83faba7b696bd4d271f90ff335a447c297b48",
+      "source_archive": "D:\\模型\\20261008\\【罗莎莉亚_新】_by_原神_f134a5432930ec6fa344c24409c48d70.zip",
+      "source_sha256": "6c272de6efeb2fc7c1086f9f8294618210708cdeab23820a1c656e7f72380944",
+      "body_pmx": "罗莎莉亚.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 12,
+        "clothes_chains": 11,
+        "colliders": 12,
+        "joints": 247
+      },
+      "bytes": 31259844
+    },
+    {
+      "id": "layla",
+      "label": "莱依拉",
+      "game": "原神",
+      "model": "res://assets/characters/roster/layla/layla.vrm",
+      "model_sha256": "5577cf1594f80095be92be1fc3e80400bc3e8512fddbaad40f86efee7607fc9a",
+      "source_archive": "D:\\模型\\20261008\\【莱依拉】_by_原神_28765a5658bef75fe5dee4b7957353b2.zip",
+      "source_sha256": "f2e0a8bbdc7017f91e9b09b875fc16c4299caf447a69663b3d02b87a22d85246",
+      "body_pmx": "莱依拉.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 5,
+        "clothes_chains": 18,
+        "colliders": 12,
+        "joints": 232
+      },
+      "bytes": 38972568
+    },
+    {
+      "id": "charlotte",
+      "label": "夏洛蒂",
+      "game": "原神",
+      "model": "res://assets/characters/roster/charlotte/charlotte.vrm",
+      "model_sha256": "b36422ec53c4729052a835b1429e4005b86dce8e43ae36a6ee3ae27c1526e2c8",
+      "source_archive": "D:\\模型\\20261008\\夏洛蒂_by_原神_28f6db1289d34d2cbe869fb3191d79a8.zip",
+      "source_sha256": "ab97eeb35b98592767f60795157f035260c15df129379f8869cb37dcdc964b6e",
+      "body_pmx": "夏洛蒂.pmx",
+      "excluded_pmx": [
+        "报纸.pmx",
+        "相机1.pmx",
+        "相机2.pmx"
+      ],
+      "physics": {
+        "hair_chains": 2,
+        "clothes_chains": 18,
+        "colliders": 12,
+        "joints": 150
+      },
+      "bytes": 40985488
+    },
+    {
+      "id": "amber",
+      "label": "安柏",
+      "game": "原神",
+      "model": "res://assets/characters/roster/amber/amber.vrm",
+      "model_sha256": "6febfd0d5562001f329a7aba90c28b407312c763073711ce82ce755f47981c87",
+      "source_archive": "D:\\模型\\20261008\\安柏_by_原神_174c8c36c505106b0223cb1daa5d8579.zip",
+      "source_sha256": "a766b867836bc34ce04289e06d39d16dad82bf8089d9e6c77204ed75d748f8c2",
+      "body_pmx": "安柏.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 2,
+        "clothes_chains": 1,
+        "colliders": 12,
+        "joints": 19
+      },
+      "bytes": 41180312
+    }
+  ]
+}

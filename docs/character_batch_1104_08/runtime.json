@@ -1,0 +1,169 @@
+{
+  "catalog": "res://assets/characters/roster/eighth_batch.json",
+  "engine": "4.7.2-stable (official)",
+  "failures": [],
+  "grounding_enabled": false,
+  "models": [
+    {
+      "bones": 253,
+      "captures": [],
+      "clothes_chains": 16,
+      "hair_chains": 3,
+      "id": "sucrose",
+      "material_classes": {
+        "ShaderMaterial": 21
+      },
+      "max_segment_error_m": 0.00000382028520107269,
+      "meshes": 1,
+      "morphs": 60,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 376,
+      "captures": [],
+      "clothes_chains": 17,
+      "hair_chains": 5,
+      "id": "faruzan",
+      "material_classes": {
+        "ShaderMaterial": 28
+      },
+      "max_segment_error_m": 0.00000408105552196503,
+      "meshes": 1,
+      "morphs": 63,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 534,
+      "captures": [],
+      "clothes_chains": 41,
+      "hair_chains": 10,
+      "id": "lynette",
+      "material_classes": {
+        "ShaderMaterial": 29
+      },
+      "max_segment_error_m": 0.00000388175249099731,
+      "meshes": 1,
+      "morphs": 60,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 476,
+      "captures": [],
+      "clothes_chains": 33,
+      "hair_chains": 8,
+      "id": "kirara",
+      "material_classes": {
+        "ShaderMaterial": 33
+      },
+      "max_segment_error_m": 0.00000393204391002655,
+      "meshes": 1,
+      "morphs": 63,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 395,
+      "captures": [],
+      "clothes_chains": 11,
+      "hair_chains": 12,
+      "id": "rosaria",
+      "material_classes": {
+        "ShaderMaterial": 20
+      },
+      "max_segment_error_m": 0.00000454112887382507,
+      "meshes": 1,
+      "morphs": 58,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 387,
+      "captures": [],
+      "clothes_chains": 18,
+      "hair_chains": 5,
+      "id": "layla",
+      "material_classes": {
+        "ShaderMaterial": 20
+      },
+      "max_segment_error_m": 0.00000404752790927887,
+      "meshes": 1,
+      "morphs": 62,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 320,
+      "captures": [],
+      "clothes_chains": 18,
+      "hair_chains": 2,
+      "id": "charlotte",
+      "material_classes": {
+        "ShaderMaterial": 23
+      },
+      "max_segment_error_m": 0.00000394880771636963,
+      "meshes": 1,
+      "morphs": 61,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 161,
+      "captures": [],
+      "clothes_chains": 1,
+      "hair_chains": 2,
+      "id": "amber",
+      "material_classes": {
+        "ShaderMaterial": 8
+      },
+      "max_segment_error_m": 0.00000304915010929108,
+      "meshes": 1,
+      "morphs": 47,
+      "physics_steps": 309,
+      "pose_checks": 54
+    }
+  ],
+  "motions": [
+    {
+      "acceptance_report": "res://docs/character_locomotion_1104/acceptance.json",
+      "formal_id": "A01",
+      "formal_resource": "res://assets/characters/motion_review/A01.tres",
+      "formal_source_sha256": "a5adab20fa25e2e5b63c62070ce1efda7112469faf234283d8320eda261259f5",
+      "id": "idle",
+      "label": "地图待机 · A01",
+      "npc_enabled": true,
+      "resource": "res://assets/characters/roster/motions/shared_world_A01.tres",
+      "status": "included_in_locomotion_acceptance"
+    },
+    {
+      "acceptance_report": "res://docs/character_locomotion_1104/acceptance.json",
+      "formal_id": "A05",
+      "formal_resource": "res://assets/characters/motion_review/A05.tres",
+      "formal_source_sha256": "7d83ebc95d586f90001b2ee2b3176002ebe566ff45318098c18dfb68c89929eb",
+      "id": "walk",
+      "label": "地图步行 · A05",
+      "npc_enabled": true,
+      "resource": "res://assets/characters/roster/motions/shared_world_A05.tres",
+      "status": "included_in_locomotion_acceptance"
+    },
+    {
+      "acceptance_report": "res://docs/character_locomotion_1104/acceptance.json",
+      "formal_id": "A06",
+      "formal_resource": "res://assets/characters/motion_review/A06.tres",
+      "formal_source_sha256": "ffc028f3b248b611a1ae65396afdc558048f6ae02ac68c563578138cb55a0a00",
+      "id": "run",
+      "label": "地图跑步 · A06",
+      "npc_enabled": true,
+      "resource": "res://assets/characters/roster/motions/shared_world_A06.tres",
+      "status": "included_in_locomotion_acceptance"
+    }
+  ],
+  "passed": true,
+  "registered_avatars": 47,
+  "renderer": "",
+  "scene": "res://scenes/character_roster_review.tscn",
+  "shared_clips": 3,
+  "test_fps": 60
+}

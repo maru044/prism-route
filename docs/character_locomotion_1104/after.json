@@ -1,0 +1,403 @@
+{
+  "clips": [
+    {
+      "endpoint_position_gap_m": 0.0000253743328357814,
+      "id": "A01",
+      "length": 2.5416666,
+      "preview_pelvis_max_error_m": 0.00000000186264514923096,
+      "samples": [
+        {
+          "actual_pelvis": [
+            0.0190558768808842,
+            0.95180082321167,
+            0.0481954589486122
+          ],
+          "expected_pelvis": [
+            0.0190558768808842,
+            0.95180082321167,
+            0.0481954589486122
+          ],
+          "fraction": 0.0
+        },
+        {
+          "actual_pelvis": [
+            0.0187970250844955,
+            0.950765430927277,
+            0.0481954626739025
+          ],
+          "expected_pelvis": [
+            0.0187970269471407,
+            0.950765430927277,
+            0.0481954626739025
+          ],
+          "fraction": 0.1
+        },
+        {
+          "actual_pelvis": [
+            0.0180423781275749,
+            0.947746872901917,
+            0.0481954663991928
+          ],
+          "expected_pelvis": [
+            0.0180423799902201,
+            0.947746872901917,
+            0.0481954663991928
+          ],
+          "fraction": 0.25
+        },
+        {
+          "actual_pelvis": [
+            0.0174653604626656,
+            0.945438742637634,
+            0.0481954589486122
+          ],
+          "expected_pelvis": [
+            0.0174653623253107,
+            0.945438742637634,
+            0.0481954589486122
+          ],
+          "fraction": 0.5
+        },
+        {
+          "actual_pelvis": [
+            0.0183654800057411,
+            0.949039220809937,
+            0.0481954589486122
+          ],
+          "expected_pelvis": [
+            0.0183654800057411,
+            0.949039220809937,
+            0.0481954589486122
+          ],
+          "fraction": 0.75
+        },
+        {
+          "actual_pelvis": [
+            0.0189210772514343,
+            0.951261639595032,
+            0.0481954589486122
+          ],
+          "expected_pelvis": [
+            0.0189210772514343,
+            0.951261639595032,
+            0.0481954589486122
+          ],
+          "fraction": 0.9
+        },
+        {
+          "actual_pelvis": [
+            0.0190620310604572,
+            0.951825439929962,
+            0.0481954552233219
+          ],
+          "expected_pelvis": [
+            0.0190620310604572,
+            0.951825439929962,
+            0.0481954552233219
+          ],
+          "fraction": 1.0
+        }
+      ],
+      "worst_rotation_gaps": [
+        {
+          "bone": "GeneralSkeleton:Head",
+          "degrees": 0.0395646820588927
+        },
+        {
+          "bone": "GeneralSkeleton:LeftEye",
+          "degrees": 0.0395646820588927
+        },
+        {
+          "bone": "GeneralSkeleton:LeftForearmTwist",
+          "degrees": 0.0395646820588927
+        },
+        {
+          "bone": "GeneralSkeleton:LeftIndexIntermediate",
+          "degrees": 0.0395646820588927
+        },
+        {
+          "bone": "GeneralSkeleton:LeftLittleIntermediate",
+          "degrees": 0.0395646820588927
+        },
+        {
+          "bone": "GeneralSkeleton:LeftLowerArm",
+          "degrees": 0.0395646820588927
+        },
+        {
+          "bone": "GeneralSkeleton:LeftRingProximal",
+          "degrees": 0.0395646820588927
+        },
+        {
+          "bone": "GeneralSkeleton:LeftThumbProximal",
+          "degrees": 0.0395646820588927
+        }
+      ]
+    },
+    {
+      "endpoint_position_gap_m": 0.0,
+      "id": "A05",
+      "length": 1.3333333,
+      "preview_pelvis_max_error_m": 0.00000000186264514923096,
+      "samples": [
+        {
+          "actual_pelvis": [
+            -0.0270458348095417,
+            0.938236176967621,
+            0.045426070690155
+          ],
+          "expected_pelvis": [
+            -0.0270458348095417,
+            0.938236176967621,
+            0.045426070690155
+          ],
+          "fraction": 0.0
+        },
+        {
+          "actual_pelvis": [
+            -0.0172072872519493,
+            0.953871130943298,
+            0.049155980348587
+          ],
+          "expected_pelvis": [
+            -0.0172072872519493,
+            0.953871130943298,
+            0.049155980348587
+          ],
+          "fraction": 0.1
+        },
+        {
+          "actual_pelvis": [
+            0.00694566778838634,
+            0.973588466644287,
+            0.0523258000612259
+          ],
+          "expected_pelvis": [
+            0.00694566825404763,
+            0.973588466644287,
+            0.0523258000612259
+          ],
+          "fraction": 0.25
+        },
+        {
+          "actual_pelvis": [
+            0.0300549305975437,
+            0.932149112224579,
+            0.0464863851666451
+          ],
+          "expected_pelvis": [
+            0.0300549305975437,
+            0.932149112224579,
+            0.0464863851666451
+          ],
+          "fraction": 0.5
+        },
+        {
+          "actual_pelvis": [
+            -0.00077386386692524,
+            0.973756313323975,
+            0.0524337142705917
+          ],
+          "expected_pelvis": [
+            -0.000773863750509918,
+            0.973756313323975,
+            0.0524337142705917
+          ],
+          "fraction": 0.75
+        },
+        {
+          "actual_pelvis": [
+            -0.0217575468122959,
+            0.952538371086121,
+            0.047637302428484
+          ],
+          "expected_pelvis": [
+            -0.0217575449496508,
+            0.952538371086121,
+            0.047637302428484
+          ],
+          "fraction": 0.9
+        },
+        {
+          "actual_pelvis": [
+            -0.0270458348095417,
+            0.938236176967621,
+            0.045426070690155
+          ],
+          "expected_pelvis": [
+            -0.0270458348095417,
+            0.938236176967621,
+            0.045426070690155
+          ],
+          "fraction": 1.0
+        }
+      ],
+      "worst_rotation_gaps": [
+        {
+          "bone": "GeneralSkeleton:Head",
+          "degrees": 0.0395646820588927
+        },
+        {
+          "bone": "GeneralSkeleton:LeftEye",
+          "degrees": 0.0395646820588927
+        },
+        {
+          "bone": "GeneralSkeleton:LeftRingDistal",
+          "degrees": 0.0395646820588927
+        },
+        {
+          "bone": "GeneralSkeleton:LeftRingIntermediate",
+          "degrees": 0.0395646820588927
+        },
+        {
+          "bone": "GeneralSkeleton:LeftThumbDistal",
+          "degrees": 0.0395646820588927
+        },
+        {
+          "bone": "GeneralSkeleton:LeftThumbProximal",
+          "degrees": 0.0395646820588927
+        },
+        {
+          "bone": "GeneralSkeleton:LeftToes",
+          "degrees": 0.0395646820588927
+        },
+        {
+          "bone": "GeneralSkeleton:Neck",
+          "degrees": 0.0395646820588927
+        }
+      ]
+    },
+    {
+      "endpoint_position_gap_m": 0.0,
+      "id": "A06",
+      "length": 0.79166665,
+      "preview_pelvis_max_error_m": 0.000000000931322574615479,
+      "samples": [
+        {
+          "actual_pelvis": [
+            -0.00626471359282732,
+            0.96977162361145,
+            0.0441760346293449
+          ],
+          "expected_pelvis": [
+            -0.00626471452414989,
+            0.96977162361145,
+            0.0441760346293449
+          ],
+          "fraction": 0.0
+        },
+        {
+          "actual_pelvis": [
+            -0.00708345323801041,
+            0.930660128593445,
+            0.050136361271143
+          ],
+          "expected_pelvis": [
+            -0.00708345277234912,
+            0.930660128593445,
+            0.050136361271143
+          ],
+          "fraction": 0.1
+        },
+        {
+          "actual_pelvis": [
+            -0.00227679987438023,
+            0.935696721076965,
+            0.0533708482980728
+          ],
+          "expected_pelvis": [
+            -0.00227679987438023,
+            0.935696721076965,
+            0.0533708482980728
+          ],
+          "fraction": 0.25
+        },
+        {
+          "actual_pelvis": [
+            0.0162472017109394,
+            0.968485713005066,
+            0.0423970520496368
+          ],
+          "expected_pelvis": [
+            0.0162472017109394,
+            0.968485713005066,
+            0.0423970520496368
+          ],
+          "fraction": 0.5
+        },
+        {
+          "actual_pelvis": [
+            -0.00315429200418293,
+            0.910963237285614,
+            0.0458605587482452
+          ],
+          "expected_pelvis": [
+            -0.00315429223701358,
+            0.910963237285614,
+            0.0458605587482452
+          ],
+          "fraction": 0.75
+        },
+        {
+          "actual_pelvis": [
+            -0.00537334568798542,
+            0.966806530952454,
+            0.0429483242332935
+          ],
+          "expected_pelvis": [
+            -0.00537334522232413,
+            0.966806530952454,
+            0.0429483242332935
+          ],
+          "fraction": 0.9
+        },
+        {
+          "actual_pelvis": [
+            -0.00626471359282732,
+            0.96977162361145,
+            0.0441760346293449
+          ],
+          "expected_pelvis": [
+            -0.00626471452414989,
+            0.96977162361145,
+            0.0441760346293449
+          ],
+          "fraction": 1.0
+        }
+      ],
+      "worst_rotation_gaps": [
+        {
+          "bone": "GeneralSkeleton:Chest",
+          "degrees": 0.0395646820588927
+        },
+        {
+          "bone": "GeneralSkeleton:Hips",
+          "degrees": 0.0395646820588927
+        },
+        {
+          "bone": "GeneralSkeleton:LeftForearmTwist",
+          "degrees": 0.0395646820588927
+        },
+        {
+          "bone": "GeneralSkeleton:LeftLittleIntermediate",
+          "degrees": 0.0395646820588927
+        },
+        {
+          "bone": "GeneralSkeleton:LeftLowerArm",
+          "degrees": 0.0395646820588927
+        },
+        {
+          "bone": "GeneralSkeleton:RightHand",
+          "degrees": 0.0395646820588927
+        },
+        {
+          "bone": "GeneralSkeleton:RightLittleIntermediate",
+          "degrees": 0.0395646820588927
+        },
+        {
+          "bone": "GeneralSkeleton:RightMiddleIntermediate",
+          "degrees": 0.0395646820588927
+        }
+      ]
+    }
+  ]
+}

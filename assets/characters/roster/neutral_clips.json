@@ -1,0 +1,89 @@
+{
+  "source_controller": "res://scripts/world_character_controller.gd",
+  "source_scene": "res://scenes/characters/world_ganyu.tscn",
+  "clips": [
+    {
+      "id": "idle",
+      "label": "地图待机 · A01",
+      "resource": "res://assets/characters/roster/motions/shared_world_A01.tres",
+      "formal_id": "A01",
+      "formal_resource": "res://assets/characters/motion_review/A01.tres",
+      "formal_source_sha256": "a5adab20fa25e2e5b63c62070ce1efda7112469faf234283d8320eda261259f5",
+      "npc_enabled": true,
+      "status": "included_in_locomotion_acceptance",
+      "acceptance_report": "res://docs/character_locomotion_1104/acceptance.json"
+    },
+    {
+      "id": "walk",
+      "label": "地图步行 · A05",
+      "resource": "res://assets/characters/roster/motions/shared_world_A05.tres",
+      "formal_id": "A05",
+      "formal_resource": "res://assets/characters/motion_review/A05.tres",
+      "formal_source_sha256": "7d83ebc95d586f90001b2ee2b3176002ebe566ff45318098c18dfb68c89929eb",
+      "npc_enabled": true,
+      "status": "included_in_locomotion_acceptance",
+      "acceptance_report": "res://docs/character_locomotion_1104/acceptance.json"
+    },
+    {
+      "id": "run",
+      "label": "地图跑步 · A06",
+      "resource": "res://assets/characters/roster/motions/shared_world_A06.tres",
+      "formal_id": "A06",
+      "formal_resource": "res://assets/characters/motion_review/A06.tres",
+      "formal_source_sha256": "ffc028f3b248b611a1ae65396afdc558048f6ae02ac68c563578138cb55a0a00",
+      "npc_enabled": true,
+      "status": "included_in_locomotion_acceptance",
+      "acceptance_report": "res://docs/character_locomotion_1104/acceptance.json"
+    }
+  ],
+  "build": [
+    {
+      "id": "shared_world_A01",
+      "resource": "res://assets/characters/roster/motions/shared_world_A01.tres",
+      "frames": 382,
+      "duration": 2.5416666,
+      "tracks": 59,
+      "constant_rotation_tracks": 9,
+      "bytes": 1245582,
+      "source": "assets/characters/motion_review/A01.tres",
+      "source_sha256": "a5adab20fa25e2e5b63c62070ce1efda7112469faf234283d8320eda261259f5",
+      "output_sha256": "03cccff390b57f82dd58a22cd8837e210d841a4b7fe53d5baf755fc01d9fa68e",
+      "reference_height": 0.976953744888306,
+      "controller": "res://scripts/world_character_controller.gd",
+      "centering": "actual world controller _center_clip applied",
+      "formal_id": "A01"
+    },
+    {
+      "id": "shared_world_A05",
+      "resource": "res://assets/characters/roster/motions/shared_world_A05.tres",
+      "frames": 161,
+      "duration": 1.3333333,
+      "tracks": 59,
+      "constant_rotation_tracks": 0,
+      "bytes": 632081,
+      "source": "assets/characters/motion_review/A05.tres",
+      "source_sha256": "7d83ebc95d586f90001b2ee2b3176002ebe566ff45318098c18dfb68c89929eb",
+      "output_sha256": "c52827382e97a5cade7a432992e3d7dbc77195e84f5f676cb65e21265fb396a0",
+      "reference_height": 0.976953744888306,
+      "controller": "res://scripts/world_character_controller.gd",
+      "centering": "actual world controller _center_clip applied",
+      "formal_id": "A05"
+    },
+    {
+      "id": "shared_world_A06",
+      "resource": "res://assets/characters/roster/motions/shared_world_A06.tres",
+      "frames": 119,
+      "duration": 0.79166665,
+      "tracks": 59,
+      "constant_rotation_tracks": 0,
+      "bytes": 465744,
+      "source": "assets/characters/motion_review/A06.tres",
+      "source_sha256": "ffc028f3b248b611a1ae65396afdc558048f6ae02ac68c563578138cb55a0a00",
+      "output_sha256": "7b781a96b3175f909e7b3efe7af728dd0ec4f43b7bd65a4ea635f22e2095e1c5",
+      "reference_height": 0.976953744888306,
+      "controller": "res://scripts/world_character_controller.gd",
+      "centering": "actual world controller _center_clip applied",
+      "formal_id": "A06"
+    }
+  ]
+}

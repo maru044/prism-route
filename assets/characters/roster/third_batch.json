@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "kafka",
+      "label": "卡芙卡",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/kafka/kafka.vrm",
+      "model_sha256": "6ee34e7739a90d45f88b1524e9e23781574f2e3d960cece00f3780bc9c3ee931",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道-卡芙卡_by_崩坏：星穹铁道_1ceb68a8f0c568ae7ceb3de957173ea8.zip",
+      "source_sha256": "f2394590f915b2280af0f04ad949ed19d7ae42838989f12d23310cb364196394",
+      "body_pmx": "卡芙卡.pmx",
+      "excluded_pmx": [
+        "刀.pmx",
+        "子弹.pmx",
+        "枪白.pmx",
+        "枪黑.pmx"
+      ],
+      "physics": {
+        "hair_chains": 7,
+        "clothes_chains": 37,
+        "colliders": 12,
+        "joints": 313
+      },
+      "bytes": 36802432
+    },
+    {
+      "id": "silver_wolf",
+      "label": "银狼",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/silver_wolf/silver_wolf.vrm",
+      "model_sha256": "e5f65ac9a03e6686cfa640eeca69f5f88d6e27111eafbbd8573e3af9424fdebf",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道——银狼_by_崩坏：星穹铁道_387a60d37309b3b599db7fed0e8a8f8b.zip",
+      "source_sha256": "35fbb8de0482394658cd22d6a6165caece363a9c2fdf52ae807f3bfca7b3f724",
+      "body_pmx": "银狼.pmx",
+      "excluded_pmx": [
+        "炮.pmx"
+      ],
+      "physics": {
+        "hair_chains": 10,
+        "clothes_chains": 23,
+        "colliders": 12,
+        "joints": 250
+      },
+      "bytes": 48369340
+    },
+    {
+      "id": "march7th",
+      "label": "三月七",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/march7th/march7th.vrm",
+      "model_sha256": "a5cbc6be16f6bfcaba6cb946c507aa1de1d0b1e70cb1e1c5dbccba2cfd3823db",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—三月七_by_崩坏：星穹铁道_7bffc09c69039df537f835bfe9d82ed9.zip",
+      "source_sha256": "942aef2af3a465e77c1569369b3c422fdf64f8494cbdf3b529a88c3cc66c13dc",
+      "body_pmx": "三月七 1.0.pmx",
+      "excluded_pmx": [
+        "弓1.0.pmx",
+        "箭1.0.pmx"
+      ],
+      "physics": {
+        "hair_chains": 8,
+        "clothes_chains": 23,
+        "colliders": 12,
+        "joints": 194
+      },
+      "bytes": 40379276
+    },
+    {
+      "id": "bronya",
+      "label": "布洛妮娅",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/bronya/bronya.vrm",
+      "model_sha256": "639554bf30e43f4d67e49492153d6c47d053a58d9abdf2415e8172a5ac90434c",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—布洛妮娅_by_崩坏：星穹铁道_feb5d5c1bb7881e7e1e598027181d4e7.zip",
+      "source_sha256": "5654ac242594f41ba8431f636ee2fd4a06ae9e19653612c5366e243d1ce30344",
+      "body_pmx": "布洛妮娅 1.0.pmx",
+      "excluded_pmx": [
+        "枪.pmx"
+      ],
+      "physics": {
+        "hair_chains": 15,
+        "clothes_chains": 16,
+        "colliders": 12,
+        "joints": 195
+      },
+      "bytes": 55702300
+    },
+    {
+      "id": "seele",
+      "label": "希儿",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/seele/seele.vrm",
+      "model_sha256": "8c0a145175c473d15b6a4b8c5c64efc4d2444c34d67dea527e74421822ef4a89",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—希儿_by_崩坏：星穹铁道_d4521afdb4193191da63173ea7fd73bd.zip",
+      "source_sha256": "dc543444b41b0ce5c234ecfb9ab82804b94e6c85632f7fca11e2b0b5871928e5",
+      "body_pmx": "希儿1.0.pmx",
+      "excluded_pmx": [
+        "镰刀.pmx"
+      ],
+      "physics": {
+        "hair_chains": 12,
+        "clothes_chains": 30,
+        "colliders": 12,
+        "joints": 321
+      },
+      "bytes": 50834788
+    }
+  ]
+}

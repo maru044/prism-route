@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "huohuo",
+      "label": "藿藿",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/huohuo/huohuo.vrm",
+      "model_sha256": "cb16b6d6cca294f1098d3b1538fb9ca521165078c460cc703c140588ba44207e",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—藿藿_by_崩坏：星穹铁道_15dfb3da71b4298d58365a853adc2f4b.zip",
+      "source_sha256": "578bc491d03caa93f3ea854ad3727559563ee56f66d63db26b9f6417da106aee",
+      "body_pmx": "藿藿4.0.pmx",
+      "excluded_pmx": [
+        "旗帜.pmx"
+      ],
+      "physics": {
+        "hair_chains": 7,
+        "clothes_chains": 38,
+        "colliders": 12,
+        "joints": 330
+      },
+      "bytes": 46133504
+    },
+    {
+      "id": "qingque",
+      "label": "青雀",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/qingque/qingque.vrm",
+      "model_sha256": "e3a1120388ad2f8621a11b9f63df911cfaa18db48c293f0d11cc9f4d66e0dfc7",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—青雀_by_崩坏：星穹铁道_45b6bdd31eed3a0c16d407289f9c92de.rar",
+      "source_sha256": "ab5e739c2bbd0fdeaecf8890a5c223c9db20bdc8e8fb9331d01962d4724ecab8",
+      "body_pmx": "青雀（分桦）.pmx",
+      "excluded_pmx": [
+        "武器（青雀）.pmx"
+      ],
+      "physics": {
+        "hair_chains": 7,
+        "clothes_chains": 25,
+        "colliders": 12,
+        "joints": 182
+      },
+      "bytes": 52871104
+    },
+    {
+      "id": "yukong",
+      "label": "驭空",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/yukong/yukong.vrm",
+      "model_sha256": "c1a57ce116fa13c4becea664fc8698cd8c3936c0d9ee37b89083051ec57abff8",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—驭空_by_崩坏：星穹铁道_a8a159f08377fb26b2df638509e5204c.rar",
+      "source_sha256": "6c49a507f6df444efca37973fc9c2d74c861c84de779e9dbbe2dd479917a0986",
+      "body_pmx": "星穹铁道—驭空（改5）.pmx",
+      "excluded_pmx": [
+        "纸鸢.pmx"
+      ],
+      "physics": {
+        "hair_chains": 14,
+        "clothes_chains": 21,
+        "colliders": 12,
+        "joints": 199
+      },
+      "bytes": 54965240
+    },
+    {
+      "id": "herta",
+      "label": "黑塔",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/herta/herta.vrm",
+      "model_sha256": "674c36d6966ebde4bf24c1b299cf81ca80d026cd368116cc5aa4f994084e01e2",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道-黑塔_by_崩坏：星穹铁道_12473aa4e6df6e275a129ff282a03335.zip",
+      "source_sha256": "1151239e4765e6fdd075f02eda2ce7f713842b908e43212814bcf21a3bd4e453",
+      "body_pmx": "黑塔.pmx",
+      "excluded_pmx": [
+        "锤子.pmx"
+      ],
+      "physics": {
+        "hair_chains": 10,
+        "clothes_chains": 40,
+        "colliders": 12,
+        "joints": 440
+      },
+      "bytes": 42096900
+    }
+  ]
+}

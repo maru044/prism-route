@@ -1,0 +1,1690 @@
+{
+  "production_settings_changed": false,
+  "tree_save_unchanged": true,
+  "variants": [
+    {
+      "draws": {
+        "max": 1681.0,
+        "mean": 1681.0,
+        "p95": 1681.0,
+        "samples": 292
+      },
+      "frame_ms": {
+        "max": 20.042,
+        "mean": 10.2878595890411,
+        "p95": 12.003,
+        "samples": 292
+      },
+      "gpu_ms": {
+        "max": 10.6029996871948,
+        "mean": 9.66503422880826,
+        "p95": 9.97599983215332,
+        "samples": 292
+      },
+      "grass": {
+        "active": 328,
+        "building": false,
+        "built": 328,
+        "cache": {
+          "baked_cells": 11466,
+          "cache_hits": 3556,
+          "cache_mib": 95.9990234375,
+          "corrupt": 0,
+          "decode_ms": 9343.783,
+          "disk_reads": 328,
+          "evictions": 257,
+          "inflight": 0,
+          "io_ms": 255.096,
+          "pack_worker_ms": 0.0,
+          "status": ""
+        },
+        "cancelled": 0,
+        "commit_ms": 0.0,
+        "completed_per_s": 13.6,
+        "incoming_per_s": 0.0,
+        "indexed_cells": 11466,
+        "last_build_ms": 0.01,
+        "lookahead_m": 0.0,
+        "max_commit_ms": 3.728,
+        "oldest_visible_s": 0.0,
+        "pending_visible": 0,
+        "phases": {},
+        "queue_p95_s": 0.0,
+        "queued": 0,
+        "ready_cells": 0,
+        "rebuilt": 0,
+        "speed_mps": 0.0,
+        "unloaded": 0,
+        "visible": {
+          "0_48": 0,
+          "110_128": 0,
+          "48_76": 0,
+          "76_110": 0
+        }
+      },
+      "grass_commit_ms": {
+        "max": 0.004,
+        "mean": 0.000664383561643836,
+        "p95": 0.002,
+        "samples": 292
+      },
+      "grass_tick_ms": {
+        "max": 2.131,
+        "mean": 0.135287671232877,
+        "p95": 1.331,
+        "samples": 292
+      },
+      "label": "earth_water_baseline",
+      "physics_ms": {
+        "max": 1.869,
+        "mean": 1.80739383561644,
+        "p95": 1.869,
+        "samples": 292
+      },
+      "primitives": {
+        "max": 11102161.0,
+        "mean": 11102161.0,
+        "p95": 11102161.0,
+        "samples": 292
+      },
+      "process_ms": {
+        "max": 66.973,
+        "mean": 32.6628767123287,
+        "p95": 66.973,
+        "samples": 292
+      },
+      "reflection_cpu_ms": {
+        "max": 1.71800005435944,
+        "mean": 0.48554794587297,
+        "p95": 1.13900005817413,
+        "samples": 292
+      },
+      "reflection_gpu_ms": {
+        "max": 0.270999997854233,
+        "mean": 0.0927602739570892,
+        "p95": 0.0979999974370003,
+        "samples": 292
+      },
+      "render_cpu_ms": {
+        "max": 3.05599999427795,
+        "mean": 1.26170205396332,
+        "p95": 2.21499991416931,
+        "samples": 292
+      },
+      "render_setup_ms": {
+        "max": 0.326,
+        "mean": 0.159979452054795,
+        "p95": 0.193,
+        "samples": 292
+      },
+      "scripts": {
+        "res://addons/vrm/runtime/vrm_spring_bone_controller.gd:_process": {
+          "max": 0.12,
+          "mean": 0.0334948453608247,
+          "p95": 0.08,
+          "samples": 291
+        },
+        "res://scripts/audio/world_audio_1030.gd:_physics_process": {
+          "max": 1.138,
+          "mean": 0.0997182320441988,
+          "p95": 1.092,
+          "samples": 181
+        },
+        "res://scripts/characters/character_wetness.gd:_physics_process": {
+          "max": 0.108,
+          "mean": 0.0310828729281768,
+          "p95": 0.048,
+          "samples": 181
+        },
+        "res://scripts/characters/hologram_effect.gd:_process": {
+          "max": 0.391,
+          "mean": 0.0834467353951889,
+          "p95": 0.259,
+          "samples": 291
+        },
+        "res://scripts/characters/projected_keqing.gd:_process": {
+          "max": 0.217,
+          "mean": 0.0493676975945017,
+          "p95": 0.151,
+          "samples": 291
+        },
+        "res://scripts/grass_wind_world.gd:_process": {
+          "max": 2.402,
+          "mean": 0.189505154639176,
+          "p95": 1.529,
+          "samples": 291
+        },
+        "res://scripts/map_1021.gd:_process": {
+          "max": 0.022,
+          "mean": 0.0047594501718213,
+          "p95": 0.013,
+          "samples": 291
+        },
+        "res://scripts/performance_monitor_1021.gd:_process": {
+          "max": 2.115,
+          "mean": 0.0650756013745704,
+          "p95": 0.045,
+          "samples": 291
+        },
+        "res://scripts/tree_planting/world_vegetation.gd:_process": {
+          "max": 2.167,
+          "mean": 0.166694158075601,
+          "p95": 1.354,
+          "samples": 291
+        },
+        "res://scripts/water/water_manager.gd:_physics_process": {
+          "max": 0.112,
+          "mean": 0.0160883977900552,
+          "p95": 0.018,
+          "samples": 181
+        },
+        "res://scripts/water/water_manager.gd:_process": {
+          "max": 10.701,
+          "mean": 3.90036082474227,
+          "p95": 4.257,
+          "samples": 291
+        },
+        "res://scripts/world/initial_ruin.gd:_process": {
+          "max": 0.199,
+          "mean": 0.0406082474226804,
+          "p95": 0.126,
+          "samples": 291
+        },
+        "res://scripts/world/upper_ring.gd:_process": {
+          "max": 0.024,
+          "mean": 0.00651546391752575,
+          "p95": 0.014,
+          "samples": 291
+        }
+      },
+      "water": {
+        "bodies": 7,
+        "clock": 10.3491666666666,
+        "emitted": 0,
+        "events": 0,
+        "reflection_active": true,
+        "reflection_gpu_ms": 0.096000000834465,
+        "reflection_objects": 404,
+        "reflection_size": [
+          960,
+          540
+        ],
+        "reflection_weight": 1.0,
+        "style": 2,
+        "wind": 0.783148148148146
+      }
+    },
+    {
+      "draws": {
+        "max": 1681.0,
+        "mean": 1681.0,
+        "p95": 1681.0,
+        "samples": 306
+      },
+      "frame_ms": {
+        "max": 12.911,
+        "mean": 9.81319934640523,
+        "p95": 10.79,
+        "samples": 306
+      },
+      "gpu_ms": {
+        "max": 11.4040002822876,
+        "mean": 9.51324836257236,
+        "p95": 9.82199954986572,
+        "samples": 306
+      },
+      "grass": {
+        "active": 328,
+        "building": false,
+        "built": 328,
+        "cache": {
+          "baked_cells": 11466,
+          "cache_hits": 4777,
+          "cache_mib": 95.9990234375,
+          "corrupt": 0,
+          "decode_ms": 9343.783,
+          "disk_reads": 328,
+          "evictions": 257,
+          "inflight": 0,
+          "io_ms": 255.096,
+          "pack_worker_ms": 0.0,
+          "status": ""
+        },
+        "cancelled": 0,
+        "commit_ms": 0.0,
+        "completed_per_s": 0.0,
+        "incoming_per_s": 0.0,
+        "indexed_cells": 11466,
+        "last_build_ms": 0.008,
+        "lookahead_m": 0.0,
+        "max_commit_ms": 3.728,
+        "oldest_visible_s": 0.0,
+        "pending_visible": 0,
+        "phases": {},
+        "queue_p95_s": 0.0,
+        "queued": 0,
+        "ready_cells": 0,
+        "rebuilt": 0,
+        "speed_mps": 0.0,
+        "unloaded": 0,
+        "visible": {
+          "0_48": 0,
+          "110_128": 0,
+          "48_76": 0,
+          "76_110": 0
+        }
+      },
+      "grass_commit_ms": {
+        "max": 0.003,
+        "mean": 0.000562091503267974,
+        "p95": 0.002,
+        "samples": 306
+      },
+      "grass_tick_ms": {
+        "max": 2.145,
+        "mean": 0.129653594771242,
+        "p95": 1.311,
+        "samples": 306
+      },
+      "label": "earth_proxy_sweep_skipped",
+      "physics_ms": {
+        "max": 2.36,
+        "mean": 1.94353267973857,
+        "p95": 2.36,
+        "samples": 306
+      },
+      "primitives": {
+        "max": 11102161.0,
+        "mean": 11102153.1830065,
+        "p95": 11102153.0,
+        "samples": 306
+      },
+      "process_ms": {
+        "max": 18.133,
+        "mean": 11.3469019607844,
+        "p95": 18.133,
+        "samples": 306
+      },
+      "reflection_cpu_ms": {
+        "max": 1.60899996757507,
+        "mean": 0.428653594520357,
+        "p95": 1.01900005340576,
+        "samples": 306
+      },
+      "reflection_gpu_ms": {
+        "max": 0.28600001335144,
+        "mean": 0.0978235296077198,
+        "p95": 0.0989999994635582,
+        "samples": 306
+      },
+      "render_cpu_ms": {
+        "max": 3.95000004768372,
+        "mean": 1.17532679828164,
+        "p95": 1.36000001430511,
+        "samples": 306
+      },
+      "render_setup_ms": {
+        "max": 0.42,
+        "mean": 0.145712418300654,
+        "p95": 0.2,
+        "samples": 306
+      },
+      "scripts": {
+        "res://addons/vrm/runtime/vrm_spring_bone_controller.gd:_process": {
+          "max": 0.122,
+          "mean": 0.0337016393442623,
+          "p95": 0.085,
+          "samples": 305
+        },
+        "res://scripts/audio/world_audio_1030.gd:_physics_process": {
+          "max": 1.987,
+          "mean": 0.104605555555556,
+          "p95": 1.096,
+          "samples": 180
+        },
+        "res://scripts/characters/character_wetness.gd:_physics_process": {
+          "max": 0.166,
+          "mean": 0.0325166666666667,
+          "p95": 0.051,
+          "samples": 180
+        },
+        "res://scripts/characters/hologram_effect.gd:_process": {
+          "max": 0.404,
+          "mean": 0.0847606557377049,
+          "p95": 0.269,
+          "samples": 305
+        },
+        "res://scripts/characters/projected_keqing.gd:_process": {
+          "max": 0.215,
+          "mean": 0.0493081967213114,
+          "p95": 0.149,
+          "samples": 305
+        },
+        "res://scripts/grass_wind_world.gd:_process": {
+          "max": 2.188,
+          "mean": 0.165524590163935,
+          "p95": 1.503,
+          "samples": 305
+        },
+        "res://scripts/map_1021.gd:_process": {
+          "max": 0.02,
+          "mean": 0.00496393442622949,
+          "p95": 0.013,
+          "samples": 305
+        },
+        "res://scripts/performance_monitor_1021.gd:_process": {
+          "max": 1.991,
+          "mean": 0.0681213114754097,
+          "p95": 0.043,
+          "samples": 305
+        },
+        "res://scripts/tree_planting/world_vegetation.gd:_process": {
+          "max": 2.178,
+          "mean": 0.158665573770492,
+          "p95": 1.331,
+          "samples": 305
+        },
+        "res://scripts/water/water_manager.gd:_physics_process": {
+          "max": 0.061,
+          "mean": 0.01575,
+          "p95": 0.02,
+          "samples": 180
+        },
+        "res://scripts/water/water_manager.gd:_process": {
+          "max": 0.366,
+          "mean": 0.0872032786885246,
+          "p95": 0.252,
+          "samples": 305
+        },
+        "res://scripts/world/initial_ruin.gd:_process": {
+          "max": 0.196,
+          "mean": 0.0417868852459016,
+          "p95": 0.121,
+          "samples": 305
+        },
+        "res://scripts/world/upper_ring.gd:_process": {
+          "max": 0.071,
+          "mean": 0.00615737704918031,
+          "p95": 0.014,
+          "samples": 305
+        }
+      },
+      "water": {
+        "bodies": 7,
+        "clock": 13.8476525555556,
+        "emitted": 0,
+        "events": 0,
+        "reflection_active": true,
+        "reflection_gpu_ms": 0.096000000834465,
+        "reflection_objects": 0,
+        "reflection_size": [
+          960,
+          540
+        ],
+        "reflection_weight": 1.0,
+        "style": 2,
+        "wind": 1.0
+      }
+    },
+    {
+      "draws": {
+        "max": 1681.0,
+        "mean": 1681.0,
+        "p95": 1681.0,
+        "samples": 304
+      },
+      "frame_ms": {
+        "max": 11.902,
+        "mean": 9.89228289473684,
+        "p95": 11.081,
+        "samples": 304
+      },
+      "gpu_ms": {
+        "max": 10.1619997024536,
+        "mean": 9.60314144586262,
+        "p95": 9.91800022125244,
+        "samples": 304
+      },
+      "grass": {
+        "active": 328,
+        "building": false,
+        "built": 328,
+        "cache": {
+          "baked_cells": 11466,
+          "cache_hits": 5961,
+          "cache_mib": 95.9990234375,
+          "corrupt": 0,
+          "decode_ms": 9343.783,
+          "disk_reads": 328,
+          "evictions": 257,
+          "inflight": 0,
+          "io_ms": 255.096,
+          "pack_worker_ms": 0.0,
+          "status": ""
+        },
+        "cancelled": 0,
+        "commit_ms": 0.0,
+        "completed_per_s": 0.0,
+        "incoming_per_s": 0.0,
+        "indexed_cells": 11466,
+        "last_build_ms": 0.008,
+        "lookahead_m": 0.0,
+        "max_commit_ms": 3.728,
+        "oldest_visible_s": 0.0,
+        "pending_visible": 0,
+        "phases": {},
+        "queue_p95_s": 0.0,
+        "queued": 0,
+        "ready_cells": 0,
+        "rebuilt": 0,
+        "speed_mps": 0.0,
+        "unloaded": 0,
+        "visible": {
+          "0_48": 0,
+          "110_128": 0,
+          "48_76": 0,
+          "76_110": 0
+        }
+      },
+      "grass_commit_ms": {
+        "max": 0.004,
+        "mean": 0.000628289473684211,
+        "p95": 0.002,
+        "samples": 304
+      },
+      "grass_tick_ms": {
+        "max": 2.077,
+        "mean": 0.133621710526316,
+        "p95": 1.321,
+        "samples": 304
+      },
+      "label": "earth_all_water_updates_frozen",
+      "physics_ms": {
+        "max": 2.979,
+        "mean": 2.19965131578947,
+        "p95": 2.979,
+        "samples": 304
+      },
+      "primitives": {
+        "max": 11102153.0,
+        "mean": 11102153.0,
+        "p95": 11102153.0,
+        "samples": 304
+      },
+      "process_ms": {
+        "max": 10.422,
+        "mean": 10.2422368421053,
+        "p95": 10.422,
+        "samples": 304
+      },
+      "reflection_cpu_ms": {
+        "max": 1.6360000371933,
+        "mean": 0.47145723595627,
+        "p95": 1.09200000762939,
+        "samples": 304
+      },
+      "reflection_gpu_ms": {
+        "max": 0.280000001192093,
+        "mean": 0.0995296054323645,
+        "p95": 0.100000001490116,
+        "samples": 304
+      },
+      "render_cpu_ms": {
+        "max": 2.67499995231628,
+        "mean": 1.16499013022373,
+        "p95": 1.36800003051758,
+        "samples": 304
+      },
+      "render_setup_ms": {
+        "max": 0.4,
+        "mean": 0.137516447368421,
+        "p95": 0.196,
+        "samples": 304
+      },
+      "scripts": {
+        "res://addons/vrm/runtime/vrm_spring_bone_controller.gd:_process": {
+          "max": 0.119,
+          "mean": 0.0341122112211221,
+          "p95": 0.091,
+          "samples": 303
+        },
+        "res://scripts/audio/world_audio_1030.gd:_physics_process": {
+          "max": 1.139,
+          "mean": 0.101187845303867,
+          "p95": 1.103,
+          "samples": 181
+        },
+        "res://scripts/characters/character_wetness.gd:_physics_process": {
+          "max": 0.151,
+          "mean": 0.0321270718232044,
+          "p95": 0.051,
+          "samples": 181
+        },
+        "res://scripts/characters/hologram_effect.gd:_process": {
+          "max": 0.377,
+          "mean": 0.0878943894389439,
+          "p95": 0.299,
+          "samples": 303
+        },
+        "res://scripts/characters/projected_keqing.gd:_process": {
+          "max": 0.201,
+          "mean": 0.0511155115511551,
+          "p95": 0.16,
+          "samples": 303
+        },
+        "res://scripts/grass_wind_world.gd:_process": {
+          "max": 2.193,
+          "mean": 0.172145214521452,
+          "p95": 1.515,
+          "samples": 303
+        },
+        "res://scripts/map_1021.gd:_process": {
+          "max": 0.02,
+          "mean": 0.00492079207920791,
+          "p95": 0.015,
+          "samples": 303
+        },
+        "res://scripts/performance_monitor_1021.gd:_process": {
+          "max": 1.909,
+          "mean": 0.067993399339934,
+          "p95": 0.05,
+          "samples": 303
+        },
+        "res://scripts/tree_planting/world_vegetation.gd:_process": {
+          "max": 2.107,
+          "mean": 0.157303630363036,
+          "p95": 1.341,
+          "samples": 303
+        },
+        "res://scripts/water/water_manager.gd:_physics_process": {
+          "max": 0.088,
+          "mean": 0.0164419889502762,
+          "p95": 0.019,
+          "samples": 181
+        },
+        "res://scripts/world/initial_ruin.gd:_process": {
+          "max": 0.178,
+          "mean": 0.0436204620462046,
+          "p95": 0.142,
+          "samples": 303
+        },
+        "res://scripts/world/upper_ring.gd:_process": {
+          "max": 0.021,
+          "mean": 0.0061188118811881,
+          "p95": 0.015,
+          "samples": 303
+        }
+      },
+      "water": {
+        "bodies": 7,
+        "clock": 13.8476525555556,
+        "emitted": 0,
+        "events": 0,
+        "reflection_active": true,
+        "reflection_gpu_ms": 0.096000000834465,
+        "reflection_objects": 0,
+        "reflection_size": [
+          960,
+          540
+        ],
+        "reflection_weight": 1.0,
+        "style": 2,
+        "wind": 1.0
+      }
+    },
+    {
+      "draws": {
+        "max": 1681.0,
+        "mean": 1681.0,
+        "p95": 1681.0,
+        "samples": 296
+      },
+      "frame_ms": {
+        "max": 17.088,
+        "mean": 10.1365743243243,
+        "p95": 11.987,
+        "samples": 296
+      },
+      "gpu_ms": {
+        "max": 10.3050003051758,
+        "mean": 9.61754731229834,
+        "p95": 9.98099994659424,
+        "samples": 296
+      },
+      "grass": {
+        "active": 328,
+        "building": false,
+        "built": 328,
+        "cache": {
+          "baked_cells": 11466,
+          "cache_hits": 7219,
+          "cache_mib": 95.9990234375,
+          "corrupt": 0,
+          "decode_ms": 9343.783,
+          "disk_reads": 328,
+          "evictions": 257,
+          "inflight": 0,
+          "io_ms": 255.096,
+          "pack_worker_ms": 0.0,
+          "status": ""
+        },
+        "cancelled": 0,
+        "commit_ms": 0.001,
+        "completed_per_s": 0.0,
+        "incoming_per_s": 0.0,
+        "indexed_cells": 11466,
+        "last_build_ms": 0.012,
+        "lookahead_m": 0.0,
+        "max_commit_ms": 3.728,
+        "oldest_visible_s": 0.0,
+        "pending_visible": 0,
+        "phases": {},
+        "queue_p95_s": 0.0,
+        "queued": 0,
+        "ready_cells": 0,
+        "rebuilt": 0,
+        "speed_mps": 0.0,
+        "unloaded": 0,
+        "visible": {
+          "0_48": 0,
+          "110_128": 0,
+          "48_76": 0,
+          "76_110": 0
+        }
+      },
+      "grass_commit_ms": {
+        "max": 0.004,
+        "mean": 0.000665540540540541,
+        "p95": 0.002,
+        "samples": 296
+      },
+      "grass_tick_ms": {
+        "max": 2.159,
+        "mean": 0.136993243243243,
+        "p95": 1.326,
+        "samples": 296
+      },
+      "label": "earth_water_baseline_repeat",
+      "physics_ms": {
+        "max": 1.977,
+        "mean": 1.86352364864866,
+        "p95": 1.977,
+        "samples": 296
+      },
+      "primitives": {
+        "max": 11102161.0,
+        "mean": 11102155.027027,
+        "p95": 11102161.0,
+        "samples": 296
+      },
+      "process_ms": {
+        "max": 16.324,
+        "mean": 15.2025506756757,
+        "p95": 16.324,
+        "samples": 296
+      },
+      "reflection_cpu_ms": {
+        "max": 1.43099999427795,
+        "mean": 0.45119256762838,
+        "p95": 0.981000006198883,
+        "samples": 296
+      },
+      "reflection_gpu_ms": {
+        "max": 0.284999996423721,
+        "mean": 0.0923378379965151,
+        "p95": 0.0979999974370003,
+        "samples": 296
+      },
+      "render_cpu_ms": {
+        "max": 3.58200001716614,
+        "mean": 1.25313175791824,
+        "p95": 2.18099999427795,
+        "samples": 296
+      },
+      "render_setup_ms": {
+        "max": 0.231,
+        "mean": 0.159307432432432,
+        "p95": 0.187,
+        "samples": 296
+      },
+      "scripts": {
+        "res://addons/vrm/runtime/vrm_spring_bone_controller.gd:_process": {
+          "max": 0.17,
+          "mean": 0.0346101694915254,
+          "p95": 0.08,
+          "samples": 295
+        },
+        "res://scripts/audio/world_audio_1030.gd:_physics_process": {
+          "max": 1.256,
+          "mean": 0.105077348066298,
+          "p95": 1.089,
+          "samples": 181
+        },
+        "res://scripts/characters/character_wetness.gd:_physics_process": {
+          "max": 0.092,
+          "mean": 0.031403314917127,
+          "p95": 0.048,
+          "samples": 181
+        },
+        "res://scripts/characters/hologram_effect.gd:_process": {
+          "max": 0.407,
+          "mean": 0.0849491525423728,
+          "p95": 0.254,
+          "samples": 295
+        },
+        "res://scripts/characters/projected_keqing.gd:_process": {
+          "max": 0.209,
+          "mean": 0.0503898305084745,
+          "p95": 0.147,
+          "samples": 295
+        },
+        "res://scripts/grass_wind_world.gd:_process": {
+          "max": 2.167,
+          "mean": 0.182230508474576,
+          "p95": 1.523,
+          "samples": 295
+        },
+        "res://scripts/map_1021.gd:_process": {
+          "max": 0.02,
+          "mean": 0.00489491525423727,
+          "p95": 0.013,
+          "samples": 295
+        },
+        "res://scripts/performance_monitor_1021.gd:_process": {
+          "max": 1.895,
+          "mean": 0.0613423728813559,
+          "p95": 0.053,
+          "samples": 295
+        },
+        "res://scripts/tree_planting/world_vegetation.gd:_process": {
+          "max": 2.192,
+          "mean": 0.169162711864407,
+          "p95": 1.348,
+          "samples": 295
+        },
+        "res://scripts/water/water_manager.gd:_physics_process": {
+          "max": 0.055,
+          "mean": 0.0155414364640884,
+          "p95": 0.019,
+          "samples": 181
+        },
+        "res://scripts/water/water_manager.gd:_process": {
+          "max": 10.65,
+          "mean": 3.91374237288136,
+          "p95": 4.239,
+          "samples": 295
+        },
+        "res://scripts/world/initial_ruin.gd:_process": {
+          "max": 0.195,
+          "mean": 0.041871186440678,
+          "p95": 0.117,
+          "samples": 295
+        },
+        "res://scripts/world/upper_ring.gd:_process": {
+          "max": 0.023,
+          "mean": 0.0066101694915254,
+          "p95": 0.014,
+          "samples": 295
+        }
+      },
+      "water": {
+        "bodies": 7,
+        "clock": 17.3569485555557,
+        "emitted": 0,
+        "events": 0,
+        "reflection_active": true,
+        "reflection_gpu_ms": 0.0979999974370003,
+        "reflection_objects": 404,
+        "reflection_size": [
+          960,
+          540
+        ],
+        "reflection_weight": 1.0,
+        "style": 2,
+        "wind": 0.377121888888893
+      }
+    },
+    {
+      "draws": {
+        "max": 1905.0,
+        "mean": 1905.0,
+        "p95": 1905.0,
+        "samples": 416
+      },
+      "frame_ms": {
+        "max": 14.968,
+        "mean": 7.22344471153846,
+        "p95": 9.163,
+        "samples": 416
+      },
+      "gpu_ms": {
+        "max": 3.36899995803833,
+        "mean": 2.9103701922756,
+        "p95": 3.13599991798401,
+        "samples": 416
+      },
+      "grass": {
+        "active": 60,
+        "building": false,
+        "built": 388,
+        "cache": {
+          "baked_cells": 11466,
+          "cache_hits": 9574,
+          "cache_mib": 95.297607421875,
+          "corrupt": 0,
+          "decode_ms": 10489.988,
+          "disk_reads": 388,
+          "evictions": 290,
+          "inflight": 0,
+          "io_ms": 309.112,
+          "pack_worker_ms": 0.0,
+          "status": ""
+        },
+        "cancelled": 0,
+        "commit_ms": 0.001,
+        "completed_per_s": 0.0,
+        "incoming_per_s": 0.0,
+        "indexed_cells": 11466,
+        "last_build_ms": 0.011,
+        "lookahead_m": 0.0,
+        "max_commit_ms": 3.728,
+        "oldest_visible_s": 0.0,
+        "pending_visible": 0,
+        "phases": {},
+        "queue_p95_s": 0.0,
+        "queued": 0,
+        "ready_cells": 0,
+        "rebuilt": 0,
+        "speed_mps": 0.0,
+        "unloaded": 328,
+        "visible": {
+          "0_48": 0,
+          "110_128": 0,
+          "48_76": 0,
+          "76_110": 0
+        }
+      },
+      "grass_commit_ms": {
+        "max": 0.002,
+        "mean": 0.000521634615384616,
+        "p95": 0.001,
+        "samples": 416
+      },
+      "grass_tick_ms": {
+        "max": 0.59,
+        "mean": 0.0303749999999999,
+        "p95": 0.289,
+        "samples": 416
+      },
+      "label": "cave_water_baseline",
+      "physics_ms": {
+        "max": 2.66,
+        "mean": 2.01560817307692,
+        "p95": 2.66,
+        "samples": 416
+      },
+      "primitives": {
+        "max": 4824217.0,
+        "mean": 4824217.0,
+        "p95": 4824217.0,
+        "samples": 416
+      },
+      "process_ms": {
+        "max": 14.936,
+        "mean": 14.2491466346155,
+        "p95": 14.936,
+        "samples": 416
+      },
+      "reflection_cpu_ms": {
+        "max": 1.0110000371933,
+        "mean": 0.342725963045198,
+        "p95": 0.707000017166138,
+        "samples": 416
+      },
+      "reflection_gpu_ms": {
+        "max": 0.0390000008046627,
+        "mean": 0.0381418265885888,
+        "p95": 0.0390000008046627,
+        "samples": 416
+      },
+      "render_cpu_ms": {
+        "max": 3.24900007247925,
+        "mean": 1.28935096441553,
+        "p95": 2.27999997138977,
+        "samples": 416
+      },
+      "render_setup_ms": {
+        "max": 0.492,
+        "mean": 0.153442307692308,
+        "p95": 0.177,
+        "samples": 416
+      },
+      "scripts": {
+        "res://addons/vrm/runtime/vrm_spring_bone_controller.gd:_process": {
+          "max": 0.097,
+          "mean": 0.0270674698795181,
+          "p95": 0.057,
+          "samples": 415
+        },
+        "res://scripts/audio/world_audio_1030.gd:_physics_process": {
+          "max": 1.959,
+          "mean": 0.11232044198895,
+          "p95": 1.095,
+          "samples": 181
+        },
+        "res://scripts/characters/character_wetness.gd:_physics_process": {
+          "max": 0.061,
+          "mean": 0.0300552486187845,
+          "p95": 0.046,
+          "samples": 181
+        },
+        "res://scripts/characters/hologram_effect.gd:_process": {
+          "max": 0.31,
+          "mean": 0.0618361445783133,
+          "p95": 0.168,
+          "samples": 415
+        },
+        "res://scripts/characters/projected_keqing.gd:_process": {
+          "max": 0.198,
+          "mean": 0.038267469879518,
+          "p95": 0.099,
+          "samples": 415
+        },
+        "res://scripts/grass_wind_world.gd:_process": {
+          "max": 1.056,
+          "mean": 0.0474048192771084,
+          "p95": 0.316,
+          "samples": 415
+        },
+        "res://scripts/map_1021.gd:_process": {
+          "max": 0.017,
+          "mean": 0.00372048192771083,
+          "p95": 0.009,
+          "samples": 415
+        },
+        "res://scripts/performance_monitor_1021.gd:_process": {
+          "max": 1.203,
+          "mean": 0.0402530120481927,
+          "p95": 0.029,
+          "samples": 415
+        },
+        "res://scripts/tree_planting/world_vegetation.gd:_process": {
+          "max": 0.627,
+          "mean": 0.0555638554216867,
+          "p95": 0.306,
+          "samples": 415
+        },
+        "res://scripts/water/water_manager.gd:_physics_process": {
+          "max": 0.035,
+          "mean": 0.0152707182320442,
+          "p95": 0.017,
+          "samples": 181
+        },
+        "res://scripts/water/water_manager.gd:_process": {
+          "max": 10.508,
+          "mean": 3.67635421686747,
+          "p95": 4.071,
+          "samples": 415
+        },
+        "res://scripts/world/initial_ruin.gd:_process": {
+          "max": 0.158,
+          "mean": 0.0307759036144578,
+          "p95": 0.077,
+          "samples": 415
+        },
+        "res://scripts/world/upper_ring.gd:_process": {
+          "max": 0.018,
+          "mean": 0.00540481927710841,
+          "p95": 0.01,
+          "samples": 415
+        }
+      },
+      "water": {
+        "bodies": 7,
+        "clock": 27.8993734179884,
+        "emitted": 0,
+        "events": 0,
+        "reflection_active": true,
+        "reflection_gpu_ms": 0.0379999987781048,
+        "reflection_objects": 211,
+        "reflection_size": [
+          960,
+          540
+        ],
+        "reflection_weight": 1.0,
+        "style": 2,
+        "wind": 0.0
+      }
+    },
+    {
+      "draws": {
+        "max": 1905.0,
+        "mean": 1905.0,
+        "p95": 1905.0,
+        "samples": 918
+      },
+      "frame_ms": {
+        "max": 5.929,
+        "mean": 3.26929520697167,
+        "p95": 4.285,
+        "samples": 918
+      },
+      "gpu_ms": {
+        "max": 3.34100008010864,
+        "mean": 2.9297494553273,
+        "p95": 3.16300010681152,
+        "samples": 918
+      },
+      "grass": {
+        "active": 60,
+        "building": false,
+        "built": 388,
+        "cache": {
+          "baked_cells": 11466,
+          "cache_hits": 10356,
+          "cache_mib": 95.297607421875,
+          "corrupt": 0,
+          "decode_ms": 10489.988,
+          "disk_reads": 388,
+          "evictions": 290,
+          "inflight": 0,
+          "io_ms": 309.112,
+          "pack_worker_ms": 0.0,
+          "status": ""
+        },
+        "cancelled": 0,
+        "commit_ms": 0.0,
+        "completed_per_s": 0.0,
+        "incoming_per_s": 0.0,
+        "indexed_cells": 11466,
+        "last_build_ms": 0.007,
+        "lookahead_m": 0.0,
+        "max_commit_ms": 3.728,
+        "oldest_visible_s": 0.0,
+        "pending_visible": 0,
+        "phases": {},
+        "queue_p95_s": 0.0,
+        "queued": 0,
+        "ready_cells": 0,
+        "rebuilt": 0,
+        "speed_mps": 0.0,
+        "unloaded": 328,
+        "visible": {
+          "0_48": 0,
+          "110_128": 0,
+          "48_76": 0,
+          "76_110": 0
+        }
+      },
+      "grass_commit_ms": {
+        "max": 0.002,
+        "mean": 0.000398692810457517,
+        "p95": 0.001,
+        "samples": 918
+      },
+      "grass_tick_ms": {
+        "max": 0.759,
+        "mean": 0.0177331154684094,
+        "p95": 0.025,
+        "samples": 918
+      },
+      "label": "cave_proxy_sweep_skipped",
+      "physics_ms": {
+        "max": 1.825,
+        "mean": 1.78155773420479,
+        "p95": 1.825,
+        "samples": 918
+      },
+      "primitives": {
+        "max": 4824217.0,
+        "mean": 4824211.31808279,
+        "p95": 4824217.0,
+        "samples": 918
+      },
+      "process_ms": {
+        "max": 13.493,
+        "mean": 7.55367320261448,
+        "p95": 13.493,
+        "samples": 918
+      },
+      "reflection_cpu_ms": {
+        "max": 0.709999978542328,
+        "mean": 0.227239651228088,
+        "p95": 0.441000014543533,
+        "samples": 918
+      },
+      "reflection_gpu_ms": {
+        "max": 0.204999998211861,
+        "mean": 0.0398540300497692,
+        "p95": 0.0489999987185001,
+        "samples": 918
+      },
+      "render_cpu_ms": {
+        "max": 2.72499990463257,
+        "mean": 1.04958061091521,
+        "p95": 1.83500003814697,
+        "samples": 918
+      },
+      "render_setup_ms": {
+        "max": 0.372,
+        "mean": 0.113904139433551,
+        "p95": 0.201,
+        "samples": 918
+      },
+      "scripts": {
+        "res://addons/vrm/runtime/vrm_spring_bone_controller.gd:_process": {
+          "max": 0.056,
+          "mean": 0.0171744820065431,
+          "p95": 0.03,
+          "samples": 917
+        },
+        "res://scripts/audio/world_audio_1030.gd:_physics_process": {
+          "max": 1.118,
+          "mean": 0.0997833333333333,
+          "p95": 1.089,
+          "samples": 180
+        },
+        "res://scripts/characters/character_wetness.gd:_physics_process": {
+          "max": 0.074,
+          "mean": 0.0295388888888889,
+          "p95": 0.045,
+          "samples": 180
+        },
+        "res://scripts/characters/hologram_effect.gd:_process": {
+          "max": 0.188,
+          "mean": 0.0446346782988003,
+          "p95": 0.096,
+          "samples": 917
+        },
+        "res://scripts/characters/projected_keqing.gd:_process": {
+          "max": 0.113,
+          "mean": 0.0265801526717557,
+          "p95": 0.05,
+          "samples": 917
+        },
+        "res://scripts/grass_wind_world.gd:_process": {
+          "max": 0.79,
+          "mean": 0.0251941112322792,
+          "p95": 0.045,
+          "samples": 917
+        },
+        "res://scripts/map_1021.gd:_process": {
+          "max": 0.074,
+          "mean": 0.00273282442748088,
+          "p95": 0.005,
+          "samples": 917
+        },
+        "res://scripts/performance_monitor_1021.gd:_process": {
+          "max": 1.139,
+          "mean": 0.0207938931297709,
+          "p95": 0.016,
+          "samples": 917
+        },
+        "res://scripts/tree_planting/world_vegetation.gd:_process": {
+          "max": 0.801,
+          "mean": 0.0345899672846236,
+          "p95": 0.071,
+          "samples": 917
+        },
+        "res://scripts/water/water_manager.gd:_physics_process": {
+          "max": 0.069,
+          "mean": 0.0147555555555555,
+          "p95": 0.018,
+          "samples": 180
+        },
+        "res://scripts/water/water_manager.gd:_process": {
+          "max": 0.157,
+          "mean": 0.0416019629225735,
+          "p95": 0.08,
+          "samples": 917
+        },
+        "res://scripts/world/initial_ruin.gd:_process": {
+          "max": 0.1,
+          "mean": 0.0220065430752453,
+          "p95": 0.041,
+          "samples": 917
+        },
+        "res://scripts/world/upper_ring.gd:_process": {
+          "max": 0.016,
+          "mean": 0.00308396946564883,
+          "p95": 0.006,
+          "samples": 917
+        }
+      },
+      "water": {
+        "bodies": 7,
+        "clock": 31.3993378585853,
+        "emitted": 0,
+        "events": 0,
+        "reflection_active": true,
+        "reflection_gpu_ms": 0.0480000004172325,
+        "reflection_objects": 0,
+        "reflection_size": [
+          960,
+          540
+        ],
+        "reflection_weight": 1.0,
+        "style": 2,
+        "wind": 0.970386565656551
+      }
+    },
+    {
+      "draws": {
+        "max": 1905.0,
+        "mean": 1905.0,
+        "p95": 1905.0,
+        "samples": 920
+      },
+      "frame_ms": {
+        "max": 6.617,
+        "mean": 3.26277391304348,
+        "p95": 4.207,
+        "samples": 920
+      },
+      "gpu_ms": {
+        "max": 3.39800000190735,
+        "mean": 2.9308478264705,
+        "p95": 3.16300010681152,
+        "samples": 920
+      },
+      "grass": {
+        "active": 60,
+        "building": false,
+        "built": 388,
+        "cache": {
+          "baked_cells": 11466,
+          "cache_hits": 11161,
+          "cache_mib": 95.297607421875,
+          "corrupt": 0,
+          "decode_ms": 10489.988,
+          "disk_reads": 388,
+          "evictions": 290,
+          "inflight": 0,
+          "io_ms": 309.112,
+          "pack_worker_ms": 0.0,
+          "status": ""
+        },
+        "cancelled": 0,
+        "commit_ms": 0.0,
+        "completed_per_s": 0.0,
+        "incoming_per_s": 0.0,
+        "indexed_cells": 11466,
+        "last_build_ms": 0.008,
+        "lookahead_m": 0.0,
+        "max_commit_ms": 3.728,
+        "oldest_visible_s": 0.0,
+        "pending_visible": 0,
+        "phases": {},
+        "queue_p95_s": 0.0,
+        "queued": 0,
+        "ready_cells": 0,
+        "rebuilt": 0,
+        "speed_mps": 0.0,
+        "unloaded": 328,
+        "visible": {
+          "0_48": 0,
+          "110_128": 0,
+          "48_76": 0,
+          "76_110": 0
+        }
+      },
+      "grass_commit_ms": {
+        "max": 0.004,
+        "mean": 0.000402173913043479,
+        "p95": 0.001,
+        "samples": 920
+      },
+      "grass_tick_ms": {
+        "max": 0.418,
+        "mean": 0.0166880434782607,
+        "p95": 0.021,
+        "samples": 920
+      },
+      "label": "cave_all_water_updates_frozen",
+      "physics_ms": {
+        "max": 2.432,
+        "mean": 1.75914130434785,
+        "p95": 2.432,
+        "samples": 920
+      },
+      "primitives": {
+        "max": 4824209.0,
+        "mean": 4824209.0,
+        "p95": 4824209.0,
+        "samples": 920
+      },
+      "process_ms": {
+        "max": 7.46,
+        "mean": 6.3752010869565,
+        "p95": 7.46,
+        "samples": 920
+      },
+      "reflection_cpu_ms": {
+        "max": 0.669000029563904,
+        "mean": 0.227759782840376,
+        "p95": 0.435000002384186,
+        "samples": 920
+      },
+      "reflection_gpu_ms": {
+        "max": 0.224999994039536,
+        "mean": 0.04135108653294,
+        "p95": 0.0500000007450581,
+        "samples": 920
+      },
+      "render_cpu_ms": {
+        "max": 2.79099988937378,
+        "mean": 1.04090000021717,
+        "p95": 1.932000041008,
+        "samples": 920
+      },
+      "render_setup_ms": {
+        "max": 0.31,
+        "mean": 0.101580434782608,
+        "p95": 0.169,
+        "samples": 920
+      },
+      "scripts": {
+        "res://addons/vrm/runtime/vrm_spring_bone_controller.gd:_process": {
+          "max": 0.107,
+          "mean": 0.0167410228509249,
+          "p95": 0.029,
+          "samples": 919
+        },
+        "res://scripts/audio/world_audio_1030.gd:_physics_process": {
+          "max": 1.829,
+          "mean": 0.104288888888889,
+          "p95": 1.086,
+          "samples": 180
+        },
+        "res://scripts/characters/character_wetness.gd:_physics_process": {
+          "max": 0.093,
+          "mean": 0.0290222222222222,
+          "p95": 0.042,
+          "samples": 180
+        },
+        "res://scripts/characters/hologram_effect.gd:_process": {
+          "max": 0.377,
+          "mean": 0.0431795429815015,
+          "p95": 0.089,
+          "samples": 919
+        },
+        "res://scripts/characters/projected_keqing.gd:_process": {
+          "max": 0.206,
+          "mean": 0.0257932535364526,
+          "p95": 0.047,
+          "samples": 919
+        },
+        "res://scripts/grass_wind_world.gd:_process": {
+          "max": 0.976,
+          "mean": 0.0261577801958651,
+          "p95": 0.039,
+          "samples": 919
+        },
+        "res://scripts/map_1021.gd:_process": {
+          "max": 0.02,
+          "mean": 0.00248095756256797,
+          "p95": 0.005,
+          "samples": 919
+        },
+        "res://scripts/performance_monitor_1021.gd:_process": {
+          "max": 1.151,
+          "mean": 0.0227943416757344,
+          "p95": 0.017,
+          "samples": 919
+        },
+        "res://scripts/tree_planting/world_vegetation.gd:_process": {
+          "max": 0.437,
+          "mean": 0.0331392818280738,
+          "p95": 0.063,
+          "samples": 919
+        },
+        "res://scripts/water/water_manager.gd:_physics_process": {
+          "max": 0.033,
+          "mean": 0.0158888888888889,
+          "p95": 0.018,
+          "samples": 180
+        },
+        "res://scripts/world/initial_ruin.gd:_process": {
+          "max": 0.189,
+          "mean": 0.0213939064200217,
+          "p95": 0.037,
+          "samples": 919
+        },
+        "res://scripts/world/upper_ring.gd:_process": {
+          "max": 0.044,
+          "mean": 0.00306420021762782,
+          "p95": 0.005,
+          "samples": 919
+        }
+      },
+      "water": {
+        "bodies": 7,
+        "clock": 31.3993378585853,
+        "emitted": 0,
+        "events": 0,
+        "reflection_active": true,
+        "reflection_gpu_ms": 0.0480000004172325,
+        "reflection_objects": 0,
+        "reflection_size": [
+          960,
+          540
+        ],
+        "reflection_weight": 1.0,
+        "style": 2,
+        "wind": 0.970386565656551
+      }
+    },
+    {
+      "draws": {
+        "max": 1905.0,
+        "mean": 1905.0,
+        "p95": 1905.0,
+        "samples": 413
+      },
+      "frame_ms": {
+        "max": 15.237,
+        "mean": 7.27976513317191,
+        "p95": 9.483,
+        "samples": 413
+      },
+      "gpu_ms": {
+        "max": 3.37700009346008,
+        "mean": 2.93204842237237,
+        "p95": 3.15499997138977,
+        "samples": 413
+      },
+      "grass": {
+        "active": 60,
+        "building": false,
+        "built": 388,
+        "cache": {
+          "baked_cells": 11466,
+          "cache_hits": 11943,
+          "cache_mib": 95.297607421875,
+          "corrupt": 0,
+          "decode_ms": 10489.988,
+          "disk_reads": 388,
+          "evictions": 290,
+          "inflight": 0,
+          "io_ms": 309.112,
+          "pack_worker_ms": 0.0,
+          "status": ""
+        },
+        "cancelled": 0,
+        "commit_ms": 0.001,
+        "completed_per_s": 0.0,
+        "incoming_per_s": 0.0,
+        "indexed_cells": 11466,
+        "last_build_ms": 0.024,
+        "lookahead_m": 0.0,
+        "max_commit_ms": 3.728,
+        "oldest_visible_s": 0.0,
+        "pending_visible": 0,
+        "phases": {},
+        "queue_p95_s": 0.0,
+        "queued": 0,
+        "ready_cells": 0,
+        "rebuilt": 0,
+        "speed_mps": 0.0,
+        "unloaded": 328,
+        "visible": {
+          "0_48": 0,
+          "110_128": 0,
+          "48_76": 0,
+          "76_110": 0
+        }
+      },
+      "grass_commit_ms": {
+        "max": 0.003,
+        "mean": 0.00053268765133172,
+        "p95": 0.002,
+        "samples": 413
+      },
+      "grass_tick_ms": {
+        "max": 0.947,
+        "mean": 0.0344309927360774,
+        "p95": 0.288,
+        "samples": 413
+      },
+      "label": "cave_water_baseline_repeat",
+      "physics_ms": {
+        "max": 2.432,
+        "mean": 1.79579176755448,
+        "p95": 2.432,
+        "samples": 413
+      },
+      "primitives": {
+        "max": 4824225.0,
+        "mean": 4824219.49878935,
+        "p95": 4824225.0,
+        "samples": 413
+      },
+      "process_ms": {
+        "max": 15.21,
+        "mean": 13.6967191283293,
+        "p95": 15.21,
+        "samples": 413
+      },
+      "reflection_cpu_ms": {
+        "max": 1.32200002670288,
+        "mean": 0.333968522365388,
+        "p95": 0.657000005245209,
+        "samples": 413
+      },
+      "reflection_gpu_ms": {
+        "max": 0.0390000008046627,
+        "mean": 0.0379999996259917,
+        "p95": 0.0390000008046627,
+        "samples": 413
+      },
+      "render_cpu_ms": {
+        "max": 2.82200002670288,
+        "mean": 1.28911622687633,
+        "p95": 2.23900008201599,
+        "samples": 413
+      },
+      "render_setup_ms": {
+        "max": 0.481,
+        "mean": 0.152699757869249,
+        "p95": 0.177,
+        "samples": 413
+      },
+      "scripts": {
+        "res://addons/vrm/runtime/vrm_spring_bone_controller.gd:_process": {
+          "max": 0.086,
+          "mean": 0.0273689320388349,
+          "p95": 0.057,
+          "samples": 412
+        },
+        "res://scripts/audio/world_audio_1030.gd:_physics_process": {
+          "max": 1.149,
+          "mean": 0.10653591160221,
+          "p95": 1.083,
+          "samples": 181
+        },
+        "res://scripts/characters/character_wetness.gd:_physics_process": {
+          "max": 0.054,
+          "mean": 0.0301878453038674,
+          "p95": 0.044,
+          "samples": 181
+        },
+        "res://scripts/characters/hologram_effect.gd:_process": {
+          "max": 0.259,
+          "mean": 0.0648640776699029,
+          "p95": 0.18,
+          "samples": 412
+        },
+        "res://scripts/characters/projected_keqing.gd:_process": {
+          "max": 0.178,
+          "mean": 0.0395631067961165,
+          "p95": 0.105,
+          "samples": 412
+        },
+        "res://scripts/grass_wind_world.gd:_process": {
+          "max": 0.993,
+          "mean": 0.0458543689320387,
+          "p95": 0.316,
+          "samples": 412
+        },
+        "res://scripts/map_1021.gd:_process": {
+          "max": 0.014,
+          "mean": 0.0038398058252427,
+          "p95": 0.009,
+          "samples": 412
+        },
+        "res://scripts/performance_monitor_1021.gd:_process": {
+          "max": 1.175,
+          "mean": 0.0466796116504854,
+          "p95": 0.045,
+          "samples": 412
+        },
+        "res://scripts/tree_planting/world_vegetation.gd:_process": {
+          "max": 1.011,
+          "mean": 0.0601990291262136,
+          "p95": 0.308,
+          "samples": 412
+        },
+        "res://scripts/water/water_manager.gd:_physics_process": {
+          "max": 0.029,
+          "mean": 0.0151767955801105,
+          "p95": 0.018,
+          "samples": 181
+        },
+        "res://scripts/water/water_manager.gd:_process": {
+          "max": 10.758,
+          "mean": 3.71800728155339,
+          "p95": 4.122,
+          "samples": 412
+        },
+        "res://scripts/world/initial_ruin.gd:_process": {
+          "max": 0.249,
+          "mean": 0.0319490291262135,
+          "p95": 0.081,
+          "samples": 412
+        },
+        "res://scripts/world/upper_ring.gd:_process": {
+          "max": 0.016,
+          "mean": 0.00556310679611648,
+          "p95": 0.011,
+          "samples": 412
+        }
+      },
+      "water": {
+        "bodies": 7,
+        "clock": 34.9090508412692,
+        "emitted": 0,
+        "events": 0,
+        "reflection_active": true,
+        "reflection_gpu_ms": 0.0370000004768372,
+        "reflection_objects": 211,
+        "reflection_size": [
+          960,
+          540
+        ],
+        "reflection_weight": 1.0,
+        "style": 2,
+        "wind": 1.0
+      }
+    }
+  ]
+}

@@ -131,6 +131,9 @@ uniform vec4 earth_pavilion_support_bounds = vec4(0.0,0.0,1.0,1.0);
 uniform bool use_sunken_archive_grass_cut = false;
 uniform sampler2D sunken_archive_grass_cut : filter_nearest, repeat_disable;
 uniform vec4 sunken_archive_cut_bounds = vec4(0.0,0.0,1.0,1.0);
+uniform bool use_church_grass_cut = false;
+uniform sampler2D church_grass_cut : filter_nearest, repeat_disable;
+uniform vec4 church_cut_bounds = vec4(0.0,0.0,1.0,1.0);
 uniform float grass_near_fade_start = 48.0;
 uniform float grass_near_fade_end = 76.0;
 uniform float grass_far_fade_start = 76.0;
@@ -296,7 +299,14 @@ void vertex() {
 			if (cut > 0.5 && (cut < 1.5 || world_origin.y <= 18.5)) { grass_lod_visibility = 0.0; }
 		}
 	}
-	if ((skip_invisible_grass || use_atrium_grass_cut || use_terrace_grass_cut || use_earth_pavilion_grass_support || use_sunken_archive_grass_cut) && grass_lod_visibility < 0.5) {
+	if (use_church_grass_cut) {
+		vec2 cut_uv = (world_origin.xz - church_cut_bounds.xy) / church_cut_bounds.zw;
+		if (all(greaterThanEqual(cut_uv,vec2(0.0))) && all(lessThan(cut_uv,vec2(1.0)))) {
+			float height = textureLod(church_grass_cut,cut_uv,0.0).r;
+			if (height > -9999.0 && world_origin.y >= height-12.0 && world_origin.y <= height+2.0) { grass_lod_visibility=0.0; }
+		}
+	}
+	if ((skip_invisible_grass || use_atrium_grass_cut || use_terrace_grass_cut || use_earth_pavilion_grass_support || use_sunken_archive_grass_cut || use_church_grass_cut) && grass_lod_visibility < 0.5) {
 		VERTEX = vec3(0.0);
 	} else {
 		vec3 palette_origin = mix(

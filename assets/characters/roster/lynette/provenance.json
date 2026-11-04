@@ -1,0 +1,20 @@
+{
+  "archive": "D:\\模型\\20261008\\【琳妮特】_by_原神_82c4527df590fc2b1a28c26b93cbeeac.zip",
+  "archive_sha256": "118d93c077f69a53160741b74b534fdc9733d44c10165ac8d4d027aeb7283614",
+  "body_pmx": "【琳妮特】.pmx",
+  "source_sha256": "c8ae596cd241eef8bbd553b6f2c4b6c4fcdda7e5dfdb4414d7f43b6553990f81",
+  "pmx_name": "Linette",
+  "pmx_english_name": "Avatar_Girl_Sword_Linette_Model",
+  "pmx_comment": "感谢下载本模型\r\n\r\n◆允许完善物理，修正模型权重、表情等bug\r\n\r\n  允许改色，适度更改衣装，添加spa、toon等\r\n\r\n◆请勿二次配布，以及拆取部件以用于改造其他模型\r\n\r\n  请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n  请勿用于商业用途\r\n\r\n◆他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n◆模型提供：miHoYo\r\n\r\n◆模型改造：观海\r\n\r\n  联系我【BiliBili：观海子】\r\n\r\n◆最终解释权归属：miHoYo\r\n\r\n请遵守本规则使用",
+  "pmx_english_comment": "",
+  "authors": [
+    "miHoYo",
+    "观海"
+  ],
+  "excluded_pmx": [
+    "帽.pmx",
+    "托盘.pmx",
+    "杯.pmx",
+    "茶匙.pmx"
+  ]
+}

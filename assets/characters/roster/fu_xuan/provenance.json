@@ -1,0 +1,17 @@
+{
+  "archive": "D:\\模型\\20261008\\星穹铁道—符玄_by_崩坏：星穹铁道_ec490043e06acfd189c43a5d5453c2d4.rar",
+  "archive_sha256": "741c19433308377a135b02e363bfb81c223825ecfe1a0d9df662c54e97fb344c",
+  "body_pmx": "符玄（鞋+发饰补差145cm）(目修).pmx",
+  "source_sha256": "5056064dc1193c81d3988b92580e45801fdc4b09bc931b3ac62edbcd285cfd2f",
+  "pmx_name": "符玄",
+  "pmx_english_name": "New MMD Model",
+  "pmx_comment": "允许改造，优化骨骼和刚体，重制UV\r\n\r\n===================\r\n请勿二次配布\r\n\r\n请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n请勿用于商业用途\r\n\r\n他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n模型编辑：流云景\r\n\r\n模型版权所属miHoYo",
+  "pmx_english_comment": "exported by mmd_tools",
+  "authors": [
+    "miHoYo",
+    "流云景"
+  ],
+  "excluded_pmx": [
+    "符玄武器.pmx"
+  ]
+}

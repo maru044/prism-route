@@ -1,0 +1,124 @@
+{
+  "catalog": "res://assets/characters/roster/sixth_batch.json",
+  "engine": "4.7.2-stable (official)",
+  "failures": [],
+  "grounding_enabled": false,
+  "models": [
+    {
+      "bones": 328,
+      "captures": [],
+      "clothes_chains": 25,
+      "hair_chains": 7,
+      "id": "yoimiya",
+      "material_classes": {
+        "ShaderMaterial": 27
+      },
+      "max_segment_error_m": 0.00000388734042644501,
+      "meshes": 1,
+      "morphs": 62,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 558,
+      "captures": [],
+      "clothes_chains": 40,
+      "hair_chains": 8,
+      "id": "yunjin",
+      "material_classes": {
+        "ShaderMaterial": 27
+      },
+      "max_segment_error_m": 0.00000392459332942963,
+      "meshes": 1,
+      "morphs": 63,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 307,
+      "captures": [],
+      "clothes_chains": 16,
+      "hair_chains": 4,
+      "id": "fischl",
+      "material_classes": {
+        "ShaderMaterial": 19
+      },
+      "max_segment_error_m": 0.00000333786010742188,
+      "meshes": 1,
+      "morphs": 43,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 330,
+      "captures": [],
+      "clothes_chains": 12,
+      "hair_chains": 1,
+      "id": "noelle",
+      "material_classes": {
+        "ShaderMaterial": 11
+      },
+      "max_segment_error_m": 0.00000356882810592651,
+      "meshes": 1,
+      "morphs": 44,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 224,
+      "captures": [],
+      "clothes_chains": 6,
+      "hair_chains": 6,
+      "id": "kuki_shinobu",
+      "material_classes": {
+        "ShaderMaterial": 18
+      },
+      "max_segment_error_m": 0.00000390969216823578,
+      "meshes": 1,
+      "morphs": 65,
+      "physics_steps": 309,
+      "pose_checks": 54
+    }
+  ],
+  "motions": [
+    {
+      "acceptance_report": "res://docs/character_locomotion_1104/acceptance.json",
+      "formal_id": "A01",
+      "formal_resource": "res://assets/characters/motion_review/A01.tres",
+      "formal_source_sha256": "a5adab20fa25e2e5b63c62070ce1efda7112469faf234283d8320eda261259f5",
+      "id": "idle",
+      "label": "地图待机 · A01",
+      "npc_enabled": true,
+      "resource": "res://assets/characters/roster/motions/shared_world_A01.tres",
+      "status": "included_in_locomotion_acceptance"
+    },
+    {
+      "acceptance_report": "res://docs/character_locomotion_1104/acceptance.json",
+      "formal_id": "A05",
+      "formal_resource": "res://assets/characters/motion_review/A05.tres",
+      "formal_source_sha256": "7d83ebc95d586f90001b2ee2b3176002ebe566ff45318098c18dfb68c89929eb",
+      "id": "walk",
+      "label": "地图步行 · A05",
+      "npc_enabled": true,
+      "resource": "res://assets/characters/roster/motions/shared_world_A05.tres",
+      "status": "included_in_locomotion_acceptance"
+    },
+    {
+      "acceptance_report": "res://docs/character_locomotion_1104/acceptance.json",
+      "formal_id": "A06",
+      "formal_resource": "res://assets/characters/motion_review/A06.tres",
+      "formal_source_sha256": "ffc028f3b248b611a1ae65396afdc558048f6ae02ac68c563578138cb55a0a00",
+      "id": "run",
+      "label": "地图跑步 · A06",
+      "npc_enabled": true,
+      "resource": "res://assets/characters/roster/motions/shared_world_A06.tres",
+      "status": "included_in_locomotion_acceptance"
+    }
+  ],
+  "passed": true,
+  "registered_avatars": 35,
+  "renderer": "",
+  "scene": "res://scenes/character_roster_review.tscn",
+  "shared_clips": 3,
+  "test_fps": 60
+}

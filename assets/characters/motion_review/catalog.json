@@ -83,7 +83,13 @@
     "duration": 0.7916666455566883,
     "tracks": 53,
     "frames": 25,
-    "retarget_hip_scale": 0.7225939875955107
+    "retarget_hip_scale": 0.7225939875955107,
+    "horizontal_pelvis_scale": 0.9677232473783819,
+    "in_place_anchor_xz": [
+      -0.0046336388383775885,
+      0.007539657599571741
+    ],
+    "loop_closure": "matched_endpoints_and_segment_velocity_short_hermite_windows"
   },
   {
     "id": "A07",

@@ -1,0 +1,17 @@
+{
+  "archive": "D:\\模型\\20261008\\星穹铁道—希儿_by_崩坏：星穹铁道_d4521afdb4193191da63173ea7fd73bd.zip",
+  "archive_sha256": "6c14fd9805529f2850582d6708e63b8be639b01e0321bd804ab8cd6c4a4e8429",
+  "body_pmx": "希儿1.0.pmx",
+  "source_sha256": "dc543444b41b0ce5c234ecfb9ab82804b94e6c85632f7fca11e2b0b5871928e5",
+  "pmx_name": "希儿",
+  "pmx_english_name": "希儿",
+  "pmx_comment": "\r\n允许改造，优化骨骼和刚体，重制UV\r\n\r\n===================\r\n请勿二次配布\r\n\r\n请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n请勿用于商业用途\r\n\r\n他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n模型编辑：神帝宇\r\n\r\n模型版权所属miHoYo",
+  "pmx_english_comment": "\r\n允许改造，优化骨骼和刚体，重制UV\r\n\r\n===================\r\n请勿二次配布\r\n\r\n请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n请勿用于商业用途\r\n\r\n他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n模型编辑：神帝宇\r\n\r\n模型版权所属miHoYo",
+  "authors": [
+    "miHoYo",
+    "神帝宇"
+  ],
+  "excluded_pmx": [
+    "镰刀.pmx"
+  ]
+}

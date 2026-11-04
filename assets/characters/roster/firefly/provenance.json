@@ -1,0 +1,18 @@
+{
+  "archive": "D:\\模型\\20261008\\星穹铁道—流萤_by_崩坏：星穹铁道_52cc060e67d20048a369c56b1e8c7f38.zip",
+  "archive_sha256": "0518af37b485843345e4d0cff090b14e45f61c08180d0f762301f5d166c34ab6",
+  "body_pmx": "流萤3.0.pmx",
+  "source_sha256": "d6a7fb40d774490cd345b04a57e6fc6bd7a9764a93b12fb6b3b32f8cb9ba9b51",
+  "pmx_name": "流萤",
+  "pmx_english_name": "流萤",
+  "pmx_comment": "\r\n允许改造，优化骨骼和刚体，重制UV\r\n\r\n===================\r\n请勿二次配布\r\n\r\n请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n请勿用于商业用途\r\n\r\n他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n模型编辑：神帝宇\r\n\r\n模型版权所属miHoYo",
+  "pmx_english_comment": "\r\n允许改造，优化骨骼和刚体，重制UV\r\n\r\n===================\r\n请勿二次配布\r\n\r\n请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n请勿用于商业用途\r\n\r\n他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n模型编辑：神帝宇\r\n\r\n模型版权所属miHoYo",
+  "authors": [
+    "miHoYo",
+    "神帝宇"
+  ],
+  "excluded_pmx": [
+    "武器.pmx",
+    "萨姆变身器.pmx"
+  ]
+}

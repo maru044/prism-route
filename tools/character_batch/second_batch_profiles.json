@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "shenhe",
+      "label": "申鹤",
+      "game": "原神",
+      "archive_glob": "*申鹤*.zip",
+      "body_pmx": "申鹤.pmx",
+      "zip_encoding": "cp932",
+      "physics_prefixes": [
+        "後擺_",
+        "後髪_",
+        "侧髪_",
+        "毛2_",
+        "毛3_"
+      ]
+    },
+    {
+      "id": "yelan",
+      "label": "夜兰",
+      "game": "原神",
+      "archive_glob": "*夜兰*.zip",
+      "body_pmx": "夜兰.pmx",
+      "zip_encoding": "gbk",
+      "physics_prefixes": [
+        "CF_",
+        "后F_",
+        "X_",
+        "PF_",
+        "QB_",
+        "HB_",
+        "L_",
+        "坠_",
+        "LS1_"
+      ]
+    },
+    {
+      "id": "eula",
+      "label": "优菈",
+      "game": "原神",
+      "archive_glob": "*优菈*.zip",
+      "body_pmx": "优菈.pmx",
+      "zip_encoding": "cp932",
+      "physics_prefixes": [
+        "发_",
+        "头饰1_",
+        "头饰2_",
+        "后发1_",
+        "后发2_",
+        "披风1_",
+        "披风2_",
+        "翎_",
+        "领带_"
+      ]
+    },
+    {
+      "id": "lisa",
+      "label": "丽莎",
+      "game": "原神",
+      "archive_glob": "*丽莎*.zip",
+      "body_pmx": "丽莎.pmx",
+      "zip_encoding": "gbk",
+      "physics_prefixes": [
+        "+HairS",
+        "bz_",
+        "zb_",
+        "yb__",
+        "qz_",
+        "hq_"
+      ]
+    },
+    {
+      "id": "ningguang",
+      "label": "凝光",
+      "game": "原神",
+      "archive_glob": "*凝光*.zip",
+      "body_pmx": "凝光.pmx",
+      "zip_encoding": "cp932",
+      "physics_prefixes": [
+        "zb_",
+        "yb__",
+        "zq_",
+        "yq__",
+        "ts_",
+        "yx__",
+        "zx_",
+        "ds",
+        "hq_",
+        "qq_"
+      ],
+      "archive_path_overrides": {
+        "ï├î⌡/Texture/ò/Åε.png": "凝光/Texture/表情.png"
+      }
+    }
+  ]
+}

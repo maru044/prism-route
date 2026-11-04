@@ -34,11 +34,22 @@ var model_overrides := {}
 var preview_floor: MeshInstance3D
 var ground_body: StaticBody3D
 
+static func available_profiles() -> Array:
+	var result: Array=JSON.parse_string(FileAccess.get_file_as_string("res://assets/characters/mmd_validation/shared/manifest.json")).profiles
+	var ids: Dictionary={}
+	for row: Dictionary in result:ids[row.id]=true
+	const ROSTER="res://assets/characters/roster/catalog.json"
+	if FileAccess.file_exists(ROSTER):
+		var roster: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(ROSTER))
+		for row: Dictionary in roster.profiles:
+			if not ids.has(row.id):result.append(row);ids[row.id]=true
+	return result
+
 func _ready() -> void:
 	playing = false
 	body_bones = ["下半身","Spine","Chest","Neck","Head","LeftShoulder","LeftUpperArm","LeftLowerArm","LeftHand","RightShoulder","RightUpperArm","RightLowerArm","RightHand","LeftUpperLeg","LeftLowerLeg","LeftFoot","LeftToes","RightUpperLeg","RightLowerLeg","RightFoot","RightToes"]
 	catalog = JSON.parse_string(FileAccess.get_file_as_string(CATALOG_PATH))
-	avatar_profiles=JSON.parse_string(FileAccess.get_file_as_string("res://assets/characters/mmd_validation/shared/manifest.json")).profiles
+	avatar_profiles=available_profiles()
 	_build_library_ui()
 	group.name = "PairedActors"
 	add_child(group)
@@ -72,6 +83,13 @@ func _build_library_ui() -> void:
 	title.text = "共享动作预览"
 	title.add_theme_font_size_override("font_size",25)
 	panel.add_child(title)
+	var roster_nav_btn := Button.new()
+	roster_nav_btn.text = "← 🚶 返回单人中性动作检查 (character_roster_review)"
+	roster_nav_btn.custom_minimum_size.y = 30
+	roster_nav_btn.pressed.connect(func():
+		get_tree().change_scene_to_file("res://scenes/character_roster_review.tscn")
+	)
+	panel.add_child(roster_nav_btn)
 	panel.add_child(count_label)
 	scope_select.add_item("已选动作")
 	scope_select.add_item("验证样本")
@@ -97,6 +115,10 @@ func _build_library_ui() -> void:
 	panel.add_child(mode_label)
 	panel.add_child(view_mode)
 	view_mode.item_selected.connect(_on_view_mode)
+	var model_label:=Label.new()
+	model_label.text="角色选择（共 47 位全图鉴角色自由替换）"
+	model_label.add_theme_font_size_override("font_size", 14)
+	panel.add_child(model_label)
 	panel.add_child(model_controls)
 	loop_toggle.text="循环预览（不修改动作）"
 	panel.add_child(loop_toggle)
@@ -216,7 +238,23 @@ func _sync_group_controls() -> void:
 		options.disabled=not role.get("shared",false)
 		options.item_selected.connect(_on_model_choice.bind(String(role.id),options))
 		row.add_child(options);model_controls.add_child(row)
+	if pack.roles.size() >= 2:
+		var swap_btn := Button.new()
+		swap_btn.text = "⇄ 互换角色 A 与 B (换位)"
+		swap_btn.pressed.connect(swap_roles_a_b)
+		model_controls.add_child(swap_btn)
 	loop_toggle.set_pressed_no_signal(pack.get("loop_preview",false))
+
+func swap_roles_a_b() -> void:
+	if loading or pack.roles.size() < 2: return
+	var prof_a: String = _effective_profile(pack.roles[0])
+	var prof_b: String = _effective_profile(pack.roles[1])
+	model_overrides["A"] = prof_b
+	model_overrides["B"] = prof_a
+	current_pack = ""
+	await select_entry(current_entry)
+	_sync_group_controls()
+	_refresh_ui()
 
 func _on_model_choice(index:int,role_id:String,options:OptionButton) -> void:
 	await set_role_model(role_id,String(options.get_item_metadata(index)))
@@ -328,6 +366,8 @@ func select_entry(id: String) -> void:
 		details.text="%s\n\n%d 个角色实例，共用标准人形姿态资源。\n保留各自骨长与辅助骨结构。\n\n%.3f 秒 / %d FPS\n资源按来源角色位保存，不为目标角色复制。\n\n并排布局仅供观察；双人组保留共同坐标。\n头发与服饰使用各角色已有配置。\n接触适配与物理美术质量需另行审核。" % [pack.label,visible_roles.size(),duration,int(catalog.fps)]
 	if pack.get("selected",false):
 		details.text="源范围 %d–%d 帧\n%.2f 秒 · %d 个角色位\n\n整组共用时间与坐标。模型可切换，动作资源保持共享。\n\n本批是身体动作；原表情、专有形变和道具独立接入。\n循环预览不代表接缝已修整。" % [pack.frame_start,pack.frame_end,duration,pack.roles.size()]
+	if current_pack=="shared_walk":
+		details.text="历史 VRMA 共享走路样本（非地图 A05）\n地图基础动作请打开 character_roster_review 场景。\n\n"+details.text
 	_sync_group_controls()
 	_filter_entries()
 	_refresh_ui()

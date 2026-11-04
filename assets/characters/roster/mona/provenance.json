@@ -1,0 +1,19 @@
+{
+  "archive": "D:\\模型\\20261008\\莫娜_by_原神_b8870c3980f838bd2bca5ea9011e3d63.zip",
+  "archive_sha256": "6726663f9eef7f2b9de597cf5a0c9c72d0d2924b6ffb47fc1c83443925ec6724",
+  "body_pmx": "莫娜1.0.pmx",
+  "source_sha256": "a28b00a60392ab666b295e9b3f3336e16ca44923076668639bed19a485620ecb",
+  "pmx_name": "莫娜",
+  "pmx_english_name": "莫娜",
+  "pmx_comment": "\r\n允许改造，优化骨骼和刚体，重制UV\r\n\r\n===================\r\n请勿二次配布\r\n\r\n请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n请勿用于商业用途\r\n\r\n他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n模型编辑：神帝宇\r\n\r\n模型版权所属miHoYo",
+  "pmx_english_comment": "\r\n允许改造，优化骨骼和刚体，重制UV\r\n\r\n===================\r\n请勿二次配布\r\n\r\n请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n请勿用于商业用途\r\n\r\n他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n模型编辑：神帝宇\r\n\r\n模型版权所属miHoYo",
+  "authors": [
+    "miHoYo",
+    "神帝宇"
+  ],
+  "excluded_pmx": [],
+  "archive_path_overrides": {
+    "Texture/ê▀ò₧.png": "Texture/衣服.png",
+    "Texture/ò/Åε.png": "Texture/表情.png"
+  }
+}

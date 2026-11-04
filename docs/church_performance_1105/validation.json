@@ -1,0 +1,15 @@
+{
+  "church_colliders": 50,
+  "church_geometry_unchanged": true,
+  "church_meshes": 93,
+  "failures": [],
+  "floor_collision_checks": 8,
+  "glass_panels": 5,
+  "global_bake_unchanged": true,
+  "installed_local_grass_cells": 12,
+  "passed": true,
+  "remaining_roots_under_paving": 0,
+  "retained_roots": 53624,
+  "root_and_rng_parity_cells": 12,
+  "user_tree_save_unchanged": true
+}

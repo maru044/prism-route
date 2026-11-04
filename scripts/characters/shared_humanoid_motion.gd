@@ -20,6 +20,7 @@ var all_springs: Array = []
 var collider_groups: Array = []
 var physical_indices: Array[int] = []
 var simulation_steps := 0
+var simulation_reset_count := 0
 var last_physics_globals := {}
 var last_physics_rotations := {}
 var semantic_bones := {}
@@ -158,6 +159,7 @@ func sample_time(value: float) -> void:
 func seek(value: float) -> void:
 	sample_time(value)
 	if simulation:
+		simulation_reset_count += 1
 		simulation.setup(_active_springs, collider_groups)
 		simulation.set_enable_body_collisions(true)
 		simulation.set_environment_collision_enabled(true)

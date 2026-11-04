@@ -1,0 +1,156 @@
+{
+  "date": "2026-11-04",
+  "scene": "res://scenes/character_roster_review.tscn",
+  "roster_catalog_sha256": "9610a65714148252e1d82883576e85b69c2f43d7e3ed695326d7f51b9d5ff4de",
+  "roster_models": 11,
+  "all_vrm_files_unchanged": true,
+  "model_sha256": [
+    {
+      "id": "keqing",
+      "sha256": "46b7f282b78fd72b585207251c3be12bc8f8bc8f2a3b24c07698dec395d3ff01"
+    },
+    {
+      "id": "ganyu",
+      "sha256": "03f292d54cb40da06c219e3b35e0b300e8f8b46de8f1e9bc0b13685b99279b72"
+    },
+    {
+      "id": "hutao",
+      "sha256": "a62ad4f384cc03f0b70937c5f9720036f98b8c5fed8ca6cb9a735a5ec07ab915"
+    },
+    {
+      "id": "huahuo",
+      "sha256": "60075651511ad4e94717c7c7cf56c663e19dc7cc81d2c8bf04a4e1b479d26108"
+    },
+    {
+      "id": "yae_miko",
+      "sha256": "d2bef2d58fa7ce3ee9cf6f64071f3134efa2c5dbe4f60499b64c6cc76bef0a5a"
+    },
+    {
+      "id": "raiden_shogun",
+      "sha256": "ed31d5e1cd901844fd5b414ba92e81fa7d19a2514d6e48cd287197913f25fe25"
+    },
+    {
+      "id": "furina",
+      "sha256": "fa6342f37020251a94811bddf412ebb797ee2c8f65bdb0bcf4f5669e5e3ccad4"
+    },
+    {
+      "id": "jingliu",
+      "sha256": "6444fcd63a195249a5eb5f2a581a1aabbd3e791ede266c5fb616c13ef4cde927"
+    },
+    {
+      "id": "miyabi",
+      "sha256": "40817605ce1419c978a13276e7030c7497d3457cce4927be2743c33dcdc88bbe"
+    },
+    {
+      "id": "shenhe",
+      "sha256": "306666c2ce1e4fa3eceae3849191c6af084f77ac7cddec2d419d48818d10c82d"
+    },
+    {
+      "id": "yelan",
+      "sha256": "be769aa2d1bd8eacd44ebb54ce88f03c53860206b1fb0481691e411076d2a67d"
+    },
+    {
+      "id": "eula",
+      "sha256": "cdacab2b07b679f5a05c3689b06aeb6ef3761ad1dda407da7917ad920355dd4b"
+    },
+    {
+      "id": "lisa",
+      "sha256": "d54367a1da7c3ca089f24dfce6977d3c92432679ce59f01fc054d81c131b3698"
+    },
+    {
+      "id": "ningguang",
+      "sha256": "c2b4cb15d74a74cc02d9f776651dfbac606f8b2b68b65462fd6a5b5636a0650b"
+    },
+    {
+      "id": "barbara",
+      "sha256": "1b78a508460420d435e1e950c385cfad10d9a0bb48fe25a9ea3372030f9c5d6e"
+    }
+  ],
+  "formal_source_resources_changed": [
+    "assets/characters/motion_review/A06.tres"
+  ],
+  "formal_source_resources_unchanged": 41,
+  "source_run_middle_rotation_max_component_difference": 0.0,
+  "source_run_duration_s": 0.79166665,
+  "shared_motion_build": [
+    {
+      "id": "shared_world_A01",
+      "resource": "res://assets/characters/roster/motions/shared_world_A01.tres",
+      "frames": 382,
+      "duration": 2.5416666,
+      "tracks": 59,
+      "constant_rotation_tracks": 9,
+      "bytes": 1245582,
+      "source": "assets/characters/motion_review/A01.tres",
+      "source_sha256": "a5adab20fa25e2e5b63c62070ce1efda7112469faf234283d8320eda261259f5",
+      "output_sha256": "03cccff390b57f82dd58a22cd8837e210d841a4b7fe53d5baf755fc01d9fa68e",
+      "reference_height": 0.976953744888306,
+      "controller": "res://scripts/world_character_controller.gd",
+      "centering": "actual world controller _center_clip applied",
+      "formal_id": "A01"
+    },
+    {
+      "id": "shared_world_A05",
+      "resource": "res://assets/characters/roster/motions/shared_world_A05.tres",
+      "frames": 161,
+      "duration": 1.3333333,
+      "tracks": 59,
+      "constant_rotation_tracks": 0,
+      "bytes": 632081,
+      "source": "assets/characters/motion_review/A05.tres",
+      "source_sha256": "7d83ebc95d586f90001b2ee2b3176002ebe566ff45318098c18dfb68c89929eb",
+      "output_sha256": "c52827382e97a5cade7a432992e3d7dbc77195e84f5f676cb65e21265fb396a0",
+      "reference_height": 0.976953744888306,
+      "controller": "res://scripts/world_character_controller.gd",
+      "centering": "actual world controller _center_clip applied",
+      "formal_id": "A05"
+    },
+    {
+      "id": "shared_world_A06",
+      "resource": "res://assets/characters/roster/motions/shared_world_A06.tres",
+      "frames": 119,
+      "duration": 0.79166665,
+      "tracks": 59,
+      "constant_rotation_tracks": 0,
+      "bytes": 465744,
+      "source": "assets/characters/motion_review/A06.tres",
+      "source_sha256": "ffc028f3b248b611a1ae65396afdc558048f6ae02ac68c563578138cb55a0a00",
+      "output_sha256": "7b781a96b3175f909e7b3efe7af728dd0ec4f43b7bd65a4ea635f22e2095e1c5",
+      "reference_height": 0.976953744888306,
+      "controller": "res://scripts/world_character_controller.gd",
+      "centering": "actual world controller _center_clip applied",
+      "formal_id": "A06"
+    }
+  ],
+  "reports": {
+    "acceptance.json": {
+      "passed": true,
+      "sha256": "18c543a906ec784f6e250c6ef498f0b2b61a5f78bc942223781e986aa66bc382"
+    },
+    "acceptance_30.json": {
+      "passed": true,
+      "sha256": "dc37b4ae7534a5b0591e8f47559432ac7979e470405f3e7f86cb2bc0acd4f66c"
+    },
+    "acceptance_120.json": {
+      "passed": true,
+      "sha256": "5ab421b3e41776cf4014202e3a4d2ee3e076a4caa705281ee1d21573254ed6e9"
+    },
+    "formal_motion_fidelity.json": {
+      "passed": true,
+      "sha256": "2db44cb7df115522e9a2d5d837fd4885ce16806c6b3b5fa6fa85c9f2fdac0d54"
+    },
+    "playback_clock.json": {
+      "passed": true,
+      "sha256": "682b0b705327a9b13632bd6e1347c27b5c02f1f4d7be4c668c1f32266a5aa7a9"
+    },
+    "visual_walk.json": {
+      "passed": true,
+      "sha256": "6721052f11e9eb57e9091ca54a2e1722419d02c6424a77c28a82192958287046"
+    },
+    "visual_run.json": {
+      "passed": true,
+      "sha256": "fd864975524516a9463c84b8ee78cfba10429a4e18a9fd688573c587ee84c113"
+    }
+  },
+  "raw_capture_frames_retained": false
+}

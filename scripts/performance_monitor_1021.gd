@@ -17,6 +17,9 @@ var collecting := false
 var render_cpu_sum := 0.0
 var render_gpu_sum := 0.0
 var render_samples := 0
+var water_cpu_sum := 0.0
+var water_cpu_peak := 0.0
+var water_cpu_samples := 0
 var stream_sum := 0.0
 var stream_peak := 0.0
 var stream_samples := 0
@@ -68,8 +71,9 @@ func _ready() -> void:
 	var details := GridContainer.new();details.columns=2
 	details.add_theme_constant_override("h_separation",10);details.add_theme_constant_override("v_separation",2)
 	box.add_child(details)
-	_add_row(details,"process","引擎处理 / 物理 · ms")
-	_add_row(details,"render","渲染 CPU / GPU · ms")
+	_add_row(details,"process","引擎帧 / 物理峰值 · ms")
+	_add_row(details,"render","主视口渲染 CPU / GPU · ms")
+	_add_row(details,"water_cpu","水面管理 CPU · 均值 / 峰值 ms")
 	_add_row(details,"water_reflection","水面反射 GPU / 分辨率")
 	_add_row(details,"draws","Draw calls / 渲染对象")
 	_add_row(details,"primitives","渲染图元 / 帧")
@@ -92,7 +96,7 @@ func _ready() -> void:
 	_add_row(details,"lod_cpu_cache","↳ LOD实例CPU副本 · MiB")
 	_add_row(details,"source","草数据 · 烘焙 / 候选格")
 	_add_row(details,"refresh","面板刷新 · ms / Hz")
-	box.add_child(_label("显存为引擎分配量；CPU / GPU 耗时不可直接相加",12,MUTED))
+	box.add_child(_label("引擎峰值约1秒区间，含渲染同步；CPU / GPU 不可直接相加",12,MUTED))
 	for child in root_control.find_children("*","Control",true,false):
 		child.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	_fit_panel()
@@ -141,6 +145,10 @@ func _process(delta: float) -> void:
 	render_cpu_sum+=RenderingServer.viewport_get_measured_render_time_cpu(viewport_rid)
 	render_gpu_sum+=RenderingServer.viewport_get_measured_render_time_gpu(viewport_rid)
 	render_samples+=1
+	var water=world_scene.get("water_manager")
+	if water!=null:
+		var ms: float=water.last_update_usec/1000.0
+		water_cpu_sum+=ms;water_cpu_peak=maxf(water_cpu_peak,ms);water_cpu_samples+=1
 	var stream=_stream()
 	if stream!=null:
 		var ms: float=stream.last_build_usec/1000.0
@@ -155,6 +163,7 @@ func _process(delta: float) -> void:
 	_refresh()
 	refresh_cost_ms=(Time.get_ticks_usec()-start)/1000.0
 	render_cpu_sum=0;render_gpu_sum=0;render_samples=0
+	water_cpu_sum=0;water_cpu_peak=0;water_cpu_samples=0
 	stream_sum=0;stream_peak=0;stream_samples=0
 	stream_phases.clear()
 
@@ -191,6 +200,7 @@ func _refresh() -> void:
 	var gpu := render_gpu_sum/maxi(render_samples,1)
 	_set_value("render","%.2f / %s" % [render_cpu_sum/maxi(render_samples,1),"%.2f"%gpu if gpu>0 else "不可用"])
 	var water=world_scene.get("water_manager")
+	_set_value("water_cpu","%.2f / %.2f" % [water_cpu_sum/maxi(water_cpu_samples,1),water_cpu_peak] if water_cpu_samples>0 else "—")
 	if water!=null:
 		var wm: Dictionary=water.metrics()
 		_set_value("water_reflection","%.2f ms / %d×%d"%[wm.reflection_gpu_ms,wm.reflection_size[0],wm.reflection_size[1]] if wm.reflection_active else "关闭")

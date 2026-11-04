@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "ayaka",
+      "label": "神里绫华",
+      "game": "原神",
+      "model": "res://assets/characters/roster/ayaka/ayaka.vrm",
+      "model_sha256": "4c93c0852c8b518451345ee94a966b8b520217afaa7e4c4990aa8c966eb0ccc5",
+      "source_archive": "D:\\模型\\20261008\\神里绫华-模之屋_by_原神_57919b356c6bdd2aefc1f1e8575521f8.zip",
+      "source_sha256": "28b407fd32a5f70ae7553db60af780cf2df454d6d947bf33af8016cb3ce7cdce",
+      "body_pmx": "神里绫华.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 5,
+        "clothes_chains": 17,
+        "colliders": 12,
+        "joints": 145
+      },
+      "bytes": 35855148
+    },
+    {
+      "id": "nilou",
+      "label": "妮露",
+      "game": "原神",
+      "model": "res://assets/characters/roster/nilou/nilou.vrm",
+      "model_sha256": "1dc34a681eb24d7bd019135a85a23bbeaf829a4147dbd162fc0eaebbe54444e1",
+      "source_archive": "D:\\模型\\20261008\\妮露_by_原神_e1cb5e49f74b603c9c3c269050ce15a4.zip",
+      "source_sha256": "764f60bd149911183ce668f6aa1c48425be62c03516a384b770dc66d13d7e474",
+      "body_pmx": "妮露.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 18,
+        "clothes_chains": 23,
+        "colliders": 12,
+        "joints": 428
+      },
+      "bytes": 48947828
+    },
+    {
+      "id": "kokomi",
+      "label": "珊瑚宫心海",
+      "game": "原神",
+      "model": "res://assets/characters/roster/kokomi/kokomi.vrm",
+      "model_sha256": "3ab9db487ae29f034081a83ea2b7307379f2436c5aba7b3d6119e842110348e0",
+      "source_archive": "D:\\模型\\20261008\\【珊瑚宫心海】_by_原神_32c242c2043da5bac0d24f1b07a2f3f8.zip",
+      "source_sha256": "ec064d4e69aee4d04f92507b4705feab4ace180ec36177474843bdc03bc70a2a",
+      "body_pmx": "珊瑚宫心海.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 6,
+        "clothes_chains": 22,
+        "colliders": 12,
+        "joints": 246
+      },
+      "bytes": 41940792
+    },
+    {
+      "id": "mona",
+      "label": "莫娜",
+      "game": "原神",
+      "model": "res://assets/characters/roster/mona/mona.vrm",
+      "model_sha256": "c3767fe481a2c34afd18188828b34f3445bf62b4a5bc0f6c6d1acc164217b534",
+      "source_archive": "D:\\模型\\20261008\\莫娜_by_原神_b8870c3980f838bd2bca5ea9011e3d63.zip",
+      "source_sha256": "a28b00a60392ab666b295e9b3f3336e16ca44923076668639bed19a485620ecb",
+      "body_pmx": "莫娜1.0.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 2,
+        "clothes_chains": 2,
+        "colliders": 12,
+        "joints": 26
+      },
+      "bytes": 23581812
+    },
+    {
+      "id": "jean",
+      "label": "琴",
+      "game": "原神",
+      "model": "res://assets/characters/roster/jean/jean.vrm",
+      "model_sha256": "ff992da3e8ed9f76c48bddebefd914114ed65b6dcc1b1aa25c59c2de17c5485e",
+      "source_archive": "D:\\模型\\20261008\\琴_by_原神_61c2f285c133b7376c176b9869edafe2.zip",
+      "source_sha256": "f6814bcd259b93a82b6e0c13d274e9bf0079eb92cf02b5f84a40daa9e9779c3f",
+      "body_pmx": "琴.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 3,
+        "clothes_chains": 28,
+        "colliders": 12,
+        "joints": 265
+      },
+      "bytes": 18136588
+    }
+  ]
+}

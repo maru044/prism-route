@@ -1,0 +1,141 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "sucrose",
+      "label": "砂糖",
+      "game": "原神",
+      "archive_glob": "*砂糖*.zip",
+      "body_pmx": "砂糖.pmx",
+      "zip_encoding": "cp932",
+      "physics_prefixes": [
+        "耳_",
+        "发_",
+        "スカート_",
+        "披风_"
+      ]
+    },
+    {
+      "id": "faruzan",
+      "label": "珐露珊",
+      "game": "原神",
+      "archive_glob": "*珐露珊*.zip",
+      "body_pmx": "珐露珊.pmx",
+      "zip_encoding": "gbk",
+      "physics_prefixes": [
+        "B_",
+        "F_",
+        "CF_",
+        "Q_",
+        "PF_",
+        "PFD_"
+      ]
+    },
+    {
+      "id": "lynette",
+      "label": "琳妮特",
+      "game": "原神",
+      "archive_glob": "*琳妮特*.zip",
+      "body_pmx": "【琳妮特】.pmx",
+      "zip_encoding": "cp932",
+      "physics_prefixes": [
+        "HF_",
+        "耳_",
+        "CF1_",
+        "F1_",
+        "尾",
+        "Q_",
+        "PJ1_",
+        "J1_",
+        "J2_",
+        "W_",
+        "PJD_"
+      ]
+    },
+    {
+      "id": "kirara",
+      "label": "绮良良",
+      "game": "原神",
+      "archive_glob": "*绮良良*.zip",
+      "body_pmx": "绮良良.pmx",
+      "zip_encoding": "gbk",
+      "physics_prefixes": [
+        "HF_",
+        "HD_",
+        "CF_",
+        "DM_",
+        "W_",
+        "Q_",
+        "X_",
+        "BZ_",
+        "QD_",
+        "TJ_",
+        "腰饰"
+      ]
+    },
+    {
+      "id": "rosaria",
+      "label": "罗莎莉亚",
+      "game": "原神",
+      "archive_glob": "*罗莎莉亚*.zip",
+      "body_pmx": "罗莎莉亚.pmx",
+      "zip_encoding": "gbk",
+      "physics_prefixes": [
+        "头巾_",
+        "前发",
+        "发_",
+        "HB_",
+        "QB_",
+        "带_"
+      ]
+    },
+    {
+      "id": "layla",
+      "label": "莱依拉",
+      "game": "原神",
+      "archive_glob": "*莱依拉*.zip",
+      "body_pmx": "莱依拉.pmx",
+      "zip_encoding": "gbk",
+      "physics_prefixes": [
+        "HF_",
+        "CF_",
+        "Q_",
+        "D2_",
+        "QD_",
+        "SL_",
+        "M1_"
+      ]
+    },
+    {
+      "id": "charlotte",
+      "label": "夏洛蒂",
+      "game": "原神",
+      "archive_glob": "*夏洛蒂*.zip",
+      "body_pmx": "夏洛蒂.pmx",
+      "zip_encoding": "gbk",
+      "physics_prefixes": [
+        "HF_",
+        "Q_",
+        "D_",
+        "YM_",
+        "BD_"
+      ]
+    },
+    {
+      "id": "amber",
+      "label": "安柏",
+      "game": "原神",
+      "archive_glob": "*安柏*.zip",
+      "body_pmx": "安柏.pmx",
+      "zip_encoding": "cp932",
+      "physics_prefixes": [
+        "スカート_",
+        "tf_",
+        "+LegBagS"
+      ],
+      "archive_path_overrides": {
+        "ê└öÉ/Texture/ò/Åε.png": "安柏/Texture/表情.png"
+      }
+    }
+  ]
+}

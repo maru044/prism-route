@@ -1,0 +1,439 @@
+{
+  "catalog": "res://assets/characters/roster/catalog.json",
+  "engine": "4.7.2-stable (official)",
+  "failures": [],
+  "grounding_enabled": false,
+  "models": [
+    {
+      "bones": 457,
+      "captures": [],
+      "clothes_chains": 19,
+      "hair_chains": 7,
+      "id": "yae_miko",
+      "material_classes": {
+        "ShaderMaterial": 25
+      },
+      "max_segment_error_m": 0.00000488199293613434,
+      "meshes": 1,
+      "morphs": 66,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 310,
+      "captures": [],
+      "clothes_chains": 22,
+      "hair_chains": 3,
+      "id": "raiden_shogun",
+      "material_classes": {
+        "ShaderMaterial": 23
+      },
+      "max_segment_error_m": 0.00000473856925964355,
+      "meshes": 1,
+      "morphs": 64,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 426,
+      "captures": [],
+      "clothes_chains": 25,
+      "hair_chains": 3,
+      "id": "furina",
+      "material_classes": {
+        "ShaderMaterial": 32
+      },
+      "max_segment_error_m": 0.00000400654971599579,
+      "meshes": 1,
+      "morphs": 63,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 562,
+      "captures": [],
+      "clothes_chains": 23,
+      "hair_chains": 15,
+      "id": "jingliu",
+      "material_classes": {
+        "ShaderMaterial": 31
+      },
+      "max_segment_error_m": 0.00000407733023166656,
+      "meshes": 1,
+      "morphs": 66,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 437,
+      "captures": [],
+      "clothes_chains": 24,
+      "hair_chains": 9,
+      "id": "miyabi",
+      "material_classes": {
+        "ShaderMaterial": 23
+      },
+      "max_segment_error_m": 0.00000436790287494659,
+      "meshes": 1,
+      "morphs": 52,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 260,
+      "captures": [],
+      "clothes_chains": 5,
+      "hair_chains": 3,
+      "id": "shenhe",
+      "material_classes": {
+        "ShaderMaterial": 23
+      },
+      "max_segment_error_m": 0.00000478699803352356,
+      "meshes": 1,
+      "morphs": 65,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 367,
+      "captures": [],
+      "clothes_chains": 25,
+      "hair_chains": 12,
+      "id": "yelan",
+      "material_classes": {
+        "ShaderMaterial": 22
+      },
+      "max_segment_error_m": 0.00000486895442008972,
+      "meshes": 1,
+      "morphs": 62,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 214,
+      "captures": [],
+      "clothes_chains": 8,
+      "hair_chains": 6,
+      "id": "eula",
+      "material_classes": {
+        "ShaderMaterial": 25
+      },
+      "max_segment_error_m": 0.00000477954745292664,
+      "meshes": 1,
+      "morphs": 60,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 421,
+      "captures": [],
+      "clothes_chains": 22,
+      "hair_chains": 2,
+      "id": "lisa",
+      "material_classes": {
+        "ShaderMaterial": 14
+      },
+      "max_segment_error_m": 0.00000393763184547424,
+      "meshes": 1,
+      "morphs": 46,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 623,
+      "captures": [],
+      "clothes_chains": 30,
+      "hair_chains": 5,
+      "id": "ningguang",
+      "material_classes": {
+        "ShaderMaterial": 14
+      },
+      "max_segment_error_m": 0.00000394321978092194,
+      "meshes": 1,
+      "morphs": 45,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 283,
+      "captures": [],
+      "clothes_chains": 14,
+      "hair_chains": 4,
+      "id": "barbara",
+      "material_classes": {
+        "ShaderMaterial": 20
+      },
+      "max_segment_error_m": 0.00000336579978466034,
+      "meshes": 1,
+      "morphs": 61,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 499,
+      "captures": [],
+      "clothes_chains": 37,
+      "hair_chains": 7,
+      "id": "kafka",
+      "material_classes": {
+        "ShaderMaterial": 25
+      },
+      "max_segment_error_m": 0.000005330890417099,
+      "meshes": 1,
+      "morphs": 66,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 441,
+      "captures": [],
+      "clothes_chains": 23,
+      "hair_chains": 10,
+      "id": "silver_wolf",
+      "material_classes": {
+        "ShaderMaterial": 34
+      },
+      "max_segment_error_m": 0.00000459142029285431,
+      "meshes": 1,
+      "morphs": 66,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 372,
+      "captures": [],
+      "clothes_chains": 23,
+      "hair_chains": 8,
+      "id": "march7th",
+      "material_classes": {
+        "ShaderMaterial": 30
+      },
+      "max_segment_error_m": 0.00000420771539211273,
+      "meshes": 1,
+      "morphs": 71,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 396,
+      "captures": [],
+      "clothes_chains": 16,
+      "hair_chains": 15,
+      "id": "bronya",
+      "material_classes": {
+        "ShaderMaterial": 33
+      },
+      "max_segment_error_m": 0.0000040736049413681,
+      "meshes": 1,
+      "morphs": 66,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 544,
+      "captures": [],
+      "clothes_chains": 30,
+      "hair_chains": 12,
+      "id": "seele",
+      "material_classes": {
+        "ShaderMaterial": 29
+      },
+      "max_segment_error_m": 0.00000411644577980042,
+      "meshes": 1,
+      "morphs": 66,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 284,
+      "captures": [],
+      "clothes_chains": 17,
+      "hair_chains": 5,
+      "id": "ayaka",
+      "material_classes": {
+        "ShaderMaterial": 26
+      },
+      "max_segment_error_m": 0.00000390410423278809,
+      "meshes": 1,
+      "morphs": 62,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 602,
+      "captures": [],
+      "clothes_chains": 23,
+      "hair_chains": 18,
+      "id": "nilou",
+      "material_classes": {
+        "ShaderMaterial": 32
+      },
+      "max_segment_error_m": 0.00000397488474845886,
+      "meshes": 1,
+      "morphs": 63,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 393,
+      "captures": [],
+      "clothes_chains": 22,
+      "hair_chains": 6,
+      "id": "kokomi",
+      "material_classes": {
+        "ShaderMaterial": 35
+      },
+      "max_segment_error_m": 0.0000040493905544281,
+      "meshes": 1,
+      "morphs": 62,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 195,
+      "captures": [],
+      "clothes_chains": 2,
+      "hair_chains": 2,
+      "id": "mona",
+      "material_classes": {
+        "ShaderMaterial": 11
+      },
+      "max_segment_error_m": 0.00000344030559062958,
+      "meshes": 1,
+      "morphs": 43,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 430,
+      "captures": [],
+      "clothes_chains": 28,
+      "hair_chains": 3,
+      "id": "jean",
+      "material_classes": {
+        "ShaderMaterial": 10
+      },
+      "max_segment_error_m": 0.0000039711594581604,
+      "meshes": 1,
+      "morphs": 46,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 751,
+      "captures": [],
+      "clothes_chains": 57,
+      "hair_chains": 12,
+      "id": "firefly",
+      "material_classes": {
+        "ShaderMaterial": 34
+      },
+      "max_segment_error_m": 0.00000412948429584503,
+      "meshes": 1,
+      "morphs": 66,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 730,
+      "captures": [],
+      "clothes_chains": 44,
+      "hair_chains": 5,
+      "id": "ruan_mei",
+      "material_classes": {
+        "ShaderMaterial": 29
+      },
+      "max_segment_error_m": 0.00000409036874771118,
+      "meshes": 1,
+      "morphs": 66,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 384,
+      "captures": [],
+      "clothes_chains": 23,
+      "hair_chains": 14,
+      "id": "black_swan",
+      "material_classes": {
+        "ShaderMaterial": 21
+      },
+      "max_segment_error_m": 0.00000543519854545593,
+      "meshes": 1,
+      "morphs": 81,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 604,
+      "captures": [],
+      "clothes_chains": 45,
+      "hair_chains": 10,
+      "id": "fu_xuan",
+      "material_classes": {
+        "ShaderMaterial": 51
+      },
+      "max_segment_error_m": 0.00000401958823204041,
+      "meshes": 1,
+      "morphs": 68,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 605,
+      "captures": [],
+      "clothes_chains": 59,
+      "hair_chains": 7,
+      "id": "tingyun",
+      "material_classes": {
+        "ShaderMaterial": 31
+      },
+      "max_segment_error_m": 0.00000397488474845886,
+      "meshes": 1,
+      "morphs": 80,
+      "physics_steps": 309,
+      "pose_checks": 54
+    }
+  ],
+  "motions": [
+    {
+      "acceptance_report": "res://docs/character_locomotion_1104/acceptance.json",
+      "formal_id": "A01",
+      "formal_resource": "res://assets/characters/motion_review/A01.tres",
+      "formal_source_sha256": "a5adab20fa25e2e5b63c62070ce1efda7112469faf234283d8320eda261259f5",
+      "id": "idle",
+      "label": "地图待机 · A01",
+      "npc_enabled": true,
+      "resource": "res://assets/characters/roster/motions/shared_world_A01.tres",
+      "status": "included_in_locomotion_acceptance"
+    },
+    {
+      "acceptance_report": "res://docs/character_locomotion_1104/acceptance.json",
+      "formal_id": "A05",
+      "formal_resource": "res://assets/characters/motion_review/A05.tres",
+      "formal_source_sha256": "7d83ebc95d586f90001b2ee2b3176002ebe566ff45318098c18dfb68c89929eb",
+      "id": "walk",
+      "label": "地图步行 · A05",
+      "npc_enabled": true,
+      "resource": "res://assets/characters/roster/motions/shared_world_A05.tres",
+      "status": "included_in_locomotion_acceptance"
+    },
+    {
+      "acceptance_report": "res://docs/character_locomotion_1104/acceptance.json",
+      "formal_id": "A06",
+      "formal_resource": "res://assets/characters/motion_review/A06.tres",
+      "formal_source_sha256": "ffc028f3b248b611a1ae65396afdc558048f6ae02ac68c563578138cb55a0a00",
+      "id": "run",
+      "label": "地图跑步 · A06",
+      "npc_enabled": true,
+      "resource": "res://assets/characters/roster/motions/shared_world_A06.tres",
+      "status": "included_in_locomotion_acceptance"
+    }
+  ],
+  "passed": true,
+  "registered_avatars": 30,
+  "renderer": "",
+  "scene": "res://scenes/character_roster_review.tscn",
+  "shared_clips": 3,
+  "test_fps": 60
+}

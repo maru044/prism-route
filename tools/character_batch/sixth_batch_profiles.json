@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "yoimiya",
+      "label": "宵宫",
+      "game": "原神",
+      "archive_glob": "*宵宫*.zip",
+      "body_pmx": "宵宫.pmx",
+      "zip_encoding": "gbk",
+      "physics_prefixes": [
+        "髮",
+        "头饰1_",
+        "F_",
+        "裙_",
+        "結",
+        "繩",
+        "衣襬_",
+        "帶_"
+      ]
+    },
+    {
+      "id": "yunjin",
+      "label": "云堇",
+      "game": "原神",
+      "archive_glob": "*云堇*.zip",
+      "body_pmx": "云堇.pmx",
+      "zip_encoding": "gbk",
+      "physics_prefixes": [
+        "后髪_",
+        "侧髪_",
+        "辫_",
+        "Q_",
+        "pj_",
+        "流苏_"
+      ]
+    },
+    {
+      "id": "fischl",
+      "label": "菲谢尔",
+      "game": "原神",
+      "archive_glob": "*菲谢尔*.zip",
+      "body_pmx": "菲谢尔.pmx",
+      "zip_encoding": "utf-8",
+      "physics_prefixes": [
+        "后发",
+        "发_",
+        "スカート_",
+        "裙摆_",
+        "腕饰_"
+      ]
+    },
+    {
+      "id": "noelle",
+      "label": "诺艾尔",
+      "game": "原神",
+      "archive_glob": "*诺艾尔*.zip",
+      "body_pmx": "诺艾尔.pmx",
+      "zip_encoding": "cp932",
+      "physics_prefixes": [
+        "+HairS",
+        "+HairB",
+        "+Bo",
+        "q_"
+      ],
+      "archive_path_overrides": {
+        "Texture/ê▀ò₧.jpg": "Texture/衣服.jpg",
+        "Texture/ò/Åε.png": "Texture/表情.png"
+      }
+    },
+    {
+      "id": "kuki_shinobu",
+      "label": "久岐忍",
+      "game": "原神",
+      "archive_glob": "*久岐忍*.zip",
+      "body_pmx": "久岐忍.pmx",
+      "zip_encoding": "cp932",
+      "physics_prefixes": [
+        "TD_",
+        "TJ_",
+        "CF_",
+        "带",
+        "YJ_",
+        "YD_"
+      ]
+    }
+  ]
+}

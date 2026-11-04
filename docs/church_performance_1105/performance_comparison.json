@@ -1,0 +1,51 @@
+{
+  "passed": true,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "renderer": "Forward+ / D3D12",
+  "adapter": "NVIDIA GeForce RTX 5070 Ti",
+  "fps_cap_disabled_only_in_probe": true,
+  "comparison": [
+    {
+      "view": "church_entry",
+      "before_frame_ms": 19.1806106870229,
+      "after_frame_ms": 12.9702435233161,
+      "before_fps": 52.13598338016286,
+      "after_fps": 77.09955470013644,
+      "before_gpu_ms": 18.8595266997359,
+      "after_gpu_ms": 12.6471709958012,
+      "frame_time_reduction_percent": 32.37835992317268
+    },
+    {
+      "view": "church_overview",
+      "before_frame_ms": 17.7859290780142,
+      "after_frame_ms": 16.6553509933775,
+      "before_fps": 56.22422059672635,
+      "after_fps": 60.040764100235414,
+      "before_gpu_ms": 17.4191631695903,
+      "after_gpu_ms": 16.2748874891673,
+      "frame_time_reduction_percent": 6.35658716324381
+    },
+    {
+      "view": "grass_hidden",
+      "before_frame_ms": 2.67340277777778,
+      "after_frame_ms": 2.66282002129925,
+      "before_fps": 374.05512117827334,
+      "after_fps": 375.541715925689,
+      "before_gpu_ms": 2.10747329011942,
+      "after_gpu_ms": 2.1133344010931,
+      "frame_time_reduction_percent": 0.39585342569766757
+    }
+  ],
+  "removed_grass_instances": 43484,
+  "repacked_cells": 12,
+  "unchanged_geometry_sha256": "778c14ee0c2f14f474e896c3f4a72af69b2892c11d954957cb8484363aa09617",
+  "reports_sha256": {
+    "before.json": "192776e577f7426913a98689e52a192439f65bfccaed7dee34319bd1a65b623c",
+    "after.json": "79f05405545fa65330da8eda32feeb6252b192b5d6c8a8e84e5716d9900d86e3",
+    "validation.json": "8eda2f7cfde4765fc0c17fcd10cee55b00a01e3baa6efbe91c8696d130d23df9",
+    "grass_bake.json": "65c37ea5f311e1a877f852715a1d7480a01c9ae2ee083a1642451312cd948d2e"
+  }
+}

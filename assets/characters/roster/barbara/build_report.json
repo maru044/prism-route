@@ -1,0 +1,499 @@
+{
+  "id": "barbara",
+  "label": "芭芭拉",
+  "vertices": 15281,
+  "bones": 330,
+  "morphs": 61,
+  "materials": 20,
+  "alpha": [
+    {
+      "name": "面1",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "面2",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "目白",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "目",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "睫",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "目星",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "二重",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "眉",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "口舌",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "齿",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "发",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "发饰",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "上衣",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "腿",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "魔法书",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "肌",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "裙子",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "腰带",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "> <",
+      "mode": "MASK",
+      "min_alpha": 0,
+      "max_alpha": 255,
+      "transparent_fraction": 0.7193828351012537,
+      "partial_fraction": 0.022099003535840565,
+      "middle_fraction": 0.01679524268723883
+    },
+    {
+      "name": "脸红",
+      "mode": "MASK",
+      "min_alpha": 0,
+      "max_alpha": 80,
+      "transparent_fraction": 0.5047868423205957,
+      "partial_fraction": 0.6427460927910973,
+      "middle_fraction": 0.38728418296375094
+    }
+  ],
+  "physics": {
+    "hair_chains": 4,
+    "clothes_chains": 14,
+    "colliders": 12,
+    "joints": 154
+  },
+  "source_sha256": "b9309f9913f4deb1fc03c6f2962337582593cd394145196b89a60f07ca7ccaf5",
+  "source_unchanged": true,
+  "max_weight_total_error": 0.0,
+  "foot_test": {
+    "bone": "足首.L",
+    "angle_deg": 25,
+    "moved_vertices_over_0_1mm": 257,
+    "max_displacement_m": 0.07289514407369878
+  },
+  "helper_links": [
+    [
+      "足D.L",
+      "足.L"
+    ],
+    [
+      "ひざD.L",
+      "ひざ.L"
+    ],
+    [
+      "足首D.L",
+      "足首.L"
+    ],
+    [
+      "足D.R",
+      "足.R"
+    ],
+    [
+      "ひざD.R",
+      "ひざ.R"
+    ],
+    [
+      "足首D.R",
+      "足首.R"
+    ]
+  ],
+  "chains": [
+    {
+      "group": "Hair",
+      "attachment": "发_0_1.L",
+      "nodes": [
+        "发_1_1.L",
+        "发_2_1.L",
+        "发_3_1.L",
+        "发_4_1.L",
+        "发_5_1.L",
+        "发_6_1.L"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "发_0_1.R",
+      "nodes": [
+        "发_1_1.R",
+        "发_2_1.R",
+        "发_3_1.R",
+        "发_4_1.R",
+        "发_5_1.R",
+        "发_6_1.R"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "侧发_0_1.L",
+      "nodes": [
+        "侧发_1_1.L",
+        "侧发_2_1.L",
+        "侧发_3_1.L",
+        "侧发_4_1.L",
+        "侧发_5_1.L"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "侧发_0_1.R",
+      "nodes": [
+        "侧发_1_1.R",
+        "侧发_2_1.R",
+        "侧发_3_1.R",
+        "侧发_4_1.R",
+        "侧发_5_1.R"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "带_0_1.L",
+      "nodes": [
+        "带_1_1.L",
+        "带_2_1.L",
+        "带_3_1.L",
+        "带_4_1.L",
+        "带_5_1.L",
+        "带_6_1.L"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "带_0_1.R",
+      "nodes": [
+        "带_1_1.R",
+        "带_2_1.R",
+        "带_3_1.R",
+        "带_4_1.R",
+        "带_5_1.R",
+        "带_6_1.R"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "スカート_0_0",
+      "nodes": [
+        "スカート_1_0",
+        "スカート_2_0",
+        "スカート_3_0",
+        "スカート_4_0",
+        "スカート_5_0",
+        "スカート_6_0",
+        "スカート_7_0",
+        "スカート_8_0",
+        "スカート_9_0",
+        "スカート_10_0"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "スカート_0_1",
+      "nodes": [
+        "スカート_1_1",
+        "スカート_2_1",
+        "スカート_3_1",
+        "スカート_4_1",
+        "スカート_5_1",
+        "スカート_6_1",
+        "スカート_7_1",
+        "スカート_8_1",
+        "スカート_9_1",
+        "スカート_10_1"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "スカート_0_2",
+      "nodes": [
+        "スカート_1_2",
+        "スカート_2_2",
+        "スカート_3_2",
+        "スカート_4_2",
+        "スカート_5_2",
+        "スカート_6_2",
+        "スカート_7_2",
+        "スカート_8_2",
+        "スカート_9_2",
+        "スカート_10_2"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "スカート_0_3",
+      "nodes": [
+        "スカート_1_3",
+        "スカート_2_3",
+        "スカート_3_3",
+        "スカート_4_3",
+        "スカート_5_3",
+        "スカート_6_3",
+        "スカート_7_3",
+        "スカート_8_3",
+        "スカート_9_3",
+        "スカート_10_3"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "スカート_0_4",
+      "nodes": [
+        "スカート_1_4",
+        "スカート_2_4",
+        "スカート_3_4",
+        "スカート_4_4",
+        "スカート_5_4",
+        "スカート_6_4",
+        "スカート_7_4",
+        "スカート_8_4",
+        "スカート_9_4",
+        "スカート_10_4"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "スカート_0_5",
+      "nodes": [
+        "スカート_1_5",
+        "スカート_2_5",
+        "スカート_3_5",
+        "スカート_4_5",
+        "スカート_5_5",
+        "スカート_6_5",
+        "スカート_7_5",
+        "スカート_8_5",
+        "スカート_9_5",
+        "スカート_10_5"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "スカート_0_6",
+      "nodes": [
+        "スカート_1_6",
+        "スカート_2_6",
+        "スカート_3_6",
+        "スカート_4_6",
+        "スカート_5_6",
+        "スカート_6_6",
+        "スカート_7_6",
+        "スカート_8_6",
+        "スカート_9_6",
+        "スカート_10_6"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "スカート_0_7",
+      "nodes": [
+        "スカート_1_7",
+        "スカート_2_7",
+        "スカート_3_7",
+        "スカート_4_7",
+        "スカート_5_7",
+        "スカート_6_7",
+        "スカート_7_7",
+        "スカート_8_7",
+        "スカート_9_7",
+        "スカート_10_7"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "スカート_0_8",
+      "nodes": [
+        "スカート_1_8",
+        "スカート_2_8",
+        "スカート_3_8",
+        "スカート_4_8",
+        "スカート_5_8",
+        "スカート_6_8",
+        "スカート_7_8",
+        "スカート_8_8",
+        "スカート_9_8",
+        "スカート_10_8"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "スカート_0_9",
+      "nodes": [
+        "スカート_1_9",
+        "スカート_2_9",
+        "スカート_3_9",
+        "スカート_4_9",
+        "スカート_5_9",
+        "スカート_6_9",
+        "スカート_7_9",
+        "スカート_8_9",
+        "スカート_9_9",
+        "スカート_10_9"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "スカート_0_10",
+      "nodes": [
+        "スカート_1_10",
+        "スカート_2_10",
+        "スカート_3_10",
+        "スカート_4_10",
+        "スカート_5_10",
+        "スカート_6_10",
+        "スカート_7_10",
+        "スカート_8_10",
+        "スカート_9_10",
+        "スカート_10_10"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "スカート_0_11",
+      "nodes": [
+        "スカート_1_11",
+        "スカート_2_11",
+        "スカート_3_11",
+        "スカート_4_11",
+        "スカート_5_11",
+        "スカート_6_11",
+        "スカート_7_11",
+        "スカート_8_11",
+        "スカート_9_11",
+        "スカート_10_11"
+      ]
+    }
+  ],
+  "mesh_binary_preserved": true,
+  "output_sha256": "1b78a508460420d435e1e950c385cfad10d9a0bb48fe25a9ea3372030f9c5d6e",
+  "mesh_binary_sha256": "090ad540bce6cc219fc7b0c67345ff3326338e4d2fe9693c1c08d7be0241257e",
+  "alpha_method": "UV triangle coverage on RGBA texture thumbnails with maximum edge 1024; material factor alpha preserved; validated in Godot."
+}

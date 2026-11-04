@@ -1,0 +1,44 @@
+{
+  "available_profiles": 14,
+  "catalog": "res://assets/characters/roster/second_batch.json",
+  "entry": "shared_walk_all",
+  "failures": [],
+  "models": [
+    {
+      "bones": 260,
+      "id": "shenhe",
+      "model": "res://assets/characters/roster/shenhe/shenhe.vrm",
+      "shared_motion_identity": true,
+      "time": 0.333333333333333
+    },
+    {
+      "bones": 367,
+      "id": "yelan",
+      "model": "res://assets/characters/roster/yelan/yelan.vrm",
+      "shared_motion_identity": true,
+      "time": 0.333333333333333
+    },
+    {
+      "bones": 214,
+      "id": "eula",
+      "model": "res://assets/characters/roster/eula/eula.vrm",
+      "shared_motion_identity": true,
+      "time": 0.333333333333333
+    },
+    {
+      "bones": 421,
+      "id": "lisa",
+      "model": "res://assets/characters/roster/lisa/lisa.vrm",
+      "shared_motion_identity": true,
+      "time": 0.333333333333333
+    },
+    {
+      "bones": 623,
+      "id": "ningguang",
+      "model": "res://assets/characters/roster/ningguang/ningguang.vrm",
+      "shared_motion_identity": true,
+      "time": 0.333333333333333
+    }
+  ],
+  "passed": true
+}

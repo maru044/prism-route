@@ -1,0 +1,17 @@
+{
+  "archive": "D:\\模型\\20261008\\星穹铁道——银狼_by_崩坏：星穹铁道_387a60d37309b3b599db7fed0e8a8f8b.zip",
+  "archive_sha256": "3658409bc162bcbbd80da468cd81b7e8f860a8c5cfa8e298fdd36e4efdd674ee",
+  "body_pmx": "银狼.pmx",
+  "source_sha256": "35fbb8de0482394658cd22d6a6165caece363a9c2fdf52ae807f3bfca7b3f724",
+  "pmx_name": "银狼",
+  "pmx_english_name": "银狼",
+  "pmx_comment": "\r\n允许改造，优化骨骼和刚体，重制UV\r\n\r\n===================\r\n请勿二次配布\r\n\r\n请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n请勿用于商业用途\r\n\r\n他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n模型编辑：神帝宇\r\n\r\n模型版权所属miHoYo",
+  "pmx_english_comment": "\r\n允许改造，优化骨骼和刚体，重制UV\r\n\r\n===================\r\n请勿二次配布\r\n\r\n请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n请勿用于商业用途\r\n\r\n他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n模型编辑：神帝宇\r\n\r\n模型版权所属miHoYo",
+  "authors": [
+    "miHoYo",
+    "神帝宇"
+  ],
+  "excluded_pmx": [
+    "炮.pmx"
+  ]
+}

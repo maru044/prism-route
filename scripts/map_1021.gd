@@ -22,8 +22,13 @@ const TERRACE_RUINS := preload("res://scripts/world/terrace_ruins.gd")
 const LANDMARK_RING := preload("res://scripts/world/landmark_ring.gd")
 const WATER_COURT := preload("res://scripts/world/water_court.gd")
 const EARTH_PAVILION := preload("res://scripts/world/east_earth_pavilion.gd")
+const TERRAIN_REPAIRS := preload("res://scripts/world/terrain_repairs.gd")
 const SUNKEN_ARCHIVE := preload("res://scripts/world/sunken_archive.gd")
+const ROAD_JUNCTION := preload("res://scripts/world/road_junction.gd")
+const CHURCH_RUINS := preload("res://scripts/world/church_ruins.gd")
+var church_ruins
 var sunken_archive
+var terrain_repairs
 var earth_pavilion
 var water_court
 var landmark_ring
@@ -83,7 +88,7 @@ func _ready() -> void:
 	camper.automation_enabled=automation_enabled;camper.set_physics_process(false);camper.set_process_unhandled_input(false);camper.visible=false
 	camper.calibrate_wheels()
 	camper.respawn_resolver=_resolve_camper_respawn
-	_load_mask();_environment();_build_model();_build_oval_atrium();_build_initial_ruin();_build_island_saddle();_build_landmark_ring();_build_terrace_ruins();_build_water_court();_build_earth_pavilion();_build_sunken_archive();_build_upper_ring();_build_surface_detail_trial();_hud()
+	_load_mask();_environment();_build_model();add_child(ROAD_JUNCTION.new());_build_terrain_repairs();_build_oval_atrium();_build_initial_ruin();_build_island_saddle();_build_landmark_ring();_build_terrace_ruins();_build_water_court();_build_earth_pavilion();_build_sunken_archive();_build_church_ruins();_build_upper_ring();_build_surface_detail_trial();_hud()
 	camera=Camera3D.new();camera.near=0.15;camera.far=10000;camera.fov=58;add_child(camera)
 	await get_tree().physics_frame;await get_tree().physics_frame
 	for proposal: Dictionary in metadata.spawns:
@@ -114,6 +119,9 @@ func _ready() -> void:
 	if "--earth-pavilion-preview" in OS.get_cmdline_user_args():
 		for i in resolved_spawns.size():
 			if resolved_spawns[i].get("key","")=="earth_pavilion":initial_spawn=i;break
+	if "--church-preview" in OS.get_cmdline_user_args():
+		for i in resolved_spawns.size():
+			if resolved_spawns[i].get("key","")=="church_ruins":initial_spawn=i;break
 	if "--sunken-archive-preview" in OS.get_cmdline_user_args():
 		for i in resolved_spawns.size():
 			if resolved_spawns[i].get("key","")=="sunken_archive":initial_spawn=i;break
@@ -135,8 +143,11 @@ func _ready() -> void:
 	terrace_ruins.bind_grass(vegetation.grass_material)
 	earth_pavilion.bind_grass(vegetation.grass_material)
 	sunken_archive.bind_grass(vegetation.grass_material)
+	church_ruins.bind_grass(vegetation.grass_material)
 	oval_atrium.install_grass_cells(vegetation.volume_streamer)
 	earth_pavilion.install_grass_cells(vegetation.volume_streamer)
+	terrain_repairs.install_grass_cells(vegetation.volume_streamer)
+	church_ruins.install_grass_cells(vegetation.volume_streamer)
 	upper_ring.plant_courtyard(vegetation)
 	grass_wind=GRASS_WIND.new();add_child(grass_wind)
 	grass_wind.initialize(vegetation);grass_wind.set_mode(GRASS_WIND.Mode.AUTO)
@@ -177,6 +188,10 @@ func _ready() -> void:
 		set_free(true)
 		camera.global_position=vec(sunken_archive.manifest.views.overview.eye)
 		camera.look_at(vec(sunken_archive.manifest.views.overview.target))
+	if "--terrain-repairs-preview" in OS.get_cmdline_user_args():
+		set_free(true)
+		camera.global_position=Vector3(-40.,30.,-700.)
+		camera.look_at(Vector3(-130.,1.5,-580.))
 	if "--verify-world-clusters" in OS.get_cmdline_user_args():
 		var verifier: Node=load("res://tools/check_world_clusters_1029.gd").new();verifier.world=self;add_child(verifier);verifier.call_deferred("run")
 	if "--verify-world-audio" in OS.get_cmdline_user_args():
@@ -212,7 +227,17 @@ func _initialize_water() -> void:
 	landmark_ring.register_reflections(water_manager)
 	water_court.register_reflections(water_manager)
 	earth_pavilion.register_reflections(water_manager)
+	terrain_repairs.register_reflections(water_manager)
 	sunken_archive.register_reflections(water_manager)
+
+func _build_terrain_repairs() -> void:
+	terrain_repairs=TERRAIN_REPAIRS.new();terrain_repairs.world=self;add_child(terrain_repairs)
+
+func _build_church_ruins() -> void:
+	church_ruins=CHURCH_RUINS.new();church_ruins.world=self;add_child(church_ruins)
+	metadata.spawns.append({"name":"西双子山 · 孤顶教堂遗址","key":"church_ruins","position":church_ruins.manifest.spawn_godot,
+		"look_direction":church_ruins.manifest.spawn_look_direction_godot,"required_floor_kind":"Structure",
+		"required_source_id":church_ruins.manifest.spawn_source_id,"maximum_search_distance_m":2.,"character_only":true})
 
 func _build_sunken_archive() -> void:
 	sunken_archive=SUNKEN_ARCHIVE.new();sunken_archive.world=self;add_child(sunken_archive)
@@ -317,6 +342,7 @@ func _load_mask() -> void:
 	terrain_material.set_shader_parameter("mask_extent_xz",Vector2(metadata.extent_xz[0],metadata.extent_xz[1]))
 
 func architectural_band(p: Vector3,margin:=0.0) -> bool:
+	if church_ruins!=null and church_ruins.blocks_grass(p):return true
 	if sunken_archive!=null and sunken_archive.blocks_grass(p):return true
 	if earth_pavilion!=null and earth_pavilion.blocks_grass(p):return true
 	if terrace_ruins!=null and terrace_ruins.blocks_grass(p):return true
@@ -345,7 +371,7 @@ func _build_model() -> void:
 	for node in model.find_children("*","MeshInstance3D",true,false):
 		var mesh:=node as MeshInstance3D;var id:=str(mesh.name).get_slice("_",1)
 		# Remove both the old render mesh and its prospective collision before building the reviewed hosts.
-		if id in OVAL_ATRIUM.REPLACED_IDS or id in EARTH_PAVILION.REPLACED_IDS or id in SUNKEN_ARCHIVE.REPLACED_IDS:
+		if id in OVAL_ATRIUM.REPLACED_IDS or id in EARTH_PAVILION.REPLACED_IDS or id in TERRAIN_REPAIRS.REPLACED_IDS or id in SUNKEN_ARCHIVE.REPLACED_IDS or id in ROAD_JUNCTION.REPLACED_IDS:
 			mesh.free();continue
 		# Object semantics can change without rebuilding or moving mesh geometry.
 		var row: Dictionary=byid.get(id,{})

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/characters/shared_humanoid_actor.tscn" id="1"]
+
+[node name="lisa" instance=ExtResource("1")]
+model_resource = "res://assets/characters/roster/lisa/lisa.vrm"
+motion_resource = "res://assets/characters/roster/motions/shared_world_A01.tres"
+auto_play = true

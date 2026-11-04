@@ -1,0 +1,77 @@
+{
+  "models": 5,
+  "source_archives_unchanged": true,
+  "source_pmx_unchanged": true,
+  "final_mesh_binary_preserved": true,
+  "weights_max_error": 2.8870999813079834e-08,
+  "vrm_bytes": 241969976,
+  "existing_models_unchanged": [
+    "keqing",
+    "ganyu",
+    "hutao",
+    "huahuo"
+  ],
+  "reports": {
+    "runtime.json": {
+      "passed": true,
+      "sha256": "b99ea5d7969f3016fece1cf2fc2aa7af5a83dcd12aa077a103864315a64e7af3"
+    },
+    "runtime_30.json": {
+      "passed": true,
+      "sha256": "51b45d937f46e3972c98888acd3d33b77bc1e70864bb18278e12c5064a40ab63"
+    },
+    "runtime_120.json": {
+      "passed": true,
+      "sha256": "d40ce9c5f905bfc338ecde0009aba883f8e3c2387b3ab130d21323ab4ef3b244"
+    },
+    "existing_review.json": {
+      "passed": true,
+      "sha256": "d415fc96fd38866bb738b3519d039c46837901605cf37e6ccd558c546e3dc64e"
+    },
+    "visual.json": {
+      "passed": true,
+      "sha256": "e87956514575ca908be0e771dfb4367106967130498af0e89eea4c724b535e77"
+    },
+    "visual_walk.json": {
+      "passed": true,
+      "sha256": "6cf0894b1bcd48c0d1e5b5564702514f021241bd6dca5bae8fa7f1e3a677f42d"
+    },
+    "visual_rigid.json": {
+      "passed": true,
+      "sha256": "c7ebe4a15d9f6503c62d2e462e244142bae4acc53b092116dd3b5510eb51be33"
+    },
+    "formal_motion_fidelity.json": {
+      "passed": true,
+      "sha256": "2db44cb7df115522e9a2d5d837fd4885ce16806c6b3b5fa6fa85c9f2fdac0d54"
+    },
+    "playback_clock.json": {
+      "passed": true,
+      "sha256": "682b0b705327a9b13632bd6e1347c27b5c02f1f4d7be4c668c1f32266a5aa7a9"
+    }
+  },
+  "formal_motion_source": {
+    "scene": "res://scenes/characters/world_ganyu.tscn",
+    "controller": "res://scripts/world_character_controller.gd",
+    "clips": [
+      {
+        "id": "A01",
+        "source": "res://assets/characters/motion_review/A01.tres",
+        "sha256": "a5adab20fa25e2e5b63c62070ce1efda7112469faf234283d8320eda261259f5"
+      },
+      {
+        "id": "A05",
+        "source": "res://assets/characters/motion_review/A05.tres",
+        "sha256": "7d83ebc95d586f90001b2ee2b3176002ebe566ff45318098c18dfb68c89929eb"
+      },
+      {
+        "id": "A06",
+        "source": "res://assets/characters/motion_review/A06.tres",
+        "sha256": "ffc028f3b248b611a1ae65396afdc558048f6ae02ac68c563578138cb55a0a00"
+      }
+    ]
+  },
+  "new_models_unchanged_after_motion_source_correction": true,
+  "legacy_shared_resources_unchanged": true,
+  "current_locomotion_acceptance": "res://docs/character_locomotion_1104/acceptance.json",
+  "import_snapshot_note": "Import-time reports precede final preview pelvis/wrap correction; current locomotion quality is recorded in character_locomotion_1104."
+}

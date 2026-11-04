@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "ayaka",
+      "label": "神里绫华",
+      "game": "原神",
+      "archive_glob": "*神里绫华*.zip",
+      "body_pmx": "神里绫华.pmx",
+      "zip_encoding": "gbk",
+      "physics_prefixes": [
+        "髮_",
+        "髮帶1_",
+        "帶1_",
+        "結_",
+        "繩1_",
+        "裙_"
+      ]
+    },
+    {
+      "id": "nilou",
+      "label": "妮露",
+      "game": "原神",
+      "archive_glob": "*妮露*.zip",
+      "body_pmx": "妮露.pmx",
+      "zip_encoding": "gbk",
+      "physics_prefixes": [
+        "HF_",
+        "HF1_",
+        "CF_",
+        "HDJ_",
+        "Q_",
+        "QB_",
+        "QD_",
+        "D_",
+        "S_",
+        "TS_"
+      ]
+    },
+    {
+      "id": "kokomi",
+      "label": "珊瑚宫心海",
+      "game": "原神",
+      "archive_glob": "*珊瑚宫心海*.zip",
+      "body_pmx": "珊瑚宫心海.pmx",
+      "zip_encoding": "gbk",
+      "physics_prefixes": [
+        "后髪_",
+        "侧髪1_",
+        "侧髪2_",
+        "HB_",
+        "QB_",
+        "后摆_",
+        "带_",
+        "袖_"
+      ]
+    },
+    {
+      "id": "mona",
+      "label": "莫娜",
+      "game": "原神",
+      "archive_glob": "*莫娜*.zip",
+      "body_pmx": "莫娜1.0.pmx",
+      "zip_encoding": "cp932",
+      "physics_prefixes": [
+        "+HairS",
+        "+Hat",
+        "+AmiceF",
+        "+PendantF",
+        "bs_"
+      ],
+      "archive_path_overrides": {
+        "Texture/ê▀ò₧.png": "Texture/衣服.png",
+        "Texture/ò/Åε.png": "Texture/表情.png"
+      }
+    },
+    {
+      "id": "jean",
+      "label": "琴",
+      "game": "原神",
+      "archive_glob": "*琴_by*.zip",
+      "body_pmx": "琴.pmx",
+      "zip_encoding": "cp932",
+      "physics_prefixes": [
+        "Bip",
+        "PJ_",
+        "q_"
+      ],
+      "archive_path_overrides": {
+        "ï╒/Texture/ê▀ò₧.jpg": "琴/Texture/衣服.jpg",
+        "ï╒/Texture/ò/Åε.png": "琴/Texture/表情.png"
+      }
+    }
+  ]
+}

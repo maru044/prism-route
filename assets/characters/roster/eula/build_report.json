@@ -1,0 +1,443 @@
+{
+  "id": "eula",
+  "label": "优菈",
+  "vertices": 20197,
+  "bones": 253,
+  "morphs": 60,
+  "materials": 25,
+  "alpha": [
+    {
+      "name": "发",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "发+",
+      "mode": "MASK",
+      "min_alpha": 0,
+      "max_alpha": 70,
+      "transparent_fraction": 0.9813378360099071,
+      "partial_fraction": 0.02067017738617759,
+      "middle_fraction": 0.01744242995274988
+    },
+    {
+      "name": "头饰",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "头饰_金属",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "神之眼",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "体",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "领带",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "金属1",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "金属2",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "肌",
+      "mode": "MASK",
+      "min_alpha": 0,
+      "max_alpha": 255,
+      "transparent_fraction": 0.1394466755912539,
+      "partial_fraction": 0.06923248549754574,
+      "middle_fraction": 0.0320615796519411
+    },
+    {
+      "name": "披风1",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "披风2",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "披风3",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "披风4_1",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "披风4_2",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "面",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "面1",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "口舌",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "齿",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "星目",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "眉",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "睫",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "目",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "白目",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "二重",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    }
+  ],
+  "physics": {
+    "hair_chains": 6,
+    "clothes_chains": 8,
+    "colliders": 12,
+    "joints": 77
+  },
+  "source_sha256": "733b271d45a057b7b6c4a56316341002c0fd741ef56043dfe15b8549da49a6b9",
+  "source_unchanged": true,
+  "max_weight_total_error": 0.0,
+  "foot_test": {
+    "bone": "足首.L",
+    "angle_deg": 25,
+    "moved_vertices_over_0_1mm": 679,
+    "max_displacement_m": 0.08169317527010558
+  },
+  "helper_links": [
+    [
+      "足D.L",
+      "足.L"
+    ],
+    [
+      "ひざD.L",
+      "ひざ.L"
+    ],
+    [
+      "足首D.L",
+      "足首.L"
+    ],
+    [
+      "足D.R",
+      "足.R"
+    ],
+    [
+      "ひざD.R",
+      "ひざ.R"
+    ],
+    [
+      "足首D.R",
+      "足首.R"
+    ]
+  ],
+  "chains": [
+    {
+      "group": "Hair",
+      "attachment": "发_0_1.L",
+      "nodes": [
+        "发_1_1.L",
+        "发_2_1.L",
+        "发_3_1.L",
+        "发_4_1.L",
+        "发_5_1.L"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "头饰1_0_1",
+      "nodes": [
+        "头饰1_1_1",
+        "头饰1_2_1",
+        "头饰1_3_1",
+        "头饰1_4_1"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "头饰2_0_1",
+      "nodes": [
+        "头饰2_1_1",
+        "头饰2_2_1",
+        "头饰2_3_1",
+        "头饰2_4_1"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "后发1_0_1",
+      "nodes": [
+        "后发1_1_1",
+        "后发1_2_1",
+        "后发1_3_1"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "发_0_1.R",
+      "nodes": [
+        "发_1_1.R",
+        "发_2_1.R",
+        "发_3_1.R",
+        "发_4_1.R"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "后发2_0_1",
+      "nodes": [
+        "后发2_1_1",
+        "后发2_2_1",
+        "后发2_3_1",
+        "后发2_4_1"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "披风1_0_0",
+      "nodes": [
+        "披风1_1_0",
+        "披风1_2_0",
+        "披风1_3_0",
+        "披风1_4_0",
+        "披风1_5_0",
+        "披风1_6_0",
+        "披风1_7_0"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "披风1_0_1",
+      "nodes": [
+        "披风1_1_1",
+        "披风1_2_1",
+        "披风1_3_1",
+        "披风1_4_1",
+        "披风1_5_1",
+        "披风1_6_1",
+        "披风1_7_1",
+        "披风1_8_1",
+        "披风1_9_1"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "披风1_0_2",
+      "nodes": [
+        "披风1_1_2",
+        "披风1_2_2",
+        "披风1_3_2",
+        "披风1_4_2",
+        "披风1_5_2",
+        "披风1_6_2",
+        "披风1_7_2",
+        "披风1_8_2",
+        "披风1_9_2"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "披风2_0_0",
+      "nodes": [
+        "披风2_1_0",
+        "披风2_2_0",
+        "披风2_3_0",
+        "披风2_4_0",
+        "披风2_5_0",
+        "披风2_6_0"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "披风2_1_1",
+      "nodes": [
+        "披风2_2_1",
+        "披风2_3_1",
+        "披风2_4_1",
+        "披风2_5_1",
+        "披风2_6_1"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "翎_0_1",
+      "nodes": [
+        "翎_1_1",
+        "翎_2_1",
+        "翎_3_1",
+        "翎_4_1",
+        "翎_5_1"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "披风2_0_2",
+      "nodes": [
+        "披风2_1_2",
+        "披风2_2_2",
+        "披风2_3_2",
+        "披风2_4_2",
+        "披风2_5_2",
+        "披风2_6_2"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "领带_0_1",
+      "nodes": [
+        "领带_1_1",
+        "领带_2_1",
+        "领带_3_1",
+        "领带_4_1",
+        "领带_5_1",
+        "领带_6_1"
+      ]
+    }
+  ],
+  "mesh_binary_preserved": true,
+  "output_sha256": "cdacab2b07b679f5a05c3689b06aeb6ef3761ad1dda407da7917ad920355dd4b",
+  "mesh_binary_sha256": "896a014e3dcf530888e4e1bed3b49c986efff574731d596c014ecc70a7ca66ff",
+  "alpha_method": "UV triangle coverage on RGBA texture thumbnails with maximum edge 1024; material factor alpha preserved; validated in Godot."
+}

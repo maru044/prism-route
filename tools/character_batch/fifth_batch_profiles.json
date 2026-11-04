@@ -1,0 +1,110 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "firefly",
+      "label": "流萤",
+      "game": "崩坏：星穹铁道",
+      "archive_glob": "*流萤*.zip",
+      "body_pmx": "流萤3.0.pmx",
+      "zip_encoding": "utf-8",
+      "physics_prefixes": [
+        "hf_",
+        "zhb_",
+        "yhb_",
+        "Hair",
+        "wt_",
+        "xd",
+        "M-xd",
+        "hbd",
+        "M-hbd",
+        "qz_",
+        "zx_",
+        "yx_"
+      ]
+    },
+    {
+      "id": "ruan_mei",
+      "label": "阮·梅",
+      "game": "崩坏：星穹铁道",
+      "archive_glob": "*阮·梅*.zip",
+      "body_pmx": "阮·梅1.0.pmx",
+      "zip_encoding": "gbk",
+      "physics_prefixes": [
+        "Hair",
+        "bz_",
+        "js_",
+        "qq_",
+        "qh_"
+      ]
+    },
+    {
+      "id": "black_swan",
+      "label": "黑天鹅",
+      "game": "崩坏：星穹铁道",
+      "archive_glob": "*黑天鹅*.zip",
+      "body_pmx": "星穹铁道—黑天鹅（优化）.pmx",
+      "zip_encoding": "gbk",
+      "physics_prefixes": [
+        "側髪一",
+        "側長髮",
+        "後髪一",
+        "前頭巾",
+        "後頭巾",
+        "裙_",
+        "胸飾",
+        "腕皮帶"
+      ]
+    },
+    {
+      "id": "fu_xuan",
+      "label": "符玄",
+      "game": "崩坏：星穹铁道",
+      "archive_glob": "*符玄*.rar",
+      "body_pmx": "符玄（鞋+发饰补差145cm）(目修).pmx",
+      "zip_encoding": "utf-8",
+      "physics_prefixes": [
+        "髮簪穗",
+        "髮穗",
+        "側髪",
+        "耳墜",
+        "发髻_",
+        "側長髮_",
+        "馬尾_",
+        "裙_",
+        "裙掛飾條",
+        "外袖_",
+        "袖_",
+        "袖飄带_",
+        "袖飄帶_",
+        "袖環_",
+        "胸星盤"
+      ]
+    },
+    {
+      "id": "tingyun",
+      "label": "停云",
+      "game": "崩坏：星穹铁道",
+      "archive_glob": "*停云*.rar",
+      "body_pmx": "停云.pmx",
+      "zip_encoding": "utf-8",
+      "physics_prefixes": [
+        "翹髪",
+        "馬尾",
+        "側髪",
+        "中劉海",
+        "耳_",
+        "尾",
+        "裙_",
+        "衣穗",
+        "絲帶結",
+        "袖_",
+        "長袖_",
+        "側綢_"
+      ],
+      "placeholders": [
+        "星穹铁道—停云/星穹铁道—停云（分桦）/lambert2"
+      ]
+    }
+  ]
+}

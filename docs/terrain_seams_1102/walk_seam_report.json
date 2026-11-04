@@ -1,0 +1,206 @@
+{
+  "other_objects_unchanged": 1457, 
+  "edge_samples": 258, 
+  "solid": true, 
+  "native_geometry_mb": 1.1707344055175781, 
+  "faces": 9, 
+  "max_edge_exposure_m": -2.2814321516406721e-06, 
+  "cross_check_note": "Profiles include points beyond the original terrain footprint, toward the lake; missing exterior samples do not indicate a hole in the closed BRep.", 
+  "inner_boundaries": "Original edges 1, 2, 10 retained exactly", 
+  "edge_missing_host": 0, 
+  "cross_checks": [
+    {
+      "max_half_meter_change": 0.017439986017929954, 
+      "row": 8, 
+      "missing": 43
+    }, 
+    {
+      "max_half_meter_change": 0.27160560631686792, 
+      "row": 11, 
+      "missing": 28
+    }, 
+    {
+      "max_half_meter_change": 0.27248835692912721, 
+      "row": 14, 
+      "missing": 10
+    }, 
+    {
+      "max_half_meter_change": 0.27337166775403432, 
+      "row": 17, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.27225267067583658, 
+      "row": 20, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.27330110735171687, 
+      "row": 23, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.2713248438367728, 
+      "row": 26, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.27210869127923232, 
+      "row": 29, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.27221463690282377, 
+      "row": 32, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.27124132039315541, 
+      "row": 35, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.27203805737369535, 
+      "row": 38, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.27230234083094018, 
+      "row": 41, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.27179524100509056, 
+      "row": 44, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.2725563834944893, 
+      "row": 47, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.27213045416524295, 
+      "row": 50, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.27296579991098824, 
+      "row": 53, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.27234978394881182, 
+      "row": 56, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.27262189486769728, 
+      "row": 59, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.10683688752834897, 
+      "row": 62, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.11263410599816126, 
+      "row": 65, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.12335595036521951, 
+      "row": 68, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.13527093236258736, 
+      "row": 71, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.14486720193685088, 
+      "row": 74, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.091307635505589957, 
+      "row": 77, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.037261063899862279, 
+      "row": 80, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.027210325798087354, 
+      "row": 83, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.027102559601004828, 
+      "row": 86, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.028975956592962149, 
+      "row": 89, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.030352431261096768, 
+      "row": 92, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.031630977669877325, 
+      "row": 95, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.032450686664834194, 
+      "row": 98, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.032491888165953497, 
+      "row": 101, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.031644351299281226, 
+      "row": 104, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.032211984071139454, 
+      "row": 107, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.031381133243026937, 
+      "row": 110, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.029374628234943856, 
+      "row": 113, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.023361361643154055, 
+      "row": 116, 
+      "missing": 0
+    }, 
+    {
+      "max_half_meter_change": 0.12372696635967984, 
+      "row": 119, 
+      "missing": 0
+    }
+  ], 
+  "valid": true, 
+  "game_imported": false, 
+  "object_id": "e7a0e133-f284-4cd4-8796-349bb8638efc"
+}

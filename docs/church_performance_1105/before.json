@@ -1,0 +1,520 @@
+{
+  "adapter": "NVIDIA GeForce RTX 5070 Ti",
+  "resolution": [
+    1920,
+    1080
+  ],
+  "tag": "before",
+  "variants": [
+    {
+      "draws": {
+        "max": 2293.0,
+        "mean": 2293.0,
+        "p95": 2293.0,
+        "samples": 131
+      },
+      "frame_ms": {
+        "max": 20.978,
+        "mean": 19.1806106870229,
+        "p95": 20.393,
+        "samples": 131
+      },
+      "gpu_ms": {
+        "max": 20.0370006561279,
+        "mean": 18.8595266997359,
+        "p95": 19.6830005645752,
+        "samples": 131
+      },
+      "grass": {
+        "active": 350,
+        "building": false,
+        "built": 350,
+        "cache": {
+          "baked_cells": 11494,
+          "cache_hits": 17755,
+          "cache_mib": 94.963134765625,
+          "corrupt": 0,
+          "decode_ms": 11081.386,
+          "disk_reads": 350,
+          "evictions": 278,
+          "inflight": 0,
+          "io_ms": 328.869,
+          "pack_worker_ms": 0.0,
+          "status": ""
+        },
+        "cancelled": 0,
+        "commit_ms": 0.0,
+        "completed_per_s": 5.4,
+        "incoming_per_s": 0.0,
+        "indexed_cells": 11494,
+        "last_build_ms": 0.013,
+        "lookahead_m": 0.0,
+        "max_commit_ms": 89.761,
+        "oldest_visible_s": 0.0,
+        "pending_visible": 0,
+        "phases": {},
+        "queue_p95_s": 0.0,
+        "queued": 0,
+        "ready_cells": 0,
+        "rebuilt": 0,
+        "speed_mps": 0.0,
+        "unloaded": 0,
+        "visible": {
+          "0_48": 0,
+          "110_128": 0,
+          "48_76": 0,
+          "76_110": 0
+        }
+      },
+      "label": "church_entry",
+      "physics_ms": {
+        "max": 1.982,
+        "mean": 1.86653435114504,
+        "p95": 1.982,
+        "samples": 131
+      },
+      "primitives": {
+        "max": 21740843.0,
+        "mean": 21740840.6183206,
+        "p95": 21740843.0,
+        "samples": 131
+      },
+      "render_cpu_ms": {
+        "max": 3.98499989509583,
+        "mean": 1.56811450273936,
+        "p95": 1.72300004959106,
+        "samples": 131
+      },
+      "water": {
+        "bodies": 7,
+        "clock": 14.3923236363636,
+        "cpu_ms": 0.064,
+        "dynamic_proxies": 0,
+        "emitted": 0,
+        "events": 0,
+        "proxy_records": 5749,
+        "reflection_active": true,
+        "reflection_gpu_ms": 0.0989999994635582,
+        "reflection_objects": 338,
+        "reflection_size": [
+          960,
+          540
+        ],
+        "reflection_weight": 1.0,
+        "style": 2,
+        "visibility_passes": 1,
+        "visibility_pending": 0,
+        "visibility_scanned": 0,
+        "wind": 1.0
+      }
+    },
+    {
+      "draws": {
+        "max": 2114.0,
+        "mean": 2114.0,
+        "p95": 2114.0,
+        "samples": 115
+      },
+      "frame_ms": {
+        "max": 25.574,
+        "mean": 21.7782,
+        "p95": 23.251,
+        "samples": 115
+      },
+      "gpu_ms": {
+        "max": 24.8010005950928,
+        "mean": 21.4636523039445,
+        "p95": 21.9340000152588,
+        "samples": 115
+      },
+      "grass": {
+        "active": 350,
+        "building": false,
+        "built": 350,
+        "cache": {
+          "baked_cells": 11494,
+          "cache_hits": 23242,
+          "cache_mib": 94.963134765625,
+          "corrupt": 0,
+          "decode_ms": 11081.386,
+          "disk_reads": 350,
+          "evictions": 278,
+          "inflight": 0,
+          "io_ms": 328.869,
+          "pack_worker_ms": 0.0,
+          "status": ""
+        },
+        "cancelled": 0,
+        "commit_ms": 0.0,
+        "completed_per_s": 0.0,
+        "incoming_per_s": 0.0,
+        "indexed_cells": 11494,
+        "last_build_ms": 0.013,
+        "lookahead_m": 0.0,
+        "max_commit_ms": 89.761,
+        "oldest_visible_s": 0.0,
+        "pending_visible": 0,
+        "phases": {},
+        "queue_p95_s": 0.0,
+        "queued": 0,
+        "ready_cells": 0,
+        "rebuilt": 0,
+        "speed_mps": 0.0,
+        "unloaded": 0,
+        "visible": {
+          "0_48": 0,
+          "110_128": 0,
+          "48_76": 0,
+          "76_110": 0
+        }
+      },
+      "label": "church_hidden",
+      "physics_ms": {
+        "max": 2.996,
+        "mean": 2.80697391304348,
+        "p95": 2.996,
+        "samples": 115
+      },
+      "primitives": {
+        "max": 21709955.0,
+        "mean": 21709949.7130435,
+        "p95": 21709955.0,
+        "samples": 115
+      },
+      "render_cpu_ms": {
+        "max": 5.71500015258789,
+        "mean": 1.58679130492003,
+        "p95": 2.76799988746643,
+        "samples": 115
+      },
+      "water": {
+        "bodies": 7,
+        "clock": 17.7433333333333,
+        "cpu_ms": 0.066,
+        "dynamic_proxies": 0,
+        "emitted": 0,
+        "events": 0,
+        "proxy_records": 5749,
+        "reflection_active": true,
+        "reflection_gpu_ms": 0.100000001490116,
+        "reflection_objects": 338,
+        "reflection_size": [
+          960,
+          540
+        ],
+        "reflection_weight": 1.0,
+        "style": 2,
+        "visibility_passes": 1,
+        "visibility_pending": 0,
+        "visibility_scanned": 0,
+        "wind": 1.0
+      }
+    },
+    {
+      "draws": {
+        "max": 2288.0,
+        "mean": 2288.0,
+        "p95": 2288.0,
+        "samples": 130
+      },
+      "frame_ms": {
+        "max": 22.876,
+        "mean": 19.2765923076923,
+        "p95": 20.472,
+        "samples": 130
+      },
+      "gpu_ms": {
+        "max": 22.636999130249,
+        "mean": 18.9368614783654,
+        "p95": 19.8190002441406,
+        "samples": 130
+      },
+      "grass": {
+        "active": 350,
+        "building": false,
+        "built": 350,
+        "cache": {
+          "baked_cells": 11494,
+          "cache_hits": 28375,
+          "cache_mib": 94.963134765625,
+          "corrupt": 0,
+          "decode_ms": 11081.386,
+          "disk_reads": 350,
+          "evictions": 278,
+          "inflight": 0,
+          "io_ms": 328.869,
+          "pack_worker_ms": 0.0,
+          "status": ""
+        },
+        "cancelled": 0,
+        "commit_ms": 0.001,
+        "completed_per_s": 0.0,
+        "incoming_per_s": 0.0,
+        "indexed_cells": 11494,
+        "last_build_ms": 0.024,
+        "lookahead_m": 0.0,
+        "max_commit_ms": 89.761,
+        "oldest_visible_s": 0.0,
+        "pending_visible": 0,
+        "phases": {},
+        "queue_p95_s": 0.0,
+        "queued": 0,
+        "ready_cells": 0,
+        "rebuilt": 0,
+        "speed_mps": 0.0,
+        "unloaded": 0,
+        "visible": {
+          "0_48": 0,
+          "110_128": 0,
+          "48_76": 0,
+          "76_110": 0
+        }
+      },
+      "label": "glass_hidden",
+      "physics_ms": {
+        "max": 2.884,
+        "mean": 2.19592307692308,
+        "p95": 2.884,
+        "samples": 130
+      },
+      "primitives": {
+        "max": 21740809.0,
+        "mean": 21740809.0,
+        "p95": 21740809.0,
+        "samples": 130
+      },
+      "render_cpu_ms": {
+        "max": 3.68600010871887,
+        "mean": 1.64996153941521,
+        "p95": 2.19199991226196,
+        "samples": 130
+      },
+      "water": {
+        "bodies": 7,
+        "clock": 20.9520803333334,
+        "cpu_ms": 0.068,
+        "dynamic_proxies": 0,
+        "emitted": 0,
+        "events": 0,
+        "proxy_records": 5749,
+        "reflection_active": true,
+        "reflection_gpu_ms": 0.101999998092651,
+        "reflection_objects": 338,
+        "reflection_size": [
+          960,
+          540
+        ],
+        "reflection_weight": 1.0,
+        "style": 2,
+        "visibility_passes": 1,
+        "visibility_pending": 0,
+        "visibility_scanned": 0,
+        "wind": 0.348936656565658
+      }
+    },
+    {
+      "draws": {
+        "max": 1823.0,
+        "mean": 1823.0,
+        "p95": 1823.0,
+        "samples": 936
+      },
+      "frame_ms": {
+        "max": 6.64,
+        "mean": 2.67340277777778,
+        "p95": 4.075,
+        "samples": 936
+      },
+      "gpu_ms": {
+        "max": 2.54299998283386,
+        "mean": 2.10747329011942,
+        "p95": 2.34699988365173,
+        "samples": 936
+      },
+      "grass": {
+        "active": 350,
+        "building": false,
+        "built": 350,
+        "cache": {
+          "baked_cells": 11494,
+          "cache_hits": 33862,
+          "cache_mib": 94.963134765625,
+          "corrupt": 0,
+          "decode_ms": 11081.386,
+          "disk_reads": 350,
+          "evictions": 278,
+          "inflight": 0,
+          "io_ms": 328.869,
+          "pack_worker_ms": 0.0,
+          "status": ""
+        },
+        "cancelled": 0,
+        "commit_ms": 0.0,
+        "completed_per_s": 0.0,
+        "incoming_per_s": 0.0,
+        "indexed_cells": 11494,
+        "last_build_ms": 0.007,
+        "lookahead_m": 0.0,
+        "max_commit_ms": 89.761,
+        "oldest_visible_s": 0.0,
+        "pending_visible": 0,
+        "phases": {},
+        "queue_p95_s": 0.0,
+        "queued": 0,
+        "ready_cells": 0,
+        "rebuilt": 0,
+        "speed_mps": 0.0,
+        "unloaded": 0,
+        "visible": {
+          "0_48": 0,
+          "110_128": 0,
+          "48_76": 0,
+          "76_110": 0
+        }
+      },
+      "label": "grass_hidden",
+      "physics_ms": {
+        "max": 1.834,
+        "mean": 1.68663888888889,
+        "p95": 1.834,
+        "samples": 936
+      },
+      "primitives": {
+        "max": 5388989.0,
+        "mean": 5388985.5042735,
+        "p95": 5388989.0,
+        "samples": 936
+      },
+      "render_cpu_ms": {
+        "max": 2.0220000743866,
+        "mean": 0.938317308632227,
+        "p95": 1.182000041008,
+        "samples": 936
+      },
+      "water": {
+        "bodies": 7,
+        "clock": 24.1815806190469,
+        "cpu_ms": 0.031,
+        "dynamic_proxies": 0,
+        "emitted": 0,
+        "events": 0,
+        "proxy_records": 5749,
+        "reflection_active": true,
+        "reflection_gpu_ms": 0.0890000015497208,
+        "reflection_objects": 338,
+        "reflection_size": [
+          960,
+          540
+        ],
+        "reflection_weight": 1.0,
+        "style": 2,
+        "visibility_passes": 1,
+        "visibility_pending": 0,
+        "visibility_scanned": 0,
+        "wind": 0.0
+      }
+    },
+    {
+      "draws": {
+        "max": 2578.0,
+        "mean": 2578.0,
+        "p95": 2578.0,
+        "samples": 141
+      },
+      "frame_ms": {
+        "max": 20.182,
+        "mean": 17.7859290780142,
+        "p95": 18.858,
+        "samples": 141
+      },
+      "gpu_ms": {
+        "max": 19.7889995574951,
+        "mean": 17.4191631695903,
+        "p95": 17.8540000915527,
+        "samples": 141
+      },
+      "grass": {
+        "active": 376,
+        "building": false,
+        "built": 376,
+        "cache": {
+          "baked_cells": 11494,
+          "cache_hits": 40320,
+          "cache_mib": 95.124267578125,
+          "corrupt": 0,
+          "decode_ms": 12933.252,
+          "disk_reads": 409,
+          "evictions": 338,
+          "inflight": 0,
+          "io_ms": 532.4,
+          "pack_worker_ms": 0.0,
+          "status": ""
+        },
+        "cancelled": 0,
+        "commit_ms": 0.001,
+        "completed_per_s": 0.0,
+        "incoming_per_s": 0.0,
+        "indexed_cells": 11494,
+        "last_build_ms": 0.014,
+        "lookahead_m": 0.0,
+        "max_commit_ms": 89.761,
+        "oldest_visible_s": 0.0,
+        "pending_visible": 0,
+        "phases": {},
+        "queue_p95_s": 0.0,
+        "queued": 0,
+        "ready_cells": 0,
+        "rebuilt": 0,
+        "speed_mps": 0.0,
+        "unloaded": 0,
+        "visible": {
+          "0_48": 0,
+          "110_128": 0,
+          "48_76": 0,
+          "76_110": 0
+        }
+      },
+      "label": "church_overview",
+      "physics_ms": {
+        "max": 2.256,
+        "mean": 2.0051914893617,
+        "p95": 2.256,
+        "samples": 141
+      },
+      "primitives": {
+        "max": 21034855.0,
+        "mean": 21034855.0,
+        "p95": 21034855.0,
+        "samples": 141
+      },
+      "render_cpu_ms": {
+        "max": 3.48900008201599,
+        "mean": 1.65834042112878,
+        "p95": 1.87300002574921,
+        "samples": 141
+      },
+      "water": {
+        "bodies": 7,
+        "clock": 31.3989632222215,
+        "cpu_ms": 0.07,
+        "dynamic_proxies": 0,
+        "emitted": 0,
+        "events": 0,
+        "proxy_records": 5749,
+        "reflection_active": true,
+        "reflection_gpu_ms": 0.136999994516373,
+        "reflection_objects": 329,
+        "reflection_size": [
+          960,
+          540
+        ],
+        "reflection_weight": 1.0,
+        "style": 2,
+        "visibility_passes": 2,
+        "visibility_pending": 0,
+        "visibility_scanned": 0,
+        "wind": 0.0
+      }
+    }
+  ]
+}

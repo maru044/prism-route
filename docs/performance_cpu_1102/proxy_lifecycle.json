@@ -1,0 +1,11 @@
+{
+  "ancestor_visibility": true,
+  "delete_during_budgeted_pass": true,
+  "direct_and_queued_free": true,
+  "duplicate_and_reparent": true,
+  "failures": [],
+  "move_rotate_scale": true,
+  "passed": true,
+  "stationary_no_rescan": true,
+  "style_switch": true
+}

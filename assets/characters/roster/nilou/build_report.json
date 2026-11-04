@@ -1,0 +1,1019 @@
+{
+  "id": "nilou",
+  "label": "妮露",
+  "vertices": 27022,
+  "bones": 645,
+  "morphs": 63,
+  "materials": 32,
+  "alpha": [
+    {
+      "name": "颜",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "颜2",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "目",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "白目",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "眉",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "二重",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "睫",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "口舌",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "齿",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "星目",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "头饰",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "髮",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "后髮",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "髮绳",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "头纱",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "头纱饰",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "首",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "体",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "蝴蝶结",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "神之眼AL",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "体2",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "裙",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "新規",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "新規.001",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "前摆",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "体饰",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "前蝴蝶结",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "肌1",
+      "mode": "MASK",
+      "min_alpha": 0,
+      "max_alpha": 255,
+      "transparent_fraction": 0.07333094113190998,
+      "partial_fraction": 0.012638797520084524,
+      "middle_fraction": 0.009379423080756732
+    },
+    {
+      "name": "肌2",
+      "mode": "MASK",
+      "min_alpha": 0,
+      "max_alpha": 255,
+      "transparent_fraction": 0.16374926877559284,
+      "partial_fraction": 0.05837195698150565,
+      "middle_fraction": 0.039211627593034246
+    },
+    {
+      "name": "肌3",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "髮+",
+      "mode": "MASK",
+      "min_alpha": 0,
+      "max_alpha": 69,
+      "transparent_fraction": 0.9798908877767257,
+      "partial_fraction": 0.022201181297623877,
+      "middle_fraction": 0.018594165652193517
+    },
+    {
+      "name": "后髮+",
+      "mode": "MASK",
+      "min_alpha": 0,
+      "max_alpha": 70,
+      "transparent_fraction": 0.9926405936316739,
+      "partial_fraction": 0.008030291479250846,
+      "middle_fraction": 0.006881654849940281
+    }
+  ],
+  "physics": {
+    "hair_chains": 18,
+    "clothes_chains": 23,
+    "colliders": 12,
+    "joints": 428
+  },
+  "source_sha256": "764f60bd149911183ce668f6aa1c48425be62c03516a384b770dc66d13d7e474",
+  "source_unchanged": true,
+  "max_weight_total_error": 0.0,
+  "foot_test": {
+    "bone": "足首.L",
+    "angle_deg": 25,
+    "moved_vertices_over_0_1mm": 1108,
+    "max_displacement_m": 0.06810589353715002
+  },
+  "helper_links": [
+    [
+      "足D.L",
+      "足.L"
+    ],
+    [
+      "ひざD.L",
+      "ひざ.L"
+    ],
+    [
+      "足首D.L",
+      "足首.L"
+    ],
+    [
+      "足D.R",
+      "足.R"
+    ],
+    [
+      "ひざD.R",
+      "ひざ.R"
+    ],
+    [
+      "足首D.R",
+      "足首.R"
+    ]
+  ],
+  "chains": [
+    {
+      "group": "Clothes",
+      "attachment": "Q_0_0",
+      "nodes": [
+        "Q_0_0",
+        "Q_1_0",
+        "Q_2_0"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "Q_0_1",
+      "nodes": [
+        "Q_1_1",
+        "Q_2_1",
+        "Q_3_1",
+        "Q_4_1",
+        "Q_5_1",
+        "Q_6_1",
+        "Q_7_1",
+        "Q_8_1",
+        "Q_9_1",
+        "Q_10_1",
+        "Q_11_1",
+        "Q_12_1"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "Q_0_2",
+      "nodes": [
+        "Q_1_2",
+        "Q_2_2",
+        "Q_3_2",
+        "Q_4_2",
+        "Q_5_2",
+        "Q_6_2",
+        "Q_7_2",
+        "Q_8_2",
+        "Q_9_2",
+        "Q_10_2",
+        "Q_11_2",
+        "Q_12_2"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "Q_0_3",
+      "nodes": [
+        "Q_1_3",
+        "Q_2_3",
+        "Q_3_3",
+        "Q_4_3",
+        "Q_5_3",
+        "Q_6_3",
+        "Q_7_3",
+        "Q_8_3",
+        "Q_9_3",
+        "Q_10_3",
+        "Q_11_3",
+        "Q_12_3"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "Q_0_4",
+      "nodes": [
+        "Q_1_4",
+        "Q_2_4",
+        "Q_3_4",
+        "Q_4_4",
+        "Q_5_4",
+        "Q_6_4",
+        "Q_7_4",
+        "Q_8_4",
+        "Q_9_4",
+        "Q_10_4",
+        "Q_11_4",
+        "Q_12_4"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "Q_0_5",
+      "nodes": [
+        "Q_1_5",
+        "Q_2_5",
+        "Q_3_5",
+        "Q_4_5",
+        "Q_5_5",
+        "Q_6_5",
+        "Q_7_5",
+        "Q_8_5",
+        "Q_9_5",
+        "Q_10_5",
+        "Q_11_5",
+        "Q_12_5"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "Q_0_6",
+      "nodes": [
+        "Q_1_6",
+        "Q_2_6",
+        "Q_3_6",
+        "Q_4_6",
+        "Q_5_6",
+        "Q_6_6",
+        "Q_7_6",
+        "Q_8_6",
+        "Q_9_6",
+        "Q_10_6",
+        "Q_11_6",
+        "Q_12_6"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "Q_0_7",
+      "nodes": [
+        "Q_1_7",
+        "Q_2_7",
+        "Q_3_7",
+        "Q_4_7",
+        "Q_5_7",
+        "Q_6_7",
+        "Q_7_7",
+        "Q_8_7",
+        "Q_9_7",
+        "Q_10_7",
+        "Q_11_7",
+        "Q_12_7"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "Q_0_8",
+      "nodes": [
+        "Q_1_8",
+        "Q_2_8",
+        "Q_3_8",
+        "Q_4_8",
+        "Q_5_8",
+        "Q_6_8",
+        "Q_7_8",
+        "Q_8_8",
+        "Q_9_8",
+        "Q_10_8",
+        "Q_11_8",
+        "Q_12_8"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "Q_0_9",
+      "nodes": [
+        "Q_1_9",
+        "Q_2_9",
+        "Q_3_9",
+        "Q_4_9",
+        "Q_5_9",
+        "Q_6_9",
+        "Q_7_9",
+        "Q_8_9",
+        "Q_9_9",
+        "Q_10_9",
+        "Q_11_9",
+        "Q_12_9"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "Q_0_10",
+      "nodes": [
+        "Q_1_10",
+        "Q_2_10",
+        "Q_3_10",
+        "Q_4_10",
+        "Q_5_10",
+        "Q_6_10",
+        "Q_7_10",
+        "Q_8_10",
+        "Q_9_10",
+        "Q_10_10",
+        "Q_11_10",
+        "Q_12_10"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "Q_0_11",
+      "nodes": [
+        "Q_1_11",
+        "Q_2_11",
+        "Q_3_11",
+        "Q_4_11",
+        "Q_5_11",
+        "Q_6_11",
+        "Q_7_11",
+        "Q_8_11",
+        "Q_9_11",
+        "Q_10_11",
+        "Q_11_11",
+        "Q_12_11"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "Q_0_12",
+      "nodes": [
+        "Q_1_12",
+        "Q_2_12",
+        "Q_3_12",
+        "Q_4_12",
+        "Q_5_12",
+        "Q_6_12",
+        "Q_7_12",
+        "Q_8_12",
+        "Q_9_12",
+        "Q_10_12",
+        "Q_11_12",
+        "Q_12_12"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "Q_0_13",
+      "nodes": [
+        "Q_1_13",
+        "Q_2_13",
+        "Q_3_13",
+        "Q_4_13",
+        "Q_5_13",
+        "Q_6_13",
+        "Q_7_13",
+        "Q_8_13",
+        "Q_9_13",
+        "Q_10_13",
+        "Q_11_13",
+        "Q_12_13"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "Q_0_14",
+      "nodes": [
+        "Q_1_14",
+        "Q_2_14",
+        "Q_3_14",
+        "Q_4_14",
+        "Q_5_14",
+        "Q_6_14",
+        "Q_7_14",
+        "Q_8_14",
+        "Q_9_14",
+        "Q_10_14",
+        "Q_11_14",
+        "Q_12_14"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "S_0_1",
+      "nodes": [
+        "S_1_1",
+        "S_2_1",
+        "S_3_1",
+        "S_4_1",
+        "S_5_1",
+        "S_6_1",
+        "S_7_1",
+        "S_8_1",
+        "S_9_1",
+        "S_10_1",
+        "S_11_1",
+        "S_12_1",
+        "S_13_1",
+        "S_14_1",
+        "S_15_1",
+        "S_16_1"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "QB_0_1",
+      "nodes": [
+        "QB_1_1",
+        "QB_2_1",
+        "QB_3_1",
+        "QB_4_1",
+        "QB_5_1",
+        "QB_6_1",
+        "QB_7_1"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "HDJ_0_1.L",
+      "nodes": [
+        "HDJ_1_1.L",
+        "HDJ_2_1.L",
+        "HDJ_3_1.L",
+        "HDJ_4_1.L"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "HDJ_0_1.R",
+      "nodes": [
+        "HDJ_1_1.R",
+        "HDJ_2_1.R",
+        "HDJ_3_1.R",
+        "HDJ_4_1.R"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "D_0_1.R",
+      "nodes": [
+        "D_1_1.R",
+        "D_2_1.R",
+        "D_3_1.R",
+        "D_4_1.R",
+        "D_5_1.R",
+        "D_6_1.R",
+        "D_7_1.R",
+        "D_8_1.R",
+        "D_9_1.R",
+        "D_10_1.R",
+        "D_11_1.R",
+        "D_12_1.R",
+        "D_13_1.R",
+        "D_14_1.R",
+        "D_15_1.R",
+        "D_16_1.R",
+        "D_17_1.R",
+        "D_18_1.R",
+        "D_19_1.R",
+        "D_20_1.R"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "QD_0_1.R",
+      "nodes": [
+        "QD_1_1.R",
+        "QD_2_1.R",
+        "QD_3_1.R",
+        "QD_4_1.R",
+        "QD_5_1.R",
+        "QD_6_1.R",
+        "QD_7_1.R",
+        "QD_8_1.R",
+        "QD_9_1.R",
+        "QD_10_1.R",
+        "QD_11_1.R",
+        "QD_12_1.R",
+        "QD_13_1.R",
+        "QD_14_1.R",
+        "QD_15_1.R",
+        "QD_16_1.R",
+        "QD_17_1.R"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "D_0_1.L",
+      "nodes": [
+        "D_1_1.L",
+        "D_2_1.L",
+        "D_3_1.L",
+        "D_4_1.L",
+        "D_5_1.L",
+        "D_6_1.L",
+        "D_7_1.L",
+        "D_8_1.L",
+        "D_9_1.L",
+        "D_10_1.L",
+        "D_11_1.L",
+        "D_12_1.L",
+        "D_13_1.L",
+        "D_14_1.L",
+        "D_15_1.L",
+        "D_16_1.L",
+        "D_17_1.L",
+        "D_18_1.L",
+        "D_19_1.L",
+        "D_20_1.L"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "QD_0_1.L",
+      "nodes": [
+        "QD_1_1.L",
+        "QD_2_1.L",
+        "QD_3_1.L",
+        "QD_4_1.L",
+        "QD_5_1.L",
+        "QD_6_1.L",
+        "QD_7_1.L",
+        "QD_8_1.L",
+        "QD_9_1.L",
+        "QD_10_1.L",
+        "QD_11_1.L",
+        "QD_12_1.L",
+        "QD_13_1.L",
+        "QD_14_1.L",
+        "QD_15_1.L",
+        "QD_16_1.L",
+        "QD_17_1.L"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "CF_0_1.R",
+      "nodes": [
+        "CF_1_1.R",
+        "CF_2_1.R",
+        "CF_3_1.R",
+        "CF_4_1.R",
+        "CF_5_1.R",
+        "CF_6_1.R",
+        "CF_7_1.R"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HF_0_1.R",
+      "nodes": [
+        "HF_1_1.R",
+        "HF_2_1.R",
+        "HF_3_1.R"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HF_4_1.R",
+      "nodes": [
+        "HF_5_1.R",
+        "HF_6_1.R",
+        "HF_7_1.R",
+        "HF_8_1.R",
+        "HF_9_1.R",
+        "HF_10_1.R",
+        "HF_11_1.R",
+        "HF_12_1.R",
+        "HF_13_1.R",
+        "HF_14_1.R",
+        "HF_15_1.R",
+        "HF_16_1.R",
+        "HF_17_1.R",
+        "HF_18_1.R",
+        "HF_19_1.R",
+        "HF_20_1.R"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HF1_0_1.R",
+      "nodes": [
+        "HF1_1_1.R",
+        "HF1_2_1.R",
+        "HF1_3_1.R",
+        "HF1_4_1.R",
+        "HF1_5_1.R",
+        "HF1_6_1.R",
+        "HF1_7_1.R",
+        "HF1_8_1.R",
+        "HF1_9_1.R",
+        "HF1_10_1.R",
+        "HF1_11_1.R",
+        "HF1_12_1.R",
+        "HF1_13_1.R",
+        "HF1_14_1.R",
+        "HF1_15_1.R",
+        "HF1_16_1.R"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HF_0_1.L",
+      "nodes": [
+        "HF_1_1.L",
+        "HF_2_1.L",
+        "HF_3_1.L"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HF_4_1.L",
+      "nodes": [
+        "HF_5_1.L",
+        "HF_6_1.L",
+        "HF_7_1.L",
+        "HF_8_1.L",
+        "HF_9_1.L",
+        "HF_10_1.L",
+        "HF_11_1.L",
+        "HF_12_1.L",
+        "HF_13_1.L",
+        "HF_14_1.L",
+        "HF_15_1.L",
+        "HF_16_1.L",
+        "HF_17_1.L",
+        "HF_18_1.L",
+        "HF_19_1.L",
+        "HF_20_1.L"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HF1_0_1.L",
+      "nodes": [
+        "HF1_1_1.L",
+        "HF1_2_1.L",
+        "HF1_3_1.L",
+        "HF1_4_1.L",
+        "HF1_5_1.L",
+        "HF1_6_1.L",
+        "HF1_7_1.L",
+        "HF1_8_1.L",
+        "HF1_9_1.L",
+        "HF1_10_1.L",
+        "HF1_11_1.L",
+        "HF1_12_1.L",
+        "HF1_13_1.L",
+        "HF1_14_1.L",
+        "HF1_15_1.L",
+        "HF1_16_1.L"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "CF_0_1.L",
+      "nodes": [
+        "CF_1_1.L",
+        "CF_2_1.L",
+        "CF_3_1.L",
+        "CF_4_1.L",
+        "CF_5_1.L",
+        "CF_6_1.L",
+        "CF_7_1.L"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "TS_0_0",
+      "nodes": [
+        "TS_1_0",
+        "TS_2_0",
+        "TS_3_0",
+        "TS_4_0",
+        "TS_5_0"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "TS_0_1.R",
+      "nodes": [
+        "TS_1_1.R",
+        "TS_2_1.R",
+        "TS_3_1.R",
+        "TS_4_1.R",
+        "TS_5_1.R",
+        "TS_6_1.R",
+        "TS_7_1.R",
+        "TS_8_1.R",
+        "TS_9_1.R",
+        "TS_10_1.R",
+        "TS_11_1.R"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "TS_0_1",
+      "nodes": [
+        "TS_1_1",
+        "TS_2_1",
+        "TS_3_1",
+        "TS_4_1",
+        "TS_5_1",
+        "TS_6_1"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "TS_0_2",
+      "nodes": [
+        "TS_1_2",
+        "TS_2_2",
+        "TS_3_2",
+        "TS_4_2",
+        "TS_5_2",
+        "TS_6_2"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "TS_0_3",
+      "nodes": [
+        "TS_1_3",
+        "TS_2_3",
+        "TS_3_3",
+        "TS_4_3",
+        "TS_5_3",
+        "TS_6_3"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "TS_0_4",
+      "nodes": [
+        "TS_1_4",
+        "TS_2_4",
+        "TS_3_4",
+        "TS_4_4",
+        "TS_5_4",
+        "TS_6_4"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "TS_0_5",
+      "nodes": [
+        "TS_1_5",
+        "TS_2_5",
+        "TS_3_5",
+        "TS_4_5",
+        "TS_5_5",
+        "TS_6_5"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "TS_0_6",
+      "nodes": [
+        "TS_1_6",
+        "TS_2_6",
+        "TS_3_6",
+        "TS_4_6",
+        "TS_5_6",
+        "TS_6_6"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "TS_0_7",
+      "nodes": [
+        "TS_1_7",
+        "TS_2_7",
+        "TS_3_7",
+        "TS_4_7",
+        "TS_5_7"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "TS_0_1.L",
+      "nodes": [
+        "TS_1_1.L",
+        "TS_2_1.L",
+        "TS_3_1.L",
+        "TS_4_1.L",
+        "TS_5_1.L",
+        "TS_6_1.L",
+        "TS_7_1.L",
+        "TS_8_1.L",
+        "TS_9_1.L",
+        "TS_10_1.L",
+        "TS_11_1.L"
+      ]
+    }
+  ],
+  "mesh_binary_preserved": true,
+  "output_sha256": "1dc34a681eb24d7bd019135a85a23bbeaf829a4147dbd162fc0eaebbe54444e1",
+  "mesh_binary_sha256": "e17891ca6e64bde818cd1d4eca30f3042de683596d97140f1f675383a691d54c",
+  "alpha_method": "UV triangle coverage on RGBA texture thumbnails with maximum edge 1024; material factor alpha preserved; validated in Godot."
+}

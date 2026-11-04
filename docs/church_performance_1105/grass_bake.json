@@ -1,0 +1,14 @@
+{
+  "cells": 12,
+  "cut_sha256": "42c2e5ba649defa703246552aba6b6a972b18878aa42c58f672e8b972d135e83",
+  "global_bake_unchanged": true,
+  "global_manifest_sha256": "aba46312d63f429ba282c179ccc145a7a81f4f20b40f883b0036528ce8fd65f9",
+  "original_roots": 64495,
+  "passed": true,
+  "removed_blades": 43484,
+  "removed_roots": 10871,
+  "retained_roots": 53624,
+  "tree_save_sha256": "b30f25dd5fa50492635345ce757ef18e054859e322e976c2736a710272d3bbd8",
+  "tree_save_unchanged": true,
+  "untouched_roots_preserve_position_normal_rng": true
+}

@@ -1,0 +1,194 @@
+{
+  "catalog": "res://assets/characters/roster/catalog.json",
+  "engine": "4.7.2-stable (official)",
+  "failures": [],
+  "grounding_enabled": false,
+  "models": [
+    {
+      "bones": 457,
+      "captures": [],
+      "clothes_chains": 19,
+      "hair_chains": 7,
+      "id": "yae_miko",
+      "material_classes": {
+        "ShaderMaterial": 25
+      },
+      "max_segment_error_m": 0.00000487267971038818,
+      "meshes": 1,
+      "morphs": 66,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 310,
+      "captures": [],
+      "clothes_chains": 22,
+      "hair_chains": 3,
+      "id": "raiden_shogun",
+      "material_classes": {
+        "ShaderMaterial": 23
+      },
+      "max_segment_error_m": 0.00000471435487270355,
+      "meshes": 1,
+      "morphs": 64,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 426,
+      "captures": [],
+      "clothes_chains": 25,
+      "hair_chains": 3,
+      "id": "furina",
+      "material_classes": {
+        "ShaderMaterial": 32
+      },
+      "max_segment_error_m": 0.00000401772558689117,
+      "meshes": 1,
+      "morphs": 63,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 562,
+      "captures": [],
+      "clothes_chains": 23,
+      "hair_chains": 15,
+      "id": "jingliu",
+      "material_classes": {
+        "ShaderMaterial": 31
+      },
+      "max_segment_error_m": 0.00000407546758651733,
+      "meshes": 1,
+      "morphs": 66,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 437,
+      "captures": [],
+      "clothes_chains": 24,
+      "hair_chains": 9,
+      "id": "miyabi",
+      "material_classes": {
+        "ShaderMaterial": 23
+      },
+      "max_segment_error_m": 0.00000436417758464813,
+      "meshes": 1,
+      "morphs": 52,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 260,
+      "captures": [],
+      "clothes_chains": 5,
+      "hair_chains": 3,
+      "id": "shenhe",
+      "material_classes": {
+        "ShaderMaterial": 23
+      },
+      "max_segment_error_m": 0.00000480189919471741,
+      "meshes": 1,
+      "morphs": 65,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 367,
+      "captures": [],
+      "clothes_chains": 25,
+      "hair_chains": 12,
+      "id": "yelan",
+      "material_classes": {
+        "ShaderMaterial": 22
+      },
+      "max_segment_error_m": 0.00000487640500068665,
+      "meshes": 1,
+      "morphs": 62,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 214,
+      "captures": [],
+      "clothes_chains": 8,
+      "hair_chains": 6,
+      "id": "eula",
+      "material_classes": {
+        "ShaderMaterial": 25
+      },
+      "max_segment_error_m": 0.00000479072332382202,
+      "meshes": 1,
+      "morphs": 60,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 421,
+      "captures": [],
+      "clothes_chains": 22,
+      "hair_chains": 2,
+      "id": "lisa",
+      "material_classes": {
+        "ShaderMaterial": 14
+      },
+      "max_segment_error_m": 0.00000394321978092194,
+      "meshes": 1,
+      "morphs": 46,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 623,
+      "captures": [],
+      "clothes_chains": 30,
+      "hair_chains": 5,
+      "id": "ningguang",
+      "material_classes": {
+        "ShaderMaterial": 14
+      },
+      "max_segment_error_m": 0.00000393949449062347,
+      "meshes": 1,
+      "morphs": 45,
+      "physics_steps": 309,
+      "pose_checks": 54
+    }
+  ],
+  "motions": [
+    {
+      "formal_id": "A01",
+      "formal_resource": "res://assets/characters/motion_review/A01.tres",
+      "formal_source_sha256": "a5adab20fa25e2e5b63c62070ce1efda7112469faf234283d8320eda261259f5",
+      "id": "idle",
+      "label": "地图待机 · A01",
+      "npc_enabled": true,
+      "resource": "res://assets/characters/roster/motions/shared_world_A01.tres"
+    },
+    {
+      "formal_id": "A05",
+      "formal_resource": "res://assets/characters/motion_review/A05.tres",
+      "formal_source_sha256": "7d83ebc95d586f90001b2ee2b3176002ebe566ff45318098c18dfb68c89929eb",
+      "id": "walk",
+      "label": "地图步行 · A05",
+      "npc_enabled": true,
+      "resource": "res://assets/characters/roster/motions/shared_world_A05.tres"
+    },
+    {
+      "formal_id": "A06",
+      "formal_resource": "res://assets/characters/motion_review/A06.tres",
+      "formal_source_sha256": "dd763d9bfde9f5c47ae75ca88db34d6eb2ebb044c4d86979f524caebadd0ae08",
+      "id": "run",
+      "label": "地图跑步 · A06（暂不验收）",
+      "npc_enabled": false,
+      "resource": "res://assets/characters/roster/motions/shared_world_A06.tres",
+      "status": "deferred_npc_not_required"
+    }
+  ],
+  "passed": true,
+  "registered_avatars": 14,
+  "renderer": "",
+  "scene": "res://scenes/character_roster_review.tscn",
+  "shared_clips": 3,
+  "test_fps": 60
+}

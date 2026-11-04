@@ -1,5 +1,19 @@
 # Prism Route — world and vegetation prototype
 
+## 孤顶教堂性能与玻璃修复 · 2026-11-05
+
+教堂铺装下已清除 43,484 个草实例并重烘焙 12 格；入口视角实测约 19.18 → 12.97 ms。五片玻璃改为通透彩玻璃，教堂原几何与用户树木保留。见 [修复记录、截图与验收](docs/church_performance_1105/README.md)。
+
+**Agent 排障入口：** [场景性能排障指南](docs/SCENE_PERFORMANCE_TROUBLESHOOTING.md)，说明为什么新增建筑不会自动清理旧草缓存、如何定位瓶颈、局部重烘焙与验收。根目录 `AGENTS.md` 也已登记。
+
+## 米家角色两批入库 · 2026-11-04
+
+首批八重神子、雷电将军、芙宁娜、镜流、星见雅，第二批申鹤、夜兰、优菈、丽莎、凝光已完成无武器 VRM 导入、MToon、衣发物理和共享中性动作检查，现有角色共 14 个。
+打开 `scenes/character_roster_review.tscn` 按 F6，或运行 `tools/run_character_roster_review.ps1`。
+沿用同一个检查场景，菜单累计展示两批 10 个新模型；原动作预览器的角色选择包含全部 14 个角色。
+基础动作统一使用正式甘雨的 A01 待机 / A05 步行 / A06 跑步。已修正预览骨盆抵消、A06 骨盆与循环接缝，并将跑步纳入验收；详见 [共享移动动作最终验收](docs/character_locomotion_1104/README.md)。历史共享走路样本不是地图 A05。
+后续模型制作优先参考 [角色批量导入指南](docs/CHARACTER_BATCH_IMPORT_GUIDE.md)，含配置、编码与权重修复、物理链、重建命令和验收边界。
+
 ## 重要制作指南：MMD 动作 → 现有 VRM，2026-11-03
 
 后续转换 MMD 动作优先参考 [MMD → VRM 制作指南](docs/MMD_TO_VRM_PRODUCTION_GUIDE.md)。

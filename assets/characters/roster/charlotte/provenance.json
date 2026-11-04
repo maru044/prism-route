@@ -1,0 +1,19 @@
+{
+  "archive": "D:\\模型\\20261008\\夏洛蒂_by_原神_28f6db1289d34d2cbe869fb3191d79a8.zip",
+  "archive_sha256": "14a7746dc9a6246abe0ce57a84ea36551fe0a428d86b313fc2ca9315a444872f",
+  "body_pmx": "夏洛蒂.pmx",
+  "source_sha256": "ab97eeb35b98592767f60795157f035260c15df129379f8869cb37dcdc964b6e",
+  "pmx_name": "Charlotte",
+  "pmx_english_name": "Avatar_Girl_Catalyst_Charlotte_Model",
+  "pmx_comment": "感谢下载本模型\r\n\r\n◆允许完善物理，修正模型权重、表情等bug\r\n\r\n  允许改色，适度更改衣装，添加spa、toon等\r\n\r\n◆请勿二次配布，以及拆取部件以用于改造其他模型\r\n\r\n  请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n  请勿用于商业用途\r\n\r\n◆他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n◆模型提供：miHoYo\r\n\r\n◆模型改造：观海\r\n\r\n  联系我【BiliBili：观海子】\r\n\r\n◆最终解释权归属：miHoYo\r\n\r\n请遵守本规则使用",
+  "pmx_english_comment": "",
+  "authors": [
+    "miHoYo",
+    "观海"
+  ],
+  "excluded_pmx": [
+    "报纸.pmx",
+    "相机1.pmx",
+    "相机2.pmx"
+  ]
+}

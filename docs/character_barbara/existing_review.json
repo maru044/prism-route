@@ -1,0 +1,16 @@
+{
+  "available_profiles": 15,
+  "catalog": "res://assets/characters/roster/barbara.json",
+  "entry": "shared_walk_all",
+  "failures": [],
+  "models": [
+    {
+      "bones": 283,
+      "id": "barbara",
+      "model": "res://assets/characters/roster/barbara/barbara.vrm",
+      "shared_motion_identity": true,
+      "time": 0.333333333333333
+    }
+  ],
+  "passed": true
+}

@@ -1,0 +1,107 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "firefly",
+      "label": "流萤",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/firefly/firefly.vrm",
+      "model_sha256": "61b493a40fb1e72a785b1c4987b1217f2f1839a59d08611b1f99e173e5f5286f",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—流萤_by_崩坏：星穹铁道_52cc060e67d20048a369c56b1e8c7f38.zip",
+      "source_sha256": "d6a7fb40d774490cd345b04a57e6fc6bd7a9764a93b12fb6b3b32f8cb9ba9b51",
+      "body_pmx": "流萤3.0.pmx",
+      "excluded_pmx": [
+        "武器.pmx",
+        "萨姆变身器.pmx"
+      ],
+      "physics": {
+        "hair_chains": 12,
+        "clothes_chains": 57,
+        "colliders": 12,
+        "joints": 501
+      },
+      "bytes": 53107480
+    },
+    {
+      "id": "ruan_mei",
+      "label": "阮·梅",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/ruan_mei/ruan_mei.vrm",
+      "model_sha256": "78503589e6316c83529acb6e45a0ee077beb02ad43817d3eaf5324654eaf60b2",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—阮·梅_by_崩坏：星穹铁道_b64aceb4f8c7b5172ebb270d771aa979.zip",
+      "source_sha256": "6292fcec0dac8961dcef7afd6285fc270f08a4a3b94738523befe8c67335c5f5",
+      "body_pmx": "阮·梅1.0.pmx",
+      "excluded_pmx": [
+        "花.pmx",
+        "阮.pmx"
+      ],
+      "physics": {
+        "hair_chains": 5,
+        "clothes_chains": 44,
+        "colliders": 12,
+        "joints": 499
+      },
+      "bytes": 51512060
+    },
+    {
+      "id": "black_swan",
+      "label": "黑天鹅",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/black_swan/black_swan.vrm",
+      "model_sha256": "04c321b9272c5613c766193b38f5c1b92832cfd581ebcc197001704a20352cc7",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—黑天鹅_by_崩坏：星穹铁道_3b622dd48a1f96eaec1d8bd246a6ea8b.zip",
+      "source_sha256": "4143bb4128332ff0c5c15c5d4bcc937234b4ea264b2d7f6256af0fea0385bc47",
+      "body_pmx": "星穹铁道—黑天鹅（优化）.pmx",
+      "excluded_pmx": [
+        "黑天鹅占星仪.pmx"
+      ],
+      "physics": {
+        "hair_chains": 14,
+        "clothes_chains": 23,
+        "colliders": 12,
+        "joints": 223
+      },
+      "bytes": 61631388
+    },
+    {
+      "id": "fu_xuan",
+      "label": "符玄",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/fu_xuan/fu_xuan.vrm",
+      "model_sha256": "97d61862e3ee85f899ac3edafce6236dbcae9f8157be9e2eb5449b02822038b2",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—符玄_by_崩坏：星穹铁道_ec490043e06acfd189c43a5d5453c2d4.rar",
+      "source_sha256": "5056064dc1193c81d3988b92580e45801fdc4b09bc931b3ac62edbcd285cfd2f",
+      "body_pmx": "符玄（鞋+发饰补差145cm）(目修).pmx",
+      "excluded_pmx": [
+        "符玄武器.pmx"
+      ],
+      "physics": {
+        "hair_chains": 10,
+        "clothes_chains": 45,
+        "colliders": 12,
+        "joints": 411
+      },
+      "bytes": 67689624
+    },
+    {
+      "id": "tingyun",
+      "label": "停云",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/tingyun/tingyun.vrm",
+      "model_sha256": "2984e6abc7d3445aa6a0466f428e40fc65f5ac7f5e12a0802b9f7425a9dff827",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—停云_by_崩坏：星穹铁道_525d6d14250e3035b366d8ef6a456906.rar",
+      "source_sha256": "ff4059992ab4f76b121024b435d7bd825ee2f33bc47cf93ef6f4e0ef2fafcd10",
+      "body_pmx": "停云.pmx",
+      "excluded_pmx": [
+        "停云武器.pmx"
+      ],
+      "physics": {
+        "hair_chains": 7,
+        "clothes_chains": 59,
+        "colliders": 12,
+        "joints": 388
+      },
+      "bytes": 66733168
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "captures": [
+    "waterfront_game",
+    "east_game",
+    "west_game"
+  ],
+  "effective_trees": 19328,
+  "failures": [],
+  "global_bake_valid": true,
+  "grass_bytes_checked": 75202815,
+  "grass_cells": 621,
+  "max_grass_root_error_m": 0.00000762939453125,
+  "passed": true,
+  "root_samples": 260,
+  "scene": "res://scenes/map_1021.tscn"
+}

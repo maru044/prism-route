@@ -1,0 +1,131 @@
+{
+  "date": "2026-11-04",
+  "batch": "second_batch",
+  "scene": "res://scenes/character_roster_review.tscn",
+  "new_test_scenes": 0,
+  "models": 5,
+  "registered_avatars": 14,
+  "roster_preview_models": 10,
+  "remaining_models": 36,
+  "vrm_bytes": 175586100,
+  "source_archives_unchanged": true,
+  "source_pmx_unchanged": true,
+  "existing_nine_vrms_unchanged": true,
+  "shared_motions_unchanged": true,
+  "all_model_sha256": [
+    {
+      "id": "keqing",
+      "sha256": "46b7f282b78fd72b585207251c3be12bc8f8bc8f2a3b24c07698dec395d3ff01"
+    },
+    {
+      "id": "ganyu",
+      "sha256": "03f292d54cb40da06c219e3b35e0b300e8f8b46de8f1e9bc0b13685b99279b72"
+    },
+    {
+      "id": "hutao",
+      "sha256": "a62ad4f384cc03f0b70937c5f9720036f98b8c5fed8ca6cb9a735a5ec07ab915"
+    },
+    {
+      "id": "huahuo",
+      "sha256": "60075651511ad4e94717c7c7cf56c663e19dc7cc81d2c8bf04a4e1b479d26108"
+    },
+    {
+      "id": "yae_miko",
+      "sha256": "d2bef2d58fa7ce3ee9cf6f64071f3134efa2c5dbe4f60499b64c6cc76bef0a5a"
+    },
+    {
+      "id": "raiden_shogun",
+      "sha256": "ed31d5e1cd901844fd5b414ba92e81fa7d19a2514d6e48cd287197913f25fe25"
+    },
+    {
+      "id": "furina",
+      "sha256": "fa6342f37020251a94811bddf412ebb797ee2c8f65bdb0bcf4f5669e5e3ccad4"
+    },
+    {
+      "id": "jingliu",
+      "sha256": "6444fcd63a195249a5eb5f2a581a1aabbd3e791ede266c5fb616c13ef4cde927"
+    },
+    {
+      "id": "miyabi",
+      "sha256": "40817605ce1419c978a13276e7030c7497d3457cce4927be2743c33dcdc88bbe"
+    },
+    {
+      "id": "shenhe",
+      "sha256": "306666c2ce1e4fa3eceae3849191c6af084f77ac7cddec2d419d48818d10c82d"
+    },
+    {
+      "id": "yelan",
+      "sha256": "be769aa2d1bd8eacd44ebb54ce88f03c53860206b1fb0481691e411076d2a67d"
+    },
+    {
+      "id": "eula",
+      "sha256": "cdacab2b07b679f5a05c3689b06aeb6ef3761ad1dda407da7917ad920355dd4b"
+    },
+    {
+      "id": "lisa",
+      "sha256": "d54367a1da7c3ca089f24dfce6977d3c92432679ce59f01fc054d81c131b3698"
+    },
+    {
+      "id": "ningguang",
+      "sha256": "c2b4cb15d74a74cc02d9f776651dfbac606f8b2b68b65462fd6a5b5636a0650b"
+    }
+  ],
+  "motion_sources": [
+    {
+      "id": "idle",
+      "label": "地图待机 · A01",
+      "resource": "res://assets/characters/roster/motions/shared_world_A01.tres",
+      "formal_id": "A01",
+      "formal_resource": "res://assets/characters/motion_review/A01.tres",
+      "formal_source_sha256": "a5adab20fa25e2e5b63c62070ce1efda7112469faf234283d8320eda261259f5",
+      "npc_enabled": true
+    },
+    {
+      "id": "walk",
+      "label": "地图步行 · A05",
+      "resource": "res://assets/characters/roster/motions/shared_world_A05.tres",
+      "formal_id": "A05",
+      "formal_resource": "res://assets/characters/motion_review/A05.tres",
+      "formal_source_sha256": "7d83ebc95d586f90001b2ee2b3176002ebe566ff45318098c18dfb68c89929eb",
+      "npc_enabled": true
+    },
+    {
+      "id": "run",
+      "label": "地图跑步 · A06（暂不验收）",
+      "resource": "res://assets/characters/roster/motions/shared_world_A06.tres",
+      "formal_id": "A06",
+      "formal_resource": "res://assets/characters/motion_review/A06.tres",
+      "formal_source_sha256": "dd763d9bfde9f5c47ae75ca88db34d6eb2ebb044c4d86979f524caebadd0ae08",
+      "npc_enabled": false,
+      "status": "deferred_npc_not_required"
+    }
+  ],
+  "reports": {
+    "runtime.json": {
+      "passed": true,
+      "sha256": "6ad32b72b4f06f4d5ecada1c6f1556a839d5ee6a9fadf6b055ca1ebcab2def5e"
+    },
+    "cumulative/runtime.json": {
+      "passed": true,
+      "sha256": "1905c1cbf12c5283db56c7560253cce8b2fbdbe6a6ec324dcc6ee526ed4fcaac"
+    },
+    "existing_review.json": {
+      "passed": true,
+      "sha256": "088379cf612a5a7ba21ac2fe409e69406730b32635823aee286fcfb0fea89d7b"
+    },
+    "visual.json": {
+      "passed": true,
+      "sha256": "607017e6c6e2989d7a71c2e29616dfc01209e905a452483c6c29d5fa6ea058d2"
+    },
+    "visual_walk.json": {
+      "passed": true,
+      "sha256": "a730f6821210e765823c24a7a2793a2b10772d02a2a0ddd91eb2c1f07d21c6ed"
+    },
+    "visual_rigid.json": {
+      "passed": true,
+      "sha256": "a96030042c73c570ceb45867cf5a993edc03e2becb409b027416248713f04508"
+    }
+  },
+  "current_locomotion_acceptance": "res://docs/character_locomotion_1104/acceptance.json",
+  "import_snapshot_note": "Import-time reports precede final preview pelvis/wrap correction; current locomotion quality is recorded in character_locomotion_1104."
+}

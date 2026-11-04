@@ -1,0 +1,37 @@
+{
+  "replaced_ids": [
+    "0808d32c-6ebc-4105-9258-a0f755ac2752"
+  ],
+  "repair": {
+    "road_fit_error_m": 0.0006756583295413066,
+    "xy_unchanged": true,
+    "overlap_fit_error_m": 0.0047725962962559265,
+    "native_overlap_error_m": 0.0022423338459631736,
+    "native_overlap_samples": 940,
+    "support_clearance_m": 0.019154067089694138,
+    "changed_id": "0808d32c-6ebc-4105-9258-a0f755ac2752",
+    "full_match_last_m": 18.0,
+    "transition_length_m": 55.0,
+    "original_overlap_step_m": 0.7441849889751566,
+    "changed_ids": [
+      "0808d32c-6ebc-4105-9258-a0f755ac2752"
+    ],
+    "original_actual_overlap_step_m": 0.6031172762692734,
+    "far_geometry_error_m": 1.4065157110574797e-12,
+    "max_z_correction_m": 0.8272478484301118,
+    "xy_error_m": 1.4062285205060312e-12
+  },
+  "objects": [
+    {
+      "id": "0808d32c-6ebc-4105-9258-a0f755ac2752",
+      "normal_offset": 458256,
+      "name": "艺术桥_保留实际路面与两端接点",
+      "vertex_count": 13257,
+      "index_count": 74793,
+      "kind": "Road",
+      "offset": 0,
+      "collision": true
+    }
+  ],
+  "source": "D:\\Prism Route\\map\\map_current.3dm"
+}

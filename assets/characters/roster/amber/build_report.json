@@ -1,0 +1,166 @@
+{
+  "id": "amber",
+  "label": "安柏",
+  "vertices": 31405,
+  "bones": 208,
+  "morphs": 47,
+  "materials": 8,
+  "alpha": [
+    {
+      "name": "眼白",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "脸",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "眼睛",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "皮肤",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "衣服",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "头发",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "头饰",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "表情",
+      "mode": "MASK",
+      "min_alpha": 0,
+      "max_alpha": 255,
+      "transparent_fraction": 0.6555443481377221,
+      "partial_fraction": 0.18069311938404803,
+      "middle_fraction": 0.08159224973338228
+    }
+  ],
+  "physics": {
+    "hair_chains": 2,
+    "clothes_chains": 1,
+    "colliders": 12,
+    "joints": 19
+  },
+  "source_sha256": "a766b867836bc34ce04289e06d39d16dad82bf8089d9e6c77204ed75d748f8c2",
+  "source_unchanged": true,
+  "max_weight_total_error": 2.9802322387695312e-08,
+  "foot_test": {
+    "bone": "足首.L",
+    "angle_deg": 25,
+    "moved_vertices_over_0_1mm": 1092,
+    "max_displacement_m": 0.061930031458193174
+  },
+  "helper_links": [
+    [
+      "足D.L",
+      "足.L"
+    ],
+    [
+      "ひざD.L",
+      "ひざ.L"
+    ],
+    [
+      "足首D.L",
+      "足首.L"
+    ],
+    [
+      "足D.R",
+      "足.R"
+    ],
+    [
+      "ひざD.R",
+      "ひざ.R"
+    ],
+    [
+      "足首D.R",
+      "足首.R"
+    ]
+  ],
+  "chains": [
+    {
+      "group": "Hair",
+      "attachment": "スカート_0_1",
+      "nodes": [
+        "スカート_1_1",
+        "スカート_2_1",
+        "スカート_3_1",
+        "スカート_4_1",
+        "スカート_5_1",
+        "スカート_6_1",
+        "スカート_7_1",
+        "スカート_8_1"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "tf_0_1",
+      "nodes": [
+        "tf_1_1",
+        "tf_2_1",
+        "tf_3_1",
+        "tf_4_1",
+        "tf_5_1",
+        "tf_6_1",
+        "tf_7_1",
+        "tf_8_1"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "+LegBagS L A03",
+      "nodes": [
+        "+LegBagS L A04",
+        "+LegBagS L A05",
+        "+LegBagS L A06"
+      ]
+    }
+  ],
+  "mesh_binary_preserved": true,
+  "output_sha256": "6febfd0d5562001f329a7aba90c28b407312c763073711ce82ce755f47981c87",
+  "mesh_binary_sha256": "6c420c723f21e120928e965f6812a839dde2e2d49de8272614b5f85689fa10a1",
+  "alpha_method": "UV triangle coverage on RGBA texture thumbnails with maximum edge 1024; material factor alpha preserved; validated in Godot."
+}

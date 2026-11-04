@@ -1,0 +1,206 @@
+{
+  "id": "mona",
+  "label": "莫娜",
+  "vertices": 16024,
+  "bones": 242,
+  "morphs": 43,
+  "materials": 11,
+  "alpha": [
+    {
+      "name": "脸",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "眼白",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "眼睛",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "皮肤",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "头发",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "帽子",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "腿饰",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "背饰",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "衣服",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "背带",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "表情",
+      "mode": "MASK",
+      "min_alpha": 0,
+      "max_alpha": 255,
+      "transparent_fraction": 0.6555443481377221,
+      "partial_fraction": 0.18069311938404803,
+      "middle_fraction": 0.08159224973338228
+    }
+  ],
+  "physics": {
+    "hair_chains": 2,
+    "clothes_chains": 2,
+    "colliders": 12,
+    "joints": 26
+  },
+  "source_sha256": "a28b00a60392ab666b295e9b3f3336e16ca44923076668639bed19a485620ecb",
+  "source_unchanged": true,
+  "max_weight_total_error": 0.0,
+  "foot_test": {
+    "bone": "足首.L",
+    "angle_deg": 25,
+    "moved_vertices_over_0_1mm": 435,
+    "max_displacement_m": 0.06580949640157391
+  },
+  "helper_links": [
+    [
+      "足D.L",
+      "足.L"
+    ],
+    [
+      "ひざD.L",
+      "ひざ.L"
+    ],
+    [
+      "足首D.L",
+      "足首.L"
+    ],
+    [
+      "足D.R",
+      "足.R"
+    ],
+    [
+      "ひざD.R",
+      "ひざ.R"
+    ],
+    [
+      "足首D.R",
+      "足首.R"
+    ]
+  ],
+  "chains": [
+    {
+      "group": "Hair",
+      "attachment": "+HairS R M01",
+      "nodes": [
+        "+HairS R M02",
+        "+HairS R M03",
+        "+HairS R M04",
+        "+HairS R M05"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "+HairS L M01",
+      "nodes": [
+        "+HairS L M02",
+        "+HairS L M03",
+        "+HairS L M04",
+        "+HairS L M05"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "bs_0_1",
+      "nodes": [
+        "bs_1_1",
+        "bs_2_1",
+        "bs_3_1",
+        "bs_4_1",
+        "bs_5_1",
+        "bs_6_1",
+        "bs_7_1",
+        "bs_8_1",
+        "bs_9_1"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "bs_0_2",
+      "nodes": [
+        "bs_1_2",
+        "bs_2_2",
+        "bs_3_2",
+        "bs_4_2",
+        "bs_5_2",
+        "bs_6_2",
+        "bs_7_2",
+        "bs_8_2",
+        "bs_9_2"
+      ]
+    }
+  ],
+  "mesh_binary_preserved": true,
+  "output_sha256": "c3767fe481a2c34afd18188828b34f3445bf62b4a5bc0f6c6d1acc164217b534",
+  "mesh_binary_sha256": "630b9a7bf0f1e507111c2af5203d8f0b8282d98693c1b3aaba02078da3a3c5f4",
+  "alpha_method": "UV triangle coverage on RGBA texture thumbnails with maximum edge 1024; material factor alpha preserved; validated in Godot."
+}

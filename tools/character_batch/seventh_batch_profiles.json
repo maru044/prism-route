@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "huohuo",
+      "label": "藿藿",
+      "game": "崩坏：星穹铁道",
+      "archive_glob": "*藿藿*.zip",
+      "body_pmx": "藿藿4.0.pmx",
+      "zip_encoding": "gbk",
+      "physics_prefixes": [
+        "Hair",
+        "Hat",
+        "Armor_",
+        "Tail_",
+        "wt_",
+        "qz_",
+        "ysd"
+      ]
+    },
+    {
+      "id": "qingque",
+      "label": "青雀",
+      "game": "崩坏：星穹铁道",
+      "archive_glob": "*青雀*.rar",
+      "body_pmx": "青雀（分桦）.pmx",
+      "zip_encoding": "utf-8",
+      "physics_prefixes": [
+        "側髪",
+        "馬尾",
+        "dress_",
+        "後結",
+        "袖結帶_",
+        "脖飾蝴蝶結帶_",
+        "裙前穗_",
+        "袖飾",
+        "鞋飾"
+      ],
+      "file_copies": {
+        "星穹铁道—青雀/颜.png": "星穹铁道—青雀/Avatar_Qingque_00_Face_Color.png"
+      }
+    },
+    {
+      "id": "yukong",
+      "label": "驭空",
+      "game": "崩坏：星穹铁道",
+      "archive_glob": "*驭空*.rar",
+      "body_pmx": "星穹铁道—驭空（改5）.pmx",
+      "zip_encoding": "utf-8",
+      "physics_prefixes": [
+        "Hair",
+        "earA_",
+        "尾",
+        "下摆_",
+        "袖_",
+        "围脖",
+        "袖边"
+      ]
+    },
+    {
+      "id": "herta",
+      "label": "黑塔",
+      "game": "崩坏：星穹铁道",
+      "archive_glob": "*黑塔*.zip",
+      "body_pmx": "黑塔.pmx",
+      "zip_encoding": "utf-8",
+      "physics_prefixes": [
+        "hair",
+        "earring",
+        "headwear",
+        "yhf_",
+        "zhf_",
+        "yb_",
+        "zb_",
+        "xbz_",
+        "ywq_",
+        "zwq_",
+        "q_",
+        "zsl",
+        "ysl",
+        "zqyd",
+        "yqyd"
+      ]
+    }
+  ]
+}

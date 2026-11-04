@@ -1,0 +1,175 @@
+{
+  "crossing_scope": "Terrain-to-bank seams, excluding the existing asphalt curb outside the repaired terrain",
+  "failures": [],
+  "max_tree_ground_error_m": 0.04017651081085205,
+  "max_tree_scale_difference": 0.0,
+  "max_tree_xz_difference_m": 0.0,
+  "max_tree_yaw_difference": 0.0,
+  "passed": true,
+  "planting_layout_preserved": true,
+  "protected_resources": 137,
+  "tree_count": 19328,
+  "tree_grounding_tolerance_m": 0.08,
+  "trees_grounded": 439,
+  "unaffected_trees_preserved": true,
+  "walk_scene": "formal world without vegetation trunk collisions",
+  "walks": {
+    "east_patch_forward": {
+      "air_frames": 0,
+      "collisions": [
+        {
+          "normal": "(0.002202, 0.998909, -0.04665)",
+          "position": "(267.9766, 11.92592, -120.8524)",
+          "source": "6ff4660f-d023-461f-a4ac-9f0038a79c6d"
+        },
+        {
+          "normal": "(0.002202, 0.998909, -0.04665)",
+          "position": "(267.9985, 11.92587, -120.8525)",
+          "source": "6ff4660f-d023-461f-a4ac-9f0038a79c6d"
+        }
+      ],
+      "physics_steps": 743,
+      "position": "(268.0034, 11.9291, -120.8639)",
+      "reached": true,
+      "target": "(267.9093, 11.92657, -120.8417)",
+      "unsupported_frames": 0,
+      "waypoint": 49
+    },
+    "east_patch_reverse": {
+      "air_frames": 0,
+      "collisions": [
+        {
+          "normal": "(-0.070323, 0.995503, -0.063464)",
+          "position": "(220.4195, 6.351758, -128.2079)",
+          "source": "9c6e4638-fa65-4d06-b84d-21feb0ab3b1b"
+        },
+        {
+          "normal": "(-0.070323, 0.995503, -0.063464)",
+          "position": "(220.4112, 6.351171, -128.208)",
+          "source": "9c6e4638-fa65-4d06-b84d-21feb0ab3b1b"
+        }
+      ],
+      "physics_steps": 701,
+      "position": "(220.3942, 6.352522, -128.2234)",
+      "reached": true,
+      "target": "(220.4834, 6.354021, -128.2432)",
+      "unsupported_frames": 0,
+      "waypoint": 49
+    },
+    "waterfront_east_forward": {
+      "air_frames": 0,
+      "collisions": [
+        {
+          "normal": "(-0.014768, 0.997755, 0.065324)",
+          "position": "(-115.7034, 1.348308, -573.7085)",
+          "source": "e7a0e133-f284-4cd4-8796-349bb8638efc"
+        },
+        {
+          "normal": "(-0.014768, 0.997755, 0.065324)",
+          "position": "(-115.7034, 1.347618, -573.6979)",
+          "source": "e7a0e133-f284-4cd4-8796-349bb8638efc"
+        }
+      ],
+      "physics_steps": 599,
+      "position": "(-115.707, 1.349141, -573.6821)",
+      "reached": true,
+      "target": "(-115.7223, 1.353528, -573.7925)",
+      "unsupported_frames": 0,
+      "waypoint": 42
+    },
+    "waterfront_east_reverse": {
+      "air_frames": 0,
+      "collisions": [
+        {
+          "normal": "(-0.000297, 0.99997, -0.007703)",
+          "position": "(-109.4023, 2.475734, -614.3688)",
+          "source": "1da83a02-adcc-4ab8-9e5b-0beafdabdb96"
+        },
+        {
+          "normal": "(-0.000297, 0.99997, -0.007703)",
+          "position": "(-109.4023, 2.475568, -614.3903)",
+          "source": "1da83a02-adcc-4ab8-9e5b-0beafdabdb96"
+        }
+      ],
+      "physics_steps": 603,
+      "position": "(-109.4024, 2.479046, -614.3965)",
+      "reached": true,
+      "target": "(-109.385, 2.47627, -614.2997)",
+      "unsupported_frames": 0,
+      "waypoint": 42
+    },
+    "waterfront_west_forward": {
+      "air_frames": 0,
+      "collisions": [
+        {
+          "normal": "(-0.006267, 0.997824, 0.065628)",
+          "position": "(-230.4523, 0.724786, -581.233)",
+          "source": "e7a0e133-f284-4cd4-8796-349bb8638efc"
+        },
+        {
+          "normal": "(-0.006267, 0.997824, 0.065628)",
+          "position": "(-230.4524, 0.724081, -581.2223)",
+          "source": "e7a0e133-f284-4cd4-8796-349bb8638efc"
+        }
+      ],
+      "physics_steps": 599,
+      "position": "(-230.4539, 0.725647, -581.2064)",
+      "reached": true,
+      "target": "(-230.4521, 0.730825, -581.3248)",
+      "unsupported_frames": 0,
+      "waypoint": 42
+    },
+    "waterfront_west_reverse": {
+      "air_frames": 0,
+      "collisions": [
+        {
+          "normal": "(-0.006369, 0.994545, 0.104114)",
+          "position": "(-230.8183, 2.250558, -622.3883)",
+          "source": "1da83a02-adcc-4ab8-9e5b-0beafdabdb96"
+        },
+        {
+          "normal": "(-0.006369, 0.994545, 0.104114)",
+          "position": "(-230.8183, 2.25183, -622.4005)",
+          "source": "1da83a02-adcc-4ab8-9e5b-0beafdabdb96"
+        }
+      ],
+      "physics_steps": 604,
+      "position": "(-230.8198, 2.256388, -622.398)",
+      "reached": true,
+      "target": "(-230.8211, 2.243711, -622.3231)",
+      "unsupported_frames": 0,
+      "waypoint": 42
+    },
+    "west_apron_forward": {
+      "air_frames": 0,
+      "collisions": [],
+      "physics_steps": 707,
+      "position": "(-1121.806, 1.858817, 25.0)",
+      "reached": true,
+      "target": "(-1121.935, 1.883318, 25.0)",
+      "unsupported_frames": 0,
+      "waypoint": 50
+    },
+    "west_apron_reverse": {
+      "air_frames": 0,
+      "collisions": [
+        {
+          "normal": "(0.155282, 0.987842, 0.007425)",
+          "position": "(-1171.083, 10.16436, 24.99877)",
+          "source": "f81baad1-a64c-48e0-a17f-f3a3c620659a"
+        },
+        {
+          "normal": "(0.155282, 0.987842, 0.007425)",
+          "position": "(-1171.093, 10.16597, 24.9988)",
+          "source": "f81baad1-a64c-48e0-a17f-f3a3c620659a"
+        }
+      ],
+      "physics_steps": 758,
+      "position": "(-1171.083, 10.17112, 25.0006)",
+      "reached": true,
+      "target": "(-1171.0, 10.15134, 25.0)",
+      "unsupported_frames": 0,
+      "waypoint": 50
+    }
+  }
+}

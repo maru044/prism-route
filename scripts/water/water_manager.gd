@@ -8,6 +8,9 @@ const SSR := preload("res://assets/water/water_ssr_opaque.gdshader")
 const OLD := preload("res://assets/world/map_1012_test/water.gdshader")
 const SKY_TEXTURE := preload("res://assets/environment/sky/fresh_cumulus_panorama_v2.png")
 const REFLECTION_LAYER := 1 << 19
+const VISIBILITY_INTERVAL := 0.25
+const VISIBILITY_MOVE_SQUARED := 1.0
+const VISIBILITY_BUDGET_USEC := 400
 enum Style { ORIGINAL, SKY, PLANAR, NATIVE_SSR }
 var style := Style.PLANAR
 var clock := 0.0
@@ -32,6 +35,17 @@ var sky_yaw := deg_to_rad(84.4)
 var reflection_radius := 240.0
 var wind_override := -1.0
 var reflection_materials: Dictionary = {}
+var _proxies_by_source: Dictionary = {}
+var _dynamic_proxies: Dictionary = {}
+var _dirty_proxies: Dictionary = {}
+var _visibility_pass: Array[Dictionary] = []
+var _visibility_cursor := 0
+var _visibility_position := Vector3.ZERO
+var _visibility_radius := -1.0
+var _visibility_invalid := true
+var visibility_passes := 0
+var visibility_scanned := 0
+var last_update_usec := 0
 
 func initialize(environment: Environment, get_actor: Callable, get_camera: Callable = Callable()) -> void:
 	main_environment = environment
@@ -103,12 +117,12 @@ func register_reflector(source: MeshInstance3D, color: Color, leaf: Texture2D = 
 	add_child(proxy)
 	proxy.global_transform = source.global_transform
 	proxy.visible = false
-	proxy_records.append({"source":source,"proxy":proxy,"bounds":source.global_transform * source.get_aabb()})
+	_track_proxy(source,proxy,false)
 
 func refresh_reflector_material(source: MeshInstance3D) -> void:
 	# A reversible surface trial may change the source override or its uniforms.
-	for record: Dictionary in proxy_records:
-		if record.source!=source:continue
+	var record: Dictionary = _proxies_by_source.get(source.get_instance_id(),{})
+	if not record.is_empty():
 		var color:=Color("e8e4da")
 		var original:=source.material_override as ShaderMaterial
 		if original!=null:
@@ -175,7 +189,82 @@ func register_tree_nodes(sources: Array,dynamic:=false) -> void:
 		add_child(proxy)
 		proxy.global_transform = source.global_transform
 		proxy.visible = false
-		proxy_records.append({"source":source,"proxy":proxy,"bounds":source.global_transform * source.get_aabb(),"dynamic_tree":dynamic})
+		_track_proxy(source,proxy,dynamic)
+
+func _track_proxy(source: GeometryInstance3D, proxy: GeometryInstance3D, dynamic: bool) -> void:
+	var id := source.get_instance_id()
+	# Factories may register a visual again after reparenting or refreshing it.
+	if _proxies_by_source.has(id):_remove_proxy(id)
+	var record := {"source":source,"proxy":proxy,"bounds":source.global_transform * source.get_aabb(),
+		"dynamic_tree":dynamic,"source_visible":source.is_visible_in_tree(),"visible":false,
+		"transform":source.global_transform,"alive":true,"index":proxy_records.size()}
+	proxy_records.append(record);_proxies_by_source[id]=record
+	if dynamic:_dynamic_proxies[id]=record
+	_dirty_proxies[id]=true
+	source.tree_exiting.connect(_remove_proxy.bind(id))
+	source.visibility_changed.connect(_source_visibility_changed.bind(id))
+
+func _remove_proxy(id: int) -> void:
+	var record: Dictionary = _proxies_by_source.get(id,{})
+	if record.is_empty():return
+	# A visibility pass can still hold this dictionary. Tombstone it before
+	# freeing nodes so that no deferred pass ever touches a freed instance.
+	record.alive=false
+	var source: Variant = record.source
+	if is_instance_valid(source):
+		source.tree_exiting.disconnect(_remove_proxy.bind(id))
+		source.visibility_changed.disconnect(_source_visibility_changed.bind(id))
+	if record.visible:reflected_objects-=1
+	if is_instance_valid(record.proxy):
+		record.proxy.hide();record.proxy.queue_free()
+	var index: int = record.index
+	var last: Dictionary = proxy_records.back()
+	proxy_records[index]=last;last.index=index;proxy_records.pop_back()
+	_proxies_by_source.erase(id);_dynamic_proxies.erase(id);_dirty_proxies.erase(id)
+
+func _source_visibility_changed(id: int) -> void:
+	var record: Dictionary = _proxies_by_source.get(id,{})
+	if record.is_empty():return
+	record.source_visible=record.source.is_visible_in_tree()
+	if not record.source_visible:_set_proxy_visible(record,false)
+	_dirty_proxies[id]=true
+
+func _set_proxy_visible(record: Dictionary, enabled: bool) -> void:
+	if record.visible!=enabled:
+		reflected_objects+=1 if enabled else -1
+		record.visible=enabled
+	if record.proxy.visible!=enabled:record.proxy.visible=enabled
+
+func _check_proxy_visibility(record: Dictionary, eye: Vector3) -> void:
+	if not record.alive:return
+	var box: AABB = record.bounds
+	var radius := reflection_radius + (20.0 if record.visible else 0.0)
+	_set_proxy_visible(record,record.source_visible and eye.distance_squared_to(eye.clamp(box.position,box.end)) < radius*radius)
+	visibility_scanned+=1
+
+func _update_proxy_visibility(eye: Vector3, delta: float) -> void:
+	visibility_scanned=0
+	# Explicit invalidation also preserves the existing diagnostic force-refresh.
+	var forced := visibility_clock>=1.0 or _visibility_invalid or _visibility_radius!=reflection_radius
+	visibility_clock=minf(visibility_clock+delta,VISIBILITY_INTERVAL)
+	for id: int in _dirty_proxies:
+		_check_proxy_visibility(_proxies_by_source[id],eye)
+	_dirty_proxies.clear()
+	if _visibility_cursor>=_visibility_pass.size():
+		var moved := eye.distance_squared_to(_visibility_position)>=VISIBILITY_MOVE_SQUARED
+		if not forced and not (moved and visibility_clock>=VISIBILITY_INTERVAL):return
+		_visibility_pass=proxy_records.duplicate();_visibility_cursor=0
+		_visibility_position=eye;_visibility_radius=reflection_radius
+		_visibility_invalid=false;visibility_clock=0.0;visibility_passes+=1
+	# Mirror camera rendering remains continuous. Only distance bookkeeping is
+	# spread across frames, retaining the original radius and 20 m hysteresis.
+	var start := Time.get_ticks_usec()
+	while _visibility_cursor<_visibility_pass.size():
+		_check_proxy_visibility(_visibility_pass[_visibility_cursor],eye)
+		_visibility_cursor+=1
+		if _visibility_cursor%32==0 and Time.get_ticks_usec()-start>=VISIBILITY_BUDGET_USEC:break
+	if _visibility_cursor>=_visibility_pass.size():
+		_visibility_pass.clear();_visibility_cursor=0
 
 func apply_style(value: int) -> void:
 	style = clampi(value,Style.ORIGINAL,Style.NATIVE_SSR)
@@ -186,8 +275,8 @@ func apply_style(value: int) -> void:
 	if reflection != null and style != Style.PLANAR:
 		reflection.render_target_update_mode = SubViewport.UPDATE_DISABLED
 		reflection_weight = 0.0
-		reflected_objects = 0
-		for row: Dictionary in proxy_records:row.proxy.hide()
+		for row: Dictionary in proxy_records:_set_proxy_visible(row,false)
+	_visibility_pass.clear();_visibility_cursor=0;_visibility_invalid=true
 	visibility_clock = 1.0
 
 func active_camera() -> Camera3D:
@@ -195,14 +284,14 @@ func active_camera() -> Camera3D:
 	return get_viewport().get_camera_3d()
 
 func _update_tree_proxies() -> void:
-	# Editor handles can be replaced by undo, region changes or play-mode apply.
-	for i in range(proxy_records.size()-1,-1,-1):
-		var record: Dictionary=proxy_records[i]
-		if not is_instance_valid(record.source) or not record.source.is_inside_tree():
-			record.proxy.queue_free();proxy_records.remove_at(i)
-		elif record.get("dynamic_tree",false):
-			record.proxy.global_transform=record.source.global_transform
-			record.bounds=record.source.global_transform*record.source.get_aabb()
+	# Static records use exit/visibility signals. Only editor-owned visuals can
+	# move, rotate or scale; unchanged dynamic transforms need no native writes.
+	for id: int in _dynamic_proxies:
+		var record: Dictionary = _dynamic_proxies[id]
+		var transform: Transform3D = record.source.global_transform
+		if transform==record.transform:continue
+		record.transform=transform;record.proxy.global_transform=transform
+		record.bounds=transform*record.source.get_aabb();_dirty_proxies[id]=true
 
 func _physics_process(delta: float) -> void:
 	if not interactions_enabled or style in [Style.ORIGINAL,Style.NATIVE_SSR]:
@@ -212,12 +301,15 @@ func _physics_process(delta: float) -> void:
 	interaction.tick(actor,clock,delta,get_world_3d().direct_space_state)
 
 func _process(delta: float) -> void:
+	var update_start := Time.get_ticks_usec()
 	_update_tree_proxies()
 	clock += delta
 	interaction.expire(clock)
 	wind_strength = wind_override if wind_override >= 0.0 else (float(wind_source.get("blend")) if is_instance_valid(wind_source) else 0.0)
 	var camera := active_camera()
-	if camera == null or reflection == null:return
+	if camera == null or reflection == null:
+		last_update_usec=Time.get_ticks_usec()-update_start
+		return
 	# Never change which camera the main viewport/vegetation streamer considers active.
 	camera.cull_mask &= ~REFLECTION_LAYER
 	var wants_mirror := style == Style.PLANAR and camera.global_position.y > 0.06 and camera.global_position.y < 260.0
@@ -258,15 +350,7 @@ func _process(delta: float) -> void:
 		if up.y < 0.0:up = -up
 		mirror_camera.global_position = eye
 		mirror_camera.look_at(eye+forward,up)
-		visibility_clock += delta
-		if visibility_clock >= 0.25:
-			visibility_clock = 0.0
-			reflected_objects = 0
-			for row: Dictionary in proxy_records:
-				var box: AABB = row.bounds
-				var distance := camera.global_position.distance_to(camera.global_position.clamp(box.position,box.end))
-				row.proxy.visible = row.source.is_visible_in_tree() and distance < reflection_radius + (20.0 if row.proxy.visible else 0.0)
-				if row.proxy.visible:reflected_objects += 1
+		_update_proxy_visibility(camera.global_position,delta)
 		reflection_gpu_ms = RenderingServer.viewport_get_measured_render_time_gpu(reflection.get_viewport_rid())
 	else:reflection_gpu_ms = 0.0
 	var vp := mirror_camera.get_camera_projection() * Projection(mirror_camera.global_transform.affine_inverse())
@@ -285,6 +369,7 @@ func _process(delta: float) -> void:
 		material.set_shader_parameter("event_count",events.size())
 		events.resize(INTERACTION.MAX_EVENTS)
 		material.set_shader_parameter("ripple_events",events)
+	last_update_usec=Time.get_ticks_usec()-update_start
 
 func _input(event: InputEvent) -> void:
 	# Let the existing actor controllers still handle these keys themselves.
@@ -296,7 +381,10 @@ func metrics() -> Dictionary:
 	return {"style":style,"wind":wind_strength,"events":interaction.events.size(),"emitted":interaction.emitted,
 		"reflection_gpu_ms":reflection_gpu_ms,"reflection_size":[reflection.size.x,reflection.size.y],
 		"reflection_objects":reflected_objects,"reflection_active":reflection.render_target_update_mode != SubViewport.UPDATE_DISABLED,
-		"reflection_weight":reflection_weight,"bodies":bodies.size(),"clock":clock}
+		"reflection_weight":reflection_weight,"bodies":bodies.size(),"clock":clock,
+		"cpu_ms":last_update_usec/1000.0,"proxy_records":proxy_records.size(),"dynamic_proxies":_dynamic_proxies.size(),
+		"visibility_passes":visibility_passes,"visibility_scanned":visibility_scanned,
+		"visibility_pending":_visibility_pass.size()-_visibility_cursor}
 
 func _exit_tree() -> void:
 	if main_environment != null:main_environment.ssr_enabled = original_ssr

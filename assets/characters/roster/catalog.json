@@ -1,0 +1,837 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "yae_miko",
+      "label": "八重神子",
+      "game": "原神",
+      "model": "res://assets/characters/roster/yae_miko/yae_miko.vrm",
+      "model_sha256": "d2bef2d58fa7ce3ee9cf6f64071f3134efa2c5dbe4f60499b64c6cc76bef0a5a",
+      "source_archive": "D:\\模型\\20261008\\模之屋【八重神子】_by_原神_b9696a3134514f269ccb9003230bfe45.zip",
+      "source_sha256": "77d7fdb8f36abdfd01cc6a1fb7c38645ef40885a556987e9181844f3552f3423",
+      "body_pmx": "八重神子.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 7,
+        "clothes_chains": 19,
+        "colliders": 12,
+        "joints": 265
+      },
+      "bytes": 49365332
+    },
+    {
+      "id": "raiden_shogun",
+      "label": "雷电将军",
+      "game": "原神",
+      "model": "res://assets/characters/roster/raiden_shogun/raiden_shogun.vrm",
+      "model_sha256": "ed31d5e1cd901844fd5b414ba92e81fa7d19a2514d6e48cd287197913f25fe25",
+      "source_archive": "D:\\模型\\20261008\\【模之屋】雷电将军_by_原神_535ff740fe45cbd49822311479d93d94.zip",
+      "source_sha256": "80f12e5db89d3f6b9d43cfdfccc20364e0828d369cb31a9d8e1c56feb680b448",
+      "body_pmx": "雷电将军.pmx",
+      "excluded_pmx": [
+        "武器.pmx"
+      ],
+      "physics": {
+        "hair_chains": 3,
+        "clothes_chains": 22,
+        "colliders": 12,
+        "joints": 156
+      },
+      "bytes": 39847740
+    },
+    {
+      "id": "furina",
+      "label": "芙宁娜",
+      "game": "原神",
+      "model": "res://assets/characters/roster/furina/furina.vrm",
+      "model_sha256": "fa6342f37020251a94811bddf412ebb797ee2c8f65bdb0bcf4f5669e5e3ccad4",
+      "source_archive": "D:\\模型\\20261008\\【芙宁娜】_by_原神_dd7a8a03e7a7dfa6593053d639fa3025.zip",
+      "source_sha256": "b975976e65769d93a84bc78be865398af3dea6feff14a9c181413552fbae74a1",
+      "body_pmx": "【芙宁娜】.pmx",
+      "excluded_pmx": [
+        "【芙宁娜_荒】.pmx"
+      ],
+      "physics": {
+        "hair_chains": 3,
+        "clothes_chains": 25,
+        "colliders": 12,
+        "joints": 246
+      },
+      "bytes": 56212964
+    },
+    {
+      "id": "jingliu",
+      "label": "镜流",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/jingliu/jingliu.vrm",
+      "model_sha256": "6444fcd63a195249a5eb5f2a581a1aabbd3e791ede266c5fb616c13ef4cde927",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—镜流_by_崩坏：星穹铁道_de62c564ed1d1d2fdbefb3857942a506.zip",
+      "source_sha256": "aed89d3d6e94a9a620621cd6255a6649cca58c5536ee04a0916587c44f3e3431",
+      "body_pmx": "镜流2.0.pmx",
+      "excluded_pmx": [
+        "大剑.pmx",
+        "小剑.pmx",
+        "裙子.pmx"
+      ],
+      "physics": {
+        "hair_chains": 15,
+        "clothes_chains": 23,
+        "colliders": 12,
+        "joints": 295
+      },
+      "bytes": 53729216
+    },
+    {
+      "id": "miyabi",
+      "label": "星见雅",
+      "game": "绝区零",
+      "model": "res://assets/characters/roster/miyabi/miyabi.vrm",
+      "model_sha256": "40817605ce1419c978a13276e7030c7497d3457cce4927be2743c33dcdc88bbe",
+      "source_archive": "D:\\模型\\20261008\\星见雅_by_绝区零_5497f7f98efc5b2a7cb509961638d435.zip",
+      "source_sha256": "56ffc00d398b0a3c5a9340b6357e1089fb468c6879fdead145fc4baceba01b96",
+      "body_pmx": "星见雅.pmx",
+      "excluded_pmx": [
+        "幽灵.pmx",
+        "武器.pmx"
+      ],
+      "physics": {
+        "hair_chains": 9,
+        "clothes_chains": 24,
+        "colliders": 12,
+        "joints": 257
+      },
+      "bytes": 42814724
+    },
+    {
+      "id": "shenhe",
+      "label": "申鹤",
+      "game": "原神",
+      "model": "res://assets/characters/roster/shenhe/shenhe.vrm",
+      "model_sha256": "306666c2ce1e4fa3eceae3849191c6af084f77ac7cddec2d419d48818d10c82d",
+      "source_archive": "D:\\模型\\20261008\\【模之屋】申鹤_by_原神_add938b763d11efe56328b5364e5c826.zip",
+      "source_sha256": "2a175553f6f045a2a208eba1c155832f7e7c9d911853ad61c53d53945e70e0e7",
+      "body_pmx": "申鹤.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 3,
+        "clothes_chains": 5,
+        "colliders": 12,
+        "joints": 73
+      },
+      "bytes": 41804944
+    },
+    {
+      "id": "yelan",
+      "label": "夜兰",
+      "game": "原神",
+      "model": "res://assets/characters/roster/yelan/yelan.vrm",
+      "model_sha256": "be769aa2d1bd8eacd44ebb54ce88f03c53860206b1fb0481691e411076d2a67d",
+      "source_archive": "D:\\模型\\20261008\\【夜兰】_by_原神_99af257187d8989a5ff579c1c6904044.zip",
+      "source_sha256": "4540aa7c38e6e59faa14f1031681c1e87ae380aaa2d5faa71e2f30771ce1cee8",
+      "body_pmx": "夜兰.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 12,
+        "clothes_chains": 25,
+        "colliders": 12,
+        "joints": 199
+      },
+      "bytes": 39574072
+    },
+    {
+      "id": "eula",
+      "label": "优菈",
+      "game": "原神",
+      "model": "res://assets/characters/roster/eula/eula.vrm",
+      "model_sha256": "cdacab2b07b679f5a05c3689b06aeb6ef3761ad1dda407da7917ad920355dd4b",
+      "source_archive": "D:\\模型\\20261008\\优菈_by_原神_339146e6e418d79e85a515b26414c0b0.zip",
+      "source_sha256": "733b271d45a057b7b6c4a56316341002c0fd741ef56043dfe15b8549da49a6b9",
+      "body_pmx": "优菈.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 6,
+        "clothes_chains": 8,
+        "colliders": 12,
+        "joints": 77
+      },
+      "bytes": 36614300
+    },
+    {
+      "id": "lisa",
+      "label": "丽莎",
+      "game": "原神",
+      "model": "res://assets/characters/roster/lisa/lisa.vrm",
+      "model_sha256": "d54367a1da7c3ca089f24dfce6977d3c92432679ce59f01fc054d81c131b3698",
+      "source_archive": "D:\\模型\\20261008\\丽莎_by_原神_17d19b5d32960eb9b71bf04f798b9d4e.zip",
+      "source_sha256": "fdd0bacdce5105b853f64f87bd54c74eedf2d5d68521adf86ed67df116c9ca27",
+      "body_pmx": "丽莎.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 2,
+        "clothes_chains": 22,
+        "colliders": 12,
+        "joints": 255
+      },
+      "bytes": 28496816
+    },
+    {
+      "id": "ningguang",
+      "label": "凝光",
+      "game": "原神",
+      "model": "res://assets/characters/roster/ningguang/ningguang.vrm",
+      "model_sha256": "c2b4cb15d74a74cc02d9f776651dfbac606f8b2b68b65462fd6a5b5636a0650b",
+      "source_archive": "D:\\模型\\20261008\\凝光_by_原神_e4422eb14f2a1d586516c2e3c8d7e6f9.zip",
+      "source_sha256": "088d610d7b8ec7536e0d52d42778039f46de998add1b4ac18691b5e8a2440273",
+      "body_pmx": "凝光.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 5,
+        "clothes_chains": 30,
+        "colliders": 12,
+        "joints": 456
+      },
+      "bytes": 29095968
+    },
+    {
+      "id": "barbara",
+      "label": "芭芭拉",
+      "game": "原神",
+      "model": "res://assets/characters/roster/barbara/barbara.vrm",
+      "model_sha256": "1b78a508460420d435e1e950c385cfad10d9a0bb48fe25a9ea3372030f9c5d6e",
+      "source_archive": "D:\\模型\\20261008\\babala_by_原神_4659bc03ee77144a87040ecb57611d64.rar",
+      "source_sha256": "b9309f9913f4deb1fc03c6f2962337582593cd394145196b89a60f07ca7ccaf5",
+      "body_pmx": "芭芭拉.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 4,
+        "clothes_chains": 14,
+        "colliders": 12,
+        "joints": 154
+      },
+      "bytes": 55215948
+    },
+    {
+      "id": "kafka",
+      "label": "卡芙卡",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/kafka/kafka.vrm",
+      "model_sha256": "6ee34e7739a90d45f88b1524e9e23781574f2e3d960cece00f3780bc9c3ee931",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道-卡芙卡_by_崩坏：星穹铁道_1ceb68a8f0c568ae7ceb3de957173ea8.zip",
+      "source_sha256": "f2394590f915b2280af0f04ad949ed19d7ae42838989f12d23310cb364196394",
+      "body_pmx": "卡芙卡.pmx",
+      "excluded_pmx": [
+        "刀.pmx",
+        "子弹.pmx",
+        "枪白.pmx",
+        "枪黑.pmx"
+      ],
+      "physics": {
+        "hair_chains": 7,
+        "clothes_chains": 37,
+        "colliders": 12,
+        "joints": 313
+      },
+      "bytes": 36802432
+    },
+    {
+      "id": "silver_wolf",
+      "label": "银狼",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/silver_wolf/silver_wolf.vrm",
+      "model_sha256": "e5f65ac9a03e6686cfa640eeca69f5f88d6e27111eafbbd8573e3af9424fdebf",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道——银狼_by_崩坏：星穹铁道_387a60d37309b3b599db7fed0e8a8f8b.zip",
+      "source_sha256": "35fbb8de0482394658cd22d6a6165caece363a9c2fdf52ae807f3bfca7b3f724",
+      "body_pmx": "银狼.pmx",
+      "excluded_pmx": [
+        "炮.pmx"
+      ],
+      "physics": {
+        "hair_chains": 10,
+        "clothes_chains": 23,
+        "colliders": 12,
+        "joints": 250
+      },
+      "bytes": 48369340
+    },
+    {
+      "id": "march7th",
+      "label": "三月七",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/march7th/march7th.vrm",
+      "model_sha256": "a5cbc6be16f6bfcaba6cb946c507aa1de1d0b1e70cb1e1c5dbccba2cfd3823db",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—三月七_by_崩坏：星穹铁道_7bffc09c69039df537f835bfe9d82ed9.zip",
+      "source_sha256": "942aef2af3a465e77c1569369b3c422fdf64f8494cbdf3b529a88c3cc66c13dc",
+      "body_pmx": "三月七 1.0.pmx",
+      "excluded_pmx": [
+        "弓1.0.pmx",
+        "箭1.0.pmx"
+      ],
+      "physics": {
+        "hair_chains": 8,
+        "clothes_chains": 23,
+        "colliders": 12,
+        "joints": 194
+      },
+      "bytes": 40379276
+    },
+    {
+      "id": "bronya",
+      "label": "布洛妮娅",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/bronya/bronya.vrm",
+      "model_sha256": "639554bf30e43f4d67e49492153d6c47d053a58d9abdf2415e8172a5ac90434c",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—布洛妮娅_by_崩坏：星穹铁道_feb5d5c1bb7881e7e1e598027181d4e7.zip",
+      "source_sha256": "5654ac242594f41ba8431f636ee2fd4a06ae9e19653612c5366e243d1ce30344",
+      "body_pmx": "布洛妮娅 1.0.pmx",
+      "excluded_pmx": [
+        "枪.pmx"
+      ],
+      "physics": {
+        "hair_chains": 15,
+        "clothes_chains": 16,
+        "colliders": 12,
+        "joints": 195
+      },
+      "bytes": 55702300
+    },
+    {
+      "id": "seele",
+      "label": "希儿",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/seele/seele.vrm",
+      "model_sha256": "8c0a145175c473d15b6a4b8c5c64efc4d2444c34d67dea527e74421822ef4a89",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—希儿_by_崩坏：星穹铁道_d4521afdb4193191da63173ea7fd73bd.zip",
+      "source_sha256": "dc543444b41b0ce5c234ecfb9ab82804b94e6c85632f7fca11e2b0b5871928e5",
+      "body_pmx": "希儿1.0.pmx",
+      "excluded_pmx": [
+        "镰刀.pmx"
+      ],
+      "physics": {
+        "hair_chains": 12,
+        "clothes_chains": 30,
+        "colliders": 12,
+        "joints": 321
+      },
+      "bytes": 50834788
+    },
+    {
+      "id": "ayaka",
+      "label": "神里绫华",
+      "game": "原神",
+      "model": "res://assets/characters/roster/ayaka/ayaka.vrm",
+      "model_sha256": "4c93c0852c8b518451345ee94a966b8b520217afaa7e4c4990aa8c966eb0ccc5",
+      "source_archive": "D:\\模型\\20261008\\神里绫华-模之屋_by_原神_57919b356c6bdd2aefc1f1e8575521f8.zip",
+      "source_sha256": "28b407fd32a5f70ae7553db60af780cf2df454d6d947bf33af8016cb3ce7cdce",
+      "body_pmx": "神里绫华.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 5,
+        "clothes_chains": 17,
+        "colliders": 12,
+        "joints": 145
+      },
+      "bytes": 35855148
+    },
+    {
+      "id": "nilou",
+      "label": "妮露",
+      "game": "原神",
+      "model": "res://assets/characters/roster/nilou/nilou.vrm",
+      "model_sha256": "1dc34a681eb24d7bd019135a85a23bbeaf829a4147dbd162fc0eaebbe54444e1",
+      "source_archive": "D:\\模型\\20261008\\妮露_by_原神_e1cb5e49f74b603c9c3c269050ce15a4.zip",
+      "source_sha256": "764f60bd149911183ce668f6aa1c48425be62c03516a384b770dc66d13d7e474",
+      "body_pmx": "妮露.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 18,
+        "clothes_chains": 23,
+        "colliders": 12,
+        "joints": 428
+      },
+      "bytes": 48947828
+    },
+    {
+      "id": "kokomi",
+      "label": "珊瑚宫心海",
+      "game": "原神",
+      "model": "res://assets/characters/roster/kokomi/kokomi.vrm",
+      "model_sha256": "3ab9db487ae29f034081a83ea2b7307379f2436c5aba7b3d6119e842110348e0",
+      "source_archive": "D:\\模型\\20261008\\【珊瑚宫心海】_by_原神_32c242c2043da5bac0d24f1b07a2f3f8.zip",
+      "source_sha256": "ec064d4e69aee4d04f92507b4705feab4ace180ec36177474843bdc03bc70a2a",
+      "body_pmx": "珊瑚宫心海.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 6,
+        "clothes_chains": 22,
+        "colliders": 12,
+        "joints": 246
+      },
+      "bytes": 41940792
+    },
+    {
+      "id": "mona",
+      "label": "莫娜",
+      "game": "原神",
+      "model": "res://assets/characters/roster/mona/mona.vrm",
+      "model_sha256": "c3767fe481a2c34afd18188828b34f3445bf62b4a5bc0f6c6d1acc164217b534",
+      "source_archive": "D:\\模型\\20261008\\莫娜_by_原神_b8870c3980f838bd2bca5ea9011e3d63.zip",
+      "source_sha256": "a28b00a60392ab666b295e9b3f3336e16ca44923076668639bed19a485620ecb",
+      "body_pmx": "莫娜1.0.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 2,
+        "clothes_chains": 2,
+        "colliders": 12,
+        "joints": 26
+      },
+      "bytes": 23581812
+    },
+    {
+      "id": "jean",
+      "label": "琴",
+      "game": "原神",
+      "model": "res://assets/characters/roster/jean/jean.vrm",
+      "model_sha256": "ff992da3e8ed9f76c48bddebefd914114ed65b6dcc1b1aa25c59c2de17c5485e",
+      "source_archive": "D:\\模型\\20261008\\琴_by_原神_61c2f285c133b7376c176b9869edafe2.zip",
+      "source_sha256": "f6814bcd259b93a82b6e0c13d274e9bf0079eb92cf02b5f84a40daa9e9779c3f",
+      "body_pmx": "琴.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 3,
+        "clothes_chains": 28,
+        "colliders": 12,
+        "joints": 265
+      },
+      "bytes": 18136588
+    },
+    {
+      "id": "firefly",
+      "label": "流萤",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/firefly/firefly.vrm",
+      "model_sha256": "61b493a40fb1e72a785b1c4987b1217f2f1839a59d08611b1f99e173e5f5286f",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—流萤_by_崩坏：星穹铁道_52cc060e67d20048a369c56b1e8c7f38.zip",
+      "source_sha256": "d6a7fb40d774490cd345b04a57e6fc6bd7a9764a93b12fb6b3b32f8cb9ba9b51",
+      "body_pmx": "流萤3.0.pmx",
+      "excluded_pmx": [
+        "武器.pmx",
+        "萨姆变身器.pmx"
+      ],
+      "physics": {
+        "hair_chains": 12,
+        "clothes_chains": 57,
+        "colliders": 12,
+        "joints": 501
+      },
+      "bytes": 53107480
+    },
+    {
+      "id": "ruan_mei",
+      "label": "阮·梅",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/ruan_mei/ruan_mei.vrm",
+      "model_sha256": "78503589e6316c83529acb6e45a0ee077beb02ad43817d3eaf5324654eaf60b2",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—阮·梅_by_崩坏：星穹铁道_b64aceb4f8c7b5172ebb270d771aa979.zip",
+      "source_sha256": "6292fcec0dac8961dcef7afd6285fc270f08a4a3b94738523befe8c67335c5f5",
+      "body_pmx": "阮·梅1.0.pmx",
+      "excluded_pmx": [
+        "花.pmx",
+        "阮.pmx"
+      ],
+      "physics": {
+        "hair_chains": 5,
+        "clothes_chains": 44,
+        "colliders": 12,
+        "joints": 499
+      },
+      "bytes": 51512060
+    },
+    {
+      "id": "black_swan",
+      "label": "黑天鹅",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/black_swan/black_swan.vrm",
+      "model_sha256": "04c321b9272c5613c766193b38f5c1b92832cfd581ebcc197001704a20352cc7",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—黑天鹅_by_崩坏：星穹铁道_3b622dd48a1f96eaec1d8bd246a6ea8b.zip",
+      "source_sha256": "4143bb4128332ff0c5c15c5d4bcc937234b4ea264b2d7f6256af0fea0385bc47",
+      "body_pmx": "星穹铁道—黑天鹅（优化）.pmx",
+      "excluded_pmx": [
+        "黑天鹅占星仪.pmx"
+      ],
+      "physics": {
+        "hair_chains": 14,
+        "clothes_chains": 23,
+        "colliders": 12,
+        "joints": 223
+      },
+      "bytes": 61631388
+    },
+    {
+      "id": "fu_xuan",
+      "label": "符玄",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/fu_xuan/fu_xuan.vrm",
+      "model_sha256": "97d61862e3ee85f899ac3edafce6236dbcae9f8157be9e2eb5449b02822038b2",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—符玄_by_崩坏：星穹铁道_ec490043e06acfd189c43a5d5453c2d4.rar",
+      "source_sha256": "5056064dc1193c81d3988b92580e45801fdc4b09bc931b3ac62edbcd285cfd2f",
+      "body_pmx": "符玄（鞋+发饰补差145cm）(目修).pmx",
+      "excluded_pmx": [
+        "符玄武器.pmx"
+      ],
+      "physics": {
+        "hair_chains": 10,
+        "clothes_chains": 45,
+        "colliders": 12,
+        "joints": 411
+      },
+      "bytes": 67689624
+    },
+    {
+      "id": "tingyun",
+      "label": "停云",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/tingyun/tingyun.vrm",
+      "model_sha256": "2984e6abc7d3445aa6a0466f428e40fc65f5ac7f5e12a0802b9f7425a9dff827",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—停云_by_崩坏：星穹铁道_525d6d14250e3035b366d8ef6a456906.rar",
+      "source_sha256": "ff4059992ab4f76b121024b435d7bd825ee2f33bc47cf93ef6f4e0ef2fafcd10",
+      "body_pmx": "停云.pmx",
+      "excluded_pmx": [
+        "停云武器.pmx"
+      ],
+      "physics": {
+        "hair_chains": 7,
+        "clothes_chains": 59,
+        "colliders": 12,
+        "joints": 388
+      },
+      "bytes": 66733168
+    },
+    {
+      "id": "yoimiya",
+      "label": "宵宫",
+      "game": "原神",
+      "model": "res://assets/characters/roster/yoimiya/yoimiya.vrm",
+      "model_sha256": "3af659593ad36b4bf335eaa1c23ae651399ae93122ba20ac36ff45860f4495cf",
+      "source_archive": "D:\\模型\\20261008\\【宵宫】_by_原神_e080d489ea2562e9ec8e2da37d3d1290.zip",
+      "source_sha256": "015e668c334d4aa36820f9ca6100656d2824ac1203cc43708f5bb0f1ca115bb7",
+      "body_pmx": "宵宫.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 7,
+        "clothes_chains": 25,
+        "colliders": 12,
+        "joints": 170
+      },
+      "bytes": 38173980
+    },
+    {
+      "id": "yunjin",
+      "label": "云堇",
+      "game": "原神",
+      "model": "res://assets/characters/roster/yunjin/yunjin.vrm",
+      "model_sha256": "72d1b77d4c320be042cbd8342ee5449ee70f16cebaca44e3c9def81ce20c96ed",
+      "source_archive": "D:\\模型\\20261008\\【模之屋】云堇_by_原神_75b1340f08dbb67a6829348136e453c2.zip",
+      "source_sha256": "bb8972aee772b847e7e585ddfb9db505f30d0b46192ae776db8946f9ac7cd12c",
+      "body_pmx": "云堇.pmx",
+      "excluded_pmx": [
+        "花枪.pmx"
+      ],
+      "physics": {
+        "hair_chains": 8,
+        "clothes_chains": 40,
+        "colliders": 12,
+        "joints": 380
+      },
+      "bytes": 41733428
+    },
+    {
+      "id": "fischl",
+      "label": "菲谢尔",
+      "game": "原神",
+      "model": "res://assets/characters/roster/fischl/fischl.vrm",
+      "model_sha256": "008037598fdeb8da2bd2c2cf7321ff57226d6a04e0ee7ccbe9d388c2bf3a2e28",
+      "source_archive": "D:\\模型\\20261008\\菲谢尔_by_原神_a720c397edb9e54a0b1e676eda2ab14e.zip",
+      "source_sha256": "cf3922d7136ddeaf4de9b17080ba8558127885982aa85ede7f7e2d9b93bd7102",
+      "body_pmx": "菲谢尔.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 4,
+        "clothes_chains": 16,
+        "colliders": 12,
+        "joints": 173
+      },
+      "bytes": 42784340
+    },
+    {
+      "id": "noelle",
+      "label": "诺艾尔",
+      "game": "原神",
+      "model": "res://assets/characters/roster/noelle/noelle.vrm",
+      "model_sha256": "cdc49ba54481dd040cacb8e930e48f018dcad9135a2cea934ef15cf6776ad5e0",
+      "source_archive": "D:\\模型\\20261008\\诺艾尔_by_原神_3cccac1569c27994fc57f52955b2ff67.zip",
+      "source_sha256": "150f54b75a835060af8d99280e1895d635f78c8ead164cb8120bd26cb2703031",
+      "body_pmx": "诺艾尔.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 1,
+        "clothes_chains": 12,
+        "colliders": 12,
+        "joints": 171
+      },
+      "bytes": 20359776
+    },
+    {
+      "id": "kuki_shinobu",
+      "label": "久岐忍",
+      "game": "原神",
+      "model": "res://assets/characters/roster/kuki_shinobu/kuki_shinobu.vrm",
+      "model_sha256": "f667241f66488d5f18afad4f6ed708b8ac6833b68e5c78c8c5b36d49859faba8",
+      "source_archive": "D:\\模型\\20261008\\【久岐忍】_by_原神_09d1482901922fa6ce46c659d49bdd2d.zip",
+      "source_sha256": "020f48fa8873ddab0a7f4422ab4150c20865b61c0df1c9cfda06ea3cfd468c12",
+      "body_pmx": "久岐忍.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 6,
+        "clothes_chains": 6,
+        "colliders": 12,
+        "joints": 75
+      },
+      "bytes": 45136968
+    },
+    {
+      "id": "huohuo",
+      "label": "藿藿",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/huohuo/huohuo.vrm",
+      "model_sha256": "cb16b6d6cca294f1098d3b1538fb9ca521165078c460cc703c140588ba44207e",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—藿藿_by_崩坏：星穹铁道_15dfb3da71b4298d58365a853adc2f4b.zip",
+      "source_sha256": "578bc491d03caa93f3ea854ad3727559563ee56f66d63db26b9f6417da106aee",
+      "body_pmx": "藿藿4.0.pmx",
+      "excluded_pmx": [
+        "旗帜.pmx"
+      ],
+      "physics": {
+        "hair_chains": 7,
+        "clothes_chains": 38,
+        "colliders": 12,
+        "joints": 330
+      },
+      "bytes": 46133504
+    },
+    {
+      "id": "qingque",
+      "label": "青雀",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/qingque/qingque.vrm",
+      "model_sha256": "e3a1120388ad2f8621a11b9f63df911cfaa18db48c293f0d11cc9f4d66e0dfc7",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—青雀_by_崩坏：星穹铁道_45b6bdd31eed3a0c16d407289f9c92de.rar",
+      "source_sha256": "ab5e739c2bbd0fdeaecf8890a5c223c9db20bdc8e8fb9331d01962d4724ecab8",
+      "body_pmx": "青雀（分桦）.pmx",
+      "excluded_pmx": [
+        "武器（青雀）.pmx"
+      ],
+      "physics": {
+        "hair_chains": 7,
+        "clothes_chains": 25,
+        "colliders": 12,
+        "joints": 182
+      },
+      "bytes": 52871104
+    },
+    {
+      "id": "yukong",
+      "label": "驭空",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/yukong/yukong.vrm",
+      "model_sha256": "c1a57ce116fa13c4becea664fc8698cd8c3936c0d9ee37b89083051ec57abff8",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—驭空_by_崩坏：星穹铁道_a8a159f08377fb26b2df638509e5204c.rar",
+      "source_sha256": "6c49a507f6df444efca37973fc9c2d74c861c84de779e9dbbe2dd479917a0986",
+      "body_pmx": "星穹铁道—驭空（改5）.pmx",
+      "excluded_pmx": [
+        "纸鸢.pmx"
+      ],
+      "physics": {
+        "hair_chains": 14,
+        "clothes_chains": 21,
+        "colliders": 12,
+        "joints": 199
+      },
+      "bytes": 54965240
+    },
+    {
+      "id": "herta",
+      "label": "黑塔",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/herta/herta.vrm",
+      "model_sha256": "674c36d6966ebde4bf24c1b299cf81ca80d026cd368116cc5aa4f994084e01e2",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道-黑塔_by_崩坏：星穹铁道_12473aa4e6df6e275a129ff282a03335.zip",
+      "source_sha256": "1151239e4765e6fdd075f02eda2ce7f713842b908e43212814bcf21a3bd4e453",
+      "body_pmx": "黑塔.pmx",
+      "excluded_pmx": [
+        "锤子.pmx"
+      ],
+      "physics": {
+        "hair_chains": 10,
+        "clothes_chains": 40,
+        "colliders": 12,
+        "joints": 440
+      },
+      "bytes": 42096900
+    },
+    {
+      "id": "sucrose",
+      "label": "砂糖",
+      "game": "原神",
+      "model": "res://assets/characters/roster/sucrose/sucrose.vrm",
+      "model_sha256": "cb8e091d1a57cb0818fbfcd1f28f1e7b67d4f60b97b30fb69151287d0ff1de6c",
+      "source_archive": "D:\\模型\\20261008\\【模之屋】砂糖_by_原神_b7478ddcd12885599962e204eb493614.zip",
+      "source_sha256": "bd2553531295528ff9703afc4d3a7d597f7badcdaade6efd48a55ad27b486350",
+      "body_pmx": "砂糖.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 3,
+        "clothes_chains": 16,
+        "colliders": 12,
+        "joints": 121
+      },
+      "bytes": 30706652
+    },
+    {
+      "id": "faruzan",
+      "label": "珐露珊",
+      "game": "原神",
+      "model": "res://assets/characters/roster/faruzan/faruzan.vrm",
+      "model_sha256": "cf168e60f7532c1fd14c8601649311c0b5b7dc529b32c2f775bf55a86303d813",
+      "source_archive": "D:\\模型\\20261008\\【珐露珊】_by_原神_ec582320e20f08a4764706eac3f2c654.zip",
+      "source_sha256": "6e3190e4dfa24a0138bcf536a1e60f17d7b66999f418c4ae8bfab8e040aa3595",
+      "body_pmx": "珐露珊.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 5,
+        "clothes_chains": 17,
+        "colliders": 12,
+        "joints": 219
+      },
+      "bytes": 43720460
+    },
+    {
+      "id": "lynette",
+      "label": "琳妮特",
+      "game": "原神",
+      "model": "res://assets/characters/roster/lynette/lynette.vrm",
+      "model_sha256": "9b55c3ee5cfd5d36d5125cc5aa0b64bc81abcca269de427c3726184b349d076e",
+      "source_archive": "D:\\模型\\20261008\\【琳妮特】_by_原神_82c4527df590fc2b1a28c26b93cbeeac.zip",
+      "source_sha256": "c8ae596cd241eef8bbd553b6f2c4b6c4fcdda7e5dfdb4414d7f43b6553990f81",
+      "body_pmx": "【琳妮特】.pmx",
+      "excluded_pmx": [
+        "帽.pmx",
+        "托盘.pmx",
+        "杯.pmx",
+        "茶匙.pmx"
+      ],
+      "physics": {
+        "hair_chains": 10,
+        "clothes_chains": 41,
+        "colliders": 12,
+        "joints": 360
+      },
+      "bytes": 48851552
+    },
+    {
+      "id": "kirara",
+      "label": "绮良良",
+      "game": "原神",
+      "model": "res://assets/characters/roster/kirara/kirara.vrm",
+      "model_sha256": "37673ad287a573c2bec97c1b11bc13861f4cdf58e1c0a9e5b146e88e1bd6f907",
+      "source_archive": "D:\\模型\\20261008\\【绮良良】_by_原神_3ae87334e869b584e1e665d027c956ee.zip",
+      "source_sha256": "be3a1a7c550bd13f9d8670a83eebb1e5fa46d18a9f45e64bb8c69390ab3f84ef",
+      "body_pmx": "绮良良.pmx",
+      "excluded_pmx": [
+        "变身形态.pmx"
+      ],
+      "physics": {
+        "hair_chains": 8,
+        "clothes_chains": 33,
+        "colliders": 12,
+        "joints": 294
+      },
+      "bytes": 47073720
+    },
+    {
+      "id": "rosaria",
+      "label": "罗莎莉亚",
+      "game": "原神",
+      "model": "res://assets/characters/roster/rosaria/rosaria.vrm",
+      "model_sha256": "1f581d007f9311bd86549fadd5a83faba7b696bd4d271f90ff335a447c297b48",
+      "source_archive": "D:\\模型\\20261008\\【罗莎莉亚_新】_by_原神_f134a5432930ec6fa344c24409c48d70.zip",
+      "source_sha256": "6c272de6efeb2fc7c1086f9f8294618210708cdeab23820a1c656e7f72380944",
+      "body_pmx": "罗莎莉亚.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 12,
+        "clothes_chains": 11,
+        "colliders": 12,
+        "joints": 247
+      },
+      "bytes": 31259844
+    },
+    {
+      "id": "layla",
+      "label": "莱依拉",
+      "game": "原神",
+      "model": "res://assets/characters/roster/layla/layla.vrm",
+      "model_sha256": "5577cf1594f80095be92be1fc3e80400bc3e8512fddbaad40f86efee7607fc9a",
+      "source_archive": "D:\\模型\\20261008\\【莱依拉】_by_原神_28765a5658bef75fe5dee4b7957353b2.zip",
+      "source_sha256": "f2e0a8bbdc7017f91e9b09b875fc16c4299caf447a69663b3d02b87a22d85246",
+      "body_pmx": "莱依拉.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 5,
+        "clothes_chains": 18,
+        "colliders": 12,
+        "joints": 232
+      },
+      "bytes": 38972568
+    },
+    {
+      "id": "charlotte",
+      "label": "夏洛蒂",
+      "game": "原神",
+      "model": "res://assets/characters/roster/charlotte/charlotte.vrm",
+      "model_sha256": "b36422ec53c4729052a835b1429e4005b86dce8e43ae36a6ee3ae27c1526e2c8",
+      "source_archive": "D:\\模型\\20261008\\夏洛蒂_by_原神_28f6db1289d34d2cbe869fb3191d79a8.zip",
+      "source_sha256": "ab97eeb35b98592767f60795157f035260c15df129379f8869cb37dcdc964b6e",
+      "body_pmx": "夏洛蒂.pmx",
+      "excluded_pmx": [
+        "报纸.pmx",
+        "相机1.pmx",
+        "相机2.pmx"
+      ],
+      "physics": {
+        "hair_chains": 2,
+        "clothes_chains": 18,
+        "colliders": 12,
+        "joints": 150
+      },
+      "bytes": 40985488
+    },
+    {
+      "id": "amber",
+      "label": "安柏",
+      "game": "原神",
+      "model": "res://assets/characters/roster/amber/amber.vrm",
+      "model_sha256": "6febfd0d5562001f329a7aba90c28b407312c763073711ce82ce755f47981c87",
+      "source_archive": "D:\\模型\\20261008\\安柏_by_原神_174c8c36c505106b0223cb1daa5d8579.zip",
+      "source_sha256": "a766b867836bc34ce04289e06d39d16dad82bf8089d9e6c77204ed75d748f8c2",
+      "body_pmx": "安柏.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 2,
+        "clothes_chains": 1,
+        "colliders": 12,
+        "joints": 19
+      },
+      "bytes": 41180312
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "adapter": "NVIDIA GeForce RTX 5070 Ti",
+  "engine": {
+    "build": "official",
+    "hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+    "hex": 263938,
+    "major": 4,
+    "minor": 7,
+    "patch": 2,
+    "status": "stable",
+    "string": "4.7.2-stable (official)",
+    "timestamp": 0
+  },
+  "resolution": "(1920, 1080)",
+  "script_entries": 15,
+  "tree_save_sha256": "07647c8b57bed6522a3cfa5231aec4ffedc0e74374d55a3af6a874d79dc64b5a"
+}

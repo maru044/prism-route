@@ -1,0 +1,17 @@
+{
+  "archive": "D:\\模型\\20261008\\星穹铁道—青雀_by_崩坏：星穹铁道_45b6bdd31eed3a0c16d407289f9c92de.rar",
+  "archive_sha256": "0da74d28ffb8e8a94229a4eaeedf422321ef556dbbbd21d107e5d9fbc528e46f",
+  "body_pmx": "青雀（分桦）.pmx",
+  "source_sha256": "ab5e739c2bbd0fdeaecf8890a5c223c9db20bdc8e8fb9331d01962d4724ecab8",
+  "pmx_name": "青雀",
+  "pmx_english_name": "Avatar_Qingque_00_Model_MMD",
+  "pmx_comment": "允许改造，优化骨骼和刚体，重制UV\r\n\r\n===================\r\n请勿二次配布\r\n\r\n请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n请勿用于商业用途\r\n\r\n他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n模型编辑：流云景\r\n\r\n模型版权所属miHoYo",
+  "pmx_english_comment": "",
+  "authors": [
+    "miHoYo",
+    "流云景"
+  ],
+  "excluded_pmx": [
+    "武器（青雀）.pmx"
+  ]
+}

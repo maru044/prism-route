@@ -1,0 +1,44 @@
+{
+  "available_profiles": 47,
+  "catalog": "res://assets/characters/roster/first_batch.json",
+  "entry": "shared_walk_all",
+  "failures": [],
+  "models": [
+    {
+      "bones": 457,
+      "id": "yae_miko",
+      "model": "res://assets/characters/roster/yae_miko/yae_miko.vrm",
+      "shared_motion_identity": true,
+      "time": 0.333333333333333
+    },
+    {
+      "bones": 310,
+      "id": "raiden_shogun",
+      "model": "res://assets/characters/roster/raiden_shogun/raiden_shogun.vrm",
+      "shared_motion_identity": true,
+      "time": 0.333333333333333
+    },
+    {
+      "bones": 426,
+      "id": "furina",
+      "model": "res://assets/characters/roster/furina/furina.vrm",
+      "shared_motion_identity": true,
+      "time": 0.333333333333333
+    },
+    {
+      "bones": 562,
+      "id": "jingliu",
+      "model": "res://assets/characters/roster/jingliu/jingliu.vrm",
+      "shared_motion_identity": true,
+      "time": 0.333333333333333
+    },
+    {
+      "bones": 437,
+      "id": "miyabi",
+      "model": "res://assets/characters/roster/miyabi/miyabi.vrm",
+      "shared_motion_identity": true,
+      "time": 0.333333333333333
+    }
+  ],
+  "passed": true
+}

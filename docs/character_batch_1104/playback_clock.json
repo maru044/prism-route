@@ -1,0 +1,51 @@
+{
+  "failures": [],
+  "measurements": [
+    {
+      "actor_auto_play": false,
+      "animation_seconds": 2.01658566666667,
+      "clip": "idle",
+      "engine_time_scale": 1.0,
+      "measured_speed": 1.0001873153299,
+      "samples": 121,
+      "selected_speed": 1.0,
+      "source_loop_seconds": 2.5416666,
+      "wall_seconds": 2.016208
+    },
+    {
+      "actor_auto_play": false,
+      "animation_seconds": 2.016588,
+      "clip": "walk",
+      "engine_time_scale": 1.0,
+      "measured_speed": 0.997684621732495,
+      "samples": 121,
+      "selected_speed": 1.0,
+      "source_loop_seconds": 1.3333333,
+      "wall_seconds": 2.021268
+    },
+    {
+      "actor_auto_play": false,
+      "animation_seconds": 1.99992,
+      "clip": "run",
+      "engine_time_scale": 1.0,
+      "measured_speed": 0.996170070965014,
+      "samples": 120,
+      "selected_speed": 1.0,
+      "source_loop_seconds": 0.79166665,
+      "wall_seconds": 2.007609
+    },
+    {
+      "actor_auto_play": false,
+      "animation_seconds": 1.49994,
+      "clip": "walk",
+      "engine_time_scale": 1.0,
+      "measured_speed": 0.748716648330697,
+      "samples": 120,
+      "selected_speed": 0.75,
+      "source_loop_seconds": 1.3333333,
+      "wall_seconds": 2.003348
+    }
+  ],
+  "passed": true,
+  "pause_preserved": true
+}

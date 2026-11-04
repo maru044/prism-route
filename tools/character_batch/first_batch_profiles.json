@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "profiles": [
+    {"id":"yae_miko","label":"八重神子","game":"原神","archive_glob":"*八重神子*.zip","body_pmx":"八重神子.pmx","zip_encoding":"gbk","physics_prefixes":["スカート_","后摆_","耳_","侧髪_","后髪_","頭绳_","袖_"]},
+    {"id":"raiden_shogun","label":"雷电将军","game":"原神","archive_glob":"*雷电将军*.zip","body_pmx":"雷电将军.pmx","zip_encoding":"cp932","physics_prefixes":["裙_","后摆_","辫_","髮1_","髮_","袖_","流苏1_"]},
+    {"id":"furina","label":"芙宁娜","game":"原神","archive_glob":"*芙宁娜*.zip","body_pmx":"【芙宁娜】.pmx","zip_encoding":"cp932","physics_prefixes":["HB1_","HB2_","HB3_","HB4_","Q_","CF_","DM_","F_","袖_"]},
+    {"id":"jingliu","label":"镜流","game":"崩坏：星穹铁道","archive_glob":"*镜流*.zip","body_pmx":"镜流2.0.pmx","zip_encoding":"gbk","physics_prefixes":["Hair","Ribbon","Sleeve","qz_","Eardrop"]},
+    {"id":"miyabi","label":"星见雅","game":"绝区零","archive_glob":"*星见雅*.zip","body_pmx":"星见雅.pmx","zip_encoding":"gbk","physics_prefixes":["Hair","Ctr_L_Hairpin","Ctr_R_Hairpin","Ear_","F_","B_","袖_","MaJia","Furisode","Q_","LD_"]}
+  ]
+}

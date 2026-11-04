@@ -1,0 +1,17 @@
+{
+  "archive": "D:\\模型\\20261008\\星穹铁道—停云_by_崩坏：星穹铁道_525d6d14250e3035b366d8ef6a456906.rar",
+  "archive_sha256": "cc4f880c60aa40584f79708c88d9cf88aab810a3e1c20cddb72fb0b9ff905e2b",
+  "body_pmx": "停云.pmx",
+  "source_sha256": "ff4059992ab4f76b121024b435d7bd825ee2f33bc47cf93ef6f4e0ef2fafcd10",
+  "pmx_name": "停云",
+  "pmx_english_name": "Avatar_Tingyun_00_Model_MMD",
+  "pmx_comment": "\r\n允许改造，优化骨骼和刚体，重制UV\r\n\r\n===================\r\n请勿二次配布\r\n\r\n请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n请勿用于商业用途\r\n\r\n他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n模型编辑：流云景\r\n\r\n模型版权所属miHoYo",
+  "pmx_english_comment": "",
+  "authors": [
+    "miHoYo",
+    "流云景"
+  ],
+  "excluded_pmx": [
+    "停云武器.pmx"
+  ]
+}

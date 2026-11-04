@@ -1,0 +1,1111 @@
+{
+  "id": "ruan_mei",
+  "label": "阮·梅",
+  "vertices": 27683,
+  "bones": 777,
+  "morphs": 66,
+  "materials": 29,
+  "alpha": [
+    {
+      "name": "头发",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "辫子",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "衣服",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "衣饰",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "衣饰花瓣",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "腿饰",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "鞋子",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "脖饰",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "项链",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "头饰",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "手套",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "裤子",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "皮肤",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "肩布",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "肩饰",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "背带",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "花",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "裙子内侧",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "肩布内侧",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "肩带内侧",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "脸",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "眉毛",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "眼白",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "眼睛",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "牙齿",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "舌头",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "口腔",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "眼睛1",
+      "mode": "BLEND",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "表情",
+      "mode": "MASK",
+      "min_alpha": 0,
+      "max_alpha": 255,
+      "transparent_fraction": 0.6555443481377221,
+      "partial_fraction": 0.18069311938404803,
+      "middle_fraction": 0.08159224973338228
+    }
+  ],
+  "physics": {
+    "hair_chains": 5,
+    "clothes_chains": 44,
+    "colliders": 12,
+    "joints": 499
+  },
+  "source_sha256": "6292fcec0dac8961dcef7afd6285fc270f08a4a3b94738523befe8c67335c5f5",
+  "source_unchanged": true,
+  "max_weight_total_error": 0.0,
+  "foot_test": {
+    "bone": "足首.L",
+    "angle_deg": 25,
+    "moved_vertices_over_0_1mm": 525,
+    "max_displacement_m": 0.08160307861356698
+  },
+  "helper_links": [
+    [
+      "足D.L",
+      "足.L"
+    ],
+    [
+      "ひざD.L",
+      "ひざ.L"
+    ],
+    [
+      "足首D.L",
+      "足首.L"
+    ],
+    [
+      "足D.R",
+      "足.R"
+    ],
+    [
+      "ひざD.R",
+      "ひざ.R"
+    ],
+    [
+      "足首D.R",
+      "足首.R"
+    ]
+  ],
+  "chains": [
+    {
+      "group": "Hair",
+      "attachment": "HairFRb_01_JNT",
+      "nodes": [
+        "HairFRb_02_JNT",
+        "HairFRb_03_JNT",
+        "HairFRb_04_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairFMc_01_JNT",
+      "nodes": [
+        "HairFMc_01_JNT",
+        "HairFMc_02_JNT",
+        "HairFMc_03_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairFLc_01_JNT",
+      "nodes": [
+        "HairFLc_01_JNT",
+        "HairFLc_02_JNT",
+        "HairFLc_03_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairFMa_01_JNT",
+      "nodes": [
+        "HairFMa_01_JNT",
+        "HairFMa_02_JNT",
+        "HairFMa_03_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "bz_0_1",
+      "nodes": [
+        "bz_1_1",
+        "bz_2_1",
+        "bz_3_1",
+        "bz_4_1",
+        "bz_5_1",
+        "bz_6_1",
+        "bz_7_1",
+        "bz_8_1",
+        "bz_9_1",
+        "bz_10_1",
+        "bz_11_1"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "js_0_0",
+      "nodes": [
+        "js_1_0",
+        "js_2_0",
+        "js_3_0",
+        "js_4_0",
+        "js_5_0",
+        "js_6_0",
+        "js_7_0",
+        "js_8_0",
+        "js_9_0",
+        "js_10_0",
+        "js_11_0"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "js_0_1",
+      "nodes": [
+        "js_1_1",
+        "js_2_1",
+        "js_3_1",
+        "js_4_1",
+        "js_5_1",
+        "js_6_1",
+        "js_7_1",
+        "js_8_1",
+        "js_9_1",
+        "js_10_1",
+        "js_11_1"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "js_0_2",
+      "nodes": [
+        "js_1_2",
+        "js_2_2",
+        "js_3_2",
+        "js_4_2",
+        "js_5_2",
+        "js_6_2",
+        "js_7_2",
+        "js_8_2",
+        "js_9_2",
+        "js_10_2",
+        "js_11_2"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "js_0_3",
+      "nodes": [
+        "js_1_3",
+        "js_2_3",
+        "js_3_3",
+        "js_4_3",
+        "js_5_3",
+        "js_6_3",
+        "js_7_3",
+        "js_8_3",
+        "js_9_3",
+        "js_10_3",
+        "js_11_3"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "js_0_4",
+      "nodes": [
+        "js_1_4",
+        "js_2_4",
+        "js_3_4",
+        "js_4_4",
+        "js_5_4",
+        "js_6_4",
+        "js_7_4",
+        "js_8_4",
+        "js_9_4",
+        "js_10_4",
+        "js_11_4"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "js_0_5",
+      "nodes": [
+        "js_1_5",
+        "js_2_5",
+        "js_3_5",
+        "js_4_5",
+        "js_5_5",
+        "js_6_5",
+        "js_7_5",
+        "js_8_5",
+        "js_9_5",
+        "js_10_5",
+        "js_11_5"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "js_0_6",
+      "nodes": [
+        "js_1_6",
+        "js_2_6",
+        "js_3_6",
+        "js_4_6",
+        "js_5_6",
+        "js_6_6",
+        "js_7_6",
+        "js_8_6",
+        "js_9_6",
+        "js_10_6",
+        "js_11_6"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "js_0_7",
+      "nodes": [
+        "js_1_7",
+        "js_2_7",
+        "js_3_7",
+        "js_4_7",
+        "js_5_7",
+        "js_6_7",
+        "js_7_7",
+        "js_8_7",
+        "js_9_7",
+        "js_10_7",
+        "js_11_7"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "js_0_8",
+      "nodes": [
+        "js_1_8",
+        "js_2_8",
+        "js_3_8",
+        "js_4_8",
+        "js_5_8",
+        "js_6_8",
+        "js_7_8",
+        "js_8_8",
+        "js_9_8",
+        "js_10_8",
+        "js_11_8"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "js_0_9",
+      "nodes": [
+        "js_1_9",
+        "js_2_9",
+        "js_3_9",
+        "js_4_9",
+        "js_5_9",
+        "js_6_9",
+        "js_7_9",
+        "js_8_9",
+        "js_9_9",
+        "js_10_9",
+        "js_11_9"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "js_0_10",
+      "nodes": [
+        "js_1_10",
+        "js_2_10",
+        "js_3_10",
+        "js_4_10",
+        "js_5_10",
+        "js_6_10",
+        "js_7_10",
+        "js_8_10",
+        "js_9_10",
+        "js_10_10",
+        "js_11_10"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "js_0_11",
+      "nodes": [
+        "js_1_11",
+        "js_2_11",
+        "js_3_11",
+        "js_4_11",
+        "js_5_11",
+        "js_6_11",
+        "js_7_11",
+        "js_8_11",
+        "js_9_11",
+        "js_10_11",
+        "js_11_11"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "js_0_12",
+      "nodes": [
+        "js_1_12",
+        "js_2_12",
+        "js_3_12",
+        "js_4_12",
+        "js_5_12",
+        "js_6_12",
+        "js_7_12",
+        "js_8_12",
+        "js_9_12",
+        "js_10_12",
+        "js_11_12"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "js_0_13",
+      "nodes": [
+        "js_1_13",
+        "js_2_13",
+        "js_3_13",
+        "js_4_13",
+        "js_5_13",
+        "js_6_13",
+        "js_7_13",
+        "js_8_13",
+        "js_9_13",
+        "js_10_13",
+        "js_11_13"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "js_0_14",
+      "nodes": [
+        "js_1_14",
+        "js_2_14",
+        "js_3_14",
+        "js_4_14",
+        "js_5_14",
+        "js_6_14",
+        "js_7_14",
+        "js_8_14",
+        "js_9_14",
+        "js_10_14",
+        "js_11_14"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "js_0_15",
+      "nodes": [
+        "js_1_15",
+        "js_2_15",
+        "js_3_15",
+        "js_4_15",
+        "js_5_15",
+        "js_6_15",
+        "js_7_15",
+        "js_8_15",
+        "js_9_15",
+        "js_10_15",
+        "js_11_15"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "js_0_16",
+      "nodes": [
+        "js_1_16",
+        "js_2_16",
+        "js_3_16",
+        "js_4_16",
+        "js_5_16",
+        "js_6_16",
+        "js_7_16",
+        "js_8_16",
+        "js_9_16",
+        "js_10_16",
+        "js_11_16"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "js_0_17",
+      "nodes": [
+        "js_1_17",
+        "js_2_17",
+        "js_3_17",
+        "js_4_17",
+        "js_5_17",
+        "js_6_17",
+        "js_7_17",
+        "js_8_17",
+        "js_9_17",
+        "js_10_17",
+        "js_11_17"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "js_0_18",
+      "nodes": [
+        "js_1_18",
+        "js_2_18",
+        "js_3_18",
+        "js_4_18",
+        "js_5_18",
+        "js_6_18",
+        "js_7_18",
+        "js_8_18",
+        "js_9_18",
+        "js_10_18",
+        "js_11_18"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "js_0_19",
+      "nodes": [
+        "js_1_19",
+        "js_2_19",
+        "js_3_19",
+        "js_4_19",
+        "js_5_19",
+        "js_6_19",
+        "js_7_19",
+        "js_8_19",
+        "js_9_19",
+        "js_10_19",
+        "js_11_19"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "js_0_20",
+      "nodes": [
+        "js_1_20",
+        "js_2_20",
+        "js_3_20",
+        "js_4_20",
+        "js_5_20",
+        "js_6_20",
+        "js_7_20",
+        "js_8_20",
+        "js_9_20",
+        "js_10_20",
+        "js_11_20"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "js_0_21",
+      "nodes": [
+        "js_1_21",
+        "js_2_21",
+        "js_3_21",
+        "js_4_21",
+        "js_5_21",
+        "js_6_21",
+        "js_7_21",
+        "js_8_21",
+        "js_9_21",
+        "js_10_21",
+        "js_11_21"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qq_0_0",
+      "nodes": [
+        "qq_1_0",
+        "qq_2_0",
+        "qq_3_0",
+        "qq_4_0",
+        "qq_5_0",
+        "qq_6_0",
+        "qq_7_0",
+        "qq_8_0",
+        "qq_9_0",
+        "qq_10_0",
+        "qq_11_0",
+        "qq_12_0",
+        "qq_13_0",
+        "qq_14_0",
+        "qq_15_0"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qq_0_1",
+      "nodes": [
+        "qq_1_1",
+        "qq_2_1",
+        "qq_3_1",
+        "qq_4_1",
+        "qq_5_1",
+        "qq_6_1",
+        "qq_7_1",
+        "qq_8_1",
+        "qq_9_1",
+        "qq_10_1",
+        "qq_11_1",
+        "qq_12_1",
+        "qq_13_1",
+        "qq_14_1",
+        "qq_15_1"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qq_0_2",
+      "nodes": [
+        "qq_1_2",
+        "qq_2_2",
+        "qq_3_2",
+        "qq_4_2",
+        "qq_5_2",
+        "qq_6_2",
+        "qq_7_2",
+        "qq_8_2",
+        "qq_9_2",
+        "qq_10_2",
+        "qq_11_2",
+        "qq_12_2",
+        "qq_13_2",
+        "qq_14_2",
+        "qq_15_2"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qq_0_3",
+      "nodes": [
+        "qq_1_3",
+        "qq_2_3",
+        "qq_3_3",
+        "qq_4_3",
+        "qq_5_3",
+        "qq_6_3",
+        "qq_7_3",
+        "qq_8_3",
+        "qq_9_3",
+        "qq_10_3",
+        "qq_11_3",
+        "qq_12_3",
+        "qq_13_3",
+        "qq_14_3",
+        "qq_15_3"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qq_0_4",
+      "nodes": [
+        "qq_1_4",
+        "qq_2_4",
+        "qq_3_4",
+        "qq_4_4",
+        "qq_5_4",
+        "qq_6_4",
+        "qq_7_4",
+        "qq_8_4",
+        "qq_9_4",
+        "qq_10_4",
+        "qq_11_4",
+        "qq_12_4",
+        "qq_13_4",
+        "qq_14_4",
+        "qq_15_4"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qq_0_5",
+      "nodes": [
+        "qq_1_5",
+        "qq_2_5",
+        "qq_3_5",
+        "qq_4_5",
+        "qq_5_5",
+        "qq_6_5",
+        "qq_7_5",
+        "qq_8_5",
+        "qq_9_5",
+        "qq_10_5",
+        "qq_11_5",
+        "qq_12_5",
+        "qq_13_5",
+        "qq_14_5",
+        "qq_15_5"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qq_0_6",
+      "nodes": [
+        "qq_1_6",
+        "qq_2_6",
+        "qq_3_6",
+        "qq_4_6",
+        "qq_5_6",
+        "qq_6_6",
+        "qq_7_6",
+        "qq_8_6",
+        "qq_9_6",
+        "qq_10_6",
+        "qq_11_6",
+        "qq_12_6",
+        "qq_13_6",
+        "qq_14_6",
+        "qq_15_6"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qq_0_7",
+      "nodes": [
+        "qq_1_7",
+        "qq_2_7",
+        "qq_3_7",
+        "qq_4_7",
+        "qq_5_7",
+        "qq_6_7",
+        "qq_7_7",
+        "qq_8_7",
+        "qq_9_7",
+        "qq_10_7",
+        "qq_11_7",
+        "qq_12_7",
+        "qq_13_7",
+        "qq_14_7",
+        "qq_15_7"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qh_0_2",
+      "nodes": [
+        "qh_0_2",
+        "qh_1_2",
+        "qh_2_2"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qh_0_3",
+      "nodes": [
+        "qh_0_3",
+        "qh_1_3",
+        "qh_2_3"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qh_0_4",
+      "nodes": [
+        "qh_1_4",
+        "qh_2_4",
+        "qh_3_4",
+        "qh_4_4"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qh_0_5",
+      "nodes": [
+        "qh_1_5",
+        "qh_2_5",
+        "qh_3_5",
+        "qh_4_5",
+        "qh_5_5",
+        "qh_6_5",
+        "qh_7_5",
+        "qh_8_5",
+        "qh_9_5",
+        "qh_10_5",
+        "qh_11_5",
+        "qh_12_5",
+        "qh_13_5",
+        "qh_14_5"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qh_0_6",
+      "nodes": [
+        "qh_1_6",
+        "qh_2_6",
+        "qh_3_6",
+        "qh_4_6",
+        "qh_5_6",
+        "qh_6_6",
+        "qh_7_6",
+        "qh_8_6",
+        "qh_9_6",
+        "qh_10_6",
+        "qh_11_6",
+        "qh_12_6",
+        "qh_13_6",
+        "qh_14_6"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qh_0_7",
+      "nodes": [
+        "qh_1_7",
+        "qh_2_7",
+        "qh_3_7",
+        "qh_4_7",
+        "qh_5_7",
+        "qh_6_7",
+        "qh_7_7",
+        "qh_8_7",
+        "qh_9_7",
+        "qh_10_7",
+        "qh_11_7",
+        "qh_12_7",
+        "qh_13_7",
+        "qh_14_7"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qh_0_8",
+      "nodes": [
+        "qh_1_8",
+        "qh_2_8",
+        "qh_3_8",
+        "qh_4_8",
+        "qh_5_8"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qh_0_9",
+      "nodes": [
+        "qh_1_9",
+        "qh_2_9",
+        "qh_3_9",
+        "qh_4_9",
+        "qh_5_9"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qh_0_10",
+      "nodes": [
+        "qh_1_10",
+        "qh_2_10",
+        "qh_3_10",
+        "qh_4_10",
+        "qh_5_10",
+        "qh_6_10",
+        "qh_7_10",
+        "qh_8_10",
+        "qh_9_10",
+        "qh_10_10",
+        "qh_11_10",
+        "qh_12_10",
+        "qh_13_10",
+        "qh_14_10"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qh_0_11",
+      "nodes": [
+        "qh_1_11",
+        "qh_2_11",
+        "qh_3_11",
+        "qh_4_11",
+        "qh_5_11",
+        "qh_6_11",
+        "qh_7_11",
+        "qh_8_11",
+        "qh_9_11",
+        "qh_10_11",
+        "qh_11_11",
+        "qh_12_11",
+        "qh_13_11",
+        "qh_14_11"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qh_0_12",
+      "nodes": [
+        "qh_1_12",
+        "qh_2_12",
+        "qh_3_12",
+        "qh_4_12",
+        "qh_5_12",
+        "qh_6_12",
+        "qh_7_12",
+        "qh_8_12",
+        "qh_9_12",
+        "qh_10_12",
+        "qh_11_12",
+        "qh_12_12",
+        "qh_13_12",
+        "qh_14_12"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qh_0_13",
+      "nodes": [
+        "qh_1_13",
+        "qh_2_13",
+        "qh_3_13",
+        "qh_4_13"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qh_0_14",
+      "nodes": [
+        "qh_1_14",
+        "qh_2_14",
+        "qh_3_14"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qh_0_15",
+      "nodes": [
+        "qh_0_15",
+        "qh_1_15",
+        "qh_2_15"
+      ]
+    }
+  ],
+  "mesh_binary_preserved": true,
+  "output_sha256": "78503589e6316c83529acb6e45a0ee077beb02ad43817d3eaf5324654eaf60b2",
+  "mesh_binary_sha256": "b76efbe0942962e1dd6af9902fbb4041c4b8d42654bb4941dccb7cbadb4025be",
+  "alpha_method": "UV triangle coverage on RGBA texture thumbnails with maximum edge 1024; material factor alpha preserved; validated in Godot."
+}

@@ -1,0 +1,18 @@
+{
+  "archive": "D:\\模型\\20261008\\凝光_by_原神_e4422eb14f2a1d586516c2e3c8d7e6f9.zip",
+  "archive_sha256": "450cf6d7b8ef3af6a035e17603a7bc41cb9a659b5028e4d6e35a8e9f5453abfc",
+  "body_pmx": "凝光.pmx",
+  "source_sha256": "088d610d7b8ec7536e0d52d42778039f46de998add1b4ac18691b5e8a2440273",
+  "pmx_name": "凝光",
+  "pmx_english_name": "凝光",
+  "pmx_comment": "\r\n允许改造，优化骨骼和刚体，重制UV\r\n\r\n===================\r\n请勿二次配布\r\n\r\n请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n请勿用于商业用途\r\n\r\n他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n模型编辑：神帝宇\r\n\r\n模型版权所属miHoYo",
+  "pmx_english_comment": "\r\n允许改造，优化骨骼和刚体，重制UV\r\n\r\n===================\r\n请勿二次配布\r\n\r\n请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n请勿用于商业用途\r\n\r\n他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n模型编辑：神帝宇\r\n\r\n模型版权所属miHoYo",
+  "authors": [
+    "miHoYo",
+    "神帝宇"
+  ],
+  "excluded_pmx": [],
+  "archive_path_overrides": {
+    "ï├î⌡/Texture/ò/Åε.png": "凝光/Texture/表情.png"
+  }
+}

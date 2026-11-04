@@ -1,0 +1,44 @@
+{
+  "available_profiles": 20,
+  "catalog": "res://assets/characters/roster/third_batch.json",
+  "entry": "shared_walk_all",
+  "failures": [],
+  "models": [
+    {
+      "bones": 499,
+      "id": "kafka",
+      "model": "res://assets/characters/roster/kafka/kafka.vrm",
+      "shared_motion_identity": true,
+      "time": 0.333333333333333
+    },
+    {
+      "bones": 441,
+      "id": "silver_wolf",
+      "model": "res://assets/characters/roster/silver_wolf/silver_wolf.vrm",
+      "shared_motion_identity": true,
+      "time": 0.333333333333333
+    },
+    {
+      "bones": 372,
+      "id": "march7th",
+      "model": "res://assets/characters/roster/march7th/march7th.vrm",
+      "shared_motion_identity": true,
+      "time": 0.333333333333333
+    },
+    {
+      "bones": 396,
+      "id": "bronya",
+      "model": "res://assets/characters/roster/bronya/bronya.vrm",
+      "shared_motion_identity": true,
+      "time": 0.333333333333333
+    },
+    {
+      "bones": 544,
+      "id": "seele",
+      "model": "res://assets/characters/roster/seele/seele.vrm",
+      "shared_motion_identity": true,
+      "time": 0.333333333333333
+    }
+  ],
+  "passed": true
+}

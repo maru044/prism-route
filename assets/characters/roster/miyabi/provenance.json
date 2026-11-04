@@ -1,0 +1,18 @@
+{
+  "archive": "D:\\模型\\20261008\\星见雅_by_绝区零_5497f7f98efc5b2a7cb509961638d435.zip",
+  "archive_sha256": "91f63d5f1d3edfe61d35ada55cc3ddfe8d2ac9b21149f33fd70a751c245d8ead",
+  "body_pmx": "星见雅.pmx",
+  "source_sha256": "56ffc00d398b0a3c5a9340b6357e1089fb468c6879fdead145fc4baceba01b96",
+  "pmx_name": "Unagi",
+  "pmx_english_name": "Unagi",
+  "pmx_comment": "感谢下载本模型\r\n\r\n◆允许完善物理，修正模型权重、表情等bug\r\n\r\n  允许改色，适度更改衣装，添加spa、toon等\r\n\r\n◆请勿二次配布，以及拆取部件以用于改造其他模型\r\n\r\n  请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n  请勿用于商业用途\r\n\r\n◆他人使用本模型所造成的一切不良后果，不由模型制作者与miHoYo承担，请向使用者追究全部责任\r\n\r\n◆模型制作：观海子\r\n\r\n  联系我【BiliBili：观海子】\r\n\r\n◆最终解释权归属：miHoYo\r\n\r\n请遵守本规则使用",
+  "pmx_english_comment": "感谢下载本模型\r\n\r\n◆允许完善物理，修正模型权重、表情等bug\r\n\r\n  允许改色，适度更改衣装，添加spa、toon等\r\n\r\n◆请勿二次配布，以及拆取部件以用于改造其他模型\r\n\r\n  请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n  请勿用于商业用途\r\n\r\n◆他人使用本模型所造成的一切不良后果，不由模型制作者与miHoYo承担，请向使用者追究全部责任\r\n\r\n◆模型制作：观海子\r\n\r\n  联系我【BiliBili：观海子】\r\n\r\n◆最终解释权归属：miHoYo\r\n\r\n请遵守本规则使用",
+  "authors": [
+    "miHoYo",
+    "观海子"
+  ],
+  "excluded_pmx": [
+    "幽灵.pmx",
+    "武器.pmx"
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "engine": "4.7.2-stable (official)",
+  "failures": [],
+  "models": [
+    {
+      "bones": 260,
+      "captures": [],
+      "clothes_chains": 5,
+      "hair_chains": 3,
+      "id": "shenhe",
+      "material_classes": {
+        "ShaderMaterial": 23
+      },
+      "max_segment_error_m": 0.00000480189919471741,
+      "meshes": 1,
+      "morphs": 65,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 367,
+      "captures": [],
+      "clothes_chains": 25,
+      "hair_chains": 12,
+      "id": "yelan",
+      "material_classes": {
+        "ShaderMaterial": 22
+      },
+      "max_segment_error_m": 0.00000487640500068665,
+      "meshes": 1,
+      "morphs": 62,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 214,
+      "captures": [],
+      "clothes_chains": 8,
+      "hair_chains": 6,
+      "id": "eula",
+      "material_classes": {
+        "ShaderMaterial": 25
+      },
+      "max_segment_error_m": 0.00000479072332382202,
+      "meshes": 1,
+      "morphs": 60,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 421,
+      "captures": [],
+      "clothes_chains": 22,
+      "hair_chains": 2,
+      "id": "lisa",
+      "material_classes": {
+        "ShaderMaterial": 14
+      },
+      "max_segment_error_m": 0.00000394321978092194,
+      "meshes": 1,
+      "morphs": 46,
+      "physics_steps": 309,
+      "pose_checks": 54
+    },
+    {
+      "bones": 623,
+      "captures": [],
+      "clothes_chains": 30,
+      "hair_chains": 5,
+      "id": "ningguang",
+      "material_classes": {
+        "ShaderMaterial": 14
+      },
+      "max_segment_error_m": 0.00000393949449062347,
+      "meshes": 1,
+      "morphs": 45,
+      "physics_steps": 309,
+      "pose_checks": 54
+    }
+  ],
+  "passed": true,
+  "registered_avatars": 14,
+  "renderer": "",
+  "shared_clips": 3,
+  "test_fps": 60
+}

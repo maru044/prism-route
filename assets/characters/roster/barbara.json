@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "barbara",
+      "label": "芭芭拉",
+      "game": "原神",
+      "model": "res://assets/characters/roster/barbara/barbara.vrm",
+      "model_sha256": "1b78a508460420d435e1e950c385cfad10d9a0bb48fe25a9ea3372030f9c5d6e",
+      "source_archive": "D:\\模型\\20261008\\babala_by_原神_4659bc03ee77144a87040ecb57611d64.rar",
+      "source_sha256": "b9309f9913f4deb1fc03c6f2962337582593cd394145196b89a60f07ca7ccaf5",
+      "body_pmx": "芭芭拉.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 4,
+        "clothes_chains": 14,
+        "colliders": 12,
+        "joints": 154
+      },
+      "bytes": 55215948
+    }
+  ]
+}

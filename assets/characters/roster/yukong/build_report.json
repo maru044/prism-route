@@ -1,0 +1,700 @@
+{
+  "id": "yukong",
+  "label": "驭空",
+  "vertices": 23298,
+  "bones": 415,
+  "morphs": 80,
+  "materials": 27,
+  "alpha": [
+    {
+      "name": "髪",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "上衣",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "体",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "手套",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "右袖",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "颜",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "眉眼",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "白目",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "目",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "目光",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "尾上饰",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "尾",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "下帘",
+      "mode": "MASK",
+      "min_alpha": 110,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.05174917491749175,
+      "middle_fraction": 0.0486028602860286
+    },
+    {
+      "name": "裤子",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "围脖",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "狐耳",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "齿",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "口",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "左袖",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "发饰",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "下帘+",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "右袖+",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "左袖+",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "下帘2",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "biaoq",
+      "mode": "MASK",
+      "min_alpha": 0,
+      "max_alpha": 255,
+      "transparent_fraction": 0.5920306593868123,
+      "partial_fraction": 0.13387757244855103,
+      "middle_fraction": 0.06916736665266694
+    },
+    {
+      "name": "目影",
+      "mode": "BLEND",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    }
+  ],
+  "physics": {
+    "hair_chains": 14,
+    "clothes_chains": 21,
+    "colliders": 12,
+    "joints": 199
+  },
+  "source_sha256": "6c49a507f6df444efca37973fc9c2d74c861c84de779e9dbbe2dd479917a0986",
+  "source_unchanged": true,
+  "max_weight_total_error": 0.0,
+  "foot_test": {
+    "bone": "足首.L",
+    "angle_deg": 25,
+    "moved_vertices_over_0_1mm": 303,
+    "max_displacement_m": 0.0850867556392336
+  },
+  "helper_links": [
+    [
+      "足D.L",
+      "足.L"
+    ],
+    [
+      "ひざD.L",
+      "ひざ.L"
+    ],
+    [
+      "足首D.L",
+      "足首.L"
+    ],
+    [
+      "足D.R",
+      "足.R"
+    ],
+    [
+      "ひざD.R",
+      "ひざ.R"
+    ],
+    [
+      "足首D.R",
+      "足首.R"
+    ]
+  ],
+  "chains": [
+    {
+      "group": "Clothes",
+      "attachment": "尾1",
+      "nodes": [
+        "尾2",
+        "尾3",
+        "尾4",
+        "尾5",
+        "尾6"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "下摆_0_0",
+      "nodes": [
+        "下摆_1_0",
+        "下摆_2_0",
+        "下摆_3_0",
+        "下摆_4_0",
+        "下摆_5_0",
+        "下摆_6_0"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "下摆_0_1",
+      "nodes": [
+        "下摆_1_1",
+        "下摆_2_1",
+        "下摆_3_1",
+        "下摆_4_1",
+        "下摆_5_1",
+        "下摆_6_1"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "下摆_0_2",
+      "nodes": [
+        "下摆_1_2",
+        "下摆_2_2",
+        "下摆_3_2"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "下摆_0_3",
+      "nodes": [
+        "下摆_1_3",
+        "下摆_2_3",
+        "下摆_3_3"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "下摆_0_4",
+      "nodes": [
+        "下摆_1_4",
+        "下摆_2_4",
+        "下摆_3_4",
+        "下摆_4_4",
+        "下摆_5_4",
+        "下摆_6_4",
+        "下摆_7_4",
+        "下摆_8_4",
+        "下摆_9_4",
+        "下摆_10_4",
+        "下摆_11_4"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "下摆_0_5",
+      "nodes": [
+        "下摆_1_5",
+        "下摆_2_5",
+        "下摆_3_5",
+        "下摆_4_5",
+        "下摆_5_5",
+        "下摆_6_5",
+        "下摆_7_5",
+        "下摆_8_5",
+        "下摆_9_5",
+        "下摆_10_5",
+        "下摆_11_5"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "下摆_0_6",
+      "nodes": [
+        "下摆_1_6",
+        "下摆_2_6",
+        "下摆_3_6",
+        "下摆_4_6",
+        "下摆_5_6",
+        "下摆_6_6",
+        "下摆_7_6",
+        "下摆_8_6",
+        "下摆_9_6",
+        "下摆_10_6",
+        "下摆_11_6"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "下摆_0_7",
+      "nodes": [
+        "下摆_1_7",
+        "下摆_2_7",
+        "下摆_3_7",
+        "下摆_4_7",
+        "下摆_5_7",
+        "下摆_6_7",
+        "下摆_7_7"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "下摆_0_8",
+      "nodes": [
+        "下摆_1_8",
+        "下摆_2_8",
+        "下摆_3_8",
+        "下摆_4_8",
+        "下摆_5_8",
+        "下摆_6_8",
+        "下摆_7_8",
+        "下摆_8_8",
+        "下摆_9_8",
+        "下摆_10_8",
+        "下摆_11_8"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "下摆_0_9",
+      "nodes": [
+        "下摆_1_9",
+        "下摆_2_9",
+        "下摆_3_9",
+        "下摆_4_9",
+        "下摆_5_9",
+        "下摆_6_9",
+        "下摆_7_9"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "下摆_0_10",
+      "nodes": [
+        "下摆_1_10",
+        "下摆_2_10",
+        "下摆_3_10",
+        "下摆_4_10",
+        "下摆_5_10",
+        "下摆_6_10",
+        "下摆_7_10",
+        "下摆_8_10",
+        "下摆_9_10",
+        "下摆_10_10",
+        "下摆_11_10"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "下摆_0_11",
+      "nodes": [
+        "下摆_1_11",
+        "下摆_2_11",
+        "下摆_3_11",
+        "下摆_4_11",
+        "下摆_5_11",
+        "下摆_6_11",
+        "下摆_7_11",
+        "下摆_8_11",
+        "下摆_9_11",
+        "下摆_10_11",
+        "下摆_11_11"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "下摆_0_12",
+      "nodes": [
+        "下摆_1_12",
+        "下摆_2_12",
+        "下摆_3_12",
+        "下摆_4_12",
+        "下摆_5_12",
+        "下摆_6_12",
+        "下摆_7_12",
+        "下摆_8_12",
+        "下摆_9_12",
+        "下摆_10_12",
+        "下摆_11_12"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "下摆_0_13",
+      "nodes": [
+        "下摆_1_13",
+        "下摆_2_13",
+        "下摆_3_13"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "下摆_0_14",
+      "nodes": [
+        "下摆_0_14",
+        "下摆_1_14",
+        "下摆_2_14"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "下摆_0_15",
+      "nodes": [
+        "下摆_1_15",
+        "下摆_2_15",
+        "下摆_3_15",
+        "下摆_4_15",
+        "下摆_5_15",
+        "下摆_6_15"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "earA_R_01_JNT",
+      "nodes": [
+        "earA_R_01_JNT",
+        "earA_R_02_JNT",
+        "earA_R_03_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "earA_L_01_JNT",
+      "nodes": [
+        "earA_L_01_JNT",
+        "earA_L_02_JNT",
+        "earA_L_03_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairFLc_00_JNT",
+      "nodes": [
+        "HairFLc_00_JNT",
+        "HairFLc_01_JNT",
+        "HairFLc_02_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairFLb_00_JNT",
+      "nodes": [
+        "HairFLb_00_JNT",
+        "HairFLb_01_JNT",
+        "HairFLb_02_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairFRc_00_JNT",
+      "nodes": [
+        "HairFRc_00_JNT",
+        "HairFRc_01_JNT",
+        "HairFRc_02_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairFRb_00_JNT",
+      "nodes": [
+        "HairFRb_00_JNT",
+        "HairFRb_01_JNT",
+        "HairFRb_02_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairBL_01a_00_JNT",
+      "nodes": [
+        "HairBL_01a_00_JNT",
+        "HairBL_01a_01_JNT",
+        "HairBL_01a_02_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairBL_01b_00_JNT",
+      "nodes": [
+        "HairBL_01b_00_JNT",
+        "HairBL_01b_01_JNT",
+        "HairBL_01b_02_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairBL_01c_00_JNT",
+      "nodes": [
+        "HairBL_01c_00_JNT",
+        "HairBL_01c_01_JNT",
+        "HairBL_01c_02_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairBL_01d_00_JNT",
+      "nodes": [
+        "HairBL_01d_00_JNT",
+        "HairBL_01d_01_JNT",
+        "HairBL_01d_02_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairBR_01a_00_JNT",
+      "nodes": [
+        "HairBR_01a_00_JNT",
+        "HairBR_01a_01_JNT",
+        "HairBR_01a_02_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairBR_01b_00_JNT",
+      "nodes": [
+        "HairBR_01b_00_JNT",
+        "HairBR_01b_01_JNT",
+        "HairBR_01b_02_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairBR_01c_00_JNT",
+      "nodes": [
+        "HairBR_01c_00_JNT",
+        "HairBR_01c_01_JNT",
+        "HairBR_01c_02_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairBR_01d_00_JNT",
+      "nodes": [
+        "HairBR_01d_00_JNT",
+        "HairBR_01d_01_JNT",
+        "HairBR_01d_02_JNT"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "袖_0_1.R",
+      "nodes": [
+        "袖_1_1.R",
+        "袖_2_1.R",
+        "袖_3_1.R",
+        "袖_4_1.R",
+        "袖_5_1.R",
+        "袖_6_1.R",
+        "袖_7_1.R",
+        "袖_8_1.R",
+        "袖_9_1.R",
+        "袖_10_1.R",
+        "袖_11_1.R"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "袖_0_1.L",
+      "nodes": [
+        "袖_1_1.L",
+        "袖_2_1.L",
+        "袖_3_1.L",
+        "袖_4_1.L",
+        "袖_5_1.L",
+        "袖_6_1.L",
+        "袖_7_1.L",
+        "袖_8_1.L",
+        "袖_9_1.L",
+        "袖_10_1.L",
+        "袖_11_1.L"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "围脖2",
+      "nodes": [
+        "围脖2",
+        "围脖3",
+        "围脖4"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "围脖5",
+      "nodes": [
+        "围脖6",
+        "围脖7",
+        "围脖8",
+        "围脖9",
+        "围脖10",
+        "围脖11"
+      ]
+    }
+  ],
+  "mesh_binary_preserved": true,
+  "output_sha256": "c1a57ce116fa13c4becea664fc8698cd8c3936c0d9ee37b89083051ec57abff8",
+  "mesh_binary_sha256": "8ab907a92b32906e470412a80441b16ff8297bb49a16b94cb48419f9ecbaad61",
+  "alpha_method": "UV triangle coverage on RGBA texture thumbnails with maximum edge 1024; material factor alpha preserved; validated in Godot."
+}
