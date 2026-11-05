@@ -22,7 +22,7 @@ var filtered_entries: Array = []
 var heading := Label.new()
 var hair_on := true
 var clothes_on := true
-var partner_on := true
+var partner_on := false # 暂时的选择：双人亲密交互碰撞不可预测，容易引起服饰/发丝高频震颤，默认关闭
 var group := Node3D.new()
 var scope_select := OptionButton.new()
 var view_mode := OptionButton.new()
@@ -33,6 +33,17 @@ var avatar_profiles: Array = []
 var model_overrides := {}
 var preview_floor: MeshInstance3D
 var ground_body: StaticBody3D
+var ground_snap_enabled := false
+var furniture_root := Node3D.new()
+var furniture_instance: Node3D = null
+var furniture_select := OptionButton.new()
+var furniture_offset := Vector3.ZERO
+var furniture_rot_y := 0.0
+var furniture_visible := false
+var furniture_catalog: Array = []
+var furn_offset_labels := {}
+var auto_furn_match := true
+var furn_slider_nodes := {}
 
 static func available_profiles() -> Array:
 	var result: Array=JSON.parse_string(FileAccess.get_file_as_string("res://assets/characters/mmd_validation/shared/manifest.json")).profiles
@@ -50,6 +61,13 @@ func _ready() -> void:
 	body_bones = ["下半身","Spine","Chest","Neck","Head","LeftShoulder","LeftUpperArm","LeftLowerArm","LeftHand","RightShoulder","RightUpperArm","RightLowerArm","RightHand","LeftUpperLeg","LeftLowerLeg","LeftFoot","LeftToes","RightUpperLeg","RightLowerLeg","RightFoot","RightToes"]
 	catalog = JSON.parse_string(FileAccess.get_file_as_string(CATALOG_PATH))
 	avatar_profiles=available_profiles()
+	const FURN_CAT := "res://assets/furniture/scifi/furniture_catalog.json"
+	if FileAccess.file_exists(FURN_CAT):
+		var raw_f := FileAccess.get_file_as_string(FURN_CAT)
+		var parsed_f: Dictionary = JSON.parse_string(raw_f)
+		if parsed_f and parsed_f.has("furniture"):
+			furniture_catalog = parsed_f["furniture"]
+	add_child(furniture_root)
 	_build_library_ui()
 	group.name = "PairedActors"
 	add_child(group)
@@ -138,7 +156,62 @@ func _build_library_ui() -> void:
 			environment.tonemap_exposure = v
 			light_label.text = "光照曝光 (Exposure: %.2f)" % v
 	)
-	details.custom_minimum_size=Vector2(330,150)
+	var ground_snap_toggle := CheckButton.new()
+	ground_snap_toggle.text = "贴地校准 (Ground Snap 补偿)"
+	ground_snap_toggle.button_pressed = false
+	panel.add_child(ground_snap_toggle)
+	ground_snap_toggle.toggled.connect(func(enabled: bool):
+		_update_ground_snap(enabled)
+	)
+	var furn_box := VBoxContainer.new()
+	panel.add_child(furn_box)
+	var furn_label := Label.new()
+	furn_label.text = "🪑 科技家具与交互对齐预览"
+	furn_label.add_theme_font_size_override("font_size", 14)
+	furn_box.add_child(furn_label)
+	furniture_select.add_item("隐藏家具 (None)")
+	furniture_select.add_item("★ 自动动作匹配 (Auto Match)")
+	for item in furniture_catalog:
+		furniture_select.add_item(item["name_zh"])
+	furniture_select.select(1)
+	furniture_visible = true
+	auto_furn_match = true
+	furn_box.add_child(furniture_select)
+	furniture_select.item_selected.connect(_on_furniture_selected)
+	var furn_sliders_container := VBoxContainer.new()
+	furn_box.add_child(furn_sliders_container)
+	for axis_info in [
+		{"name": "X", "label": "X 左右", "min": -2.0, "max": 2.0, "step": 0.01, "default": 0.0},
+		{"name": "Y", "label": "Y 高程", "min": -0.5, "max": 0.8, "step": 0.01, "default": 0.0},
+		{"name": "Z", "label": "Z 进深", "min": -2.0, "max": 2.0, "step": 0.01, "default": 0.0},
+		{"name": "Rot", "label": "水平朝向", "min": -180.0, "max": 180.0, "step": 5.0, "default": 0.0}
+	]:
+		var row := HBoxContainer.new()
+		var l := Label.new()
+		l.text = "%s: %.2f" % [axis_info.name, axis_info.default]
+		l.custom_minimum_size.x = 75
+		furn_offset_labels[axis_info.name] = l
+		var s := HSlider.new()
+		s.min_value = axis_info.min
+		s.max_value = axis_info.max
+		s.step = axis_info.step
+		s.value = axis_info.default
+		s.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		furn_slider_nodes[axis_info.name] = s
+		var ax: String = axis_info.name
+		s.value_changed.connect(func(v: float):
+			_on_furn_slider_changed(ax, v)
+		)
+		row.add_child(l)
+		row.add_child(s)
+		furn_sliders_container.add_child(row)
+	var reset_furn_btn := Button.new()
+	reset_furn_btn.text = "↺ 重置家具位姿偏移"
+	reset_furn_btn.pressed.connect(func():
+		_reset_furniture_sliders()
+	)
+	furn_box.add_child(reset_furn_btn)
+	details.custom_minimum_size=Vector2(330,240)
 	panel.add_child(details)
 	heading.position = Vector2(420,24)
 	heading.size=Vector2(1470,75)
@@ -166,12 +239,18 @@ func _build_library_ui() -> void:
 		if time>=duration: seek_frame(0)
 		playing = not playing
 		_refresh_ui())
-	for view in [{"label":"正面","yaw":0.0},{"label":"侧面","yaw":PI/2},{"label":"背面","yaw":PI}]:
+	for view_name in ["正面", "侧面", "背面"]:
 		var button := Button.new()
-		button.text = view.label
+		button.text = view_name
 		row.add_child(button)
 		button.pressed.connect(func():
-			if camera: yaw = view.yaw; _update_camera())
+			if camera:
+				var reversed: bool = _is_pack_reversed()
+				match view_name:
+					"正面": yaw = PI if reversed else 0.0
+					"侧面": yaw = PI / 2
+					"背面": yaw = 0.0 if reversed else PI
+				_update_camera())
 	var skeleton_toggle := CheckButton.new()
 	skeleton_toggle.text = "骨架"
 	row.add_child(skeleton_toggle)
@@ -179,7 +258,9 @@ func _build_library_ui() -> void:
 	for field in ["头发物理","服饰物理","对方碰撞"]:
 		var toggle := CheckButton.new()
 		toggle.text = field
-		toggle.button_pressed = true
+		toggle.button_pressed = (field != "对方碰撞")
+		if field == "对方碰撞":
+			toggle.tooltip_text = "【暂时的选择】默认关闭以防服饰高频震颤。需要观察对方身体碰撞对衣发的影响时可手动开启。"
 		row.add_child(toggle)
 		toggle.toggled.connect(func(value):
 			if field=="头发物理": hair_on=value
@@ -187,7 +268,7 @@ func _build_library_ui() -> void:
 			else: partner_on=value
 			_apply_physics())
 	var hint := Label.new()
-	hint.text = "同一时间轴控制全部角色 · 右键旋转 / 滚轮缩放 · 暂停动作后服饰继续收敛"
+	hint.text = "同一时间轴控制全部角色 · 对方碰撞默认关闭防震颤（暂时的选择，可手动开启） · 右键旋转 / 滚轮缩放"
 	controls.add_child(hint)
 
 func _filter_entries() -> void:
@@ -203,12 +284,19 @@ func _filter_entries() -> void:
 				entry=candidate
 				break
 		if entry.is_empty():continue
-		var haystack:String=item.label
+		var haystack:String=item.label + " " + item.get("title_zh", "") + " " + item.get("category_zh", "") + " " + item.get("description_zh", "")
+		if item.has("placement"):
+			haystack += " " + str(item.placement.get("type_zh", "")) + " " + str(item.placement.get("prop_needed", ""))
 		for track in item.source_tracks:haystack+=" "+str(track.file)
 		if not search.text.is_empty() and not haystack.to_lower().contains(search.text.to_lower()): continue
 		filtered_entries.append(entry)
-		library_list.add_item("%d人 · %s" % [people,item.label])
-		library_list.set_item_tooltip(filtered_entries.size()-1,"%s\n%d–%d 帧 · %.2f 秒 · %d 个角色位" % [item.label,item.frame_start,item.frame_end,item.duration,people])
+		var display_title: String = item.get("display_label", "%d人 · %s" % [people,item.label])
+		library_list.add_item(display_title)
+		var tooltip_desc: String = item.get("description_zh", "")
+		if not tooltip_desc.is_empty():
+			library_list.set_item_tooltip(filtered_entries.size()-1, "%s\n\n%s\n\n%d–%d 帧 · %.2f 秒 · %d 个角色位" % [display_title, tooltip_desc, item.frame_start, item.frame_end, item.duration, people])
+		else:
+			library_list.set_item_tooltip(filtered_entries.size()-1, "%s\n%d–%d 帧 · %.2f 秒 · %d 个角色位" % [item.label, item.frame_start, item.frame_end, item.duration, people])
 		if item.id==current_pack:library_list.select(filtered_entries.size()-1)
 	count_label.text="%d 个动作组 · 每组只列一次" % filtered_entries.size()
 	library_list.custom_minimum_size.y=clampf(filtered_entries.size()*30.0+12.0,150,344)
@@ -319,7 +407,8 @@ func select_entry(id: String) -> void:
 			if role.get("shared", false):
 				instance.translation_policy=role.get("translation_policy", "height_scaled")
 				var offset: Array=role.get("presentation_offset", [0,0,0])
-				instance.position=Vector3(offset[0],offset[1],offset[2])
+				var ground_snap_y: float = float(pack.placement.get("ground_offset", 0.0)) if (ground_snap_enabled and pack.has("placement")) else 0.0
+				instance.position=Vector3(offset[0], offset[1] + ground_snap_y, offset[2])
 			group.add_child(instance)
 			actors[role.id]=instance
 			if role.get("shared", false) and pack.roles.size()>2 and not pack.get("selected",false):
@@ -339,6 +428,9 @@ func select_entry(id: String) -> void:
 			proxy.configure(actors[role.id].skeleton,1 << (i+1))
 			role_proxies[role.id]=proxy
 		current_pack=entry.pack
+		yaw = PI if _is_pack_reversed() else 0.0
+		if auto_furn_match and furniture_visible:
+			_auto_match_furniture()
 	duration=float(pack.duration)
 	timeline.max_value=duration
 	visible_roles=entry.roles
@@ -375,17 +467,44 @@ func select_entry(id: String) -> void:
 		role_labels.append(pack.roles[i].id+" · "+_model_label(pack.roles[i]))
 		var file:String=str(pack.source_tracks[i].file).replace("\\","/").get_file()
 		source_labels.append("%s：%s" % [pack.roles[i].label,file])
-	heading.text=entry.label+"  |  "+" / ".join(role_labels)
-	details.text="配套来源：%s\n%s\n\n%d–%d 帧 / %d FPS / %.2f 秒\n当前显示：%s\n\n共用时钟，保留原始相对坐标。\n角色拆分是诊断视图，不代表原作是单人动作。\n\n接触适配待审阅，局部服饰重叠仍需处理。\n对方碰撞只作用于头发和服饰，不自动修正身体动作。" % [pack.label,"\n".join(source_labels),pack.frame_start,pack.frame_end,int(catalog.fps),duration,", ".join(visible_roles)]
-	if pack.get("shared", false):
+	var title_display: String = pack.get("display_label", entry.label)
+	heading.text = title_display + "  |  " + " / ".join(role_labels)
+	if pack.has("title_zh"):
+		var pinfo: Dictionary = pack.get("placement", {})
+		var rdesc_lines: Array[String] = []
+		if pack.has("roles_desc"):
+			for rid in pack.roles_desc:
+				rdesc_lines.append("  · 角色 %s: %s" % [rid, pack.roles_desc[rid]])
+		details.text = "【姿势】%s (%s)\n【分类】%s  |  【推荐依托】%s\n【基准标高】%.2fm  |  【贴地偏移】%.2fm\n\n【动作详解与特征】\n%s\n\n【角色分工】\n%s\n\n【规格】%d~%d 帧 | %d FPS | %.2f 秒 | %s\n\n※ 提示：对方碰撞已默认关闭（防止双人紧贴时服饰不可预测地持续震颤，属于当前阶段的暂时选择，可在底部控制栏随时手动开启）。" % [
+			pack.title_zh, pack.label,
+			pack.get("category_zh", ""),
+			pinfo.get("prop_needed", "地面"),
+			pinfo.get("base_height", 0.0),
+			pinfo.get("ground_offset", 0.0),
+			pack.get("description_zh", ""),
+			"\n".join(rdesc_lines),
+			pack.frame_start, pack.frame_end, int(catalog.fps), duration, ", ".join(visible_roles)
+		]
+	elif pack.get("shared", false):
 		details.text="%s\n\n%d 个角色实例，共用标准人形姿态资源。\n保留各自骨长与辅助骨结构。\n\n%.3f 秒 / %d FPS\n资源按来源角色位保存，不为目标角色复制。\n\n并排布局仅供观察；双人组保留共同坐标。\n头发与服饰使用各角色已有配置。\n接触适配与物理美术质量需另行审核。" % [pack.label,visible_roles.size(),duration,int(catalog.fps)]
-	if pack.get("selected",false):
+	elif pack.get("selected",false):
 		details.text="源范围 %d–%d 帧\n%.2f 秒 · %d 个角色位\n\n整组共用时间与坐标。模型可切换，动作资源保持共享。\n\n本批是身体动作；原表情、专有形变和道具独立接入。\n循环预览不代表接缝已修整。" % [pack.frame_start,pack.frame_end,duration,pack.roles.size()]
 	if current_pack=="shared_walk":
 		details.text="历史 VRMA 共享走路样本（非地图 A05）\n地图基础动作请打开 character_roster_review 场景。\n\n"+details.text
 	_sync_group_controls()
 	_filter_entries()
 	_refresh_ui()
+
+func _update_ground_snap(enabled: bool) -> void:
+	ground_snap_enabled = enabled
+	var offset_y: float = float(pack.placement.get("ground_offset", 0.0)) if (enabled and pack.has("placement")) else 0.0
+	for role_id in actors:
+		var inst: Node3D = actors[role_id]
+		var orig_offset: Array = [0, 0, 0]
+		for r in pack.roles:
+			if r.id == role_id:
+				orig_offset = r.get("presentation_offset", [0, 0, 0])
+		inst.position.y = orig_offset[1] + offset_y
 
 func _apply_physics() -> void:
 	for role_id in actors:
@@ -517,3 +636,101 @@ func _capture_sequence() -> void:
 	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png(directory+("/paired_side_006.png" if current_pack=="shared_walk" else "/paired_side_060.png"))
 	get_tree().quit()
+
+func _on_furniture_selected(index: int) -> void:
+	if index == 0:
+		furniture_visible = false
+		auto_furn_match = false
+		if furniture_instance:
+			furniture_instance.visible = false
+	elif index == 1:
+		furniture_visible = true
+		auto_furn_match = true
+		_auto_match_furniture()
+	else:
+		furniture_visible = true
+		auto_furn_match = false
+		var furn_data: Dictionary = furniture_catalog[index - 2]
+		_load_furniture(furn_data)
+
+func _is_pack_reversed() -> bool:
+	if not pack or pack.is_empty(): return false
+	return pack.id in [
+		"mmd_71dec5bd8390", "shared_mmd_role_a", "shared_pair",
+		"mmd_fcc0340f8227", "mmd_87e004f6db53", "mmd_c63e75bc7057",
+		"mmd_fca4bab1635f", "mmd_86e40adc8f14"
+	]
+
+func _auto_match_furniture() -> void:
+	if not furniture_visible or not auto_furn_match or not pack or pack.is_empty():
+		return
+	var target_id := ""
+	var default_offset := Vector3.ZERO
+	var default_rot := 0.0
+
+	# 现有的旧家具不再使用，仅将新研制的「几何悬挑」科技单人椅装配在最契合的单人/双人坐椅动作中，其余动作全部空置
+	match pack.id:
+		"mmd_781d8c87fd79": # Welcome - BJV2 (受纳方端坐受纳)
+			target_id = "prism_geo_chair"
+			default_offset = Vector3(0.0, 0.0, -0.51)
+			default_rot = 0.0
+		"mmd_beee0d2eb57b": # Loop 20 Chikan 03 (坐姿膝上怀抱把玩，角色B底座端坐，角色A跨坐膝上)
+			target_id = "prism_geo_chair"
+			default_offset = Vector3.ZERO
+			default_rot = 0.0
+		_:
+			# 其余全部动作（包括床沿、卧姿、地面等）不配家具，保持场景开阔空置
+			target_id = ""
+
+	if target_id != "":
+		for item in furniture_catalog:
+			if item.id == target_id:
+				_load_furniture(item, default_offset, default_rot)
+				break
+	else:
+		if furniture_instance:
+			furniture_instance.visible = false
+
+func _load_furniture(data: Dictionary, default_pos: Vector3 = Vector3.ZERO, default_rot_deg: float = 0.0) -> void:
+	for c in furniture_root.get_children():
+		c.queue_free()
+	furniture_instance = null
+	if not ResourceLoader.exists(data.file):
+		return
+	var res = load(data.file)
+	if res:
+		furniture_instance = res.instantiate()
+		furniture_root.add_child(furniture_instance)
+		furniture_instance.visible = furniture_visible
+		_set_furniture_sliders(default_pos, default_rot_deg)
+
+func _set_furniture_sliders(pos: Vector3, rot_deg: float) -> void:
+	furniture_offset = pos
+	furniture_rot_y = deg_to_rad(rot_deg)
+	if furn_slider_nodes.has("X"): furn_slider_nodes["X"].set_value_no_signal(pos.x)
+	if furn_slider_nodes.has("Y"): furn_slider_nodes["Y"].set_value_no_signal(pos.y)
+	if furn_slider_nodes.has("Z"): furn_slider_nodes["Z"].set_value_no_signal(pos.z)
+	if furn_slider_nodes.has("Rot"): furn_slider_nodes["Rot"].set_value_no_signal(rot_deg)
+	if furn_offset_labels.has("X"): furn_offset_labels["X"].text = "X: %.2f" % pos.x
+	if furn_offset_labels.has("Y"): furn_offset_labels["Y"].text = "Y: %.2f" % pos.y
+	if furn_offset_labels.has("Z"): furn_offset_labels["Z"].text = "Z: %.2f" % pos.z
+	if furn_offset_labels.has("Rot"): furn_offset_labels["Rot"].text = "Rot: %.0f°" % rot_deg
+	_update_furniture_transform()
+
+func _reset_furniture_sliders() -> void:
+	_set_furniture_sliders(Vector3.ZERO, 0.0)
+
+func _on_furn_slider_changed(axis: String, val: float) -> void:
+	match axis:
+		"X": furniture_offset.x = val
+		"Y": furniture_offset.y = val
+		"Z": furniture_offset.z = val
+		"Rot": furniture_rot_y = deg_to_rad(val)
+	if furn_offset_labels.has(axis):
+		furn_offset_labels[axis].text = ("%s: %.2f" % [axis, val]) if axis != "Rot" else ("Rot: %.0f°" % val)
+	_update_furniture_transform()
+
+func _update_furniture_transform() -> void:
+	if furniture_instance:
+		furniture_instance.position = furniture_offset
+		furniture_instance.rotation = Vector3(0, furniture_rot_y, 0)

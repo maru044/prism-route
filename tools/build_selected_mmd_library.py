@@ -9,6 +9,7 @@ import time
 import numpy as np
 from build_motion_review import Source, transform, worlds
 from build_shared_humanoid_validation import write_clip,lca
+from apply_motion_metadata import METADATA
 
 ROOT=Path(__file__).resolve().parents[1]
 CACHE=ROOT/'.model_import_build/mmd_selected'
@@ -109,20 +110,36 @@ def main():
                           'report':'res://assets/characters/mmd_selected/manifest.json','profile':default_profile,'shared':True,
                           'translation_policy':'shared_world','presentation_offset':[0,0,0]})
             print('SHARED_SELECTED '+json.dumps({'clip':record['id'],'bytes':record['bytes'],'reused':record['reused']}),flush=True)
-        packs.append({'id':item['id'],'label':item['label'],'selected':True,'shared':True,'duration':item['duration'],
+        pack_record = {'id':item['id'],'label':item['label'],'selected':True,'shared':True,'duration':item['duration'],
                       'frame_start':item['frame_start'],'frame_end':item['frame_end'],'loop_preview':False,'loop_status':'source segment; seam not modified',
                       'source_tracks':[{'file':r['source_file'],'sha256':r['source_sha256']} for r in item['roles']],
                       'roles':roles,'references':[r['reference'] for r in clip_reports],
-                      'dependency_note':'Body animation only; source expressions, custom deformations and props are separate.'})
-    assert len(packs)==19 and len(reports)==38 and sum(not r['reused'] for r in reports)==36
+                      'dependency_note':'Body animation only; source expressions, custom deformations and props are separate.'}
+        if item['id'] in METADATA:
+            meta = METADATA[item['id']]
+            pack_record.update({
+                'title_zh': meta['title_zh'],
+                'category': meta['category'],
+                'category_zh': meta['category_zh'],
+                'placement': meta['placement'],
+                'roles_desc': meta['roles_desc'],
+                'description_zh': meta['description_zh'],
+                'display_label': f"【{meta['category_zh']}】{meta['title_zh']} ({item['label']})"
+            })
+            for r in roles:
+                if r['id'] in meta['roles_desc']:
+                    r['label_zh'] = meta['roles_desc'][r['id']]
+        packs.append(pack_record)
+    assert len(packs)==20 and len(reports)==40 and sum(not r['reused'] for r in reports)==38
     manifest={'schema':1,'profiles':existing['profiles'],'readme_sha256':plan['readme_sha256'],'packs':packs,'clips':reports,
-              'counts':{'groups':19,'tracks':38,'new_tracks':36,'reused_tracks':2,'deferred_groups':2},'source_selection':'docs/motion_selection/README.md'}
+              'counts':{'groups':20,'tracks':40,'new_tracks':38,'reused_tracks':2,'deferred_groups':1},'source_selection':'docs/motion_selection/README.md'}
     (DEST/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf-8')
     catalog_path=ROOT/'assets/characters/mmd_validation/paired/catalog.json';catalog=json.loads(catalog_path.read_text(encoding='utf-8'))
     ids={p['id'] for p in packs}
     catalog['packs']=[p for p in catalog['packs'] if p['id'] not in ids]+packs
     catalog['entries']=[e for e in catalog['entries'] if e['pack'] not in ids]+[
-        {'id':p['id']+'_all','pack':p['id'],'label':p['label'],'roles':[r['id'] for r in p['roles']],'kind':'入选动作'} for p in packs]
+        {'id':p['id']+'_all','pack':p['id'],'label':p['label'],'roles':[r['id'] for r in p['roles']],'kind':'入选动作',
+         **({'title_zh': p['title_zh'], 'category': p['category'], 'category_zh': p['category_zh'], 'display_label': p['display_label']} if 'title_zh' in p else {})} for p in packs]
     # Start with an inexpensive solo; legacy/sample IDs remain available for regression.
     solo=next(p for p in packs if len(p['roles'])==1)
     catalog['default_entry']=solo['id']+'_all'

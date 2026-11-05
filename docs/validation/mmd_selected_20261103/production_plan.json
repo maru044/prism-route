@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "readme_sha256": "648879f160ad2df65549407ccf1844d0dba67da256c8f79e1aee892010d2162a",
+  "readme_sha256": "d8222151d5c14cfe626d2485bf3fceaf19a1354dedeae965359c6f8937b621f9",
   "source_root": "D:\\模型\\20261008\\Public R-18 Motions",
   "reference_models": {
     "A": "D:/模型/20261008/刻晴_by_原神_b0f08721a7da17df599896ac40dd2f22/刻晴/刻晴/刻晴.pmx",
@@ -377,6 +377,39 @@
       "translation_policy": "shared_world"
     },
     {
+      "id": "mmd_781d8c87fd79",
+      "label": "Welcome - BJV2 2021 Uptade",
+      "decision": "KEEP",
+      "frame_start": 0,
+      "frame_end": 4201,
+      "fps": 30,
+      "duration": 140.03333333333333,
+      "roles": [
+        {
+          "id": "A",
+          "source_file": "Welcome - BJV2 2021 Uptade/Welcome - Blowjob V2 - Izumi.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Welcome - BJV2 2021 Uptade\\Welcome - Blowjob V2 - Izumi.vmd",
+          "source_sha256": "f1a9247add8211d0bfedfec6076b3d3a0ee347cff3bad191a953050c9eaa15ae",
+          "source_frame_end": 4201,
+          "reference": "A",
+          "clip_id": "mmd_781d8c87fd79_a",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_781d8c87fd79_a.glb"
+        },
+        {
+          "id": "B",
+          "source_file": "Welcome - BJV2 2021 Uptade/Welcome - Blowjob V2 - Maran.vmd",
+          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Welcome - BJV2 2021 Uptade\\Welcome - Blowjob V2 - Maran.vmd",
+          "source_sha256": "972b43dea9f54516c3b9017822388dcd779bf1fbda32d232a0097088563f844a",
+          "source_frame_end": 4201,
+          "reference": "B",
+          "clip_id": "mmd_781d8c87fd79_b",
+          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_781d8c87fd79_b.glb"
+        }
+      ],
+      "loop_policy": "manual_preview_only; no source seam modification",
+      "translation_policy": "shared_world"
+    },
+    {
       "id": "mmd_4f041b833292",
       "label": "Motorcycle Photoshoot 2nd pose",
       "decision": "MAYBE",
@@ -404,39 +437,6 @@
           "reference": "B",
           "clip_id": "mmd_4f041b833292_b",
           "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_4f041b833292_b.glb"
-        }
-      ],
-      "loop_policy": "manual_preview_only; no source seam modification",
-      "translation_policy": "shared_world"
-    },
-    {
-      "id": "mmd_781d8c87fd79",
-      "label": "Welcome - BJV2 2021 Uptade",
-      "decision": "MAYBE",
-      "frame_start": 0,
-      "frame_end": 4201,
-      "fps": 30,
-      "duration": 140.03333333333333,
-      "roles": [
-        {
-          "id": "A",
-          "source_file": "Welcome - BJV2 2021 Uptade/Welcome - Blowjob V2 - Izumi.vmd",
-          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Welcome - BJV2 2021 Uptade\\Welcome - Blowjob V2 - Izumi.vmd",
-          "source_sha256": "f1a9247add8211d0bfedfec6076b3d3a0ee347cff3bad191a953050c9eaa15ae",
-          "source_frame_end": 4201,
-          "reference": "A",
-          "clip_id": "mmd_781d8c87fd79_a",
-          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_781d8c87fd79_a.glb"
-        },
-        {
-          "id": "B",
-          "source_file": "Welcome - BJV2 2021 Uptade/Welcome - Blowjob V2 - Maran.vmd",
-          "source_path": "D:\\模型\\20261008\\Public R-18 Motions\\Welcome - BJV2 2021 Uptade\\Welcome - Blowjob V2 - Maran.vmd",
-          "source_sha256": "972b43dea9f54516c3b9017822388dcd779bf1fbda32d232a0097088563f844a",
-          "source_frame_end": 4201,
-          "reference": "B",
-          "clip_id": "mmd_781d8c87fd79_b",
-          "baked_glb": "D:\\Prism Route\\prism-route\\.model_import_build\\mmd_selected\\mmd_781d8c87fd79_b.glb"
         }
       ],
       "loop_policy": "manual_preview_only; no source seam modification",

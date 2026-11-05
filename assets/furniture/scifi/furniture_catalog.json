@@ -1,0 +1,25 @@
+{
+  "furniture": [
+    {
+      "id": "prism_geo_chair",
+      "name_zh": "「折面穹壳」科技造型单人椅 (Prism Sculpted Origami Lounge Chair)",
+      "category": "chair",
+      "file": "res://assets/furniture/prism/prism_geo_chair.glb",
+      "dimensions": {
+        "width": 0.984,
+        "depth": 0.988,
+        "height": 0.862
+      },
+      "seat_surface_height": 0.420,
+      "recline_angle_deg": 27.5,
+      "facing": "+Z",
+      "backrest": "-Z",
+      "ground_contact_y": 0.0,
+      "materials": [
+        "Prism_White_Hard (纯白硬质微折面建筑体块，27.5°后仰大躺角避让头颈)",
+        "Prism_Slate_Blue_Cushion (低饱和典雅蓝灰织物座垫/靠垫)",
+        "Prism_Brushed_Metal (底部微缩悬浮钛金金属底座)"
+      ]
+    }
+  ]
+}

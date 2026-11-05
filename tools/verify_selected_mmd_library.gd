@@ -3,8 +3,8 @@ extends "res://tools/verify_shared_humanoid_validation.gd"
 
 func _run() -> void:
 	var manifest:Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://assets/characters/mmd_selected/manifest.json"))
-	check(manifest.packs.size()==19 and manifest.clips.size()==38,"Selected library count mismatch")
-	check(manifest.counts.new_tracks==36 and manifest.counts.reused_tracks==2,"Unexpected per-target or repeated bakes")
+	check(manifest.packs.size()==20 and manifest.clips.size()==40,"Selected library count mismatch")
+	check(manifest.counts.new_tracks==38 and manifest.counts.reused_tracks==2,"Unexpected per-target or repeated bakes")
 	var scene=load("res://scenes/character_mmd_vrm_validation.tscn").instantiate()
 	root.add_child(scene)
 	for i in 300:
@@ -13,7 +13,7 @@ func _run() -> void:
 	check(scene.initialized,"Preview did not initialize")
 	if not scene.initialized:quit(1);return
 	scene.playing=false
-	check(scene.scope_select.selected==0 and scene.filtered_entries.size()==19,"Main list must contain nineteen groups")
+	check(scene.scope_select.selected==0 and scene.filtered_entries.size()==20,"Main list must contain twenty groups")
 	var group_ids:={}
 	for entry in scene.filtered_entries:
 		check(not group_ids.has(entry.pack),"Group appears more than once")
@@ -22,7 +22,7 @@ func _run() -> void:
 	for people in [1,2,3]:
 		scene.category.select(people);scene._filter_entries()
 		filtered_counts.append(scene.filtered_entries.size())
-	check(filtered_counts==[1,17,1],"Solo/pair/triple group filter failed")
+	check(filtered_counts==[1,18,1],"Solo/pair/triple group filter failed")
 	scene.category.select(0);scene.search.text="Loop 08";scene._filter_entries()
 	check(scene.filtered_entries.size()==1,"Group search failed")
 	scene.search.text="";scene._filter_entries()

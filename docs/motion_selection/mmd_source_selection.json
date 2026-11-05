@@ -321,6 +321,35 @@
         "B": "D:/模型/ganyu_by_原神_7381ccd84ee8763ce63b3ad638e1c49b/甘雨.pmx"
       }
     },
+    "f9d25dcd3b5d72e24562": {
+      "id": "f9d25dcd3b5d72e24562",
+      "source_key": "40749aba098403b585e5",
+      "folder_id": "781d8c87fd794638",
+      "source_folder": "Welcome - BJV2 2021 Uptade",
+      "decision": "KEEP",
+      "roles": [
+        {
+          "slot": "A",
+          "file": "Welcome - BJV2 2021 Uptade/Welcome - Blowjob V2 - Izumi.vmd",
+          "sha256": "f1a9247add8211d0bfedfec6076b3d3a0ee347cff3bad191a953050c9eaa15ae"
+        },
+        {
+          "slot": "B",
+          "file": "Welcome - BJV2 2021 Uptade/Welcome - Blowjob V2 - Maran.vmd",
+          "sha256": "972b43dea9f54516c3b9017822388dcd779bf1fbda32d232a0097088563f844a"
+        }
+      ],
+      "fps": 30,
+      "frame_start": 0,
+      "frame_end": 4201,
+      "note": "README confirmed shortlist; first-listed partner variant.",
+      "rough_special_preview": false,
+      "authority": "docs/motion_selection/README.md",
+      "reference_models": {
+        "A": "D:/模型/20261008/刻晴_by_原神_b0f08721a7da17df599896ac40dd2f22/刻晴/刻晴/刻晴.pmx",
+        "B": "D:/模型/ganyu_by_原神_7381ccd84ee8763ce63b3ad638e1c49b/甘雨.pmx"
+      }
+    },
     "e9cc03528dacd902cb16": {
       "id": "e9cc03528dacd902cb16",
       "source_key": "043ec1059ff677321d98",
@@ -342,35 +371,6 @@
       "fps": 30,
       "frame_start": 0,
       "frame_end": 1615,
-      "note": "README confirmed shortlist; first-listed partner variant.",
-      "rough_special_preview": false,
-      "authority": "docs/motion_selection/README.md",
-      "reference_models": {
-        "A": "D:/模型/20261008/刻晴_by_原神_b0f08721a7da17df599896ac40dd2f22/刻晴/刻晴/刻晴.pmx",
-        "B": "D:/模型/ganyu_by_原神_7381ccd84ee8763ce63b3ad638e1c49b/甘雨.pmx"
-      }
-    },
-    "f9d25dcd3b5d72e24562": {
-      "id": "f9d25dcd3b5d72e24562",
-      "source_key": "40749aba098403b585e5",
-      "folder_id": "781d8c87fd794638",
-      "source_folder": "Welcome - BJV2 2021 Uptade",
-      "decision": "MAYBE",
-      "roles": [
-        {
-          "slot": "A",
-          "file": "Welcome - BJV2 2021 Uptade/Welcome - Blowjob V2 - Izumi.vmd",
-          "sha256": "f1a9247add8211d0bfedfec6076b3d3a0ee347cff3bad191a953050c9eaa15ae"
-        },
-        {
-          "slot": "B",
-          "file": "Welcome - BJV2 2021 Uptade/Welcome - Blowjob V2 - Maran.vmd",
-          "sha256": "972b43dea9f54516c3b9017822388dcd779bf1fbda32d232a0097088563f844a"
-        }
-      ],
-      "fps": 30,
-      "frame_start": 0,
-      "frame_end": 4201,
       "note": "README confirmed shortlist; first-listed partner variant.",
       "rough_special_preview": false,
       "authority": "docs/motion_selection/README.md",

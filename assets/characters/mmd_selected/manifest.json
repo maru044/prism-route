@@ -26,7 +26,7 @@
       "model_sha256": "60075651511ad4e94717c7c7cf56c663e19dc7cc81d2c8bf04a4e1b479d26108"
     }
   ],
-  "readme_sha256": "648879f160ad2df65549407ccf1844d0dba67da256c8f79e1aee892010d2162a",
+  "readme_sha256": "d8222151d5c14cfe626d2485bf3fceaf19a1354dedeae965359c6f8937b621f9",
   "packs": [
     {
       "id": "mmd_0a3f6ba5f5de",
@@ -62,7 +62,8 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "侍奉方 (女) - 双膝跪于床前地面，俯身贴合侍奉"
         },
         {
           "id": "B",
@@ -77,14 +78,31 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "竿役受纳方 (男) - 仰躺/半靠于床沿，双腿微曲垂向地面"
         }
       ],
       "references": [
         "res://docs/validation/mmd_selected_20261103/references/mmd_0a3f6ba5f5de_a_reference.json",
         "res://docs/validation/mmd_selected_20261103/references/mmd_0a3f6ba5f5de_b_reference.json"
       ],
-      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate.",
+      "title_zh": "床沿仰卧胸部侍奉",
+      "category": "foreplay",
+      "category_zh": "前戏互动",
+      "placement": {
+        "type": "bed",
+        "type_zh": "床沿/软榻",
+        "base_height": 0.45,
+        "ground_offset": 0.0,
+        "prop_needed": "床沿 / 软榻边沿 (高度 ~0.45m，竿役半躺床面，双腿下垂)"
+      },
+      "roles_desc": {
+        "A": "侍奉方 (女) - 双膝跪于床前地面，俯身贴合侍奉",
+        "B": "竿役受纳方 (男) - 仰躺/半靠于床沿，双腿微曲垂向地面"
+      },
+      "description_zh": "床沿仰卧亲密侍奉姿态。竿役（受纳方）半仰躺于床沿或软榻表面（依托高度约0.42m~0.48m），双腿垂向床前地面；女方双膝跪于床前地面，俯身进行温柔胸部侍奉，伴随躯干起伏与深情头部互动。本动作实际交互依托为床沿，并非单人椅。",
+      "display_label": "【前戏互动】床沿仰卧胸部侍奉 (Armchair Paizuri - By Ademar440)"
     },
     {
       "id": "mmd_16a2ecfb7781",
@@ -120,7 +138,8 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "施力方 (女) - 双膝跪趴在男方双腿之间执行口交侍奉"
         },
         {
           "id": "B",
@@ -135,14 +154,31 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "受役方 (男) - 平躺仰卧，双臂自然垂放"
         }
       ],
       "references": [
         "res://docs/validation/mmd_selected_20261103/references/mmd_16a2ecfb7781_a_reference.json",
         "res://docs/validation/mmd_selected_20261103/references/mmd_16a2ecfb7781_b_reference.json"
       ],
-      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate.",
+      "title_zh": "双人卧榻口交侍奉",
+      "category": "oral",
+      "category_zh": "口交侍奉",
+      "placement": {
+        "type": "ground",
+        "type_zh": "地面/低床",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "床铺 / 地毯 / 榻榻米 (0.00m~0.05m)"
+      },
+      "roles_desc": {
+        "A": "施力方 (女) - 双膝跪趴在男方双腿之间执行口交侍奉",
+        "B": "受役方 (男) - 平躺仰卧，双臂自然垂放"
+      },
+      "description_zh": "标准的卧姿亲密口交动作。男方完全平躺仰卧，女方跪趴在男方两腿之间俯首进行深情而细致的口部侍奉。虽然原名含Bed，但动作烘焙基准面在 0.00m 地面，可直接在地毯、草地、榻榻米或低矮床榻上自然播放。",
+      "display_label": "【口交侍奉】双人卧榻口交侍奉 (BJ in Bed)"
     },
     {
       "id": "mmd_67d58e9d607e",
@@ -178,7 +214,8 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "施力方 (女) - 居高临下站立，单脚踩踏抚弄"
         },
         {
           "id": "B",
@@ -193,14 +230,31 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "受役方 (男) - 平躺在地面，仰视并承受足部踩踏侍奉"
         }
       ],
       "references": [
         "res://docs/validation/mmd_selected_20261103/references/mmd_67d58e9d607e_a_reference.json",
         "res://docs/validation/mmd_selected_20261103/references/mmd_67d58e9d607e_b_reference.json"
       ],
-      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate.",
+      "title_zh": "女王踩踏足交",
+      "category": "foreplay",
+      "category_zh": "前戏互动",
+      "placement": {
+        "type": "ground",
+        "type_zh": "地面",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "地面 (0.00m)"
+      },
+      "roles_desc": {
+        "A": "施力方 (女) - 居高临下站立，单脚踩踏抚弄",
+        "B": "受役方 (男) - 平躺在地面，仰视并承受足部踩踏侍奉"
+      },
+      "description_zh": "极具支配感的女王踩踏足交。女方高傲站立在地面（0.00m），单脚抬起踩在男方要害处反复碾磨抚弄；男方平躺在地面仰视承受。具有极高的角色性格反差与互动张力，适合傲娇、御姐或主仆角色调教情境。",
+      "display_label": "【前戏互动】女王踩踏足交 (Dominating FJ)"
     },
     {
       "id": "mmd_6e891982bb51",
@@ -232,13 +286,29 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "自慰女主角 - 仰卧半倚，单手抚弄敏感处，身体起伏微颤"
         }
       ],
       "references": [
         "res://docs/validation/mmd_selected_20261103/references/mmd_6e891982bb51_a_reference.json"
       ],
-      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate.",
+      "title_zh": "单人沉醉自慰循环",
+      "category": "solo",
+      "category_zh": "单人自慰",
+      "placement": {
+        "type": "bed",
+        "type_zh": "床铺/高台",
+        "base_height": 0.48,
+        "ground_offset": -0.48,
+        "prop_needed": "床铺 / 软垫 (高度 ~0.48m)"
+      },
+      "roles_desc": {
+        "A": "自慰女主角 - 仰卧半倚，单手抚弄敏感处，身体起伏微颤"
+      },
+      "description_zh": "细腻的单人仰卧自慰循环动作。角色仰卧在床榻上，一手抚摸胸前一手轻抚腿心，伴随迷离的头部轻晃与呼吸喘息起伏。源动作依托约 0.48m 高的床面，贴地播放时可应用 -0.48m 下沉补偿贴紧草地或地毯。",
+      "display_label": "【单人自慰】单人沉醉自慰循环 (Loop 02)"
     },
     {
       "id": "mmd_71dec5bd8390",
@@ -274,7 +344,8 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "抚弄女方 - 侧坐于床榻边缘，双脚垂地，探手轻抚身旁少女"
         },
         {
           "id": "B",
@@ -289,14 +360,31 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "受抚女方 - 倚坐于床榻，单腿屈起搭在床面，娇羞迎合手指温存"
         }
       ],
       "references": [
         "res://assets/characters/mmd_validation/shared/shared_mmd_role_a_reference.json",
         "res://assets/characters/mmd_validation/shared/shared_mmd_role_b_reference.json"
       ],
-      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate.",
+      "title_zh": "双女床沿闲坐温存",
+      "category": "yuri",
+      "category_zh": "百合互慰",
+      "placement": {
+        "type": "bed",
+        "type_zh": "床沿/软榻/沙发",
+        "base_height": 0.52,
+        "ground_offset": -0.52,
+        "prop_needed": "双人床 / 床沿 / 软榻沙发 (座高 ~0.50m~0.55m)"
+      },
+      "roles_desc": {
+        "A": "抚弄女方 - 侧坐于床榻边缘，双脚垂地，探手轻抚身旁少女",
+        "B": "受抚女方 - 倚坐于床榻，单腿屈起搭在床面，娇羞迎合手指温存"
+      },
+      "description_zh": "细腻的双女床沿温存爱抚。两名少女依偎在床榻或沙发边缘（座面高约0.50m~0.55m），B角色单腿屈起坐在床面娇羞迎合，A角色侧坐床沿伸手探入其双腿之间轻柔挑逗慢捻。无男性骨骼依赖，非常适合卧室大床或窗边软榻的百合私密互动。",
+      "display_label": "【百合互慰】双女床沿闲坐温存 (Loop 03)"
     },
     {
       "id": "mmd_aec34d147925",
@@ -332,7 +420,8 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "受抚女方 - 仰卧在床铺上(高度0.52m)，双腿大开屈膝迎合深入"
         },
         {
           "id": "B",
@@ -347,14 +436,31 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "抚弄女方 - 坐在床沿/床边地面，俯身向床上的少女热烈抚摸"
         }
       ],
       "references": [
         "res://docs/validation/mmd_selected_20261103/references/mmd_aec34d147925_a_reference.json",
         "res://docs/validation/mmd_selected_20261103/references/mmd_aec34d147925_b_reference.json"
       ],
-      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate.",
+      "title_zh": "双女床榻深层爱抚",
+      "category": "yuri",
+      "category_zh": "百合互慰",
+      "placement": {
+        "type": "bed",
+        "type_zh": "床铺/床沿",
+        "base_height": 0.52,
+        "ground_offset": -0.52,
+        "prop_needed": "双人床铺 (床面高 ~0.52m，抚弄方立于床沿)"
+      },
+      "roles_desc": {
+        "A": "受抚女方 - 仰卧在床铺上(高度0.52m)，双腿大开屈膝迎合深入",
+        "B": "抚弄女方 - 坐在床沿/床边地面，俯身向床上的少女热烈抚摸"
+      },
+      "description_zh": "高落差的情趣双女床榻爱抚。受弄少女（A角色）整个人完全平躺仰卧在0.52m高的大床中央，双腿大开屈膝起伏；抚弄少女（B角色）坐在床沿或床边，俯身将手探向床上少女腿心深入快速抽送爱抚。非常适合卧室内大床的深度百合前戏。",
+      "display_label": "【百合互慰】双女床榻深层爱抚 (Loop 05)"
     },
     {
       "id": "mmd_9957977a1355",
@@ -390,7 +496,8 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "百合女方 1 - 平躺屈腿，骨盆与对方紧密交错相贴"
         },
         {
           "id": "B",
@@ -405,14 +512,31 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "百合女方 2 - 跨交相拥，双腿交错磨蹭摩擦"
         }
       ],
       "references": [
         "res://docs/validation/mmd_selected_20261103/references/mmd_9957977a1355_a_reference.json",
         "res://docs/validation/mmd_selected_20261103/references/mmd_9957977a1355_b_reference.json"
       ],
-      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate.",
+      "title_zh": "双女百合磨豆腐",
+      "category": "yuri",
+      "category_zh": "百合互慰",
+      "placement": {
+        "type": "ground",
+        "type_zh": "地面",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "地面 / 软垫 (0.00m)"
+      },
+      "roles_desc": {
+        "A": "百合女方 1 - 平躺屈腿，骨盆与对方紧密交错相贴",
+        "B": "百合女方 2 - 跨交相拥，双腿交错磨蹭摩擦"
+      },
+      "description_zh": "极其珍稀的纯百合贴面摩擦（Tribadism / 磨豆腐）。两位女主角在地面上双腿交错、跨部紧紧贴合在一起，通过骨盆的辗转研磨与相互摩擦达到高潮。无任何外置模型或男性依赖，是纯正双女角色的顶级浪漫资产。",
+      "display_label": "【百合互慰】双女百合磨豆腐 (Loop 08)"
     },
     {
       "id": "mmd_fcc0340f8227",
@@ -448,7 +572,8 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "侍奉女方 - 双膝跪地，仰头专注口交侍奉"
         },
         {
           "id": "B",
@@ -463,14 +588,31 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "站立男方 - 挺立在地面，低头抚摸女方头部"
         }
       ],
       "references": [
         "res://docs/validation/mmd_selected_20261103/references/mmd_fcc0340f8227_a_reference.json",
         "res://docs/validation/mmd_selected_20261103/references/mmd_fcc0340f8227_b_reference.json"
       ],
-      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate.",
+      "title_zh": "站姿受纳跪地侍奉",
+      "category": "oral",
+      "category_zh": "口交侍奉",
+      "placement": {
+        "type": "ground",
+        "type_zh": "地面",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "地面 (0.00m)"
+      },
+      "roles_desc": {
+        "A": "侍奉女方 - 双膝跪地，仰头专注口交侍奉",
+        "B": "站立男方 - 挺立在地面，低头抚摸女方头部"
+      },
+      "description_zh": "高低位差强烈的经典站跪口交。男方自然站立在地面（0.00m），女方温顺地双膝跪地仰视男方，双手环抱男方大腿深情吞吐。适合在任何走廊、墙角、野外树下随时触发，极具征服感与侍奉温情。",
+      "display_label": "【口交侍奉】站姿受纳跪地侍奉 (Loop 13 - KBJ)"
     },
     {
       "id": "mmd_8c5c490fb87c",
@@ -506,7 +648,8 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "被拥女方 - 亭亭玉立，感受背后传来的温度与抚弄"
         },
         {
           "id": "B",
@@ -521,14 +664,31 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "环抱方 - 从背后贴身环抱，双手在胸腹间游移探抚"
         }
       ],
       "references": [
         "res://docs/validation/mmd_selected_20261103/references/mmd_8c5c490fb87c_a_reference.json",
         "res://docs/validation/mmd_selected_20261103/references/mmd_8c5c490fb87c_b_reference.json"
       ],
-      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate.",
+      "title_zh": "背后贴身亲密爱抚",
+      "category": "intimate_daily",
+      "category_zh": "日常温存",
+      "placement": {
+        "type": "ground",
+        "type_zh": "地面",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "地面 (0.00m)"
+      },
+      "roles_desc": {
+        "A": "被拥女方 - 亭亭玉立，感受背后传来的温度与抚弄",
+        "B": "环抱方 - 从背后贴身环抱，双手在胸腹间游移探抚"
+      },
+      "description_zh": "站姿背后温存贴身爱抚。男方从后方完全贴住女方后背，下巴抵在女方肩颈处，双臂环绕在其腰腹与胸前缓缓游移抚摸；女方微微后仰依偎在怀中。既可作为日常拥抱亲昵，也可作为情挑前戏。",
+      "display_label": "【日常温存】背后贴身亲密爱抚 (Loop 17 - Chikan 01)"
     },
     {
       "id": "mmd_beee0d2eb57b",
@@ -564,7 +724,8 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "受役女方 - 被主人宠溺抱在膝头怀里，娇躯依偎任由随性把玩"
         },
         {
           "id": "B",
@@ -579,14 +740,31 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "主人位 (男) - 端坐于座椅或床沿，双脚踏地，怀抱少女随性扣弄把玩"
         }
       ],
       "references": [
         "res://docs/validation/mmd_selected_20261103/references/mmd_beee0d2eb57b_a_reference.json",
         "res://docs/validation/mmd_selected_20261103/references/mmd_beee0d2eb57b_b_reference.json"
       ],
-      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate.",
+      "title_zh": "坐姿膝上怀抱把玩",
+      "category": "intimate_daily",
+      "category_zh": "日常温存",
+      "placement": {
+        "type": "seat",
+        "type_zh": "座椅/沙发/床沿",
+        "base_height": 0.48,
+        "ground_offset": 0.0,
+        "prop_needed": "沙发 / 椅子 / 床沿 (座高 ~0.45m~0.50m)"
+      },
+      "roles_desc": {
+        "A": "受役女方 - 被主人宠溺抱在膝头怀里，娇躯依偎任由随性把玩",
+        "B": "主人位 (男) - 端坐于座椅或床沿，双脚踏地，怀抱少女随性扣弄把玩"
+      },
+      "description_zh": "深度契合设定集的坐姿怀抱温存常驻动作。男方以主人姿态端坐在沙发、椅凳或床沿上（座高约0.48m，双脚踏地），将受役少女宠溺地抱在膝头大腿上，单手揽抱入怀，另一手随性扣弄抚弄把玩；少女娇躯微颤温顺依偎。与站姿的Loop 17形成完美的一站一坐常驻待机互补。",
+      "display_label": "【日常温存】坐姿膝上怀抱把玩 (Loop 20 - Chikan 03)"
     },
     {
       "id": "mmd_7869c66910b9",
@@ -626,7 +804,8 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "侍奉女方 1 - 跪趴在左侧，专注亲吻抚弄"
         },
         {
           "id": "B",
@@ -641,7 +820,8 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "侍奉女方 2 - 跪趴在右侧，协同包夹挑逗"
         },
         {
           "id": "C",
@@ -656,7 +836,8 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "受役男方 - 仰面享受两位少女的左右侍奉"
         }
       ],
       "references": [
@@ -664,7 +845,100 @@
         "res://docs/validation/mmd_selected_20261103/references/mmd_7869c66910b9_b_reference.json",
         "res://docs/validation/mmd_selected_20261103/references/mmd_7869c66910b9_c_reference.json"
       ],
-      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate.",
+      "title_zh": "双女天使合璧侍奉",
+      "category": "oral",
+      "category_zh": "口交侍奉",
+      "placement": {
+        "type": "ground",
+        "type_zh": "地面",
+        "base_height": 0.0,
+        "ground_offset": 0.2,
+        "prop_needed": "地面 / 大床 (0.00m)"
+      },
+      "roles_desc": {
+        "A": "侍奉女方 1 - 跪趴在左侧，专注亲吻抚弄",
+        "B": "侍奉女方 2 - 跪趴在右侧，协同包夹挑逗",
+        "C": "受役男方 - 仰面享受两位少女的左右侍奉"
+      },
+      "description_zh": "豪华的三人 3P 双飞口交大作。两名少女宛如双生天使般分别跪在男方身体两侧，一人主攻一人从旁协助，双手与唇齿交替侍奉。源动作手膝略微下沉 0.20m，通过 +0.20m 补偿后贴地效果绝佳。",
+      "display_label": "【口交侍奉】双女天使合璧侍奉 (Loop 27 - Twin Angels-V2)"
+    },
+    {
+      "id": "mmd_781d8c87fd79",
+      "label": "Welcome - BJV2 2021 Uptade",
+      "selected": true,
+      "shared": true,
+      "duration": 140.03333333333333,
+      "frame_start": 0,
+      "frame_end": 4201,
+      "loop_preview": false,
+      "loop_status": "source segment; seam not modified",
+      "source_tracks": [
+        {
+          "file": "Welcome - BJV2 2021 Uptade/Welcome - Blowjob V2 - Izumi.vmd",
+          "sha256": "f1a9247add8211d0bfedfec6076b3d3a0ee347cff3bad191a953050c9eaa15ae"
+        },
+        {
+          "file": "Welcome - BJV2 2021 Uptade/Welcome - Blowjob V2 - Maran.vmd",
+          "sha256": "972b43dea9f54516c3b9017822388dcd779bf1fbda32d232a0097088563f844a"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_781d8c87fd79_a.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "keqing",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "侍奉方 (女) - 双膝跪地(0.00m)，微仰头为主人进行深情口交侍奉"
+        },
+        {
+          "id": "B",
+          "label": "角色 B",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_selected/animations/mmd_781d8c87fd79_b.tres",
+          "report": "res://assets/characters/mmd_selected/manifest.json",
+          "profile": "ganyu",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "受役方 (男) - 端坐于单人沙发/靠椅(骨盆0.51m)，双手自然扶倚享受侍奉"
+        }
+      ],
+      "references": [
+        "res://docs/validation/mmd_selected_20261103/references/mmd_781d8c87fd79_a_reference.json",
+        "res://docs/validation/mmd_selected_20261103/references/mmd_781d8c87fd79_b_reference.json"
+      ],
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate.",
+      "title_zh": "沙发端坐受纳口交",
+      "category": "oral",
+      "category_zh": "口交侍奉",
+      "placement": {
+        "type": "seat",
+        "type_zh": "座椅/沙发",
+        "base_height": 0.48,
+        "ground_offset": 0.0,
+        "prop_needed": "单人沙发 / 靠背扶手椅 (座高 ~0.45m~0.48m)"
+      },
+      "roles_desc": {
+        "A": "侍奉方 (女) - 双膝跪地(0.00m)，微仰头为主人进行深情口交侍奉",
+        "B": "受役方 (男) - 端坐于单人沙发/靠椅(骨盆0.51m)，双手自然扶倚享受侍奉"
+      },
+      "description_zh": "长达140秒的超豪华主仆口交过场全流程。男方端坐于单人沙发/靠椅上（骨盆高0.51m，适配座高0.45m~0.48m，双脚自然踩地），女方双膝跪地（地面0.00m），包含从前期手部轻抚调情平滑推进到深情跪地口交侍奉的完整叙事演出。非常适合作为主线推进、养成达成或专属Cutscene的极品坐姿侍奉动作。",
+      "display_label": "【口交侍奉】沙发端坐受纳口交 (Welcome - BJV2 2021 Uptade)"
     },
     {
       "id": "mmd_87e004f6db53",
@@ -700,7 +974,8 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "受役女方 - 仰卧平躺地面，双腿曲起分开迎合抽插"
         },
         {
           "id": "B",
@@ -715,14 +990,31 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "施力男方 - 双膝跪在女方两腿之间俯身撞击"
         }
       ],
       "references": [
         "res://docs/validation/mmd_selected_20261103/references/mmd_87e004f6db53_a_reference.json",
         "res://docs/validation/mmd_selected_20261103/references/mmd_87e004f6db53_b_reference.json"
       ],
-      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate.",
+      "title_zh": "日式温泉仰卧正常位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "placement": {
+        "type": "ground",
+        "type_zh": "地面/水面",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "地面 / 浴室 / 温泉池底 (0.00m)"
+      },
+      "roles_desc": {
+        "A": "受役女方 - 仰卧平躺地面，双腿曲起分开迎合抽插",
+        "B": "施力男方 - 双膝跪在女方两腿之间俯身撞击"
+      },
+      "description_zh": "最经典的仰卧面对面正常位（Missionary）。女方平躺在地面双腿架在男方腰际，男方跪姿俯身双手撑地有力律动，双方视线交汇、情感交流最充沛。基准高度完美贴紧 0.00m，适合草地、温泉、地毯等任何场景。",
+      "display_label": "【本番性爱】日式温泉仰卧正常位 (Bath House Service V2)"
     },
     {
       "id": "mmd_43916ffe3d35",
@@ -758,7 +1050,8 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "受役女方 - 跨坐在男方身上，主动摇摆腰肢起伏套弄"
         },
         {
           "id": "B",
@@ -773,14 +1066,31 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "施力男方 - 平躺仰卧享受女方的主动骑乘"
         }
       ],
       "references": [
         "res://docs/validation/mmd_selected_20261103/references/mmd_43916ffe3d35_a_reference.json",
         "res://docs/validation/mmd_selected_20261103/references/mmd_43916ffe3d35_b_reference.json"
       ],
-      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate.",
+      "title_zh": "双人夜色卧姿骑乘",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "placement": {
+        "type": "bed",
+        "type_zh": "床铺",
+        "base_height": 0.52,
+        "ground_offset": -0.52,
+        "prop_needed": "双人床 / 席梦思 (高度 ~0.52m)"
+      },
+      "roles_desc": {
+        "A": "受役女方 - 跨坐在男方身上，主动摇摆腰肢起伏套弄",
+        "B": "施力男方 - 平躺仰卧享受女方的主动骑乘"
+      },
+      "description_zh": "Ademar440 殿堂级卧姿骑乘位（Cowgirl）。长达 234 秒超完整起伏过程，女方跨坐在仰卧男方身上掌握主动权，包含慢速磨蹭、深套骑乘与高潮起伏。原作依托 0.52m 床面，野外播放时启用 -0.52m 补偿即可稳坐地面。",
+      "display_label": "【本番性爱】双人夜色卧姿骑乘 (Just Tonight - By Ademar440)"
     },
     {
       "id": "mmd_2864892bd378",
@@ -816,7 +1126,8 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "受役女方 - 双膝跪地双手撑地，臀部翘起承受后入"
         },
         {
           "id": "B",
@@ -831,14 +1142,31 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "施力男方 - 跪在女方身后握住纤腰沉稳撞击"
         }
       ],
       "references": [
         "res://docs/validation/mmd_selected_20261103/references/mmd_2864892bd378_a_reference.json",
         "res://docs/validation/mmd_selected_20261103/references/mmd_2864892bd378_b_reference.json"
       ],
-      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate.",
+      "title_zh": "情趣后背跪趴位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "placement": {
+        "type": "ground",
+        "type_zh": "地面",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "地面 / 榻榻米 / 地毯 (0.00m)"
+      },
+      "roles_desc": {
+        "A": "受役女方 - 双膝跪地双手撑地，臀部翘起承受后入",
+        "B": "施力男方 - 跪在女方身后握住纤腰沉稳撞击"
+      },
+      "description_zh": "后背位（Doggy style）的王牌标准动作。女方四肢着地翘臀诱人，男方跪在身后双手扣紧女方骨盆有节奏地前后冲刺。动作循环极其流畅自然，高度精确贴紧地面 0.00m，随时随地都能展开狂野后入。",
+      "display_label": "【本番性爱】情趣后背跪趴位 (LHDS V3 - By Ademar440)"
     },
     {
       "id": "mmd_160b1e7a411c",
@@ -874,7 +1202,8 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "受役女方 - 背对男方坐在大腿上，腰肢随撞击上下弹动"
         },
         {
           "id": "B",
@@ -889,14 +1218,31 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "施力男方 - 端坐在椅子上双脚踩地，双手环抱女方腰肢"
         }
       ],
       "references": [
         "res://docs/validation/mmd_selected_20261103/references/mmd_160b1e7a411c_a_reference.json",
         "res://docs/validation/mmd_selected_20261103/references/mmd_160b1e7a411c_b_reference.json"
       ],
-      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate.",
+      "title_zh": "浪漫情侣背面坐位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "placement": {
+        "type": "seat",
+        "type_zh": "座椅/石凳",
+        "base_height": 0.42,
+        "ground_offset": 0.0,
+        "prop_needed": "木椅 / 石凳 / 沙发 (座高 ~0.42m)"
+      },
+      "roles_desc": {
+        "A": "受役女方 - 背对男方坐在大腿上，腰肢随撞击上下弹动",
+        "B": "施力男方 - 端坐在椅子上双脚踩地，双手环抱女方腰肢"
+      },
+      "description_zh": "极为浪漫的家具情侣背面坐位。男方端坐在 0.42m 高度的椅子或石凳上（双脚稳稳踩在 0.00m 地面），女方背对男方坐在其大腿上（骨盆高 0.68m），男方双手托住女方小腹与胸口，自下而上顶弄撞击。",
+      "display_label": "【本番性爱】浪漫情侣背面坐位 (Lap Sitting)"
     },
     {
       "id": "mmd_1256ad646811",
@@ -932,7 +1278,8 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "受役女方 - 侧躺微屈双腿，背部贴紧男方胸膛迎合深入"
         },
         {
           "id": "B",
@@ -947,14 +1294,31 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "施力男方 - 侧躺贴紧女方身后，单臂搂抱深情抽送"
         }
       ],
       "references": [
         "res://docs/validation/mmd_selected_20261103/references/mmd_1256ad646811_a_reference.json",
         "res://docs/validation/mmd_selected_20261103/references/mmd_1256ad646811_b_reference.json"
       ],
-      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate.",
+      "title_zh": "温存侧卧相拥汤匙位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "placement": {
+        "type": "ground",
+        "type_zh": "地面/被褥",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "地面 / 地毯 / 床单 (0.00m)"
+      },
+      "roles_desc": {
+        "A": "受役女方 - 侧躺微屈双腿，背部贴紧男方胸膛迎合深入",
+        "B": "施力男方 - 侧躺贴紧女方身后，单臂搂抱深情抽送"
+      },
+      "description_zh": "汤匙位（Spooning / 侧卧后入位）。两人像两把叠在一起的汤匙一样朝向同一侧侧躺，男方胸膛紧贴女方美背，单臂搂住女方腰身在后方缓缓抽送。温存、缠绵且体力消耗最小，极具情侣间私密耳语的温馨氛围。",
+      "display_label": "【本番性爱】温存侧卧相拥汤匙位 (Loop 07 - Spooning)"
     },
     {
       "id": "mmd_c63e75bc7057",
@@ -990,7 +1354,8 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "受役女方 - 双臂勾住男方脖颈，双腿盘腰完全悬空在空中"
         },
         {
           "id": "B",
@@ -1005,14 +1370,31 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "施力男方 - 双脚站立地面，有力抱起女方一边走动一边深顶"
         }
       ],
       "references": [
         "res://docs/validation/mmd_selected_20261103/references/mmd_c63e75bc7057_a_reference.json",
         "res://docs/validation/mmd_selected_20261103/references/mmd_c63e75bc7057_b_reference.json"
       ],
-      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate.",
+      "title_zh": "逆火车便当悬空抱操",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "placement": {
+        "type": "air",
+        "type_zh": "悬空抱操",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "无道具（男方站立承重，女方悬空 1.00m）"
+      },
+      "roles_desc": {
+        "A": "受役女方 - 双臂勾住男方脖颈，双腿盘腰完全悬空在空中",
+        "B": "施力男方 - 双脚站立地面，有力抱起女方一边走动一边深顶"
+      },
+      "description_zh": "震撼的逆向站姿悬空抱操（火车便当）。男方双脚稳踏地面（0.00m），依靠强大的臂力将女方整个抱离地面（女方骨盆悬空在 1.01m 处，双腿紧紧盘绕在男方腰际）。无需任何家具支撑，在野外探险或任意空地上即可凌空狂野交互！",
+      "display_label": "【本番性爱】逆火车便当悬空抱操 (Loop 33 - Suspended Congress)"
     },
     {
       "id": "mmd_fca4bab1635f",
@@ -1048,7 +1430,8 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "受役女方 - 双脚立地，上半身俯伏在桌面上翘臀迎合"
         },
         {
           "id": "B",
@@ -1063,14 +1446,31 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "施力男方 - 站在女方身后按住细腰激烈撞击"
         }
       ],
       "references": [
         "res://docs/validation/mmd_selected_20261103/references/mmd_fca4bab1635f_a_reference.json",
         "res://docs/validation/mmd_selected_20261103/references/mmd_fca4bab1635f_b_reference.json"
       ],
-      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate.",
+      "title_zh": "经典俯身扶桌后背位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "placement": {
+        "type": "table",
+        "type_zh": "桌面/讲台",
+        "base_height": 0.82,
+        "ground_offset": 0.0,
+        "prop_needed": "办公桌 / 课桌 / 吧台 / 遗迹石台 (高度 0.80m~0.85m)"
+      },
+      "roles_desc": {
+        "A": "受役女方 - 双脚立地，上半身俯伏在桌面上翘臀迎合",
+        "B": "施力男方 - 站在女方身后按住细腰激烈撞击"
+      },
+      "description_zh": "高人气的办公室/课桌俯身扶桌后背位（Table Sex From Behind）。男女双方双脚均站立在地面（0.00m），女方上身向前俯伏在约 0.82m 高的桌台边缘，双手支撑，臀部后翘承受男方强烈的站姿后入冲刺。",
+      "display_label": "【本番性爱】经典俯身扶桌后背位 (TSFB V2)"
     },
     {
       "id": "mmd_86e40adc8f14",
@@ -1106,7 +1506,8 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "亲昵女方 - 站立紧贴男方，双腿夹紧男方大腿柔情磨蹭"
         },
         {
           "id": "B",
@@ -1121,14 +1522,31 @@
             0,
             0,
             0
-          ]
+          ],
+          "label_zh": "相拥男方 - 站立紧搂女方腰身，深情相拥温存摩擦"
         }
       ],
       "references": [
         "res://docs/validation/mmd_selected_20261103/references/mmd_86e40adc8f14_a_reference.json",
         "res://docs/validation/mmd_selected_20261103/references/mmd_86e40adc8f14_b_reference.json"
       ],
-      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate."
+      "dependency_note": "Body animation only; source expressions, custom deformations and props are separate.",
+      "title_zh": "站姿相拥股间素股",
+      "category": "intimate_daily",
+      "category_zh": "日常温存",
+      "placement": {
+        "type": "ground",
+        "type_zh": "地面",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "地面 (0.00m)"
+      },
+      "roles_desc": {
+        "A": "亲昵女方 - 站立紧贴男方，双腿夹紧男方大腿柔情磨蹭",
+        "B": "相拥男方 - 站立紧搂女方腰身，深情相拥温存摩擦"
+      },
+      "description_zh": "站姿紧密相拥的大腿夹蹭（素股 / Thigh service）。男女双方站立在地面（0.00m）紧紧相拥，女方将双腿夹住男方大腿内侧轻轻磨蹭，双手环抱男方颈背。动作既是深情的站立拥抱，又带有脸红心跳的素股调情，日常互动极佳。",
+      "display_label": "【日常温存】站姿相拥股间素股 (Thigh service)"
     }
   ],
   "clips": [
@@ -1147,7 +1565,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_0a3f6ba5f5de_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 1.6113547477158985e-06,
-      "standardize_elapsed_s": 2.4320353999501094,
+      "standardize_elapsed_s": 3.0426300999242812,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 5.900558791525164e-07,
       "pack": "mmd_0a3f6ba5f5de",
@@ -1170,7 +1588,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_0a3f6ba5f5de_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 1.5162664751371124e-08,
-      "standardize_elapsed_s": 2.721813299925998,
+      "standardize_elapsed_s": 3.908688099938445,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 4.498201265371913e-07,
       "pack": "mmd_0a3f6ba5f5de",
@@ -1193,7 +1611,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_16a2ecfb7781_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 5.079500878739374e-06,
-      "standardize_elapsed_s": 2.1634097000351176,
+      "standardize_elapsed_s": 3.1548043000511825,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 6.152934677023464e-07,
       "pack": "mmd_16a2ecfb7781",
@@ -1216,7 +1634,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_16a2ecfb7781_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 1.410317036071307e-07,
-      "standardize_elapsed_s": 2.2062472000252455,
+      "standardize_elapsed_s": 3.2418334999820217,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 5.405651672845201e-07,
       "pack": "mmd_16a2ecfb7781",
@@ -1239,7 +1657,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_67d58e9d607e_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 4.786801939861418e-07,
-      "standardize_elapsed_s": 1.2746537000639364,
+      "standardize_elapsed_s": 1.881390399998054,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 1.0185859287757791e-06,
       "pack": "mmd_67d58e9d607e",
@@ -1262,7 +1680,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_67d58e9d607e_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 1.1200484983930892e-11,
-      "standardize_elapsed_s": 1.2220517999958247,
+      "standardize_elapsed_s": 1.7650097999721766,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 4.1201104410584245e-07,
       "pack": "mmd_67d58e9d607e",
@@ -1285,7 +1703,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_6e891982bb51_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 2.997630845213983e-07,
-      "standardize_elapsed_s": 0.7140136999078095,
+      "standardize_elapsed_s": 1.0524970999686047,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 8.805565060790871e-07,
       "pack": "mmd_6e891982bb51",
@@ -1350,7 +1768,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_aec34d147925_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 7.15007179297178e-08,
-      "standardize_elapsed_s": 0.726564500015229,
+      "standardize_elapsed_s": 1.0079232000280172,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 6.920622896989061e-07,
       "pack": "mmd_aec34d147925",
@@ -1373,7 +1791,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_aec34d147925_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 3.834412578007651e-07,
-      "standardize_elapsed_s": 0.7006007999880239,
+      "standardize_elapsed_s": 1.079947100020945,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 6.492273648722308e-07,
       "pack": "mmd_aec34d147925",
@@ -1396,7 +1814,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_9957977a1355_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 1.0041156443263421e-06,
-      "standardize_elapsed_s": 1.3242909999098629,
+      "standardize_elapsed_s": 1.6753932000137866,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 7.336457744295103e-07,
       "pack": "mmd_9957977a1355",
@@ -1419,7 +1837,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_9957977a1355_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 2.1134788726340226e-06,
-      "standardize_elapsed_s": 1.4143256000243127,
+      "standardize_elapsed_s": 1.6740592999849468,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 7.133906604996815e-07,
       "pack": "mmd_9957977a1355",
@@ -1442,7 +1860,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_fcc0340f8227_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 2.7014763825938815e-07,
-      "standardize_elapsed_s": 1.6076637000078335,
+      "standardize_elapsed_s": 1.9055862999521196,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 6.294748585040695e-07,
       "pack": "mmd_fcc0340f8227",
@@ -1465,7 +1883,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_fcc0340f8227_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 1.8136065971230408e-07,
-      "standardize_elapsed_s": 1.6077501999679953,
+      "standardize_elapsed_s": 1.8814679000061005,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 7.539457464619601e-07,
       "pack": "mmd_fcc0340f8227",
@@ -1488,7 +1906,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_8c5c490fb87c_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 4.7451533805031865e-07,
-      "standardize_elapsed_s": 1.3829905000748113,
+      "standardize_elapsed_s": 1.689622199977748,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 7.646311476799563e-07,
       "pack": "mmd_8c5c490fb87c",
@@ -1511,7 +1929,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_8c5c490fb87c_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 3.287396904694262e-07,
-      "standardize_elapsed_s": 1.432116400101222,
+      "standardize_elapsed_s": 1.6751323000062257,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 9.94701341884055e-07,
       "pack": "mmd_8c5c490fb87c",
@@ -1534,7 +1952,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_beee0d2eb57b_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 6.465063901589518e-07,
-      "standardize_elapsed_s": 1.4422222999855876,
+      "standardize_elapsed_s": 1.6486441000597551,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 7.030862473134451e-07,
       "pack": "mmd_beee0d2eb57b",
@@ -1557,7 +1975,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_beee0d2eb57b_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 9.392884214864949e-07,
-      "standardize_elapsed_s": 1.4274896999122575,
+      "standardize_elapsed_s": 1.6224952000193298,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 5.650359849187571e-07,
       "pack": "mmd_beee0d2eb57b",
@@ -1580,7 +1998,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_7869c66910b9_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 2.2700391915653206e-06,
-      "standardize_elapsed_s": 2.735755999921821,
+      "standardize_elapsed_s": 3.227603599894792,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 5.202970492296138e-07,
       "pack": "mmd_7869c66910b9",
@@ -1603,7 +2021,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_7869c66910b9_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 4.6699096206345714e-08,
-      "standardize_elapsed_s": 2.715684900060296,
+      "standardize_elapsed_s": 3.050035799969919,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 6.320931322419289e-07,
       "pack": "mmd_7869c66910b9",
@@ -1626,13 +2044,59 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_7869c66910b9_c_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 7.102068419473362e-08,
-      "standardize_elapsed_s": 2.707527399994433,
+      "standardize_elapsed_s": 3.1608224000083283,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 5.388294709156935e-07,
       "pack": "mmd_7869c66910b9",
       "role": "C",
       "source_file": "Loop 27 - Twin Angels-V2/Loop 27 - Twin Angels - SS 18-22.vmd",
       "source_vmd_sha256": "54a30eaa8bf403028add3247c0eceb77400a9e6ec73bad4187b8202ea738d08c"
+    },
+    {
+      "id": "mmd_781d8c87fd79_a",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_781d8c87fd79_a.tres",
+      "frames": 4202,
+      "duration": 140.03333333333333,
+      "tracks": 59,
+      "constant_rotation_tracks": 0,
+      "bytes": 15560868,
+      "source": ".model_import_build/mmd_selected/mmd_781d8c87fd79_a.glb",
+      "source_sha256": "7fa3e46cca2285feebe524d2af3987b0c16fd62cc4b10f2963f3531c8aff3d6c",
+      "output_sha256": "ec60321ed329525cba0d98c66ad2f373f52a9e44469e4cf9ebd989996dad3ecb",
+      "reference_height": 0.9838524702936413,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_781d8c87fd79_a_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 1.1749809442074266e-07,
+      "standardize_elapsed_s": 6.764377700048499,
+      "bake_position_checks": 2844,
+      "max_bake_position_error_m": 6.704798136100249e-07,
+      "pack": "mmd_781d8c87fd79",
+      "role": "A",
+      "source_file": "Welcome - BJV2 2021 Uptade/Welcome - Blowjob V2 - Izumi.vmd",
+      "source_vmd_sha256": "f1a9247add8211d0bfedfec6076b3d3a0ee347cff3bad191a953050c9eaa15ae"
+    },
+    {
+      "id": "mmd_781d8c87fd79_b",
+      "resource": "res://assets/characters/mmd_selected/animations/mmd_781d8c87fd79_b.tres",
+      "frames": 4202,
+      "duration": 140.03333333333333,
+      "tracks": 59,
+      "constant_rotation_tracks": 8,
+      "bytes": 13445951,
+      "source": ".model_import_build/mmd_selected/mmd_781d8c87fd79_b.glb",
+      "source_sha256": "dc654204c341b910a4b1cc5bd8395568aa633cdd744318307a3a3fcd4a59491b",
+      "output_sha256": "363aeaefb06073ab2db4bf19c032a3b35d8e11b9039b219ecb0872f534e2d086",
+      "reference_height": 0.9769537867977787,
+      "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_781d8c87fd79_b_reference.json",
+      "reused": false,
+      "dense_sampling_max_matrix_error": 6.855806777839035e-08,
+      "standardize_elapsed_s": 6.771677799988538,
+      "bake_position_checks": 2835,
+      "max_bake_position_error_m": 6.419616707723855e-07,
+      "pack": "mmd_781d8c87fd79",
+      "role": "B",
+      "source_file": "Welcome - BJV2 2021 Uptade/Welcome - Blowjob V2 - Maran.vmd",
+      "source_vmd_sha256": "972b43dea9f54516c3b9017822388dcd779bf1fbda32d232a0097088563f844a"
     },
     {
       "id": "mmd_87e004f6db53_a",
@@ -1649,7 +2113,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_87e004f6db53_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 2.386212046984193e-06,
-      "standardize_elapsed_s": 2.55938300001435,
+      "standardize_elapsed_s": 2.8894585000816733,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 4.851466594964178e-07,
       "pack": "mmd_87e004f6db53",
@@ -1672,7 +2136,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_87e004f6db53_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 1.116561467506827e-06,
-      "standardize_elapsed_s": 2.5473994000349194,
+      "standardize_elapsed_s": 2.9051316999830306,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 4.867209748165212e-07,
       "pack": "mmd_87e004f6db53",
@@ -1695,7 +2159,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_43916ffe3d35_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 1.2505270462481732e-06,
-      "standardize_elapsed_s": 9.355537399998866,
+      "standardize_elapsed_s": 10.792086099972948,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 7.450953116640914e-07,
       "pack": "mmd_43916ffe3d35",
@@ -1718,7 +2182,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_43916ffe3d35_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 4.769917640035093e-07,
-      "standardize_elapsed_s": 9.63675940001849,
+      "standardize_elapsed_s": 10.871034999960102,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 5.015740597160708e-07,
       "pack": "mmd_43916ffe3d35",
@@ -1741,7 +2205,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_2864892bd378_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 2.0007610289987654e-06,
-      "standardize_elapsed_s": 2.8371443999931216,
+      "standardize_elapsed_s": 3.2062569999834523,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 4.3316012185062867e-07,
       "pack": "mmd_2864892bd378",
@@ -1764,7 +2228,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_2864892bd378_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 3.29118228525882e-06,
-      "standardize_elapsed_s": 2.747484900057316,
+      "standardize_elapsed_s": 3.068491299985908,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 4.523219466850188e-07,
       "pack": "mmd_2864892bd378",
@@ -1787,7 +2251,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_160b1e7a411c_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 1.4432899320127035e-15,
-      "standardize_elapsed_s": 3.243660500040278,
+      "standardize_elapsed_s": 3.619700099923648,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 7.233589091908914e-07,
       "pack": "mmd_160b1e7a411c",
@@ -1810,7 +2274,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_160b1e7a411c_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 1.7763568394002505e-15,
-      "standardize_elapsed_s": 3.2539523999439552,
+      "standardize_elapsed_s": 3.575652400031686,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 4.6566128730773926e-07,
       "pack": "mmd_160b1e7a411c",
@@ -1833,7 +2297,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_1256ad646811_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 2.887597331246994e-07,
-      "standardize_elapsed_s": 1.3084285999648273,
+      "standardize_elapsed_s": 1.442576100002043,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 6.53658420757349e-07,
       "pack": "mmd_1256ad646811",
@@ -1856,7 +2320,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_1256ad646811_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 2.4707961263081835e-07,
-      "standardize_elapsed_s": 1.2862198000075296,
+      "standardize_elapsed_s": 1.51217220001854,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 4.5783196376971053e-07,
       "pack": "mmd_1256ad646811",
@@ -1879,7 +2343,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_c63e75bc7057_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 2.403445043597241e-06,
-      "standardize_elapsed_s": 1.4620999000035226,
+      "standardize_elapsed_s": 1.566486999974586,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 7.348554137908192e-07,
       "pack": "mmd_c63e75bc7057",
@@ -1902,7 +2366,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_c63e75bc7057_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 6.516454440497199e-07,
-      "standardize_elapsed_s": 1.4464822000591084,
+      "standardize_elapsed_s": 1.6395245000021532,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 7.474477264526173e-07,
       "pack": "mmd_c63e75bc7057",
@@ -1925,7 +2389,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_fca4bab1635f_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 3.6010879921402617e-07,
-      "standardize_elapsed_s": 2.3805200000060722,
+      "standardize_elapsed_s": 2.5214578999439254,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 8.379833310247953e-07,
       "pack": "mmd_fca4bab1635f",
@@ -1948,7 +2412,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_fca4bab1635f_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 1.9719375164012343e-06,
-      "standardize_elapsed_s": 2.4068467000033706,
+      "standardize_elapsed_s": 2.628999499953352,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 6.976544803809897e-07,
       "pack": "mmd_fca4bab1635f",
@@ -1971,7 +2435,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_86e40adc8f14_a_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 3.136857055774378e-07,
-      "standardize_elapsed_s": 2.112054800032638,
+      "standardize_elapsed_s": 2.2618310000980273,
       "bake_position_checks": 2844,
       "max_bake_position_error_m": 8.654868426005061e-07,
       "pack": "mmd_86e40adc8f14",
@@ -1994,7 +2458,7 @@
       "reference": "res://docs/validation/mmd_selected_20261103/references/mmd_86e40adc8f14_b_reference.json",
       "reused": false,
       "dense_sampling_max_matrix_error": 2.2555754904118874e-07,
-      "standardize_elapsed_s": 2.118212000001222,
+      "standardize_elapsed_s": 2.2657648000167683,
       "bake_position_checks": 2835,
       "max_bake_position_error_m": 8.02452088465541e-07,
       "pack": "mmd_86e40adc8f14",
@@ -2004,11 +2468,11 @@
     }
   ],
   "counts": {
-    "groups": 19,
-    "tracks": 38,
-    "new_tracks": 36,
+    "groups": 20,
+    "tracks": 40,
+    "new_tracks": 38,
     "reused_tracks": 2,
-    "deferred_groups": 2
+    "deferred_groups": 1
   },
   "source_selection": "docs/motion_selection/README.md"
 }

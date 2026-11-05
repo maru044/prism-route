@@ -1,12 +1,12 @@
 {
   "counts": {
-    "groups": 19,
-    "tracks": 38,
-    "new_tracks": 36,
+    "groups": 20,
+    "tracks": 40,
+    "new_tracks": 38,
     "reused_tracks": 2,
-    "deferred_groups": 2
+    "deferred_groups": 1
   },
-  "animation_bytes": 232506379,
+  "animation_bytes": 261513198,
   "max_source_bake_position_error_m": 1.0185859287757791e-06,
   "new_target_specific_animation_files": 0,
   "new_source_role_bakes": 20,

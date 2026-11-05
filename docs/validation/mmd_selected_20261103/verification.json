@@ -1,10 +1,10 @@
 {
 	"avatar_profiles": 4,
-	"clips": 38,
+	"clips": 40,
 	"contact_fit": "not approved; body transfer and finite spring simulation do not guarantee contact or cloth art quality",
 	"failures": [],
-	"groups": 19,
-	"isolated_role_mode_checks": 38,
+	"groups": 20,
+	"isolated_role_mode_checks": 40,
 	"max_axis_error_rad": 0.000305249355733395,
 	"max_body_rotation_error_rad": 0.0000150080659296134,
 	"max_clock_error_s": 0.000000333333360913457,
@@ -16,13 +16,13 @@
 	"passed": true,
 	"people_filter_counts": [
 		1,
-		17,
+		18,
 		1
 	],
 	"physics_smoke_frames_per_group": 12,
-	"physics_steps_observed": 912,
-	"resource_identity_checks": 152,
-	"rotation_checks": 164720,
+	"physics_steps_observed": 960,
+	"resource_identity_checks": 160,
+	"rotation_checks": 173536,
 	"selected_main_rows": 19,
 	"source_joint_position_errors_m": {
 		"res://assets/characters/mmd_validation/keqing_physics.vrm": {
