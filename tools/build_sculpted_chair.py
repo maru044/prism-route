@@ -280,11 +280,36 @@ final_obj.location = (0, 0, 0)
 final_obj.rotation_euler = (0, 0, 0)
 final_obj.scale = (1, 1, 1)
 
-# Export GLB
+# ==========================================
+# 6. STANDARDIZED INTERACTION ANCHORS (SOCKET SYSTEM)
+# ==========================================
+# 1. Seat Anchor (sitting position on cushion: seat height 0.420m, pelvis at Y=0.0)
+empty_seat = bpy.data.objects.new("Anchor_Seat", None)
+empty_seat.empty_display_type = "ARROWS"
+empty_seat.empty_display_size = 0.25
+empty_seat.location = Vector((0.0, 0.0, 0.420))
+empty_seat.rotation_euler = Euler((0.0, 0.0, 0.0), "XYZ")
+bpy.context.collection.objects.link(empty_seat)
+
+# 2. Front Floor Anchor (kneeling/standing in front of chair at ground 0.00m)
+empty_front = bpy.data.objects.new("Anchor_Chair_Front", None)
+empty_front.empty_display_type = "ARROWS"
+empty_front.empty_display_size = 0.25
+empty_front.location = Vector((0.0, -0.50, 0.0))
+empty_front.rotation_euler = Euler((0.0, 0.0, 0.0), "XYZ")
+bpy.context.collection.objects.link(empty_front)
+
+# Select all objects for glTF export
+bpy.context.view_layer.update()
+for obj in bpy.data.objects:
+    obj.select_set(True)
+
+# Export GLB with Y-up standard
 bpy.ops.export_scene.gltf(
     filepath=str(glb_path),
     export_format='GLB',
     use_selection=True,
-    export_apply=True
+    export_apply=True,
+    export_yup=True
 )
-print(f"Exported clean GLB to: {glb_path}")
+print(f"Exported clean GLB with anchors to: {glb_path}")

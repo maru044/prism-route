@@ -10,17 +10,21 @@ extends Node3D
 var motion_anchors: Dictionary = {}
 
 func _ready() -> void:
-	_discover_anchors()
+	_discover_anchors(self)
 
-func get_motion_anchor(motion_id: String) -> Transform3D:
-	if motion_anchors.has(motion_id):
-		var marker: Marker3D = motion_anchors[motion_id]
-		return marker.transform
-	return Transform3D(Basis(), Vector3(0, 0, 0))
+func get_motion_anchor(anchor_name: String) -> Transform3D:
+	if motion_anchors.has(anchor_name):
+		var node: Node3D = motion_anchors[anchor_name]
+		return global_transform.affine_inverse() * node.global_transform
+	for k in motion_anchors:
+		if k.to_lower().contains(anchor_name.to_lower()):
+			return global_transform.affine_inverse() * motion_anchors[k].global_transform
+	return Transform3D(Basis(), Vector3.ZERO)
 
-func _discover_anchors() -> void:
-	var anchor_root := find_child("MotionAnchors", false, false)
-	if anchor_root:
-		for marker in anchor_root.get_children():
-			if marker is Marker3D:
-				motion_anchors[marker.name] = marker
+func _discover_anchors(node: Node) -> void:
+	if node != self and (node is Node3D) and node.name.begins_with("Anchor_"):
+		motion_anchors[node.name] = node
+		var short_name := node.name.trim_prefix("Anchor_").to_lower()
+		motion_anchors[short_name] = node
+	for child in node.get_children():
+		_discover_anchors(child)

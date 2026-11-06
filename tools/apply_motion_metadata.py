@@ -22,21 +22,21 @@ METADATA = {
         "description_zh": "床沿仰卧亲密侍奉姿态。竿役（受纳方）半仰躺于床沿或软榻表面（依托高度约0.42m~0.48m），双腿垂向床前地面；女方双膝跪于床前地面，俯身进行温柔胸部侍奉，伴随躯干起伏与深情头部互动。本动作实际交互依托为床沿，并非单人椅。"
     },
     "mmd_16a2ecfb7781": {
-        "title_zh": "双人卧榻口交侍奉",
+        "title_zh": "双人平躺口交侍奉",
         "category": "oral",
         "category_zh": "口交侍奉",
         "placement": {
             "type": "ground",
-            "type_zh": "地面/低床",
+            "type_zh": "地面通用/卧姿",
             "base_height": 0.0,
             "ground_offset": 0.0,
-            "prop_needed": "床铺 / 地毯 / 榻榻米 (0.00m~0.05m)"
+            "prop_needed": "地面 / 地毯 / 低榻（地上通用，默认无需家具）"
         },
         "roles_desc": {
             "A": "施力方 (女) - 双膝跪趴在男方双腿之间执行口交侍奉",
-            "B": "受役方 (男) - 平躺仰卧，双臂自然垂放"
+            "B": "受役方 (男) - 平躺仰卧于地面，双臂自然垂放"
         },
-        "description_zh": "标准的卧姿亲密口交动作。男方完全平躺仰卧，女方跪趴在男方两腿之间俯首进行深情而细致的口部侍奉。虽然原名含Bed，但动作烘焙基准面在 0.00m 地面，可直接在地毯、草地、榻榻米或低矮床榻上自然播放。"
+        "description_zh": "标准的通用地面平躺口交侍奉动作。男方完全平躺仰卧于地面基准面（0.00m），女方双膝跪趴在男方两腿之间俯首进行深情而细致的口部侍奉。此动作为地面与床榻通用的平躺动作，默认直接在地面/地毯播放，无需额外家具依托。"
     },
     "mmd_67d58e9d607e": {
         "title_zh": "女王踩踏足交",
@@ -89,38 +89,39 @@ METADATA = {
         "description_zh": "细腻的双女床沿温存爱抚。两名少女依偎在床榻或沙发边缘（座面高约0.50m~0.55m），B角色单腿屈起坐在床面娇羞迎合，A角色侧坐床沿伸手探入其双腿之间轻柔挑逗慢捻。无男性骨骼依赖，非常适合卧室大床或窗边软榻的百合私密互动。"
     },
     "mmd_aec34d147925": {
-        "title_zh": "双女床榻深层爱抚",
+        "title_zh": "双女床沿深层爱抚",
         "category": "yuri",
         "category_zh": "百合互慰",
         "placement": {
-            "type": "bed",
-            "type_zh": "床铺/床沿",
-            "base_height": 0.52,
-            "ground_offset": -0.52,
-            "prop_needed": "双人床铺 (床面高 ~0.52m，抚弄方立于床沿)"
+            "type": "bed_edge",
+            "type_zh": "床沿/软榻边沿",
+            "base_height": 0.46,
+            "ground_offset": 0.0,
+            "prop_needed": "双人床沿 (床面高 0.46m，抚弄方立于床前地面，受抚方卧于床面)"
         },
         "roles_desc": {
-            "A": "受抚女方 - 仰卧在床铺上(高度0.52m)，双腿大开屈膝迎合深入",
-            "B": "抚弄女方 - 坐在床沿/床边地面，俯身向床上的少女热烈抚摸"
+            "A": "受抚女方 - 仰卧在床沿表面，双腿大开屈膝迎合深入",
+            "B": "抚弄女方 - 站立于床沿前地面，俯身向床上的少女热烈抚摸"
         },
-        "description_zh": "高落差的情趣双女床榻爱抚。受弄少女（A角色）整个人完全平躺仰卧在0.52m高的大床中央，双腿大开屈膝起伏；抚弄少女（B角色）坐在床沿或床边，俯身将手探向床上少女腿心深入快速抽送爱抚。非常适合卧室内大床的深度百合前戏。"
+        "description_zh": "高落差的百合双女床沿爱抚动作。受抚少女（A角色）平躺仰卧在约0.46m高的床面近床沿处，双腿大开屈膝迎合；抚弄少女（B角色）站立于床沿正前方地面（0.00m），俯身将手探向床上少女腿心深入快速抽送爱抚。属于典型的床沿高低差交互动作。"
     },
     "mmd_781d8c87fd79": {
         "title_zh": "沙发端坐受纳口交",
         "category": "oral",
         "category_zh": "口交侍奉",
+        "presentation_offset": [0.0, 0.0, 0.512],
         "placement": {
             "type": "seat",
             "type_zh": "座椅/沙发",
-            "base_height": 0.48,
+            "base_height": 0.42,
             "ground_offset": 0.0,
-            "prop_needed": "单人沙发 / 靠背扶手椅 (座高 ~0.45m~0.48m)"
+            "prop_needed": "单人沙发 / 靠背扶手椅 (座高 ~0.42m，定位点 Anchor_Seat)"
         },
         "roles_desc": {
-            "A": "侍奉方 (女) - 双膝跪地(0.00m)，微仰头为主人进行深情口交侍奉",
-            "B": "受役方 (男) - 端坐于单人沙发/靠椅(骨盆0.51m)，双手自然扶倚享受侍奉"
+            "A": "侍奉方 (女) - 双膝跪在单人椅前地面(0.00m)，微仰头为主人进行深情口交侍奉",
+            "B": "受役方 (男) - 端坐于单人椅座面锚点(Anchor_Seat 0.42m)，双手自然扶倚享受侍奉"
         },
-        "description_zh": "长达140秒的超豪华主仆口交过场全流程。男方端坐于单人沙发/靠椅上（骨盆高0.51m，适配座高0.45m~0.48m，双脚自然踩地），女方双膝跪地（地面0.00m），包含从前期手部轻抚调情平滑推进到深情跪地口交侍奉的完整叙事演出。非常适合作为主线推进、养成达成或专属Cutscene的极品坐姿侍奉动作。"
+        "description_zh": "舒适高雅的单人椅口交侍奉姿态。男方精准对齐单人椅座面定位点（Anchor_Seat 0.42m，双脚稳踏地面），女方双膝跪在椅子正前方地面锚点（Anchor_Chair_Front 0.00m）进行深情侍奉。角色严格对齐家具锚点，家具在场景中保持静止无需移动。"
     },
     "mmd_9957977a1355": {
         "title_zh": "双女百合磨豆腐",
@@ -263,35 +264,36 @@ METADATA = {
         "title_zh": "浪漫情侣背面坐位",
         "category": "intercourse",
         "category_zh": "本番性爱",
+        "presentation_offset": [0.0, 0.0, 0.558],
         "placement": {
             "type": "seat",
-            "type_zh": "座椅/石凳",
+            "type_zh": "座椅/沙发",
             "base_height": 0.42,
             "ground_offset": 0.0,
-            "prop_needed": "木椅 / 石凳 / 沙发 (座高 ~0.42m)"
+            "prop_needed": "单人沙发 / 靠背扶手椅 (座高 ~0.42m，定位点 Anchor_Seat)"
         },
         "roles_desc": {
             "A": "受役女方 - 背对男方坐在大腿上，腰肢随撞击上下弹动",
-            "B": "施力男方 - 端坐在椅子上双脚踩地，双手环抱女方腰肢"
+            "B": "施力男方 - 端坐于单人椅座面锚点(Anchor_Seat 0.42m)，双脚踩地，双手环抱女方腰肢"
         },
-        "description_zh": "极为浪漫的家具情侣背面坐位。男方端坐在 0.42m 高度的椅子或石凳上（双脚稳稳踩在 0.00m 地面），女方背对男方坐在其大腿上（骨盆高 0.68m），男方双手托住女方小腹与胸口，自下而上顶弄撞击。"
+        "description_zh": "极为浪漫的单人沙发情侣背面坐位。男方端坐在 0.42m 高度的科技单人椅中央座面（对齐 Anchor_Seat 定位点，双脚稳稳踩在地面），女方背对男方坐在其大腿上（骨盆高 0.68m），男方双手托住女方小腹与胸口自下而上顶弄。家具保持静止，角色严格对齐座面锚点。"
     },
     "mmd_1256ad646811": {
-        "title_zh": "温存侧卧相拥汤匙位",
+        "title_zh": "双人侧卧相拥汤匙位",
         "category": "intercourse",
         "category_zh": "本番性爱",
         "placement": {
             "type": "ground",
-            "type_zh": "地面/被褥",
+            "type_zh": "地面通用/被褥",
             "base_height": 0.0,
             "ground_offset": 0.0,
-            "prop_needed": "地面 / 地毯 / 床单 (0.00m)"
+            "prop_needed": "地面 / 地毯 / 床面通用 (0.00m，默认无需家具)"
         },
         "roles_desc": {
             "A": "受役女方 - 侧躺微屈双腿，背部贴紧男方胸膛迎合深入",
             "B": "施力男方 - 侧躺贴紧女方身后，单臂搂抱深情抽送"
         },
-        "description_zh": "汤匙位（Spooning / 侧卧后入位）。两人像两把叠在一起的汤匙一样朝向同一侧侧躺，男方胸膛紧贴女方美背，单臂搂住女方腰身在后方缓缓抽送。温存、缠绵且体力消耗最小，极具情侣间私密耳语的温馨氛围。"
+        "description_zh": "汤匙位（Spooning / 侧卧后入位）。两人像两把叠在一起的汤匙一样朝向同一侧侧躺，男方胸膛紧贴女方美背，单臂搂住女方腰身在后方缓缓抽送。此动作为地面与床榻通用的卧姿动作，骨骼基准面在 0.00m 地面，默认无需配置床具，可直接在地面、地毯或任意平面上自然播放。"
     },
     "mmd_c63e75bc7057": {
         "title_zh": "逆火车便当悬空抱操",
@@ -314,18 +316,19 @@ METADATA = {
         "title_zh": "经典俯身扶桌后背位",
         "category": "intercourse",
         "category_zh": "本番性爱",
+        "presentation_offset": [0.0, 0.0, 0.0],
         "placement": {
             "type": "table",
-            "type_zh": "桌面/讲台",
-            "base_height": 0.82,
+            "type_zh": "桌面/科技长案",
+            "base_height": 0.838,
             "ground_offset": 0.0,
-            "prop_needed": "办公桌 / 课桌 / 吧台 / 遗迹石台 (高度 0.80m~0.85m)"
+            "prop_needed": "科技长案桌 / 折纸几何案台 / 办公桌 (台面高 0.838m，双手撑于 Anchor_Desk_Surface)"
         },
         "roles_desc": {
-            "A": "受役女方 - 双脚立地，上半身俯伏在桌面上翘臀迎合",
+            "A": "受役女方 - 双脚立地，上半身俯伏在长案桌面上翘臀迎合",
             "B": "施力男方 - 站在女方身后按住细腰激烈撞击"
         },
-        "description_zh": "高人气的办公室/课桌俯身扶桌后背位（Table Sex From Behind）。男女双方双脚均站立在地面（0.00m），女方上身向前俯伏在约 0.82m 高的桌台边缘，双手支撑，臀部后翘承受男方强烈的站姿后入冲刺。"
+        "description_zh": "高人气的经典俯身扶桌后背位（Table Sex From Behind / TSFB V2）。男女双方双脚站立在地面（0.00m），女方上身向前俯伏在 0.838m 高的定制折纸科技长案桌边缘，双手稳定支撑于桌面定位点 Anchor_Desk_Surface，臀部后翘承受男方强烈的站姿后入冲刺。长案下沿配有内嵌发光灯带与外倾八字折棱桌腿，空间开阔无穿模。"
     },
     "mmd_86e40adc8f14": {
         "title_zh": "站姿相拥股间素股",
@@ -364,6 +367,8 @@ def update_manifest():
                 rid = r.get("id")
                 if rid in meta["roles_desc"]:
                     r["label_zh"] = meta["roles_desc"][rid]
+                if "presentation_offset" in meta:
+                    r["presentation_offset"] = meta["presentation_offset"]
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Updated manifest.json with {len(METADATA)} metadata entries.")
 
@@ -385,6 +390,8 @@ def update_catalog():
                 rid = r.get("id")
                 if rid in meta["roles_desc"]:
                     r["label_zh"] = meta["roles_desc"][rid]
+                if "presentation_offset" in meta:
+                    r["presentation_offset"] = meta["presentation_offset"]
     for e in catalog.get("entries", []):
         pid = e.get("pack")
         if pid in METADATA:

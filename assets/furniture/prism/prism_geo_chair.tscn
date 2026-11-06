@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/interactive_furniture.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://assets/furniture/prism/prism_geo_chair.glb" id="2_mesh"]
+
+[node name="PrismGeoChair" type="Node3D"]
+script = ExtResource("1_script")
+furniture_id = "prism_geo_chair"
+furniture_name_zh = "「折面穹壳」科技造型单人椅"
+seat_surface_height = 0.42
+
+[node name="Model" parent="." instance=ExtResource("2_mesh")]

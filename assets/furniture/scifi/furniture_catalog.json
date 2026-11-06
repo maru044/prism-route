@@ -5,6 +5,7 @@
       "name_zh": "「折面穹壳」科技造型单人椅 (Prism Sculpted Origami Lounge Chair)",
       "category": "chair",
       "file": "res://assets/furniture/prism/prism_geo_chair.glb",
+      "scene_file": "res://assets/furniture/prism/prism_geo_chair.tscn",
       "dimensions": {
         "width": 0.984,
         "depth": 0.988,
@@ -15,10 +16,138 @@
       "facing": "+Z",
       "backrest": "-Z",
       "ground_contact_y": 0.0,
+      "anchors": {
+        "seat": {
+          "name": "Anchor_Seat",
+          "pos": [0.0, 0.420, 0.0],
+          "rot_deg": 0.0,
+          "description": "单人椅座面坐姿定位点，用于端坐受纳、膝上怀抱与情侣背面坐位等动作 (e.g. mmd_781d8c87fd79, mmd_beee0d2eb57b, mmd_160b1e7a411c)"
+        },
+        "front": {
+          "name": "Anchor_Chair_Front",
+          "pos": [0.0, 0.0, 0.50],
+          "rot_deg": 0.0,
+          "description": "单人椅正前方地面侍奉/跪姿定位点 (e.g. mmd_781d8c87fd79 角色A跪地侍奉)"
+        }
+      },
       "materials": [
         "Prism_White_Hard (纯白硬质微折面建筑体块，27.5°后仰大躺角避让头颈)",
         "Prism_Slate_Blue_Cushion (低饱和典雅蓝灰织物座垫/靠垫)",
         "Prism_Brushed_Metal (底部微缩悬浮钛金金属底座)"
+      ]
+    },
+    {
+      "id": "prism_geo_bed",
+      "name_zh": "「几何悬挑」极简双人床 (Prism Sculpted Origami Platform Bed)",
+      "category": "bed",
+      "file": "res://assets/furniture/prism/prism_geo_bed.glb",
+      "scene_file": "res://assets/furniture/prism/prism_geo_bed.tscn",
+      "dimensions": {
+        "width": 1.846,
+        "depth": 2.673,
+        "height": 0.993
+      },
+      "mattress_surface_height": 0.460,
+      "foot_rim_height": 0.320,
+      "headboard_recline_angle_deg": 26.5,
+      "facing": "+Z (Bed Edge faces outward, Headboard at -Z)",
+      "ground_contact_y": 0.0,
+      "anchors": {
+        "bed_edge": {
+          "name": "Anchor_BedEdge_Front",
+          "pos": [0.0, 0.460, 1.330],
+          "rot_deg": -180.0,
+          "description": "床沿坐姿或俯身亲密互动 (e.g. mmd_0a3f6ba5f5de, mmd_71dec5bd8390, mmd_aec34d147925)"
+        },
+        "bed_center": {
+          "name": "Anchor_Bed_Center",
+          "pos": [0.0, 0.460, 0.250],
+          "rot_deg": 0.0,
+          "description": "床面平躺与双人居中卧姿交互 (e.g. mmd_43916ffe3d35)"
+        },
+        "bed_headboard": {
+          "name": "Anchor_Bed_Headboard",
+          "pos": [0.0, 0.460, -0.600],
+          "rot_deg": 0.0,
+          "description": "床头靠倚倚靠动作 (e.g. mmd_6e891982bb51)"
+        }
+      },
+      "materials": [
+        "Prism_White_Hard (纯净极简哑光折面白色外壳，与建筑体块风格浑然一体)",
+        "Prism_Slate_Blue_Cushion (低饱和北欧灰蓝织物床垫、被褥及靠背垫)",
+        "Prism_White_Fabric (纯白布艺点缀腰枕)",
+        "Prism_Brushed_Metal (内缩悬浮式拉丝钛金属底座)"
+      ]
+    },
+    {
+      "id": "prism_geo_desk",
+      "name_zh": "「棱镜悬挑」折纸科技长案桌 (Prism Sculpted Origami Console Desk)",
+      "category": "desk",
+      "file": "res://assets/furniture/prism/prism_geo_desk.glb",
+      "scene_file": "res://assets/furniture/prism/prism_geo_desk.tscn",
+      "dimensions": {
+        "width": 1.420,
+        "depth": 0.600,
+        "height": 0.838
+      },
+      "tabletop_surface_height": 0.838,
+      "facing": "+Z (Front edge where character stands)",
+      "ground_contact_y": 0.0,
+      "anchors": {
+        "surface": {
+          "name": "Anchor_Desk_Surface",
+          "pos": [0.0, 0.838, -0.030],
+          "rot_deg": 0.0,
+          "description": "桌面上方手掌撑扶支撑定位点 (e.g. mmd_fca4bab1635f 经典俯身扶桌后背位)"
+        },
+        "front": {
+          "name": "Anchor_Desk_Front",
+          "pos": [0.0, 0.0, 0.0],
+          "rot_deg": 0.0,
+          "description": "桌子正前方地面站立定位点"
+        },
+        "center": {
+          "name": "Anchor_Desk_Center",
+          "pos": [0.0, 0.838, -0.220],
+          "rot_deg": 0.0,
+          "description": "桌面几何中心定位点"
+        }
+      },
+      "materials": [
+        "Prism_White_Hard (纯白硬质微折面折纸造型台面与外倾八字折棱立柱桌腿)",
+        "Prism_Brushed_Titanium (底面金属承托内框、顶端连接金属套环与地面金属脚垫)",
+        "Prism_LED_Strip (台面下沿内凹隐藏式科技暖白微光灯带)"
+      ]
+    },
+    {
+      "id": "generic_block_bench",
+      "name_zh": "通用长方体小条凳/长石台 (Generic Block Bench / Architectural Plinth)",
+      "category": "bench",
+      "specification_doc": "res://docs/GENERIC_BENCH_INTERACTION_SPEC.md",
+      "dimensions": {
+        "width": 1.400,
+        "depth": 0.480,
+        "height": 0.420
+      },
+      "seat_surface_height": 0.420,
+      "facing": "Bidirectional (All directions open, zero armrest/backrest clipping)",
+      "ground_contact_y": 0.0,
+      "anchors": {
+        "seat": {
+          "name": "Anchor_Seat",
+          "pos": [0.0, 0.420, 0.0],
+          "rot_deg": 0.0,
+          "description": "条凳座面中心唯一核心定位点，端坐、膝上怀抱、并排坐、情侣背面坐位统一对齐"
+        },
+        "front": {
+          "name": "Anchor_Front",
+          "pos": [0.0, 0.0, 0.50],
+          "rot_deg": 180.0,
+          "description": "前方地面站位/寻路触发定位点"
+        }
+      },
+      "materials": [
+        "Generic Scene Materials (石材/木质/混凝土/金属条凳通用，以水平平整顶面为核心)"
       ]
     }
   ]

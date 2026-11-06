@@ -44,6 +44,11 @@ var furniture_catalog: Array = []
 var furn_offset_labels := {}
 var auto_furn_match := true
 var furn_slider_nodes := {}
+var first_person_mode := false
+var fp_button: Button = null
+var fp_yaw_offset := 0.0
+var fp_pitch_offset := 0.0
+var fp_fov := 72.0
 
 static func available_profiles() -> Array:
 	var result: Array=JSON.parse_string(FileAccess.get_file_as_string("res://assets/characters/mmd_validation/shared/manifest.json")).profiles
@@ -244,6 +249,8 @@ func _build_library_ui() -> void:
 		button.text = view_name
 		row.add_child(button)
 		button.pressed.connect(func():
+			if first_person_mode:
+				_set_first_person(false)
 			if camera:
 				var reversed: bool = _is_pack_reversed()
 				match view_name:
@@ -251,6 +258,12 @@ func _build_library_ui() -> void:
 					"侧面": yaw = PI / 2
 					"背面": yaw = 0.0 if reversed else PI
 				_update_camera())
+	fp_button = Button.new()
+	fp_button.text = "第一人称 (竿役)"
+	fp_button.tooltip_text = "切换为角色B (竿役) 第一人称沉浸视角 [快捷键: V]，右键拖拽微调视线，滚轮调节视野(FOV)，中键重置视线"
+	row.add_child(fp_button)
+	fp_button.pressed.connect(func():
+		_set_first_person(not first_person_mode))
 	var skeleton_toggle := CheckButton.new()
 	skeleton_toggle.text = "骨架"
 	row.add_child(skeleton_toggle)
@@ -268,7 +281,7 @@ func _build_library_ui() -> void:
 			else: partner_on=value
 			_apply_physics())
 	var hint := Label.new()
-	hint.text = "同一时间轴控制全部角色 · 对方碰撞默认关闭防震颤（暂时的选择，可手动开启） · 右键旋转 / 滚轮缩放"
+	hint.text = "同一时间轴控制全部角色 · 右键旋转/微调视线 · 滚轮缩放/视场 · [V] 键切换第一人称 · 空格播放/暂停"
 	controls.add_child(hint)
 
 func _filter_entries() -> void:
@@ -428,6 +441,8 @@ func select_entry(id: String) -> void:
 			proxy.configure(actors[role.id].skeleton,1 << (i+1))
 			role_proxies[role.id]=proxy
 		current_pack=entry.pack
+		if first_person_mode:
+			_set_first_person(false)
 		yaw = PI if _is_pack_reversed() else 0.0
 		if auto_furn_match and furniture_visible:
 			_auto_match_furniture()
@@ -504,7 +519,7 @@ func _update_ground_snap(enabled: bool) -> void:
 		for r in pack.roles:
 			if r.id == role_id:
 				orig_offset = r.get("presentation_offset", [0, 0, 0])
-		inst.position.y = orig_offset[1] + offset_y
+		inst.position = Vector3(orig_offset[0], orig_offset[1] + offset_y, orig_offset[2])
 
 func _apply_physics() -> void:
 	for role_id in actors:
@@ -589,6 +604,8 @@ func _process(delta: float) -> void:
 		if time>=duration and not pack.get("loop_preview", false): playing=false
 		timeline.set_value_no_signal(time)
 		_refresh_ui()
+	if first_person_mode:
+		_update_first_person_camera()
 	if overlay.visible:
 		overlay_lines.clear_surfaces()
 		overlay_lines.surface_begin(Mesh.PRIMITIVE_LINES,overlay_material)
@@ -606,16 +623,115 @@ func _process(delta: float) -> void:
 				overlay_lines.surface_add_vertex(skel.global_transform*skel.get_bone_global_pose(index).origin)
 		overlay_lines.surface_end()
 
+func seek_frame(frame: int) -> void:
+	super.seek_frame(frame)
+	if first_person_mode:
+		_update_first_person_camera()
+
 func _refresh_ui() -> void:
 	if not initialized: return
 	var phases: Array[String]=[]
 	for role_id in visible_roles:
 		phases.append("%s %03d" % [role_id,roundi(actors[role_id].time*FPS)])
-	status.text="共同时间 %.2f s  |  帧 %03d / %d  |  %s" % [time,roundi(time*FPS),roundi(duration*FPS)," / ".join(phases)]
+	var view_str := "  |  [第一人称·右键微调视线]" if first_person_mode else ""
+	status.text="共同时间 %.2f s  |  帧 %03d / %d  |  %s%s" % [time,roundi(time*FPS),roundi(duration*FPS)," / ".join(phases), view_str]
 	play_button.text="暂停动作" if playing else "播放动作"
 
 func _unhandled_input(event: InputEvent) -> void:
-	if initialized: super._unhandled_input(event)
+	if not initialized: return
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_V:
+			_set_first_person(not first_person_mode)
+			return
+	if first_person_mode:
+		if event is InputEventMouseButton:
+			if event.button_index == MOUSE_BUTTON_RIGHT:
+				dragging = event.pressed
+			elif event.button_index == MOUSE_BUTTON_MIDDLE and event.pressed:
+				fp_yaw_offset = 0.0
+				fp_pitch_offset = 0.0
+				_update_first_person_camera()
+			elif event.pressed and event.button_index in [MOUSE_BUTTON_WHEEL_UP, MOUSE_BUTTON_WHEEL_DOWN]:
+				fp_fov = clampf(fp_fov + (-3.0 if event.button_index == MOUSE_BUTTON_WHEEL_UP else 3.0), 40.0, 95.0)
+				_update_first_person_camera()
+		elif event is InputEventMouseMotion and dragging:
+			fp_yaw_offset = clampf(fp_yaw_offset - event.relative.x * 0.005, -deg_to_rad(85.0), deg_to_rad(85.0))
+			fp_pitch_offset = clampf(fp_pitch_offset - event.relative.y * 0.005, -deg_to_rad(75.0), deg_to_rad(75.0))
+			_update_first_person_camera()
+		elif event.is_action_pressed("ui_accept"):
+			playing = not playing
+			_refresh_ui()
+	else:
+		super._unhandled_input(event)
+
+func _set_first_person(enabled: bool) -> void:
+	first_person_mode = enabled
+	if fp_button:
+		fp_button.text = "[第一人称 (竿役)]" if first_person_mode else "第一人称 (竿役)"
+	if first_person_mode:
+		fp_yaw_offset = 0.0
+		fp_pitch_offset = 0.0
+		_update_first_person_camera()
+	else:
+		if camera:
+			camera.fov = 38.0
+			camera.near = 0.02
+			_update_camera()
+
+func _update_first_person_camera() -> void:
+	if not first_person_mode or not camera:
+		return
+	var target_role := "B"
+	if not actors.has(target_role) or not actors[target_role].visible:
+		target_role = "A"
+	if not actors.has(target_role):
+		return
+	
+	var actor_instance = actors[target_role]
+	var skel: Skeleton3D = actor_instance.skeleton
+	if not skel:
+		return
+	
+	var head_idx := skel.find_bone("Head")
+	if head_idx < 0:
+		return
+	
+	var head_xf: Transform3D = skel.global_transform * skel.get_bone_global_pose(head_idx)
+	var le_idx := skel.find_bone("LeftEye")
+	var re_idx := skel.find_bone("RightEye")
+	
+	var eye_pos: Vector3
+	var base_forward: Vector3
+	var base_up: Vector3
+	
+	if le_idx >= 0 and re_idx >= 0:
+		var le_wp: Vector3 = (skel.global_transform * skel.get_bone_global_pose(le_idx)).origin
+		var re_wp: Vector3 = (skel.global_transform * skel.get_bone_global_pose(re_idx)).origin
+		eye_pos = (le_wp + re_wp) * 0.5
+		base_forward = (eye_pos - head_xf.origin).normalized()
+		if base_forward.length_squared() < 0.1:
+			base_forward = -head_xf.basis.z.normalized()
+		base_up = head_xf.basis.y.normalized()
+	else:
+		base_forward = -head_xf.basis.z.normalized()
+		base_up = head_xf.basis.y.normalized()
+		eye_pos = head_xf.origin + base_forward * 0.08 + base_up * 0.03
+	
+	var cam_pos: Vector3 = eye_pos + base_forward * 0.05
+	var base_right := base_forward.cross(base_up).normalized()
+	if base_right.length_squared() < 0.1:
+		base_right = Vector3.RIGHT
+	base_up = base_right.cross(base_forward).normalized()
+	
+	var look_dir := base_forward.rotated(base_up, fp_yaw_offset)
+	var current_right := look_dir.cross(base_up).normalized()
+	look_dir = look_dir.rotated(current_right, fp_pitch_offset).normalized()
+	var current_up := current_right.cross(look_dir).normalized()
+	
+	camera.global_position = cam_pos
+	camera.look_at(cam_pos + look_dir, current_up)
+	camera.fov = fp_fov
+	camera.near = 0.03
 
 func _capture_sequence() -> void:
 	var directory:="res://.godot/mmd_pair_validation"
@@ -668,18 +784,46 @@ func _auto_match_furniture() -> void:
 	var default_offset := Vector3.ZERO
 	var default_rot := 0.0
 
-	# 现有的旧家具不再使用，仅将新研制的「几何悬挑」科技单人椅装配在最契合的单人/双人坐椅动作中，其余动作全部空置
+	# 装配极简科技系列定制家具：折面单人椅（prism_geo_chair）与几何双人床（prism_geo_bed）
 	match pack.id:
-		"mmd_781d8c87fd79": # Welcome - BJV2 (受纳方端坐受纳)
-			target_id = "prism_geo_chair"
-			default_offset = Vector3(0.0, 0.0, -0.51)
-			default_rot = 0.0
-		"mmd_beee0d2eb57b": # Loop 20 Chikan 03 (坐姿膝上怀抱把玩，角色B底座端坐，角色A跨坐膝上)
+		"mmd_781d8c87fd79": # Welcome - BJV2 (受纳方端坐受纳，角色对齐单人椅 Anchor_Seat，家具零偏移静止)
 			target_id = "prism_geo_chair"
 			default_offset = Vector3.ZERO
 			default_rot = 0.0
+		"mmd_beee0d2eb57b": # Loop 20 Chikan 03 (坐姿膝上怀抱把玩)
+			target_id = "prism_geo_chair"
+			default_offset = Vector3.ZERO
+			default_rot = 0.0
+		"mmd_160b1e7a411c": # 浪漫情侣背面坐位 (Lap Sitting，角色对齐单人椅 Anchor_Seat，家具零偏移静止)
+			target_id = "prism_geo_chair"
+			default_offset = Vector3.ZERO
+			default_rot = 0.0
+		"mmd_0a3f6ba5f5de": # 床沿仰卧互动 (床沿定位点 Anchor_BedEdge_Front)
+			target_id = "prism_geo_bed"
+			default_offset = Vector3(0.0, 0.0, -1.33)
+			default_rot = 0.0
+		"mmd_71dec5bd8390": # Loop 03 双女床沿闲坐温存 (床沿定位点 Anchor_BedEdge_Front)
+			target_id = "prism_geo_bed"
+			default_offset = Vector3(0.0, 0.0, -1.82)
+			default_rot = 0.0
+		"mmd_aec34d147925": # Loop 05 双女床沿深层爱抚 (床沿定位点 Anchor_BedEdge_Front)
+			target_id = "prism_geo_bed"
+			default_offset = Vector3(0.0, 0.0, -1.28)
+			default_rot = 0.0
+		"mmd_43916ffe3d35": # 双人夜色卧姿骑乘 (床面中心定位点 Anchor_Bed_Center)
+			target_id = "prism_geo_bed"
+			default_offset = Vector3(0.0, 0.0, -0.30)
+			default_rot = 0.0
+		"mmd_6e891982bb51": # Loop 02 单人自慰循环 (床头靠倚定位点 Anchor_Bed_Headboard)
+			target_id = "prism_geo_bed"
+			default_offset = Vector3(0.0, 0.0, 0.45)
+			default_rot = 0.0
+		"mmd_fca4bab1635f": # TSFB V2 经典俯身扶桌后背位 (自动匹配科技长案桌 Anchor_Desk_Surface)
+			target_id = "prism_geo_desk"
+			default_offset = Vector3.ZERO
+			default_rot = 0.0
 		_:
-			# 其余全部动作（包括床沿、卧姿、地面等）不配家具，保持场景开阔空置
+			# 其余地面通用/空中动作不默认配家具，保持场景开阔空置（如 mmd_16a2ecfb7781 平躺口交、mmd_1256ad646811 汤匙位等）
 			target_id = ""
 
 	if target_id != "":
@@ -695,9 +839,10 @@ func _load_furniture(data: Dictionary, default_pos: Vector3 = Vector3.ZERO, defa
 	for c in furniture_root.get_children():
 		c.queue_free()
 	furniture_instance = null
-	if not ResourceLoader.exists(data.file):
+	var path_to_load: String = data.get("scene_file", data.file) if ResourceLoader.exists(data.get("scene_file", "")) else data.file
+	if not ResourceLoader.exists(path_to_load):
 		return
-	var res = load(data.file)
+	var res = load(path_to_load)
 	if res:
 		furniture_instance = res.instantiate()
 		furniture_root.add_child(furniture_instance)
