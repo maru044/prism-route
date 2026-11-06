@@ -19,10 +19,12 @@ vec3 painted_sky(vec2 coordinates) {
 		color = mix(joined, color, smoothstep(0.0, 0.015, edge_distance));
 	}
 	float pole_distance = min(uv.y, 1.0 - uv.y);
-	if (pole_distance < 0.20) {
+	// The ACG panorama has clear polar caps. Keep the fix narrow so tall
+	// cumulus is not blended away across the upper 36 degrees of the sky.
+	if (pole_distance < 0.08) {
 		float pole_y = uv.y < 0.5 ? 0.0006 : 0.9994;
 		vec3 pole = texture(display_panorama, vec2(0.5, pole_y)).rgb;
-		color = mix(pole, color, smoothstep(0.0, 0.20, pole_distance));
+		color = mix(pole, color, smoothstep(0.0, 0.08, pole_distance));
 	}
 	return color * display_energy;
 }

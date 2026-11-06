@@ -1,0 +1,22 @@
+{
+  "path": "assets\\environment\\sky\\acg_summer_panorama_v3.png",
+  "size": [
+    1774,
+    887
+  ],
+  "bytes": 1479451,
+  "sha256": "78fb7e5d5411f87e61917961bfb9eadd8e7a809c816ac1ccabbcaa9154c7101e",
+  "left_right_mean_rgb_error_255": 2.190529875986471,
+  "top_row_rgb_range": [
+    3.0,
+    13.0,
+    14.0
+  ],
+  "bottom_row_rgb_range": [
+    22.0,
+    6.0,
+    3.0
+  ],
+  "runtime_seam_guard_fraction": 0.015,
+  "runtime_pole_guard_fraction": 0.08
+}

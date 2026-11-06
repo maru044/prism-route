@@ -1,0 +1,51 @@
+{
+  "files": [
+    {
+      "path": "assets/world/current_map_validation/current_region.glb",
+      "sha256": "9539169f439699fb2112d7751b0728d0170ae4db0f8561a9235abf5b3522a0cb",
+      "comparison": "lfs-content-oid",
+      "unchanged_from_head": true
+    },
+    {
+      "path": "assets/world/current_map_validation/metadata.json",
+      "sha256": "42665bf3287c32ef0138d694abdab0b90d4c92203687e7388d14ae3142145817",
+      "comparison": "canonical-lf-text",
+      "unchanged_from_head": true
+    },
+    {
+      "path": "assets/world/current_map_validation/landscape_mask.res",
+      "sha256": "5591d12ef6688c5f65885914ef115e581b2c75f9394fae5af7447c54fd6e9280",
+      "comparison": "canonical-lf-text",
+      "unchanged_from_head": true
+    },
+    {
+      "path": "assets/world/current_map_validation/grass_bake/manifest.json",
+      "sha256": "aba46312d63f429ba282c179ccc145a7a81f4f20b40f883b0036528ce8fd65f9",
+      "comparison": "local-generated-asset; runtime grass signature checked separately"
+    },
+    {
+      "path": "assets/world/tree_planting/world_edits.json",
+      "sha256": "b30f25dd5fa50492635345ce757ef18e054859e322e976c2736a710272d3bbd8",
+      "comparison": "canonical-lf-text",
+      "unchanged_from_head": true
+    },
+    {
+      "path": "assets/world/cliff_b_test/architecture.tres",
+      "sha256": "68f30ecf5aa242e15955053f70d79a894dd56df47c7b59afabbbe308474351cb",
+      "comparison": "canonical-lf-text",
+      "unchanged_from_head": true
+    },
+    {
+      "path": "assets/world/map_1012_test/water.gdshader",
+      "sha256": "2b1a8b058d35677a0b0c5f1eaf93658ef9e1565e8eae689c4d26ab5b59e72f43",
+      "comparison": "canonical-lf-text",
+      "unchanged_from_head": true
+    },
+    {
+      "path": "scripts/water/water_manager.gd",
+      "sha256": "89787f0501bdd86168c680a5c775fdd20a3ebd8b92d10c71b99005ce01811ff9",
+      "comparison": "canonical-lf-text",
+      "unchanged_from_head": true
+    }
+  ]
+}

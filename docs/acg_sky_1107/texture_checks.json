@@ -1,0 +1,46 @@
+[
+  {
+    "path": "assets\\environment\\sky\\acg_summer_panorama_v1.png",
+    "size": [
+      1774,
+      887
+    ],
+    "bytes": 1526627,
+    "sha256": "285577e800ef38c28eb0bc608de69cb19ff8cc56bf0fedbda88ad412f6c2db2a",
+    "left_right_mean_rgb_error_255": 2.209695603156708,
+    "top_row_rgb_range": [
+      2.0,
+      7.0,
+      12.0
+    ],
+    "bottom_row_rgb_range": [
+      12.0,
+      8.0,
+      4.0
+    ],
+    "runtime_seam_guard_fraction": 0.015,
+    "runtime_pole_guard_fraction": 0.08
+  },
+  {
+    "path": "assets\\environment\\sky\\acg_summer_panorama_v2.png",
+    "size": [
+      1774,
+      887
+    ],
+    "bytes": 1477385,
+    "sha256": "304ca14bafc3c7d1ecd2130eb6aebb0dab8e14aee27f8c7dda42a2d28e30dac6",
+    "left_right_mean_rgb_error_255": 2.0901916572717023,
+    "top_row_rgb_range": [
+      3.0,
+      12.0,
+      12.0
+    ],
+    "bottom_row_rgb_range": [
+      19.0,
+      6.0,
+      3.0
+    ],
+    "runtime_seam_guard_fraction": 0.015,
+    "runtime_pole_guard_fraction": 0.08
+  }
+]

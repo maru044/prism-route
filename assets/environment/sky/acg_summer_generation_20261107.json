@@ -1,0 +1,45 @@
+{
+  "date": "2026-11-07",
+  "tool": "built-in image_gen",
+  "selected_asset": "acg_summer_panorama_v3.png",
+  "native_resolution": [
+    1774,
+    887
+  ],
+  "requested_resolution": [
+    3840,
+    1920
+  ],
+  "style_reference": "用户提供的日式ACG夏日海湾概念图",
+  "generation_prompt": "Use case: stylized-concept.\nAsset type: a production 360 by 180 degree full-sphere EQUIRECTANGULAR SKY PANORAMA texture for a Japanese ACG / anime-style 3D game, exact 2:1 aspect ratio. Request 3840 x 1920 pixels, or the largest available exact 2:1 output. Deliver the flat texture itself, edge to edge.\n\nArt reference: match the user's latest concept painting in mood and cloud design: exceptionally clear saturated summer blue sky, spectacular tall luminous white cumulus, cool blue shaded cloud volumes, delicate sweeping high cirrus. The reference is a STYLE guide only. Draw SKY ONLY; do not include its landscape or character. This is a substantial new painted sky, not a desaturated photo.\n\nColor and light: exhilarating, clean, exaggerated anime summer daylight. Deep vivid azure/cobalt-blue zenith transitioning through radiant saturated cerulean to light clear cyan at the true horizon. The horizon remains visibly blue rather than a broad white fog band. Pure brilliant white sunlit cloud ridges, small ivory highlights, soft pale-periwinkle and blue shadow planes, strong readable volume without dirty gray. Painterly polished animation background, crisp sculpted silhouettes, softly blended internal shading, no photographic noise. Bright cheerful sunlit sky, not sunset.\n\nSpherical composition: the horizon MUST be the EXACT HORIZONTAL MIDLINE (v=0.50). The whole upper half represents elevations 0 to 90 degrees; the lower half represents directions below the horizon. Paint two or three asymmetrical grand cloud complexes distributed around the 360-degree upper hemisphere, separated by large spacious blue openings. One magnificent towering cauliflower cumulus rising from about 5 degrees to 60–65 degrees elevation, with clustered lobes and vivid blue undersides; another somewhat smaller complex in a different azimuth. A few small distant cumulus islands near the midline, with blue gaps, never an unbroken white cloud fence. Add elegant sparse feathered cirrus in the mid/high blue sky, as in the concept reference. Upper hemisphere cloud cover around 35–40%, not fully overcast. Do not squash the clouds into a shallow horizontal strip.\n\nTechnical projection constraints: genuine latitude-longitude equirectangular mapping, not an ultrawide perspective landscape. Preserve correct spherical scale and pole distortion. Keep the leftmost and rightmost 4% strips cloud-free with matching smooth gradient colors so the 360-degree wrap is seamless. Keep the topmost 8% of the full image clear blue with longitude-independent zenith color, no cloudy polar pinwheel. The ENTIRE LOWER HALF (v=0.50..1) is only an unobtrusive smooth pale blue continuation below the horizon, absolutely no scenery, no clouds, no water or land. No horizontal divider or line at mid-height; the gradient continues smoothly through it. The bottom row must have a uniform pale blue color across its width.\n\nAvoid: sea, reflections, sand, islands, mountains, terrain, grass, trees, architecture, bridges, characters, birds, stars, a sun disk, lens flare, text, watermarks, framing, contact sheets, preview spheres, six cubemap panels, muted gray-blue sky, washed-out pastel veil, storm clouds.",
+  "revision_prompt": "Use case: precise-object-edit.\nEdit target: the supplied 1774 x 887 full-sphere equirectangular sky panorama. Change ONLY cumulus cloud scale. The user likes the vivid clear ACG colors but says the clouds are too large.\n\nKeep exactly the existing 2:1 canvas and latitude-longitude layout. Keep the sky gradient, saturation, deep clean blue zenith, cyan horizon, pure bright white and cool blue cloud shading, the existing sparse thin cirrus, the horizon at y=443.5, and the entirely empty pale-blue lower hemisphere. No camera zoom, no crop, no added landscape.\n\nShrink the big LEFT cumulus complex to approximately TWO THIRDS of its current width AND height (about 33 percent smaller in each dimension). Keep its horizontal center in the same general location, but anchor its base near its original horizon elevation y=450: its highest white tower should now reach approximately y=225 rather than y=110. The main complex should fit approximately x=330..790, y=225..455. It should remain an elegant volumetric cumulus group, now surrounded by substantially more open blue sky.\nShrink the main RIGHT cumulus complex in the same manner, about two thirds width and height, keeping the base around y=450; its top should now be around y=325 rather than y=260. Retain the asymmetric grouping and the small distant cloud islands, with generous BLUE gaps.\n\nReplace removed cloud areas with seamlessly matching clear blue sky. Do not replace the removed mass with extra little clouds. Do not create a continuous white cloud fence along the horizon. Keep the delicate high cirrus at their original size and locations, retaining airy motion above the smaller cumulus.\n\nKeep left/right wrap edge zones cloud-free and color-matched. Keep a clear polar cap and uniform top and bottom rows. Preserve all other details and colors, particularly the strong saturated Japanese anime summer palette. Deliver only the edited flat full-sphere panorama.",
+  "revision_reason": "用户指出第一版云过大；主积云缩小到原约2/3线性尺度，保留高饱和颜色与卷云。",
+  "source_paths": [
+    "C:/Users/PC/.codex/generated_images/01a1a739-1507-7db0-a36e-cf43f2f30a00/exec-ad4b1831-993c-4527-b7f7-7499e69d4490.png",
+    "C:/Users/PC/.codex/generated_images/01a1a739-1507-7db0-a36e-cf43f2f30a00/exec-d9421ecf-8da8-448c-b3f6-0f2013184008.png"
+  ],
+  "notes": [
+    "Native output, not a 4K asset and not artificially upscaled.",
+    "No Python image edits. New artwork created and revised with built-in image_gen.",
+    "Visible sky and existing water sky reflection share the final texture.",
+    "Current HDRI radiance and global exposure settings remain unchanged."
+  ],
+  "additional_revision": {
+    "date": "2026-11-07",
+    "tool": "built-in image_gen",
+    "selected_asset": "acg_summer_panorama_v3.png",
+    "edit_target": "acg_summer_panorama_v2.png",
+    "prompt": "Use case: precise-object-edit.\nEdit target: the supplied 1774 x 887 equirectangular sky panorama, acg_summer_panorama_v2.png.\nChange ONLY the scale of the two tall, dense cumulus cloud complexes. Make each approximately 25 percent SMALLER in width AND height (75 percent of its present linear dimensions), with its base kept near the existing horizon cloud level. Leave the main group's horizontal center near x=560 and the right group's center near x=1460. The tallest left tower currently reaches about y=245; after the edit it should reach approximately y=300, with its base still near y=455. The right tower currently reaches about y=340; its new top should be near y=370, base still y=455. Narrow both groups correspondingly and replace removed cloud regions with matching blue sky. Preserve their recognizable sculpted lobes, brilliant white tops, cool blue shadows, and Japanese ACG painterly finish.\nINVARIANTS: Keep the same saturated cobalt/azure-to-cyan sky gradient, brightness, colors, sparse thin high cirrus in their current positions and sizes, small distant low clouds, empty pale-blue lower hemisphere, exact 2:1 full canvas, horizon at the horizontal midline, and seam/pole suitability. Do not move, rotate, zoom or crop the overall panorama. Do not shrink the thin cirrus or scatter new clouds into the cleared regions. Do not make an unbroken white cloud fence. No landscape, ocean, ground, buildings, characters, sun disk, typography, frames or watermark.\nThe game will apply a separate 180-degree orientation adjustment; do NOT rotate the bitmap. Deliver just the edited panorama.",
+    "requested_relative_cloud_scale": 0.75,
+    "display_yaw_before_degrees": 90,
+    "additional_rotation_degrees": 180,
+    "display_yaw_after_degrees": -90,
+    "source_path": "C:/Users/PC/.codex/generated_images/01a1a739-1507-7db0-a36e-cf43f2f30a00/exec-862f2a32-cca5-475d-aeb4-347c72e73374.png",
+    "notes": [
+      "Cloud scale is an approximate painted revision, not an exact numerical resampling.",
+      "The 180-degree orientation change is applied by the sky material, not painted into the bitmap.",
+      "Sky color, cirrus, HDRI lighting and the rest of the scene retain the accepted settings."
+    ]
+  },
+  "display_yaw_degrees": -90
+}

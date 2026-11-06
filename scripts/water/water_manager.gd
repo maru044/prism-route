@@ -6,7 +6,7 @@ const SURFACE := preload("res://assets/water/water_surface.gdshader")
 const PROXY := preload("res://assets/water/reflection_proxy.gdshader")
 const SSR := preload("res://assets/water/water_ssr_opaque.gdshader")
 const OLD := preload("res://assets/world/map_1012_test/water.gdshader")
-const SKY_TEXTURE := preload("res://assets/environment/sky/fresh_cumulus_panorama_v2.png")
+const SKY_TEXTURE := preload("res://assets/environment/sky/acg_summer_panorama_v3.png")
 const REFLECTION_LAYER := 1 << 19
 const VISIBILITY_INTERVAL := 0.25
 const VISIBILITY_MOVE_SQUARED := 1.0
@@ -53,6 +53,11 @@ func initialize(environment: Environment, get_actor: Callable, get_camera: Calla
 	actor_provider = get_actor
 	camera_provider = get_camera
 	sky_yaw = environment.sky_rotation.y
+	# Visible panorama yaw is independent of the HDRI lighting orientation.
+	# The water sampler rotates world directions by -sky_yaw before lookup.
+	if environment.sky != null and environment.sky.sky_material is ShaderMaterial:
+		var display_rotation: Variant=(environment.sky.sky_material as ShaderMaterial).get_shader_parameter("display_yaw")
+		if display_rotation != null:sky_yaw-=float(display_rotation)
 	reflection = SubViewport.new()
 	reflection.name = "WaterReflectionHDR"
 	reflection.size = Vector2i(800,450)

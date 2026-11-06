@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "files": [
+    {
+      "path": "scripts/map_1021.gd",
+      "sha256": "e76dc7fb671ec5699a18c9958926f2210ea4375eb94013b31f4cba88c4ce240d",
+      "unchanged": true
+    },
+    {
+      "path": "assets/environment/sky/fresh_cumulus_panorama_v2.png",
+      "sha256": "47cbf3972c6e6fbc2591120f4db7085168335439b686b9a27f4ff4fae6e7f8b2",
+      "unchanged": true
+    },
+    {
+      "path": "assets/environment/hdri/rosendal_park_sunset_puresky_4k.exr",
+      "sha256": "cfdad1bacc266ce7a34d5c574c0ba2e5cd3ce1e37d8579990843d65d132b48a9",
+      "unchanged": true
+    },
+    {
+      "path": "assets/world/current_map_validation/current_region.glb",
+      "sha256": "9539169f439699fb2112d7751b0728d0170ae4db0f8561a9235abf5b3522a0cb",
+      "unchanged": true
+    },
+    {
+      "path": "assets/world/current_map_validation/grass_bake/manifest.json",
+      "sha256": "aba46312d63f429ba282c179ccc145a7a81f4f20b40f883b0036528ce8fd65f9",
+      "unchanged": true
+    },
+    {
+      "path": "assets/world/tree_planting/world_edits.json",
+      "sha256": "b30f25dd5fa50492635345ce757ef18e054859e322e976c2736a710272d3bbd8",
+      "unchanged": true
+    },
+    {
+      "path": "assets/environment/beach_sand/beach_sand.tres",
+      "sha256": "e47e2045e6f1139f09d19d011668f5ca24a927c253f8ae42649c8b6f1b71197e",
+      "unchanged": true
+    },
+    {
+      "path": "shaders/environment/beach_sand.gdshader",
+      "sha256": "98ba70d746bb6aecf5d3ca02585da6278442a2fd78278195407a648636b1f97b",
+      "unchanged": true
+    }
+  ]
+}

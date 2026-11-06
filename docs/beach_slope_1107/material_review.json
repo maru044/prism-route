@@ -1,0 +1,48 @@
+{
+  "adapter": "NVIDIA GeForce RTX 5070 Ti",
+  "entry": "scenes/main.tscn",
+  "measurements": [
+    {
+      "gpu_ms": 0.553570589861449,
+      "render_cpu_ms": 0.369595588086283,
+      "samples": 680,
+      "view": "material_before_shore"
+    },
+    {
+      "gpu_ms": 0.564345534340005,
+      "render_cpu_ms": 0.366341142297489,
+      "samples": 683,
+      "view": "material_after_shore"
+    },
+    {
+      "gpu_ms": 0.541160639219105,
+      "render_cpu_ms": 0.339798841652408,
+      "samples": 691,
+      "view": "material_before_wet"
+    },
+    {
+      "gpu_ms": 0.553304219350024,
+      "render_cpu_ms": 0.344331877634168,
+      "samples": 687,
+      "view": "material_after_wet"
+    },
+    {
+      "gpu_ms": 0.548107465345468,
+      "render_cpu_ms": 0.351780596953719,
+      "samples": 670,
+      "view": "material_before_overview"
+    },
+    {
+      "gpu_ms": 0.566460621835218,
+      "render_cpu_ms": 0.356208024128585,
+      "samples": 673,
+      "view": "material_after_overview"
+    }
+  ],
+  "note": "Sequential material A/B; brief local samples, not a whole-world performance benchmark.",
+  "resolution": [
+    1600,
+    900
+  ],
+  "sand_meshes": 4
+}

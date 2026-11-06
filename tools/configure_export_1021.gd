@@ -62,6 +62,8 @@ func run() -> void:
 		if not feature_file in includes.split(","):includes+=("," if not includes.is_empty() else "")+feature_file
 	for feature_file: String in ["assets/world/church_ruins_1105/manifest.json","assets/world/church_ruins_1105/ground_grass.json","assets/world/church_ruins_1105/grass_cut.rf","assets/world/church_ruins_1105/grass_bake/manifest.json","assets/world/church_ruins_1105/grass_bake/*.grass"]:
 		if not feature_file in includes.split(","):includes+=("," if not includes.is_empty() else "")+feature_file
+	for beach_file: String in ["assets/world/beach_slope_1107/manifest.json","assets/environment/beach_sand/sources.json"]:
+		if not beach_file in includes.split(","):includes+=("," if not includes.is_empty() else "")+beach_file
 	config.set_value("preset.0","include_filter",includes)
 	var exclusions: PackedStringArray=["docs/*","screenshots/*","archive/*","experiments/*","assets/water/review/*","assets/world/current_map_validation/review/*","assets/world/current_map_validation/grass_bake/manifest_part_*.json","*.3dm","*.3dmbak","*.blend","*.blend1","*.TMP"]
 	var bake_root: String="res://assets/world/current_map_validation/grass_bake/"

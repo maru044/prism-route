@@ -1,0 +1,125 @@
+{
+  "retrieved_date": "2026-11-07",
+  "status": "downloaded candidates; not assigned to formal scene",
+  "assets": [
+    {
+      "id": "sand_03",
+      "name": "Sand 03",
+      "source_url": "https://polyhaven.com/a/sand_03",
+      "info_api_url": "https://api.polyhaven.com/info/sand_03",
+      "files_api_url": "https://api.polyhaven.com/files/sand_03",
+      "authors": {
+        "Charlotte Baglioni": "All"
+      },
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "license_legalcode_url": "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
+      "source_dimensions_mm": [
+        2000,
+        2000
+      ],
+      "tile_size_m": [
+        2.0,
+        2.0
+      ],
+      "maps": [
+        {
+          "role": "albedo",
+          "path": "assets/environment/beach_sand/sand_03/sand_03_diff_2k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sand_03/sand_03_diff_2k.jpg",
+          "bytes": 3353581,
+          "official_md5": "7732acef12dc23c8f7eda65f5cea0ab6",
+          "sha256": "538453033d28a64c671b89389a6ee904184af18d365adb5a15d5ea9e1eb5705b",
+          "resolution": [
+            2048,
+            2048
+          ]
+        },
+        {
+          "role": "normal_opengl",
+          "path": "assets/environment/beach_sand/sand_03/sand_03_nor_gl_2k.png",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/2k/sand_03/sand_03_nor_gl_2k.png",
+          "bytes": 22273220,
+          "official_md5": "902a565005b714356b0a4863a23f4515",
+          "sha256": "43b8179110e6ac28e230c931216fbdf1923f93f62502df4255c0b68525adf628",
+          "resolution": [
+            2048,
+            2048
+          ]
+        },
+        {
+          "role": "roughness",
+          "path": "assets/environment/beach_sand/sand_03/sand_03_rough_2k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sand_03/sand_03_rough_2k.jpg",
+          "bytes": 1543849,
+          "official_md5": "7ee62cdf779c0fb37a5db58af5f3522e",
+          "sha256": "f42030a395cf54fee47e8d2f36c9c0d3600a61564c12f728497da3e21b17a381",
+          "resolution": [
+            2048,
+            2048
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aerial_beach_01",
+      "name": "Aerial Beach 01",
+      "source_url": "https://polyhaven.com/a/aerial_beach_01",
+      "info_api_url": "https://api.polyhaven.com/info/aerial_beach_01",
+      "files_api_url": "https://api.polyhaven.com/files/aerial_beach_01",
+      "authors": {
+        "Rob Tuytel": "All"
+      },
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "license_legalcode_url": "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
+      "source_dimensions_mm": [
+        30000,
+        30000
+      ],
+      "tile_size_m": [
+        30.0,
+        30.0
+      ],
+      "maps": [
+        {
+          "role": "albedo",
+          "path": "assets/environment/beach_sand/aerial_beach_01/aerial_beach_01_diff_2k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/aerial_beach_01/aerial_beach_01_diff_2k.jpg",
+          "bytes": 457152,
+          "official_md5": "b06496ad69bc0587e03e9cbcf9a80d76",
+          "sha256": "1803d7e2861b304bea6d2e124dcd4c657fcb93843b84c17bb2db98ce48a87e4e",
+          "resolution": [
+            2048,
+            2048
+          ]
+        },
+        {
+          "role": "normal_opengl",
+          "path": "assets/environment/beach_sand/aerial_beach_01/aerial_beach_01_nor_gl_2k.png",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/2k/aerial_beach_01/aerial_beach_01_nor_gl_2k.png",
+          "bytes": 6738050,
+          "official_md5": "dc5230ed738b129ed78d536ebfef52c1",
+          "sha256": "e4d4e3aae7f104c6481d1ec8ff93003a3128fb623adcb78c3b005c1e29b730bd",
+          "resolution": [
+            2048,
+            2048
+          ]
+        },
+        {
+          "role": "roughness",
+          "path": "assets/environment/beach_sand/aerial_beach_01/aerial_beach_01_rough_2k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/aerial_beach_01/aerial_beach_01_rough_2k.jpg",
+          "bytes": 505596,
+          "official_md5": "e372484429ef0b815b5387429d199c6d",
+          "sha256": "318b440c109de7411f9e7443f38ae3cf873f34e90afd762c931bae3b23426da2",
+          "resolution": [
+            2048,
+            2048
+          ]
+        }
+      ]
+    }
+  ],
+  "total_texture_bytes": 34871448
+}

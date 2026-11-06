@@ -76,9 +76,9 @@ vec3 reflected_sky(vec3 direction) {
         color = mix(joined, color, smoothstep(0.0, 0.015, edge));
     }
     float pole = min(uv.y, 1.0 - uv.y);
-    if (pole < 0.20) {
+    if (pole < 0.08) {
         vec3 pole_color = texture(sky_panorama, vec2(0.5, uv.y < 0.5 ? 0.0006 : 0.9994)).rgb;
-        color = mix(pole_color, color, smoothstep(0.0, 0.20, pole));
+        color = mix(pole_color, color, smoothstep(0.0, 0.08, pole));
     }
     return color;
 }

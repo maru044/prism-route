@@ -1,0 +1,15 @@
+{
+  "accepted_display_yaw_degrees": -90.0000000002924,
+  "camera_exterior_offset_m": 26.0,
+  "camera_transform": "[X: (0.628581, -0.0, 0.777744), Y: (0.123909, 0.987227, -0.100144), Z: (-0.76781, 0.159318, 0.620552), O: (-793.7078, 34.81761, 1514.32)]",
+  "entry": "scenes/main.tscn",
+  "initial_water_yaw_degrees": 174.399998706169,
+  "spawn": "spawn_cave",
+  "variants": [
+    {
+      "display_yaw_degrees": -90.0000000002924,
+      "water_yaw_degrees": 174.399998706169
+    }
+  ],
+  "water_yaw_matches_display": true
+}

@@ -1,0 +1,40 @@
+{
+  "passed": true,
+  "files": [
+    {
+      "path": "scripts/map_1021.gd",
+      "sha256": "e76dc7fb671ec5699a18c9958926f2210ea4375eb94013b31f4cba88c4ce240d",
+      "unchanged": true
+    },
+    {
+      "path": "scripts/water/water_manager.gd",
+      "sha256": "89787f0501bdd86168c680a5c775fdd20a3ebd8b92d10c71b99005ce01811ff9",
+      "unchanged": true
+    },
+    {
+      "path": "assets/water/water_surface.gdshader",
+      "sha256": "a383b1f872fa185aeffc9b7e877d9c75b3555f284c931e32b96a457a00e83e0e",
+      "unchanged": true
+    },
+    {
+      "path": "assets/world/beach_slope_1107/beach.glb",
+      "sha256": "1ba8495da2a013e280a4157865c12f3999ae62c60280d94b8f896aa4f7b193d9",
+      "unchanged": true
+    },
+    {
+      "path": "assets/world/current_map_validation/current_region.glb",
+      "sha256": "9539169f439699fb2112d7751b0728d0170ae4db0f8561a9235abf5b3522a0cb",
+      "unchanged": true
+    },
+    {
+      "path": "assets/world/current_map_validation/grass_bake/manifest.json",
+      "sha256": "aba46312d63f429ba282c179ccc145a7a81f4f20b40f883b0036528ce8fd65f9",
+      "unchanged": true
+    },
+    {
+      "path": "assets/world/tree_planting/world_edits.json",
+      "sha256": "b30f25dd5fa50492635345ce757ef18e054859e322e976c2736a710272d3bbd8",
+      "unchanged": true
+    }
+  ]
+}

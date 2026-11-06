@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-07",
+  "tool": "built-in image_gen",
+  "selected_asset": "acg_summer_panorama_v3.png",
+  "edit_target": "acg_summer_panorama_v2.png",
+  "prompt": "Use case: precise-object-edit.\nEdit target: the supplied 1774 x 887 equirectangular sky panorama, acg_summer_panorama_v2.png.\nChange ONLY the scale of the two tall, dense cumulus cloud complexes. Make each approximately 25 percent SMALLER in width AND height (75 percent of its present linear dimensions), with its base kept near the existing horizon cloud level. Leave the main group's horizontal center near x=560 and the right group's center near x=1460. The tallest left tower currently reaches about y=245; after the edit it should reach approximately y=300, with its base still near y=455. The right tower currently reaches about y=340; its new top should be near y=370, base still y=455. Narrow both groups correspondingly and replace removed cloud regions with matching blue sky. Preserve their recognizable sculpted lobes, brilliant white tops, cool blue shadows, and Japanese ACG painterly finish.\nINVARIANTS: Keep the same saturated cobalt/azure-to-cyan sky gradient, brightness, colors, sparse thin high cirrus in their current positions and sizes, small distant low clouds, empty pale-blue lower hemisphere, exact 2:1 full canvas, horizon at the horizontal midline, and seam/pole suitability. Do not move, rotate, zoom or crop the overall panorama. Do not shrink the thin cirrus or scatter new clouds into the cleared regions. Do not make an unbroken white cloud fence. No landscape, ocean, ground, buildings, characters, sun disk, typography, frames or watermark.\nThe game will apply a separate 180-degree orientation adjustment; do NOT rotate the bitmap. Deliver just the edited panorama.",
+  "requested_relative_cloud_scale": 0.75,
+  "display_yaw_before_degrees": 90,
+  "additional_rotation_degrees": 180,
+  "display_yaw_after_degrees": -90,
+  "source_path": "C:/Users/PC/.codex/generated_images/01a1a739-1507-7db0-a36e-cf43f2f30a00/exec-862f2a32-cca5-475d-aeb4-347c72e73374.png",
+  "notes": [
+    "Cloud scale is an approximate painted revision, not an exact numerical resampling.",
+    "The 180-degree orientation change is applied by the sky material, not painted into the bitmap.",
+    "Sky color, cirrus, HDRI lighting and the rest of the scene retain the accepted settings."
+  ]
+}

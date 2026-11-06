@@ -26,6 +26,7 @@ const TERRAIN_REPAIRS := preload("res://scripts/world/terrain_repairs.gd")
 const SUNKEN_ARCHIVE := preload("res://scripts/world/sunken_archive.gd")
 const ROAD_JUNCTION := preload("res://scripts/world/road_junction.gd")
 const CHURCH_RUINS := preload("res://scripts/world/church_ruins.gd")
+const BEACH_SLOPE := preload("res://scripts/world/beach_slope.gd")
 var church_ruins
 var sunken_archive
 var terrain_repairs
@@ -364,14 +365,14 @@ func _build_model() -> void:
 	var architecture: Material=load("res://assets/world/cliff_b_test/architecture.tres")
 	var road:=StandardMaterial3D.new();road.albedo_color=Color(0.13,0.145,0.15);road.roughness=0.93
 	road.cull_mode=BaseMaterial3D.CULL_DISABLED
-	var sand:=StandardMaterial3D.new();sand.albedo_color=Color(0.77,0.71,0.52);sand.roughness=0.98
+	var sand: Material=load("res://assets/environment/beach_sand/beach_sand.tres")
 	var water:=ShaderMaterial.new();water.shader=load("res://assets/world/map_1012_test/water.gdshader")
 	var byid: Dictionary={}
 	for row: Dictionary in metadata.object_records:byid[row.id]=row
 	for node in model.find_children("*","MeshInstance3D",true,false):
 		var mesh:=node as MeshInstance3D;var id:=str(mesh.name).get_slice("_",1)
 		# Remove both the old render mesh and its prospective collision before building the reviewed hosts.
-		if id in OVAL_ATRIUM.REPLACED_IDS or id in EARTH_PAVILION.REPLACED_IDS or id in TERRAIN_REPAIRS.REPLACED_IDS or id in SUNKEN_ARCHIVE.REPLACED_IDS or id in ROAD_JUNCTION.REPLACED_IDS:
+		if id in OVAL_ATRIUM.REPLACED_IDS or id in EARTH_PAVILION.REPLACED_IDS or id in TERRAIN_REPAIRS.REPLACED_IDS or id in SUNKEN_ARCHIVE.REPLACED_IDS or id in ROAD_JUNCTION.REPLACED_IDS or id in BEACH_SLOPE.REPLACED_IDS:
 			mesh.free();continue
 		# Object semantics can change without rebuilding or moving mesh geometry.
 		var row: Dictionary=byid.get(id,{})
@@ -387,6 +388,7 @@ func _build_model() -> void:
 		mesh.add_child(body)
 		var shape:=mesh.mesh.create_trimesh_shape();shape.backface_collision=true
 		var collider:=CollisionShape3D.new();collider.shape=shape;body.add_child(collider)
+	var beach:=BEACH_SLOPE.new();beach.sand_material=sand;model.add_child(beach)
 	print("CURRENT_MAP_COLLISION_READY")
 
 func _environment() -> void:

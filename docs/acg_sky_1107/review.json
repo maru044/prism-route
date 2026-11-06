@@ -1,0 +1,15 @@
+{
+  "display_asset": "res://assets/environment/sky/acg_summer_panorama_v3.png",
+  "display_yaw_degrees": -90.0000000002924,
+  "entry": "scenes/main.tscn",
+  "exposure": 0.740000009536743,
+  "lighting_asset": "res://assets/environment/hdri/rosendal_park_sunset_puresky_4k.exr",
+  "lighting_energy": 0.48,
+  "main_cloud_approx_azimuth_from_north_degrees": 109.599998706169,
+  "native_resolution": [
+    1774,
+    887
+  ],
+  "note": "Texture A/B shares HDRI lighting, exposure, and narrow pole guard.",
+  "water_bodies": 7
+}
