@@ -112,6 +112,14 @@ uniform bool use_grass_lod_density = false;
 // Enabled only by the 1021 streamer. Instances already fully alpha-discarded
 // by LOD collapse to degenerate triangles before wind/biome work and raster.
 uniform bool skip_invisible_grass = false;
+// Camera occlusion dither fade: clears grass blocking the view to the character
+// specifically active when looking from low angles (underskirt / upward views).
+uniform bool use_camera_occlusion_fade = true;
+uniform float camera_fade_pitch_min : hint_range(0.0, 1.0) = 0.10;
+uniform float camera_fade_pitch_max : hint_range(0.0, 1.0) = 0.38;
+uniform float camera_fade_distance_max : hint_range(0.5, 6.0) = 2.8;
+uniform float camera_fade_radius : hint_range(0.2, 2.0) = 0.85;
+uniform float camera_fade_near_lens : hint_range(0.1, 1.5) = 0.55;
 // Local presentation cut for the excavated atrium; immutable root caches stay reusable.
 uniform bool use_atrium_grass_cut = false;
 uniform vec4 atrium_roof_cut_xz = vec4(0.0, 0.0, 1.0, 1.0);
@@ -503,6 +511,13 @@ void vertex() {
 	}
 }
 
+const float bayer_matrix_4x4[16] = float[16](
+	0.0 / 16.0,  8.0 / 16.0,  2.0 / 16.0, 10.0 / 16.0,
+	12.0 / 16.0,  4.0 / 16.0, 14.0 / 16.0,  6.0 / 16.0,
+	3.0 / 16.0, 11.0 / 16.0,  1.0 / 16.0,  9.0 / 16.0,
+	15.0 / 16.0,  7.0 / 16.0, 13.0 / 16.0,  5.0 / 16.0
+);
+
 void fragment() {
 	vec2 local_card_uv = UV;
 	vec2 sample_uv = UV;
@@ -541,6 +556,39 @@ void fragment() {
 	}
 	float cutout_alpha = tex.a * edge_mask * view_mask
 		* grass_lod_visibility * tree_lod_visibility;
+	if (use_camera_occlusion_fade) {
+		// In Godot Spatial Shader, the camera world forward direction is -INV_VIEW_MATRIX[2].xyz.
+		// Its Y component is -INV_VIEW_MATRIX[2].y (> 0 when camera is pitched upward / looking up).
+		float cam_pitch_up = -INV_VIEW_MATRIX[2].y;
+		float pitch_weight = smoothstep(camera_fade_pitch_min, camera_fade_pitch_max, cam_pitch_up);
+		if (pitch_weight > 0.001) {
+			// In View Space, camera is at origin (0, 0, 0), looking down -Z.
+			// Distance along camera sightline is -VERTEX.z.
+			float view_depth = -VERTEX.z;
+			if (view_depth > 0.0) {
+				// 1. Sightline corridor mask between camera and character
+				float depth_mask = 1.0 - smoothstep(camera_fade_distance_max * 0.5, camera_fade_distance_max, view_depth);
+				float radial_dist = length(VERTEX.xy);
+				float radius_mask = 1.0 - smoothstep(camera_fade_radius * 0.45, camera_fade_radius, radial_dist);
+				float corridor_occlusion = depth_mask * radius_mask;
+
+				// 2. Direct camera lens proximity bubble (prevents blades right in front of the lens)
+				float lens_dist = length(VERTEX);
+				float lens_occlusion = 1.0 - smoothstep(camera_fade_near_lens * 0.4, camera_fade_near_lens, lens_dist);
+
+				// Combined occlusion intensity scaled by camera upward pitch
+				float occlusion = clamp(max(corridor_occlusion, lens_occlusion) * pitch_weight, 0.0, 1.0);
+				if (occlusion > 0.005) {
+					float keep_ratio = 1.0 - occlusion;
+					ivec2 pixel_coord = ivec2(mod(FRAGCOORD.xy, 4.0));
+					float dither_threshold = bayer_matrix_4x4[pixel_coord.y * 4 + pixel_coord.x];
+					if (keep_ratio <= dither_threshold) {
+						cutout_alpha = 0.0;
+					}
+				}
+			}
+		}
+	}
 	// Godot flips interpolated normals on rasterized backfaces when culling is
 	// disabled. Undo that flip for single-copy grass cards: both sides must keep
 	// the same authored upward/curved normal as the old duplicated-face mesh.

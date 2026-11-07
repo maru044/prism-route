@@ -339,7 +339,9 @@ func _process(delta: float) -> void:
 	var rendering := style == Style.PLANAR and (wants_mirror or reflection_weight > 0.001)
 	reflection.render_target_update_mode = SubViewport.UPDATE_ALWAYS if rendering else SubViewport.UPDATE_DISABLED
 	if rendering:
-		var size := Vector2i(Vector2(get_viewport().get("size")) * 0.5)
+		# Root Window.size is the OS window size, not the fixed render size
+		# when viewport stretching is enabled (e.g. 1080p on a larger desktop).
+		var size := Vector2i(get_viewport().get_visible_rect().size * 0.5)
 		size.x = maxi(size.x,128);size.y = maxi(size.y,72)
 		if reflection.size != size:reflection.size = size
 		mirror_camera.fov = camera.fov

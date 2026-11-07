@@ -12,6 +12,11 @@ const MOTION_LABELS := {"idle": "待机", "walk": "步行", "run": "奔跑", "ju
 @export var gravity_strength := 22.0
 @export var surface_step_height := 0.0
 @export var use_mtoon := true
+@export var camera_min_distance := 0.45
+@export var camera_max_distance := 10.0
+@export var camera_min_pitch := -1.35
+@export var camera_max_pitch := 1.25
+@export var camera_pivot_height := 0.95
 @onready var visual: Node3D = $Visual
 @onready var character: Node3D = $Visual/GanyuModel
 @onready var camera_pivot: Node3D = $CameraPivot
@@ -43,6 +48,7 @@ func _ready() -> void:
 		add_child(wetness)
 	floor_snap_length = 0.45
 	floor_max_angle = deg_to_rad(48)
+	camera_pivot.position = Vector3(0, camera_pivot_height, 0)
 	respawn_transform = global_transform
 	spring_arm.add_excluded_object(get_rid())
 	skeleton = character.find_child("GeneralSkeleton", true, false)
@@ -154,6 +160,7 @@ func set_spawn(point: Vector3, heading: float) -> void:
 	global_position = point
 	rotation = Vector3.ZERO
 	visual.rotation = Vector3(0, heading + PI, 0)
+	camera_pivot.position = Vector3(0, camera_pivot_height, 0)
 	camera_pivot.rotation = Vector3(-0.16, heading, 0)
 	velocity = Vector3.ZERO
 	respawn_transform = Transform3D(Basis(Vector3.UP, heading), point)
@@ -189,8 +196,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			dragging_camera = event.pressed
+		elif event.button_index == MOUSE_BUTTON_MIDDLE and event.pressed:
+			camera_pivot.rotation.x = -0.16
+			spring_arm.spring_length = 4.0
 		elif event.pressed and event.button_index in [MOUSE_BUTTON_WHEEL_UP, MOUSE_BUTTON_WHEEL_DOWN]:
-			spring_arm.spring_length = clampf(spring_arm.spring_length + (0.4 if event.button_index == MOUSE_BUTTON_WHEEL_DOWN else -0.4), 1.8, 10.0)
+			spring_arm.spring_length = clampf(spring_arm.spring_length + (0.25 if event.button_index == MOUSE_BUTTON_WHEEL_DOWN else -0.25), camera_min_distance, camera_max_distance)
 	if event is InputEventMouseMotion and dragging_camera:
 		camera_pivot.rotation.y -= event.relative.x * 0.004
-		camera_pivot.rotation.x = clampf(camera_pivot.rotation.x - event.relative.y * 0.003, -0.72, 0.45)
+		camera_pivot.rotation.x = clampf(camera_pivot.rotation.x - event.relative.y * 0.003, camera_min_pitch, camera_max_pitch)
