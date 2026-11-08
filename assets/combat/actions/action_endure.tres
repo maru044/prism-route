@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TurnActionResource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/combat/turn_action_resource.gd" id="1_action"]
+
+[resource]
+script = ExtResource("1_action")
+action_id = "act_endure"
+action_name = "咬牙忍耐"
+action_category = "endure"
+target_zone = ""
+base_pleasure = 0.0
+self_pleasure_defense = 0.5
+description = "调整呼吸强行忍耐，本回合受到的侍奉快感降低50%。"
+log_template = "{user}咬牙忍耐，稳固自身心神！"

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TurnActionResource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/combat/turn_action_resource.gd" id="1_action"]
+
+[resource]
+script = ExtResource("1_action")
+action_id = "act_caress"
+action_name = "柔情爱抚"
+action_category = "tease"
+target_zone = "mouth"
+base_pleasure = 15.0
+self_pleasure_defense = 0.0
+description = "轻抚花火的脸颊与唇齿，增加平稳快感。"
+log_template = "{user}施展了柔情爱抚！"

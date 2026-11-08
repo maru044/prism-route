@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TurnActionResource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/combat/turn_action_resource.gd" id="1_action"]
+
+[resource]
+script = ExtResource("1_action")
+action_id = "act_nipples"
+action_name = "玩弄双乳"
+action_category = "tease"
+target_zone = "nipples"
+base_pleasure = 18.0
+self_pleasure_defense = 0.0
+description = "双手伸入和服衣襟捏弄敏感乳尖，造成适度加深快感。"
+log_template = "{user}玩弄了花火的敏感双乳！"

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TurnActionResource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/combat/turn_action_resource.gd" id="1_action"]
+
+[resource]
+script = ExtResource("1_action")
+action_id = "act_toy_vibe"
+action_name = "调频高频跳蛋"
+action_category = "toy"
+target_zone = "clitoris"
+base_pleasure = 20.0
+self_pleasure_defense = 0.0
+description = "将情趣跳蛋震频调至高效档位，向私密花核施加持续平稳刺激。"
+log_template = "{user}调节了高频跳蛋！"
