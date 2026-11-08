@@ -8,6 +8,7 @@ const GEOMETRY := preload("res://assets/world/initial_ruin_1029/ruin.glb")
 const WALK_COLLISION := preload("res://assets/world/initial_ruin_1029/walk_collision.glb")
 const WALK_MANIFEST := "res://assets/world/initial_ruin_1029/walk_collision.json"
 const ACTOR_SOLID_LAYER := 32
+const NPC_SOLID_LAYER := 64
 var world
 var planting_mask = MASK.new()
 var walk_manifest: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(WALK_MANIFEST))
@@ -127,7 +128,7 @@ func _build_npc() -> void:
 	npc_anchor.add_child(avatar)
 	npc_body = StaticBody3D.new()
 	npc_body.name = "NPCBody"
-	npc_body.collision_layer = ACTOR_SOLID_LAYER
+	npc_body.collision_layer = NPC_SOLID_LAYER
 	npc_body.collision_mask = 0
 	npc_anchor.add_child(npc_body)
 	var shape := CollisionShape3D.new()

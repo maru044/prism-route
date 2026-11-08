@@ -205,7 +205,7 @@ func world_checks() -> void:
 	if not scene.test_ready: return
 	check(scene.spawn_index == 8 and scene.character_mode,"Formal cave spawn changed")
 	check(scene.water_manager.bodies.size() == 7,"Formal water count changed")
-	check(scene.character.collision_mask == 32,"Water became a solid character floor")
+	check(scene.character.collision_mask == (32 | 64),"Water became a solid character floor")
 	inspect()
 	scene.set_free(true); scene.set_review_ui_visible(false)
 	scene.grass_wind.running = false

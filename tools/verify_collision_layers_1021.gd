@@ -36,7 +36,7 @@ func run() -> void:
 				record.merge({"legacy_query_hits_marking":true,"actor_query_hits_road":true,"paint_height_m":old.position.y-solid.position.y});found=true;break
 			check(found,"No road support beneath marking: "+id);records.append(record)
 	check(records.size()>0 and bodies==197,"Collision population changed")
-	check(scene.character.collision_mask==32 and scene.camper.collision_mask==32 and scene.camper.ground_query_mask==32,"Actor masks disagree")
+	check(scene.character.collision_mask==(32|64) and scene.camper.collision_mask==(32|64) and scene.camper.ground_query_mask==32,"Actor masks disagree")
 	var store=load("res://scripts/grass_baked_store.gd").new()
 	var signature: String=store.signature(scene)
 	check(store.open(scene.ASSETS+"grass_bake",signature) and store.manifest.cells.size()==11321,"Existing grass bake unexpectedly invalidated")

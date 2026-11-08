@@ -39,6 +39,7 @@ var island_saddle
 var upper_ring
 const SURFACE_DETAIL_TRIAL := preload("res://scripts/world/architecture_detail_trial.gd")
 const ACTOR_SOLID_LAYER := 32
+const NPC_SOLID_LAYER := 64
 var water_manager
 var initial_ruin
 var surface_detail_trial
@@ -82,7 +83,7 @@ func _ready() -> void:
 	if "--verify-export" in OS.get_cmdline_user_args() or "--verify-world-clusters" in OS.get_cmdline_user_args() or "--verify-world-audio" in OS.get_cmdline_user_args():automation_enabled=true
 	metadata=JSON.parse_string(FileAccess.get_file_as_string(ASSETS+"metadata.json"))
 	# Preserve legacy query layers for planting, while actors ignore paint.
-	character.collision_mask=ACTOR_SOLID_LAYER;camper.collision_mask=ACTOR_SOLID_LAYER
+	character.collision_mask=ACTOR_SOLID_LAYER|NPC_SOLID_LAYER;camper.collision_mask=ACTOR_SOLID_LAYER|NPC_SOLID_LAYER
 	character.surface_step_height=.18;character.safe_margin=.004
 	camper.surface_step_height=.12;camper.safe_margin=.006;camper.ground_query_mask=ACTOR_SOLID_LAYER
 	character.automation_enabled=automation_enabled; character.set_control_enabled(false)
