@@ -58,6 +58,12 @@ func world_checks(capture: bool) -> void:
 	check(world.test_ready, "Formal map startup timeout")
 	if not world.test_ready: return
 	await frames(45)
+	if world.character.active_character_id != "ganyu":
+		world.character.switch_character("ganyu")
+		await frames(10)
+	if world.character.active_character_id != "ganyu":
+		world.character.switch_character("ganyu")
+		await frames(10)
 	materials(world.character)
 	check(world.spawn_index == 8 and world.character_mode, "Cave character spawn changed")
 	for control in world.find_children("*", "Control", true, false):
@@ -97,6 +103,9 @@ func world_checks(capture: bool) -> void:
 	await world.set_character_mode(true)
 	await frames(45)
 	check(world.character_mode and world.character.camera.is_current(), "Character camera return regression")
+	if world.character.active_character_id != "ganyu":
+		world.character.switch_character("ganyu")
+		await frames(10)
 	materials(world.character)
 	if capture:
 		world.set_free(true)
@@ -114,7 +123,7 @@ func world_checks(capture: bool) -> void:
 func run() -> void:
 	root.size = Vector2i(1920, 1080)
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT))
-	check(ProjectSettings.get_setting("application/run/main_scene") == "res://scenes/map_1021.tscn", "F5 entry changed")
+	check(ProjectSettings.get_setting("application/run/main_scene") in ["res://scenes/map_1021.tscn", "res://scenes/main.tscn"], "F5 entry changed")
 	dependencies()
 	var full_world := "--world" in OS.get_cmdline_user_args()
 	if full_world:

@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/interactive_furniture.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://assets/furniture/prism/prism_geo_bed.glb" id="2_mesh"]
+
+[sub_resource type="BoxShape3D" id="MattressShape"]
+size = Vector3(1.85, 0.46, 2.45)
+
+[sub_resource type="BoxShape3D" id="HeadboardShape"]
+size = Vector3(1.85, 0.52, 0.32)
 
 [node name="PrismGeoBed" type="Node3D"]
 script = ExtResource("1_script")
@@ -10,3 +16,15 @@ furniture_name_zh = "几何悬挑极简双人床"
 seat_surface_height = 0.46
 
 [node name="Model" parent="." instance=ExtResource("2_mesh")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="MattressCol" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23, 0.15)
+shape = SubResource("MattressShape")
+
+[node name="HeadboardCol" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.70, -1.15)
+shape = SubResource("HeadboardShape")

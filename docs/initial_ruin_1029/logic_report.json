@@ -3,36 +3,52 @@
   "geometry": {
     "anchor": [
       -1015.28479003906,
-      61.5,
+      61.0499992370605,
       1255.7880859375
     ],
-    "collision_samples": 649,
-    "keqing_surfaces": 20,
+    "collision_samples": 629,
     "max_height_error_m": 0.000213623046875,
-    "meshes": 328,
+    "meshes": 315,
     "missing": 0,
-    "overlapping_components_skipped": 87,
-    "source_triangles": 6904.0
+    "ordinary_npc": true,
+    "overlapping_components_skipped": 75,
+    "source_triangles": 5648.0
   },
   "interaction": {
-    "area_enter_exit": true,
-    "completed_solid_collision": true,
-    "free_camera_blocked": true,
-    "key": "E",
-    "materialization_seconds": 3.5,
-    "one_shot_print_count": 1,
-    "outside_blocked": true,
-    "printed_state_retained": true,
-    "vehicle_blocked": true
+    "contact_and_approach_checks": true,
+    "dais_collision_removed": true,
+    "furniture": [
+      {
+        "anchors": 2,
+        "height": 0.42,
+        "id": "seat_01",
+        "status": "anchors_ready"
+      },
+      {
+        "anchors": 2,
+        "height": 0.838,
+        "id": "table_01",
+        "status": "anchors_ready"
+      },
+      {
+        "anchors": 3,
+        "height": 0.46,
+        "id": "rest_01",
+        "status": "anchors_ready"
+      }
+    ],
+    "hologram_removed": true,
+    "motion_navigation": "not implemented in this model revision",
+    "ordinary_npc": true
   },
   "passed": true,
   "walking": {
     "grounded_at_end": true,
     "longest_airborne_ticks": 0,
-    "max_target_height_gap_m": 1.04981231689453,
+    "max_target_height_gap_m": 1.0998420715332,
     "reached": 148,
-    "surface_step_events": 442,
+    "surface_step_events": 0,
     "targets": 148,
-    "wall_seconds": 55.604
+    "wall_seconds": 58.664
   }
 }

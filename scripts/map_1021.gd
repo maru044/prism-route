@@ -292,7 +292,7 @@ func _build_upper_ring() -> void:
 func _build_initial_ruin() -> void:
 	initial_ruin=INITIAL_RUIN.instantiate();initial_ruin.world=self;add_child(initial_ruin)
 	var row: Dictionary=initial_ruin.planting_mask.manifest
-	metadata.spawns.append({"name":"初始遗迹 · 召唤台","key":"initial_ruin","position":row.spawn,"look_direction":row.forward,"required_floor_kind":"Structure","maximum_search_distance_m":2.,"character_only":true})
+	metadata.spawns.append({"name":"初始神殿 · NPC庭廊","key":"initial_ruin","position":row.spawn,"look_direction":row.forward,"required_floor_kind":"Structure","maximum_search_distance_m":2.,"character_only":true})
 
 func _build_surface_detail_trial() -> void:
 	surface_detail_trial=SURFACE_DETAIL_TRIAL.new();surface_detail_trial.name="ArchitectureDetailTrial";add_child(surface_detail_trial);surface_detail_trial.initialize(self)

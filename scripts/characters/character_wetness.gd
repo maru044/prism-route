@@ -26,7 +26,7 @@ func bind(body: Node3D, visual: Node3D) -> void:
 		if mesh.mesh == null: continue
 		for i in mesh.mesh.get_surface_count():
 			var material := mesh.get_active_material(i) as ShaderMaterial
-			if material != null and material.shader.resource_path.get_file().begins_with("wet_mtoon"):
+			if material != null and (material.shader.resource_path.get_file().begins_with("wet_mtoon") or material.shader.resource_path.get_file().begins_with("toon_")):
 				materials.append(material)
 	reset()
 

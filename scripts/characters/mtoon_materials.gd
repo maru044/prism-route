@@ -1,6 +1,6 @@
 extends RefCounted
-## Accepted lab B appearance, shared by the formal character and review tools.
-## No lab, C0/C1, SDF, profile or outline resources are loaded here.
+## Accepted MToon NPR appearance and wetness shader pipeline.
+## Supports Ganyu, Stelle, Lumine, and general roster characters.
 const PREPASS = preload("res://shaders/characters/mtoon_prepass.gdshader")
 const PREPASS_CULL_OFF = preload("res://shaders/characters/mtoon_prepass_cull_off.gdshader")
 const OPAQUE = preload("res://addons/mtoon/mtoon.gdshader")
@@ -13,8 +13,8 @@ const WET_OPAQUE = preload("res://shaders/characters/wet_mtoon.gdshader")
 const WET_OPAQUE_CULL_OFF = preload("res://shaders/characters/wet_mtoon_cull_off.gdshader")
 const WET_CUTOUT = preload("res://shaders/characters/wet_mtoon_cutout.gdshader")
 const WET_CUTOUT_CULL_OFF = preload("res://shaders/characters/wet_mtoon_cutout_cull_off.gdshader")
-# Audited against Ganyu's actual surface UVs and source texture alpha.
-# Keep the historical lab B path in create(); only the formal actor opts in.
+
+# Audited against Ganyu actual surface UVs and source texture alpha.
 const FORMAL_GANYU_ALPHA := {
 	"面1": BaseMaterial3D.TRANSPARENCY_DISABLED, "面2": BaseMaterial3D.TRANSPARENCY_DISABLED,
 	"睫": BaseMaterial3D.TRANSPARENCY_DISABLED, "二重": BaseMaterial3D.TRANSPARENCY_DISABLED,
@@ -55,41 +55,179 @@ static func create(source: StandardMaterial3D, region: String, transparency_over
 	return material
 
 static func create_formal(source: StandardMaterial3D, region: String, surface_name: String) -> ShaderMaterial:
-	# Unknown surfaces retain their source alpha behavior; this is not a generic
-	# auto-converter for other characters or already-imported MToon materials.
 	var alpha: int = FORMAL_GANYU_ALPHA.get(surface_name, -1)
 	var material := create(source, region, alpha)
-	# Preserve eye and blush overlays exactly. Only audited solid/cutout surfaces
-	# opt into the project variant; historical create() stays upstream MToon.
 	if not surface_name in ["面1","面2","发","角","服","新規","腰饰","神之眼","肌","裙摆"]: return material
 	var double_sided := source.cull_mode == BaseMaterial3D.CULL_DISABLED
 	if alpha == BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR:
 		material.shader = WET_CUTOUT_CULL_OFF if double_sided else WET_CUTOUT
 	else:
 		material.shader = WET_OPAQUE_CULL_OFF if double_sided else WET_OPAQUE
-	var response := Vector3(.14,.12,64)
-	if surface_name in ["面1","面2"]: response = Vector3(.035,.035,96)
-	elif surface_name == "肌": response = Vector3(.08,.14,80)
-	elif surface_name == "发": response = Vector3(.10,.16,80)
-	elif surface_name in ["角","腰饰","神之眼"]: response = Vector3(.02,.08,96)
-	material.set_shader_parameter("wet_darkening",response.x)
-	material.set_shader_parameter("wet_gloss",response.y)
-	material.set_shader_parameter("wet_gloss_power",response.z)
-	var dry := PackedFloat32Array(); dry.resize(24); dry.fill(0.0)
-	material.set_shader_parameter("wet_levels",dry)
+	var response := Vector3(0.14, 0.12, 64)
+	if surface_name in ["面1","面2"]: response = Vector3(0.035, 0.035, 96)
+	elif surface_name == "肌": response = Vector3(0.08, 0.14, 80)
+	elif surface_name == "发": response = Vector3(0.10, 0.16, 80)
+	elif surface_name in ["角","腰饰","神之眼"]: response = Vector3(0.02, 0.08, 96)
+	material.set_shader_parameter("wet_darkening", response.x)
+	material.set_shader_parameter("wet_gloss", response.y)
+	material.set_shader_parameter("wet_gloss_power", response.z)
+	var dry := PackedFloat32Array()
+	dry.resize(24)
+	dry.fill(0.0)
+	material.set_shader_parameter("wet_levels", dry)
 	return material
 
-static func apply(character: Node3D) -> Dictionary:
+static func apply_to_stelle_material(source_mat: ShaderMaterial, surface_name: String) -> ShaderMaterial:
+	var mat := source_mat.duplicate() as ShaderMaterial
+	var is_cutout := (surface_name in ["新建", "表情"])
+	var is_trans := (surface_name == "眼睛1")
+	var cull_off := not (surface_name in ["外套", "外套衣饰铁", "外套内侧"])
+	
+	if is_trans:
+		mat.shader = BLEND_CULL_OFF
+	elif is_cutout:
+		mat.shader = WET_CUTOUT_CULL_OFF if cull_off else WET_CUTOUT
+	else:
+		mat.shader = WET_OPAQUE_CULL_OFF if cull_off else WET_OPAQUE
+	
+	var shade_col := Color(0.78, 0.73, 0.85)
+	var receive_shadow := 1.0
+	var shade_toony := 0.75
+	var wet_resp := Vector3(0.14, 0.12, 64)
+	
+	if surface_name in ["外套", "衣服", "背带", "臂带", "鞋子", "手套"]:
+		shade_col = Color(0.70, 0.68, 0.78)
+		shade_toony = 0.80
+		wet_resp = Vector3(0.15, 0.12, 64)
+	elif surface_name == "外套内侧":
+		shade_col = Color(0.88, 0.76, 0.55)
+		shade_toony = 0.76
+		wet_resp = Vector3(0.16, 0.10, 64)
+	elif surface_name in ["衣饰铁", "外套衣饰铁", "怀表"]:
+		shade_col = Color(0.72, 0.74, 0.82)
+		shade_toony = 0.85
+		wet_resp = Vector3(0.02, 0.25, 128)
+	elif surface_name == "头发":
+		shade_col = Color(0.75, 0.72, 0.84)
+		shade_toony = 0.78
+		wet_resp = Vector3(0.10, 0.16, 80)
+	elif surface_name in ["脸", "皮肤", "眉毛", "口腔", "新胖次"]:
+		shade_col = Color(0.95, 0.85, 0.85)
+		shade_toony = 0.70
+		receive_shadow = 0.20 if surface_name in ["脸", "眉毛", "口腔"] else 0.40
+		wet_resp = Vector3(0.04, 0.04, 96) if surface_name in ["脸", "眉毛"] else Vector3(0.08, 0.14, 80)
+	elif surface_name in ["眼睛", "眼白"]:
+		shade_col = Color(0.90, 0.88, 0.92)
+		receive_shadow = 0.0
+		shade_toony = 0.90
+		wet_resp = Vector3(0.0, 0.0, 64)
+	
+	mat.set_shader_parameter("_ShadeColor", shade_col)
+	mat.set_shader_parameter("_ShadeToony", shade_toony)
+	mat.set_shader_parameter("_ReceiveShadowRate", receive_shadow)
+	mat.set_shader_parameter("_IndirectLightIntensity", 0.35)
+	mat.set_shader_parameter("_OutlineWidthMode", 0.0)
+	mat.next_pass = null
+	
+	if surface_name == "眼睛":
+		mat.set_shader_parameter("_EmissionColor", Color(0.35, 0.28, 0.10))
+	
+	mat.set_shader_parameter("wet_darkening", wet_resp.x)
+	mat.set_shader_parameter("wet_gloss", wet_resp.y)
+	mat.set_shader_parameter("wet_gloss_power", wet_resp.z)
+	var dry := PackedFloat32Array()
+	dry.resize(24)
+	dry.fill(0.0)
+	mat.set_shader_parameter("wet_levels", dry)
+	return mat
+
+static func apply_to_generic_shader_material(source_mat: ShaderMaterial, surface_name: String) -> ShaderMaterial:
+	var mat := source_mat.duplicate() as ShaderMaterial
+	var orig_shader_path := source_mat.shader.resource_path if source_mat.shader else ""
+	var is_cutout := orig_shader_path.contains("cutout") or surface_name.contains("cutout")
+	var is_trans := orig_shader_path.contains("trans")
+	var cull_off := orig_shader_path.contains("cull_off")
+	
+	if is_trans:
+		mat.shader = BLEND_CULL_OFF if cull_off else BLEND
+	elif is_cutout:
+		mat.shader = WET_CUTOUT_CULL_OFF if cull_off else WET_CUTOUT
+	else:
+		mat.shader = WET_OPAQUE_CULL_OFF if cull_off else WET_OPAQUE
+	
+	var shade_col := Color(0.78, 0.73, 0.85)
+	var receive_shadow := 1.0
+	var shade_toony := 0.75
+	var wet_resp := Vector3(0.14, 0.12, 64)
+	
+	if surface_name in ["面", "面1", "面2", "脸", "颜", "颜2", "眉", "睫", "口", "口舌", "齿"]:
+		shade_col = Color(0.95, 0.85, 0.85)
+		receive_shadow = 0.22
+		shade_toony = 0.70
+		wet_resp = Vector3(0.04, 0.04, 96)
+	elif surface_name in ["肌", "皮肤"]:
+		shade_col = Color(0.92, 0.82, 0.84)
+		receive_shadow = 0.40
+		shade_toony = 0.72
+		wet_resp = Vector3(0.08, 0.14, 80)
+	elif surface_name in ["目", "眼睛", "眼白", "星目", "目星"]:
+		shade_col = Color(0.90, 0.88, 0.92)
+		receive_shadow = 0.0
+		shade_toony = 0.90
+		wet_resp = Vector3(0.0, 0.0, 64)
+	elif surface_name in ["发", "头发", "髪", "髪+"]:
+		shade_col = Color(0.76, 0.73, 0.85)
+		shade_toony = 0.78
+		wet_resp = Vector3(0.10, 0.16, 80)
+	
+	mat.set_shader_parameter("_ShadeColor", shade_col)
+	mat.set_shader_parameter("_ShadeToony", shade_toony)
+	mat.set_shader_parameter("_ReceiveShadowRate", receive_shadow)
+	mat.set_shader_parameter("_IndirectLightIntensity", 0.35)
+	mat.set_shader_parameter("_OutlineWidthMode", 0.0)
+	mat.next_pass = null
+	
+	mat.set_shader_parameter("wet_darkening", wet_resp.x)
+	mat.set_shader_parameter("wet_gloss", wet_resp.y)
+	mat.set_shader_parameter("wet_gloss_power", wet_resp.z)
+	var dry := PackedFloat32Array()
+	dry.resize(24)
+	dry.fill(0.0)
+	mat.set_shader_parameter("wet_levels", dry)
+	return mat
+
+static func apply(character: Node3D, character_id: String = "auto") -> Dictionary:
 	var result := {"converted": 0, "skipped": []}
+	var detected_id := character_id
+	if detected_id == "auto":
+		var node_str := (character.name + " " + character.get_scene_file_path()).to_lower()
+		if node_str.contains("stelle") or node_str.contains("女主"):
+			detected_id = "stelle"
+		elif node_str.contains("lumine") or node_str.contains("荧"):
+			detected_id = "lumine"
+		elif node_str.contains("ganyu") or node_str.contains("甘雨"):
+			detected_id = "ganyu"
+		else:
+			detected_id = "generic"
+	
 	for mesh: MeshInstance3D in character.find_children("*", "MeshInstance3D", true, false):
 		if mesh.mesh == null: continue
 		for index in mesh.mesh.get_surface_count():
 			var source: Material = mesh.get_active_material(index)
-			if not source is StandardMaterial3D:
+			var name_value: String = mesh.mesh.surface_get_name(index) if mesh.mesh is ArrayMesh else ""
+			if name_value.is_empty() and source != null:
+				name_value = source.resource_name
+			
+			if source is StandardMaterial3D:
+				var region := "face" if name_value in ["面1", "面2", "脸", "颜"] else ("skin" if name_value in ["肌", "皮肤"] else "body")
+				mesh.set_surface_override_material(index, create_formal(source, region, name_value))
+				result.converted += 1
+			elif source is ShaderMaterial:
+				if detected_id == "stelle":
+					mesh.set_surface_override_material(index, apply_to_stelle_material(source, name_value))
+				else:
+					mesh.set_surface_override_material(index, apply_to_generic_shader_material(source, name_value))
+				result.converted += 1
+			else:
 				result.skipped.append(str(character.get_path_to(mesh)) + ":" + str(index))
-				continue
-			var name_value: String = mesh.mesh.surface_get_name(index) if mesh.mesh is ArrayMesh else source.resource_name
-			var region := "face" if name_value in ["面1", "面2"] else ("skin" if name_value == "肌" else "body")
-			mesh.set_surface_override_material(index, create_formal(source, region, name_value))
-			result.converted += 1
 	return result

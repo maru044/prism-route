@@ -1,0 +1,18 @@
+{
+  "archive": "D:\\模型\\20261008\\星穹铁道—女主_by_崩坏：星穹铁道_8adcc72d13db82812f92ce0eb02be5a5.zip",
+  "archive_sha256": "f5bf98b62c0ffe9a554eef00dfa5e8fecd2255c6baa9e2f3049b9cf04e1e0bc5",
+  "body_pmx": "女主1.0.pmx",
+  "source_sha256": "9ca0e397fca6b5b0bdb1d74672d8e729e8ecd85eebb95eda1117ccc66a30fa93",
+  "pmx_name": "女主",
+  "pmx_english_name": "女主",
+  "pmx_comment": "\r\n允许改造，优化骨骼和刚体，重制UV\r\n\r\n===================\r\n请勿二次配布\r\n\r\n请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n请勿用于商业用途\r\n\r\n他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n模型编辑：神帝宇\r\n\r\n模型版权所属miHoYo",
+  "pmx_english_comment": "\r\n允许改造，优化骨骼和刚体，重制UV\r\n\r\n===================\r\n请勿二次配布\r\n\r\n请勿用于18禁作品，极端宗教宣传，血腥恐怖猎奇作品，人身攻击等\r\n\r\n请勿用于商业用途\r\n\r\n他人使用本模型所造成的一切不良后果，不由模型改造者与miHoYo承担，请向使用者追究全部责任\r\n\r\n模型编辑：神帝宇\r\n\r\n模型版权所属miHoYo",
+  "authors": [
+    "miHoYo",
+    "神帝宇"
+  ],
+  "excluded_pmx": [
+    "球棒.pmx",
+    "骑枪.pmx"
+  ]
+}

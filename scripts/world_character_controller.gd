@@ -2,12 +2,61 @@ extends CharacterBody3D
 const SURFACE_MOTION := preload("res://scripts/surface_motion.gd")
 const MTOON_MATERIALS := preload("res://scripts/characters/mtoon_materials.gd")
 const WETNESS := preload("res://scripts/characters/character_wetness.gd")
-## Basic camera-relative world controller using Ganyu's reviewed baked clips.
+const WHEEL_SCENE := preload("res://scenes/ui/character_switch_wheel.tscn")
+const CHARACTER_NPR := preload("res://scripts/characters/character_npr.gd")
+
+## Camera-relative world controller with Genshin Impact style dynamic character switching.
+## Supports Stelle, Ganyu, Lumine, and Firefly with auto-retargeting and MToon NPR tuning.
+
+signal character_switched(new_id: String, old_id: String)
 
 const MOTIONS := {"idle": "A01", "walk": "A05", "run": "A06", "jump_start": "A18", "jump_air": "A19", "jump_land": "A20", "greet": "A25"}
 const MOTION_LABELS := {"idle": "待机", "walk": "步行", "run": "奔跑", "jump_start": "起跳", "jump_air": "空中", "jump_land": "落地", "greet": "招呼"}
-@export var walking_speed := 1.6
-@export var running_speed := 4.2
+
+const SOURCE_REST_HIPS := Vector3(0.0, 0.661507, 0.0)
+
+const ROSTER_PROFILES: Dictionary = {
+	"stelle": {
+		"name": "星",
+		"model_path": "res://assets/characters/roster/stelle/stelle.vrm",
+		"capsule_height": 1.62,
+		"capsule_radius": 0.26,
+		"camera_pivot_height": 1.08,
+		"walking_speed": 1.65,
+		"running_speed": 4.3,
+	},
+	"ganyu": {
+		"name": "甘雨",
+		"model_path": "res://scenes/characters/ganyu.tscn",
+		"capsule_height": 1.45,
+		"capsule_radius": 0.24,
+		"camera_pivot_height": 0.95,
+		"walking_speed": 1.6,
+		"running_speed": 4.2,
+	},
+	"lumine": {
+		"name": "荧",
+		"model_path": "res://assets/characters/roster/lumine/lumine.vrm",
+		"capsule_height": 1.48,
+		"capsule_radius": 0.24,
+		"camera_pivot_height": 0.96,
+		"walking_speed": 1.6,
+		"running_speed": 4.2,
+	},
+	"firefly": {
+		"name": "流萤",
+		"model_path": "res://assets/characters/roster/firefly/firefly.vrm",
+		"capsule_height": 1.55,
+		"capsule_radius": 0.24,
+		"camera_pivot_height": 0.98,
+		"walking_speed": 1.6,
+		"running_speed": 4.2,
+	}
+}
+
+@export var active_character_id: String = "ganyu"
+@export var walking_speed := 1.65
+@export var running_speed := 4.3
 @export var jump_speed := 7.0
 @export var gravity_strength := 22.0
 @export var surface_step_height := 0.0
@@ -16,12 +65,15 @@ const MOTION_LABELS := {"idle": "待机", "walk": "步行", "run": "奔跑", "ju
 @export var camera_max_distance := 10.0
 @export var camera_min_pitch := -1.35
 @export var camera_max_pitch := 1.25
-@export var camera_pivot_height := 0.95
+@export var camera_pivot_height := 1.08
+
 @onready var visual: Node3D = $Visual
-@onready var character: Node3D = $Visual/GanyuModel
+@onready var collision_shape: CollisionShape3D = $CollisionShape3D
 @onready var camera_pivot: Node3D = $CameraPivot
 @onready var spring_arm: SpringArm3D = $CameraPivot/SpringArm3D
 @onready var camera: Camera3D = $CameraPivot/SpringArm3D/Camera3D
+
+var character: Node3D
 var skeleton: Skeleton3D
 var player: AnimationPlayer
 var animation_state := ""
@@ -37,56 +89,210 @@ var landing_time := 0.0
 var greeting := false
 var mtoon_report: Dictionary = {}
 var wetness: Node
+var switch_wheel: CanvasLayer
+var npr_face_materials: Array = []
+var npr_outline_shell: MeshInstance3D = null
+var npr_source_mesh: MeshInstance3D = null
+var head_index := -1
+var head_rest_inv := Basis.IDENTITY
 
 func _ready() -> void:
-	if use_mtoon:
-		mtoon_report = MTOON_MATERIALS.apply(character)
-		if not mtoon_report.skipped.is_empty(): push_warning("MToon kept unmapped source materials: " + str(mtoon_report.skipped))
-		wetness = WETNESS.new()
-		wetness.name = "CharacterWetness"
-		wetness.bind(self,character)
-		add_child(wetness)
 	floor_snap_length = 0.45
 	floor_max_angle = deg_to_rad(48)
+	spring_arm.add_excluded_object(get_rid())
+	
+	_apply_character_setup(active_character_id, false)
+	
 	camera_pivot.position = Vector3(0, camera_pivot_height, 0)
 	respawn_transform = global_transform
-	spring_arm.add_excluded_object(get_rid())
+	
+	switch_wheel = WHEEL_SCENE.instantiate()
+	add_child(switch_wheel)
+	switch_wheel.character_selected.connect(func(target_id: String):
+		switch_character(target_id))
+	switch_wheel.set_active_character(active_character_id)
+
+func _apply_character_setup(char_id: String, is_runtime_switch: bool) -> void:
+	var profile: Dictionary = ROSTER_PROFILES.get(char_id, ROSTER_PROFILES["stelle"])
+	var model_path: String = String(profile.get("model_path", ""))
+	
+	# Clear previous models or reuse if initial Ganyu
+	var reuse_existing := false
+	if not is_runtime_switch and char_id == "ganyu" and visual.has_node("GanyuModel"):
+		character = visual.get_node("GanyuModel")
+		reuse_existing = true
+	else:
+		for child in visual.get_children():
+			visual.remove_child(child)
+			child.queue_free()
+		var packed := load(model_path) as PackedScene
+		assert(packed != null, "Failed to load character model: " + model_path)
+		character = packed.instantiate()
+		character.name = char_id.capitalize() + "Model"
+		visual.add_child(character)
+	
 	skeleton = character.find_child("GeneralSkeleton", true, false)
+	assert(skeleton != null, "GeneralSkeleton not found in character: " + char_id)
 	skeleton.motion_scale = 1.0
+	
 	var original: AnimationPlayer = character.find_child("AnimationPlayer", true, false)
 	if original:
 		original.stop()
 	skeleton.reset_bone_poses()
+	
+	head_index = skeleton.find_bone("Head")
+	if head_index >= 0:
+		head_rest_inv = skeleton.get_bone_global_rest(head_index).basis.inverse()
+	
+	if is_instance_valid(npr_outline_shell):
+		npr_outline_shell.queue_free()
+	npr_outline_shell = null
+	npr_face_materials.clear()
+	npr_source_mesh = null
+	
+	# Update collision capsule
+	var h: float = float(profile.get("capsule_height", 1.62))
+	var r: float = float(profile.get("capsule_radius", 0.26))
+	if collision_shape != null:
+		var capsule := collision_shape.shape as CapsuleShape3D
+		if capsule != null:
+			capsule.height = h
+			capsule.radius = r
+		collision_shape.position = Vector3(0, h * 0.5, 0)
+	
+	camera_pivot_height = float(profile.get("camera_pivot_height", 1.08))
+	camera_pivot.position = Vector3(0, camera_pivot_height, 0)
+	walking_speed = float(profile.get("walking_speed", 1.65))
+	running_speed = float(profile.get("running_speed", 4.3))
+	
+	# NPR / MToon shader conversion & tuning
+	if use_mtoon:
+		if char_id == "ganyu":
+			mtoon_report = MTOON_MATERIALS.apply(character, char_id)
+		else:
+			var npr_res: Dictionary = CHARACTER_NPR.apply_npr(character, char_id)
+			mtoon_report = {"converted": npr_res.converted, "skipped": []}
+			npr_face_materials = npr_res.face_materials
+			npr_outline_shell = npr_res.outline_shell
+			for m in character.find_children("*", "MeshInstance3D", true, false):
+				if not m.has_meta("character_npr_outline") and m.mesh != null:
+					npr_source_mesh = m
+					break
+		if not mtoon_report.skipped.is_empty():
+			push_warning("MToon kept unmapped source materials: " + str(mtoon_report.skipped))
+		if wetness == null:
+			wetness = WETNESS.new()
+			wetness.name = "CharacterWetness"
+			add_child(wetness)
+		wetness.bind(self, character)
+	
+	# AnimationPlayer setup with automatic retargeting
 	player = AnimationPlayer.new()
 	player.name = "WorldMotionPlayer"
-	# AnimationMixer physics callback: keep poses in step with body movement.
 	player.callback_mode_process = 0
 	character.add_child(player)
+	
+	var skel_path: NodePath = character.get_path_to(skeleton)
 	var library := AnimationLibrary.new()
 	for state: String in MOTIONS:
-		var animation: Animation = load("res://assets/characters/motion_review/%s.tres" % MOTIONS[state]).duplicate(true)
-		animation.loop_mode = Animation.LOOP_LINEAR if state in ["idle", "walk", "run", "jump_air"] else Animation.LOOP_NONE
-		_center_clip(animation)
-		library.add_animation(state, animation)
+		var raw_anim: Animation = load("res://assets/characters/motion_review/%s.tres" % MOTIONS[state])
+		var anim: Animation = raw_anim.duplicate(true)
+		anim.loop_mode = Animation.LOOP_LINEAR if state in ["idle", "walk", "run", "jump_air"] else Animation.LOOP_NONE
+		
+		_retarget_and_center_clip(anim, skeleton, skel_path)
+		library.add_animation(state, anim)
+	
 	player.add_animation_library("", library)
 	player.animation_finished.connect(func(state: StringName):
 		if state == "greet": greeting = false)
-	_set_animation("idle")
+	
+	active_character_id = char_id
+	if not is_runtime_switch:
+		_set_animation("idle")
 	_reset_springs.call_deferred()
 
-func _center_clip(animation: Animation) -> void:
-	# Keep the reviewed pelvic sway and vertical pose; remove only its constant
-	# horizontal anchor. Translation through the world belongs to this body.
+func switch_character(target_id: String) -> bool:
+	if target_id == active_character_id:
+		return false
+	if not ROSTER_PROFILES.has(target_id):
+		push_warning("Character ID not recognized in roster: " + target_id)
+		return false
+	
+	var old_id := active_character_id
+	var prev_pos := global_position
+	var prev_heading := visual.rotation.y
+	var prev_vel := velocity
+	var prev_pitch := camera_pivot.rotation.x
+	var prev_yaw := camera_pivot.rotation.y
+	var prev_spring_len := spring_arm.spring_length
+	var prev_anim := animation_state
+	
+	_apply_character_setup(target_id, true)
+	
+	global_position = prev_pos
+	visual.rotation.y = prev_heading
+	velocity = prev_vel
+	camera_pivot.rotation.x = prev_pitch
+	camera_pivot.rotation.y = prev_yaw
+	spring_arm.spring_length = prev_spring_len
+	
+	animation_state = ""
+	_set_animation(prev_anim if not prev_anim.is_empty() else "idle")
+	
+	if switch_wheel != null:
+		switch_wheel.set_active_character(target_id)
+	
+	character_switched.emit(target_id, old_id)
+	return true
+
+func _retarget_and_center_clip(animation: Animation, target_skeleton: Skeleton3D, skel_path: NodePath) -> void:
+	var hips_idx: int = target_skeleton.find_bone("Hips")
+	var target_rest_hips: Vector3 = target_skeleton.get_bone_rest(hips_idx).origin if hips_idx >= 0 else SOURCE_REST_HIPS
+	
 	for track in animation.get_track_count():
-		if animation.track_get_type(track) != Animation.TYPE_POSITION_3D or not str(animation.track_get_path(track)).ends_with(":Hips"):
-			continue
-		var count := animation.track_get_key_count(track)
-		var anchor := Vector3.ZERO
-		for key in count:
-			anchor += animation.track_get_key_value(track, key) / float(count)
-		anchor.y = 0
-		for key in count:
-			animation.track_set_key_value(track, key, animation.track_get_key_value(track, key) - anchor)
+		var original_path: String = str(animation.track_get_path(track))
+		var colon_idx: int = original_path.find(":")
+		if colon_idx != -1:
+			var bone_part: String = original_path.substr(colon_idx)
+			animation.track_set_path(track, NodePath(str(skel_path) + bone_part))
+		
+		if animation.track_get_type(track) == Animation.TYPE_POSITION_3D and original_path.ends_with(":Hips"):
+			var count: int = animation.track_get_key_count(track)
+			if count == 0:
+				continue
+			
+			for key in count:
+				var old_val: Vector3 = animation.track_get_key_value(track, key)
+				var delta: Vector3 = old_val - SOURCE_REST_HIPS
+				var new_val: Vector3 = target_rest_hips + delta
+				animation.track_set_key_value(track, key, new_val)
+			
+			var avg_xz := Vector2.ZERO
+			for key in count:
+				var val: Vector3 = animation.track_get_key_value(track, key)
+				avg_xz += Vector2(val.x, val.z) / float(count)
+			
+			var offset_x: float = avg_xz.x - target_rest_hips.x
+			var offset_z: float = avg_xz.y - target_rest_hips.z
+			for key in count:
+				var val: Vector3 = animation.track_get_key_value(track, key)
+				val.x -= offset_x
+				val.z -= offset_z
+				animation.track_set_key_value(track, key, val)
+
+func _process(_delta: float) -> void:
+	if not npr_face_materials.is_empty() and skeleton != null and head_index >= 0:
+		var head_basis: Basis = skeleton.global_basis * skeleton.get_bone_global_pose(head_index).basis * head_rest_inv
+		var forward: Vector3 = (head_basis * Vector3.BACK).normalized()
+		for f_mat: ShaderMaterial in npr_face_materials:
+			f_mat.set_shader_parameter("head_forward", forward)
+			
+	if is_instance_valid(npr_outline_shell) and is_instance_valid(npr_source_mesh):
+		npr_outline_shell.transform = npr_source_mesh.transform
+		for i in npr_source_mesh.get_blend_shape_count():
+			var val: float = npr_source_mesh.get_blend_shape_value(i)
+			if not is_equal_approx(val, npr_outline_shell.get_blend_shape_value(i)):
+				npr_outline_shell.set_blend_shape_value(i, val)
 
 func _physics_process(delta: float) -> void:
 	var movement := test_move if automation_enabled else Vector2(
@@ -121,7 +327,7 @@ func _physics_process(delta: float) -> void:
 	if direction.length_squared() > 0.001:
 		visual.rotation.y = lerp_angle(visual.rotation.y, atan2(direction.x, direction.z), minf(delta * 12, 1))
 		greeting = false
-	SURFACE_MOTION.move(self,delta,surface_step_height)
+	SURFACE_MOTION.move(self, delta, surface_step_height)
 	if not was_grounded and is_on_floor():
 		landing_time = 0.22
 	var speed := Vector2(velocity.x, velocity.z).length()
@@ -146,7 +352,8 @@ func _set_animation(state: String) -> void:
 	if animation_state == state:
 		return
 	animation_state = state
-	player.play(state, 0.14)
+	if player != null and player.has_animation(state):
+		player.play(state, 0.14)
 
 func set_control_enabled(enabled: bool) -> void:
 	set_physics_process(enabled)
@@ -171,10 +378,13 @@ func set_spawn(point: Vector3, heading: float) -> void:
 	_reset_springs.call_deferred()
 
 func reset_to_respawn() -> void:
-	if wetness != null: wetness.reset()
+	if wetness != null:
+		wetness.reset()
 	set_spawn(respawn_transform.origin, respawn_transform.basis.get_euler().y)
 
 func _reset_springs() -> void:
+	if character == null or skeleton == null:
+		return
 	var controller = character.find_child("VRMSpringBoneController", true, false)
 	var simulation = skeleton.get_node_or_null("VRMSpringBoneSimulation")
 	if controller and simulation:
@@ -188,6 +398,8 @@ func get_motion_label() -> String:
 	return MOTION_LABELS.get(animation_state, "待机")
 
 func _unhandled_input(event: InputEvent) -> void:
+	if switch_wheel != null and switch_wheel.wheel_visible:
+		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		match event.physical_keycode if event.physical_keycode != 0 else event.keycode:
 			KEY_SPACE: jump_requested = true

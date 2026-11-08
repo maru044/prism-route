@@ -49,6 +49,23 @@ var fp_button: Button = null
 var fp_yaw_offset := 0.0
 var fp_pitch_offset := 0.0
 var fp_fov := 72.0
+const POSES_DIR := "res://assets/characters/poses"
+var is_previewing_pose := false
+var active_pose_data: Dictionary = {}
+var pose_panel: PanelContainer = null
+var pose_list := ItemList.new()
+var pose_name_input := LineEdit.new()
+var pose_search := LineEdit.new()
+var pose_status_label := Label.new()
+var pose_role_select := OptionButton.new()
+var pose_ground_toggle := CheckButton.new()
+var pose_details_label := Label.new()
+var pose_count_label := Label.new()
+var pose_files: Array[String] = []
+var rename_box: HBoxContainer = null
+var rename_input: LineEdit = null
+var delete_confirm_box: HBoxContainer = null
+var delete_confirm_label: Label = null
 
 static func available_profiles() -> Array:
 	var result: Array=JSON.parse_string(FileAccess.get_file_as_string("res://assets/characters/mmd_validation/shared/manifest.json")).profiles
@@ -231,16 +248,19 @@ func _build_library_ui() -> void:
 	timeline.step = 1.0/FPS
 	timeline.max_value = 16.0
 	controls.add_child(timeline)
-	timeline.drag_started.connect(func(): playing = false; _refresh_ui())
+	timeline.drag_started.connect(func(): playing = false; is_previewing_pose = false; _refresh_ui())
 	timeline.value_changed.connect(func(value):
 		if not initialized: return
 		playing = false
+		is_previewing_pose = false
 		seek_frame(roundi(value*FPS)))
 	var row := HBoxContainer.new()
 	controls.add_child(row)
 	row.add_child(play_button)
 	play_button.pressed.connect(func():
 		if not initialized: return
+		if is_previewing_pose:
+			is_previewing_pose = false
 		if time>=duration: seek_frame(0)
 		playing = not playing
 		_refresh_ui())
@@ -280,9 +300,15 @@ func _build_library_ui() -> void:
 			elif field=="服饰物理": clothes_on=value
 			else: partner_on=value
 			_apply_physics())
+	var pose_mgr_btn := Button.new()
+	pose_mgr_btn.text = "📷 姿态捕获与管理"
+	pose_mgr_btn.tooltip_text = "打开战利品姿态捕获与文件管理器面板 [快捷键: P]"
+	row.add_child(pose_mgr_btn)
+	pose_mgr_btn.pressed.connect(_toggle_pose_manager)
 	var hint := Label.new()
-	hint.text = "同一时间轴控制全部角色 · 右键旋转/微调视线 · 滚轮缩放/视场 · [V] 键切换第一人称 · 空格播放/暂停"
+	hint.text = "同一时间轴控制全部角色 · 右键旋转/微调视线 · 滚轮缩放/视场 · [V] 第一人称 · [P] 姿态管理器 · 空格播放/暂停"
 	controls.add_child(hint)
+	_build_pose_manager_ui(layer)
 
 func _filter_entries() -> void:
 	filtered_entries.clear()
@@ -643,6 +669,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.keycode == KEY_V:
 			_set_first_person(not first_person_mode)
 			return
+		elif event.keycode == KEY_P:
+			_toggle_pose_manager()
+			return
 	if first_person_mode:
 		if event is InputEventMouseButton:
 			if event.button_index == MOUSE_BUTTON_RIGHT:
@@ -879,3 +908,513 @@ func _update_furniture_transform() -> void:
 	if furniture_instance:
 		furniture_instance.position = furniture_offset
 		furniture_instance.rotation = Vector3(0, furniture_rot_y, 0)
+
+
+# ==============================================================================
+# 战利品姿态捕获与文件管理器系统 (Pose Snapshot & File Resource Manager)
+# ==============================================================================
+
+func _build_pose_manager_ui(layer: CanvasLayer) -> void:
+	pose_panel = PanelContainer.new()
+	pose_panel.position = Vector2(1480, 24)
+	pose_panel.size = Vector2(420, 920)
+	pose_panel.visible = false
+	
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.08, 0.10, 0.14, 0.94)
+	style.border_color = Color(0.28, 0.48, 0.72, 0.85)
+	style.set_border_width_all(2)
+	style.set_corner_radius_all(10)
+	style.set_content_margin_all(12)
+	pose_panel.add_theme_stylebox_override("panel", style)
+	layer.add_child(pose_panel)
+	
+	var vbox := VBoxContainer.new()
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	pose_panel.add_child(vbox)
+	
+	# Header
+	var header := HBoxContainer.new()
+	vbox.add_child(header)
+	var title_lbl := Label.new()
+	title_lbl.text = "📷 战利品姿态管理器"
+	title_lbl.add_theme_font_size_override("font_size", 17)
+	title_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	header.add_child(title_lbl)
+	
+	var close_btn := Button.new()
+	close_btn.text = " ✕ "
+	close_btn.tooltip_text = "关闭面板 [快捷键: P]"
+	close_btn.pressed.connect(func(): pose_panel.visible = false)
+	header.add_child(close_btn)
+	
+	vbox.add_child(HSeparator.new())
+	
+	# Section 1: Capture
+	var cap_title := Label.new()
+	cap_title.text = "【姿态快照】捕获当前骨骼状态为姿态资源"
+	cap_title.add_theme_font_size_override("font_size", 13)
+	vbox.add_child(cap_title)
+	
+	var cap_row1 := HBoxContainer.new()
+	vbox.add_child(cap_row1)
+	var r_lbl := Label.new()
+	r_lbl.text = "目标通道:"
+	cap_row1.add_child(r_lbl)
+	pose_role_select.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	cap_row1.add_child(pose_role_select)
+	pose_ground_toggle.text = "贴地对齐"
+	pose_ground_toggle.button_pressed = true
+	pose_ground_toggle.tooltip_text = "开启时自动检测角色与地面最低骨骼触点，将姿态垂直重心贴地对齐（适合平放或床面）。"
+	cap_row1.add_child(pose_ground_toggle)
+	
+	var cap_row2 := HBoxContainer.new()
+	vbox.add_child(cap_row2)
+	pose_name_input.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	pose_name_input.placeholder_text = "姿态文件名 (如 pose_bed_spread)"
+	cap_row2.add_child(pose_name_input)
+	
+	var auto_name_btn := Button.new()
+	auto_name_btn.text = "⚡ 自动命名"
+	auto_name_btn.tooltip_text = "根据当前动作编号、角色通道和帧编号自动生成语义化文件名"
+	auto_name_btn.pressed.connect(_suggest_pose_name)
+	cap_row2.add_child(auto_name_btn)
+	
+	var cap_btn := Button.new()
+	cap_btn.text = "📸 捕获当前帧并导出姿态文件 (.json)"
+	cap_btn.custom_minimum_size.y = 32
+	cap_btn.pressed.connect(_capture_current_pose)
+	vbox.add_child(cap_btn)
+	
+	vbox.add_child(HSeparator.new())
+	
+	# Section 2: Library
+	var lib_header := HBoxContainer.new()
+	vbox.add_child(lib_header)
+	pose_count_label.text = "📁 已存姿态库 (0 个)"
+	pose_count_label.add_theme_font_size_override("font_size", 13)
+	pose_count_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	lib_header.add_child(pose_count_label)
+	
+	var refresh_btn := Button.new()
+	refresh_btn.text = "🔄 刷新"
+	refresh_btn.pressed.connect(_refresh_pose_list)
+	lib_header.add_child(refresh_btn)
+	
+	var folder_btn := Button.new()
+	folder_btn.text = "📂 打开目录"
+	folder_btn.tooltip_text = "在系统资源管理器中打开姿态文件存储目录"
+	folder_btn.pressed.connect(_open_poses_folder)
+	lib_header.add_child(folder_btn)
+	
+	pose_search.placeholder_text = "🔍 过滤搜索姿态名称..."
+	pose_search.text_changed.connect(func(_t: String): _refresh_pose_list())
+	vbox.add_child(pose_search)
+	
+	pose_list.custom_minimum_size = Vector2(390, 240)
+	pose_list.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	pose_list.item_selected.connect(_on_pose_item_selected)
+	pose_list.item_activated.connect(func(_idx: int): _preview_selected_pose())
+	vbox.add_child(pose_list)
+	
+	pose_details_label.text = "点击上方文件可查看元数据，双击直接预览。"
+	pose_details_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	pose_details_label.custom_minimum_size.y = 50
+	pose_details_label.add_theme_font_size_override("font_size", 12)
+	vbox.add_child(pose_details_label)
+	
+	vbox.add_child(HSeparator.new())
+	
+	# Section 3: Operations
+	var op_row1 := HBoxContainer.new()
+	vbox.add_child(op_row1)
+	var prev_btn := Button.new()
+	prev_btn.text = "▶ 应用/预览姿态"
+	prev_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	prev_btn.custom_minimum_size.y = 30
+	prev_btn.tooltip_text = "冻结当前动作播放，将选中姿态的骨骼位姿应用至场景模型"
+	prev_btn.pressed.connect(_preview_selected_pose)
+	op_row1.add_child(prev_btn)
+	
+	var resume_btn := Button.new()
+	resume_btn.text = "↺ 恢复动作播放"
+	resume_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	resume_btn.custom_minimum_size.y = 30
+	resume_btn.pressed.connect(_resume_from_pose_preview)
+	op_row1.add_child(resume_btn)
+	
+	var op_row2 := HBoxContainer.new()
+	vbox.add_child(op_row2)
+	var rename_btn := Button.new()
+	rename_btn.text = "✏️ 重命名"
+	rename_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	rename_btn.pressed.connect(_start_rename)
+	op_row2.add_child(rename_btn)
+	
+	var delete_btn := Button.new()
+	delete_btn.text = "🗑️ 删除文件"
+	delete_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	delete_btn.pressed.connect(_start_delete)
+	op_row2.add_child(delete_btn)
+	
+	# Inline rename box
+	rename_box = HBoxContainer.new()
+	rename_box.visible = false
+	vbox.add_child(rename_box)
+	rename_input = LineEdit.new()
+	rename_input.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	rename_box.add_child(rename_input)
+	var conf_ren_btn := Button.new()
+	conf_ren_btn.text = "✓ 确认"
+	conf_ren_btn.pressed.connect(_confirm_rename)
+	rename_box.add_child(conf_ren_btn)
+	var cancel_ren_btn := Button.new()
+	cancel_ren_btn.text = "✕ 取消"
+	cancel_ren_btn.pressed.connect(func(): rename_box.visible = false)
+	rename_box.add_child(cancel_ren_btn)
+	
+	# Inline delete confirmation box
+	delete_confirm_box = HBoxContainer.new()
+	delete_confirm_box.visible = false
+	vbox.add_child(delete_confirm_box)
+	delete_confirm_label = Label.new()
+	delete_confirm_label.text = "确定删除？"
+	delete_confirm_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	delete_confirm_label.add_theme_font_size_override("font_size", 12)
+	delete_confirm_box.add_child(delete_confirm_label)
+	var conf_del_btn := Button.new()
+	conf_del_btn.text = "✓ 确认删除"
+	conf_del_btn.add_theme_color_override("font_color", Color(1.0, 0.35, 0.35))
+	conf_del_btn.pressed.connect(_confirm_delete)
+	delete_confirm_box.add_child(conf_del_btn)
+	var cancel_del_btn := Button.new()
+	cancel_del_btn.text = "✕ 取消"
+	cancel_del_btn.pressed.connect(func(): delete_confirm_box.visible = false)
+	delete_confirm_box.add_child(cancel_del_btn)
+	
+	# Status message label
+	pose_status_label.text = "就绪。按 [P] 随时切换此管理器。"
+	pose_status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	pose_status_label.add_theme_font_size_override("font_size", 12)
+	pose_status_label.custom_minimum_size.y = 36
+	vbox.add_child(pose_status_label)
+
+func _toggle_pose_manager() -> void:
+	if not pose_panel: return
+	pose_panel.visible = not pose_panel.visible
+	if pose_panel.visible:
+		_update_pose_roles_dropdown()
+		_suggest_pose_name()
+		_refresh_pose_list()
+
+func _update_pose_roles_dropdown() -> void:
+	pose_role_select.clear()
+	if not pack or not pack.has("roles"): return
+	for i in pack.roles.size():
+		var r: Dictionary = pack.roles[i]
+		var rid: String = r.id
+		var role_tag := " (受体/被动)" if (i == 0 or rid == "B") else ""
+		pose_role_select.add_item("角色 %s (%s)%s" % [rid, _model_label(r), role_tag])
+		pose_role_select.set_item_metadata(i, rid)
+	if visible_roles.size() == 1:
+		for i in pose_role_select.item_count:
+			if String(pose_role_select.get_item_metadata(i)) == visible_roles[0]:
+				pose_role_select.select(i)
+				break
+	elif pose_role_select.item_count > 1:
+		var found_b := false
+		for i in pose_role_select.item_count:
+			if String(pose_role_select.get_item_metadata(i)) == "B":
+				pose_role_select.select(i)
+				found_b = true
+				break
+		if not found_b:
+			pose_role_select.select(0)
+
+func _suggest_pose_name() -> void:
+	var role_id := "B"
+	if pose_role_select.item_count > 0 and pose_role_select.selected >= 0:
+		role_id = String(pose_role_select.get_item_metadata(pose_role_select.selected))
+	elif not visible_roles.is_empty():
+		role_id = visible_roles[0]
+	var clean_pack: String = current_pack.trim_prefix("shared_").replace("-", "_")
+	var frame_idx: int = roundi(time * FPS)
+	pose_name_input.text = "pose_%s_%s_f%03d" % [clean_pack, role_id.to_lower(), frame_idx]
+
+func _capture_current_pose() -> void:
+	if not initialized or loading: return
+	var role_id := "B"
+	if pose_role_select.item_count > 0 and pose_role_select.selected >= 0:
+		role_id = String(pose_role_select.get_item_metadata(pose_role_select.selected))
+	elif not visible_roles.is_empty():
+		role_id = visible_roles[0]
+	
+	if not actors.has(role_id):
+		pose_status_label.text = "错误: 角色 %s 实例不存在" % role_id
+		return
+	
+	var inst = actors[role_id]
+	var skel: Skeleton3D = inst.skeleton
+	if not skel:
+		pose_status_label.text = "错误: 角色 %s 骨架不存在" % role_id
+		return
+	
+	var pose_name: String = pose_name_input.text.strip_edges()
+	if pose_name.is_empty():
+		_suggest_pose_name()
+		pose_name = pose_name_input.text.strip_edges()
+	if pose_name.ends_with(".json"):
+		pose_name = pose_name.trim_suffix(".json")
+	
+	var char_pos: Vector3 = inst.character.position
+	var char_rot: Vector3 = inst.character.rotation
+	
+	if pose_ground_toggle.button_pressed:
+		var lowest_y := 999.0
+		for i in skel.get_bone_count():
+			var p := (skel.global_transform * skel.get_bone_global_pose(i)).origin
+			if p.y < lowest_y:
+				lowest_y = p.y
+		if lowest_y < 900.0:
+			char_pos.y -= lowest_y
+	
+	var bones_data: Dictionary = {}
+	for i in skel.get_bone_count():
+		var bname: String = skel.get_bone_name(i)
+		if bname.begins_with("hair") or bname.begins_with("skirt") or bname.begins_with("Spring") or bname.contains("Collider"):
+			continue
+		var rot: Quaternion = skel.get_bone_pose_rotation(i)
+		var pos: Vector3 = skel.get_bone_pose_position(i)
+		var b_entry: Dictionary = {
+			"rot": [snappedf(rot.x, 0.0001), snappedf(rot.y, 0.0001), snappedf(rot.z, 0.0001), snappedf(rot.w, 0.0001)]
+		}
+		if pos.length_squared() > 0.00001:
+			b_entry["pos"] = [snappedf(pos.x, 0.001), snappedf(pos.y, 0.001), snappedf(pos.z, 0.001)]
+		bones_data[bname] = b_entry
+	
+	var pose_data: Dictionary = {
+		"schema": "prism_pose_v1",
+		"name": pose_name,
+		"created_at": Time.get_datetime_string_from_system(),
+		"source_pack": current_pack,
+		"source_pack_title": pack.get("title_zh", pack.label),
+		"source_role": role_id,
+		"source_time": snappedf(time, 0.001),
+		"source_frame": roundi(time * FPS),
+		"grounded": pose_ground_toggle.button_pressed,
+		"character_pos": [snappedf(char_pos.x, 0.001), snappedf(char_pos.y, 0.001), snappedf(char_pos.z, 0.001)],
+		"character_rot": [snappedf(char_rot.x, 0.001), snappedf(char_rot.y, 0.001), snappedf(char_rot.z, 0.001)],
+		"bone_count": bones_data.size(),
+		"bones": bones_data
+	}
+	
+	if not DirAccess.dir_exists_absolute(POSES_DIR):
+		DirAccess.make_dir_recursive_absolute(POSES_DIR)
+	
+	var file_path := POSES_DIR + "/" + pose_name + ".json"
+	var fa := FileAccess.open(file_path, FileAccess.WRITE)
+	if fa:
+		fa.store_string(JSON.stringify(pose_data, "	"))
+		fa.close()
+		pose_status_label.text = "✓ 成功保存姿态: %s.json (%d 根骨骼)" % [pose_name, bones_data.size()]
+		_refresh_pose_list()
+		for idx in pose_files.size():
+			if pose_files[idx] == pose_name + ".json":
+				pose_list.select(idx)
+				_on_pose_item_selected(idx)
+				break
+	else:
+		pose_status_label.text = "✕ 保存失败: 无法写入 " + file_path
+
+func _refresh_pose_list() -> void:
+	pose_files.clear()
+	pose_list.clear()
+	if rename_box: rename_box.visible = false
+	if delete_confirm_box: delete_confirm_box.visible = false
+	if not DirAccess.dir_exists_absolute(POSES_DIR):
+		DirAccess.make_dir_recursive_absolute(POSES_DIR)
+	var raw_files := DirAccess.get_files_at(POSES_DIR)
+	var search_filter := pose_search.text.strip_edges().to_lower()
+	for f in raw_files:
+		if f.ends_with(".json"):
+			if search_filter.is_empty() or f.to_lower().contains(search_filter):
+				pose_files.append(f)
+	pose_files.sort()
+	for f in pose_files:
+		var display_name := f.trim_suffix(".json")
+		pose_list.add_item("🎭 " + display_name)
+	pose_count_label.text = "📁 已存姿态库 (%d 个)" % pose_files.size()
+
+func _on_pose_item_selected(index: int) -> void:
+	if index < 0 or index >= pose_files.size(): return
+	var fname := pose_files[index]
+	var path := POSES_DIR + "/" + fname
+	if not FileAccess.file_exists(path):
+		pose_details_label.text = "文件不存在"
+		return
+	var raw := FileAccess.get_file_as_string(path)
+	var data: Variant = JSON.parse_string(raw)
+	if typeof(data) == TYPE_DICTIONARY:
+		var pack_title: String = data.get("source_pack_title", data.get("source_pack", "未知"))
+		var role_str: String = data.get("source_role", "未知")
+		var b_count: int = data.get("bone_count", data.get("bones", {}).size())
+		var ground_str: String = "已贴地" if data.get("grounded", false) else "原始高度"
+		var time_str: String = "%.2fs (帧 %d)" % [float(data.get("source_time", 0.0)), int(data.get("source_frame", 0))]
+		pose_details_label.text = "【%s】
+来源动作: %s | 通道: 角色 %s | %s | %s | %d 根骨骼" % [
+			data.get("name", fname), pack_title, role_str, time_str, ground_str, b_count
+		]
+	else:
+		pose_details_label.text = fname
+
+func _preview_selected_pose() -> void:
+	if not initialized or loading: return
+	var selected_items := pose_list.get_selected_items()
+	if selected_items.is_empty():
+		pose_status_label.text = "请先选择一个姿态文件"
+		return
+	var fname := pose_files[selected_items[0]]
+	var path := POSES_DIR + "/" + fname
+	if not FileAccess.file_exists(path):
+		pose_status_label.text = "文件不存在: " + fname
+		return
+	var raw := FileAccess.get_file_as_string(path)
+	var data: Variant = JSON.parse_string(raw)
+	if typeof(data) != TYPE_DICTIONARY:
+		pose_status_label.text = "错误: 姿态文件损坏或无法解析"
+		return
+	
+	var role_id: String = data.get("source_role", "B")
+	if pose_role_select.item_count > 0 and pose_role_select.selected >= 0:
+		role_id = String(pose_role_select.get_item_metadata(pose_role_select.selected))
+	elif not visible_roles.is_empty() and not visible_roles.has(role_id):
+		role_id = visible_roles[0]
+	elif not actors.has(role_id):
+		role_id = actors.keys()[0] if not actors.is_empty() else ""
+	
+	if not actors.has(role_id):
+		pose_status_label.text = "错误: 未找到角色实例 " + role_id
+		return
+	
+	var inst = actors[role_id]
+	var skel: Skeleton3D = inst.skeleton
+	if not skel: return
+	
+	playing = false
+	is_previewing_pose = true
+	active_pose_data = data
+	_refresh_ui()
+	
+	skel.reset_bone_poses()
+	
+	if data.has("character_pos"):
+		var p: Array = data["character_pos"]
+		inst.character.position = Vector3(p[0], p[1], p[2])
+	if data.has("character_rot"):
+		var r: Array = data["character_rot"]
+		inst.character.rotation = Vector3(r[0], r[1], r[2])
+	
+	var bones: Dictionary = data.get("bones", {})
+	for bname in bones:
+		var idx := skel.find_bone(bname)
+		if idx >= 0:
+			var bentry: Dictionary = bones[bname]
+			if bentry.has("rot"):
+				var q: Array = bentry["rot"]
+				skel.set_bone_pose_rotation(idx, Quaternion(q[0], q[1], q[2], q[3]))
+			if bentry.has("pos"):
+				var p: Array = bentry["pos"]
+				skel.set_bone_pose_position(idx, Vector3(p[0], p[1], p[2]))
+	
+	skel.force_update_all_bone_transforms()
+	pose_status_label.text = "▶ 已应用姿态: %s 到角色 %s (动画已冻结)" % [data.get("name", fname), role_id]
+
+func _resume_from_pose_preview() -> void:
+	if not initialized: return
+	is_previewing_pose = false
+	active_pose_data.clear()
+	seek_frame(roundi(time * FPS))
+	pose_status_label.text = "↺ 已恢复原始 MMD 动作序列"
+
+func _start_rename() -> void:
+	var selected_items := pose_list.get_selected_items()
+	if selected_items.is_empty():
+		pose_status_label.text = "请先选择要重命名的姿态"
+		return
+	var fname := pose_files[selected_items[0]]
+	rename_input.text = fname.trim_suffix(".json")
+	rename_box.visible = true
+	delete_confirm_box.visible = false
+	rename_input.grab_focus()
+
+func _confirm_rename() -> void:
+	var selected_items := pose_list.get_selected_items()
+	if selected_items.is_empty():
+		rename_box.visible = false
+		return
+	var old_file := pose_files[selected_items[0]]
+	var new_base := rename_input.text.strip_edges().trim_suffix(".json")
+	if new_base.is_empty():
+		pose_status_label.text = "重命名错误: 文件名不能为空"
+		return
+	var new_file := new_base + ".json"
+	if new_file == old_file:
+		rename_box.visible = false
+		return
+	var old_path := POSES_DIR + "/" + old_file
+	var new_path := POSES_DIR + "/" + new_file
+	if FileAccess.file_exists(new_path):
+		pose_status_label.text = "重命名失败: 目标文件已存在 " + new_file
+		return
+	var err := DirAccess.rename_absolute(old_path, new_path)
+	if err == OK:
+		var raw := FileAccess.get_file_as_string(new_path)
+		var data: Variant = JSON.parse_string(raw)
+		if typeof(data) == TYPE_DICTIONARY:
+			data["name"] = new_base
+			var fa := FileAccess.open(new_path, FileAccess.WRITE)
+			if fa:
+				fa.store_string(JSON.stringify(data, "\t"))
+				fa.close()
+		pose_status_label.text = "✓ 重命名成功: " + new_file
+		rename_box.visible = false
+		_refresh_pose_list()
+		for i in pose_files.size():
+			if pose_files[i] == new_file:
+				pose_list.select(i)
+				_on_pose_item_selected(i)
+				break
+	else:
+		pose_status_label.text = "✕ 重命名失败: 错误码 %d" % err
+
+func _start_delete() -> void:
+	var selected_items := pose_list.get_selected_items()
+	if selected_items.is_empty():
+		pose_status_label.text = "请先选择要删除的姿态"
+		return
+	var fname := pose_files[selected_items[0]]
+	delete_confirm_label.text = "确认删除 '%s' 吗？" % fname
+	delete_confirm_box.visible = true
+	rename_box.visible = false
+
+func _confirm_delete() -> void:
+	var selected_items := pose_list.get_selected_items()
+	if selected_items.is_empty():
+		delete_confirm_box.visible = false
+		return
+	var fname := pose_files[selected_items[0]]
+	var path := POSES_DIR + "/" + fname
+	var err := DirAccess.remove_absolute(path)
+	if err == OK:
+		pose_status_label.text = "✓ 已删除姿态文件: " + fname
+		delete_confirm_box.visible = false
+		_refresh_pose_list()
+		pose_details_label.text = "文件已删除"
+	else:
+		pose_status_label.text = "✕ 删除失败: 错误码 %d" % err
+
+func _open_poses_folder() -> void:
+	var global_path := ProjectSettings.globalize_path(POSES_DIR)
+	OS.shell_open(global_path)
+	pose_status_label.text = "已打开系统文件夹: " + global_path

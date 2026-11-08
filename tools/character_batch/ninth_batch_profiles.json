@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "lumine",
+      "label": "荧",
+      "game": "原神",
+      "archive_glob": "*荧*.zip",
+      "body_pmx": "荧.pmx",
+      "zip_encoding": "cp932",
+      "physics_prefixes": [
+        "+Hair",
+        "Q_",
+        "头饰",
+        "带_"
+      ]
+    },
+    {
+      "id": "stelle",
+      "label": "星",
+      "game": "崩坏：星穹铁道",
+      "archive_glob": "*星穹铁道—女主*.zip",
+      "body_pmx": "女主1.0.pmx",
+      "zip_encoding": "gbk",
+      "physics_prefixes": [
+        "Hair",
+        "qz_",
+        "wt_",
+        "collarA_",
+        "gloves",
+        "Shoelace_",
+        "hbs",
+        "bs",
+        "xs"
+      ]
+    }
+  ]
+}

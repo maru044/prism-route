@@ -13,7 +13,7 @@ def read(p):return json.loads(p.read_text(encoding='utf-8-sig'))
 def write(p,d):p.write_text(json.dumps(d,ensure_ascii=False,indent=2),encoding='utf-8')
 def make_recipe():
     state=read(CAD/'build_state.json');source=read(CACHE/'initial_ruin_1029.json');plan=state['placement'];approach=state['checks']['approach']
-    assert len(state['objects'])==328
+    assert state.get('interactions',{}).get('version')==1
     by_name={o['name']:o for o in source['objects']}
     center=np.array(plan['front_center']);right=np.array(plan['right_axis']);forward=np.array(plan['long_axis'])
     def world(u,v,z):
@@ -93,32 +93,15 @@ def make_recipe():
     flight('PR_Walk_Entry_2','entry_2',-18.3,57.75,18,3.6)
     flight('PR_Walk_Internal_1','internal_1',9.,60.45,4)
     flight('PR_Walk_Internal_2','internal_2',47.5,61.05,4)
-    # Circular dais: continuous conical walking skirt plus a level top disk.
-    verts=[];faces=[];top_faces=[];rings=[(2.10,61.05),(1.8,61.2),(1.5,61.35),(1.25,61.5)];sides=128
-    for radius,z in rings:
-        verts.extend(world(math.cos(i*2*math.pi/sides)*radius,25.+math.sin(i*2*math.pi/sides)*radius,z) for i in range(sides))
-    for j in range(len(rings)-1):
-        for i in range(sides):
-            k=(i+1)%sides;a=j*sides+i;b=j*sides+k;c=(j+1)*sides+k;d=(j+1)*sides+i
-            top_faces.extend([len(faces),len(faces)+1]);faces.extend([[a,b,c],[a,c,d]])
-    disk=len(verts);verts.append(world(0,25.,61.5));bottom=len(verts);verts.append(world(0,25.,61.0))
-    rim=len(verts);verts.extend(world(math.cos(i*2*math.pi/sides)*2.1,25.+math.sin(i*2*math.pi/sides)*2.1,61.0) for i in range(sides))
-    for i in range(sides):
-        k=(i+1)%sides;top_faces.append(len(faces));faces.append([3*sides+i,3*sides+k,disk])
-        faces.extend([[bottom,rim+k,rim+i],[i,rim+i,rim+k],[i,rim+k,k]])
-    route=[]
-    for v in np.linspace(22.3,25.,12):
-        r=25.-v;z=float(np.interp(r,[1.25,1.5,1.8,2.1],[61.5,61.35,61.2,61.05]));route.append(world(0,v,z))
-    models.append(dict(name='PR_Walk_SummonDais-colonly',role='dais',vertices=verts,triangles=faces,top_faces=top_faces,route=route))
-    replaced=[o for o in state['objects'] if o['name'].startswith(('PR_Approach_','PR_EntryFlight_','PR_InternalStair_','PR_SummonStep_'))]
-    assert len(replaced)==206
-    recipe=dict(version=1,source_state=str(CAD/'build_state.json'),source_state_sha256=hashlib.sha256((CAD/'build_state.json').read_bytes()).hexdigest(),native_center=[1450,1150,0],models=models,replaced_objects=replaced,source_bounds={o['id']:by_name[o['name']]['bounds'] for o in replaced},math=dict(approach_length=length,approach_stations=stations,approach_height_knots=knots,profile='monotone PCHIP, piecewise linear triangle mesh',sample_spacing_m=.25,approach_width=3.2,entry_width=7.2,riser=.15,tread=.35,dais_rings=rings))
+    replaced=[o for o in state['objects'] if o['name'].startswith(('PR_Approach_','PR_EntryFlight_','PR_InternalStair_'))]
+    assert len(replaced)==203
+    recipe=dict(version=2,source_state=str(CAD/'build_state.json'),source_state_sha256=hashlib.sha256((CAD/'build_state.json').read_bytes()).hexdigest(),native_center=[1450,1150,0],models=models,replaced_objects=replaced,source_bounds={o['id']:by_name[o['name']]['bounds'] for o in replaced},math=dict(approach_length=length,approach_stations=stations,approach_height_knots=knots,profile='monotone PCHIP, piecewise linear triangle mesh',sample_spacing_m=.25,approach_width=3.2,entry_width=7.2,riser=.15,tread=.35))
     write(RECIPE,recipe)
     print(json.dumps(dict(recipe=str(RECIPE),models=len(models),triangles=sum(len(m['triangles']) for m in models),replaced=len(replaced),length=length)))
 
 def package():
     exported=read(CACHE/'ruin_walk_collision_cad.json');recipe=read(RECIPE)
-    assert exported['original_objects_preserved'] and len(exported['objects'])==6
+    assert exported['original_objects_preserved'] and len(exported['objects'])==5
     work=CACHE/'ruin_walk_collision_export';work.mkdir(exist_ok=True)
     (work/'source.bin').write_bytes((CACHE/'ruin_walk_collision_cad.bin').read_bytes())
     spec=importlib.util.spec_from_file_location('walk_glb',ROOT/'tools/build_landscape_world_mask.py');module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);module.CACHE=work;module.OUT=work
@@ -140,7 +123,7 @@ def package():
         routes[model['role']]=[godot(p) for p in model['route']]
     manifest=dict(version=1,source_document=exported['source'],source_layer=exported['layer'],cad_objects=exported['objects'],original_objects_preserved=True,source_state_sha256=recipe['source_state_sha256'],mesh_sha256=hashlib.sha256(glb).hexdigest(),replaced_actor_collision_ids=[o['id'] for o in recipe['replaced_objects']],replaced_names=[o['name'] for o in recipe['replaced_objects']],triangles=sum(o['index_count']//3 for o in exported['objects']),probes=probes,routes=routes,math=recipe['math'])
     write(OUT/'walk_collision.json',manifest)
-    print(json.dumps(dict(objects=6,triangles=manifest['triangles'],bytes=len(glb),original_preserved=True)))
+    print(json.dumps(dict(objects=5,triangles=manifest['triangles'],bytes=len(glb),original_preserved=True)))
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser();parser.add_argument('action',choices=['recipe','package']);args=parser.parse_args()

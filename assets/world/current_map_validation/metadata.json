@@ -5465,10 +5465,10 @@
   "static_features": {
     "initial_ruin_1029": {
       "manifest": "res://assets/world/initial_ruin_1029/manifest.json",
-      "mesh_sha256": "2517c8c098f11065cb6fa7aafe2ec5b58e9a61795ebfbbbf7070cdccca39e65e",
-      "manifest_sha256": "3abc14d2d1280b79270f0b25c34e1e76e6bdfaab80e4c7bd1339359637cc5fb8",
-      "objects": 325,
-      "triangles": 6868
+      "mesh_sha256": "ac55f6e4acb14a057e65c9f83d5da367fb8cd77a126f6832c7ea92120c727858",
+      "manifest_sha256": "5748ba5081440650a445d9391b1c1ea833c96f4caa55f42c2bb64643fe291450",
+      "objects": 315,
+      "triangles": 5648
     },
     "upper_ring_1030": {
       "manifest": "res://assets/world/upper_ring_1030/manifest.json",
@@ -5481,15 +5481,16 @@
   },
   "grass_render_only_overrides": {
     "initial_ruin_1029": {
-      "render_mesh_sha256": "2517c8c098f11065cb6fa7aafe2ec5b58e9a61795ebfbbbf7070cdccca39e65e",
-      "render_manifest_sha256": "3abc14d2d1280b79270f0b25c34e1e76e6bdfaab80e4c7bd1339359637cc5fb8",
+      "render_mesh_sha256": "ac55f6e4acb14a057e65c9f83d5da367fb8cd77a126f6832c7ea92120c727858",
+      "render_manifest_sha256": "5748ba5081440650a445d9391b1c1ea833c96f4caa55f42c2bb64643fe291450",
       "generation_feature": {
         "manifest": "res://assets/world/initial_ruin_1029/manifest.json",
         "mesh_sha256": "2b53bdea720c27e30a6ce2a9a24fc383b4f25c80f8b977c171603fb3023bdc52",
         "manifest_sha256": "bcf25c42d1dcf5847f99b147d5a80248bf65891bf1f78f1f47ba97dc6bafafb5",
         "objects": 328,
         "triangles": 6904
-      }
+      },
+      "reason": "NPC/furniture revision on unchanged sealed temple floor; original terrain and planting exclusion volumes retained."
     }
   }
 }

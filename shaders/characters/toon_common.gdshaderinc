@@ -15,10 +15,30 @@ uniform vec3 skin_shadow_multiplier = vec3(0.82, 0.68, 0.72);
 uniform vec3 head_forward = vec3(0.0, 0.0, 1.0);
 uniform float alpha_cutoff = 0.0;
 uniform float source_roughness = 0.5;
+
+// Project-owned wetness extension. Height samples follow the actor root.
+uniform float wet_levels[24];
+uniform float wet_root_height = 0.0;
+uniform float wet_water_level = -10000.0;
+uniform bool wet_contact = false;
+uniform float wet_darkening = 0.0;
+uniform float wet_gloss = 0.0;
+uniform float wet_gloss_power = 64.0;
+varying float wet_world_y;
+varying float wet_amount;
+
+float wet_sample(float height) {
+	float sample_index = clamp((height + 0.15) / 2.30 * 23.0, 0.0, 23.0);
+	int low = int(floor(sample_index));
+	int high = min(low + 1, 23);
+	return clamp(mix(wet_levels[low], wet_levels[high], fract(sample_index)), 0.0, 1.0);
+}
+
 varying vec3 strand_direction;
 
 void vertex() {
 	UV = UV * uv_transform.xy + uv_transform.zw;
+	wet_world_y = (MODEL_MATRIX * vec4(VERTEX, 1.0)).y;
 	// Tangent-based approximation; no claim of authored strand-flow data.
 	strand_direction = mat3(MODELVIEW_MATRIX) * TANGENT;
 }
@@ -26,7 +46,9 @@ void vertex() {
 void fragment() {
 	vec4 sample_color = texture(base_texture, UV) * base_color;
 	if (sample_color.a < alpha_cutoff) { discard; }
-	ALBEDO = sample_color.rgb;
+	wet_amount = wet_sample(wet_world_y - wet_root_height);
+	float wet_diffuse = 1.0 - wet_darkening * wet_amount;
+	ALBEDO = sample_color.rgb * wet_diffuse;
 	ROUGHNESS = region == 5 ? max(0.3, source_roughness) : 1.0;
 	SPECULAR = region == 5 ? 0.25 : 0.0;
 	METALLIC = 0.0;
@@ -70,4 +92,10 @@ void light() {
 		specular_lobe = pow(max(dot(n, half_vector), 0.0), 32.0) * 0.18;
 	}
 	SPECULAR_LIGHT += specular_lobe * max(nl, 0.0) * ATTENUATION * LIGHT_COLOR / PI;
+	float air = wet_contact ? smoothstep(0.0, 0.04, wet_world_y - wet_water_level) : 1.0;
+	vec3 wet_n = normalize(NORMAL);
+	vec3 wet_h = normalize(LIGHT + VIEW + vec3(0.000001));
+	float wet_fresnel = 0.04 + 0.96 * pow(1.0 - clamp(dot(wet_n, VIEW), 0.0, 1.0), 5.0);
+	float wet_specular = pow(max(dot(wet_n, wet_h), 0.0), wet_gloss_power);
+	SPECULAR_LIGHT += LIGHT_COLOR * ATTENUATION * max(dot(wet_n, LIGHT), 0.0) * wet_specular * (0.25 + 0.75 * wet_fresnel) * wet_gloss * wet_amount * air;
 }

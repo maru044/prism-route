@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/interactive_furniture.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://assets/furniture/prism/prism_geo_desk.glb" id="2_mesh"]
+
+[sub_resource type="BoxShape3D" id="TopShape"]
+size = Vector3(1.42, 0.08, 0.52)
+
+[sub_resource type="BoxShape3D" id="LegShape"]
+size = Vector3(0.22, 0.76, 0.26)
 
 [node name="PrismGeoDesk" type="Node3D"]
 script = ExtResource("1_script")
@@ -10,3 +16,19 @@ furniture_name_zh = "「棱镜悬挑」折纸科技长案桌"
 seat_surface_height = 0.838
 
 [node name="Model" parent="." instance=ExtResource("2_mesh")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="TabletopCol" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.80, -0.17)
+shape = SubResource("TopShape")
+
+[node name="LeftLegCol" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.52, 0.38, -0.17)
+shape = SubResource("LegShape")
+
+[node name="RightLegCol" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.52, 0.38, -0.17)
+shape = SubResource("LegShape")

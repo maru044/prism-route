@@ -60,16 +60,11 @@ func run() -> void:
 		unchanged[path]=FileAccess.get_sha256("res://"+path)==before[path];check(unchanged[path],"Modified source asset: "+path)
 	var bake: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(world.ASSETS+"grass_bake/manifest.json"))
 	check(bake.complete and bake.signature==STORE.signature(world),"Grass bake invalidated")
-	# Exercise the existing E trigger once with the new projection receivers active.
-	world.set_free(false);world.character_mode=true;world._sync_actor_controls()
-	var ruin=world.initial_ruin;var forward: Vector3=world.vec(ruin.planting_mask.manifest.forward)
-	var near: Vector3=ruin.avatar.global_position-forward*2.45;near.y=61.09
-	world.character.set_spawn(near,.38);await frames(14)
-	check(ruin.can_interact(),"Summon prompt is no longer reachable")
-	var event:=InputEventKey.new();event.keycode=KEY_E;event.physical_keycode=KEY_E;event.pressed=true;Input.parse_input_event(event)
-	var release:=InputEventKey.new();release.keycode=KEY_E;release.physical_keycode=KEY_E;release.pressed=false;Input.parse_input_event(release)
-	await frames(240);check(ruin.state==ruin.State.PRINTED and ruin.print_count==1,"E materialization regressed")
-	var report: Dictionary={"passed":failures.is_empty(),"failures":failures,"actual_scene":world.scene_file_path,"window_title":world.get_window().title,"revision":trial.settings.revision,"clusters":layer.report,"visible_clusters":visible_clusters,"unchanged_assets":unchanged,"grass_bake_valid":true,"summon_print_count":ruin.print_count,"adapter":RenderingServer.get_video_adapter_name()}
+	var ruin=world.initial_ruin
+	while not ruin.npc_ready:await get_tree().process_frame
+	check(ruin.find_child("HologramEffect",true,false)==null,"Temple unexpectedly creates a hologram")
+	check(ruin.furniture_instances.size()==3,"Temple furniture sockets missing")
+	var report: Dictionary={"passed":failures.is_empty(),"failures":failures,"actual_scene":world.scene_file_path,"window_title":world.get_window().title,"revision":trial.settings.revision,"clusters":layer.report,"visible_clusters":visible_clusters,"unchanged_assets":unchanged,"grass_bake_valid":true,"temple_npc_ready":ruin.npc_ready,"adapter":RenderingServer.get_video_adapter_name()}
 	var placements: Array=[]
 	for row: Dictionary in layer.placements:placements.append({"group":row.group,"source_id":row.source_id,"top":[row.top.x,row.top.y,row.top.z],"normal":[row.normal.x,row.normal.y,row.normal.z],"size":row.size,"cell":row.cell,"mirror":row.mirror,"role":row.role,"path_id":row.path_id})
 	FileAccess.open(OUT+"placements.json",FileAccess.WRITE).store_string(JSON.stringify(placements,"  "))

@@ -1,10 +1,12 @@
-# ACG 夏日天空全景 · 2026-11-07
+# ACG 夏日天空全景 · 2026-11-07 起
 
 按用户概念图重新绘制清亮、高饱和的日式 ACG 天空：钴蓝到青蓝的渐变、白色积云、冷蓝阴面与轻薄卷云。生成与修改均使用内置 image_gen；没有对旧图简单提高饱和度，也没有用 Python 重绘或拼接图片。
 
 ## 当前选用版本
 
 正式资源为 [acg_summer_panorama_v3.png](../../assets/environment/sky/acg_summer_panorama_v3.png)，原生分辨率 **1774 × 887，严格 2:1**。提示词请求更大分辨率，工具实际返回该尺寸；没有将放大后的图冒称为 4K 原图。它是 LDR 绘制天空，不是提供真实场景辐射强度的 HDRI。
+
+**2026-11-08 最新修订：只重绘并缩小最大的主积云，继续覆盖上述原路径。** 当前主云团见 [实机截图](after_main_cloud.png)；其余海岸、朝向与接缝截图，以及旧 JSON 检查记录保留为 11 月 7 日历史，不代表此次重绘后的全部视图。最新验证范围及提示词见末节。
 
 第一版 `acg_summer_panorama_v1.png` 云团过大。用户反馈后，第二版将主要积云的宽、高缩到原约三分之二，云底仍靠近地平线，保留第一版的蓝色、明暗风格与高空卷云，增加蓝天留白。[完整生成与修改提示词](../../assets/environment/sky/acg_summer_generation_20261107.json) 可供后续 agent 继续调整。
 
@@ -57,3 +59,22 @@ $godot = '.current_map_build/runtime/Godot_v4.7.2-stable_win64_console.exe'
 当前为 v3／−90°。上节 +90° 仅保留为调整历史。主要积云转向地图南侧的东南方向，天空与水面仍使用同一张全景；不旋转 HDRI、太阳或模型。没有再次调整沙滩、植被、曝光或几何。
 
 实机从相同的全景采样方位对照 v2 与 v3：[上一版相同朝向](v2_same_yaw_main_cloud.png) / [当前主积云](after_main_cloud.png)。另保留 [当前初始区域视角](initial_yaw_-90.png)、[朝向与倒影初始化检查](yaw_review.json) 及 [本轮范围校验](v3_scope.json)。主云团方位为依照贴图中心 u≈0.32 估算，实际截图与 `review.json` 可复核其角尺寸和方位。
+
+## 2026-11-08：仅缩小主积云
+
+用户反馈南部视角的主云团仍像近处云墙，要求局部重绘并导入游戏。使用内置 imagegen 编辑现有 v3，提示词目标为原主云团宽、高约 65%，保持云底和水平中心。实际为绘制修订，不是精确数值缩放；保留蓝天渐变、薄卷云、右侧次云团及原有明暗风格。未追求更高分辨率，也未放大原图。
+
+直接覆盖原 PNG，保留原 `.import`、mipmap、资源路径和 UID；没有增加 v4 或新的天空材质。Godot 重新导入完成。从正式 `scenes/main.tscn` 加载整个世界，在固定镜头、相同曝光下临时切换修改前/后贴图，同时切换全部水面天空采样；修改后的云团与水中倒影明显缩小，蓝天留白增多。[当前主云实机](after_main_cloud.png) 已原位更新，不额外保留一组截图。
+
+运行验证输出 `CLOUD_SIZE_REVIEW_OK`：尺寸 1774×887，水面 7 处，`display_yaw=-90°`，水面方位与背景一致，照明仍为原 `rosendal_park_sunset_puresky_4k.exr`、`lighting_energy=0.48`。材质、天空/水面着色器、water_manager 和主世界脚本的文件指纹与本轮开始一致。本轮没有修改太阳、曝光、沙滩或植被。
+
+复用原 `review_acg_sky_1107.gd` 的场景、等待和天空/水面切换逻辑，通过忽略的构建缓存目录中的临时派生脚本只拍摄此次同镜头对照；测试进程已退出，临时脚本、基线贴图、前后截图及日志均在检查后清理。未新增永久测试文件或 JSON 报告。原 PNG 的数学无缝性仍使用已有窄带接缝/极点保护，不宣称生成图逐像素保持了区域外所有内容。
+
+<details>
+<summary>本轮内置 imagegen 完整提示词</summary>
+
+```text
+Use case: precise-object-edit. Asset type: existing 2:1 equirectangular full-sphere sky panorama for a Japanese ACG game. Image 1 is the EDIT TARGET, not a composition reference. Make ONE strictly localized edit: redraw ONLY the largest towering white cumulus cloud group in the left-middle, centered at approximately normalized x=0.31, its base at y=0.515 and its current summit at y=0.32. Reduce this main cloud group's visible width AND height to 65 percent of its current size, anchored to its EXISTING base and horizontal center, making a smaller distant cloud rather than a huge near cloud wall. The new summit should be around y=0.385, with more open blue sky above and on either side. Retain the cloud's Japanese anime painted puffy lobes, brilliant clean white sunlit edges and pale blue shaded interior, at the SAME brightness and palette as original. Cleanly restore the original blue sky gradient wherever the old larger cloud was removed, blending invisibly. INVARIANTS: preserve the rest of the source image as exactly as possible, including its vivid cobalt zenith, cyan horizon gradient, every thin cirrus wisp across the upper sky, the low distant horizon cloud ribbon, the smaller secondary cumulus cloud on the right (x around 0.82), the entire lower half, and both panorama borders. Preserve the identical 2:1 canvas and horizon position. Do not globally recolor, change saturation/exposure, enlarge any cloud, add clouds, add sun/land/water/objects/text, crop, rotate, or mirror. This is a precise main-cloud size correction, not a new sky design. Keep seam-safe blue margins and cloud-free polar caps.
+```
+
+</details>

@@ -3,23 +3,50 @@
   "geometry": {
     "anchor": [
       -1015.28479003906,
-      61.5,
+      61.0499992370605,
       1255.7880859375
     ],
-    "collision_samples": 649,
-    "keqing_surfaces": 20,
+    "collision_samples": 629,
     "max_height_error_m": 0.000213623046875,
-    "meshes": 328,
+    "meshes": 315,
     "missing": 0,
-    "overlapping_components_skipped": 87,
-    "source_triangles": 6904.0
+    "ordinary_npc": true,
+    "overlapping_components_skipped": 75,
+    "source_triangles": 5648.0
+  },
+  "interaction": {
+    "contact_and_approach_checks": true,
+    "dais_collision_removed": true,
+    "furniture": [
+      {
+        "anchors": 2,
+        "height": 0.42,
+        "id": "seat_01",
+        "status": "anchors_ready"
+      },
+      {
+        "anchors": 2,
+        "height": 0.838,
+        "id": "table_01",
+        "status": "anchors_ready"
+      },
+      {
+        "anchors": 3,
+        "height": 0.46,
+        "id": "rest_01",
+        "status": "anchors_ready"
+      }
+    ],
+    "hologram_removed": true,
+    "motion_navigation": "not implemented in this model revision",
+    "ordinary_npc": true
   },
   "passed": true,
   "render": {
     "adapter": "NVIDIA GeForce RTX 5070 Ti",
     "corrupt_cells": 0,
-    "grass_reads": 179,
-    "real_E_print_completed": true,
-    "visible_trees": 19558
+    "grass_reads": 51,
+    "ordinary_npc": true,
+    "visible_trees": 19296
   }
 }

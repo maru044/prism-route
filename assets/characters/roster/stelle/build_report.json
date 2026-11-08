@@ -1,0 +1,938 @@
+{
+  "id": "stelle",
+  "label": "星",
+  "vertices": 20030,
+  "bones": 593,
+  "morphs": 68,
+  "materials": 21,
+  "alpha": [
+    {
+      "name": "衣服",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "衣饰铁",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "外套",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "外套衣饰铁",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "背带",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "臂带",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "怀表",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "新建",
+      "mode": "MASK",
+      "min_alpha": 0,
+      "max_alpha": 255,
+      "transparent_fraction": 0.32827239241757256,
+      "partial_fraction": 0.2054622226215075,
+      "middle_fraction": 0.17788159195040876
+    },
+    {
+      "name": "手套",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "鞋子",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "新胖次",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "头发",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "外套内侧",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "皮肤",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "脸",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "眉毛",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "口腔",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "眼睛",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "眼白",
+      "mode": "OPAQUE",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "眼睛1",
+      "mode": "BLEND",
+      "min_alpha": 255,
+      "max_alpha": 255,
+      "transparent_fraction": 0.0,
+      "partial_fraction": 0.0,
+      "middle_fraction": 0.0
+    },
+    {
+      "name": "表情",
+      "mode": "MASK",
+      "min_alpha": 0,
+      "max_alpha": 255,
+      "transparent_fraction": 0.6555443481377221,
+      "partial_fraction": 0.18069311938404803,
+      "middle_fraction": 0.08159224973338228
+    }
+  ],
+  "physics": {
+    "hair_chains": 16,
+    "clothes_chains": 36,
+    "colliders": 12,
+    "joints": 380
+  },
+  "source_sha256": "9ca0e397fca6b5b0bdb1d74672d8e729e8ecd85eebb95eda1117ccc66a30fa93",
+  "source_unchanged": true,
+  "max_weight_total_error": 0.0,
+  "foot_test": {
+    "bone": "足首.L",
+    "angle_deg": 25,
+    "moved_vertices_over_0_1mm": 280,
+    "max_displacement_m": 0.08668898117686409
+  },
+  "helper_links": [
+    [
+      "足D.L",
+      "足.L"
+    ],
+    [
+      "ひざD.L",
+      "ひざ.L"
+    ],
+    [
+      "足首D.L",
+      "足首.L"
+    ],
+    [
+      "足D.R",
+      "足.R"
+    ],
+    [
+      "ひざD.R",
+      "ひざ.R"
+    ],
+    [
+      "足首D.R",
+      "足首.R"
+    ]
+  ],
+  "chains": [
+    {
+      "group": "Hair",
+      "attachment": "HairFront_00_M_JNT",
+      "nodes": [
+        "HairFront_00_M_JNT",
+        "HairFront_01_M_JNT",
+        "HairFront_02_M_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairLeft_00_L_JNT",
+      "nodes": [
+        "HairLeft_01_L_JNT",
+        "HairLeft_02_L_JNT",
+        "HairLeft_03_L_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairBack_00_L_JNT",
+      "nodes": [
+        "HairBack_01_L_JNT",
+        "HairBack_02_L_JNT",
+        "HairBack_03_L_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairBack_00_M_JNT",
+      "nodes": [
+        "HairBack_01_M_JNT",
+        "HairBack_02_M_JNT",
+        "HairBack_03_M_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairBack_00_R_JNT",
+      "nodes": [
+        "HairBack_01_R_JNT",
+        "HairBack_02_R_JNT",
+        "HairBack_03_R_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairRsihtDn_02_R_JNT",
+      "nodes": [
+        "HairRsihtDn_02_R_JNT",
+        "HairRsihtDn_03_R_JNT",
+        "HairRsihtDn_04_R_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairRsihtDnA_00_R_JNT",
+      "nodes": [
+        "HairRsihtDnA_00_R_JNT",
+        "HairRsihtDnA_01_R_JNT",
+        "HairRsihtDnA_02_R_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairRsihtDnB_00_R_JNT",
+      "nodes": [
+        "HairRsihtDnB_00_R_JNT",
+        "HairRsihtDnB_01_R_JNT",
+        "HairRsihtDnB_02_R_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairLeftDn_01_L_JNT",
+      "nodes": [
+        "HairLeftDn_01_L_JNT",
+        "HairLeftDn_02_L_JNT",
+        "HairLeftDn_03_L_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairLeftDnA_00_L_JNT",
+      "nodes": [
+        "HairLeftDnA_00_L_JNT",
+        "HairLeftDnA_01_L_JNT",
+        "HairLeftDnA_02_L_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairLeftDnB_00_L_JNT",
+      "nodes": [
+        "HairLeftDnB_00_L_JNT",
+        "HairLeftDnB_01_L_JNT",
+        "HairLeftDnB_02_L_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairRsihtBack_00_R_JNT",
+      "nodes": [
+        "HairRsihtBack_00_R_JNT",
+        "HairRsihtBack_01_R_JNT",
+        "HairRsihtBack_02_R_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairRsihtBack_00_L_JNT",
+      "nodes": [
+        "HairRsihtBack_00_L_JNT",
+        "HairRsihtBack_01_L_JNT",
+        "HairRsihtBack_02_L_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairRsiht_00_R_JNT",
+      "nodes": [
+        "HairRsiht_01_R_JNT",
+        "HairRsiht_02_R_JNT",
+        "HairRsiht_03_R_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairFront_00_L_JNT",
+      "nodes": [
+        "HairFront_00_L_JNT",
+        "HairFront_01_L_JNT",
+        "HairFront_02_L_JNT"
+      ]
+    },
+    {
+      "group": "Hair",
+      "attachment": "HairFront_00_R_JNT",
+      "nodes": [
+        "HairFront_00_R_JNT",
+        "HairFront_01_R_JNT",
+        "HairFront_02_R_JNT"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "bs1",
+      "nodes": [
+        "bs2",
+        "bs3",
+        "bs4",
+        "bs5",
+        "bs6",
+        "bs7",
+        "bs8",
+        "bs9",
+        "bs10",
+        "bs11",
+        "bs12",
+        "bs13",
+        "bs14"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "wt_0_0",
+      "nodes": [
+        "wt_1_0",
+        "wt_2_0",
+        "wt_3_0",
+        "wt_4_0",
+        "wt_5_0",
+        "wt_6_0",
+        "wt_7_0",
+        "wt_8_0",
+        "wt_9_0",
+        "wt_10_0",
+        "wt_11_0"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "wt_0_1",
+      "nodes": [
+        "wt_1_1",
+        "wt_2_1",
+        "wt_3_1",
+        "wt_4_1",
+        "wt_5_1",
+        "wt_6_1",
+        "wt_7_1",
+        "wt_8_1",
+        "wt_9_1",
+        "wt_10_1",
+        "wt_11_1"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "wt_0_2",
+      "nodes": [
+        "wt_1_2",
+        "wt_2_2",
+        "wt_3_2",
+        "wt_4_2",
+        "wt_5_2",
+        "wt_6_2",
+        "wt_7_2",
+        "wt_8_2",
+        "wt_9_2",
+        "wt_10_2",
+        "wt_11_2"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "wt_0_3",
+      "nodes": [
+        "wt_1_3",
+        "wt_2_3",
+        "wt_3_3",
+        "wt_4_3",
+        "wt_5_3",
+        "wt_6_3",
+        "wt_7_3",
+        "wt_8_3",
+        "wt_9_3",
+        "wt_10_3",
+        "wt_11_3"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "wt_0_4",
+      "nodes": [
+        "wt_1_4",
+        "wt_2_4",
+        "wt_3_4",
+        "wt_4_4",
+        "wt_5_4",
+        "wt_6_4",
+        "wt_7_4",
+        "wt_8_4",
+        "wt_9_4",
+        "wt_10_4",
+        "wt_11_4"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "wt_0_5",
+      "nodes": [
+        "wt_1_5",
+        "wt_2_5",
+        "wt_3_5",
+        "wt_4_5",
+        "wt_5_5",
+        "wt_6_5",
+        "wt_7_5",
+        "wt_8_5",
+        "wt_9_5",
+        "wt_10_5",
+        "wt_11_5"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "wt_0_6",
+      "nodes": [
+        "wt_1_6",
+        "wt_2_6",
+        "wt_3_6",
+        "wt_4_6",
+        "wt_5_6",
+        "wt_6_6",
+        "wt_7_6",
+        "wt_8_6",
+        "wt_9_6",
+        "wt_10_6",
+        "wt_11_6"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "wt_0_7",
+      "nodes": [
+        "wt_1_7",
+        "wt_2_7",
+        "wt_3_7",
+        "wt_4_7",
+        "wt_5_7",
+        "wt_6_7",
+        "wt_7_7",
+        "wt_8_7",
+        "wt_9_7",
+        "wt_10_7",
+        "wt_11_7"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "wt_0_8",
+      "nodes": [
+        "wt_1_8",
+        "wt_2_8",
+        "wt_3_8",
+        "wt_4_8",
+        "wt_5_8",
+        "wt_6_8",
+        "wt_7_8",
+        "wt_8_8",
+        "wt_9_8",
+        "wt_10_8",
+        "wt_11_8"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "wt_0_9",
+      "nodes": [
+        "wt_1_9",
+        "wt_2_9",
+        "wt_3_9",
+        "wt_4_9",
+        "wt_5_9",
+        "wt_6_9",
+        "wt_7_9",
+        "wt_8_9",
+        "wt_9_9",
+        "wt_10_9",
+        "wt_11_9"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "wt_0_10",
+      "nodes": [
+        "wt_1_10",
+        "wt_2_10",
+        "wt_3_10",
+        "wt_4_10",
+        "wt_5_10",
+        "wt_6_10",
+        "wt_7_10",
+        "wt_8_10",
+        "wt_9_10",
+        "wt_10_10",
+        "wt_11_10"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "wt_0_11",
+      "nodes": [
+        "wt_1_11",
+        "wt_2_11",
+        "wt_3_11",
+        "wt_4_11",
+        "wt_5_11",
+        "wt_6_11",
+        "wt_7_11",
+        "wt_8_11",
+        "wt_9_11",
+        "wt_10_11",
+        "wt_11_11"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "wt_0_12",
+      "nodes": [
+        "wt_1_12",
+        "wt_2_12",
+        "wt_3_12",
+        "wt_4_12",
+        "wt_5_12",
+        "wt_6_12",
+        "wt_7_12",
+        "wt_8_12",
+        "wt_9_12",
+        "wt_10_12",
+        "wt_11_12"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "wt_0_13",
+      "nodes": [
+        "wt_1_13",
+        "wt_2_13",
+        "wt_3_13",
+        "wt_4_13",
+        "wt_5_13",
+        "wt_6_13",
+        "wt_7_13",
+        "wt_8_13",
+        "wt_9_13",
+        "wt_10_13",
+        "wt_11_13"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "wt_0_14",
+      "nodes": [
+        "wt_1_14",
+        "wt_2_14",
+        "wt_3_14",
+        "wt_4_14",
+        "wt_5_14",
+        "wt_6_14",
+        "wt_7_14",
+        "wt_8_14",
+        "wt_9_14",
+        "wt_10_14",
+        "wt_11_14"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "wt_0_15",
+      "nodes": [
+        "wt_1_15",
+        "wt_2_15",
+        "wt_3_15",
+        "wt_4_15",
+        "wt_5_15",
+        "wt_6_15",
+        "wt_7_15",
+        "wt_8_15",
+        "wt_9_15",
+        "wt_10_15",
+        "wt_11_15"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "Shoelace_00_R_JNT",
+      "nodes": [
+        "Shoelace_00_R_JNT-Shoelace_00_R_JNT-Shoelace_00_R_JNT-Shoelace_",
+        "Shoelace_00_R_JNT-Shoelace_00_R_JNT-Shoelace_01_R_JNT",
+        "Shoelace_00_R_JNT-Shoelace_00_R_JNT-Shoelace_01_R_JNT-Shoelace_",
+        "Shoelace_00_R_JNT-Shoelace_01_R_JNT",
+        "Shoelace_00_R_JNT-Shoelace_01_R_JNT-Shoelace_01_R_JNT",
+        "Shoelace_01_R_JNT"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "Shoelace_00_L_JNT",
+      "nodes": [
+        "Shoelace_00_L_JNT-Shoelace_00_L_JNT-Shoelace_00_L_JNT-Shoelace_",
+        "Shoelace_00_L_JNT-Shoelace_00_L_JNT-Shoelace_01_L_JNT",
+        "Shoelace_00_L_JNT-Shoelace_00_L_JNT-Shoelace_01_L_JNT-Shoelace_",
+        "Shoelace_00_L_JNT-Shoelace_01_L_JNT",
+        "Shoelace_00_L_JNT-Shoelace_01_L_JNT-Shoelace_01_L_JNT",
+        "Shoelace_01_L_JNT"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qz_0_0",
+      "nodes": [
+        "qz_1_0",
+        "qz_2_0",
+        "qz_3_0",
+        "qz_4_0",
+        "qz_5_0",
+        "qz_6_0",
+        "qz_7_0"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qz_0_1",
+      "nodes": [
+        "qz_1_1",
+        "qz_2_1",
+        "qz_3_1",
+        "qz_4_1",
+        "qz_5_1",
+        "qz_6_1",
+        "qz_7_1"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qz_0_2",
+      "nodes": [
+        "qz_1_2",
+        "qz_2_2",
+        "qz_3_2",
+        "qz_4_2",
+        "qz_5_2",
+        "qz_6_2",
+        "qz_7_2"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qz_0_3",
+      "nodes": [
+        "qz_1_3",
+        "qz_2_3",
+        "qz_3_3",
+        "qz_4_3",
+        "qz_5_3",
+        "qz_6_3",
+        "qz_7_3"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qz_0_4",
+      "nodes": [
+        "qz_1_4",
+        "qz_2_4",
+        "qz_3_4",
+        "qz_4_4",
+        "qz_5_4",
+        "qz_6_4",
+        "qz_7_4"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qz_0_5",
+      "nodes": [
+        "qz_1_5",
+        "qz_2_5",
+        "qz_3_5",
+        "qz_4_5",
+        "qz_5_5",
+        "qz_6_5",
+        "qz_7_5"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qz_0_6",
+      "nodes": [
+        "qz_1_6",
+        "qz_2_6",
+        "qz_3_6",
+        "qz_4_6",
+        "qz_5_6",
+        "qz_6_6",
+        "qz_7_6"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qz_0_7",
+      "nodes": [
+        "qz_1_7",
+        "qz_2_7",
+        "qz_3_7",
+        "qz_4_7",
+        "qz_5_7",
+        "qz_6_7",
+        "qz_7_7"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qz_0_8",
+      "nodes": [
+        "qz_1_8",
+        "qz_2_8",
+        "qz_3_8",
+        "qz_4_8",
+        "qz_5_8",
+        "qz_6_8",
+        "qz_7_8"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qz_0_9",
+      "nodes": [
+        "qz_1_9",
+        "qz_2_9",
+        "qz_3_9",
+        "qz_4_9",
+        "qz_5_9",
+        "qz_6_9",
+        "qz_7_9"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qz_0_10",
+      "nodes": [
+        "qz_1_10",
+        "qz_2_10",
+        "qz_3_10",
+        "qz_4_10",
+        "qz_5_10",
+        "qz_6_10",
+        "qz_7_10"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qz_0_11",
+      "nodes": [
+        "qz_1_11",
+        "qz_2_11",
+        "qz_3_11",
+        "qz_4_11",
+        "qz_5_11",
+        "qz_6_11",
+        "qz_7_11"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qz_0_12",
+      "nodes": [
+        "qz_1_12",
+        "qz_2_12",
+        "qz_3_12",
+        "qz_4_12",
+        "qz_5_12",
+        "qz_6_12",
+        "qz_7_12"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qz_0_13",
+      "nodes": [
+        "qz_1_13",
+        "qz_2_13",
+        "qz_3_13",
+        "qz_4_13",
+        "qz_5_13",
+        "qz_6_13",
+        "qz_7_13"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "qz_0_14",
+      "nodes": [
+        "qz_1_14",
+        "qz_2_14",
+        "qz_3_14",
+        "qz_4_14",
+        "qz_5_14",
+        "qz_6_14",
+        "qz_7_14"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "hbs1",
+      "nodes": [
+        "hbs2",
+        "hbs3",
+        "hbs4",
+        "hbs5",
+        "hbs6",
+        "hbs7",
+        "hbs8",
+        "hbs9",
+        "hbs10",
+        "hbs11",
+        "hbs12",
+        "hbs13",
+        "hbs14",
+        "hbs15",
+        "hbs16",
+        "hbs17",
+        "hbs18",
+        "hbs19",
+        "hbs20",
+        "hbs21"
+      ]
+    },
+    {
+      "group": "Clothes",
+      "attachment": "xs1",
+      "nodes": [
+        "xs2",
+        "xs3",
+        "xs4",
+        "xs5",
+        "xs6",
+        "xs7"
+      ]
+    }
+  ],
+  "mesh_binary_preserved": true,
+  "output_sha256": "918cdddd838efc37a4398c8204e199cf2a0fa56407598546ae36e70b0bb9b9c6",
+  "mesh_binary_sha256": "77d3800b43dd0c48cf526d024a756544a385045bb12d75b0b1aa05b6d44e8620",
+  "alpha_method": "UV triangle coverage on RGBA texture thumbnails with maximum edge 1024; material factor alpha preserved; validated in Godot."
+}

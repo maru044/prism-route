@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "lumine",
+      "label": "荧",
+      "game": "原神",
+      "model": "res://assets/characters/roster/lumine/lumine.vrm",
+      "model_sha256": "7121c0295c13f91621c20c1dd4ee376ac685287cf43c4c74f0be26429aacf4a1",
+      "source_archive": "D:\\模型\\20261008\\【女主角_荧】_by_原神_39fd8673fd145a6c65858227788cb173.zip",
+      "source_sha256": "b92cf1066bbc8762c899c48e993f9d91321fdc02150f13c4a8c840e55b6371eb",
+      "body_pmx": "荧.pmx",
+      "excluded_pmx": [],
+      "physics": {
+        "hair_chains": 4,
+        "clothes_chains": 12,
+        "colliders": 12,
+        "joints": 121
+      },
+      "bytes": 36768024
+    },
+    {
+      "id": "stelle",
+      "label": "星",
+      "game": "崩坏：星穹铁道",
+      "model": "res://assets/characters/roster/stelle/stelle.vrm",
+      "model_sha256": "918cdddd838efc37a4398c8204e199cf2a0fa56407598546ae36e70b0bb9b9c6",
+      "source_archive": "D:\\模型\\20261008\\星穹铁道—女主_by_崩坏：星穹铁道_8adcc72d13db82812f92ce0eb02be5a5.zip",
+      "source_sha256": "9ca0e397fca6b5b0bdb1d74672d8e729e8ecd85eebb95eda1117ccc66a30fa93",
+      "body_pmx": "女主1.0.pmx",
+      "excluded_pmx": [
+        "球棒.pmx",
+        "骑枪.pmx"
+      ],
+      "physics": {
+        "hair_chains": 16,
+        "clothes_chains": 36,
+        "colliders": 12,
+        "joints": 380
+      },
+      "bytes": 35901816
+    }
+  ]
+}

@@ -1,46 +1,73 @@
 """Package the read-only CAD delta as a separate, world-aligned static feature."""
 from pathlib import Path
-import hashlib, importlib.util, json, shutil
+import hashlib, importlib.util, json, shutil, struct
 import numpy as np
-from scipy.spatial import ConvexHull
 
 ROOT=Path(__file__).resolve().parents[1]
 CACHE=ROOT/'.current_map_build'
 OUT=ROOT/'assets/world/initial_ruin_1029'
 BASE=ROOT/'assets/world/current_map_validation'
 
+def geometry_streams(raw):
+    size=struct.unpack_from('<I',raw,12)[0];doc=json.loads(raw[20:20+size]);blob=raw[28+size:]
+    def array(index):
+        accessor=doc['accessors'][index];view=doc['bufferViews'][accessor['bufferView']]
+        offset=view.get('byteOffset',0)
+        return blob[offset:offset+view['byteLength']]
+    result={}
+    for node in doc['nodes']:
+        primitive=doc['meshes'][node['mesh']]['primitives'][0]
+        result[node['extras']['source_id']]=hashlib.sha256(array(primitive['attributes']['POSITION'])+array(primitive['indices'])).hexdigest()
+    return result
+
 def main():
     OUT.mkdir(parents=True,exist_ok=True)
     source=json.loads((CACHE/'initial_ruin_1029.json').read_text(encoding='utf-8-sig'))
-    assert source['cad_unchanged'] and len(source['objects'])==328
+    assert source['cad_unchanged'] and source.get('interactions',{}).get('version')==1
+    previous=json.loads((OUT/'manifest.json').read_text(encoding='utf-8-sig'))
+    previous_streams=geometry_streams((OUT/'ruin.glb').read_bytes())
+    metadata=json.loads((BASE/'metadata.json').read_text(encoding='utf-8-sig'))
+    previous_feature=metadata['static_features']['initial_ruin_1029'].copy()
+    previous_override=metadata.get('grass_render_only_overrides',{}).get('initial_ruin_1029',{})
+    generation_feature=previous_override.get('generation_feature',previous_feature)
     work=CACHE/'initial_ruin_1029_export';work.mkdir(exist_ok=True)
     shutil.copyfile(CACHE/'initial_ruin_1029.bin',work/'source.bin')
     spec=importlib.util.spec_from_file_location('ruin_glb',ROOT/'tools/build_landscape_world_mask.py')
     module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
-    module.CACHE=work;module.OUT=OUT
+    module.CACHE=work;module.OUT=work
     module.build_glb(source)
-    (OUT/'current_region.glb').replace(OUT/'ruin.glb')
+    current_streams=geometry_streams((work/'current_region.glb').read_bytes())
+    assert all(previous_streams[k]==current_streams[k] for k in previous_streams.keys() & current_streams.keys()), 'Retained architecture changed; planting equivalence must be reevaluated'
+    shutil.copyfile(work/'current_region.glb',OUT/'ruin.glb')
     center=np.array(source['native_center'],dtype=np.float32)
     def godot(p):
         q=np.array(p,dtype=np.float32)-center
         return [float(q[0]),float(q[2]),float(-q[1])]
-    raw=(work/'source.bin').read_bytes()
-    exclusions=[]
+    # The accepted foundation/entry footprints also cover the user's deleted
+    # redundant landing bases. Preserve this unchanged planting contract.
+    exclusions=previous['exclusions']
+    old_by_id={r['id']:r for r in previous['objects']}
+    current_by_id={r['id']:r for r in source['objects']}
+    removed=[r for r in previous['objects'] if r['id'] not in current_by_id]
+    assert all(r['category'] in ('dais','furniture') for r in removed)
     for row in source['objects']:
-        if row['category'] not in ['foundation','entry']:continue
-        p=np.frombuffer(raw,'<f4',count=row['vertex_count']*3,offset=row['offset']).reshape(-1,3)
-        xy=np.unique(p[:,:2],axis=0)
-        if len(xy)<3:continue
-        polygon=xy[ConvexHull(xy).vertices]
-        points=[[float(x-center[0]),float(center[1]-y)] for x,y in polygon]
-        arr=np.array(points)
-        exclusions.append({'id':row['id'],'polygon':points,'bounds':[arr.min(0).tolist(),arr.max(0).tolist()],
-                           'height':[float(p[:,2].min())-.8,float(p[:,2].max())+.8]})
+        if row['id'] in old_by_id:
+            old=old_by_id[row['id']]
+            assert row['category']==old['category'] and np.allclose(row['bounds'],old['bounds'],atol=.0001)
+        else:
+            assert row['category']=='furniture' and row['bounds'][0][2]>=61.049
+    interactions=source['interactions']
+    for item in interactions['furniture']+[interactions['npc_idle']]:
+        item['position']=godot(item.pop('root_position_cad'))
+        direction=item.pop('forward_cad');item['forward']=[direction[0],direction[2],-direction[1]]
+        for anchor in item['anchors']:
+            anchor['position']=godot(anchor.pop('position_cad'))
+            direction=anchor.pop('forward_cad');anchor['forward']=[direction[0],direction[2],-direction[1]]
     feature={
         'source_document':source['source'],'cad_unchanged':True,'native_center':source['native_center'],
         'objects':source['objects'],'triangles':sum(r['index_count']//3 for r in source['objects']),
         'mesh_sha256':hashlib.sha256((OUT/'ruin.glb').read_bytes()).hexdigest(),
-        'summon_anchor':godot(source['summon_anchor']),
+        'interactions':interactions,
         'forward':[float(source['placement']['long_axis'][0]),0.,float(-source['placement']['long_axis'][1])],
         'spawn':godot([source['placement']['front_center'][0]+source['placement']['long_axis'][0]*18,
                        source['placement']['front_center'][1]+source['placement']['long_axis'][1]*18,61.05]),
@@ -49,19 +76,22 @@ def main():
         'placement':source['placement'],
     }
     (OUT/'manifest.json').write_text(json.dumps(feature,ensure_ascii=False,indent=2),encoding='utf-8')
-    olddir=CACHE/'initial_ruin_1029_before';olddir.mkdir(exist_ok=True)
-    for name in ['metadata.json','tree_layout.json','tree_layout_metadata.json','grass_bake/manifest.json']:
-        dst=olddir/name;dst.parent.mkdir(parents=True,exist_ok=True)
-        if not dst.exists():shutil.copyfile(BASE/name,dst)
-    metadata=json.loads((BASE/'metadata.json').read_text(encoding='utf-8-sig'))
     metadata.setdefault('static_features',{})['initial_ruin_1029']={
         'manifest':'res://assets/world/initial_ruin_1029/manifest.json',
         'mesh_sha256':feature['mesh_sha256'],
         'manifest_sha256':hashlib.sha256((OUT/'manifest.json').read_bytes()).hexdigest(),
-        'objects':328,'triangles':feature['triangles']}
+        'objects':len(source['objects']),'triangles':feature['triangles']}
+    # Furniture and the removed devices sit on the retained non-plantable
+    # hall floor. Terrain, foundation/entry masks and their collision stay put.
+    # This exact-revision rule expires automatically on any subsequent edit.
+    metadata.setdefault('grass_render_only_overrides',{})['initial_ruin_1029']={
+        'render_mesh_sha256':feature['mesh_sha256'],
+        'render_manifest_sha256':hashlib.sha256((OUT/'manifest.json').read_bytes()).hexdigest(),
+        'generation_feature':generation_feature,
+        'reason':'NPC/furniture revision on unchanged sealed temple floor; original terrain and planting exclusion volumes retained.'}
     (BASE/'metadata.json').write_text(json.dumps(metadata,ensure_ascii=False,indent=2),encoding='utf-8')
     assert metadata['mesh_sha256']==hashlib.sha256((BASE/'current_region.glb').read_bytes()).hexdigest()
-    print(json.dumps({'objects':328,'triangles':feature['triangles'],'exclusion_polygons':len(exclusions),
-                      'summon_anchor':feature['summon_anchor'],'base_mesh_unchanged':True}))
+    print(json.dumps({'objects':len(source['objects']),'triangles':feature['triangles'],'exclusion_polygons':len(exclusions),
+                      'furniture':len(interactions['furniture']),'base_mesh_unchanged':True}))
 
 if __name__=='__main__':main()

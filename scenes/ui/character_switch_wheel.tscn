@@ -1,0 +1,111 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/character_switch_wheel.gd" id="1_jvp8q"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hk0c5"]
+bg_color = Color(0.08, 0.11, 0.16, 0.92)
+border_width_bottom = 2
+border_color = Color(0.95, 0.82, 0.35, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="CharacterSwitchWheel" type="CanvasLayer" unique_id=1667854561]
+script = ExtResource("1_jvp8q")
+
+[node name="WheelRoot" type="Control" parent="." unique_id=1077955160]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -260.0
+offset_right = 260.0
+offset_bottom = 260.0
+pivot_offset = Vector2(260, 260)
+
+[node name="WheelCanvas" type="Control" parent="WheelRoot" unique_id=594352790]
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CenterInfo" type="VBoxContainer" parent="WheelRoot" unique_id=1755265632]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -70.0
+offset_top = -65.0
+offset_right = 70.0
+offset_bottom = 65.0
+mouse_filter = 2
+alignment = 1
+
+[node name="KeyLabel" type="Label" parent="WheelRoot/CenterInfo" unique_id=1449920893]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "快捷键 [1]"
+horizontal_alignment = 1
+
+[node name="NameLabel" type="Label" parent="WheelRoot/CenterInfo" unique_id=1904352110]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "星"
+horizontal_alignment = 1
+
+[node name="TitleLabel" type="Label" parent="WheelRoot/CenterInfo" unique_id=1521112519]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "开拓者 · 星"
+horizontal_alignment = 1
+
+[node name="DescLabel" type="Label" parent="WheelRoot/CenterInfo" unique_id=150524401]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "物理 · 毁灭"
+horizontal_alignment = 1
+
+[node name="TeamHud" type="Control" parent="." unique_id=1036223652]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="TeamList" type="VBoxContainer" parent="TeamHud" unique_id=120984533]
+layout_mode = 0
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_top = 220.0
+offset_right = -20.0
+offset_bottom = 440.0
+theme_override_constants/separation = 10
+
+[node name="SwitchBanner" type="PanelContainer" parent="." unique_id=1320177303]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -240.0
+offset_top = 35.0
+offset_right = 240.0
+offset_bottom = 85.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hk0c5")
+
+[node name="BannerMargin" type="MarginContainer" parent="SwitchBanner" unique_id=137197910]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 10
+
+[node name="BannerText" type="Label" parent="SwitchBanner/BannerMargin" unique_id=1967859060]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "✦ 主控角色已就绪：开拓者 · 星 ✦"
+horizontal_alignment = 1
