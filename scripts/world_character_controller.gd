@@ -226,14 +226,24 @@ func switch_character(target_id: String) -> bool:
 	return true
 
 func _retarget_and_center_clip(animation: Animation, target_skeleton: Skeleton3D, skel_path: NodePath) -> void:
+	var center_idx: int = target_skeleton.find_bone("センター")
 	var hips_idx: int = target_skeleton.find_bone("Hips")
-	var target_rest_hips: Vector3 = target_skeleton.get_bone_rest(hips_idx).origin if hips_idx >= 0 else SOURCE_REST_HIPS
+	
+	# If target skeleton has センター (VRM standard such as Lumine), the source animation's
+	# root motion (authored on Ganyu's 0.66m Center-named-as-Hips) maps to センター.
+	# Otherwise (like Ganyu herself), it maps directly to Hips.
+	var use_center_for_root: bool = (center_idx >= 0)
+	var root_bone_name: String = "センター" if use_center_for_root else "Hips"
+	var root_bone_idx: int = center_idx if use_center_for_root else hips_idx
+	var target_rest_origin: Vector3 = target_skeleton.get_bone_rest(root_bone_idx).origin if root_bone_idx >= 0 else SOURCE_REST_HIPS
 	
 	for track in animation.get_track_count():
 		var original_path: String = str(animation.track_get_path(track))
 		var colon_idx: int = original_path.find(":")
 		if colon_idx != -1:
 			var bone_part: String = original_path.substr(colon_idx)
+			if bone_part == ":Hips" and use_center_for_root:
+				bone_part = ":センター"
 			animation.track_set_path(track, NodePath(str(skel_path) + bone_part))
 		
 		if animation.track_get_type(track) == Animation.TYPE_POSITION_3D and original_path.ends_with(":Hips"):
@@ -244,7 +254,7 @@ func _retarget_and_center_clip(animation: Animation, target_skeleton: Skeleton3D
 			for key in count:
 				var old_val: Vector3 = animation.track_get_key_value(track, key)
 				var delta: Vector3 = old_val - SOURCE_REST_HIPS
-				var new_val: Vector3 = target_rest_hips + delta
+				var new_val: Vector3 = target_rest_origin + delta
 				animation.track_set_key_value(track, key, new_val)
 			
 			var avg_xz := Vector2.ZERO
@@ -252,8 +262,8 @@ func _retarget_and_center_clip(animation: Animation, target_skeleton: Skeleton3D
 				var val: Vector3 = animation.track_get_key_value(track, key)
 				avg_xz += Vector2(val.x, val.z) / float(count)
 			
-			var offset_x: float = avg_xz.x - target_rest_hips.x
-			var offset_z: float = avg_xz.y - target_rest_hips.z
+			var offset_x: float = avg_xz.x - target_rest_origin.x
+			var offset_z: float = avg_xz.y - target_rest_origin.z
 			for key in count:
 				var val: Vector3 = animation.track_get_key_value(track, key)
 				val.x -= offset_x
