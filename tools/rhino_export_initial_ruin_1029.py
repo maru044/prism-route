@@ -72,7 +72,14 @@ def read_interactions(state):
     """Export actual CAD points as semantic data, never as visible GLB meshes."""
     layout=json.loads(json.dumps(state.get('interactions',{})))
     for item in layout.get('furniture',[])+[layout.get('npc_idle',{})]:
-        for anchor in item.get('anchors',[]):
+        anchors=item.get('anchors',[])
+        if anchors and 'root_position_cad' in item:
+            first_obj=sc.doc.Objects.FindId(System.Guid(anchors[0]['source_id']))
+            if first_obj is not None and isinstance(first_obj.Geometry,G.Point):
+                dp=first_obj.Geometry.Location;old_pos=anchors[0].get('position_cad',[dp.X,dp.Y,dp.Z])
+                dx=dp.X-old_pos[0];dy=dp.Y-old_pos[1];dz=dp.Z-old_pos[2]
+                item['root_position_cad']=[item['root_position_cad'][0]+dx,item['root_position_cad'][1]+dy,item['root_position_cad'][2]+dz]
+        for anchor in anchors:
             obj=sc.doc.Objects.FindId(System.Guid(anchor['source_id']))
             assert obj is not None and isinstance(obj.Geometry,G.Point)
             p=obj.Geometry.Location;anchor['position_cad']=[p.X,p.Y,p.Z]

@@ -36,8 +36,10 @@ def main():
     module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
     module.CACHE=work;module.OUT=work
     module.build_glb(source)
+    old_by_id={r['id']:r for r in previous['objects']}
     current_streams=geometry_streams((work/'current_region.glb').read_bytes())
-    assert all(previous_streams[k]==current_streams[k] for k in previous_streams.keys() & current_streams.keys()), 'Retained architecture changed; planting equivalence must be reevaluated'
+    retained_keys={k for k in previous_streams.keys() & current_streams.keys() if old_by_id.get(k,{}).get('category')!='furniture'}
+    assert all(previous_streams[k]==current_streams[k] for k in retained_keys), 'Retained architecture changed; planting equivalence must be reevaluated'
     shutil.copyfile(work/'current_region.glb',OUT/'ruin.glb')
     center=np.array(source['native_center'],dtype=np.float32)
     def godot(p):
@@ -46,12 +48,11 @@ def main():
     # The accepted foundation/entry footprints also cover the user's deleted
     # redundant landing bases. Preserve this unchanged planting contract.
     exclusions=previous['exclusions']
-    old_by_id={r['id']:r for r in previous['objects']}
     current_by_id={r['id']:r for r in source['objects']}
     removed=[r for r in previous['objects'] if r['id'] not in current_by_id]
     assert all(r['category'] in ('dais','furniture') for r in removed)
     for row in source['objects']:
-        if row['id'] in old_by_id:
+        if row['id'] in old_by_id and row['category']!='furniture':
             old=old_by_id[row['id']]
             assert row['category']==old['category'] and np.allclose(row['bounds'],old['bounds'],atol=.0001)
         else:

@@ -107,5 +107,5 @@ theme_override_constants/margin_bottom = 10
 [node name="BannerText" type="Label" parent="SwitchBanner/BannerMargin" unique_id=1967859060]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
-text = "✦ 主控角色已就绪：开拓者 · 星 ✦"
+text = "✦ 主控角色已就绪：旅行者 · 荧 ✦"
 horizontal_alignment = 1

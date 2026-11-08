@@ -5465,8 +5465,8 @@
   "static_features": {
     "initial_ruin_1029": {
       "manifest": "res://assets/world/initial_ruin_1029/manifest.json",
-      "mesh_sha256": "ac55f6e4acb14a057e65c9f83d5da367fb8cd77a126f6832c7ea92120c727858",
-      "manifest_sha256": "5748ba5081440650a445d9391b1c1ea833c96f4caa55f42c2bb64643fe291450",
+      "mesh_sha256": "8bcba242e946cd6314a078f0511c89fb423d5cae008224f6c38701be4e4ae9c2",
+      "manifest_sha256": "0f9a4064da9ee6a8736e2ee9bc4e9a88bb5420caba0dc3ae85080f712924f579",
       "objects": 315,
       "triangles": 5648
     },
@@ -5481,8 +5481,8 @@
   },
   "grass_render_only_overrides": {
     "initial_ruin_1029": {
-      "render_mesh_sha256": "ac55f6e4acb14a057e65c9f83d5da367fb8cd77a126f6832c7ea92120c727858",
-      "render_manifest_sha256": "5748ba5081440650a445d9391b1c1ea833c96f4caa55f42c2bb64643fe291450",
+      "render_mesh_sha256": "8bcba242e946cd6314a078f0511c89fb423d5cae008224f6c38701be4e4ae9c2",
+      "render_manifest_sha256": "0f9a4064da9ee6a8736e2ee9bc4e9a88bb5420caba0dc3ae85080f712924f579",
       "generation_feature": {
         "manifest": "res://assets/world/initial_ruin_1029/manifest.json",
         "mesh_sha256": "2b53bdea720c27e30a6ce2a9a24fc383b4f25c80f8b977c171603fb3023bdc52",

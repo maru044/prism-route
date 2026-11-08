@@ -377,7 +377,7 @@ func get_motion_label() -> String:
 	return MOTION_LABELS.get(animation_state, "待机")
 
 func _unhandled_input(event: InputEvent) -> void:
-	if switch_wheel != null and switch_wheel.wheel_visible:
+	if switch_wheel != null and switch_wheel.get("wheel_visible") == true:
 		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		match event.physical_keycode if event.physical_keycode != 0 else event.keycode:

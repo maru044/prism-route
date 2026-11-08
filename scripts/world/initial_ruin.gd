@@ -114,14 +114,14 @@ func _build_npc() -> void:
 	npc_anchor.set_meta("instance_id",row.id)
 	add_child(npc_anchor)
 	avatar = NPC.instantiate()
-	avatar.name = "KeqingIdle"
-	avatar.model_resource = "res://assets/characters/mmd_validation/keqing_physics.vrm"
+	avatar.name = "SparkleIdle"
+	avatar.model_resource = "res://assets/characters/import_tests_local/huahuo/huahuo_fixed.vrm"
 	avatar.motion_resource = "res://assets/characters/roster/motions/shared_world_A01.tres"
 	avatar.environment_mask = 1 | ACTOR_SOLID_LAYER
 	avatar.auto_play = true
 	# This shared VRM actor's visual forward is +Z, matching the socket.
 	avatar.initialized.connect(func():
-		MTOON.apply(avatar.character)
+		MTOON.apply(avatar.character, "huahuo")
 		npc_ready = true
 	)
 	npc_anchor.add_child(avatar)
