@@ -39,6 +39,22 @@ func materials(actor: Node3D) -> void:
 	report.materials = rows
 	check(rows.size() == 19, "Wrong formal surface count")
 
+func verify_vrm_character(actor: Node3D, char_id: String, expected_surfaces: int) -> void:
+	check(actor.use_mtoon, "Character " + char_id + " disabled MToon")
+	check(actor.wetness != null and actor.wetness.materials.size() > 0, "Character " + char_id + " wetness controller missing or empty")
+	check(actor.mtoon_report.get("converted", 0) == expected_surfaces, "Character " + char_id + " converted count mismatch: got " + str(actor.mtoon_report.get("converted", 0)) + ", expected " + str(expected_surfaces))
+	check(actor.mtoon_report.get("skipped", []).is_empty(), "Character " + char_id + " materials skipped: " + str(actor.mtoon_report.get("skipped", [])))
+	for mesh: MeshInstance3D in actor.character.find_children("*", "MeshInstance3D", true, false):
+		check(not mesh.has_meta("character_npr_outline"), "Outline shell loaded on " + char_id)
+		for index in mesh.mesh.get_surface_count():
+			var active: Material = mesh.get_active_material(index)
+			check(active is ShaderMaterial, "Active material is not ShaderMaterial on " + char_id + " [" + str(index) + "]")
+			if active is ShaderMaterial and active.shader != null:
+				var sh: String = active.shader.resource_path.get_file()
+				check(sh.begins_with("wet_mtoon") or sh.begins_with("mtoon"), "Surface using non-MToon shader on " + char_id + ": " + sh)
+				check(not sh.begins_with("toon_"), "Found C0 shader on " + char_id + ": " + sh)
+				check(active.next_pass == null, "Found outline next_pass on " + char_id)
+
 func dependencies() -> void:
 	var config := ConfigFile.new()
 	check(config.load("res://export_presets.cfg") == OK, "Cannot load export configuration")
@@ -133,6 +149,17 @@ func run() -> void:
 		root.add_child(actor)
 		actor.set_control_enabled(false)
 		materials(actor)
+		
+		# Validate Stelle on formal MToon
+		actor.switch_character("stelle")
+		await process_frame
+		verify_vrm_character(actor, "stelle", 21)
+		
+		# Validate Lumine on formal MToon
+		actor.switch_character("lumine")
+		await process_frame
+		verify_vrm_character(actor, "lumine", 20)
+		
 		actor.queue_free()
 		await process_frame
 	report.passed = failures.is_empty()

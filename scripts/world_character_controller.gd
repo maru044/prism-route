@@ -3,7 +3,6 @@ const SURFACE_MOTION := preload("res://scripts/surface_motion.gd")
 const MTOON_MATERIALS := preload("res://scripts/characters/mtoon_materials.gd")
 const WETNESS := preload("res://scripts/characters/character_wetness.gd")
 const WHEEL_SCENE := preload("res://scenes/ui/character_switch_wheel.tscn")
-const CHARACTER_NPR := preload("res://scripts/characters/character_npr.gd")
 
 ## Camera-relative world controller with Genshin Impact style dynamic character switching.
 ## Supports Stelle, Ganyu, Lumine, and Firefly with auto-retargeting and MToon NPR tuning.
@@ -90,9 +89,6 @@ var greeting := false
 var mtoon_report: Dictionary = {}
 var wetness: Node
 var switch_wheel: CanvasLayer
-var npr_face_materials: Array = []
-var npr_outline_shell: MeshInstance3D = null
-var npr_source_mesh: MeshInstance3D = null
 var head_index := -1
 var head_rest_inv := Basis.IDENTITY
 
@@ -144,12 +140,6 @@ func _apply_character_setup(char_id: String, is_runtime_switch: bool) -> void:
 	if head_index >= 0:
 		head_rest_inv = skeleton.get_bone_global_rest(head_index).basis.inverse()
 	
-	if is_instance_valid(npr_outline_shell):
-		npr_outline_shell.queue_free()
-	npr_outline_shell = null
-	npr_face_materials.clear()
-	npr_source_mesh = null
-	
 	# Update collision capsule
 	var h: float = float(profile.get("capsule_height", 1.62))
 	var r: float = float(profile.get("capsule_radius", 0.26))
@@ -165,19 +155,9 @@ func _apply_character_setup(char_id: String, is_runtime_switch: bool) -> void:
 	walking_speed = float(profile.get("walking_speed", 1.65))
 	running_speed = float(profile.get("running_speed", 4.3))
 	
-	# NPR / MToon shader conversion & tuning
+	# MToon shader conversion & tuning for all roster characters
 	if use_mtoon:
-		if char_id == "ganyu":
-			mtoon_report = MTOON_MATERIALS.apply(character, char_id)
-		else:
-			var npr_res: Dictionary = CHARACTER_NPR.apply_npr(character, char_id)
-			mtoon_report = {"converted": npr_res.converted, "skipped": []}
-			npr_face_materials = npr_res.face_materials
-			npr_outline_shell = npr_res.outline_shell
-			for m in character.find_children("*", "MeshInstance3D", true, false):
-				if not m.has_meta("character_npr_outline") and m.mesh != null:
-					npr_source_mesh = m
-					break
+		mtoon_report = MTOON_MATERIALS.apply(character, char_id)
 		if not mtoon_report.skipped.is_empty():
 			push_warning("MToon kept unmapped source materials: " + str(mtoon_report.skipped))
 		if wetness == null:
@@ -281,18 +261,7 @@ func _retarget_and_center_clip(animation: Animation, target_skeleton: Skeleton3D
 				animation.track_set_key_value(track, key, val)
 
 func _process(_delta: float) -> void:
-	if not npr_face_materials.is_empty() and skeleton != null and head_index >= 0:
-		var head_basis: Basis = skeleton.global_basis * skeleton.get_bone_global_pose(head_index).basis * head_rest_inv
-		var forward: Vector3 = (head_basis * Vector3.BACK).normalized()
-		for f_mat: ShaderMaterial in npr_face_materials:
-			f_mat.set_shader_parameter("head_forward", forward)
-			
-	if is_instance_valid(npr_outline_shell) and is_instance_valid(npr_source_mesh):
-		npr_outline_shell.transform = npr_source_mesh.transform
-		for i in npr_source_mesh.get_blend_shape_count():
-			var val: float = npr_source_mesh.get_blend_shape_value(i)
-			if not is_equal_approx(val, npr_outline_shell.get_blend_shape_value(i)):
-				npr_outline_shell.set_blend_shape_value(i, val)
+	pass
 
 func _physics_process(delta: float) -> void:
 	var movement := test_move if automation_enabled else Vector2(
