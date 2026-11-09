@@ -5,7 +5,7 @@
       "duration": 2.5416666,
       "formal_resource": "res://assets/characters/motion_review/A01.tres",
       "id": "A01",
-      "max_position_error_m": 0.00000026023758437077,
+      "max_position_error_m": 0.00000031855043403084,
       "max_rotation_error_rad": 0.0009765625,
       "shared_resource": "res://assets/characters/roster/motions/shared_world_A01.tres"
     },
@@ -29,7 +29,7 @@
       "duration": 0.79166665,
       "formal_resource": "res://assets/characters/motion_review/A06.tres",
       "id": "A06",
-      "max_position_error_m": 0.000127372652059421,
+      "max_position_error_m": 0.000127363877254538,
       "max_rotation_error_rad": 0.0009765625,
       "shared_resource": "res://assets/characters/roster/motions/shared_world_A06.tres"
     }

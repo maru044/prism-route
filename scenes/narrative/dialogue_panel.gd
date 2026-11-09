@@ -4,6 +4,7 @@ extends Control
 
 signal option_selected(index: int)
 signal next_pressed()
+const INPUT_GROUP := "dialogue_input_panels"
 
 var speaker_label: Label
 var text_label: RichTextLabel
@@ -11,6 +12,7 @@ var choices_container: VBoxContainer
 var prompt_label: Label
 
 func _ready() -> void:
+	add_to_group(INPUT_GROUP)
 	anchor_right = 1.0
 	anchor_bottom = 1.0
 	mouse_filter = Control.MOUSE_FILTER_PASS
@@ -86,6 +88,7 @@ func display_text(speaker: String, content: String, emotion: String = "") -> voi
 
 func display_choices(choices: Array) -> void:
 	for child in choices_container.get_children():
+		choices_container.remove_child(child)
 		child.queue_free()
 		
 	choices_container.visible = true
@@ -119,15 +122,27 @@ func display_choices(choices: Array) -> void:
 		btn.pressed.connect(func(): option_selected.emit(idx))
 		choices_container.add_child(btn)
 
+static func has_active_dialogue(tree: SceneTree) -> bool:
+	if tree == null: return false
+	for panel in tree.get_nodes_in_group(INPUT_GROUP):
+		if panel is Control and panel.is_visible_in_tree(): return true
+	return false
+
+func _input(event: InputEvent) -> void:
+	if not is_visible_in_tree() or not event is InputEventKey: return
+	var key: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
+	if key >= KEY_1 and key <= KEY_9:
+		# Consume before emitting: a selection may synchronously close this panel.
+		get_viewport().set_input_as_handled()
+		if event.pressed and not event.echo and choices_container.visible:
+			var index := key - KEY_1
+			if index < choices_container.get_child_count(): option_selected.emit(index)
+	elif not choices_container.visible and key in [KEY_SPACE, KEY_ENTER]:
+		get_viewport().set_input_as_handled()
+		if event.pressed and not event.echo: next_pressed.emit()
+
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		if not choices_container.visible:
+			accept_event()
 			next_pressed.emit()
-	elif event is InputEventKey and event.pressed:
-		if not choices_container.visible and (event.keycode == KEY_SPACE or event.keycode == KEY_ENTER):
-			next_pressed.emit()
-		elif choices_container.visible:
-			if event.keycode >= KEY_1 and event.keycode <= KEY_9:
-				var chosen_idx: int = event.keycode - KEY_1
-				if chosen_idx < choices_container.get_child_count():
-					option_selected.emit(chosen_idx)

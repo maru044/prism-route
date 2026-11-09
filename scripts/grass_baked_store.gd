@@ -72,10 +72,19 @@ func request(cell: Vector3i) -> void:
 	var row: Dictionary=manifest.cells[id]
 	jobs[id]=WorkerThreadPool.add_task(_read.bind(id,row),false,"Grass buffer "+id)
 
+static func read_payload(row: Dictionary,fallback_path: String="") -> PackedByteArray:
+	var path: String=row.get("resource_path",fallback_path)
+	if not FileAccess.file_exists(path):return PackedByteArray()
+	if not row.has("resource_offset"):return FileAccess.get_file_as_bytes(path)
+	var file:=FileAccess.open(path,FileAccess.READ)
+	if file==null:return PackedByteArray()
+	file.seek(int(row.resource_offset))
+	return file.get_buffer(int(row.compressed_bytes))
+
 func _read(id: String,row: Dictionary) -> void:
 	var start:=Time.get_ticks_usec()
 	var path: String=row.get("resource_path",directory+"/"+id+".grass")
-	var bytes:=FileAccess.get_file_as_bytes(path) if FileAccess.file_exists(path) else PackedByteArray()
+	var bytes:=read_payload(row,path)
 	var read_time:=Time.get_ticks_usec()-start;start=Time.get_ticks_usec()
 	var hash:=HashingContext.new();hash.start(HashingContext.HASH_SHA256)
 	if not bytes.is_empty():hash.update(bytes)

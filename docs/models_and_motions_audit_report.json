@@ -1,0 +1,179 @@
+{
+  "captures": [
+    "audit_ganyu_rest_pose_front.png",
+    "audit_ganyu_rest_pose_closeup.png",
+    "audit_ganyu_motion_idle.png",
+    "audit_ganyu_motion_walk.png",
+    "audit_ganyu_motion_run.png",
+    "audit_ganyu_pose_m_legs.png",
+    "audit_huahuo_pose_m_legs.png",
+    "audit_keqing_pose_m_legs.png",
+    "audit_ganyu_pose_kneeling.png",
+    "audit_huahuo_pose_kneeling.png",
+    "audit_keqing_pose_kneeling.png",
+    "audit_ganyu_pose_recline_m_legs.png",
+    "audit_huahuo_pose_recline_m_legs.png",
+    "audit_keqing_pose_recline_m_legs.png",
+    "audit_ganyu_corpse_ragdoll.png",
+    "audit_sparkle_corpse_ragdoll.png"
+  ],
+  "corpse_ragdoll": {
+    "bones_count": 16,
+    "ganyu_simulating": true,
+    "huahuo_switch": true
+  },
+  "failures": [],
+  "ganyu_locomotion": {
+    "idle": {
+      "finite": true,
+      "max_bone_dist": 1.64769816398621
+    },
+    "jump_air": {
+      "finite": true,
+      "max_bone_dist": 1.61607074737549
+    },
+    "jump_land": {
+      "finite": true,
+      "max_bone_dist": 1.62641978263855
+    },
+    "jump_start": {
+      "finite": true,
+      "max_bone_dist": 1.6416984796524
+    },
+    "run": {
+      "finite": true,
+      "max_bone_dist": 1.66329884529114
+    },
+    "walk": {
+      "finite": true,
+      "max_bone_dist": 1.66850650310516
+    }
+  },
+  "ganyu_model_clean": true,
+  "models_audit": {
+    "firefly": {
+      "body_root_name": "Hips",
+      "bone_count": 751,
+      "label": "流萤",
+      "material_surfaces": 34,
+      "mesh_count": 2,
+      "path": "res://assets/characters/roster/firefly/firefly.vrm",
+      "pelvis_name": "下半身",
+      "rig_valid": true
+    },
+    "ganyu": {
+      "body_root_name": "腰",
+      "bone_count": 276,
+      "label": "甘雨",
+      "material_surfaces": 19,
+      "mesh_count": 2,
+      "path": "res://scenes/characters/ganyu.tscn",
+      "pelvis_name": "下半身",
+      "rig_valid": true
+    },
+    "huahuo": {
+      "body_root_name": "Hips",
+      "bone_count": 719,
+      "label": "花火",
+      "material_surfaces": 40,
+      "mesh_count": 2,
+      "path": "res://assets/characters/import_tests_local/huahuo/huahuo_fixed.vrm",
+      "pelvis_name": "下半身",
+      "rig_valid": true
+    },
+    "hutao": {
+      "body_root_name": "Hips",
+      "bone_count": 251,
+      "label": "胡桃",
+      "material_surfaces": 21,
+      "mesh_count": 1,
+      "path": "res://assets/characters/import_tests_local/hutao/hutao_fixed.vrm",
+      "pelvis_name": "下半身",
+      "rig_valid": true
+    },
+    "keqing": {
+      "body_root_name": "Hips",
+      "bone_count": 277,
+      "label": "刻晴",
+      "material_surfaces": 20,
+      "mesh_count": 2,
+      "path": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+      "pelvis_name": "下半身",
+      "rig_valid": true
+    },
+    "lumine": {
+      "body_root_name": "Hips",
+      "bone_count": 273,
+      "label": "荧",
+      "material_surfaces": 20,
+      "mesh_count": 2,
+      "path": "res://assets/characters/roster/lumine/lumine.vrm",
+      "pelvis_name": "下半身",
+      "rig_valid": true
+    },
+    "stelle": {
+      "body_root_name": "Hips",
+      "bone_count": 546,
+      "label": "星",
+      "material_surfaces": 21,
+      "mesh_count": 2,
+      "path": "res://assets/characters/roster/stelle/stelle.vrm",
+      "pelvis_name": "下半身",
+      "rig_valid": true
+    }
+  },
+  "passed": true,
+  "poses_retargeting": {
+    "pose_kneeling": {
+      "ganyu": {
+        "max_bone_dist": 1.47095501422882,
+        "root_disp": "(0.000029, 0.044831, -0.006906)",
+        "valid": true
+      },
+      "huahuo": {
+        "max_bone_dist": 1.21761929988861,
+        "root_disp": "(0.000025, 0.039495, -0.006084)",
+        "valid": true
+      },
+      "keqing": {
+        "max_bone_dist": 1.47281610965729,
+        "root_disp": "(0.000029, 0.045147, -0.006955)",
+        "valid": true
+      }
+    },
+    "pose_m_legs": {
+      "ganyu": {
+        "max_bone_dist": 1.58899462223053,
+        "root_disp": "(0.000029, 0.044831, -0.457723)",
+        "valid": true
+      },
+      "huahuo": {
+        "max_bone_dist": 1.37517786026001,
+        "root_disp": "(0.000025, 0.039495, -0.403243)",
+        "valid": true
+      },
+      "keqing": {
+        "max_bone_dist": 1.61634159088135,
+        "root_disp": "(0.000029, 0.045147, -0.460955)",
+        "valid": true
+      }
+    },
+    "pose_recline_m_legs": {
+      "ganyu": {
+        "max_bone_dist": 1.6028254032135,
+        "root_disp": "(0.000027, 0.044831, -0.021801)",
+        "valid": true
+      },
+      "huahuo": {
+        "max_bone_dist": 1.42826330661774,
+        "root_disp": "(0.000027, 0.039495, -0.019207)",
+        "valid": true
+      },
+      "keqing": {
+        "max_bone_dist": 1.60474479198456,
+        "root_disp": "(0.000029, 0.045147, -0.021955)",
+        "valid": true
+      }
+    }
+  }
+}

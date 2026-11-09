@@ -1,4 +1,5 @@
 extends Node3D
+const HUMANOID_RIG := preload("res://scripts/characters/humanoid_rig.gd")
 ## Immutable shared clip; per-instance rest calibration and physics state only.
 signal initialized
 @export_file("*.vrm") var model_resource := ""
@@ -55,28 +56,18 @@ func _ready() -> void:
 		rest_local.append(skeleton.get_bone_rest(i))
 		rest_world.append(skeleton.get_bone_global_rest(i))
 	for i in skeleton.get_parentless_bones(): _append_order(i)
-	var profile := SkeletonProfileHumanoid.new()
-	for i in profile.bone_size:
-		var name: String = profile.get_bone_name(i)
-		var index := skeleton.find_bone(name)
-		if index >= 0: semantic_bones[name] = index
+	var rig := HUMANOID_RIG.new()
+	if not rig.setup(skeleton):
+		push_error("Invalid humanoid rig")
+		return
+	semantic_bones = rig.semantic_bones.duplicate()
 	for name in ["Hips", "Spine", "Head", "LeftUpperArm", "RightUpperArm", "LeftLowerArm", "RightLowerArm", "LeftHand", "RightHand", "LeftUpperLeg", "RightUpperLeg", "LeftLowerLeg", "RightLowerLeg", "LeftFoot", "RightFoot"]:
 		assert(semantic_bones.has(name), "Missing required humanoid bone: " + name)
-	pelvis = _lca(semantic_bones.LeftUpperLeg, semantic_bones.RightUpperLeg)
-	body_root = _lca(pelvis, semantic_bones.Spine)
+	pelvis = rig.pelvis
+	body_root = rig.body_root
 	assert(pelvis >= 0 and body_root >= 0)
 	semantic_bones.Hips = pelvis
 	semantic_bones.BodyRoot = body_root
-	for side in ["Left","Right"]:
-		for pair in [["LowerArm","UpperArm","UpperArmTwist"],["Hand","LowerArm","ForearmTwist"]]:
-			var index: int = parents[semantic_bones[side+pair[0]]]
-			var stop: int = semantic_bones[side+pair[1]]
-			while index>=0 and index!=stop:
-				var name: String = skeleton.get_bone_name(index)
-				if name.contains("捩") or name.to_lower().contains("twist"):
-					semantic_bones[side+pair[2]]=index
-					break
-				index=parents[index]
 	target_height = absf(rest_world[pelvis].origin.y)
 	assert(target_height > .1)
 	translation_scale = target_height / float(motion.get_meta("reference_height")) if translation_policy == "height_scaled" else 1.0
@@ -115,14 +106,6 @@ func _ready() -> void:
 func _append_order(index: int) -> void:
 	bone_order.append(index)
 	for child in skeleton.get_bone_children(index): _append_order(child)
-
-func _lca(a: int, b: int) -> int:
-	var ancestors := {}
-	while a >= 0:
-		ancestors[a] = true
-		a = parents[a]
-	while b >= 0 and not ancestors.has(b): b = parents[b]
-	return b
 
 func sample_time(value: float) -> void:
 	time = clampf(value, 0.0, duration)

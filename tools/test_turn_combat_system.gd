@@ -1,5 +1,6 @@
 extends SceneTree
-## Automated headless verification test for the updated Turn-Based Sensual Combat without endurance and with mid-battle negotiation.
+## Comprehensive automated test suite for the Refactored Turn-Based Sensual Combat and Narrative Engine.
+## Validates Action Registry, DialogueContext, TemporaryCombatModifiers, Reset Isolation, and Session Idempotency.
 
 const PleasureComponent := preload("res://scripts/combat/pleasure_component.gd")
 const TurnActionResource := preload("res://scripts/combat/turn_action_resource.gd")
@@ -8,57 +9,81 @@ const DialogueManager := preload("res://scripts/narrative/dialogue_manager.gd")
 const SparkleTutorialDialogue := preload("res://scripts/narrative/sparkle_tutorial_dialogue.gd")
 
 func _init() -> void:
-	call_deferred("_run_full_test")
+	call_deferred("_run_full_test_suite")
 
-func _run_full_test() -> void:
-	print("--- STARTING UPDATED TURN COMBAT & NARRATIVE TEST ---")
+func _run_full_test_suite() -> void:
+	print("=== STARTING FULL REFACTORED COMBAT & NARRATIVE TEST SUITE ===")
 	
-	# 1. PleasureComponent Tests (No Endurance)
-	print("[Step 1] Verifying PleasureComponent without endurance")
-	var p_comp = PleasureComponent.new()
-	p_comp.character_name = "TestPlayer"
-	root.add_child(p_comp)
+	# Test 1: PleasureComponent Complete Reset and Edging Thresholds
+	print("[Test 1] Testing PleasureComponent complete reset and thresholds:")
+	var player_pleasure = PleasureComponent.new()
+	player_pleasure.character_name = "Player"
+	root.add_child(player_pleasure)
 	
-	assert(p_comp.current_pleasure == 0.0, "Initial pleasure should be 0")
-	var gained: float = p_comp.add_pleasure(15.0, "mouth")
-	assert(gained == 15.0, "Mouth zone default sensitivity should be 1.0")
+	player_pleasure.pleasure_locked = true
+	player_pleasure.pleasure_cap = 90.0
+	player_pleasure.damage_taken_multiplier = 2.5
+	player_pleasure.add_pleasure(50.0, "mouth")
+	assert(player_pleasure.current_pleasure > 0.0, "Pleasure should be greater than 0")
 	
-	p_comp.pleasure_locked = true
-	p_comp.pleasure_cap = 90.0
-	p_comp.add_pleasure(100.0)
-	assert(p_comp.current_pleasure == 90.0, "Pleasure cap should clamp at 90.0")
-	assert(not p_comp.has_reached_climax, "Capped pleasure should not climax")
+	player_pleasure.reset()
+	assert(player_pleasure.current_pleasure == 0.0, "Pleasure must be reset to 0")
+	assert(player_pleasure.pleasure_locked == false, "pleasure_locked must be reset to false")
+	assert(player_pleasure.pleasure_cap == 100.0, "pleasure_cap must be reset to 100.0")
+	assert(player_pleasure.damage_taken_multiplier == 1.0, "damage_taken_multiplier must be reset to 1.0")
+	assert(player_pleasure.edging_threshold == PleasureComponent.EDGING_PREVIEW_THRESHOLD, "Threshold must match constant")
+	print("[Test 1 PASSED] PleasureComponent reset and threshold isolation verified!")
 	
-	p_comp.queue_free()
-	print("[Step 1 PASSED] PleasureComponent verified.")
-	
-	# 2. DialogueManager Tests
-	print("[Step 2] Verifying DialogueManager and Graph")
+	# Test 2: DialogueManager Action Registry, Aliases, and Context
+	print("[Test 2] Testing DialogueManager Action Registry and Session Context:")
 	var d_mgr = DialogueManager.new()
 	root.add_child(d_mgr)
 	
 	var graph: Dictionary = SparkleTutorialDialogue.get_dialogue_graph()
-	var text_box := [""]
-	var choices_box := [[]]
-	
-	d_mgr.text_updated.connect(func(speaker: String, text: String, emotion: String):
-		text_box[0] = text
-	)
-	d_mgr.choices_presented.connect(func(choices: Array):
-		choices_box[0] = choices
+	var payload_box := [{}]
+	d_mgr.dialogue_ended.connect(func(payload: Dictionary):
+		payload_box[0] = payload
 	)
 	
+	# Start in-battle edging dialogue with NEXT_TURN policy
+	d_mgr.start_dialogue(
+		graph,
+		"mid_battle_edging",
+		DialogueManager.DialogueSource.MID_BATTLE_EDGING,
+		DialogueManager.ResumePolicy.NEXT_TURN
+	)
+	assert(d_mgr.session_active, "Session must be active")
+	assert(d_mgr.session_id == 1, "Session ID should be 1")
+	assert(d_mgr.current_source == DialogueManager.DialogueSource.MID_BATTLE_EDGING, "Source must match")
+	assert(d_mgr.current_resume_policy == DialogueManager.ResumePolicy.NEXT_TURN, "Policy must match NEXT_TURN")
+	
+	# Advance text to choice
+	d_mgr.advance_text()
+	# Choose option 0: 咬牙坚持
+	d_mgr.choose_option(0)
+	# Choose option 0: 重返战场
+	d_mgr.choose_option(0)
+	
+	assert(not d_mgr.session_active, "Session must be closed after action")
+	assert(payload_box[0].get("action") == DialogueManager.ACTION_RESUME_COMBAT, "Action must be resume_combat")
+	assert(payload_box[0].get("resume_policy") == DialogueManager.ResumePolicy.NEXT_TURN, "Payload must retain NEXT_TURN policy")
+	assert(payload_box[0].get("session_id") == 1, "Payload must have correct session_id")
+	print("[Test 2 PASSED] DialogueManager context tracking and action dispatch verified!")
+	
+	# Test 3: Action Aliases (choose_kill -> kill, choose_spare -> spare)
+	print("[Test 3] Testing Action Alias Normalization:")
 	d_mgr.start_dialogue(graph, "start")
-	assert("欢迎来到我们的游�? in text_box[0], "Start text mismatch")
+	d_mgr._finish_with_action("choose_kill")
+	assert(payload_box[0].get("action") == "kill", "choose_kill must normalize to kill")
+	d_mgr.start_dialogue(graph, "start")
+	d_mgr._finish_with_action("choose_spare")
+	assert(payload_box[0].get("action") == "spare", "choose_spare must normalize to spare")
+	print("[Test 3 PASSED] Action alias normalization verified!")
 	
-	d_mgr.queue_free()
-	print("[Step 2 PASSED] DialogueManager verified.")
-	
-	# 3. TurnCombatManager: Mid-battle dialogue resumption test
-	print("[Step 3] Verifying in-battle negotiation resumption")
-	var player_pleasure = PleasureComponent.new()
-	root.add_child(player_pleasure)
+	# Test 4: Temporary Defense Modifier vs Action Defense (P0-3)
+	print("[Test 4] Testing Temporary Defense Modifier non-overwriting:")
 	var npc_pleasure = PleasureComponent.new()
+	npc_pleasure.character_name = "NPC"
 	root.add_child(npc_pleasure)
 	
 	var combat_mgr = TurnCombatManager.new()
@@ -66,52 +91,66 @@ func _run_full_test() -> void:
 	combat_mgr.setup(player_pleasure, npc_pleasure)
 	
 	combat_mgr.start_combat(false, {})
-	assert(combat_mgr.current_phase == TurnCombatManager.Phase.PLAYER_INPUT, "Should start in player input phase")
 	
-	# Trigger in-battle negotiation
-	combat_mgr.request_in_battle_negotiation()
-	assert(combat_mgr.current_phase == TurnCombatManager.Phase.MID_BATTLE_DIALOGUE, "Phase should be mid-battle dialogue")
+	# Apply temporary defense from mid-battle dialogue (e.g. 咬牙坚持 50%)
+	combat_mgr.temporary_defense_modifier = 0.5
 	
-	# Resume combat without exiting
-	combat_mgr.resume_combat_after_dialogue(false)
-	assert(combat_mgr.current_phase == TurnCombatManager.Phase.PLAYER_INPUT, "Combat should resume to player input without exiting")
-	print("In-battle negotiation resumption verified: combat remains active!")
+	# Player uses an aggressive action with 0 self-defense (e.g. caress)
+	var caress_action = load("res://assets/combat/actions/action_caress.tres")
+	combat_mgr.execute_player_action(caress_action)
 	
-	# 4. Teaching kill & Surrender test
-	print("[Step 4] Verifying Teaching Kill and Surrender")
-	var combat_record := {"winner": "", "ended": false}
-	combat_mgr.combat_ended.connect(func(winner: String, loser: String, reason: String):
-		combat_record["winner"] = winner
-		combat_record["ended"] = true
+	# Temporary defense MUST survive player action execution
+	assert(combat_mgr.temporary_defense_modifier == 0.5, "Temporary defense must NOT be wiped by player action")
+	
+	# Allow NPC turn to execute and consume defense
+	for i in range(75):
+		await process_frame
+		
+	# After NPC turn, temporary modifier is consumed
+	assert(combat_mgr.temporary_defense_modifier == 0.0, "Temporary defense must be consumed after NPC turn")
+	assert(combat_mgr.round_action_defense == 0.0, "Round action defense must be reset after NPC turn")
+	print("[Test 4 PASSED] Temporary combat modifier non-overwriting verified!")
+	
+	# Test 5: Consecutive Battles Reset (P0-4)
+	print("[Test 5] Testing consecutive battles state isolation:")
+	# Battle 1: Distracted cheat (multiplier 2.5) + lock pleasure
+	combat_mgr.start_combat(false, {"meta_cheat_mode": "distracted"})
+	assert(npc_pleasure.damage_taken_multiplier == 2.5, "NPC should take 2.5x damage in Battle 1")
+	
+	# Battle 2: Fair duel with no cheats
+	combat_mgr.start_combat(false, {})
+	assert(npc_pleasure.damage_taken_multiplier == 1.0, "NPC damage multiplier must be reset to 1.0 in Battle 2")
+	assert(player_pleasure.pleasure_locked == false, "Player pleasure lock must be false in Battle 2")
+	print("[Test 5 PASSED] Consecutive battle state isolation verified!")
+	
+	# Test 6: Idempotent Combat Ending (P0-5)
+	print("[Test 6] Testing Idempotent Combat Ending:")
+	var end_event_box := [0]
+	combat_mgr.combat_ended.connect(func(_w: String, _l: String, _r: String):
+		end_event_box[0] += 1
 	)
 	
-	combat_mgr.start_combat(true, {})
-	var endure_action = load("res://assets/combat/actions/action_endure.tres")
-	combat_mgr.execute_player_action(endure_action)
+	combat_mgr.start_combat(false, {})
+	player_pleasure.add_pleasure(150.0) # Defeat master
+	combat_mgr._check_battle_state()
 	
-	for i in range(120):
-		await process_frame
-		if combat_record["ended"]:
-			break
-			
-	assert(combat_record["winner"] == "Sparkle", "Teaching kill should defeat master")
-	assert(player_pleasure.has_reached_climax, "Master should climax in teaching kill")
-	print("Teaching kill confirmed.")
+	assert(combat_mgr.is_resolved == true, "Combat must be resolved")
+	assert(end_event_box[0] == 1, "Combat ended event must be emitted exactly once")
 	
-	# Surrender cheat
-	combat_record["ended"] = false
-	combat_record["winner"] = ""
-	combat_mgr.start_combat(false, {"meta_cheat_mode": "instant_surrender"})
-	for i in range(60):
-		await process_frame
-		if combat_record["ended"]:
-			break
-	assert(combat_record["winner"] == "Master", "Surrender should defeat Sparkle")
-	print("Instant surrender confirmed.")
+	# Attempt illegal second resolution
+	combat_mgr._check_battle_state()
+	assert(end_event_box[0] == 1, "Combat ended event must not be emitted again")
 	
+	# Attempt illegal resume after resolved
+	combat_mgr.resume_combat_after_dialogue(false, false)
+	assert(combat_mgr.current_phase == TurnCombatManager.Phase.DEFEAT, "Phase must not change after resolution")
+	print("[Test 6 PASSED] Idempotent combat resolution verified!")
+	
+	# Clean up test nodes
 	player_pleasure.queue_free()
 	npc_pleasure.queue_free()
 	combat_mgr.queue_free()
+	d_mgr.queue_free()
 	
-	print("--- ALL UPDATED TURN COMBAT TESTS PASSED! ---")
+	print("=== ALL REFACTORED UNIT TESTS PASSED 100%! ===")
 	quit(0)

@@ -13,6 +13,7 @@ enum State {
 }
 
 const POSES_DIR := "res://assets/characters/poses"
+const HUMANOID_RIG := preload("res://scripts/characters/humanoid_rig.gd")
 
 @export var character_scene: PackedScene = preload("res://scenes/characters/ganyu.tscn")
 @export var auto_start_ragdoll := true
@@ -24,6 +25,9 @@ var character_instance: Node3D = null
 var skeleton: Skeleton3D = null
 var simulator: PhysicalBoneSimulator3D = null
 var physical_bones: Dictionary = {} # bone_name: String -> PhysicalBone3D
+var rig := HUMANOID_RIG.new()
+var _pose_tween: Tween
+var _pose_anchor := Transform3D.IDENTITY
 
 var current_character_id := "ganyu"
 var current_character_label := "甘雨"
@@ -59,7 +63,12 @@ func _setup_character_internals() -> void:
 		var anim_player: AnimationPlayer = character_instance.find_child("AnimationPlayer", true, false) as AnimationPlayer
 		if anim_player:
 			anim_player.stop()
-			
+		# Fresh spawns must not inherit an editor-saved animation frame.
+		skeleton.reset_bone_poses()
+		skeleton.force_update_all_bone_transforms()
+		if not rig.setup(skeleton):
+			push_error("Invalid ragdoll humanoid rig")
+			return
 		_build_physical_bones()
 
 func load_character_from_profile(profile: Dictionary) -> bool:
@@ -145,7 +154,7 @@ func _build_physical_bones() -> void:
 		skeleton.add_child(simulator)
 	
 	for c in simulator.get_children():
-		c.queue_free()
+		c.free() # Unbind old bone IDs before rebuilding in this same frame.
 	physical_bones.clear()
 	
 	# Anatomical bone specifications for realistic humanoid ragdoll
@@ -191,7 +200,7 @@ func _build_physical_bones() -> void:
 		var swing_span: float = spec[9]
 		var twist_span: float = spec[10]
 		
-		var b_idx: int = skeleton.find_bone(bname)
+		var b_idx: int = rig.physical_index(bname)
 		if b_idx < 0:
 			continue
 			
@@ -199,7 +208,7 @@ func _build_physical_bones() -> void:
 		
 		var pb := PhysicalBone3D.new()
 		pb.name = "PB_" + bname
-		pb.bone_name = bname
+		pb.bone_name = skeleton.get_bone_name(b_idx)
 		pb.joint_type = joint_t
 		pb.mass = mass
 		pb.friction = 0.15 # Low friction allows smooth floor sliding without sticking
@@ -208,7 +217,12 @@ func _build_physical_bones() -> void:
 		pb.can_sleep = false # Keep active so it doesn't freeze asleep
 		pb.collision_layer = 4 # Physical ragdoll corpse layer
 		pb.collision_mask = 1 # Collides with Floor & Furniture (Layer 1)
-		pb.transform = b_gr
+		# Move the BODY center, retaining the bone and joint at their anatomical anchors.
+		# MMD torso and lower-body branches share BodyRoot, not necessarily the pelvis.
+		if bname == "Hips":
+			col_offset = b_gr.affine_inverse() * rig.rest_world[rig.pelvis].origin
+		pb.body_offset = Transform3D(Basis.IDENTITY, col_offset)
+		pb.transform = b_gr * pb.body_offset
 		pb.set_meta("corpse_bone_name", bname)
 		
 		if joint_t == PhysicalBone3D.JOINT_TYPE_HINGE:
@@ -227,7 +241,7 @@ func _build_physical_bones() -> void:
 		cap.radius = radius
 		cap.height = height
 		col.shape = cap
-		col.position = col_offset # Centered along the anatomical bone segment
+		col.position = Vector3.ZERO # Body offset already places the shape center.
 		pb.add_child(col)
 		
 		# All 16 PhysicalBone3D are direct children of PhysicalBoneSimulator3D
@@ -236,6 +250,7 @@ func _build_physical_bones() -> void:
 
 func start_ragdoll() -> void:
 	if not simulator: return
+	_cancel_pose_tween()
 	dragged_bone = null
 	drag_anchor = null
 	tween_active = false
@@ -338,12 +353,19 @@ func apply_pose_file(path: String, duration: float = 0.35) -> bool:
 	if typeof(data) != TYPE_DICTIONARY:
 		printerr("Invalid pose JSON: ", path)
 		return false
-		
+	return apply_pose_data(data, duration)
+
+func apply_pose_data(data: Dictionary, duration: float = 0.35) -> bool:
+	var payload := HUMANOID_RIG.pose_payload(data)
+	if payload.is_empty():
+		push_warning("Pose needs humanoid_pose or its explicit source_model; re-save it in the MMD preview.")
+		return false
+	_cancel_pose_tween()
 	stop_drag()
 	
 	# Synchronize world position with current corpse location on the supporting surface (floor/bed/desk)
 	if simulator and simulator.is_simulating_physics() and physical_bones.has("Hips"):
-		var hip_pos: Vector3 = physical_bones["Hips"].global_position
+		var hip_pos := get_pelvis_world_position()
 		var ground_y := 0.0
 		var space_state := get_world_3d().direct_space_state
 		if space_state:
@@ -362,55 +384,64 @@ func apply_pose_file(path: String, duration: float = 0.35) -> bool:
 			fwd.y = 0.0
 			if fwd.length_squared() > 0.01:
 				character_instance.look_at(character_instance.global_position + fwd.normalized(), Vector3.UP)
-				
+		_pose_anchor = character_instance.transform
+	elif current_state not in [State.POSED, State.POSED_DRAGGING]:
+		_pose_anchor = character_instance.transform
+	else:
+		# Preserve subsequent dragging of a posed actor, without accumulating the pose offset.
+		var local_pelvis := to_local(get_pelvis_world_position())
+		_pose_anchor.origin.x = local_pelvis.x
+		_pose_anchor.origin.z = local_pelvis.z
 	stop_ragdoll()
 	current_state = State.POSED
-	current_pose_name = data.get("name", path.get_file().get_basename())
+	current_pose_name = data.get("name", "pose")
 	current_pose_data = data
 	state_changed.emit(current_state)
 	
-	_interpolate_to_pose(data, duration)
+	_interpolate_to_pose(payload, duration)
 	return true
 
-func _interpolate_to_pose(pose_data: Dictionary, duration: float) -> void:
+func _cancel_pose_tween() -> void:
+	tween_active = false
+	if _pose_tween != null and _pose_tween.is_valid(): _pose_tween.kill()
+	_pose_tween = null
+
+func get_pelvis_world_position() -> Vector3:
+	if skeleton == null or rig.pelvis < 0: return global_position
+	return skeleton.global_transform * skeleton.get_bone_global_pose(rig.pelvis).origin
+
+func _interpolate_to_pose(payload: Dictionary, duration: float) -> void:
 	if not skeleton: return
-	
-	var bones_target: Dictionary = pose_data.get("bones", {})
+	var solution := rig.solve_pose(payload)
 	var start_rotations: Dictionary = {}
 	var start_positions: Dictionary = {}
-	var target_rotations: Dictionary = {}
-	var target_positions: Dictionary = {}
-	
-	for bname in bones_target:
-		var idx := skeleton.find_bone(bname)
-		if idx >= 0:
-			start_rotations[idx] = skeleton.get_bone_pose_rotation(idx)
-			start_positions[idx] = skeleton.get_bone_pose_position(idx)
-			var bentry: Dictionary = bones_target[bname]
-			if bentry.has("rot"):
-				var q: Array = bentry["rot"]
-				target_rotations[idx] = Quaternion(q[0], q[1], q[2], q[3])
-			if bentry.has("pos"):
-				var p: Array = bentry["pos"]
-				target_positions[idx] = Vector3(p[0], p[1], p[2])
-				
+	for idx in rig.order:
+		start_rotations[idx] = skeleton.get_bone_pose_rotation(idx)
+		start_positions[idx] = skeleton.get_bone_pose_position(idx)
+	var skel_in_model := character_instance.global_transform.affine_inverse() * skeleton.global_transform
+	var offset: Vector3 = skel_in_model.basis * solution.root_displacement
+	var pelvis_in_model: Vector3 = skel_in_model * solution.pelvis_position
+	var projected: Vector3 = _pose_anchor.basis * pelvis_in_model
+	var end_position: Vector3 = _pose_anchor.origin + _pose_anchor.basis * offset - Vector3(projected.x, 0, projected.z)
+	var start_position := character_instance.position
+	var apply_frame := func(t: float):
+		for idx in rig.order:
+			skeleton.set_bone_pose_rotation(idx, start_rotations[idx].slerp(solution.rotations[idx], t))
+			skeleton.set_bone_pose_position(idx, start_positions[idx].lerp(rig.rest_local[idx].origin, t))
+			skeleton.set_bone_pose_scale(idx, rig.rest_local[idx].basis.get_scale())
+		character_instance.position = start_position.lerp(end_position, t)
+		skeleton.force_update_all_bone_transforms()
+	if duration <= 0.0:
+		apply_frame.call(1.0)
+		pose_applied.emit(current_pose_name)
+		return
 	tween_active = true
 	var tw := create_tween()
+	_pose_tween = tw
 	tw.set_ease(Tween.EASE_OUT)
 	tw.set_trans(Tween.TRANS_CUBIC)
 	
-	tw.tween_method(func(t: float):
-		if not tween_active: return
-		for idx in target_rotations:
-			var r_start: Quaternion = start_rotations[idx]
-			var r_end: Quaternion = target_rotations[idx]
-			skeleton.set_bone_pose_rotation(idx, r_start.slerp(r_end, t))
-		for idx in target_positions:
-			var p_start: Vector3 = start_positions[idx]
-			var p_end: Vector3 = target_positions[idx]
-			skeleton.set_bone_pose_position(idx, p_start.lerp(p_end, t))
-		skeleton.force_update_all_bone_transforms()
-	, 0.0, 1.0, duration)
+	tw.tween_method(apply_frame, 0.0, 1.0, duration)
 	
 	tw.finished.connect(func():
 		tween_active = false
@@ -440,7 +471,7 @@ func get_closest_bone_to_ray(ray_origin: Vector3, ray_dir: Vector3, max_dist: fl
 		# In posed mode, test against skeleton bone world positions
 		if skeleton:
 			for bname in ["LeftFoot", "RightFoot", "Hips", "Head", "LeftHand", "RightHand"]:
-				var idx := skeleton.find_bone(bname)
+				var idx: int = rig.semantic_bones.get(bname, -1)
 				if idx >= 0:
 					var b_pos := skeleton.global_transform * skeleton.get_bone_global_pose(idx).origin
 					var to_bone := b_pos - ray_origin

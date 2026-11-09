@@ -319,14 +319,14 @@ static func get_dialogue_graph() -> Dictionary:
 			"victory_node_3": {
 				"type": "choice",
 				"speaker": "花火",
-				"text": "杀了我的话主人可以体验玩弄尸体哦，不用担心，主人走出范围后花火就重新刷新了哦，我们的游戏机制就是这么写的，嘻嘻！",
+				"text": "无论主人选择杀掉还是放过，花火都会作为可用角色加入主人的队伍哦！区别只在于主人是想现在体验奸尸玩弄尸体，还是想要活体的乞命侍奉呢？不用担心，走出范围后花火也会重新刷新的，嘻嘻！",
 				"choices": [
 					{
-						"text": "【杀掉】体验物理玩弄尸体分支（化为自然布娃娃）。",
-						"action": "choose_kill"
+						"text": "【杀掉】体验奸尸与物理布娃娃玩弄分支（永久解锁角色）。",
+						"action": "kill"
 					},
 					{
-						"text": "【放过】饶你一命，不玩尸体。",
+						"text": "【放过】体验活体乞命顺从侍奉分支（永久解锁角色）。",
 						"target": "spare_dialogue"
 					}
 				]
@@ -363,7 +363,29 @@ static func get_dialogue_graph() -> Dictionary:
 				"choices": [
 					{
 						"text": "【确认】进入乞命侍奉结算。",
-						"action": "choose_spare"
+						"action": "spare"
+					}
+				]
+			},
+			"post_spare_greeting": {
+				"type": "text",
+				"speaker": "花火",
+				"text": "主人！刚才的乞命侍奉还满意吗？花火现在已经是主人的专属玩伴了哦，随时听候主人差遣！",
+				"emotion": "smirk",
+				"next": "post_spare_choices"
+			},
+			"post_spare_choices": {
+				"type": "choice",
+				"speaker": "花火",
+				"text": "主人想要花火做什么呢？",
+				"choices": [
+					{
+						"text": "【再次对决】重新与花火进行回合制对战！",
+						"action": "enter_combat"
+					},
+					{
+						"text": "【离开】暂时先这样吧。",
+						"action": "close"
 					}
 				]
 			}

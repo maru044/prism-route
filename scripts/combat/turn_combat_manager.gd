@@ -26,8 +26,11 @@ var npc_pleasure: Node
 var current_phase: Phase = Phase.INACTIVE
 var round_count: int = 1
 var is_tutorial_round: bool = true # Round 1 is teaching kill
-var player_defense_ratio: float = 0.0
+
+var round_action_defense: float = 0.0
+var temporary_defense_modifier: float = 0.0 # From mid-battle dialogue (e.g. 咬牙坚持)
 var has_triggered_mid_edging_talk: bool = false
+var is_resolved: bool = false
 
 func setup(player_comp: Node, npc_comp: Node) -> void:
 	player_pleasure = player_comp
@@ -36,8 +39,10 @@ func setup(player_comp: Node, npc_comp: Node) -> void:
 func start_combat(tutorial_mode: bool = true, meta_settings: Dictionary = {}) -> void:
 	is_tutorial_round = tutorial_mode
 	round_count = 1
-	player_defense_ratio = 0.0
+	round_action_defense = 0.0
+	temporary_defense_modifier = 0.0
 	has_triggered_mid_edging_talk = false
+	is_resolved = false
 	
 	player_pleasure.reset()
 	npc_pleasure.reset()
@@ -68,13 +73,13 @@ func start_combat(tutorial_mode: bool = true, meta_settings: Dictionary = {}) ->
 	_advance_to_player_turn()
 
 func execute_player_action(action: Resource) -> void:
-	if current_phase != Phase.PLAYER_INPUT:
+	if current_phase != Phase.PLAYER_INPUT or is_resolved:
 		return
 		
 	current_phase = Phase.PLAYER_ACTION
 	phase_changed.emit(current_phase)
 	
-	player_defense_ratio = action.self_pleasure_defense
+	round_action_defense = action.self_pleasure_defense
 	
 	if action.base_pleasure > 0.0:
 		var gained: float = npc_pleasure.add_pleasure(action.base_pleasure, action.target_zone)
@@ -96,13 +101,16 @@ func execute_player_action(action: Resource) -> void:
 	_advance_to_npc_turn()
 
 func request_in_battle_negotiation() -> void:
-	if current_phase != Phase.PLAYER_INPUT:
+	if current_phase != Phase.PLAYER_INPUT or is_resolved:
 		return
 	current_phase = Phase.MID_BATTLE_DIALOGUE
 	phase_changed.emit(current_phase)
 	mid_battle_dialogue_requested.emit("player_manual_call")
 
 func resume_combat_after_dialogue(surrender_requested: bool = false, from_edging_danger: bool = false) -> void:
+	if current_phase != Phase.MID_BATTLE_DIALOGUE or is_resolved:
+		return
+		
 	if surrender_requested:
 		npc_pleasure.add_pleasure(100.0)
 		_check_battle_state()
@@ -117,11 +125,15 @@ func resume_combat_after_dialogue(surrender_requested: bool = false, from_edging
 		log_message_emitted.emit("战中交涉结束，对决继续！请主人选择行动。")
 
 func _advance_to_player_turn() -> void:
+	if is_resolved:
+		return
 	current_phase = Phase.PLAYER_INPUT
 	phase_changed.emit(current_phase)
 	log_message_emitted.emit("【玩家回合】请主人选择行动指令。")
 
 func _advance_to_npc_turn() -> void:
+	if is_resolved:
+		return
 	current_phase = Phase.NPC_ACTION
 	phase_changed.emit(current_phase)
 	log_message_emitted.emit("【花火回合】轮到花火行动了！")
@@ -152,12 +164,14 @@ func _advance_to_npc_turn() -> void:
 				skill_name = "媚眼凝视与娇吟"
 				raw_dmg = 16.0
 				
-		var actual_dmg: float = raw_dmg * (1.0 - player_defense_ratio)
+		var total_defense: float = clampf(round_action_defense + temporary_defense_modifier, 0.0, 0.95)
+		var actual_dmg: float = raw_dmg * (1.0 - total_defense)
 		var gained: float = player_pleasure.add_pleasure(actual_dmg)
 		log_message_emitted.emit("花火施展了【%s】，对主人造成了 +%.1f%% 快感！" % [skill_name, gained])
 		
-	# Reset round defense
-	player_defense_ratio = 0.0
+	# Reset round defense & consume temporary defense
+	round_action_defense = 0.0
+	temporary_defense_modifier = 0.0
 	
 	await get_tree().create_timer(0.5).timeout
 	
@@ -175,6 +189,8 @@ func _advance_to_npc_turn() -> void:
 	_advance_to_next_round()
 
 func _advance_to_next_round() -> void:
+	if is_resolved:
+		return
 	current_phase = Phase.ROUND_END
 	round_count += 1
 	phase_changed.emit(current_phase)
@@ -182,7 +198,11 @@ func _advance_to_next_round() -> void:
 	_advance_to_player_turn()
 
 func _check_battle_state() -> bool:
+	if is_resolved:
+		return true
+		
 	if npc_pleasure.has_reached_climax:
+		is_resolved = true
 		current_phase = Phase.VICTORY
 		phase_changed.emit(current_phase)
 		log_message_emitted.emit("【花火绝顶败北】花火娇喘连连，全身痉挛绝顶，主人赢得了回合对战！")
@@ -190,6 +210,7 @@ func _check_battle_state() -> bool:
 		return true
 		
 	if player_pleasure.has_reached_climax:
+		is_resolved = true
 		current_phase = Phase.DEFEAT
 		phase_changed.emit(current_phase)
 		log_message_emitted.emit("【主人射精败北】主人的忍耐突破极限，败北射精虚脱！")

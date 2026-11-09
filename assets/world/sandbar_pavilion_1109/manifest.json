@@ -1,0 +1,3550 @@
+{
+  "grass_rebake_required": false,
+  "protected_objects_unchanged": true,
+  "court_hub": [
+    -828.0,
+    0.0,
+    -116.0
+  ],
+  "buildings": [
+    {
+      "route_start": [
+        -808.58,
+        0.09,
+        -158.56
+      ],
+      "side_windows": [
+        {
+          "center": [
+            -814.4976,
+            1.8,
+            -187.0032
+          ],
+          "outward": [
+            -0.8,
+            0,
+            -0.6
+          ]
+        },
+        {
+          "center": [
+            -819.3024,
+            1.8,
+            -180.5968
+          ],
+          "outward": [
+            -0.8,
+            0,
+            -0.6
+          ]
+        },
+        {
+          "center": [
+            -779.6176,
+            1.8,
+            -160.8432
+          ],
+          "outward": [
+            0.8,
+            0,
+            0.6
+          ]
+        },
+        {
+          "center": [
+            -784.4224,
+            1.8,
+            -154.4368
+          ],
+          "outward": [
+            0.8,
+            0,
+            0.6
+          ]
+        }
+      ],
+      "art_revision": "finished_resort_v3",
+      "floor_component": "reception_Floor",
+      "facade_depth_m": 3.8,
+      "width_m": 44,
+      "approach": [
+        -808.58,
+        0.0,
+        -158.56
+      ],
+      "route_end": [
+        -805.4,
+        0.1,
+        -162.8
+      ],
+      "center": [
+        -800.6,
+        0.1,
+        -169.2
+      ],
+      "facade_revision": "timber_all_sides",
+      "id": "reception",
+      "entry": [
+        -806.66,
+        0.1,
+        -161.12
+      ],
+      "route_forward": [
+        0.6,
+        0,
+        -0.8
+      ],
+      "interior": [
+        -804.8,
+        0.1,
+        -163.6
+      ],
+      "roof_height_m": 6.7299999999999995,
+      "floor_source_id": "27fc7be9-7ae4-4c34-a16c-10388d630ca1",
+      "forward": [
+        -0.6,
+        0,
+        0.8
+      ],
+      "floor_outline": [
+        [
+          -811.6,
+          0.1,
+          -191.2
+        ],
+        [
+          -776.4,
+          0.1,
+          -164.8
+        ],
+        [
+          -789.6,
+          0.1,
+          -147.2
+        ],
+        [
+          -824.8,
+          0.1,
+          -173.6
+        ]
+      ],
+      "rear_windows": [
+        {
+          "center": [
+            -806.792,
+            1.8,
+            -187.344
+          ],
+          "outward": [
+            0.6,
+            0,
+            -0.8
+          ]
+        },
+        {
+          "center": [
+            -799.4,
+            1.8,
+            -181.8
+          ],
+          "outward": [
+            0.6,
+            0,
+            -0.8
+          ]
+        },
+        {
+          "center": [
+            -788.84,
+            1.8,
+            -173.88
+          ],
+          "outward": [
+            0.6,
+            0,
+            -0.8
+          ]
+        },
+        {
+          "center": [
+            -781.448,
+            1.8,
+            -168.336
+          ],
+          "outward": [
+            0.6,
+            0,
+            -0.8
+          ]
+        }
+      ],
+      "single_storey": true,
+      "minimum_dry_edge_clearance_m": 11.411094135853745,
+      "depth_m": 22
+    },
+    {
+      "route_start": [
+        -862.96,
+        0.09,
+        -159.72
+      ],
+      "side_windows": [
+        {
+          "center": [
+            -883.7232,
+            1.8,
+            -158.0424
+          ],
+          "outward": [
+            -0.6,
+            0,
+            0.8
+          ]
+        },
+        {
+          "center": [
+            -879.0768,
+            1.8,
+            -154.5576
+          ],
+          "outward": [
+            -0.6,
+            0,
+            0.8
+          ]
+        },
+        {
+          "center": [
+            -867.1632,
+            1.8,
+            -180.1224
+          ],
+          "outward": [
+            0.6,
+            0,
+            -0.8
+          ]
+        },
+        {
+          "center": [
+            -862.5168,
+            1.8,
+            -176.6376
+          ],
+          "outward": [
+            0.6,
+            0,
+            -0.8
+          ]
+        }
+      ],
+      "art_revision": "finished_resort_v3",
+      "floor_component": "lodge_a_Floor",
+      "facade_depth_m": 3.8,
+      "width_m": 28,
+      "approach": [
+        -862.96,
+        0.0,
+        -159.72
+      ],
+      "route_end": [
+        -867.2,
+        0.1,
+        -162.9
+      ],
+      "center": [
+        -871.6,
+        0.1,
+        -166.2
+      ],
+      "facade_revision": "timber_all_sides",
+      "id": "lodge_a",
+      "entry": [
+        -865.52,
+        0.1,
+        -161.64
+      ],
+      "route_forward": [
+        -0.8,
+        0,
+        -0.6
+      ],
+      "interior": [
+        -868.0,
+        0.1,
+        -163.5
+      ],
+      "roof_height_m": 5.18,
+      "floor_source_id": "141ad46b-d0f4-403f-b25e-afcd62adf1a4",
+      "forward": [
+        0.8,
+        0,
+        0.6
+      ],
+      "floor_outline": [
+        [
+          -886.8,
+          0.1,
+          -160.1
+        ],
+        [
+          -870.0,
+          0.1,
+          -182.5
+        ],
+        [
+          -856.4,
+          0.1,
+          -172.3
+        ],
+        [
+          -869.0,
+          0.1,
+          -155.5
+        ],
+        [
+          -864.2,
+          0.1,
+          -151.9
+        ],
+        [
+          -868.4,
+          0.1,
+          -146.3
+        ]
+      ],
+      "rear_windows": [
+        {
+          "center": [
+            -884.288,
+            1.8,
+            -163.116
+          ],
+          "outward": [
+            -0.8,
+            0,
+            -0.6
+          ]
+        },
+        {
+          "center": [
+            -880.76,
+            1.8,
+            -167.82
+          ],
+          "outward": [
+            -0.8,
+            0,
+            -0.6
+          ]
+        },
+        {
+          "center": [
+            -875.72,
+            1.8,
+            -174.54
+          ],
+          "outward": [
+            -0.8,
+            0,
+            -0.6
+          ]
+        },
+        {
+          "center": [
+            -872.192,
+            1.8,
+            -179.244
+          ],
+          "outward": [
+            -0.8,
+            0,
+            -0.6
+          ]
+        }
+      ],
+      "single_storey": true,
+      "depth_m": 23
+    },
+    {
+      "route_start": [
+        -793.44,
+        0.09,
+        -105.08
+      ],
+      "side_windows": [
+        {
+          "center": [
+            -772.9768,
+            1.8,
+            -106.3576
+          ],
+          "outward": [
+            0.6,
+            0,
+            -0.8
+          ]
+        },
+        {
+          "center": [
+            -777.6232,
+            1.8,
+            -109.8424
+          ],
+          "outward": [
+            0.6,
+            0,
+            -0.8
+          ]
+        },
+        {
+          "center": [
+            -788.9368,
+            1.8,
+            -85.0776
+          ],
+          "outward": [
+            -0.6,
+            0,
+            0.8
+          ]
+        },
+        {
+          "center": [
+            -793.5832,
+            1.8,
+            -88.5624
+          ],
+          "outward": [
+            -0.6,
+            0,
+            0.8
+          ]
+        }
+      ],
+      "art_revision": "finished_resort_v3",
+      "floor_component": "lodge_b_Floor",
+      "facade_depth_m": 3.8,
+      "width_m": 27,
+      "approach": [
+        -793.44,
+        0.0,
+        -105.08
+      ],
+      "route_end": [
+        -789.2,
+        0.1,
+        -101.9
+      ],
+      "center": [
+        -784.8,
+        0.1,
+        -98.6
+      ],
+      "facade_revision": "timber_all_sides",
+      "id": "lodge_b",
+      "entry": [
+        -790.88,
+        0.1,
+        -103.16
+      ],
+      "route_forward": [
+        0.8,
+        0,
+        0.6
+      ],
+      "interior": [
+        -788.4,
+        0.1,
+        -101.3
+      ],
+      "roof_height_m": 5.33,
+      "floor_source_id": "fcafdf39-cc76-454f-942d-1582a601a5b8",
+      "forward": [
+        -0.8,
+        0,
+        -0.6
+      ],
+      "floor_outline": [
+        [
+          -769.9,
+          0.1,
+          -104.3
+        ],
+        [
+          -786.1,
+          0.1,
+          -82.7
+        ],
+        [
+          -799.7,
+          0.1,
+          -92.9
+        ],
+        [
+          -787.7,
+          0.1,
+          -108.9
+        ],
+        [
+          -792.5,
+          0.1,
+          -112.5
+        ],
+        [
+          -788.3,
+          0.1,
+          -118.1
+        ]
+      ],
+      "rear_windows": [
+        {
+          "center": [
+            -772.328,
+            1.8,
+            -101.396
+          ],
+          "outward": [
+            0.8,
+            0,
+            0.6
+          ]
+        },
+        {
+          "center": [
+            -775.73,
+            1.8,
+            -96.86
+          ],
+          "outward": [
+            0.8,
+            0,
+            0.6
+          ]
+        },
+        {
+          "center": [
+            -780.59,
+            1.8,
+            -90.38
+          ],
+          "outward": [
+            0.8,
+            0,
+            0.6
+          ]
+        },
+        {
+          "center": [
+            -783.992,
+            1.8,
+            -85.844
+          ],
+          "outward": [
+            0.8,
+            0,
+            0.6
+          ]
+        }
+      ],
+      "single_storey": true,
+      "depth_m": 23
+    },
+    {
+      "route_start": [
+        -894.28,
+        0.09,
+        -105.96
+      ],
+      "side_windows": [
+        {
+          "center": [
+            -896.8216,
+            1.8,
+            -125.5712
+          ],
+          "outward": [
+            -0.8,
+            0,
+            -0.6
+          ]
+        },
+        {
+          "center": [
+            -899.7784,
+            1.8,
+            -121.6288
+          ],
+          "outward": [
+            -0.8,
+            0,
+            -0.6
+          ]
+        },
+        {
+          "center": [
+            -874.7416,
+            1.8,
+            -109.0112
+          ],
+          "outward": [
+            0.8,
+            0,
+            0.6
+          ]
+        },
+        {
+          "center": [
+            -877.6984,
+            1.8,
+            -105.0688
+          ],
+          "outward": [
+            0.8,
+            0,
+            0.6
+          ]
+        }
+      ],
+      "art_revision": "finished_resort_v3",
+      "floor_component": "rest_hall_Floor",
+      "facade_depth_m": 3.8,
+      "width_m": 28,
+      "approach": [
+        -894.28,
+        0.0,
+        -105.96
+      ],
+      "approach_waypoints": [
+        [
+          -862.8,
+          0.0,
+          -69.6
+        ]
+      ],
+      "route_end": [
+        -891.1,
+        0.1,
+        -110.2
+      ],
+      "center": [
+        -888.4,
+        0.1,
+        -113.8
+      ],
+      "facade_revision": "timber_all_sides",
+      "id": "rest_hall",
+      "entry": [
+        -892.36,
+        0.1,
+        -108.52
+      ],
+      "route_forward": [
+        0.6,
+        0,
+        -0.8
+      ],
+      "interior": [
+        -890.5,
+        0.1,
+        -111.0
+      ],
+      "roof_height_m": 4.18,
+      "floor_source_id": "170f43ce-a6ad-4e37-a039-592077466114",
+      "forward": [
+        -0.6,
+        0,
+        0.8
+      ],
+      "floor_outline": [
+        [
+          -895.1,
+          0.1,
+          -128.2
+        ],
+        [
+          -872.7,
+          0.1,
+          -111.4
+        ],
+        [
+          -881.7,
+          0.1,
+          -99.4
+        ],
+        [
+          -904.1,
+          0.1,
+          -116.2
+        ]
+      ],
+      "rear_windows": [
+        {
+          "center": [
+            -892.084,
+            1.8,
+            -125.688
+          ],
+          "outward": [
+            0.6,
+            0,
+            -0.8
+          ]
+        },
+        {
+          "center": [
+            -887.38,
+            1.8,
+            -122.16
+          ],
+          "outward": [
+            0.6,
+            0,
+            -0.8
+          ]
+        },
+        {
+          "center": [
+            -880.66,
+            1.8,
+            -117.12
+          ],
+          "outward": [
+            0.6,
+            0,
+            -0.8
+          ]
+        },
+        {
+          "center": [
+            -875.956,
+            1.8,
+            -113.592
+          ],
+          "outward": [
+            0.6,
+            0,
+            -0.8
+          ]
+        }
+      ],
+      "single_storey": true,
+      "depth_m": 15
+    }
+  ],
+  "camera": {
+    "fov": 44.0,
+    "target": [
+      -837.2,
+      1.5,
+      -130.4
+    ],
+    "position": [
+      -917.0,
+      38.0,
+      -39.0
+    ]
+  },
+  "floor_height_m": 0.1,
+  "materials": {
+    "stone": {
+      "roughness": 0.86,
+      "color": [
+        0.22,
+        0.28,
+        0.31
+      ]
+    },
+    "coral": {
+      "roughness": 0.88,
+      "color": [
+        0.74,
+        0.36,
+        0.27
+      ]
+    },
+    "teal": {
+      "resource": "sea_green_roof",
+      "color": [
+        0.1,
+        0.47,
+        0.49
+      ]
+    },
+    "bronze": {
+      "roughness": 0.46,
+      "metallic": 0.48,
+      "color": [
+        0.24,
+        0.2,
+        0.15
+      ]
+    },
+    "timber": {
+      "resource": "honey_timber",
+      "color": [
+        0.62,
+        0.36,
+        0.16
+      ]
+    },
+    "lamp": {
+      "roughness": 0.7,
+      "emission": 0.8,
+      "color": [
+        1.0,
+        0.71,
+        0.34
+      ]
+    },
+    "sea_glass": {
+      "roughness": 0.2,
+      "metallic": 0.12,
+      "color": [
+        0.035,
+        0.28,
+        0.35
+      ]
+    },
+    "ivory": {
+      "resource": "cool_white_wall",
+      "color": [
+        0.92,
+        0.95,
+        0.96
+      ]
+    },
+    "wall_concrete": {
+      "resource": "cool_white_wall",
+      "color": [
+        0.9,
+        0.94,
+        0.95
+      ]
+    }
+  },
+  "interactions": {
+    "furniture": [
+      {
+        "position": [
+          -832.59,
+          0.1,
+          -131.13
+        ],
+        "name_zh": "三角石座",
+        "surface_height": 0.42,
+        "anchors": [
+          {
+            "source_id": "1c06cf45-11a9-4a05-9151-95cd8c4b79c0",
+            "name": "Anchor_Seat",
+            "forward": [
+              -0.6,
+              0,
+              0.8
+            ],
+            "position": [
+              -832.59,
+              0.52,
+              -131.13
+            ]
+          },
+          {
+            "source_id": "3ec94628-63ad-4e60-b38c-49ebdda182be",
+            "name": "Anchor_Front",
+            "forward": [
+              0.6,
+              0,
+              -0.8
+            ],
+            "position": [
+              -833.19,
+              0.1,
+              -130.33
+            ]
+          }
+        ],
+        "geometry_ids": [
+          "99956866-db6c-4738-9fbe-ef095dc68395",
+          "d9b050bb-8d78-411e-9901-e7a80089d765"
+        ],
+        "interaction_status": "anchors_ready",
+        "forward": [
+          -0.6,
+          0,
+          0.8
+        ],
+        "type": "chair",
+        "instance_id": "sandbar_pavilion_1109_seat_01",
+        "usable_surface": {
+          "depth_m": 0.45,
+          "center_local": [
+            0,
+            0.42,
+            0
+          ],
+          "width_m": 0.9
+        },
+        "motion_profiles": [],
+        "id": "seat_01"
+      },
+      {
+        "position": [
+          -828.91,
+          0.1,
+          -128.37
+        ],
+        "name_zh": "三角石座",
+        "surface_height": 0.42,
+        "anchors": [
+          {
+            "source_id": "ad2b7e37-29c0-4d98-8358-ee792c572a21",
+            "name": "Anchor_Seat",
+            "forward": [
+              -0.6,
+              0,
+              0.8
+            ],
+            "position": [
+              -828.91,
+              0.52,
+              -128.37
+            ]
+          },
+          {
+            "source_id": "c7043df2-e00d-4be6-a5af-804fbff1124f",
+            "name": "Anchor_Front",
+            "forward": [
+              0.6,
+              0,
+              -0.8
+            ],
+            "position": [
+              -829.51,
+              0.1,
+              -127.57
+            ]
+          }
+        ],
+        "geometry_ids": [
+          "e7c78313-5eae-43bb-ac34-077d3a5469f7",
+          "28144702-d34f-46bf-8df7-178fbd3e515f"
+        ],
+        "interaction_status": "anchors_ready",
+        "forward": [
+          -0.6,
+          0,
+          0.8
+        ],
+        "type": "chair",
+        "instance_id": "sandbar_pavilion_1109_seat_02",
+        "usable_surface": {
+          "depth_m": 0.45,
+          "center_local": [
+            0,
+            0.42,
+            0
+          ],
+          "width_m": 0.9
+        },
+        "motion_profiles": [],
+        "id": "seat_02"
+      },
+      {
+        "position": [
+          -829.73,
+          0.1,
+          -130.61
+        ],
+        "name_zh": "折角石桌",
+        "surface_height": 0.838,
+        "anchors": [
+          {
+            "source_id": "ec23b22e-4fd9-425b-876b-16e83a6bc297",
+            "name": "Anchor_Desk_Surface",
+            "forward": [
+              -0.6,
+              0,
+              0.8
+            ],
+            "position": [
+              -829.73,
+              0.938,
+              -130.61
+            ]
+          },
+          {
+            "source_id": "499395db-88fb-4b0f-bdcf-341dea7d8226",
+            "name": "Anchor_Front",
+            "forward": [
+              0.6,
+              0,
+              -0.8
+            ],
+            "position": [
+              -830.462,
+              0.1,
+              -129.634
+            ]
+          }
+        ],
+        "geometry_ids": [
+          "e39c47d0-eaf4-4e02-826a-b3e185e34395",
+          "b6fcff19-fe91-4d51-a854-0a828411322e"
+        ],
+        "interaction_status": "anchors_ready",
+        "forward": [
+          -0.6,
+          0,
+          0.8
+        ],
+        "type": "desk",
+        "instance_id": "sandbar_pavilion_1109_desk_01",
+        "usable_surface": {
+          "depth_m": 0.45,
+          "center_local": [
+            0,
+            0.838,
+            0
+          ],
+          "width_m": 1.1
+        },
+        "motion_profiles": [],
+        "id": "desk_01"
+      },
+      {
+        "position": [
+          -889.48,
+          0.1,
+          -112.36
+        ],
+        "name_zh": "咖啡木桌",
+        "surface_height": 0.838,
+        "anchors": [
+          {
+            "source_id": "ddbff42c-95c1-413a-837f-0bc4acf95403",
+            "name": "Anchor_Desk_Surface",
+            "forward": [
+              -0.6,
+              0,
+              0.8
+            ],
+            "position": [
+              -889.48,
+              0.938,
+              -112.36
+            ]
+          },
+          {
+            "source_id": "7a7bf42e-5943-44c1-9c50-a4a2becb858c",
+            "name": "Anchor_Front",
+            "forward": [
+              0.6,
+              0,
+              -0.8
+            ],
+            "position": [
+              -890.212,
+              0.1,
+              -111.384
+            ]
+          }
+        ],
+        "geometry_ids": [
+          "0b8cc4db-3582-4f50-8ff8-934447656fa7",
+          "210cd928-2c44-44f6-a214-bb66d9d9e7d4"
+        ],
+        "interaction_status": "anchors_ready",
+        "forward": [
+          -0.6,
+          0,
+          0.8
+        ],
+        "type": "desk",
+        "instance_id": "sandbar_pavilion_1109_cafe_desk",
+        "usable_surface": {
+          "depth_m": 0.45,
+          "center_local": [
+            0,
+            0.838,
+            0
+          ],
+          "width_m": 1.1
+        },
+        "motion_profiles": [],
+        "id": "cafe_desk"
+      },
+      {
+        "position": [
+          -890.9,
+          0.1,
+          -113.8
+        ],
+        "name_zh": "咖啡露台座椅",
+        "surface_height": 0.42,
+        "anchors": [
+          {
+            "source_id": "c8e3cffc-70b3-4224-80cf-8a0efdd5e031",
+            "name": "Anchor_Seat",
+            "forward": [
+              -0.6,
+              0,
+              0.8
+            ],
+            "position": [
+              -890.9,
+              0.52,
+              -113.8
+            ]
+          },
+          {
+            "source_id": "937c0900-d3aa-473c-a757-f6bb13bc2197",
+            "name": "Anchor_Front",
+            "forward": [
+              0.6,
+              0,
+              -0.8
+            ],
+            "position": [
+              -891.41,
+              0.1,
+              -113.12
+            ]
+          }
+        ],
+        "geometry_ids": [
+          "4c82bb44-15df-4715-ba8e-a2c24403ca95",
+          "b3e6b527-af9a-4098-9415-fb8ad9bf76b0",
+          "9d548f6a-ad75-475a-a3b4-04843f06e7fd"
+        ],
+        "interaction_status": "anchors_ready",
+        "forward": [
+          -0.6,
+          0,
+          0.8
+        ],
+        "type": "chair",
+        "instance_id": "sandbar_pavilion_1109_cafe_seat_01",
+        "usable_surface": {
+          "depth_m": 0.45,
+          "center_local": [
+            0,
+            0.42,
+            0
+          ],
+          "width_m": 0.6
+        },
+        "motion_profiles": [],
+        "id": "cafe_seat_01"
+      },
+      {
+        "position": [
+          -887.7,
+          0.1,
+          -111.4
+        ],
+        "name_zh": "咖啡露台座椅",
+        "surface_height": 0.42,
+        "anchors": [
+          {
+            "source_id": "461f5591-941b-42a4-94b1-c81d0deba5a0",
+            "name": "Anchor_Seat",
+            "forward": [
+              -0.6,
+              0,
+              0.8
+            ],
+            "position": [
+              -887.7,
+              0.52,
+              -111.4
+            ]
+          },
+          {
+            "source_id": "f188aa4b-6146-4de8-a866-3a4bbc62ba0e",
+            "name": "Anchor_Front",
+            "forward": [
+              0.6,
+              0,
+              -0.8
+            ],
+            "position": [
+              -888.21,
+              0.1,
+              -110.72
+            ]
+          }
+        ],
+        "geometry_ids": [
+          "9686a277-b422-41ce-8537-08da6fcceac8",
+          "00102391-e8f8-4d80-85fb-4b06eb35b51d",
+          "f6d8e89a-6f39-49d4-bc7c-a265dc9b67f6"
+        ],
+        "interaction_status": "anchors_ready",
+        "forward": [
+          -0.6,
+          0,
+          0.8
+        ],
+        "type": "chair",
+        "instance_id": "sandbar_pavilion_1109_cafe_seat_02",
+        "usable_surface": {
+          "depth_m": 0.45,
+          "center_local": [
+            0,
+            0.42,
+            0
+          ],
+          "width_m": 0.6
+        },
+        "motion_profiles": [],
+        "id": "cafe_seat_02"
+      },
+      {
+        "position": [
+          -880.4,
+          0.0,
+          -92.8
+        ],
+        "name_zh": "沙洲躺椅",
+        "surface_height": 0.46,
+        "anchors": [
+          {
+            "source_id": "4e8a7c58-6020-40ce-960d-4d511f8f58d9",
+            "name": "Anchor_Bed_Center",
+            "forward": [
+              -0.6,
+              0,
+              0.8
+            ],
+            "position": [
+              -880.4,
+              0.46,
+              -92.8
+            ]
+          },
+          {
+            "source_id": "0a1c2b64-bc1d-4826-99bb-317aab0df86a",
+            "name": "Anchor_Front",
+            "forward": [
+              0.6,
+              0,
+              -0.8
+            ],
+            "position": [
+              -881.39,
+              0.0,
+              -91.48
+            ]
+          }
+        ],
+        "geometry_ids": [
+          "c0c65152-5004-4130-b8ee-4c0244955cbd",
+          "227a4019-7523-492e-af5c-60d7e2a9c8b7",
+          "c75529cd-274e-4b23-8441-2acdba1983fd"
+        ],
+        "interaction_status": "anchors_ready",
+        "forward": [
+          -0.6,
+          0,
+          0.8
+        ],
+        "type": "bed",
+        "instance_id": "sandbar_pavilion_1109_lounger_01",
+        "usable_surface": {
+          "depth_m": 1.1,
+          "center_local": [
+            0,
+            0.46,
+            0
+          ],
+          "width_m": 0.65
+        },
+        "motion_profiles": [],
+        "id": "lounger_01"
+      },
+      {
+        "position": [
+          -878.4,
+          0.0,
+          -91.3
+        ],
+        "name_zh": "沙洲躺椅",
+        "surface_height": 0.46,
+        "anchors": [
+          {
+            "source_id": "8d9a81d4-86a3-4e42-9413-330ea14e6160",
+            "name": "Anchor_Bed_Center",
+            "forward": [
+              -0.6,
+              0,
+              0.8
+            ],
+            "position": [
+              -878.4,
+              0.46,
+              -91.3
+            ]
+          },
+          {
+            "source_id": "a2c53b74-711c-4ac0-a734-08a697139c90",
+            "name": "Anchor_Front",
+            "forward": [
+              0.6,
+              0,
+              -0.8
+            ],
+            "position": [
+              -879.39,
+              0.0,
+              -89.98
+            ]
+          }
+        ],
+        "geometry_ids": [
+          "a5ab4581-5a5c-4050-b672-e21aa470c540",
+          "3fc4ced9-aa77-4d28-b38b-d0aac713218b",
+          "12952e08-8114-431f-a0ab-1bfa9807278d"
+        ],
+        "interaction_status": "anchors_ready",
+        "forward": [
+          -0.6,
+          0,
+          0.8
+        ],
+        "type": "bed",
+        "instance_id": "sandbar_pavilion_1109_lounger_02",
+        "usable_surface": {
+          "depth_m": 1.1,
+          "center_local": [
+            0,
+            0.46,
+            0
+          ],
+          "width_m": 0.65
+        },
+        "motion_profiles": [],
+        "id": "lounger_02"
+      }
+    ]
+  },
+  "interaction_status": "anchors_ready",
+  "forward": [
+    -0.6,
+    0,
+    0.8
+  ],
+  "objects": [
+    {
+      "building_id": "pavilion",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": false,
+      "category": "floor",
+      "kind": "Structure",
+      "name": "LowAngularPlinth",
+      "collision": true,
+      "id": "efac3609-5b8d-4f28-b1eb-fc5b9570b9af",
+      "vertex_count": 42,
+      "triangle_count": 24
+    },
+    {
+      "building_id": "pavilion",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "ivory",
+      "grain": "y",
+      "render": true,
+      "category": "roof",
+      "kind": "Structure",
+      "name": "MainFoldWest",
+      "collision": true,
+      "id": "11e067ec-4647-4b9f-8691-cf78bce99f21",
+      "vertex_count": 18,
+      "triangle_count": 8
+    },
+    {
+      "building_id": "pavilion",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "ivory",
+      "grain": "y",
+      "render": true,
+      "category": "roof",
+      "kind": "Structure",
+      "name": "MainFoldEastBrokenTip",
+      "collision": true,
+      "id": "99333158-d427-4d84-9a29-d8c044d9bbfb",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "pavilion",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "ivory",
+      "grain": "y",
+      "render": true,
+      "category": "roof",
+      "kind": "Structure",
+      "name": "SmallFoldWest",
+      "collision": true,
+      "id": "289699b1-153e-4ecb-aea2-5d047730eaf6",
+      "vertex_count": 18,
+      "triangle_count": 8
+    },
+    {
+      "building_id": "pavilion",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "ivory",
+      "grain": "y",
+      "render": true,
+      "category": "roof",
+      "kind": "Structure",
+      "name": "SmallFoldEast",
+      "collision": true,
+      "id": "a1bcc988-0385-47ab-9150-235af02ad000",
+      "vertex_count": 18,
+      "triangle_count": 8
+    },
+    {
+      "building_id": "pavilion",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "bronze",
+      "grain": "y",
+      "render": true,
+      "category": "frame",
+      "kind": "Structure",
+      "name": "BronzeFrameAndExposedRibs",
+      "collision": true,
+      "id": "8afafdcd-cf42-4416-9637-306624ff6700",
+      "vertex_count": 528,
+      "triangle_count": 264
+    },
+    {
+      "building_id": "pavilion",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "timber",
+      "grain": "x",
+      "render": true,
+      "category": "seat",
+      "kind": "Structure",
+      "name": "seat_01_Surface",
+      "collision": true,
+      "id": "99956866-db6c-4738-9fbe-ef095dc68395",
+      "vertex_count": 18,
+      "triangle_count": 8
+    },
+    {
+      "building_id": "pavilion",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "seat",
+      "kind": "Structure",
+      "name": "seat_01_Base",
+      "collision": true,
+      "id": "d9b050bb-8d78-411e-9901-e7a80089d765",
+      "vertex_count": 18,
+      "triangle_count": 8
+    },
+    {
+      "building_id": "pavilion",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "timber",
+      "grain": "x",
+      "render": true,
+      "category": "seat",
+      "kind": "Structure",
+      "name": "seat_02_Surface",
+      "collision": true,
+      "id": "e7c78313-5eae-43bb-ac34-077d3a5469f7",
+      "vertex_count": 18,
+      "triangle_count": 8
+    },
+    {
+      "building_id": "pavilion",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "seat",
+      "kind": "Structure",
+      "name": "seat_02_Base",
+      "collision": true,
+      "id": "28144702-d34f-46bf-8df7-178fbd3e515f",
+      "vertex_count": 18,
+      "triangle_count": 8
+    },
+    {
+      "building_id": "pavilion",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "timber",
+      "grain": "x",
+      "render": true,
+      "category": "desk",
+      "kind": "Structure",
+      "name": "desk_01_Surface",
+      "collision": true,
+      "id": "e39c47d0-eaf4-4e02-826a-b3e185e34395",
+      "vertex_count": 36,
+      "triangle_count": 20
+    },
+    {
+      "building_id": "pavilion",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "desk",
+      "kind": "Structure",
+      "name": "desk_01_Base",
+      "collision": true,
+      "id": "b6fcff19-fe91-4d51-a854-0a828411322e",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "pavilion",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "stepping_stone",
+      "kind": "Structure",
+      "name": "ShortStone_01",
+      "collision": true,
+      "id": "6fde21ca-1efd-452b-b1de-1775106e9919",
+      "vertex_count": 30,
+      "triangle_count": 16
+    },
+    {
+      "building_id": "pavilion",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "stepping_stone",
+      "kind": "Structure",
+      "name": "ShortStone_02",
+      "collision": true,
+      "id": "c39c1b50-fbf8-41ed-88db-1878963d1c59",
+      "vertex_count": 30,
+      "triangle_count": 16
+    },
+    {
+      "building_id": "pavilion",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "stepping_stone",
+      "kind": "Structure",
+      "name": "ShortStone_03",
+      "collision": true,
+      "id": "30d64f89-10aa-4bb0-83c6-7e289ee43e3f",
+      "vertex_count": 30,
+      "triangle_count": 16
+    },
+    {
+      "building_id": "pavilion",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "stepping_stone",
+      "kind": "Structure",
+      "name": "ShortStone_04",
+      "collision": true,
+      "id": "d57f316f-66fe-4bca-bf2c-f89a0bfb2166",
+      "vertex_count": 30,
+      "triangle_count": 16
+    },
+    {
+      "building_id": "reception",
+      "texture_frame": [
+        0,
+        -49,
+        0
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": false,
+      "category": "floor",
+      "kind": "Structure",
+      "name": "reception_Floor",
+      "collision": true,
+      "id": "27fc7be9-7ae4-4c34-a16c-10388d630ca1",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "reception",
+      "texture_frame": [
+        0,
+        -49,
+        0
+      ],
+      "material_key": "timber",
+      "grain": "z",
+      "render": true,
+      "category": "deck",
+      "kind": "Structure",
+      "name": "reception_Deck",
+      "collision": false,
+      "id": "0fe35af7-96d2-45b1-b6cd-19db495f710b",
+      "vertex_count": 4800,
+      "triangle_count": 2400
+    },
+    {
+      "building_id": "reception",
+      "texture_frame": [
+        0,
+        -49,
+        0
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "deck",
+      "kind": "Structure",
+      "name": "reception_DeckBacking",
+      "collision": false,
+      "id": "6f97cc8c-7d0f-4ae0-b893-44974d3d76a1",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "reception",
+      "texture_frame": [
+        0,
+        -49,
+        0
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "floor",
+      "kind": "Structure",
+      "name": "reception_InteriorFloor",
+      "collision": false,
+      "id": "92a78953-a3c7-4187-9328-c5b97ad12011",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "reception",
+      "texture_frame": [
+        0,
+        -49,
+        0
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "entry_apron",
+      "kind": "Structure",
+      "name": "reception_EntryApron",
+      "collision": true,
+      "id": "a56bf382-97e8-496b-b334-6f79adfb848e",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "reception",
+      "texture_frame": [
+        0,
+        -49,
+        0
+      ],
+      "material_key": "bronze",
+      "grain": "y",
+      "render": true,
+      "category": "bronze",
+      "kind": "Structure",
+      "name": "reception_bronze_y_Solid",
+      "collision": true,
+      "id": "002a8fe0-d83a-4fc4-ac4b-c7e4b977ff0a",
+      "vertex_count": 384,
+      "triangle_count": 192
+    },
+    {
+      "building_id": "reception",
+      "texture_frame": [
+        0,
+        -49,
+        0
+      ],
+      "material_key": "coral",
+      "grain": "y",
+      "render": true,
+      "category": "coral",
+      "kind": "Structure",
+      "name": "reception_coral_y_Solid",
+      "collision": true,
+      "id": "1aa64b09-aa28-4a17-8536-c69f1e74eb2a",
+      "vertex_count": 48,
+      "triangle_count": 24
+    },
+    {
+      "building_id": "reception",
+      "texture_frame": [
+        0,
+        -49,
+        0
+      ],
+      "material_key": "ivory",
+      "grain": "y",
+      "render": true,
+      "category": "ivory",
+      "kind": "Structure",
+      "name": "reception_ivory_y_Detail",
+      "collision": false,
+      "id": "6e3d82f4-143b-49e2-93bc-6b20d8898f6c",
+      "vertex_count": 215,
+      "triangle_count": 96
+    },
+    {
+      "building_id": "reception",
+      "texture_frame": [
+        0,
+        -49,
+        0
+      ],
+      "material_key": "ivory",
+      "grain": "z",
+      "render": true,
+      "category": "ivory",
+      "kind": "Structure",
+      "name": "reception_ivory_z_Detail",
+      "collision": false,
+      "id": "17402952-e12b-4a01-be6a-6aa57acbcb78",
+      "vertex_count": 1440,
+      "triangle_count": 720
+    },
+    {
+      "building_id": "reception",
+      "texture_frame": [
+        0,
+        -49,
+        0
+      ],
+      "material_key": "ivory",
+      "grain": "x",
+      "render": true,
+      "category": "ivory",
+      "kind": "Structure",
+      "name": "reception_ivory_x_Solid",
+      "collision": true,
+      "id": "f6537ea9-39e1-47e0-be1a-1b171fea6d63",
+      "vertex_count": 192,
+      "triangle_count": 96
+    },
+    {
+      "building_id": "reception",
+      "texture_frame": [
+        0,
+        -49,
+        0
+      ],
+      "material_key": "ivory",
+      "grain": "y",
+      "render": true,
+      "category": "ivory",
+      "kind": "Structure",
+      "name": "reception_ivory_y_Solid",
+      "collision": true,
+      "id": "1b62fbf8-7f7c-4421-b006-a918afbffb0e",
+      "vertex_count": 432,
+      "triangle_count": 216
+    },
+    {
+      "building_id": "reception",
+      "texture_frame": [
+        0,
+        -49,
+        0
+      ],
+      "material_key": "ivory",
+      "grain": "z",
+      "render": true,
+      "category": "ivory",
+      "kind": "Structure",
+      "name": "reception_ivory_z_Solid",
+      "collision": true,
+      "id": "ca1f4ac5-d114-4be2-a644-be5e48fb582a",
+      "vertex_count": 220,
+      "triangle_count": 108
+    },
+    {
+      "building_id": "reception",
+      "texture_frame": [
+        0,
+        -49,
+        0
+      ],
+      "material_key": "lamp",
+      "grain": "y",
+      "render": true,
+      "category": "lamp",
+      "kind": "Structure",
+      "name": "reception_lamp_y_Detail",
+      "collision": false,
+      "id": "b48e55b2-d434-4bbb-b225-993932aac184",
+      "vertex_count": 48,
+      "triangle_count": 24
+    },
+    {
+      "building_id": "reception",
+      "texture_frame": [
+        0,
+        -49,
+        0
+      ],
+      "material_key": "sea_glass",
+      "grain": "y",
+      "render": true,
+      "category": "sea_glass",
+      "kind": "Structure",
+      "name": "reception_sea_glass_y_Solid",
+      "collision": true,
+      "id": "2b066b9c-5b46-4153-ab71-277a9f9ad1f3",
+      "vertex_count": 240,
+      "triangle_count": 120
+    },
+    {
+      "building_id": "reception",
+      "texture_frame": [
+        0,
+        -49,
+        0
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "stone",
+      "kind": "Structure",
+      "name": "reception_stone_y_Solid",
+      "collision": true,
+      "id": "6a82eb96-df6b-4c60-8255-0d3397aa601d",
+      "vertex_count": 386,
+      "triangle_count": 192
+    },
+    {
+      "building_id": "reception",
+      "texture_frame": [
+        0,
+        -49,
+        0
+      ],
+      "material_key": "teal",
+      "grain": "z",
+      "render": true,
+      "category": "teal",
+      "kind": "Structure",
+      "name": "reception_teal_z_Detail",
+      "collision": false,
+      "id": "f07b0f96-7cf6-47c1-9a05-cb4971346f83",
+      "vertex_count": 1296,
+      "triangle_count": 648
+    },
+    {
+      "building_id": "reception",
+      "texture_frame": [
+        0,
+        -49,
+        0
+      ],
+      "material_key": "teal",
+      "grain": "z",
+      "render": true,
+      "category": "teal",
+      "kind": "Structure",
+      "name": "reception_teal_z_Solid",
+      "collision": true,
+      "id": "bac17ec3-e839-4344-9e8a-db9991e9344d",
+      "vertex_count": 28,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "reception",
+      "texture_frame": [
+        0,
+        -49,
+        0
+      ],
+      "material_key": "timber",
+      "grain": "x",
+      "render": true,
+      "category": "timber",
+      "kind": "Structure",
+      "name": "reception_timber_x_Detail",
+      "collision": false,
+      "id": "c24b29c0-0146-4814-9fa8-ae05503d62a5",
+      "vertex_count": 60,
+      "triangle_count": 24
+    },
+    {
+      "building_id": "reception",
+      "texture_frame": [
+        0,
+        -49,
+        0
+      ],
+      "material_key": "timber",
+      "grain": "z",
+      "render": true,
+      "category": "timber",
+      "kind": "Structure",
+      "name": "reception_timber_z_Detail",
+      "collision": false,
+      "id": "a44c8864-30f4-4cf4-910a-10803f8f76fa",
+      "vertex_count": 96,
+      "triangle_count": 48
+    },
+    {
+      "building_id": "reception",
+      "texture_frame": [
+        0,
+        -49,
+        0
+      ],
+      "material_key": "timber",
+      "grain": "x",
+      "render": true,
+      "category": "timber",
+      "kind": "Structure",
+      "name": "reception_timber_x_Solid",
+      "collision": true,
+      "id": "dce94705-a5f2-4c62-a879-7f8f7cd9a09d",
+      "vertex_count": 168,
+      "triangle_count": 84
+    },
+    {
+      "building_id": "reception",
+      "texture_frame": [
+        0,
+        -49,
+        0
+      ],
+      "material_key": "timber",
+      "grain": "y",
+      "render": true,
+      "category": "timber",
+      "kind": "Structure",
+      "name": "reception_timber_y_Solid",
+      "collision": true,
+      "id": "1ea4cf46-5cb5-42e7-afb8-8c2d88e44b14",
+      "vertex_count": 2196,
+      "triangle_count": 1080
+    },
+    {
+      "building_id": "reception",
+      "texture_frame": [
+        0,
+        -49,
+        0
+      ],
+      "material_key": "timber",
+      "grain": "z",
+      "render": true,
+      "category": "timber",
+      "kind": "Structure",
+      "name": "reception_timber_z_Solid",
+      "collision": true,
+      "id": "ee4a042c-5f2f-426a-9045-36cec5bdd424",
+      "vertex_count": 96,
+      "triangle_count": 48
+    },
+    {
+      "building_id": "lodge_a",
+      "texture_frame": [
+        -55,
+        -4,
+        1.5707963267948966
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": false,
+      "category": "floor",
+      "kind": "Structure",
+      "name": "lodge_a_Floor",
+      "collision": true,
+      "id": "141ad46b-d0f4-403f-b25e-afcd62adf1a4",
+      "vertex_count": 40,
+      "triangle_count": 20
+    },
+    {
+      "building_id": "lodge_a",
+      "texture_frame": [
+        -55,
+        -4,
+        1.5707963267948966
+      ],
+      "material_key": "timber",
+      "grain": "z",
+      "render": true,
+      "category": "deck",
+      "kind": "Structure",
+      "name": "lodge_a_Deck",
+      "collision": false,
+      "id": "c1cd15d5-a92d-4c84-a900-278a89dce207",
+      "vertex_count": 3090,
+      "triangle_count": 1544
+    },
+    {
+      "building_id": "lodge_a",
+      "texture_frame": [
+        -55,
+        -4,
+        1.5707963267948966
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "deck",
+      "kind": "Structure",
+      "name": "lodge_a_DeckBacking",
+      "collision": false,
+      "id": "5bc4d79f-57b5-4780-962f-73a29d98ad5b",
+      "vertex_count": 40,
+      "triangle_count": 20
+    },
+    {
+      "building_id": "lodge_a",
+      "texture_frame": [
+        -55,
+        -4,
+        1.5707963267948966
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "floor",
+      "kind": "Structure",
+      "name": "lodge_a_InteriorFloor",
+      "collision": false,
+      "id": "3ea9a002-9788-44f6-b4d1-a890aef022bb",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "lodge_a",
+      "texture_frame": [
+        -55,
+        -4,
+        1.5707963267948966
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "entry_apron",
+      "kind": "Structure",
+      "name": "lodge_a_EntryApron",
+      "collision": true,
+      "id": "ef462f59-2da7-4300-aa40-e8a8d2365dad",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "lodge_a",
+      "texture_frame": [
+        -55,
+        -4,
+        1.5707963267948966
+      ],
+      "material_key": "bronze",
+      "grain": "y",
+      "render": true,
+      "category": "bronze",
+      "kind": "Structure",
+      "name": "lodge_a_bronze_y_Solid",
+      "collision": true,
+      "id": "9ddeabb6-dd0c-47cb-89f4-b56a369632f5",
+      "vertex_count": 240,
+      "triangle_count": 120
+    },
+    {
+      "building_id": "lodge_a",
+      "texture_frame": [
+        -55,
+        -4,
+        1.5707963267948966
+      ],
+      "material_key": "coral",
+      "grain": "y",
+      "render": true,
+      "category": "coral",
+      "kind": "Structure",
+      "name": "lodge_a_coral_y_Solid",
+      "collision": true,
+      "id": "95d62454-4241-418d-888f-589a49c26948",
+      "vertex_count": 48,
+      "triangle_count": 24
+    },
+    {
+      "building_id": "lodge_a",
+      "texture_frame": [
+        -55,
+        -4,
+        1.5707963267948966
+      ],
+      "material_key": "ivory",
+      "grain": "y",
+      "render": true,
+      "category": "ivory",
+      "kind": "Structure",
+      "name": "lodge_a_ivory_y_Detail",
+      "collision": false,
+      "id": "0e1314c4-545f-4272-b019-d3a79238dfbf",
+      "vertex_count": 311,
+      "triangle_count": 144
+    },
+    {
+      "building_id": "lodge_a",
+      "texture_frame": [
+        -55,
+        -4,
+        1.5707963267948966
+      ],
+      "material_key": "ivory",
+      "grain": "x",
+      "render": true,
+      "category": "ivory",
+      "kind": "Structure",
+      "name": "lodge_a_ivory_x_Solid",
+      "collision": true,
+      "id": "29572bf6-fd2b-4bdd-aaf0-9bf8146e1254",
+      "vertex_count": 192,
+      "triangle_count": 96
+    },
+    {
+      "building_id": "lodge_a",
+      "texture_frame": [
+        -55,
+        -4,
+        1.5707963267948966
+      ],
+      "material_key": "ivory",
+      "grain": "y",
+      "render": true,
+      "category": "ivory",
+      "kind": "Structure",
+      "name": "lodge_a_ivory_y_Solid",
+      "collision": true,
+      "id": "cb42b36a-3712-498e-b293-c5712f5e1933",
+      "vertex_count": 432,
+      "triangle_count": 216
+    },
+    {
+      "building_id": "lodge_a",
+      "texture_frame": [
+        -55,
+        -4,
+        1.5707963267948966
+      ],
+      "material_key": "ivory",
+      "grain": "z",
+      "render": true,
+      "category": "ivory",
+      "kind": "Structure",
+      "name": "lodge_a_ivory_z_Solid",
+      "collision": true,
+      "id": "eca2cd98-a139-41bd-8638-9537b6d7b5d8",
+      "vertex_count": 192,
+      "triangle_count": 96
+    },
+    {
+      "building_id": "lodge_a",
+      "texture_frame": [
+        -55,
+        -4,
+        1.5707963267948966
+      ],
+      "material_key": "lamp",
+      "grain": "y",
+      "render": true,
+      "category": "lamp",
+      "kind": "Structure",
+      "name": "lodge_a_lamp_y_Detail",
+      "collision": false,
+      "id": "cae59482-0f97-41ad-8f02-53eab600bcb6",
+      "vertex_count": 48,
+      "triangle_count": 24
+    },
+    {
+      "building_id": "lodge_a",
+      "texture_frame": [
+        -55,
+        -4,
+        1.5707963267948966
+      ],
+      "material_key": "sea_glass",
+      "grain": "y",
+      "render": true,
+      "category": "sea_glass",
+      "kind": "Structure",
+      "name": "lodge_a_sea_glass_y_Solid",
+      "collision": true,
+      "id": "fb9a2e94-0a83-4f2a-ae32-3b3eb22609e1",
+      "vertex_count": 240,
+      "triangle_count": 120
+    },
+    {
+      "building_id": "lodge_a",
+      "texture_frame": [
+        -55,
+        -4,
+        1.5707963267948966
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "stone",
+      "kind": "Structure",
+      "name": "lodge_a_stone_y_Solid",
+      "collision": true,
+      "id": "a40cae1b-2270-4099-a72c-c671a907a642",
+      "vertex_count": 411,
+      "triangle_count": 204
+    },
+    {
+      "building_id": "lodge_a",
+      "texture_frame": [
+        -55,
+        -4,
+        1.5707963267948966
+      ],
+      "material_key": "teal",
+      "grain": "z",
+      "render": true,
+      "category": "teal",
+      "kind": "Structure",
+      "name": "lodge_a_teal_z_Detail",
+      "collision": false,
+      "id": "96a808a3-3be2-43d9-b890-8d60c2ecfda5",
+      "vertex_count": 2280,
+      "triangle_count": 1140
+    },
+    {
+      "building_id": "lodge_a",
+      "texture_frame": [
+        -55,
+        -4,
+        1.5707963267948966
+      ],
+      "material_key": "teal",
+      "grain": "z",
+      "render": true,
+      "category": "teal",
+      "kind": "Structure",
+      "name": "lodge_a_teal_z_Solid",
+      "collision": true,
+      "id": "6ba76235-0a84-41f2-9ffa-5f30463b7bea",
+      "vertex_count": 86,
+      "triangle_count": 36
+    },
+    {
+      "building_id": "lodge_a",
+      "texture_frame": [
+        -55,
+        -4,
+        1.5707963267948966
+      ],
+      "material_key": "timber",
+      "grain": "x",
+      "render": true,
+      "category": "timber",
+      "kind": "Structure",
+      "name": "lodge_a_timber_x_Detail",
+      "collision": false,
+      "id": "e049fcd0-71fc-4986-bcd4-174635e032c3",
+      "vertex_count": 86,
+      "triangle_count": 36
+    },
+    {
+      "building_id": "lodge_a",
+      "texture_frame": [
+        -55,
+        -4,
+        1.5707963267948966
+      ],
+      "material_key": "timber",
+      "grain": "z",
+      "render": true,
+      "category": "timber",
+      "kind": "Structure",
+      "name": "lodge_a_timber_z_Detail",
+      "collision": false,
+      "id": "28d5361a-10da-4634-b76b-262b58af86c3",
+      "vertex_count": 96,
+      "triangle_count": 48
+    },
+    {
+      "building_id": "lodge_a",
+      "texture_frame": [
+        -55,
+        -4,
+        1.5707963267948966
+      ],
+      "material_key": "timber",
+      "grain": "x",
+      "render": true,
+      "category": "timber",
+      "kind": "Structure",
+      "name": "lodge_a_timber_x_Solid",
+      "collision": true,
+      "id": "7794f9e3-ce41-4830-b4b1-0f4459e39daa",
+      "vertex_count": 168,
+      "triangle_count": 84
+    },
+    {
+      "building_id": "lodge_a",
+      "texture_frame": [
+        -55,
+        -4,
+        1.5707963267948966
+      ],
+      "material_key": "timber",
+      "grain": "y",
+      "render": true,
+      "category": "timber",
+      "kind": "Structure",
+      "name": "lodge_a_timber_y_Solid",
+      "collision": true,
+      "id": "ce5999b0-8893-4a23-877c-26ae69a60a45",
+      "vertex_count": 2559,
+      "triangle_count": 1260
+    },
+    {
+      "building_id": "lodge_a",
+      "texture_frame": [
+        -55,
+        -4,
+        1.5707963267948966
+      ],
+      "material_key": "timber",
+      "grain": "z",
+      "render": true,
+      "category": "timber",
+      "kind": "Structure",
+      "name": "lodge_a_timber_z_Solid",
+      "collision": true,
+      "id": "2ecd03fc-9be5-462f-b986-a9ac9c29f73c",
+      "vertex_count": 96,
+      "triangle_count": 48
+    },
+    {
+      "building_id": "lodge_b",
+      "texture_frame": [
+        55,
+        -2,
+        -1.5707963267948966
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": false,
+      "category": "floor",
+      "kind": "Structure",
+      "name": "lodge_b_Floor",
+      "collision": true,
+      "id": "fcafdf39-cc76-454f-942d-1582a601a5b8",
+      "vertex_count": 40,
+      "triangle_count": 20
+    },
+    {
+      "building_id": "lodge_b",
+      "texture_frame": [
+        55,
+        -2,
+        -1.5707963267948966
+      ],
+      "material_key": "timber",
+      "grain": "z",
+      "render": true,
+      "category": "deck",
+      "kind": "Structure",
+      "name": "lodge_b_Deck",
+      "collision": false,
+      "id": "bdab73dc-5bf7-4830-8beb-7d0cc3cb2ba1",
+      "vertex_count": 2994,
+      "triangle_count": 1496
+    },
+    {
+      "building_id": "lodge_b",
+      "texture_frame": [
+        55,
+        -2,
+        -1.5707963267948966
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "deck",
+      "kind": "Structure",
+      "name": "lodge_b_DeckBacking",
+      "collision": false,
+      "id": "496c53e5-f678-44c3-83a9-0d599df216e0",
+      "vertex_count": 40,
+      "triangle_count": 20
+    },
+    {
+      "building_id": "lodge_b",
+      "texture_frame": [
+        55,
+        -2,
+        -1.5707963267948966
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "floor",
+      "kind": "Structure",
+      "name": "lodge_b_InteriorFloor",
+      "collision": false,
+      "id": "a38b5e7a-2348-44ad-8b30-b1de0ca4204c",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "lodge_b",
+      "texture_frame": [
+        55,
+        -2,
+        -1.5707963267948966
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "entry_apron",
+      "kind": "Structure",
+      "name": "lodge_b_EntryApron",
+      "collision": true,
+      "id": "93037bd5-08b5-4db8-958f-aa726102ed74",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "lodge_b",
+      "texture_frame": [
+        55,
+        -2,
+        -1.5707963267948966
+      ],
+      "material_key": "bronze",
+      "grain": "y",
+      "render": true,
+      "category": "bronze",
+      "kind": "Structure",
+      "name": "lodge_b_bronze_y_Solid",
+      "collision": true,
+      "id": "d6fe68b6-57c7-4ca3-9bfb-feaf1c196626",
+      "vertex_count": 240,
+      "triangle_count": 120
+    },
+    {
+      "building_id": "lodge_b",
+      "texture_frame": [
+        55,
+        -2,
+        -1.5707963267948966
+      ],
+      "material_key": "coral",
+      "grain": "y",
+      "render": true,
+      "category": "coral",
+      "kind": "Structure",
+      "name": "lodge_b_coral_y_Solid",
+      "collision": true,
+      "id": "9ce37573-9479-44fd-8442-e076f9f5d63b",
+      "vertex_count": 48,
+      "triangle_count": 24
+    },
+    {
+      "building_id": "lodge_b",
+      "texture_frame": [
+        55,
+        -2,
+        -1.5707963267948966
+      ],
+      "material_key": "ivory",
+      "grain": "y",
+      "render": true,
+      "category": "ivory",
+      "kind": "Structure",
+      "name": "lodge_b_ivory_y_Detail",
+      "collision": false,
+      "id": "e79d2b7e-a058-47a4-bf69-f398f9924b5c",
+      "vertex_count": 310,
+      "triangle_count": 144
+    },
+    {
+      "building_id": "lodge_b",
+      "texture_frame": [
+        55,
+        -2,
+        -1.5707963267948966
+      ],
+      "material_key": "ivory",
+      "grain": "x",
+      "render": true,
+      "category": "ivory",
+      "kind": "Structure",
+      "name": "lodge_b_ivory_x_Solid",
+      "collision": true,
+      "id": "6ac3ae7a-43ac-4a6d-8582-5373210f4624",
+      "vertex_count": 192,
+      "triangle_count": 96
+    },
+    {
+      "building_id": "lodge_b",
+      "texture_frame": [
+        55,
+        -2,
+        -1.5707963267948966
+      ],
+      "material_key": "ivory",
+      "grain": "y",
+      "render": true,
+      "category": "ivory",
+      "kind": "Structure",
+      "name": "lodge_b_ivory_y_Solid",
+      "collision": true,
+      "id": "068e8566-ce06-42da-9e59-37596912d78a",
+      "vertex_count": 432,
+      "triangle_count": 216
+    },
+    {
+      "building_id": "lodge_b",
+      "texture_frame": [
+        55,
+        -2,
+        -1.5707963267948966
+      ],
+      "material_key": "ivory",
+      "grain": "z",
+      "render": true,
+      "category": "ivory",
+      "kind": "Structure",
+      "name": "lodge_b_ivory_z_Solid",
+      "collision": true,
+      "id": "1e6e974e-67ad-455c-a5e1-fa64392b801a",
+      "vertex_count": 192,
+      "triangle_count": 96
+    },
+    {
+      "building_id": "lodge_b",
+      "texture_frame": [
+        55,
+        -2,
+        -1.5707963267948966
+      ],
+      "material_key": "lamp",
+      "grain": "y",
+      "render": true,
+      "category": "lamp",
+      "kind": "Structure",
+      "name": "lodge_b_lamp_y_Detail",
+      "collision": false,
+      "id": "0e00dea2-34f0-4d86-aa02-8c3d50e9a892",
+      "vertex_count": 48,
+      "triangle_count": 24
+    },
+    {
+      "building_id": "lodge_b",
+      "texture_frame": [
+        55,
+        -2,
+        -1.5707963267948966
+      ],
+      "material_key": "sea_glass",
+      "grain": "y",
+      "render": true,
+      "category": "sea_glass",
+      "kind": "Structure",
+      "name": "lodge_b_sea_glass_y_Solid",
+      "collision": true,
+      "id": "086fb9b8-f65b-4d81-bfdb-57d694dc346a",
+      "vertex_count": 240,
+      "triangle_count": 120
+    },
+    {
+      "building_id": "lodge_b",
+      "texture_frame": [
+        55,
+        -2,
+        -1.5707963267948966
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "stone",
+      "kind": "Structure",
+      "name": "lodge_b_stone_y_Solid",
+      "collision": true,
+      "id": "7e15f1fa-e357-48a1-9763-4dabcfebdef1",
+      "vertex_count": 410,
+      "triangle_count": 204
+    },
+    {
+      "building_id": "lodge_b",
+      "texture_frame": [
+        55,
+        -2,
+        -1.5707963267948966
+      ],
+      "material_key": "teal",
+      "grain": "z",
+      "render": true,
+      "category": "teal",
+      "kind": "Structure",
+      "name": "lodge_b_teal_z_Detail",
+      "collision": false,
+      "id": "2f087ea0-0f81-45f7-8433-266ec139c058",
+      "vertex_count": 2280,
+      "triangle_count": 1140
+    },
+    {
+      "building_id": "lodge_b",
+      "texture_frame": [
+        55,
+        -2,
+        -1.5707963267948966
+      ],
+      "material_key": "teal",
+      "grain": "z",
+      "render": true,
+      "category": "teal",
+      "kind": "Structure",
+      "name": "lodge_b_teal_z_Solid",
+      "collision": true,
+      "id": "a9ba28c2-c7db-43c4-a35f-9ffa8d2ddc97",
+      "vertex_count": 88,
+      "triangle_count": 36
+    },
+    {
+      "building_id": "lodge_b",
+      "texture_frame": [
+        55,
+        -2,
+        -1.5707963267948966
+      ],
+      "material_key": "timber",
+      "grain": "x",
+      "render": true,
+      "category": "timber",
+      "kind": "Structure",
+      "name": "lodge_b_timber_x_Detail",
+      "collision": false,
+      "id": "16ffb99d-8157-49cb-97a5-557b6f3f343b",
+      "vertex_count": 88,
+      "triangle_count": 36
+    },
+    {
+      "building_id": "lodge_b",
+      "texture_frame": [
+        55,
+        -2,
+        -1.5707963267948966
+      ],
+      "material_key": "timber",
+      "grain": "z",
+      "render": true,
+      "category": "timber",
+      "kind": "Structure",
+      "name": "lodge_b_timber_z_Detail",
+      "collision": false,
+      "id": "2f2388fc-3371-414b-927c-aec0e1dd80c3",
+      "vertex_count": 96,
+      "triangle_count": 48
+    },
+    {
+      "building_id": "lodge_b",
+      "texture_frame": [
+        55,
+        -2,
+        -1.5707963267948966
+      ],
+      "material_key": "timber",
+      "grain": "x",
+      "render": true,
+      "category": "timber",
+      "kind": "Structure",
+      "name": "lodge_b_timber_x_Solid",
+      "collision": true,
+      "id": "0fe25919-8368-4851-9a77-feb95ec646fa",
+      "vertex_count": 168,
+      "triangle_count": 84
+    },
+    {
+      "building_id": "lodge_b",
+      "texture_frame": [
+        55,
+        -2,
+        -1.5707963267948966
+      ],
+      "material_key": "timber",
+      "grain": "y",
+      "render": true,
+      "category": "timber",
+      "kind": "Structure",
+      "name": "lodge_b_timber_y_Solid",
+      "collision": true,
+      "id": "c8b2c89b-b2e0-481a-93c3-673500bcbad5",
+      "vertex_count": 2549,
+      "triangle_count": 1260
+    },
+    {
+      "building_id": "lodge_b",
+      "texture_frame": [
+        55,
+        -2,
+        -1.5707963267948966
+      ],
+      "material_key": "timber",
+      "grain": "z",
+      "render": true,
+      "category": "timber",
+      "kind": "Structure",
+      "name": "lodge_b_timber_z_Solid",
+      "collision": true,
+      "id": "dd25c7b1-c107-4387-ad5b-a5740ab0ed26",
+      "vertex_count": 96,
+      "triangle_count": 48
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": false,
+      "category": "floor",
+      "kind": "Structure",
+      "name": "rest_hall_Floor",
+      "collision": true,
+      "id": "170f43ce-a6ad-4e37-a039-592077466114",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "timber",
+      "grain": "z",
+      "render": true,
+      "category": "deck",
+      "kind": "Structure",
+      "name": "rest_hall_Deck",
+      "collision": false,
+      "id": "324ec04e-4e65-4e68-9a26-2fdf11cc83e4",
+      "vertex_count": 3072,
+      "triangle_count": 1536
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "deck",
+      "kind": "Structure",
+      "name": "rest_hall_DeckBacking",
+      "collision": false,
+      "id": "0b6bee73-e8c6-4ba7-8814-3be6bf4f79aa",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "floor",
+      "kind": "Structure",
+      "name": "rest_hall_InteriorFloor",
+      "collision": false,
+      "id": "344b9b6c-dc06-40a2-a77f-71b7c7e5fe24",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "entry_apron",
+      "kind": "Structure",
+      "name": "rest_hall_EntryApron",
+      "collision": true,
+      "id": "e1faebbc-c6b6-4e68-8d74-c6169b015bbe",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "bronze",
+      "grain": "y",
+      "render": true,
+      "category": "bronze",
+      "kind": "Structure",
+      "name": "rest_hall_bronze_y_Solid",
+      "collision": true,
+      "id": "ef9161b8-544a-4c01-9da1-93f1f9818dbb",
+      "vertex_count": 240,
+      "triangle_count": 120
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "coral",
+      "grain": "y",
+      "render": true,
+      "category": "coral",
+      "kind": "Structure",
+      "name": "rest_hall_coral_y_Solid",
+      "collision": true,
+      "id": "9fc362ec-3a9d-465f-92b6-b450343fe0a2",
+      "vertex_count": 48,
+      "triangle_count": 24
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "ivory",
+      "grain": "y",
+      "render": true,
+      "category": "ivory",
+      "kind": "Structure",
+      "name": "rest_hall_ivory_y_Detail",
+      "collision": false,
+      "id": "4314000e-6107-4d2e-a562-9f94aaf2564d",
+      "vertex_count": 215,
+      "triangle_count": 96
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "ivory",
+      "grain": "x",
+      "render": true,
+      "category": "ivory",
+      "kind": "Structure",
+      "name": "rest_hall_ivory_x_Solid",
+      "collision": true,
+      "id": "2a6f1eef-9e02-4b3d-9074-e7b6d22a0755",
+      "vertex_count": 216,
+      "triangle_count": 108
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "ivory",
+      "grain": "y",
+      "render": true,
+      "category": "ivory",
+      "kind": "Structure",
+      "name": "rest_hall_ivory_y_Solid",
+      "collision": true,
+      "id": "9dd38385-c89f-4bd4-99d2-5fdb62bc7be2",
+      "vertex_count": 432,
+      "triangle_count": 216
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "ivory",
+      "grain": "z",
+      "render": true,
+      "category": "ivory",
+      "kind": "Structure",
+      "name": "rest_hall_ivory_z_Solid",
+      "collision": true,
+      "id": "7c370408-4b9a-471e-8f13-7d362a666bb1",
+      "vertex_count": 192,
+      "triangle_count": 96
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "lamp",
+      "grain": "y",
+      "render": true,
+      "category": "lamp",
+      "kind": "Structure",
+      "name": "rest_hall_lamp_y_Detail",
+      "collision": false,
+      "id": "53b0fa8b-5cc2-40dc-9c21-9a2401f84fd0",
+      "vertex_count": 48,
+      "triangle_count": 24
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "sea_glass",
+      "grain": "y",
+      "render": true,
+      "category": "sea_glass",
+      "kind": "Structure",
+      "name": "rest_hall_sea_glass_y_Solid",
+      "collision": true,
+      "id": "67375dae-9916-45c5-80f6-061818ef9360",
+      "vertex_count": 240,
+      "triangle_count": 120
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "stone",
+      "kind": "Structure",
+      "name": "rest_hall_stone_y_Solid",
+      "collision": true,
+      "id": "08c817a3-6ce4-4a1d-a995-f1e84e88e372",
+      "vertex_count": 362,
+      "triangle_count": 180
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "teal",
+      "grain": "z",
+      "render": true,
+      "category": "teal",
+      "kind": "Structure",
+      "name": "rest_hall_teal_z_Detail",
+      "collision": false,
+      "id": "b4bb7fe7-f958-489c-9b23-c5644b01a302",
+      "vertex_count": 1776,
+      "triangle_count": 888
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "teal",
+      "grain": "z",
+      "render": true,
+      "category": "teal",
+      "kind": "Structure",
+      "name": "rest_hall_teal_z_Solid",
+      "collision": true,
+      "id": "0c1916c9-23ff-4a0a-bebb-fab1a6d9f6f6",
+      "vertex_count": 60,
+      "triangle_count": 24
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "timber",
+      "grain": "x",
+      "render": true,
+      "category": "timber",
+      "kind": "Structure",
+      "name": "rest_hall_timber_x_Detail",
+      "collision": false,
+      "id": "37895c24-8fe5-43fa-8043-d1766d6289c9",
+      "vertex_count": 108,
+      "triangle_count": 48
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "timber",
+      "grain": "z",
+      "render": true,
+      "category": "timber",
+      "kind": "Structure",
+      "name": "rest_hall_timber_z_Detail",
+      "collision": false,
+      "id": "7ade4be3-8259-4d3d-833b-3a3d3a7fb506",
+      "vertex_count": 96,
+      "triangle_count": 48
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "timber",
+      "grain": "x",
+      "render": true,
+      "category": "timber",
+      "kind": "Structure",
+      "name": "rest_hall_timber_x_Solid",
+      "collision": true,
+      "id": "12f93861-fd21-4a37-b74f-97aae65a4a8b",
+      "vertex_count": 168,
+      "triangle_count": 84
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "timber",
+      "grain": "y",
+      "render": true,
+      "category": "timber",
+      "kind": "Structure",
+      "name": "rest_hall_timber_y_Solid",
+      "collision": true,
+      "id": "dce5bb51-4a1a-4228-bebd-26b3c88e9e09",
+      "vertex_count": 2196,
+      "triangle_count": 1080
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "timber",
+      "grain": "z",
+      "render": true,
+      "category": "timber",
+      "kind": "Structure",
+      "name": "rest_hall_timber_z_Solid",
+      "collision": true,
+      "id": "23f288dd-3917-4724-9561-74ba57f4bca9",
+      "vertex_count": 96,
+      "triangle_count": 48
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "timber",
+      "grain": "x",
+      "render": true,
+      "category": "desk",
+      "kind": "Structure",
+      "name": "cafe_desk_Surface",
+      "collision": true,
+      "id": "0b8cc4db-3582-4f50-8ff8-934447656fa7",
+      "vertex_count": 36,
+      "triangle_count": 20
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "bronze",
+      "grain": "y",
+      "render": true,
+      "category": "desk",
+      "kind": "Structure",
+      "name": "cafe_desk_Base",
+      "collision": true,
+      "id": "210cd928-2c44-44f6-a214-bb66d9d9e7d4",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "timber",
+      "grain": "y",
+      "render": true,
+      "category": "seat",
+      "kind": "Structure",
+      "name": "cafe_seat_01_Surface",
+      "collision": true,
+      "id": "4c82bb44-15df-4715-ba8e-a2c24403ca95",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "bronze",
+      "grain": "y",
+      "render": true,
+      "category": "seat",
+      "kind": "Structure",
+      "name": "cafe_seat_01_Base",
+      "collision": true,
+      "id": "b3e6b527-af9a-4098-9415-fb8ad9bf76b0",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "coral",
+      "grain": "y",
+      "render": true,
+      "category": "seat",
+      "kind": "Structure",
+      "name": "cafe_seat_01_Back",
+      "collision": true,
+      "id": "9d548f6a-ad75-475a-a3b4-04843f06e7fd",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "timber",
+      "grain": "y",
+      "render": true,
+      "category": "seat",
+      "kind": "Structure",
+      "name": "cafe_seat_02_Surface",
+      "collision": true,
+      "id": "9686a277-b422-41ce-8537-08da6fcceac8",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "bronze",
+      "grain": "y",
+      "render": true,
+      "category": "seat",
+      "kind": "Structure",
+      "name": "cafe_seat_02_Base",
+      "collision": true,
+      "id": "00102391-e8f8-4d80-85fb-4b06eb35b51d",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "rest_hall",
+      "texture_frame": [
+        -37,
+        48,
+        0
+      ],
+      "material_key": "coral",
+      "grain": "y",
+      "render": true,
+      "category": "seat",
+      "kind": "Structure",
+      "name": "cafe_seat_02_Back",
+      "collision": true,
+      "id": "f6d8e89a-6f39-49d4-bc7c-a265dc9b67f6",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "leisure",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "ivory",
+      "grain": "y",
+      "render": true,
+      "category": "bed",
+      "kind": "Structure",
+      "name": "lounger_01_Surface",
+      "collision": true,
+      "id": "c0c65152-5004-4130-b8ee-4c0244955cbd",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "leisure",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "timber",
+      "grain": "y",
+      "render": true,
+      "category": "bed",
+      "kind": "Structure",
+      "name": "lounger_01_Base",
+      "collision": true,
+      "id": "227a4019-7523-492e-af5c-60d7e2a9c8b7",
+      "vertex_count": 96,
+      "triangle_count": 48
+    },
+    {
+      "building_id": "leisure",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "coral",
+      "grain": "y",
+      "render": true,
+      "category": "bed",
+      "kind": "Structure",
+      "name": "lounger_01_Back",
+      "collision": true,
+      "id": "c75529cd-274e-4b23-8441-2acdba1983fd",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "leisure",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "ivory",
+      "grain": "y",
+      "render": true,
+      "category": "bed",
+      "kind": "Structure",
+      "name": "lounger_02_Surface",
+      "collision": true,
+      "id": "a5ab4581-5a5c-4050-b672-e21aa470c540",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "leisure",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "timber",
+      "grain": "y",
+      "render": true,
+      "category": "bed",
+      "kind": "Structure",
+      "name": "lounger_02_Base",
+      "collision": true,
+      "id": "3fc4ced9-aa77-4d28-b38b-d0aac713218b",
+      "vertex_count": 96,
+      "triangle_count": 48
+    },
+    {
+      "building_id": "leisure",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "coral",
+      "grain": "y",
+      "render": true,
+      "category": "bed",
+      "kind": "Structure",
+      "name": "lounger_02_Back",
+      "collision": true,
+      "id": "12952e08-8114-431f-a0ab-1bfa9807278d",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "leisure",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "bronze",
+      "grain": "y",
+      "render": true,
+      "category": "shade",
+      "kind": "Structure",
+      "name": "LeisureShadePole",
+      "collision": true,
+      "id": "802c9c67-22da-4526-975d-c4411534ac04",
+      "vertex_count": 24,
+      "triangle_count": 12
+    },
+    {
+      "building_id": "leisure",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "teal",
+      "grain": "y",
+      "render": true,
+      "category": "shade",
+      "kind": "Structure",
+      "name": "LeisureShadeCanopy",
+      "collision": false,
+      "id": "088982e3-6380-4266-b49d-7dfea5da3e2f",
+      "vertex_count": 166,
+      "triangle_count": 64
+    },
+    {
+      "building_id": "pavilion",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "timber",
+      "grain": "z",
+      "render": true,
+      "category": "deck",
+      "kind": "Structure",
+      "name": "pavilion_Deck",
+      "collision": false,
+      "id": "e6720f49-621c-4942-b4f4-38b0e84e20be",
+      "vertex_count": 1002,
+      "triangle_count": 504
+    },
+    {
+      "building_id": "pavilion",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "stone",
+      "grain": "y",
+      "render": true,
+      "category": "deck",
+      "kind": "Structure",
+      "name": "pavilion_DeckBacking",
+      "collision": false,
+      "id": "c71f346d-5db0-46e8-8d34-8843e305dcb4",
+      "vertex_count": 42,
+      "triangle_count": 24
+    },
+    {
+      "building_id": "pavilion",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "timber",
+      "grain": "x",
+      "render": true,
+      "category": "soffit",
+      "kind": "Structure",
+      "name": "PavilionTimberSoffits",
+      "collision": false,
+      "id": "6c4b2aae-64a6-4747-887f-fb336847c439",
+      "vertex_count": 86,
+      "triangle_count": 36
+    },
+    {
+      "building_id": "pavilion",
+      "texture_frame": [
+        0,
+        0,
+        0
+      ],
+      "material_key": "teal",
+      "grain": "y",
+      "render": true,
+      "category": "fascia",
+      "kind": "Structure",
+      "name": "PavilionTealFascia",
+      "collision": false,
+      "id": "066e3624-e839-4c3f-968a-16de10058e3d",
+      "vertex_count": 358,
+      "triangle_count": 156
+    }
+  ],
+  "max_height_m": 6.8,
+  "site_cad": [
+    620.0,
+    1280.0,
+    0.0
+  ],
+  "feature": "sandbar_pavilion_1109",
+  "art_revision": "finished_resort_v3",
+  "detail_camera": {
+    "fov": 48.0,
+    "target": [
+      -799.0,
+      2.6,
+      -168.0
+    ],
+    "position": [
+      -754.8,
+      8.0,
+      -178.6
+    ]
+  },
+  "native_center": [
+    1450.0,
+    1150.0,
+    0.0
+  ],
+  "spawn": [
+    -831.14,
+    0.14,
+    -128.48
+  ],
+  "terrain_modified": false,
+  "building_count": 5,
+  "triangle_count": 23024
+}

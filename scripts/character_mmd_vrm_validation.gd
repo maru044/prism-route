@@ -4,6 +4,7 @@ const CATALOG_PATH := "res://assets/characters/mmd_validation/paired/catalog.jso
 const ACTOR_SCENE := preload("res://scenes/characters/keqing_mmd_vrm.tscn")
 const SHARED_ACTOR_SCENE := preload("res://scenes/characters/shared_humanoid_actor.tscn")
 const PARTNER_PROXIES := preload("res://scripts/characters/mmd_partner_colliders.gd")
+const HUMANOID_RIG := preload("res://scripts/characters/humanoid_rig.gd")
 var actor: Node3D
 var initialized := false
 var loading := false
@@ -1194,7 +1195,8 @@ func _capture_current_pose() -> void:
 		bones_data[bname] = b_entry
 	
 	var pose_data: Dictionary = {
-		"schema": "prism_pose_v1",
+		"schema": "prism_pose_v2",
+		"source_model": inst.model_resource,
 		"name": pose_name,
 		"created_at": Time.get_datetime_string_from_system(),
 		"source_pack": current_pack,
@@ -1208,6 +1210,12 @@ func _capture_current_pose() -> void:
 		"bone_count": bones_data.size(),
 		"bones": bones_data
 	}
+	var rig := HUMANOID_RIG.new()
+	if not rig.setup(skel):
+		pose_status_label.text = "无法识别身体根与骨盆，未保存姿态"
+		return
+	var skel_in_model: Transform3D = inst.character.global_transform.affine_inverse() * skel.global_transform
+	pose_data["humanoid_pose"] = rig.capture_pose(skel_in_model.basis.inverse() * char_pos)
 	
 	if not DirAccess.dir_exists_absolute(POSES_DIR):
 		DirAccess.make_dir_recursive_absolute(POSES_DIR)
@@ -1300,6 +1308,12 @@ func _preview_selected_pose() -> void:
 	var inst = actors[role_id]
 	var skel: Skeleton3D = inst.skeleton
 	if not skel: return
+	var payload := HUMANOID_RIG.pose_payload(data)
+	if payload.is_empty():
+		pose_status_label.text = "旧姿态缺少来源模型，请从原角色重新保存"
+		return
+	var rig := HUMANOID_RIG.new()
+	if not rig.setup(skel): return
 	
 	playing = false
 	is_previewing_pose = true
@@ -1308,26 +1322,14 @@ func _preview_selected_pose() -> void:
 	
 	skel.reset_bone_poses()
 	
-	if data.has("character_pos"):
-		var p: Array = data["character_pos"]
-		inst.character.position = Vector3(p[0], p[1], p[2])
 	if data.has("character_rot"):
 		var r: Array = data["character_rot"]
 		inst.character.rotation = Vector3(r[0], r[1], r[2])
 	
-	var bones: Dictionary = data.get("bones", {})
-	for bname in bones:
-		var idx := skel.find_bone(bname)
-		if idx >= 0:
-			var bentry: Dictionary = bones[bname]
-			if bentry.has("rot"):
-				var q: Array = bentry["rot"]
-				skel.set_bone_pose_rotation(idx, Quaternion(q[0], q[1], q[2], q[3]))
-			if bentry.has("pos"):
-				var p: Array = bentry["pos"]
-				skel.set_bone_pose_position(idx, Vector3(p[0], p[1], p[2]))
-	
-	skel.force_update_all_bone_transforms()
+	var solution := rig.solve_pose(payload)
+	rig.apply_solution(solution)
+	var skel_in_model: Transform3D = inst.character.global_transform.affine_inverse() * skel.global_transform
+	inst.character.position = skel_in_model.basis * solution.root_displacement
 	pose_status_label.text = "▶ 已应用姿态: %s 到角色 %s (动画已冻结)" % [data.get("name", fname), role_id]
 
 func _resume_from_pose_preview() -> void:

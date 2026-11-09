@@ -405,3 +405,67 @@ def trim_bridge_furniture():
     write('publication.json',{'objects':d['objects'],'backup':d['backup'],'hidden_originals':[CAP,ROAD]+posts+other})
     print('Retreated existing bridge rails, posts and edge bands to the actual road edge')
     sc.doc.Views.Redraw()
+
+
+def apply_meadow_material():
+    """1109 material-only revision of the existing road shoulder, never publish()."""
+    path=ROOT+'/assets/world/terrain_repairs_1103/manifest.json'
+    with io.open(path,encoding='utf-8') as f:config=json.load(f)['road_shoulder']
+    ident=config['source_id'];o=obj(ident)
+    assert o and int(o.Geometry.DataCRC(0))==config['source_crc'],'Native host changed; inspect before applying'
+    settings=Rhino.DocObjects.ObjectEnumeratorSettings()
+    settings.NormalObjects=True;settings.HiddenObjects=True;settings.LockedObjects=True
+    opts=Rhino.FileIO.SerializationOptions()
+    def snapshot():
+        return dict((str(x.Id),(int(x.Geometry.DataCRC(0)),x.Attributes.ToJSON(opts))) for x in sc.doc.Objects.GetObjectList(settings))
+    before=snapshot()
+    material_name='沙嘴_草地护坡_白色窄路缘'
+    index=next((i for i in range(sc.doc.Materials.Count) if sc.doc.Materials[i].Name==material_name),-1)
+    material=Rhino.DocObjects.Material() if index<0 else sc.doc.Materials[index]
+    material.Name=material_name;material.DiffuseColor=Color.White
+    material.Shine=4;material.Reflectivity=.02
+    assert material.SetBitmapTexture(ROOT+'/assets/world/terrain_repairs_1103/'+config['preview_path'])
+    if index<0:index=sc.doc.Materials.Add(material)
+    else:assert material.CommitChanges()
+    attrs=o.Attributes.Duplicate();attrs.MaterialIndex=index
+    attrs.MaterialSource=Rhino.DocObjects.ObjectMaterialSource.MaterialFromObject
+    attrs.ObjectColor=Color.FromArgb(143,160,105)
+    attrs.ColorSource=Rhino.DocObjects.ObjectColorSource.ColorFromObject
+    attrs.SetUserString('pr_surface_role','road_shoulder_meadow')
+    attrs.SetUserString('pr_grass_policy','terrain_repairs_1103/manifest.json#road_shoulder')
+    undo=sc.doc.BeginUndoRecord('Road shoulder meadow material')
+    try:
+        assert sc.doc.Objects.ModifyAttributes(o.Id,attrs,True)
+        lo=config['origin_xz'];width=config['size'][0]*config['pixel_size'];height=config['size'][1]*config['pixel_size']
+        plane=G.Plane(G.Point3d(1450+lo[0],1150-lo[1]-height,0),G.Vector3d.XAxis,G.Vector3d.YAxis)
+        mapping=Rhino.Render.TextureMapping.CreatePlaneMapping(plane,G.Interval(0,width),G.Interval(0,height),G.Interval(-10,10))
+        assert sc.doc.Objects.FindId(o.Id).SetTextureMapping(1,mapping)
+    finally:sc.doc.EndUndoRecord(undo)
+    after=snapshot();assert set(before)==set(after)
+    assert before[ident][0]==after[ident][0]
+    assert all(before[k]==after[k] for k in before if k!=ident),'Unrelated native objects changed'
+    sc.doc.Objects.UnselectAll();sc.doc.Views.Redraw()
+    sc.sticky['road_shoulder_native_guard']=(before,ident,snapshot)
+    return dict(id=ident,geometry_unchanged=True,unrelated_objects_unchanged=len(before)-1,curb_width_m=config['curb_width_m'])
+
+def save_meadow_material():
+    before,ident,snapshot=sc.sticky['road_shoulder_native_guard']
+    current=snapshot()
+    assert set(current)==set(before) and current[ident][0]==before[ident][0]
+    assert all(before[k]==current[k] for k in before if k!=ident)
+    path=sc.doc.Path
+    assert path.replace('\\','/').replace('//','/').lower()=='d:/prism route/map/map_current.3dm'
+    old=Rhino.ApplicationSettings.FileSettings.CreateBackupFiles
+    try:
+        Rhino.ApplicationSettings.FileSettings.CreateBackupFiles=False
+        options=Rhino.FileIO.FileWriteOptions();options.SuppressAllInput=True;options.SuppressDialogBoxes=True;options.UpdateDocumentPath=True
+        assert sc.doc.WriteFile(path,options)
+    finally:Rhino.ApplicationSettings.FileSettings.CreateBackupFiles=old
+    saved=Rhino.FileIO.File3dm.Read(path)
+    try:
+        found=next(x for x in saved.Objects if str(x.Id)==ident)
+        assert int(found.Geometry.DataCRC(0))==before[ident][0]
+        assert found.Attributes.GetUserString('pr_surface_role')=='road_shoulder_meadow'
+    finally:saved.Dispose()
+    return dict(saved=path,geometry_unchanged=True,modified=sc.doc.Modified)
+

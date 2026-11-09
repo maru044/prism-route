@@ -6,10 +6,14 @@ signal pleasure_changed(current: float, max_val: float, percentage: float)
 signal edging_entered()
 signal climax_reached()
 
+# Standard edging thresholds
+const EDGING_PREVIEW_THRESHOLD: float = 85.0 # Visual/heartbeat warning state
+const EDGING_CRITICAL_THRESHOLD: float = 90.0 # Combat dialogue interruption threshold
+
 @export var character_name: String = "Actor"
 @export var max_pleasure: float = 100.0
 @export var current_pleasure: float = 0.0
-@export var edging_threshold: float = 85.0 # Enters edging state when pleasure >= this
+@export var edging_threshold: float = EDGING_PREVIEW_THRESHOLD
 
 # Sensitivity zones
 @export var sensitivity_mouth: float = 1.0
@@ -19,7 +23,7 @@ signal climax_reached()
 
 # Meta-cheat parameters provided by NPC
 var pleasure_locked: bool = false
-var pleasure_cap: float = 90.0
+var pleasure_cap: float = 100.0
 var damage_taken_multiplier: float = 1.0
 var damage_dealt_multiplier: float = 1.0
 
@@ -30,6 +34,10 @@ func reset() -> void:
 	current_pleasure = 0.0
 	is_edging = false
 	has_reached_climax = false
+	pleasure_locked = false
+	pleasure_cap = 100.0
+	damage_taken_multiplier = 1.0
+	damage_dealt_multiplier = 1.0
 	pleasure_changed.emit(current_pleasure, max_pleasure, 0.0)
 
 func add_pleasure(amount: float, zone: String = "") -> float:

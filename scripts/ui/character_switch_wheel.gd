@@ -1,8 +1,9 @@
 extends CanvasLayer
 ## Genshin Impact style character switch HUD.
-## Supports numeric keys [1]-[2], direct toggle via [Tab], and HUD clicking.
+## Supports direct toggle via [Tab] and HUD clicking.
 
 signal character_selected(character_id: String)
+const DIALOGUE_INPUT := preload("res://scenes/narrative/dialogue_panel.gd")
 
 const TEAM_MEMBERS: Array[Dictionary] = [
 	{
@@ -65,7 +66,6 @@ func _build_team_hud() -> void:
 		var member: Dictionary = TEAM_MEMBERS[i]
 		var btn := Button.new()
 		var m_id: String = String(member.get("id", ""))
-		var m_slot: int = int(member.get("slot", 1))
 		var m_name: String = String(member.get("name", ""))
 		var m_color: Color = member.get("color", Color.WHITE)
 		var m_accent: Color = member.get("accent", Color.WHITE)
@@ -90,7 +90,7 @@ func _build_team_hud() -> void:
 		style_hover.border_color = m_accent
 		btn.add_theme_stylebox_override("hover", style_hover)
 		
-		btn.text = " [%d]  %s" % [m_slot, m_name]
+		btn.text = "  %s" % [m_name]
 		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		btn.add_theme_font_size_override("font_size", 15)
 		btn.add_theme_color_override("font_color", Color(0.92, 0.94, 0.98))
@@ -104,7 +104,6 @@ func _update_hud_selection() -> void:
 	for i in TEAM_MEMBERS.size():
 		var member: Dictionary = TEAM_MEMBERS[i]
 		var m_id: String = String(member.get("id", ""))
-		var m_slot: int = int(member.get("slot", 1))
 		var m_name: String = String(member.get("name", ""))
 		var m_color: Color = member.get("color", Color.WHITE)
 		var m_accent: Color = member.get("accent", Color.WHITE)
@@ -121,7 +120,7 @@ func _update_hud_selection() -> void:
 			style.border_width_top = 1
 			style.border_width_bottom = 1
 			style.border_width_right = 1
-			btn.text = " ◆ [%d] %s" % [m_slot, m_name]
+			btn.text = " ◆ %s" % [m_name]
 			btn.add_theme_color_override("font_color", m_accent)
 		else:
 			style.bg_color = Color(0.08, 0.10, 0.14, 0.70)
@@ -130,7 +129,7 @@ func _update_hud_selection() -> void:
 			style.border_width_top = 0
 			style.border_width_bottom = 0
 			style.border_width_right = 0
-			btn.text = "   [%d] %s" % [m_slot, m_name]
+			btn.text = "   %s" % [m_name]
 			btn.add_theme_color_override("font_color", Color(0.85, 0.88, 0.92))
 		btn.add_theme_stylebox_override("normal", style)
 
@@ -148,18 +147,16 @@ func _show_banner_message(id: String) -> void:
 	tween_banner.tween_callback(func(): switch_banner.visible = false)
 
 func _input(event: InputEvent) -> void:
+	if DIALOGUE_INPUT.has_active_dialogue(get_tree()): return
 	if event is InputEventKey and not event.echo:
 		var code: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
 		match code:
-			KEY_1:
-				if event.pressed: _trigger_switch(String(TEAM_MEMBERS[0].get("id", "")))
-			KEY_2:
-				if event.pressed: _trigger_switch(String(TEAM_MEMBERS[1].get("id", "")))
 			KEY_TAB:
 				if event.pressed:
 					_cycle_next_character()
 
 func _trigger_switch(target_id: String) -> void:
+	if DIALOGUE_INPUT.has_active_dialogue(get_tree()): return
 	if target_id == active_character_id:
 		return
 	active_character_id = target_id

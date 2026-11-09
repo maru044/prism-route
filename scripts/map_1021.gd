@@ -15,6 +15,7 @@ const WATER_MANAGER := preload("res://scripts/water/water_manager.gd")
 const WORLD_AUDIO := preload("res://scripts/audio/world_audio_1030.gd")
 var world_audio
 const INITIAL_RUIN := preload("res://scenes/world/initial_ruin.tscn")
+const DIALOGUE_INPUT := preload("res://scenes/narrative/dialogue_panel.gd")
 const UPPER_RING := preload("res://scenes/world/upper_ring.tscn")
 const ISLAND_SADDLE := preload("res://scenes/world/island_saddle.tscn")
 const OVAL_ATRIUM := preload("res://scripts/world/oval_atrium.gd")
@@ -27,6 +28,8 @@ const SUNKEN_ARCHIVE := preload("res://scripts/world/sunken_archive.gd")
 const ROAD_JUNCTION := preload("res://scripts/world/road_junction.gd")
 const CHURCH_RUINS := preload("res://scripts/world/church_ruins.gd")
 const BEACH_SLOPE := preload("res://scripts/world/beach_slope.gd")
+const SANDBAR_PAVILION := preload("res://scripts/world/sandbar_pavilion.gd")
+var sandbar_pavilion
 var church_ruins
 var sunken_archive
 var terrain_repairs
@@ -90,7 +93,7 @@ func _ready() -> void:
 	camper.automation_enabled=automation_enabled;camper.set_physics_process(false);camper.set_process_unhandled_input(false);camper.visible=false
 	camper.calibrate_wheels()
 	camper.respawn_resolver=_resolve_camper_respawn
-	_load_mask();_environment();_build_model();add_child(ROAD_JUNCTION.new());_build_terrain_repairs();_build_oval_atrium();_build_initial_ruin();_build_island_saddle();_build_landmark_ring();_build_terrace_ruins();_build_water_court();_build_earth_pavilion();_build_sunken_archive();_build_church_ruins();_build_upper_ring();_build_surface_detail_trial();_hud()
+	_load_mask();_environment();_build_model();add_child(ROAD_JUNCTION.new());_build_terrain_repairs();_build_oval_atrium();_build_initial_ruin();_build_island_saddle();_build_landmark_ring();_build_terrace_ruins();_build_water_court();_build_earth_pavilion();_build_sunken_archive();_build_church_ruins();_build_upper_ring();_build_surface_detail_trial();_build_sandbar_pavilion();_hud()
 	camera=Camera3D.new();camera.near=0.15;camera.far=10000;camera.fov=58;add_child(camera)
 	await get_tree().physics_frame;await get_tree().physics_frame
 	for proposal: Dictionary in metadata.spawns:
@@ -127,6 +130,9 @@ func _ready() -> void:
 	if "--sunken-archive-preview" in OS.get_cmdline_user_args():
 		for i in resolved_spawns.size():
 			if resolved_spawns[i].get("key","")=="sunken_archive":initial_spawn=i;break
+	if "--sandbar-pavilion-preview" in OS.get_cmdline_user_args():
+		for i in resolved_spawns.size():
+			if resolved_spawns[i].get("key","")=="sandbar_pavilion":initial_spawn=i;break
 	await select_spawn(initial_spawn)
 	if "--ruin-preview" in OS.get_cmdline_user_args() or "--ruin-stairs-preview" in OS.get_cmdline_user_args():
 		var forward:=vec(initial_ruin.planting_mask.manifest.forward)
@@ -214,6 +220,7 @@ func _initialize_water() -> void:
 	for mesh: MeshInstance3D in model.find_children("*","MeshInstance3D",true,false):
 		var id:=str(mesh.name).get_slice("_",1)
 		var kind: String=byid.get(id,{}).get("kind","")
+		if terrain_repairs!=null and terrain_repairs.shoulder_mesh==mesh:kind="Terrain"
 		if kind=="Water":water_manager.register_water(mesh,id)
 		elif kind!="Sand":
 			var color:=Color("91a46b") if kind=="Terrain" else (Color("3b4248") if kind=="Road" else Color("e8e4da"))
@@ -231,6 +238,13 @@ func _initialize_water() -> void:
 	earth_pavilion.register_reflections(water_manager)
 	terrain_repairs.register_reflections(water_manager)
 	sunken_archive.register_reflections(water_manager)
+	sandbar_pavilion.register_reflections(water_manager)
+
+func _build_sandbar_pavilion() -> void:
+	sandbar_pavilion=SANDBAR_PAVILION.new();add_child(sandbar_pavilion)
+	metadata.spawns.append({"name":"沙洲度假遗址 · 中央双翼亭","key":"sandbar_pavilion","position":sandbar_pavilion.manifest.spawn,
+		"look_direction":[.6,0,-.8],"required_floor_kind":"Structure",
+		"required_source_id":sandbar_pavilion.manifest.objects[0].id,"maximum_search_distance_m":1.,"character_only":true})
 
 func _build_terrain_repairs() -> void:
 	terrain_repairs=TERRAIN_REPAIRS.new();terrain_repairs.world=self;add_child(terrain_repairs)
@@ -325,6 +339,7 @@ func _sync_meadow_color() -> void:
 	MEADOW_PALETTE.apply_ground(terrain_material)
 	terrain_material.set_shader_parameter("use_shared_meadow_biome",true)
 	oval_atrium.sync_ground_palette()
+	terrain_repairs.sync_shoulder_palette()
 
 func _load_mask() -> void:
 	var path:=ASSETS+"landscape_mask.res"
@@ -352,6 +367,9 @@ func architectural_band(p: Vector3,margin:=0.0) -> bool:
 		return not oval_atrium.ground_contains(p,maxf(margin,float(oval_atrium.ground_config.edge_inset_m)))
 	if upper_ring!=null and upper_ring.planting_mask.blocks(p,margin):return true
 	if initial_ruin!=null and initial_ruin.planting_mask.blocks(p,margin):return true
+	if terrain_repairs!=null:
+		var shoulder_band: int=terrain_repairs.road_shoulder_band(p,margin)
+		if shoulder_band>=0:return shoulder_band==1
 	var uv: Vector2=(Vector2(p.x,p.z)-Vector2(metadata.origin_xz[0],metadata.origin_xz[1]))/Vector2(metadata.extent_xz[0],metadata.extent_xz[1])
 	if uv.x<0 or uv.y<0 or uv.x>=1 or uv.y>=1: return false
 	var data:=mask_image.get_pixel(clampi(int(uv.x*mask_image.get_width()),0,mask_image.get_width()-1),clampi(int(uv.y*mask_image.get_height()),0,mask_image.get_height()-1))
@@ -593,6 +611,7 @@ func show_overview() -> void:
 	camera.position=Vector3(-160,1800,2100);camera.look_at(Vector3(-250,15,400));camera.make_current()
 
 func _unhandled_input(event: InputEvent) -> void:
+	if DIALOGUE_INPUT.has_active_dialogue(get_tree()): return
 	if planting!=null and planting.active:return
 	if event is InputEventKey and event.pressed and not event.echo:
 		var key: int=event.physical_keycode if event.physical_keycode!=0 else event.keycode

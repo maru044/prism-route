@@ -3,6 +3,7 @@ const SURFACE_MOTION := preload("res://scripts/surface_motion.gd")
 const MTOON_MATERIALS := preload("res://scripts/characters/mtoon_materials.gd")
 const WETNESS := preload("res://scripts/characters/character_wetness.gd")
 const WHEEL_SCENE := preload("res://scenes/ui/character_switch_wheel.tscn")
+const HUMANOID_RIG := preload("res://scripts/characters/humanoid_rig.gd")
 
 ## Camera-relative world controller with Genshin Impact style dynamic character switching.
 ## Supports Stelle, Ganyu, Lumine, and Firefly with auto-retargeting and MToon NPR tuning.
@@ -226,15 +227,13 @@ func switch_character(target_id: String) -> bool:
 	return true
 
 func _retarget_and_center_clip(animation: Animation, target_skeleton: Skeleton3D, skel_path: NodePath) -> void:
-	var center_idx: int = target_skeleton.find_bone("センター")
-	var hips_idx: int = target_skeleton.find_bone("Hips")
-	
-	# If target skeleton has センター (VRM standard such as Lumine), the source animation's
-	# root motion (authored on Ganyu's 0.66m Center-named-as-Hips) maps to センター.
-	# Otherwise (like Ganyu herself), it maps directly to Hips.
-	var use_center_for_root: bool = (center_idx >= 0)
-	var root_bone_name: String = "センター" if use_center_for_root else "Hips"
-	var root_bone_idx: int = center_idx if use_center_for_root else hips_idx
+	var rig := HUMANOID_RIG.new()
+	if not rig.setup(target_skeleton):
+		push_error("Invalid locomotion humanoid rig")
+		return
+	# These are legacy Ganyu CENTER tracks, not shared anatomical Hips tracks.
+	var root_bone_idx: int = rig.center
+	var root_bone_name: String = target_skeleton.get_bone_name(root_bone_idx)
 	var target_rest_origin: Vector3 = target_skeleton.get_bone_rest(root_bone_idx).origin if root_bone_idx >= 0 else SOURCE_REST_HIPS
 	
 	for track in animation.get_track_count():
@@ -242,8 +241,8 @@ func _retarget_and_center_clip(animation: Animation, target_skeleton: Skeleton3D
 		var colon_idx: int = original_path.find(":")
 		if colon_idx != -1:
 			var bone_part: String = original_path.substr(colon_idx)
-			if bone_part == ":Hips" and use_center_for_root:
-				bone_part = ":センター"
+			if bone_part == ":Hips":
+				bone_part = ":" + root_bone_name
 			animation.track_set_path(track, NodePath(str(skel_path) + bone_part))
 		
 		if animation.track_get_type(track) == Animation.TYPE_POSITION_3D and original_path.ends_with(":Hips"):
@@ -341,6 +340,7 @@ func set_control_enabled(enabled: bool) -> void:
 	if not enabled:
 		velocity = Vector3.ZERO
 		jump_requested = false
+		_set_animation("idle")
 
 func set_spawn(point: Vector3, heading: float) -> void:
 	global_position = point
