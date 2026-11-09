@@ -26,6 +26,8 @@ const ACTION_ENTER_COMBAT: String = "enter_combat"
 const ACTION_RESUME_COMBAT: String = "resume_combat"
 const ACTION_KILL: String = "kill"
 const ACTION_SPARE: String = "spare"
+const ACTION_SPARE_VIRGIN: String = "spare_virgin"
+const ACTION_SPARE_HONBAN: String = "spare_honban"
 const ACTION_CLOSE: String = "close"
 
 const REGISTERED_ACTIONS: Dictionary = {
@@ -33,12 +35,16 @@ const REGISTERED_ACTIONS: Dictionary = {
 	ACTION_RESUME_COMBAT: true,
 	ACTION_KILL: true,
 	ACTION_SPARE: true,
+	ACTION_SPARE_VIRGIN: true,
+	ACTION_SPARE_HONBAN: true,
 	ACTION_CLOSE: true
 }
 
 const ACTION_ALIASES: Dictionary = {
 	"choose_kill": ACTION_KILL,
-	"choose_spare": ACTION_SPARE
+	"choose_spare": ACTION_SPARE,
+	"choose_spare_virgin": ACTION_SPARE_VIRGIN,
+	"choose_spare_honban": ACTION_SPARE_HONBAN
 }
 
 var current_graph: Dictionary = {}
@@ -54,8 +60,25 @@ var blackboard: Dictionary = {
 	"defeat_count": 0,
 	"meta_cheat_enabled": false,
 	"meta_cheat_mode": "none",
+	"edging_endure": false,
 	"mercy_choice": "undecided"
 }
+
+func consume_battle_cheats() -> Dictionary:
+	var cheats := {
+		"meta_cheat_enabled": blackboard.get("meta_cheat_enabled", false),
+		"meta_cheat_mode": blackboard.get("meta_cheat_mode", "none"),
+		"edging_endure": blackboard.get("edging_endure", false)
+	}
+	blackboard["meta_cheat_enabled"] = false
+	blackboard["meta_cheat_mode"] = "none"
+	blackboard["edging_endure"] = false
+	return cheats
+
+func reset_battle_cheats() -> void:
+	blackboard["meta_cheat_enabled"] = false
+	blackboard["meta_cheat_mode"] = "none"
+	blackboard["edging_endure"] = false
 
 func start_dialogue(
 	graph_data: Dictionary,
@@ -135,8 +158,8 @@ func _finish_with_action(raw_act: String) -> void:
 		
 	if act == ACTION_KILL:
 		blackboard["mercy_choice"] = "kill"
-	elif act == ACTION_SPARE:
-		blackboard["mercy_choice"] = "spare"
+	elif act == ACTION_SPARE or act == ACTION_SPARE_VIRGIN or act == ACTION_SPARE_HONBAN:
+		blackboard["mercy_choice"] = act
 		
 	var payload := {
 		"action": act,

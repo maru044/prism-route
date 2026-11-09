@@ -75,8 +75,8 @@ func _run_overworld_flow() -> void:
 		await process_frame
 	encounter.dialogue_manager.choose_option(3) # Enter combat
 
-	# Wait for combat dual-actors and animations
-	for i in range(40):
+	# Wait for seamless combat staging transition to complete
+	while encounter.current_state != encounter.EncounterState.COMBAT:
 		await process_frame
 
 	print("Combat active. Combat actors visible: ", encounter.combat_actors_root.visible)
@@ -250,13 +250,25 @@ func _run_overworld_flow() -> void:
 	encounter.dialogue_manager.advance_text()
 	for i in range(5):
 		await process_frame
-	encounter.dialogue_manager.choose_option(0) # 【要求乞命侍奉】
+	encounter.dialogue_manager.choose_option(0)
 	encounter.dialogue_manager.advance_text()
 	for i in range(5):
 		await process_frame
-	encounter.dialogue_manager.choose_option(0) # 【确认】
+	encounter.dialogue_manager.choose_option(0)
 
-	while encounter.current_state != encounter.EncounterState.COMPLETED:
+	while encounter.current_state != encounter.EncounterState.FURNITURE_SERVICE_ACTIVE:
+		await process_frame
+
+	assert(encounter.current_state == encounter.EncounterState.FURNITURE_SERVICE_ACTIVE, "Must reach FURNITURE_SERVICE_ACTIVE")
+	assert(encounter.combat_actors_root.visible == true, "Dual actors must be visible on furniture")
+	assert(encounter.service_hud.visible == true, "Service HUD must be visible")
+	print("Furniture service active on seat_01! Capturing screenshot")
+
+	await RenderingServer.frame_post_draw
+	_save_screenshot(root.get_texture().get_image(), "overworld_temple_furniture_service.png")
+
+	encounter._finish_furniture_service()
+	for i in range(10):
 		await process_frame
 
 	assert(encounter.current_state == encounter.EncounterState.COMPLETED, "State must reach COMPLETED")

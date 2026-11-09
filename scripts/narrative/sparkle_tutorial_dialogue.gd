@@ -334,36 +334,58 @@ static func get_dialogue_graph() -> Dictionary:
 			"spare_dialogue": {
 				"type": "text",
 				"speaker": "花火",
-				"text": "嗯哼，主人不玩花火的尸体吗？真是出乎意料的温柔呢，那主人有什么其他要求呢？",
+				"text": "嗯哼，主人不玩花火的尸体吗？真是出乎意料的温柔呢！那主人有什么其他要求呢？是想要保留花火的处女之身用身体其他部位侍奉，还是直接本番破处深入交合呢？",
 				"emotion": "wondering",
 				"next": "spare_choices"
 			},
 			"spare_choices": {
 				"type": "choice",
 				"speaker": "花火",
-				"text": "请主人下达战后处置命令吧！",
+				"text": "请主人下达战后处置命令吧！花火无论哪种侍奉都会拼尽全力满足主人哦！",
 				"choices": [
 					{
-						"text": "【要求乞命侍奉】既然放过了你，那就用身体好好乞命侍奉我吧！",
-						"target": "honban_transition"
+						"text": "【保留处女 · 身体侍奉】前往神殿石椅，在保留处女之身的前提下用身体与胸部侍奉主人。",
+						"target": "virgin_service_transition"
+					},
+					{
+						"text": "【要求本番侍奉】前往神殿床榻，彻底破除处女之身，享受深入交合的本番侍奉。",
+						"target": "honban_service_transition"
 					}
 				]
 			},
-			"honban_transition": {
+			"virgin_service_transition": {
 				"type": "text",
 				"speaker": "花火",
-				"text": "咦，你居然选择了这个选项，好恶心！不过没办法，既然败北了，那么花火就侍奉主人，好好处理主人的性欲吧！",
+				"text": "哎呀！主人竟然想保留花火的处女之身吗？真是温柔又懂情调的主人呢！那花火这就引导主人前往神殿石椅，用花火娇嫩的身体和胸脯好好侍奉主人，保证让主人舒服到极致却不会弄破处女膜哦！",
 				"emotion": "blush",
-				"next": "honban_action"
+				"next": "virgin_service_action"
 			},
-			"honban_action": {
+			"virgin_service_action": {
 				"type": "choice",
 				"speaker": "系统",
-				"text": "花火娇羞顺从，切入乞命本番动画，并在逻辑上永久解锁为可用同伴！",
+				"text": "花火羞红了脸，顺从地引导主人走向神殿石椅。入座后开启保留处女身体侍奉动画，同时花火永久解锁为可用同伴！",
 				"choices": [
 					{
-						"text": "【确认】进入乞命侍奉结算。",
-						"action": "spare"
+						"text": "【确认】入座神殿石椅，享受保留处女身体侍奉！",
+						"action": "spare_virgin"
+					}
+				]
+			},
+			"honban_service_transition": {
+				"type": "text",
+				"speaker": "花火",
+				"text": "嘻嘻！主人终于按捺不住，想要花火的第一次了吗？那就请主人移步神殿的休息床榻，花火会毫无保留地把纯洁的第一次献给主人，任由主人尽情享用！",
+				"emotion": "lewd",
+				"next": "honban_service_action"
+			},
+			"honban_service_action": {
+				"type": "choice",
+				"speaker": "系统",
+				"text": "花火眼角泛起红晕，轻解罗裳卧于神殿床榻。就位后开启本番深入交合动画，花火破处并永久解锁为可用同伴！",
+				"choices": [
+					{
+						"text": "【确认】卧于神殿床榻，开启本番破处侍奉！",
+						"action": "spare_honban"
 					}
 				]
 			},

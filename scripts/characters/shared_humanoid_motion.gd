@@ -165,3 +165,26 @@ func _capture_physics_pose() -> void:
 
 func _process(delta: float) -> void:
 	if ready_for_review and auto_play: sample_time(fmod(time + delta, duration) if duration > 0.0 else 0.0)
+
+func set_motion(res_path: String) -> bool:
+	var new_motion := load(res_path) as Animation
+	if new_motion == null or new_motion.get_meta("shared_humanoid_schema", 0) != 1:
+		push_warning("Failed to load valid shared humanoid motion: " + res_path)
+		return false
+	motion_resource = res_path
+	motion = new_motion
+	duration = motion.length
+	time = 0.0
+	translation_scale = target_height / float(motion.get_meta("reference_height")) if translation_policy == "height_scaled" else 1.0
+	rotation_tracks.clear()
+	translation_track = -1
+	for track in motion.get_track_count():
+		var semantic := String(motion.track_get_path(track).get_subname(0))
+		if motion.track_get_type(track) == Animation.TYPE_ROTATION_3D:
+			rotation_tracks[semantic] = track
+		elif motion.track_get_type(track) == Animation.TYPE_POSITION_3D:
+			if semantic == "Hips" and translation_track == -1:
+				translation_track = track
+	if ready_for_review:
+		seek(0.0)
+	return true

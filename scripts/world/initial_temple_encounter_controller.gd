@@ -9,9 +9,12 @@ signal settlement_completed(outcome: String)
 enum EncounterState {
 	AVAILABLE,
 	INTRO_DIALOGUE,
+	STAGING_TRANSITION,
 	COMBAT,
 	RESULT_DIALOGUE,
 	SETTLEMENT,
+	FURNITURE_SERVICE_STAGING,
+	FURNITURE_SERVICE_ACTIVE,
 	RESPAWN,
 	COMPLETED
 }
@@ -32,6 +35,12 @@ const RESPAWN_HEADING := 0.38
 const MOTION_SPARKLE_BLOWJOB := "res://assets/characters/mmd_selected/animations/mmd_781d8c87fd79_a.tres"
 const MOTION_MASTER_RECEIVING := "res://assets/characters/mmd_selected/animations/mmd_781d8c87fd79_b.tres"
 
+const MOTION_VIRGIN_SPARKLE := "res://assets/characters/mmd_selected/animations/mmd_0a3f6ba5f5de_a.tres"
+const MOTION_VIRGIN_MASTER := "res://assets/characters/mmd_selected/animations/mmd_0a3f6ba5f5de_b.tres"
+
+const MOTION_HONBAN_SPARKLE := "res://assets/characters/mmd_selected/animations/mmd_87e004f6db53_a.tres"
+const MOTION_HONBAN_MASTER := "res://assets/characters/mmd_selected/animations/mmd_87e004f6db53_b.tres"
+
 var current_state: EncounterState = EncounterState.AVAILABLE
 var temple_node: Node3D
 var world: Node3D
@@ -43,6 +52,7 @@ var dialogue_manager: DialogueManager
 var combat_manager: TurnCombatManager
 var dialogue_panel: DialoguePanel
 var combat_hud: TurnCombatHUD
+var service_hud: Label
 var player_pleasure: PleasureComponent
 var npc_pleasure: PleasureComponent
 
@@ -52,10 +62,30 @@ var master_combat_actor: Node3D
 var combat_camera: Camera3D
 var corpse_actor: Node3D
 
+var default_combat_cam_yaw: float = 0.0
+var default_combat_cam_pitch: float = 0.0
+var default_combat_cam_distance: float = 1.75
+var default_combat_focal_point: Vector3 = Vector3.ZERO
+
+var combat_cam_yaw: float = 0.0
+var combat_cam_pitch: float = 0.0
+var combat_cam_distance: float = 1.75
+var combat_focal_point: Vector3 = Vector3.ZERO
+var combat_cam_focal_offset: Vector3 = Vector3.ZERO
+
+var is_dragging_combat_cam: bool = false
+var is_panning_combat_cam: bool = false
+
 var interact_prompt: Label
+var last_service_approach_pos: Vector3 = RESPAWN_POINT
 var defeat_count: int = 0
 var companion_unlocked: bool = false
 var is_ragdoll_active: bool = false
+
+var saved_player_collision_layer: int = 2
+var saved_player_collision_mask: int = 1
+var saved_npc_collision_layer: int = 64
+var saved_npc_collision_mask: int = 0
 
 func initialize(
 	p_temple: Node3D,
@@ -165,6 +195,19 @@ func _build_subsystems() -> void:
 	dialogue_panel.visible = false
 	canvas.add_child(dialogue_panel)
 	
+	service_hud = Label.new()
+	service_hud.name = "ServiceHUD"
+	service_hud.anchor_left = 0.1
+	service_hud.anchor_right = 0.9
+	service_hud.anchor_top = 0.84
+	service_hud.anchor_bottom = 0.93
+	service_hud.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	service_hud.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	service_hud.add_theme_font_size_override("font_size", 16)
+	service_hud.add_theme_color_override("font_color", Color(1.0, 0.96, 0.72))
+	service_hud.visible = false
+	canvas.add_child(service_hud)
+	
 	# Signal connections
 	dialogue_manager.text_updated.connect(dialogue_panel.display_text)
 	dialogue_manager.choices_presented.connect(dialogue_panel.display_choices)
@@ -219,13 +262,33 @@ func get_corpse_position() -> Vector3:
 		return corpse_actor.global_position
 	return get_npc_interaction_position()
 
-func tick(_delta: float) -> void:
-	if not world or not is_instance_valid(world.character):
+func _get_world_character() -> Node:
+	if world == null or not is_instance_valid(world):
+		return null
+	if "character" in world:
+		var node = world.get("character")
+		if node != null and is_instance_valid(node):
+			return node
+	if world.has_meta("character"):
+		var node = world.get_meta("character")
+		if node != null and is_instance_valid(node):
+			return node
+	if world.has_node("Character"):
+		return world.get_node("Character")
+	return null
+
+func tick(delta: float) -> void:
+	if current_state == EncounterState.COMBAT or current_state == EncounterState.FURNITURE_SERVICE_ACTIVE:
+		if not (dialogue_panel and is_instance_valid(dialogue_panel) and dialogue_panel.visible):
+			_process_combat_camera_keys(delta)
+			
+	var char_node := _get_world_character()
+	if char_node == null:
 		if interact_prompt and interact_prompt.visible:
 			interact_prompt.visible = false
 		return
 		
-	var player_pos: Vector3 = world.character.global_position
+	var player_pos: Vector3 = char_node.global_position
 	
 	# Handle ragdoll respawn when player leaves temple (> 30m)
 	if is_ragdoll_active:
@@ -259,8 +322,9 @@ func start_encounter_dialogue() -> void:
 	_set_encounter_state(EncounterState.INTRO_DIALOGUE)
 	interact_prompt.visible = false
 	
-	if world and is_instance_valid(world.character):
-		world.character.set_control_enabled(false)
+	var char_node := _get_world_character()
+	if char_node != null and char_node.has_method("set_control_enabled"):
+		char_node.set_control_enabled(false)
 		
 	dialogue_panel.visible = true
 	var graph: Dictionary = SparkleTutorialDialogueClass.get_dialogue_graph()
@@ -270,12 +334,130 @@ func start_encounter_dialogue() -> void:
 	elif defeat_count > 0:
 		start_node = "respawn_dialogue"
 		
+	if start_node != "respawn_dialogue":
+		dialogue_manager.reset_battle_cheats()
+		
 	dialogue_manager.start_dialogue(
 		graph,
 		start_node,
 		DialogueManagerClass.DialogueSource.WORLD_INTERACTION,
 		DialogueManagerClass.ResumePolicy.RETURN_TO_WORLD
 	)
+
+func _begin_seamless_combat_staging() -> void:
+	if current_state == EncounterState.COMBAT:
+		return
+	_set_encounter_state(EncounterState.STAGING_TRANSITION)
+	dialogue_panel.visible = false
+	if interact_prompt and is_instance_valid(interact_prompt):
+		interact_prompt.visible = false
+	if combat_hud and is_instance_valid(combat_hud):
+		combat_hud.visible = false
+		combat_hud.modulate.a = 0.0
+
+	var char_node := _get_world_character()
+	var has_character: bool = (char_node != null)
+	var is_fast_mode: bool = bool(world != null and world.get("automation_enabled"))
+
+	var npc_pos: Vector3 = get_npc_interaction_position()
+	var basis: Basis = get_npc_basis()
+	var forward: Vector3 = get_npc_forward()
+	var right: Vector3 = basis.x.normalized()
+
+	# Compute combat camera target pose
+	var target_cam_pos: Vector3 = npc_pos + forward * 1.5 + right * 0.9 + Vector3.UP * 0.85
+	var target_look_at: Vector3 = npc_pos + Vector3.UP * 0.65
+	combat_camera.global_position = target_cam_pos
+	combat_camera.look_at(target_look_at, Vector3.UP)
+	var target_cam_tf: Transform3D = combat_camera.global_transform
+
+	# Store initial default orbit parameters for runtime camera control
+	default_combat_focal_point = target_look_at
+	combat_focal_point = target_look_at
+	combat_cam_focal_offset = Vector3.ZERO
+	var cam_offset: Vector3 = target_cam_pos - target_look_at
+	default_combat_cam_distance = cam_offset.length()
+	combat_cam_distance = default_combat_cam_distance
+	default_combat_cam_yaw = atan2(cam_offset.x, cam_offset.z)
+	combat_cam_yaw = default_combat_cam_yaw
+	default_combat_cam_pitch = asin(clampf(cam_offset.y / default_combat_cam_distance, -0.99, 0.99))
+	combat_cam_pitch = default_combat_cam_pitch
+
+	# Compute initial camera pose from active character camera
+	var start_cam_tf: Transform3D = target_cam_tf
+	if has_character and "camera" in char_node and is_instance_valid(char_node.camera):
+		start_cam_tf = char_node.camera.global_transform
+		combat_camera.fov = char_node.camera.fov
+	combat_camera.global_transform = start_cam_tf
+	combat_camera.current = true
+
+	# Compute player walk destination and heading
+	var start_player_pos: Vector3 = char_node.global_position if has_character else npc_pos
+	var target_player_pos: Vector3 = npc_pos + forward * 0.45
+	target_player_pos.y = start_player_pos.y
+	var target_player_yaw: float = atan2(-forward.x, -forward.z)
+	var start_player_yaw: float = char_node.visual.rotation.y if (has_character and "visual" in char_node and char_node.visual) else target_player_yaw
+	var diff: Vector3 = target_player_pos - start_player_pos
+	diff.y = 0.0
+	var walk_distance: float = diff.length()
+
+	if has_character and char_node.has_method("set_control_enabled"):
+		char_node.set_control_enabled(false)
+		if char_node.has_method("_set_animation"):
+			if walk_distance > 0.08:
+				char_node._set_animation("walk")
+			else:
+				char_node._set_animation("idle")
+
+	var staging_duration: float = 0.35 if is_fast_mode else 1.25
+	var tween := temple_node.create_tween().set_parallel(true)
+
+	# 1. Smooth camera pan and dolly
+	tween.tween_method(func(t: float):
+		if is_instance_valid(combat_camera):
+			combat_camera.global_transform = start_cam_tf.interpolate_with(target_cam_tf, t)
+	, 0.0, 1.0, staging_duration).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+
+	# 2. Smooth player walk to staging position
+	if has_character:
+		tween.tween_method(func(t: float):
+			if is_instance_valid(char_node):
+				char_node.global_position = start_player_pos.lerp(target_player_pos, t)
+				if "visual" in char_node and is_instance_valid(char_node.visual):
+					char_node.visual.rotation.y = lerp_angle(start_player_yaw, target_player_yaw, t)
+		, 0.0, 1.0, staging_duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+	# 3. Smooth NPC alignment
+	if npc_avatar and is_instance_valid(npc_avatar):
+		var npc_start_yaw: float = npc_avatar.global_rotation.y
+		var npc_target_yaw: float = atan2(forward.x, forward.z)
+		tween.tween_method(func(t: float):
+			if is_instance_valid(npc_avatar):
+				npc_avatar.global_rotation.y = lerp_angle(npc_start_yaw, npc_target_yaw, t)
+		, 0.0, 1.0, staging_duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+	await tween.finished
+
+	if not is_instance_valid(temple_node):
+		return
+
+	if has_character and is_instance_valid(char_node) and char_node.has_method("_set_animation"):
+		char_node._set_animation("idle")
+
+	# Seamlessly switch to combat actors and HUD
+	_set_combat_visuals(true)
+	_set_encounter_state(EncounterState.COMBAT)
+
+	combat_hud.visible = true
+	var hud_tween := temple_node.create_tween()
+	hud_tween.tween_property(combat_hud, "modulate:a", 1.0, 0.25)
+
+	var is_tutorial := (defeat_count == 0)
+	var cheat_data: Dictionary = dialogue_manager.consume_battle_cheats()
+	var meta_rules := {
+		"meta_cheat_mode": cheat_data.get("meta_cheat_mode", "none")
+	}
+	combat_manager.start_combat(is_tutorial, meta_rules)
 
 func _set_combat_visuals(active: bool) -> void:
 	if npc_anchor:
@@ -285,26 +467,96 @@ func _set_combat_visuals(active: bool) -> void:
 	combat_actors_root.visible = active
 	
 	if active:
-		if world and is_instance_valid(world.character):
-			world.character.visible = false
+		var char_node := _get_world_character()
+		if char_node != null:
+			char_node.visible = false
 			
-		var npc_pos: Vector3 = get_npc_interaction_position()
-		var basis: Basis = get_npc_basis()
-		combat_actors_root.global_position = npc_pos
-		combat_actors_root.global_basis = basis
+		if current_state != EncounterState.FURNITURE_SERVICE_STAGING and current_state != EncounterState.FURNITURE_SERVICE_ACTIVE:
+			var npc_pos: Vector3 = get_npc_interaction_position()
+			var basis: Basis = get_npc_basis()
+			combat_actors_root.global_position = npc_pos
+			combat_actors_root.global_basis = basis
 		
-		var forward: Vector3 = get_npc_forward()
-		var right: Vector3 = basis.x.normalized()
-		var cam_pos: Vector3 = npc_pos + forward * 1.5 + right * 0.9 + Vector3.UP * 0.85
-		combat_camera.global_position = cam_pos
-		combat_camera.look_at(npc_pos + Vector3.UP * 0.65, Vector3.UP)
+		_update_combat_camera_transform()
 		combat_camera.current = true
 	else:
+		is_dragging_combat_cam = false
+		is_panning_combat_cam = false
 		combat_camera.current = false
-		if world and is_instance_valid(world.character):
-			world.character.visible = true
-			if world.character.camera:
-				world.character.camera.current = true
+		var char_node := _get_world_character()
+		if char_node != null:
+			char_node.visible = true
+			if "camera" in char_node and char_node.camera:
+				char_node.camera.current = true
+
+func _update_combat_camera_transform() -> void:
+	if not is_instance_valid(combat_camera):
+		return
+	var cur_focal: Vector3 = combat_focal_point + combat_cam_focal_offset
+	var rot: Basis = Basis(Vector3.UP, combat_cam_yaw) * Basis(Vector3.RIGHT, -combat_cam_pitch)
+	var cam_pos: Vector3 = cur_focal + rot * Vector3(0.0, 0.0, combat_cam_distance)
+	combat_camera.global_position = cam_pos
+	combat_camera.look_at(cur_focal, Vector3.UP)
+
+func _reset_combat_camera_to_default() -> void:
+	combat_cam_yaw = default_combat_cam_yaw
+	combat_cam_pitch = default_combat_cam_pitch
+	combat_cam_distance = default_combat_cam_distance
+	combat_cam_focal_offset = Vector3.ZERO
+	_update_combat_camera_transform()
+
+func _process_combat_camera_keys(delta: float) -> void:
+	var move_x: float = float(Input.is_physical_key_pressed(KEY_D)) - float(Input.is_physical_key_pressed(KEY_A))
+	var move_y: float = float(Input.is_physical_key_pressed(KEY_E)) - float(Input.is_physical_key_pressed(KEY_Q))
+	var move_z: float = float(Input.is_physical_key_pressed(KEY_S)) - float(Input.is_physical_key_pressed(KEY_W))
+	if move_x != 0.0 or move_y != 0.0 or move_z != 0.0:
+		var cam_basis: Basis = combat_camera.global_basis
+		var dir: Vector3 = (cam_basis.x * move_x + Vector3.UP * move_y + cam_basis.z * move_z).normalized()
+		combat_cam_focal_offset += dir * (1.8 * delta)
+		combat_cam_focal_offset.x = clampf(combat_cam_focal_offset.x, -2.5, 2.5)
+		combat_cam_focal_offset.y = clampf(combat_cam_focal_offset.y, -1.5, 2.0)
+		combat_cam_focal_offset.z = clampf(combat_cam_focal_offset.z, -2.5, 2.5)
+		_update_combat_camera_transform()
+
+func _unhandled_input(event: InputEvent) -> void:
+	if current_state != EncounterState.COMBAT and current_state != EncounterState.FURNITURE_SERVICE_ACTIVE:
+		return
+	if dialogue_panel and is_instance_valid(dialogue_panel) and dialogue_panel.visible:
+		is_dragging_combat_cam = false
+		is_panning_combat_cam = false
+		return
+		
+	if current_state == EncounterState.FURNITURE_SERVICE_ACTIVE:
+		if event is InputEventKey and event.pressed:
+			if event.keycode in [KEY_E, KEY_SPACE, KEY_ESCAPE]:
+				_finish_furniture_service()
+				return
+		
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+			is_dragging_combat_cam = event.pressed
+		elif event.button_index == MOUSE_BUTTON_MIDDLE:
+			if event.pressed:
+				_reset_combat_camera_to_default()
+			is_panning_combat_cam = event.pressed
+		elif event.pressed and event.button_index in [MOUSE_BUTTON_WHEEL_UP, MOUSE_BUTTON_WHEEL_DOWN]:
+			var delta_dist: float = 0.25 if event.button_index == MOUSE_BUTTON_WHEEL_DOWN else -0.25
+			combat_cam_distance = clampf(combat_cam_distance + delta_dist, 0.45, 6.0)
+			_update_combat_camera_transform()
+	elif event is InputEventMouseMotion:
+		if is_dragging_combat_cam:
+			combat_cam_yaw -= event.relative.x * 0.004
+			combat_cam_pitch = clampf(combat_cam_pitch - event.relative.y * 0.003, -1.35, 1.25)
+			_update_combat_camera_transform()
+		elif is_panning_combat_cam:
+			var cam_basis: Basis = combat_camera.global_basis
+			var right_vec: Vector3 = cam_basis.x.normalized()
+			var up_vec: Vector3 = cam_basis.y.normalized()
+			combat_cam_focal_offset += (-right_vec * event.relative.x + up_vec * event.relative.y) * 0.002
+			combat_cam_focal_offset.x = clampf(combat_cam_focal_offset.x, -2.5, 2.5)
+			combat_cam_focal_offset.y = clampf(combat_cam_focal_offset.y, -1.5, 2.0)
+			combat_cam_focal_offset.z = clampf(combat_cam_focal_offset.z, -2.5, 2.5)
+			_update_combat_camera_transform()
 
 func _on_dialogue_ended(payload: Dictionary) -> void:
 	var action: String = payload.get("action", "close")
@@ -316,7 +568,8 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 		dialogue_panel.visible = false
 		combat_hud.visible = true
 		
-		var cheat_mode: String = dialogue_manager.blackboard.get("meta_cheat_mode", "none")
+		var cheat_data: Dictionary = dialogue_manager.consume_battle_cheats()
+		var cheat_mode: String = cheat_data.get("meta_cheat_mode", "none")
 		if cheat_mode == "distracted":
 			combat_manager.npc_pleasure.damage_taken_multiplier = 2.5
 			combat_manager.log_message_emitted.emit("【战中识趣】花火故意走神了！受到的快感倍率提升至 2.5 倍！")
@@ -325,8 +578,7 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 			combat_manager.player_pleasure.pleasure_cap = 90.0
 			combat_manager.log_message_emitted.emit("【战中识趣】花火施加了保护！主人的快感上限被锁定在90%！")
 			
-		if dialogue_manager.blackboard.get("edging_endure", false):
-			dialogue_manager.blackboard["edging_endure"] = false
+		if cheat_data.get("edging_endure", false):
 			combat_manager.temporary_defense_modifier = 0.5
 			combat_manager.log_message_emitted.emit("【咬牙忍耐】主人集中精神咬牙忍耐，本轮快感减免 50%！")
 			
@@ -336,20 +588,15 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 		return
 		
 	if action == DialogueManagerClass.ACTION_ENTER_COMBAT:
-		_set_encounter_state(EncounterState.COMBAT)
-		dialogue_panel.visible = false
-		combat_hud.visible = true
-		_set_combat_visuals(true)
-		
-		var is_tutorial := (defeat_count == 0)
-		var meta_rules := {
-			"meta_cheat_mode": dialogue_manager.blackboard.get("meta_cheat_mode", "none")
-		}
-		combat_manager.start_combat(is_tutorial, meta_rules)
+		_begin_seamless_combat_staging()
 	elif action == DialogueManagerClass.ACTION_KILL:
 		_execute_settlement_kill()
+	elif action == "spare_virgin" or action == DialogueManagerClass.ACTION_SPARE_VIRGIN:
+		_begin_furniture_service_staging("virgin")
+	elif action == "spare_honban" or action == DialogueManagerClass.ACTION_SPARE_HONBAN:
+		_begin_furniture_service_staging("honban")
 	elif action == DialogueManagerClass.ACTION_SPARE:
-		_execute_settlement_spare()
+		_begin_furniture_service_staging("virgin")
 	elif action == DialogueManagerClass.ACTION_CLOSE:
 		dialogue_panel.visible = false
 		_restore_world_controls()
@@ -360,6 +607,19 @@ func _on_combat_phase_changed(phase: int) -> void:
 	combat_hud.set_input_enabled(phase == TurnCombatManagerClass.Phase.PLAYER_INPUT)
 
 func _on_combat_ended(winner: String, _loser: String, _reason: String) -> void:
+	dialogue_manager.reset_battle_cheats()
+	if player_pleasure:
+		player_pleasure.pleasure_locked = false
+		player_pleasure.pleasure_cap = 100.0
+		player_pleasure.damage_taken_multiplier = 1.0
+	if npc_pleasure:
+		npc_pleasure.pleasure_locked = false
+		npc_pleasure.pleasure_cap = 100.0
+		npc_pleasure.damage_taken_multiplier = 1.0
+	if combat_manager:
+		combat_manager.temporary_defense_modifier = 0.0
+		combat_manager.round_action_defense = 0.0
+
 	await temple_node.get_tree().create_timer(1.0).timeout
 	combat_hud.visible = false
 	_set_combat_visuals(false)
@@ -370,11 +630,14 @@ func _on_combat_ended(winner: String, _loser: String, _reason: String) -> void:
 		defeat_count += 1
 		dialogue_manager.blackboard["defeat_count"] = defeat_count
 		
-		if world and is_instance_valid(world.character):
-			world.character.set_spawn(RESPAWN_POINT, RESPAWN_HEADING)
-			world.character.set_control_enabled(true)
-			if world.character.camera:
-				world.character.camera.current = true
+		var char_node := _get_world_character()
+		if char_node != null:
+			if char_node.has_method("set_spawn"):
+				char_node.set_spawn(RESPAWN_POINT, RESPAWN_HEADING)
+			if char_node.has_method("set_control_enabled"):
+				char_node.set_control_enabled(true)
+			if "camera" in char_node and char_node.camera:
+				char_node.camera.current = true
 				
 		dialogue_panel.visible = false
 		_set_encounter_state(EncounterState.AVAILABLE)
@@ -436,24 +699,297 @@ func _execute_settlement_kill() -> void:
 	settlement_completed.emit("kill")
 	_set_encounter_state(EncounterState.COMPLETED)
 
-func _execute_settlement_spare() -> void:
-	_set_encounter_state(EncounterState.SETTLEMENT)
-	dialogue_panel.visible = false
-	_set_combat_visuals(false)
-	_restore_world_controls()
+func get_furniture_anchor(furniture_id: String, anchor_name: String) -> Transform3D:
+	if temple_node:
+		var furn_dict: Dictionary = temple_node.get("furniture_instances") if "furniture_instances" in temple_node else {}
+		if furn_dict.has(furniture_id):
+			var f_node: Node3D = furn_dict[furniture_id]
+			if f_node:
+				var m_node: Node3D = f_node.get_node_or_null(anchor_name)
+				if m_node:
+					return m_node.global_transform
+				return f_node.global_transform
+		var fallback_node: Node3D = temple_node.find_child(furniture_id, true, false)
+		if fallback_node:
+			var m_node: Node3D = fallback_node.get_node_or_null(anchor_name)
+			if m_node:
+				return m_node.global_transform
+			return fallback_node.global_transform
+
+	if furniture_id == "seat_01":
+		var seat_pos := Vector3(-1011.062, 61.05, 1255.254)
+		var fwd := Vector3(-0.928477, 0.0, 0.371391).normalized()
+		var basis := Basis(Vector3.UP.cross(fwd).normalized(), Vector3.UP, fwd)
+		if anchor_name == "Anchor_Seat":
+			return Transform3D(basis, Vector3(-1011.155, 61.47, 1255.291))
+		elif anchor_name == "Anchor_Front":
+			return Transform3D(Basis(Vector3.UP.cross(-fwd).normalized(), Vector3.UP, -fwd), Vector3(-1012.037, 61.05, 1255.644))
+		return Transform3D(basis, seat_pos)
+	elif furniture_id == "rest_01":
+		var bed_pos := Vector3(-1017.462, 61.05, 1251.583)
+		var fwd := Vector3(0.371391, 0.0, 0.928477).normalized()
+		var basis := Basis(Vector3.UP.cross(fwd).normalized(), Vector3.UP, fwd)
+		if anchor_name == "Anchor_Bed_Center":
+			return Transform3D(basis, Vector3(-1017.462, 61.51, 1251.583))
+		elif anchor_name == "Anchor_Front":
+			return Transform3D(Basis(Vector3.UP.cross(-fwd).normalized(), Vector3.UP, -fwd), Vector3(-1016.682, 61.05, 1253.533))
+		return Transform3D(basis, bed_pos)
+		
+	return Transform3D.IDENTITY
+
+func _setup_paired_actors(sparkle_motion: String, master_motion: String, base_transform: Transform3D) -> void:
+	if not is_instance_valid(combat_actors_root):
+		return
+	combat_actors_root.global_transform = base_transform
+	
+	if sparkle_combat_actor and is_instance_valid(sparkle_combat_actor):
+		sparkle_combat_actor.queue_free()
+	if master_combat_actor and is_instance_valid(master_combat_actor):
+		master_combat_actor.queue_free()
+		
+	sparkle_combat_actor = NPC.instantiate()
+	sparkle_combat_actor.name = "SparklePairedActor"
+	sparkle_combat_actor.model_resource = "res://assets/characters/import_tests_local/huahuo/huahuo_fixed.vrm"
+	sparkle_combat_actor.motion_resource = sparkle_motion
+	sparkle_combat_actor.auto_play = true
+	sparkle_combat_actor.environment_mask = 33
+	sparkle_combat_actor.initialized.connect(func():
+		if is_instance_valid(sparkle_combat_actor) and sparkle_combat_actor.character:
+			MTOON.apply(sparkle_combat_actor.character, "huahuo")
+	)
+	combat_actors_root.add_child(sparkle_combat_actor)
+	
+	master_combat_actor = NPC.instantiate()
+	master_combat_actor.name = "MasterPairedActor"
+	master_combat_actor.model_resource = "res://assets/characters/roster/lumine/lumine.vrm"
+	master_combat_actor.motion_resource = master_motion
+	master_combat_actor.auto_play = true
+	master_combat_actor.environment_mask = 33
+	master_combat_actor.initialized.connect(func():
+		if is_instance_valid(master_combat_actor) and master_combat_actor.character:
+			MTOON.apply(master_combat_actor.character, "lumine")
+	)
+	combat_actors_root.add_child(master_combat_actor)
+
+func _calc_walk_yaw(start_yaw: float, move_yaw: float, final_yaw: float, t: float) -> float:
+	if t < 0.2:
+		return lerp_angle(start_yaw, move_yaw, t / 0.2)
+	elif t < 0.82:
+		return move_yaw
+	else:
+		return lerp_angle(move_yaw, final_yaw, (t - 0.82) / 0.18)
+
+func _calc_walk_pos(start_pos: Vector3, target_pos: Vector3, t: float) -> Vector3:
+	var cur_xz := Vector2(start_pos.x, start_pos.z).lerp(Vector2(target_pos.x, target_pos.z), t)
+	var cur_y: float
+	if absf(target_pos.y - start_pos.y) > 0.04:
+		if t < 0.55:
+			cur_y = start_pos.y
+		else:
+			var step_t: float = (t - 0.55) / 0.45
+			var smooth_step: float = smoothstep(0.0, 1.0, step_t)
+			cur_y = lerp(start_pos.y, target_pos.y, smooth_step)
+	else:
+		cur_y = lerp(start_pos.y, target_pos.y, t)
+	return Vector3(cur_xz.x, cur_y, cur_xz.y)
+
+func _begin_furniture_service_staging(service_type: String = "virgin") -> void:
+	_set_encounter_state(EncounterState.FURNITURE_SERVICE_STAGING)
+	if dialogue_panel and is_instance_valid(dialogue_panel):
+		dialogue_panel.visible = false
+	if combat_hud and is_instance_valid(combat_hud):
+		combat_hud.visible = false
+	if interact_prompt and is_instance_valid(interact_prompt):
+		interact_prompt.visible = false
+		
+	var char_node := _get_world_character()
+	var has_character: bool = (char_node != null)
+	if has_character and char_node.has_method("set_control_enabled"):
+		char_node.set_control_enabled(false)
+		
+	# Temporarily disable character collisions so characters can freely step onto the bed/furniture
+	saved_player_collision_layer = 2
+	saved_player_collision_mask = 1
+	if has_character:
+		if "collision_layer" in char_node:
+			saved_player_collision_layer = char_node.collision_layer
+			char_node.collision_layer = 0
+		if "collision_mask" in char_node:
+			saved_player_collision_mask = char_node.collision_mask
+			char_node.collision_mask = 0
+			
+	saved_npc_collision_layer = 64
+	saved_npc_collision_mask = 0
+	if npc_body and is_instance_valid(npc_body):
+		saved_npc_collision_layer = npc_body.collision_layer
+		saved_npc_collision_mask = npc_body.collision_mask
+		npc_body.collision_layer = 0
+		npc_body.collision_mask = 0
+		
+	var furniture_id := "seat_01" if service_type == "virgin" else "rest_01"
+	var anchor_name := "Anchor_Seat" if service_type == "virgin" else "Anchor_Bed_Center"
+	var sparkle_motion := MOTION_VIRGIN_SPARKLE if service_type == "virgin" else MOTION_HONBAN_SPARKLE
+	var master_motion := MOTION_VIRGIN_MASTER if service_type == "virgin" else MOTION_HONBAN_MASTER
+	var title_text := "【乞命侍奉 · 石椅保留处女胸部侍奉】" if service_type == "virgin" else "【乞命侍奉 · 软榻本番破处深入交合】"
+	
+	var furn_tf := get_furniture_anchor(furniture_id, anchor_name)
+	var approach_tf := get_furniture_anchor(furniture_id, "Anchor_Front")
+	last_service_approach_pos = approach_tf.origin
+	
+	# Determine destination walk points and final facing angles
+	var target_player_pos: Vector3
+	var target_player_yaw: float
+	var target_npc_pos: Vector3
+	var target_npc_yaw: float
+	
+	if service_type == "virgin":
+		# Master sits on armchair; Sparkle walks in front facing Master
+		target_player_pos = furn_tf.origin
+		target_player_yaw = furn_tf.basis.get_euler().y
+		target_npc_pos = furn_tf.origin - furn_tf.basis.z * 0.45
+		target_npc_yaw = furn_tf.basis.get_euler().y + PI
+	else:
+		# Both walk directly onto bed rest_01
+		target_npc_pos = furn_tf.origin
+		target_npc_yaw = furn_tf.basis.get_euler().y
+		target_player_pos = furn_tf.origin + furn_tf.basis.z * 0.22
+		target_player_yaw = furn_tf.basis.get_euler().y
+		
+	var start_player_pos: Vector3 = char_node.global_position if has_character else approach_tf.origin
+	var start_player_yaw: float = char_node.visual.rotation.y if (has_character and "visual" in char_node and char_node.visual) else target_player_yaw
+	var player_delta: Vector3 = target_player_pos - start_player_pos
+	var player_dist: float = Vector2(player_delta.x, player_delta.z).length()
+	var player_move_yaw: float = atan2(player_delta.x, player_delta.z) if player_dist > 0.05 else target_player_yaw
+	
+	var npc_start_pos: Vector3 = npc_avatar.global_position if npc_avatar else furn_tf.origin
+	var npc_start_yaw: float = npc_avatar.global_rotation.y if npc_avatar else target_npc_yaw
+	var npc_delta: Vector3 = target_npc_pos - npc_start_pos
+	var npc_dist: float = Vector2(npc_delta.x, npc_delta.z).length()
+	var npc_move_yaw: float = atan2(npc_delta.x, npc_delta.z) if npc_dist > 0.05 else target_npc_yaw
+	
+	# Activate walk animations for both characters
+	if npc_avatar and is_instance_valid(npc_avatar):
+		if npc_avatar.has_method("set_motion"):
+			npc_avatar.set_motion("res://assets/characters/roster/motions/shared_world_A05.tres")
+			npc_avatar.auto_play = true
+			
+	if has_character:
+		if char_node.has_method("_set_animation"):
+			char_node._set_animation("walk")
+		if "player" in char_node and is_instance_valid(char_node.player):
+			char_node.player.play("walk", 0.14)
+			char_node.player.speed_scale = 1.0
+			
+	# Camera framing target overlooking the furniture
+	var target_look_at: Vector3 = furn_tf.origin + Vector3(0.0, 0.45 if service_type == "virgin" else 0.35, 0.0)
+	var cam_dist: float = 1.85 if service_type == "virgin" else 2.2
+	var cam_forward: Vector3 = furn_tf.basis.z.normalized()
+	var cam_side: Vector3 = furn_tf.basis.x.normalized()
+	var target_cam_pos: Vector3 = target_look_at + (cam_forward * 0.85 + cam_side * 0.85 + Vector3.UP * 0.55).normalized() * cam_dist
+	
+	combat_camera.global_position = target_cam_pos
+	combat_camera.look_at(target_look_at, Vector3.UP)
+	var target_cam_tf: Transform3D = combat_camera.global_transform
+	
+	default_combat_focal_point = target_look_at
+	combat_focal_point = target_look_at
+	combat_cam_focal_offset = Vector3.ZERO
+	var cam_offset: Vector3 = target_cam_pos - target_look_at
+	default_combat_cam_distance = cam_offset.length()
+	combat_cam_distance = default_combat_cam_distance
+	default_combat_cam_yaw = atan2(cam_offset.x, cam_offset.z)
+	combat_cam_yaw = default_combat_cam_yaw
+	default_combat_cam_pitch = asin(clampf(cam_offset.y / default_combat_cam_distance, -0.99, 0.99))
+	combat_cam_pitch = default_combat_cam_pitch
+	
+	var start_cam_tf: Transform3D = target_cam_tf
+	if has_character and "camera" in char_node and is_instance_valid(char_node.camera):
+		start_cam_tf = char_node.camera.global_transform
+		combat_camera.fov = char_node.camera.fov
+	combat_camera.global_transform = start_cam_tf
+	combat_camera.current = true
+	
+	var is_fast_mode: bool = bool(world != null and world.get("automation_enabled"))
+	var max_walk_dist: float = maxf(player_dist, npc_dist)
+	var staging_duration: float = 0.35 if is_fast_mode else clampf(max_walk_dist / 1.5, 2.0, 3.2)
+	var tween := temple_node.create_tween().set_parallel(true)
+	
+	# Smooth camera glide
+	tween.tween_method(func(t: float):
+		if is_instance_valid(combat_camera):
+			combat_camera.global_transform = start_cam_tf.interpolate_with(target_cam_tf, t)
+	, 0.0, 1.0, staging_duration).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+	
+	# Natural player forward walk with direction-aligned rotation and bed step-up
+	if has_character:
+		tween.tween_method(func(t: float):
+			if is_instance_valid(char_node):
+				char_node.global_position = _calc_walk_pos(start_player_pos, target_player_pos, t)
+				if "visual" in char_node and is_instance_valid(char_node.visual):
+					char_node.visual.rotation.y = _calc_walk_yaw(start_player_yaw, player_move_yaw, target_player_yaw, t)
+		, 0.0, 1.0, staging_duration).set_trans(Tween.TRANS_LINEAR)
+		
+	# Natural NPC forward walk with direction-aligned rotation and bed step-up
+	if npc_avatar and is_instance_valid(npc_avatar):
+		tween.tween_method(func(t: float):
+			if is_instance_valid(npc_avatar):
+				npc_avatar.global_position = _calc_walk_pos(npc_start_pos, target_npc_pos, t)
+				npc_avatar.global_rotation.y = _calc_walk_yaw(npc_start_yaw, npc_move_yaw, target_npc_yaw, t)
+		, 0.0, 1.0, staging_duration).set_trans(Tween.TRANS_LINEAR)
+		
+	await tween.finished
+	
+	if not is_instance_valid(temple_node):
+		return
+		
+	if has_character and is_instance_valid(char_node) and char_node.has_method("_set_animation"):
+		char_node._set_animation("idle")
+		
+	if npc_avatar and is_instance_valid(npc_avatar) and npc_avatar.has_method("set_motion"):
+		npc_avatar.set_motion("res://assets/characters/roster/motions/shared_world_A01.tres")
+		
+	_setup_paired_actors(sparkle_motion, master_motion, furn_tf)
+	_set_combat_visuals(true)
+	_set_encounter_state(EncounterState.FURNITURE_SERVICE_ACTIVE)
 	
 	companion_unlocked = true
-	if npc_avatar:
-		npc_avatar.visible = true
-	if npc_body:
-		npc_body.collision_layer = 64
-	if corpse_actor:
-		corpse_actor.stop_ragdoll()
-		corpse_actor.visible = false
+	if service_hud:
+		service_hud.text = title_text + "\n右键环绕视角 | 滚轮缩放视距 | 中键复位视角 | WASD微调对焦 | 按【E】或【空格】结束侍奉"
+		service_hud.visible = true
 		
-	print("【大世界结算】主人选择【放过】花火！乞命侍奉达成，花火永久解锁为可用伙伴！")
 	settlement_completed.emit("spare")
+	settlement_completed.emit("spare_" + service_type)
+	print("【大世界演出】成功步入家具开启乞命侍奉: " + title_text)
+
+func _finish_furniture_service() -> void:
+	if service_hud and is_instance_valid(service_hud):
+		service_hud.visible = false
+	_set_combat_visuals(false)
+	
+	var char_node := _get_world_character()
+	if char_node != null:
+		if "collision_layer" in char_node:
+			char_node.collision_layer = saved_player_collision_layer
+		if "collision_mask" in char_node:
+			char_node.collision_mask = saved_player_collision_mask
+		char_node.global_position = last_service_approach_pos
+		
+	if npc_avatar and is_instance_valid(npc_avatar):
+		npc_avatar.visible = true
+		npc_avatar.global_position = last_service_approach_pos + Vector3(0.5, 0.0, 0.5)
+		if npc_avatar.has_method("set_motion"):
+			npc_avatar.set_motion("res://assets/characters/roster/motions/shared_world_A01.tres")
+	if npc_body and is_instance_valid(npc_body):
+		npc_body.collision_layer = saved_npc_collision_layer
+		npc_body.collision_mask = saved_npc_collision_mask
+		npc_body.global_position = last_service_approach_pos + Vector3(0.5, 0.0, 0.5)
+		
+	_restore_world_controls()
 	_set_encounter_state(EncounterState.COMPLETED)
+	print("【大世界结算】主人结束了乞命侍奉，恢复碰撞与大世界自由漫游！")
+
+func _execute_settlement_spare(service_type: String = "virgin") -> void:
+	_begin_furniture_service_staging(service_type)
 
 func _respawn_sparkle_after_kill() -> void:
 	is_ragdoll_active = false
@@ -476,10 +1012,12 @@ func _respawn_sparkle_after_kill() -> void:
 	print("【大世界刷新】主人离开神殿超出30米范围，花火已重新刷新就位！")
 
 func _restore_world_controls() -> void:
-	if world and is_instance_valid(world.character):
-		world.character.set_control_enabled(true)
-		if world.character.camera:
-			world.character.camera.current = true
+	var char_node := _get_world_character()
+	if char_node != null:
+		if char_node.has_method("set_control_enabled"):
+			char_node.set_control_enabled(true)
+		if "camera" in char_node and char_node.camera:
+			char_node.camera.current = true
 
 func _set_encounter_state(new_state: EncounterState) -> void:
 	var old_state := current_state
