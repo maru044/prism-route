@@ -153,8 +153,10 @@ func _finish_with_action(raw_act: String) -> void:
 	session_active = false
 	
 	var act: String = _normalize_action(raw_act)
-	if not REGISTERED_ACTIONS.has(act):
-		push_error("Dialogue action not registered: " + raw_act)
+	var is_valid: bool = REGISTERED_ACTIONS.has(act)
+	if not is_valid:
+		push_error("Dialogue action not registered: " + raw_act + " (safely falling back to close)")
+		act = ACTION_CLOSE
 		
 	if act == ACTION_KILL:
 		blackboard["mercy_choice"] = "kill"

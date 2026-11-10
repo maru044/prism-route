@@ -16,6 +16,9 @@ const WORLD_AUDIO := preload("res://scripts/audio/world_audio_1030.gd")
 var world_audio
 const INITIAL_RUIN := preload("res://scenes/world/initial_ruin.tscn")
 const DIALOGUE_INPUT := preload("res://scenes/narrative/dialogue_panel.gd")
+const WORLD_CONTROL := preload("res://scripts/world/world_control_context.gd")
+const GAME_PROGRESS := preload("res://scripts/progress/game_progress.gd")
+var game_progress := GAME_PROGRESS.new()
 const UPPER_RING := preload("res://scenes/world/upper_ring.tscn")
 const ISLAND_SADDLE := preload("res://scenes/world/island_saddle.tscn")
 const OVAL_ATRIUM := preload("res://scripts/world/oval_atrium.gd")
@@ -29,6 +32,8 @@ const ROAD_JUNCTION := preload("res://scripts/world/road_junction.gd")
 const CHURCH_RUINS := preload("res://scripts/world/church_ruins.gd")
 const BEACH_SLOPE := preload("res://scripts/world/beach_slope.gd")
 const SANDBAR_PAVILION := preload("res://scripts/world/sandbar_pavilion.gd")
+const CAPE_TOWN := preload("res://scripts/world/cape_town.gd")
+var cape_town
 var sandbar_pavilion
 var church_ruins
 var sunken_archive
@@ -93,7 +98,7 @@ func _ready() -> void:
 	camper.automation_enabled=automation_enabled;camper.set_physics_process(false);camper.set_process_unhandled_input(false);camper.visible=false
 	camper.calibrate_wheels()
 	camper.respawn_resolver=_resolve_camper_respawn
-	_load_mask();_environment();_build_model();add_child(ROAD_JUNCTION.new());_build_terrain_repairs();_build_oval_atrium();_build_initial_ruin();_build_island_saddle();_build_landmark_ring();_build_terrace_ruins();_build_water_court();_build_earth_pavilion();_build_sunken_archive();_build_church_ruins();_build_upper_ring();_build_surface_detail_trial();_build_sandbar_pavilion();_hud()
+	_load_mask();_environment();_build_model();add_child(ROAD_JUNCTION.new());_build_terrain_repairs();_build_oval_atrium();_build_initial_ruin();_build_island_saddle();_build_landmark_ring();_build_terrace_ruins();_build_water_court();_build_earth_pavilion();_build_sunken_archive();_build_church_ruins();_build_upper_ring();_build_surface_detail_trial();_build_sandbar_pavilion();_build_cape_town();_hud()
 	camera=Camera3D.new();camera.near=0.15;camera.far=10000;camera.fov=58;add_child(camera)
 	await get_tree().physics_frame;await get_tree().physics_frame
 	for proposal: Dictionary in metadata.spawns:
@@ -133,6 +138,9 @@ func _ready() -> void:
 	if "--sandbar-pavilion-preview" in OS.get_cmdline_user_args():
 		for i in resolved_spawns.size():
 			if resolved_spawns[i].get("key","")=="sandbar_pavilion":initial_spawn=i;break
+	if "--cape-town-preview" in OS.get_cmdline_user_args():
+		for i in resolved_spawns.size():
+			if resolved_spawns[i].get("key","")=="cape_town":initial_spawn=i;break
 	await select_spawn(initial_spawn)
 	if "--ruin-preview" in OS.get_cmdline_user_args() or "--ruin-stairs-preview" in OS.get_cmdline_user_args():
 		var forward:=vec(initial_ruin.planting_mask.manifest.forward)
@@ -156,6 +164,8 @@ func _ready() -> void:
 	earth_pavilion.install_grass_cells(vegetation.volume_streamer)
 	terrain_repairs.install_grass_cells(vegetation.volume_streamer)
 	church_ruins.install_grass_cells(vegetation.volume_streamer)
+	cape_town.install_grass_cells(vegetation.volume_streamer)
+	cape_town.bind_vegetation(vegetation)
 	upper_ring.plant_courtyard(vegetation)
 	grass_wind=GRASS_WIND.new();add_child(grass_wind)
 	grass_wind.initialize(vegetation);grass_wind.set_mode(GRASS_WIND.Mode.AUTO)
@@ -205,7 +215,12 @@ func _ready() -> void:
 	if "--verify-world-audio" in OS.get_cmdline_user_args():
 		var verifier: Node=load("res://tools/check_world_audio_1030.gd").new();verifier.world=self;add_child(verifier);verifier.call_deferred("run")
 	if "--verify-export" in OS.get_cmdline_user_args():
-		get_tree().root.call_deferred("add_child",load("res://tools/verify_export_1021.gd").new())
+		if ResourceLoader.exists("res://tools/verify_export_1021.gd"):
+			get_tree().root.call_deferred("add_child",load("res://tools/verify_export_1021.gd").new())
+		elif ResourceLoader.exists("res://tools/configure_export_1021.gd"):
+			get_tree().root.call_deferred("add_child",load("res://tools/configure_export_1021.gd").new())
+		else:
+			push_warning("[Map1021] --verify-export verification script not found")
 
 func _initialize_water() -> void:
 	water_manager=WATER_MANAGER.new()
@@ -239,6 +254,15 @@ func _initialize_water() -> void:
 	terrain_repairs.register_reflections(water_manager)
 	sunken_archive.register_reflections(water_manager)
 	sandbar_pavilion.register_reflections(water_manager)
+	cape_town.register_reflections(water_manager)
+
+func _build_cape_town() -> void:
+	cape_town=CAPE_TOWN.new();cape_town.world=self;add_child(cape_town)
+	var support:=""
+	for row: Dictionary in cape_town.manifest.objects:
+		if row.name=="street/approach":support=row.id;break
+	metadata.spawns.append({"name":"海岬小镇 · 中央环岛","key":"cape_town","position":cape_town.manifest.spawn,
+		"look_direction":cape_town.manifest.forward,"required_floor_kind":"Structure","required_source_id":support,"maximum_search_distance_m":1.,"character_only":true})
 
 func _build_sandbar_pavilion() -> void:
 	sandbar_pavilion=SANDBAR_PAVILION.new();add_child(sandbar_pavilion)
@@ -340,6 +364,7 @@ func _sync_meadow_color() -> void:
 	terrain_material.set_shader_parameter("use_shared_meadow_biome",true)
 	oval_atrium.sync_ground_palette()
 	terrain_repairs.sync_shoulder_palette()
+	cape_town.sync_ground_palette()
 
 func _load_mask() -> void:
 	var path:=ASSETS+"landscape_mask.res"
@@ -359,6 +384,9 @@ func _load_mask() -> void:
 	terrain_material.set_shader_parameter("mask_extent_xz",Vector2(metadata.extent_xz[0],metadata.extent_xz[1]))
 
 func architectural_band(p: Vector3,margin:=0.0) -> bool:
+	if cape_town!=null:
+		var town_band: int=cape_town.grass_band(p,margin)
+		if town_band>=0:return town_band==1
 	if church_ruins!=null and church_ruins.blocks_grass(p):return true
 	if sunken_archive!=null and sunken_archive.blocks_grass(p):return true
 	if earth_pavilion!=null and earth_pavilion.blocks_grass(p):return true
@@ -610,9 +638,16 @@ func show_overview() -> void:
 	free_mode=true;overview_mode=true;_sync_actor_controls()
 	camera.position=Vector3(-160,1800,2100);camera.look_at(Vector3(-250,15,400));camera.make_current()
 
+func is_world_input_allowed() -> bool:
+	if WORLD_CONTROL.is_world_input_blocked(get_tree()):
+		return false
+	if planting != null and planting.active:
+		return false
+	return true
+
 func _unhandled_input(event: InputEvent) -> void:
-	if DIALOGUE_INPUT.has_active_dialogue(get_tree()): return
-	if planting!=null and planting.active:return
+	if not is_world_input_allowed():
+		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		var key: int=event.physical_keycode if event.physical_keycode!=0 else event.keycode
 		if key>=KEY_1 and key<=KEY_9:select_spawn(key-KEY_1)

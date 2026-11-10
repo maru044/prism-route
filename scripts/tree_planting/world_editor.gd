@@ -105,6 +105,7 @@ func set_source_visible(id: String,enabled: bool) -> void:
 	else:hidden[id]=true
 
 func geometry_excludes_tree(p:Vector3) -> bool:
+	if world.cape_town!=null and world.cape_town.blocks_grass(p):return true
 	return world.sunken_archive!=null and world.sunken_archive.blocks_grass(p)
 
 func set_base_visible(id: String,enabled: bool) -> void:

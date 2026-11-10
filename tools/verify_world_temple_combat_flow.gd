@@ -21,6 +21,8 @@ func _get_capture_dir() -> String:
 	return default_dir
 
 func _save_screenshot(img: Image, file_name: String) -> void:
+	if img == null or img.is_empty():
+		return
 	var target_dir := _get_capture_dir()
 	var path := target_dir + file_name
 	img.save_png(path)
@@ -30,6 +32,13 @@ func _save_screenshot(img: Image, file_name: String) -> void:
 	var brain_dir := "C:/Users/PC/.gemini/antigravity/brain/51c58479-72e8-436c-a199-d13ab3cac199/"
 	if DirAccess.dir_exists_absolute(brain_dir):
 		img.save_png(brain_dir + file_name)
+
+func _wait_for_screenshot_draw() -> void:
+	if DisplayServer.get_name() == "headless":
+		for i in range(2):
+			await process_frame
+	else:
+		await _wait_for_screenshot_draw()
 
 func _run_overworld_flow() -> void:
 	root.size = Vector2i(1920, 1080)
@@ -85,7 +94,7 @@ func _run_overworld_flow() -> void:
 	assert(encounter.current_state == encounter.EncounterState.COMBAT, "State must be COMBAT")
 
 	# Capture Overworld dual blowjob battle
-	await RenderingServer.frame_post_draw
+	await _wait_for_screenshot_draw()
 	_save_screenshot(root.get_texture().get_image(), "overworld_temple_dual_blowjob_combat.png")
 
 	# Step 3: Mid-battle negotiation in Overworld
@@ -97,7 +106,7 @@ func _run_overworld_flow() -> void:
 	assert(ruin.dialogue_panel.visible, "DialoguePanel must be floating over HUD")
 
 	# Capture Overworld mid-battle negotiation
-	await RenderingServer.frame_post_draw
+	await _wait_for_screenshot_draw()
 	_save_screenshot(root.get_texture().get_image(), "overworld_temple_mid_battle_negotiation.png")
 
 	# Advance text -> choices -> choose "【返回对决】" (choice 3)
@@ -129,7 +138,7 @@ func _run_overworld_flow() -> void:
 	assert(not ruin.is_in_dialogue_or_combat, "Player must have full freedom of movement!")
 
 	# Capture doorway respawn perspective where player has full control
-	await RenderingServer.frame_post_draw
+	await _wait_for_screenshot_draw()
 	_save_screenshot(root.get_texture().get_image(), "overworld_temple_respawn_free_movement.png")
 
 	# Step 5: Player walks across temple over to Sparkle
@@ -151,7 +160,7 @@ func _run_overworld_flow() -> void:
 	assert(encounter.defeat_count == 1, "Defeat count should be 1")
 
 	# Capture second-attempt dialogue in front of Sparkle
-	await RenderingServer.frame_post_draw
+	await _wait_for_screenshot_draw()
 	_save_screenshot(root.get_texture().get_image(), "overworld_temple_second_encounter_dialogue.png")
 
 	# Step 7: Advance second-encounter choices and select instant surrender to test settlement
@@ -193,7 +202,7 @@ func _run_overworld_flow() -> void:
 	print("Kill settlement verified: Corpse spawned at ", encounter.get_corpse_position())
 
 	# Capture corpse ragdoll screenshot
-	await RenderingServer.frame_post_draw
+	await _wait_for_screenshot_draw()
 	_save_screenshot(root.get_texture().get_image(), "overworld_temple_sparkle_corpse_ragdoll.png")
 
 	# Test respawn when leaving 30m
@@ -234,6 +243,8 @@ func _run_overworld_flow() -> void:
 	for i in range(5):
 		await process_frame
 	encounter.dialogue_manager.choose_option(0) # 再次对决 (enter_combat)
+	while encounter.current_state != encounter.EncounterState.COMBAT:
+		await process_frame
 
 	# Simulate instant win for spare verification
 	encounter.npc_pleasure.add_pleasure(100.0)
@@ -264,7 +275,7 @@ func _run_overworld_flow() -> void:
 	assert(encounter.service_hud.visible == true, "Service HUD must be visible")
 	print("Furniture service active on seat_01! Capturing screenshot")
 
-	await RenderingServer.frame_post_draw
+	await _wait_for_screenshot_draw()
 	_save_screenshot(root.get_texture().get_image(), "overworld_temple_furniture_service.png")
 
 	encounter._finish_furniture_service()

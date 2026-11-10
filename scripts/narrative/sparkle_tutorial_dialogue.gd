@@ -410,6 +410,28 @@ static func get_dialogue_graph() -> Dictionary:
 						"action": "close"
 					}
 				]
+			},
+			"post_kill_greeting": {
+				"type": "text",
+				"speaker": "花火",
+				"text": "嘻嘻，主人又回到神殿来看花火了吗？上次被主人无情杀死玩弄尸体的绝顶快感，花火到现在还记忆犹新呢！这次主人是想要再次开战，还是有其他打算呢？",
+				"emotion": "smirk",
+				"next": "post_kill_choices"
+			},
+			"post_kill_choices": {
+				"type": "choice",
+				"speaker": "花火",
+				"text": "主人想要花火做什么呢？",
+				"choices": [
+					{
+						"text": "【再次对决】重新与花火进行回合制对战！",
+						"action": "enter_combat"
+					},
+					{
+						"text": "【离开】暂时先这样吧。",
+						"action": "close"
+					}
+				]
 			}
 		}
 	}

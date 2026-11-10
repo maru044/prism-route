@@ -53,6 +53,7 @@ func add_pleasure(amount: float, zone: String = "") -> float:
 		_: multiplier = 1.0
 		
 	var actual_gain: float = amount * multiplier * damage_taken_multiplier
+	var old_val: float = current_pleasure
 	current_pleasure += actual_gain
 	
 	if pleasure_locked and current_pleasure > pleasure_cap:
@@ -68,7 +69,7 @@ func add_pleasure(amount: float, zone: String = "") -> float:
 		
 	var pct: float = (current_pleasure / max_pleasure) * 100.0
 	pleasure_changed.emit(current_pleasure, max_pleasure, pct)
-	return actual_gain
+	return current_pleasure - old_val
 
 func reduce_pleasure(amount: float) -> void:
 	current_pleasure = maxf(0.0, current_pleasure - amount)

@@ -21,7 +21,56 @@ enum EncounterState {
 
 const NPC := preload("res://scenes/characters/shared_humanoid_actor.tscn")
 const MTOON := preload("res://scripts/characters/mtoon_materials.gd")
+const WorldControlContextClass := preload("res://scripts/world/world_control_context.gd")
 const DialogueManagerClass := preload("res://scripts/narrative/dialogue_manager.gd")
+
+const VALID_TRANSITIONS: Dictionary = {
+	EncounterState.AVAILABLE: [
+		EncounterState.INTRO_DIALOGUE,
+		EncounterState.STAGING_TRANSITION,
+		EncounterState.FURNITURE_SERVICE_STAGING
+	],
+	EncounterState.INTRO_DIALOGUE: [
+		EncounterState.AVAILABLE,
+		EncounterState.STAGING_TRANSITION,
+		EncounterState.FURNITURE_SERVICE_STAGING
+	],
+	EncounterState.STAGING_TRANSITION: [
+		EncounterState.COMBAT,
+		EncounterState.AVAILABLE
+	],
+	EncounterState.COMBAT: [
+		EncounterState.RESULT_DIALOGUE,
+		EncounterState.RESPAWN,
+		EncounterState.AVAILABLE
+	],
+	EncounterState.RESULT_DIALOGUE: [
+		EncounterState.SETTLEMENT,
+		EncounterState.FURNITURE_SERVICE_STAGING,
+		EncounterState.AVAILABLE
+	],
+	EncounterState.SETTLEMENT: [
+		EncounterState.COMPLETED,
+		EncounterState.AVAILABLE
+	],
+	EncounterState.FURNITURE_SERVICE_STAGING: [
+		EncounterState.FURNITURE_SERVICE_ACTIVE,
+		EncounterState.AVAILABLE
+	],
+	EncounterState.FURNITURE_SERVICE_ACTIVE: [
+		EncounterState.COMPLETED,
+		EncounterState.AVAILABLE
+	],
+	EncounterState.RESPAWN: [
+		EncounterState.AVAILABLE
+	],
+	EncounterState.COMPLETED: [
+		EncounterState.INTRO_DIALOGUE,
+		EncounterState.STAGING_TRANSITION,
+		EncounterState.FURNITURE_SERVICE_STAGING,
+		EncounterState.AVAILABLE
+	]
+}
 const TurnCombatManagerClass := preload("res://scripts/combat/turn_combat_manager.gd")
 const DialoguePanelClass := preload("res://scenes/narrative/dialogue_panel.gd")
 const TurnCombatHUDClass := preload("res://scenes/combat/turn_combat_hud.gd")
@@ -40,6 +89,17 @@ const MOTION_VIRGIN_MASTER := "res://assets/characters/mmd_selected/animations/m
 
 const MOTION_HONBAN_SPARKLE := "res://assets/characters/mmd_selected/animations/mmd_87e004f6db53_a.tres"
 const MOTION_HONBAN_MASTER := "res://assets/characters/mmd_selected/animations/mmd_87e004f6db53_b.tres"
+
+const MASTER_CONFIGS: Dictionary = {
+	"lumine": {
+		"model": "res://assets/characters/roster/lumine/lumine.vrm",
+		"mtoon": "lumine"
+	},
+	"ganyu": {
+		"model": "res://assets/characters/ganyu/ganyu.vrm",
+		"mtoon": "ganyu"
+	}
+}
 
 var current_state: EncounterState = EncounterState.AVAILABLE
 var temple_node: Node3D
@@ -82,10 +142,22 @@ var defeat_count: int = 0
 var companion_unlocked: bool = false
 var is_ragdoll_active: bool = false
 
+var settlement_outcome: String = "none"
+var last_battle_result: String = "none"
+var tutorial_completed: bool = false
+var current_op_token: int = 0
+var saved_world_context: Dictionary = {}
+
 var saved_player_collision_layer: int = 2
 var saved_player_collision_mask: int = 1
 var saved_npc_collision_layer: int = 64
 var saved_npc_collision_mask: int = 0
+
+var last_service_approach_basis: Basis = Basis.IDENTITY
+var saved_npc_service_transform: Transform3D = Transform3D.IDENTITY
+var saved_player_service_transform: Transform3D = Transform3D.IDENTITY
+var allow_test_fixture_fallback: bool = true
+var game_progress: RefCounted = null
 
 func initialize(
 	p_temple: Node3D,
@@ -99,6 +171,25 @@ func initialize(
 	npc_anchor = p_anchor
 	npc_avatar = p_avatar
 	npc_body = p_body
+	
+	if temple_node != null:
+		temple_node.add_to_group(WorldControlContextClass.GROUP_INPUT_BLOCKERS)
+	add_to_group(WorldControlContextClass.GROUP_INPUT_BLOCKERS)
+	
+	if world != null:
+		if "game_progress" in world and world.get("game_progress") != null:
+			game_progress = world.get("game_progress")
+		elif "progress" in world and world.get("progress") != null:
+			game_progress = world.get("progress")
+	if game_progress == null:
+		game_progress = load("res://scripts/progress/game_progress.gd").new()
+		
+	if temple_node != null:
+		var f_instances = temple_node.get("furniture_instances")
+		if f_instances == null and temple_node.has_meta("furniture_instances"):
+			f_instances = temple_node.get_meta("furniture_instances")
+		if f_instances is Dictionary and not f_instances.is_empty():
+			allow_test_fixture_fallback = false
 	
 	_build_subsystems()
 
@@ -131,6 +222,11 @@ func _build_subsystems() -> void:
 		MTOON.apply(master_combat_actor.character, "lumine")
 	)
 	combat_actors_root.add_child(master_combat_actor)
+	
+	if sparkle_combat_actor.has_method("set_playback_active"):
+		sparkle_combat_actor.set_playback_active(false)
+	if master_combat_actor.has_method("set_playback_active"):
+		master_combat_actor.set_playback_active(false)
 	
 	# Dedicated Combat Camera
 	combat_camera = Camera3D.new()
@@ -262,9 +358,108 @@ func get_corpse_position() -> Vector3:
 		return corpse_actor.global_position
 	return get_npc_interaction_position()
 
+
+func is_world_input_locked() -> bool:
+	return current_state in [
+		EncounterState.INTRO_DIALOGUE,
+		EncounterState.STAGING_TRANSITION,
+		EncounterState.COMBAT,
+		EncounterState.RESULT_DIALOGUE,
+		EncounterState.SETTLEMENT,
+		EncounterState.FURNITURE_SERVICE_STAGING,
+		EncounterState.FURNITURE_SERVICE_ACTIVE
+	]
+
+func _capture_world_context() -> void:
+	if world != null:
+		saved_world_context = {
+			"character_mode": world.get("character_mode") if "character_mode" in world else true,
+			"free_mode": world.get("free_mode") if "free_mode" in world else false,
+			"overview_mode": world.get("overview_mode") if "overview_mode" in world else false
+		}
+
+
+func get_active_master_id() -> String:
+	var char_node := _get_world_character()
+	if char_node != null:
+		if "active_character_id" in char_node:
+			var c_id: String = String(char_node.active_character_id)
+			if not c_id.is_empty():
+				return c_id
+		if char_node.has_meta("active_character_id"):
+			var c_id: String = String(char_node.get_meta("active_character_id"))
+			if not c_id.is_empty():
+				return c_id
+	if world != null:
+		var switch_wheel = world.find_child("CharacterSwitchWheel", true, false)
+		if switch_wheel and "active_character_id" in switch_wheel:
+			return String(switch_wheel.active_character_id)
+	return "lumine"
+
+func _ensure_combat_actors_ready() -> void:
+	if sparkle_combat_actor != null and is_instance_valid(sparkle_combat_actor):
+		if not sparkle_combat_actor.ready_for_review:
+			await sparkle_combat_actor.initialized
+	if master_combat_actor != null and is_instance_valid(master_combat_actor):
+		if not master_combat_actor.ready_for_review:
+			await master_combat_actor.initialized
+
+func _sync_master_combat_actor_model() -> void:
+	var master_id := get_active_master_id()
+	var config: Dictionary = MASTER_CONFIGS.get(master_id, MASTER_CONFIGS["lumine"])
+	var target_model: String = config.get("model", MASTER_CONFIGS["lumine"]["model"])
+	var target_mtoon: String = config.get("mtoon", "lumine")
+	
+	if master_combat_actor != null and is_instance_valid(master_combat_actor):
+		if master_combat_actor.model_resource == target_model:
+			return
+		master_combat_actor.queue_free()
+		
+	master_combat_actor = NPC.instantiate()
+	master_combat_actor.name = "MasterReceiving"
+	master_combat_actor.model_resource = target_model
+	master_combat_actor.motion_resource = MOTION_MASTER_RECEIVING
+	master_combat_actor.auto_play = true
+	master_combat_actor.environment_mask = 33
+	master_combat_actor.initialized.connect(func():
+		if is_instance_valid(master_combat_actor) and master_combat_actor.character:
+			MTOON.apply(master_combat_actor.character, target_mtoon)
+	)
+	combat_actors_root.add_child(master_combat_actor)
+	if master_combat_actor.has_method("set_playback_active"):
+		master_combat_actor.set_playback_active(combat_actors_root.visible)
+
+func _get_world_var(prop_name: String, default_val = null):
+	if world == null or not is_instance_valid(world):
+		return default_val
+	var val = world.get(prop_name)
+	if val != null:
+		return val
+	if world.has_meta(prop_name):
+		return world.get_meta(prop_name)
+	return default_val
+
 func _get_world_character() -> Node:
 	if world == null or not is_instance_valid(world):
 		return null
+	var char_mode = _get_world_var("character_mode")
+	if char_mode != null and not bool(char_mode):
+		return null
+	var free_mode = _get_world_var("free_mode")
+	if free_mode != null and bool(free_mode):
+		return null
+	var overview = _get_world_var("overview_mode")
+	if overview != null and bool(overview):
+		return null
+	var planting = _get_world_var("planting")
+	if planting != null and planting.get("active") != null and bool(planting.get("active")):
+		return null
+	if world.has_method("active_actor"):
+		var actor = world.active_actor()
+		if actor != null and is_instance_valid(actor):
+			if "camper" in world and actor == world.get("camper"):
+				return null
+			return actor
 	if "character" in world:
 		var node = world.get("character")
 		if node != null and is_instance_valid(node):
@@ -308,10 +503,51 @@ func tick(delta: float) -> void:
 			interact_prompt.visible = false
 		return
 		
-	if dist <= 2.8:
-		interact_prompt.visible = true
-		if Input.is_key_pressed(KEY_E) or Input.is_action_just_pressed("ui_accept"):
-			start_encounter_dialogue()
+	# Block interaction when player is using camper, free camera or planting editor
+	if world != null:
+		if "character_mode" in world and not world.character_mode:
+			if interact_prompt and interact_prompt.visible:
+				interact_prompt.visible = false
+			return
+		if "free_mode" in world and world.free_mode:
+			if interact_prompt and interact_prompt.visible:
+				interact_prompt.visible = false
+			return
+		if "planting" in world and world.planting != null and world.planting.get("active"):
+			if interact_prompt and interact_prompt.visible:
+				interact_prompt.visible = false
+			return
+
+	var horiz_dist: float = Vector2(player_pos.x - npc_pos.x, player_pos.z - npc_pos.z).length()
+	var dy: float = absf(player_pos.y - npc_pos.y)
+	if horiz_dist <= 2.8 and dy <= 1.5:
+		var has_los: bool = true
+		if world and is_instance_valid(world) and world.is_inside_tree():
+			var world_3d: World3D = world.get_world_3d()
+			if world_3d:
+				var space_state := world_3d.direct_space_state
+				if space_state:
+					var ray_query := PhysicsRayQueryParameters3D.create(
+						player_pos + Vector3(0.0, 1.0, 0.0),
+						npc_pos + Vector3(0.0, 1.0, 0.0)
+					)
+					var exclude_rids: Array[RID] = []
+					if "get_rid" in char_node:
+						exclude_rids.append(char_node.get_rid())
+					if npc_body and is_instance_valid(npc_body):
+						exclude_rids.append(npc_body.get_rid())
+					ray_query.exclude = exclude_rids
+					ray_query.collision_mask = 1
+					var result := space_state.intersect_ray(ray_query)
+					if not result.is_empty():
+						has_los = false
+						
+		if has_los:
+			interact_prompt.visible = true
+			if Input.is_action_just_pressed("interact") or Input.is_action_just_pressed("ui_accept") or Input.is_physical_key_pressed(KEY_E):
+				start_encounter_dialogue()
+		else:
+			interact_prompt.visible = false
 	else:
 		interact_prompt.visible = false
 
@@ -319,8 +555,11 @@ func start_encounter_dialogue() -> void:
 	if is_ragdoll_active:
 		return
 		
-	_set_encounter_state(EncounterState.INTRO_DIALOGUE)
+	if not _set_encounter_state(EncounterState.INTRO_DIALOGUE):
+		return
+		
 	interact_prompt.visible = false
+	_capture_world_context()
 	
 	var char_node := _get_world_character()
 	if char_node != null and char_node.has_method("set_control_enabled"):
@@ -329,10 +568,18 @@ func start_encounter_dialogue() -> void:
 	dialogue_panel.visible = true
 	var graph: Dictionary = SparkleTutorialDialogueClass.get_dialogue_graph()
 	var start_node := "start"
-	if companion_unlocked:
-		start_node = "post_spare_greeting" if "post_spare_greeting" in graph.get("nodes", {}) else "start"
-	elif defeat_count > 0:
+	
+	# Priority 1: Recent battle defeat retry takes highest priority
+	if last_battle_result == "player_defeat":
 		start_node = "respawn_dialogue"
+		last_battle_result = "none"
+	# Priority 2: Historical settlement outcome
+	elif settlement_outcome == "kill":
+		start_node = "post_kill_greeting" if "post_kill_greeting" in graph.get("nodes", {}) else "start"
+	elif settlement_outcome.begins_with("spare"):
+		start_node = "post_spare_greeting" if "post_spare_greeting" in graph.get("nodes", {}) else "start"
+	else:
+		start_node = "start"
 		
 	if start_node != "respawn_dialogue":
 		dialogue_manager.reset_battle_cheats()
@@ -347,7 +594,10 @@ func start_encounter_dialogue() -> void:
 func _begin_seamless_combat_staging() -> void:
 	if current_state == EncounterState.COMBAT:
 		return
-	_set_encounter_state(EncounterState.STAGING_TRANSITION)
+	if not _set_encounter_state(EncounterState.STAGING_TRANSITION):
+		return
+	current_op_token += 1
+	var op_token := current_op_token
 	dialogue_panel.visible = false
 	if interact_prompt and is_instance_valid(interact_prompt):
 		interact_prompt.visible = false
@@ -438,11 +688,19 @@ func _begin_seamless_combat_staging() -> void:
 
 	await tween.finished
 
-	if not is_instance_valid(temple_node):
+	if not is_instance_valid(temple_node) or op_token != current_op_token or current_state != EncounterState.STAGING_TRANSITION:
 		return
 
 	if has_character and is_instance_valid(char_node) and char_node.has_method("_set_animation"):
 		char_node._set_animation("idle")
+
+	# Sync active master model and ensure actors ready before display
+	_sync_master_combat_actor_model()
+	await _ensure_combat_actors_ready()
+	if sparkle_combat_actor and sparkle_combat_actor.has_method("seek"):
+		sparkle_combat_actor.seek(0.0)
+	if master_combat_actor and master_combat_actor.has_method("seek"):
+		master_combat_actor.seek(0.0)
 
 	# Seamlessly switch to combat actors and HUD
 	_set_combat_visuals(true)
@@ -477,9 +735,17 @@ func _set_combat_visuals(active: bool) -> void:
 			combat_actors_root.global_position = npc_pos
 			combat_actors_root.global_basis = basis
 		
+		if sparkle_combat_actor and sparkle_combat_actor.has_method("set_playback_active"):
+			sparkle_combat_actor.set_playback_active(true)
+		if master_combat_actor and master_combat_actor.has_method("set_playback_active"):
+			master_combat_actor.set_playback_active(true)
 		_update_combat_camera_transform()
 		combat_camera.current = true
 	else:
+		if sparkle_combat_actor and sparkle_combat_actor.has_method("set_playback_active"):
+			sparkle_combat_actor.set_playback_active(false)
+		if master_combat_actor and master_combat_actor.has_method("set_playback_active"):
+			master_combat_actor.set_playback_active(false)
 		is_dragging_combat_cam = false
 		is_panning_combat_cam = false
 		combat_camera.current = false
@@ -499,6 +765,7 @@ func _update_combat_camera_transform() -> void:
 	combat_camera.look_at(cur_focal, Vector3.UP)
 
 func _reset_combat_camera_to_default() -> void:
+	combat_focal_point = default_combat_focal_point
 	combat_cam_yaw = default_combat_cam_yaw
 	combat_cam_pitch = default_combat_cam_pitch
 	combat_cam_distance = default_combat_cam_distance
@@ -527,10 +794,17 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 		
 	if current_state == EncounterState.FURNITURE_SERVICE_ACTIVE:
-		if event is InputEventKey and event.pressed:
+		var is_dismiss := false
+		if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept") or event.is_action_pressed("ui_cancel"):
+			is_dismiss = true
+		elif InputMap.has_action("cancel") and event.is_action_pressed("cancel"):
+			is_dismiss = true
+		elif event is InputEventKey and event.pressed:
 			if event.keycode in [KEY_E, KEY_SPACE, KEY_ESCAPE]:
-				_finish_furniture_service()
-				return
+				is_dismiss = true
+		if is_dismiss:
+			_finish_furniture_service()
+			return
 		
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT:
@@ -626,9 +900,12 @@ func _on_combat_ended(winner: String, _loser: String, _reason: String) -> void:
 	
 	var graph: Dictionary = SparkleTutorialDialogueClass.get_dialogue_graph()
 	if winner == "Sparkle":
-		_set_encounter_state(EncounterState.RESPAWN)
+		last_battle_result = "player_defeat"
 		defeat_count += 1
 		dialogue_manager.blackboard["defeat_count"] = defeat_count
+		if game_progress and game_progress.has_method("record_defeat"):
+			game_progress.record_defeat()
+		_set_encounter_state(EncounterState.RESPAWN)
 		
 		var char_node := _get_world_character()
 		if char_node != null:
@@ -640,9 +917,11 @@ func _on_combat_ended(winner: String, _loser: String, _reason: String) -> void:
 				char_node.camera.current = true
 				
 		dialogue_panel.visible = false
+		_restore_world_controls()
 		_set_encounter_state(EncounterState.AVAILABLE)
 		print("【大世界】主人败北射精虚脱，已在神殿门前重新站起！请自由走入神殿再次与花火交涉。")
 	else:
+		last_battle_result = "player_victory"
 		_set_encounter_state(EncounterState.RESULT_DIALOGUE)
 		dialogue_panel.visible = true
 		dialogue_manager.start_dialogue(
@@ -675,7 +954,14 @@ func _execute_settlement_kill() -> void:
 	_restore_world_controls()
 	
 	is_ragdoll_active = true
+	tutorial_completed = true
 	companion_unlocked = true
+	settlement_outcome = "kill"
+	if game_progress:
+		if game_progress.has_method("mark_tutorial_completed"):
+			game_progress.mark_tutorial_completed()
+		if game_progress.has_method("set_settlement_outcome"):
+			game_progress.set_settlement_outcome("kill")
 	
 	if npc_avatar:
 		npc_avatar.visible = false
@@ -699,23 +985,38 @@ func _execute_settlement_kill() -> void:
 	settlement_completed.emit("kill")
 	_set_encounter_state(EncounterState.COMPLETED)
 
-func get_furniture_anchor(furniture_id: String, anchor_name: String) -> Transform3D:
-	if temple_node:
-		var furn_dict: Dictionary = temple_node.get("furniture_instances") if "furniture_instances" in temple_node else {}
-		if furn_dict.has(furniture_id):
-			var f_node: Node3D = furn_dict[furniture_id]
-			if f_node:
-				var m_node: Node3D = f_node.get_node_or_null(anchor_name)
-				if m_node:
-					return m_node.global_transform
-				return f_node.global_transform
+func _find_furniture_node(furniture_id: String) -> Node3D:
+	if temple_node and is_instance_valid(temple_node):
+		var furn_dict = temple_node.get("furniture_instances")
+		if furn_dict == null and temple_node.has_meta("furniture_instances"):
+			furn_dict = temple_node.get_meta("furniture_instances")
+		if furn_dict is Dictionary and furn_dict.has(furniture_id):
+			var f: Node3D = furn_dict[furniture_id]
+			if f and is_instance_valid(f):
+				return f
 		var fallback_node: Node3D = temple_node.find_child(furniture_id, true, false)
-		if fallback_node:
-			var m_node: Node3D = fallback_node.get_node_or_null(anchor_name)
-			if m_node:
-				return m_node.global_transform
-			return fallback_node.global_transform
+		if fallback_node and is_instance_valid(fallback_node):
+			return fallback_node
+	return null
 
+func has_furniture_anchor(furniture_id: String, anchor_name: String) -> bool:
+	var f_node := _find_furniture_node(furniture_id)
+	if f_node and is_instance_valid(f_node):
+		if f_node.has_method("has_motion_anchor"):
+			return f_node.has_motion_anchor(anchor_name)
+		return f_node.get_node_or_null(anchor_name) != null
+	if allow_test_fixture_fallback:
+		return _has_test_fixture_anchor(furniture_id, anchor_name)
+	return false
+
+func _has_test_fixture_anchor(furniture_id: String, anchor_name: String) -> bool:
+	if furniture_id == "seat_01":
+		return anchor_name in ["Anchor_Seat", "Anchor_Front"]
+	elif furniture_id == "rest_01":
+		return anchor_name in ["Anchor_Bed_Center", "Anchor_Front", "Anchor_BedEdge_Front"]
+	return false
+
+func _get_test_fixture_anchor(furniture_id: String, anchor_name: String) -> Transform3D:
 	if furniture_id == "seat_01":
 		var seat_pos := Vector3(-1011.062, 61.05, 1255.254)
 		var fwd := Vector3(-0.928477, 0.0, 0.371391).normalized()
@@ -734,7 +1035,25 @@ func get_furniture_anchor(furniture_id: String, anchor_name: String) -> Transfor
 		elif anchor_name == "Anchor_Front":
 			return Transform3D(Basis(Vector3.UP.cross(-fwd).normalized(), Vector3.UP, -fwd), Vector3(-1016.682, 61.05, 1253.533))
 		return Transform3D(basis, bed_pos)
+	return Transform3D.IDENTITY
+
+func get_furniture_anchor(furniture_id: String, anchor_name: String) -> Transform3D:
+	var f_node := _find_furniture_node(furniture_id)
+	if f_node and is_instance_valid(f_node):
+		if f_node.has_method("get_motion_anchor"):
+			var tf: Transform3D = f_node.get_motion_anchor(anchor_name, true)
+			if tf != Transform3D.IDENTITY:
+				return tf
+		var m_node: Node3D = f_node.get_node_or_null(anchor_name)
+		if m_node and is_instance_valid(m_node):
+			return m_node.global_transform
+		push_error("[InitialTempleEncounterController] Furniture '%s' found but anchor '%s' missing!" % [furniture_id, anchor_name])
+		return Transform3D.IDENTITY
 		
+	if allow_test_fixture_fallback and _has_test_fixture_anchor(furniture_id, anchor_name):
+		return _get_test_fixture_anchor(furniture_id, anchor_name)
+		
+	push_error("[InitialTempleEncounterController] Furniture '%s' with anchor '%s' not found! Refusing silent fallback." % [furniture_id, anchor_name])
 	return Transform3D.IDENTITY
 
 func _setup_paired_actors(sparkle_motion: String, master_motion: String, base_transform: Transform3D) -> void:
@@ -759,15 +1078,19 @@ func _setup_paired_actors(sparkle_motion: String, master_motion: String, base_tr
 	)
 	combat_actors_root.add_child(sparkle_combat_actor)
 	
+	var master_cfg: Dictionary = MASTER_CONFIGS.get(get_active_master_id(), MASTER_CONFIGS["lumine"])
+	var master_model: String = master_cfg.get("model", MASTER_CONFIGS["lumine"]["model"])
+	var master_mtoon: String = master_cfg.get("mtoon", "lumine")
+	
 	master_combat_actor = NPC.instantiate()
 	master_combat_actor.name = "MasterPairedActor"
-	master_combat_actor.model_resource = "res://assets/characters/roster/lumine/lumine.vrm"
+	master_combat_actor.model_resource = master_model
 	master_combat_actor.motion_resource = master_motion
 	master_combat_actor.auto_play = true
 	master_combat_actor.environment_mask = 33
 	master_combat_actor.initialized.connect(func():
 		if is_instance_valid(master_combat_actor) and master_combat_actor.character:
-			MTOON.apply(master_combat_actor.character, "lumine")
+			MTOON.apply(master_combat_actor.character, master_mtoon)
 	)
 	combat_actors_root.add_child(master_combat_actor)
 
@@ -794,7 +1117,11 @@ func _calc_walk_pos(start_pos: Vector3, target_pos: Vector3, t: float) -> Vector
 	return Vector3(cur_xz.x, cur_y, cur_xz.y)
 
 func _begin_furniture_service_staging(service_type: String = "virgin") -> void:
-	_set_encounter_state(EncounterState.FURNITURE_SERVICE_STAGING)
+	if not _set_encounter_state(EncounterState.FURNITURE_SERVICE_STAGING):
+		return
+	current_op_token += 1
+	var op_token := current_op_token
+	settlement_outcome = "spare_" + service_type
 	if dialogue_panel and is_instance_valid(dialogue_panel):
 		dialogue_panel.visible = false
 	if combat_hud and is_instance_valid(combat_hud):
@@ -834,7 +1161,23 @@ func _begin_furniture_service_staging(service_type: String = "virgin") -> void:
 	
 	var furn_tf := get_furniture_anchor(furniture_id, anchor_name)
 	var approach_tf := get_furniture_anchor(furniture_id, "Anchor_Front")
+	if furn_tf == Transform3D.IDENTITY or approach_tf == Transform3D.IDENTITY:
+		push_error("[InitialTempleEncounterController] Staging aborted: missing required anchor for %s (%s / Anchor_Front)" % [furniture_id, anchor_name])
+		_restore_world_controls()
+		_set_encounter_state(EncounterState.AVAILABLE)
+		return
+		
+	if npc_avatar and is_instance_valid(npc_avatar):
+		saved_npc_service_transform = npc_avatar.global_transform
+	else:
+		saved_npc_service_transform = Transform3D.IDENTITY
+	if has_character:
+		saved_player_service_transform = char_node.global_transform
+	else:
+		saved_player_service_transform = Transform3D.IDENTITY
+		
 	last_service_approach_pos = approach_tf.origin
+	last_service_approach_basis = approach_tf.basis
 	
 	# Determine destination walk points and final facing angles
 	var target_player_pos: Vector3
@@ -939,7 +1282,7 @@ func _begin_furniture_service_staging(service_type: String = "virgin") -> void:
 		
 	await tween.finished
 	
-	if not is_instance_valid(temple_node):
+	if not is_instance_valid(temple_node) or op_token != current_op_token or current_state != EncounterState.FURNITURE_SERVICE_STAGING:
 		return
 		
 	if has_character and is_instance_valid(char_node) and char_node.has_method("_set_animation"):
@@ -949,16 +1292,19 @@ func _begin_furniture_service_staging(service_type: String = "virgin") -> void:
 		npc_avatar.set_motion("res://assets/characters/roster/motions/shared_world_A01.tres")
 		
 	_setup_paired_actors(sparkle_motion, master_motion, furn_tf)
+	await _ensure_combat_actors_ready()
+	if sparkle_combat_actor and sparkle_combat_actor.has_method("seek"):
+		sparkle_combat_actor.seek(0.0)
+	if master_combat_actor and master_combat_actor.has_method("seek"):
+		master_combat_actor.seek(0.0)
 	_set_combat_visuals(true)
 	_set_encounter_state(EncounterState.FURNITURE_SERVICE_ACTIVE)
-	
 	companion_unlocked = true
+	tutorial_completed = true
+	
 	if service_hud:
 		service_hud.text = title_text + "\n右键环绕视角 | 滚轮缩放视距 | 中键复位视角 | WASD微调对焦 | 按【E】或【空格】结束侍奉"
 		service_hud.visible = true
-		
-	settlement_completed.emit("spare")
-	settlement_completed.emit("spare_" + service_type)
 	print("【大世界演出】成功步入家具开启乞命侍奉: " + title_text)
 
 func _finish_furniture_service() -> void:
@@ -974,19 +1320,36 @@ func _finish_furniture_service() -> void:
 			char_node.collision_mask = saved_player_collision_mask
 		char_node.global_position = last_service_approach_pos
 		
+	var local_side: Vector3 = last_service_approach_basis.x.normalized()
+	var exit_npc_pos: Vector3 = last_service_approach_pos + local_side * 0.7
+	var exit_npc_yaw: float = last_service_approach_basis.get_euler().y
+	
 	if npc_avatar and is_instance_valid(npc_avatar):
 		npc_avatar.visible = true
-		npc_avatar.global_position = last_service_approach_pos + Vector3(0.5, 0.0, 0.5)
+		npc_avatar.global_position = exit_npc_pos
+		npc_avatar.global_rotation.y = exit_npc_yaw
 		if npc_avatar.has_method("set_motion"):
 			npc_avatar.set_motion("res://assets/characters/roster/motions/shared_world_A01.tres")
 	if npc_body and is_instance_valid(npc_body):
 		npc_body.collision_layer = saved_npc_collision_layer
 		npc_body.collision_mask = saved_npc_collision_mask
-		npc_body.global_position = last_service_approach_pos + Vector3(0.5, 0.0, 0.5)
+		npc_body.global_position = exit_npc_pos
+		npc_body.global_rotation.y = exit_npc_yaw
 		
 	_restore_world_controls()
 	_set_encounter_state(EncounterState.COMPLETED)
-	print("【大世界结算】主人结束了乞命侍奉，恢复碰撞与大世界自由漫游！")
+	tutorial_completed = true
+	companion_unlocked = true
+	if game_progress:
+		if game_progress.has_method("mark_tutorial_completed"):
+			game_progress.mark_tutorial_completed()
+		if game_progress.has_method("unlock_companion"):
+			game_progress.unlock_companion("sparkle")
+		if game_progress.has_method("set_settlement_outcome"):
+			game_progress.set_settlement_outcome(settlement_outcome)
+			
+	settlement_completed.emit(settlement_outcome)
+	print("[InitialTempleEncounterController] Finished furniture service, restored control and local positioning.")
 
 func _execute_settlement_spare(service_type: String = "virgin") -> void:
 	_begin_furniture_service_staging(service_type)
@@ -1012,6 +1375,9 @@ func _respawn_sparkle_after_kill() -> void:
 	print("【大世界刷新】主人离开神殿超出30米范围，花火已重新刷新就位！")
 
 func _restore_world_controls() -> void:
+	if world != null and world.has_method("_sync_actor_controls"):
+		world._sync_actor_controls()
+		return
 	var char_node := _get_world_character()
 	if char_node != null:
 		if char_node.has_method("set_control_enabled"):
@@ -1019,7 +1385,14 @@ func _restore_world_controls() -> void:
 		if "camera" in char_node and char_node.camera:
 			char_node.camera.current = true
 
-func _set_encounter_state(new_state: EncounterState) -> void:
+func _set_encounter_state(new_state: EncounterState) -> bool:
+	if current_state == new_state:
+		return true
+	var allowed: Array = VALID_TRANSITIONS.get(current_state, [])
+	if not allowed.has(new_state):
+		push_warning("Invalid encounter state transition: %d -> %d" % [current_state, new_state])
+		return false
 	var old_state := current_state
 	current_state = new_state
 	encounter_state_changed.emit(old_state, new_state)
+	return true

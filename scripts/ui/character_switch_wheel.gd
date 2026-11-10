@@ -4,6 +4,7 @@ extends CanvasLayer
 
 signal character_selected(character_id: String)
 const DIALOGUE_INPUT := preload("res://scenes/narrative/dialogue_panel.gd")
+const WORLD_CONTROL := preload("res://scripts/world/world_control_context.gd")
 
 const TEAM_MEMBERS: Array[Dictionary] = [
 	{
@@ -147,7 +148,7 @@ func _show_banner_message(id: String) -> void:
 	tween_banner.tween_callback(func(): switch_banner.visible = false)
 
 func _input(event: InputEvent) -> void:
-	if DIALOGUE_INPUT.has_active_dialogue(get_tree()): return
+	if WORLD_CONTROL.is_world_input_blocked(get_tree()): return
 	if event is InputEventKey and not event.echo:
 		var code: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
 		match code:
@@ -156,7 +157,7 @@ func _input(event: InputEvent) -> void:
 					_cycle_next_character()
 
 func _trigger_switch(target_id: String) -> void:
-	if DIALOGUE_INPUT.has_active_dialogue(get_tree()): return
+	if WORLD_CONTROL.is_world_input_blocked(get_tree()): return
 	if target_id == active_character_id:
 		return
 	active_character_id = target_id

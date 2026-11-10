@@ -514,17 +514,18 @@ def prepare():
                 floor_m=FLOOR,seat_height_m=.42,desk_height_m=.838,minimum_dry_edge_clearance_m=minimum)
 
 
-def apply():
+def apply(colors_override=None, layer_name=u'沙洲观测亭', object_prefix='Sandbar_', description_prefix='Low sandbar pavilion'):
     import Rhino, scriptcontext as sc, System, System.Drawing as Drawing
     assert _fingerprint()==_protected, 'Unrelated Rhino geometry changed; restage first'
     layers={}
     colors={'ivory':(236,243,245),'stone':(82,102,112),'bronze':(88,74,56),'markers':(40,180,200),
             'teal':(44,143,147),'wall_concrete':(231,240,242),'timber':(178,117,59),
             'sea_glass':(37,117,135),'coral':(219,137,116),'lamp':(255,211,137)}
-    root=sc.doc.Layers.FindByFullPath(u'建筑::沙洲观测亭',-1)
+    if colors_override:colors.update(colors_override)
+    root=sc.doc.Layers.FindByFullPath(u'建筑::'+layer_name,-1)
     if root<0:
         parent=sc.doc.Layers.FindByFullPath(u'建筑',-1)
-        layer=Rhino.DocObjects.Layer();layer.Name=u'沙洲观测亭'
+        layer=Rhino.DocObjects.Layer();layer.Name=layer_name
         if parent>=0:layer.ParentLayerId=sc.doc.Layers[parent].Id
         root=sc.doc.Layers.Add(layer)
     for key,rgb in colors.items():
@@ -567,11 +568,12 @@ def apply():
             if old is not None and old.Geometry.DataCRC(0)==row['mesh'].DataCRC(0):
                 row['id']=str(old.Id);retained.append(old.Id)
                 attrs=old.Attributes.Duplicate();attrs.LayerIndex=layers[row['material_key']]
+                attrs.SetUserString('description',description_prefix+' / '+row['category'])
                 attrs.MaterialSource=Rhino.DocObjects.ObjectMaterialSource.MaterialFromLayer
                 attrs.Mode=Rhino.DocObjects.ObjectMode.Normal if row['render'] else Rhino.DocObjects.ObjectMode.Hidden
                 sc.doc.Objects.ModifyAttributes(old.Id,attrs,True)
                 continue
-            attrs=Rhino.DocObjects.ObjectAttributes();attrs.Name='Sandbar_'+row['name']
+            attrs=Rhino.DocObjects.ObjectAttributes();attrs.Name=object_prefix+row['name']
             attrs.LayerIndex=layers[row['material_key']]
             attrs.Mode=Rhino.DocObjects.ObjectMode.Normal if row['render'] else Rhino.DocObjects.ObjectMode.Hidden
             attrs.SetUserString('pr_feature',FEATURE);attrs.SetUserString('component_id',row['name'])
@@ -579,18 +581,22 @@ def apply():
             attrs.MaterialSource=Rhino.DocObjects.ObjectMaterialSource.MaterialFromLayer
             oid=sc.doc.Objects.AddMesh(row['mesh'],attrs);assert oid!=System.Guid.Empty
             created.append(oid);row['id']=str(oid)
-            add_object_metadata(oid,attrs.Name,'Low sandbar pavilion / '+row['category'])
+            add_object_metadata(oid,attrs.Name,description_prefix+' / '+row['category'])
         for furniture in _furniture:
             furniture['geometry_ids']=[r['id'] for r in _staged if r['owner']==furniture['id']]
             for a in furniture['anchors']:
                 old=reusable.get(furniture['id']+'/'+a[0])
                 p=cad(a[1],a[2],a[3])
+                direction=furniture.get('forward_cad',FORWARD)
+                direction=[-v if a[4] else v for v in direction]
                 if old is not None and old.Geometry.Location.DistanceTo(Rhino.Geometry.Point3d(*p))<1e-7:
+                    attrs=old.Attributes.Duplicate();attrs.SetUserString('forward_cad',json.dumps(direction))
+                    sc.doc.Objects.ModifyAttributes(old.Id,attrs,True)
                     retained.append(old.Id);a.append(str(old.Id));continue
-                attrs=Rhino.DocObjects.ObjectAttributes();attrs.Name='Sandbar_'+furniture['id']+'_'+a[0]
+                attrs=Rhino.DocObjects.ObjectAttributes();attrs.Name=object_prefix+furniture['id']+'_'+a[0]
                 attrs.LayerIndex=layers['markers'];attrs.SetUserString('pr_feature',FEATURE)
                 attrs.SetUserString('component_id',furniture['id']+'/'+a[0])
-                attrs.SetUserString('forward_cad',json.dumps([-v if a[4] else v for v in FORWARD]))
+                attrs.SetUserString('forward_cad',json.dumps(direction))
                 attrs.SetUserString('instance_id',FEATURE+'_'+furniture['id'])
                 oid=sc.doc.Objects.AddPoint(Rhino.Geometry.Point3d(*p),attrs)
                 assert oid!=System.Guid.Empty;created.append(oid);a.append(str(oid))
@@ -703,7 +709,7 @@ def save_native():
     return dict(saved=path,verified_meshes=len(_staged),verified_markers=sum(len(f['anchors']) for f in _furniture),modified=sc.doc.Modified)
 
 
-def package():
+def package(filename='pavilion.glb',generator='Prism Route / Rhino sandbar pavilion'):
     import struct
     with io.open(os.path.join(CACHE,'source.json'),encoding='utf-8') as stream:
         source=json.load(stream)
@@ -725,12 +731,12 @@ def package():
         meshes.append(dict(primitives=[dict(attributes=attrs,indices=array(ix,5125,'SCALAR',34963),mode=4)]))
         nodes.append(dict(name='Structure_'+row['id'],mesh=len(meshes)-1,extras=dict(source_id=row['id'],source_name=row['name'])))
         row.update(vertex_count=len(p),triangle_count=len(ix)//3)
-    gltf=dict(asset=dict(version='2.0',generator='Prism Route / Rhino sandbar pavilion'),scene=0,
+    gltf=dict(asset=dict(version='2.0',generator=generator),scene=0,
         scenes=[dict(nodes=list(range(len(nodes))))],nodes=nodes,meshes=meshes,buffers=[dict(byteLength=len(blob))],bufferViews=views,accessors=accessors)
     js=json.dumps(gltf,separators=(',',':')).encode('utf-8');js+=b' '*((-len(js))%4);blob+=b'\0'*((-len(blob))%4)
     data=struct.pack('<III',0x46546C67,2,28+len(js)+len(blob))+struct.pack('<II',len(js),0x4E4F534A)+js+struct.pack('<II',len(blob),0x004E4942)+blob
     if not os.path.isdir(OUT):os.makedirs(OUT)
-    with open(os.path.join(OUT,'pavilion.glb'),'wb') as stream:stream.write(data)
+    with open(os.path.join(OUT,filename),'wb') as stream:stream.write(data)
     source['triangle_count']=sum(r['triangle_count'] for r in source['objects'])
     _dump(os.path.join(OUT,'manifest.json'),source)
     print(json.dumps(dict(meshes=len(meshes),triangles=source['triangle_count'],glb_bytes=len(data))))

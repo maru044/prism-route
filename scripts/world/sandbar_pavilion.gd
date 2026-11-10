@@ -71,14 +71,14 @@ func _frame(position: Array,forward: Array) -> Transform3D:
 	var f := Vector3(forward[0],forward[1],forward[2]).normalized()
 	return Transform3D(Basis(Vector3.UP.cross(f).normalized(),Vector3.UP,f),Vector3(position[0],position[1],position[2]))
 
-func _build_furniture() -> void:
+func _build_furniture(catalog_prefix:="sandbar_") -> void:
 	var container := Node3D.new()
 	container.name = "FurnitureInteractions"
 	add_child(container)
 	for row: Dictionary in manifest.interactions.furniture:
 		var furniture := FURNITURE.new()
 		furniture.name = row.id
-		furniture.furniture_id = "sandbar_" + str(row.type)
+		furniture.furniture_id = catalog_prefix + str(row.type)
 		furniture.furniture_name_zh = row.name_zh
 		furniture.seat_surface_height = float(row.surface_height)
 		furniture.transform = _frame(row.position,row.forward)

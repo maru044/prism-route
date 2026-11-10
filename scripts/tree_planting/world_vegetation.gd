@@ -1,6 +1,12 @@
 extends "res://scripts/map_1021_vegetation.gd"
-## Tree presentation only. Inherit all existing grass generation unchanged.
+## Shared trees plus an explicitly scoped authored-meadow density on the new cape.
 var birch_assets=preload("res://scripts/tree_planting/birch_assets.gd").new()
+
+func grass_coverage_unmasked(point: Vector3,normal: Vector3) -> float:
+	if world_scene.cape_town!=null and world_scene.cape_town.grass_band(point,.55)==0:
+		# This authored lowland is meadow; the legacy height-only rule calls it sand.
+		return float(world_scene.cape_town.manifest.ground_cut.grass_coverage)*clampf((normal.y-.72)/.28,0.,1.)
+	return super.grass_coverage_unmasked(point,normal)
 
 func _add_tree_lod_level(parent: Node3D,model_id: int,transforms: Array[Transform3D],palette_id: int,level: int,margin: float) -> void:
 	if model_id==3:birch_assets.add_level(self,parent,transforms,palette_id,level,margin)

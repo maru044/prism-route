@@ -24,7 +24,7 @@ __pycache__/
 # the authored copies live under assets/vegetation/textures.
 /assets/vegetation/models/*_lod*_*.png*
 # Godot may leave a locked temporary copy while a GDExtension DLL is loaded.
-/addons/vrm/bin/~*.TMP
+/addons/vrm/bin/~*
 # Regenerable Blender conversion files, captures, and diagnostics.
 /.model_import_build/
 /.map_1009_build/

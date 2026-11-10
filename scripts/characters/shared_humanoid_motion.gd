@@ -15,6 +15,7 @@ var motion: Animation
 var duration := 0.0
 var time := 0.0
 var ready_for_review := false
+var is_active_playback: bool = true
 var simulation: SkeletonModifier3D
 var controller: Node
 var all_springs: Array = []
@@ -101,6 +102,10 @@ func _ready() -> void:
 	if simulation: simulation.modification_processed.connect(_capture_physics_pose)
 	ready_for_review = true
 	set_physics_enabled(true, true)
+	if not is_active_playback:
+		set_process(false)
+		if simulation:
+			simulation.active = false
 	initialized.emit()
 
 func _append_order(index: int) -> void:
@@ -163,8 +168,19 @@ func _capture_physics_pose() -> void:
 		last_physics_globals[index] = skeleton.get_bone_global_pose(index)
 		last_physics_rotations[index] = skeleton.get_bone_pose_rotation(index)
 
+func set_playback_active(active: bool) -> void:
+	is_active_playback = active
+	set_process(active)
+	if simulation:
+		simulation.active = active and not _active_springs.is_empty()
+	if not active and skeleton:
+		skeleton.reset_bone_poses()
+
 func _process(delta: float) -> void:
-	if ready_for_review and auto_play: sample_time(fmod(time + delta, duration) if duration > 0.0 else 0.0)
+	if not is_active_playback:
+		return
+	if ready_for_review and auto_play:
+		sample_time(fmod(time + delta, duration) if duration > 0.0 else 0.0)
 
 func set_motion(res_path: String) -> bool:
 	var new_motion := load(res_path) as Animation
