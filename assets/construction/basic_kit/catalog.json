@@ -1,0 +1,628 @@
+{
+  "ground_floor_offset": 0.2,
+  "wall_height": 3.4,
+  "plots": [
+    {
+      "size": 60.0,
+      "axis_z": [
+        -0.4046557113570419,
+        0,
+        -0.9144691111602001
+      ],
+      "ground_height": 0.0,
+      "origin": [
+        -139.73055275324032,
+        0.0,
+        -481.29410365783474
+      ],
+      "reference_curve_z": 35.97619927055496,
+      "name": "北侧低地",
+      "source_id": "484258f1-e149-466b-a104-8d1142a677ee",
+      "axis_x": [
+        -0.914469111160204,
+        0,
+        0.4046557113570327
+      ],
+      "id": "lowland"
+    },
+    {
+      "size": 60.0,
+      "axis_z": [
+        0.3052527554862316,
+        0,
+        -0.9522713664014386
+      ],
+      "ground_height": 35.0,
+      "origin": [
+        684.0490835421679,
+        35.0,
+        1143.98478087364
+      ],
+      "reference_curve_z": 35.97619927055496,
+      "name": "青蓝平台",
+      "source_id": "13bbe4f4-c1e1-4ec5-9bf0-4f1a41e7889b",
+      "axis_x": [
+        -0.9522713664014381,
+        0,
+        -0.3052527554862335
+      ],
+      "id": "coastal"
+    }
+  ],
+  "definitions": {
+    "window": {
+      "collisions": [
+        {
+          "shape": "box",
+          "size": [
+            2,
+            3.4,
+            0.18
+          ],
+          "position": [
+            1,
+            1.7,
+            0
+          ]
+        }
+      ],
+      "kind": "edge",
+      "separator": true,
+      "passable": false,
+      "seals": true,
+      "label": "窗墙"
+    },
+    "entry_ramp": {
+      "footprint": [
+        2,
+        2
+      ],
+      "kind": "ramp",
+      "label": "入口缓坡",
+      "collisions": [
+        {
+          "width": 2.0,
+          "shape": "wedge",
+          "length": 2.0,
+          "height": 0.2
+        }
+      ]
+    },
+    "bed": {
+      "footprint": [
+        1.846,
+        2.673
+      ],
+      "approach": [
+        0,
+        0,
+        1.85
+      ],
+      "surface": 0.46,
+      "scene": "res://assets/furniture/prism/prism_geo_bed.tscn",
+      "sleep_slots": 1,
+      "kind": "furniture",
+      "anchor": "Anchor_Bed_Center",
+      "tags": [
+        "sleep",
+        "rest"
+      ],
+      "label": "床"
+    },
+    "arch": {
+      "collisions": [
+        {
+          "shape": "box",
+          "size": [
+            0.3,
+            3.4,
+            0.18
+          ],
+          "position": [
+            0.15,
+            1.7,
+            0
+          ]
+        },
+        {
+          "shape": "box",
+          "size": [
+            0.3,
+            3.4,
+            0.18
+          ],
+          "position": [
+            1.85,
+            1.7,
+            0
+          ]
+        },
+        {
+          "shape": "box",
+          "size": [
+            1.4,
+            1.0,
+            0.18
+          ],
+          "position": [
+            1,
+            2.9,
+            0
+          ]
+        }
+      ],
+      "opening": [
+        1.4,
+        2.4
+      ],
+      "kind": "edge",
+      "separator": true,
+      "passable": true,
+      "seals": false,
+      "label": "开放门洞"
+    },
+    "desk": {
+      "footprint": [
+        1.42,
+        0.6
+      ],
+      "approach": [
+        0,
+        0,
+        0.85
+      ],
+      "surface": 0.838,
+      "scene": "res://assets/furniture/prism/prism_geo_desk.tscn",
+      "kind": "furniture",
+      "anchor": "Anchor_Desk_Surface",
+      "tags": [
+        "work"
+      ],
+      "label": "桌子"
+    },
+    "railing": {
+      "collisions": [
+        {
+          "shape": "box",
+          "size": [
+            2,
+            1.15,
+            0.1
+          ],
+          "position": [
+            1,
+            0.575,
+            0
+          ]
+        }
+      ],
+      "kind": "edge",
+      "separator": false,
+      "passable": false,
+      "seals": false,
+      "label": "平台栏杆"
+    },
+    "door": {
+      "collisions": [
+        {
+          "shape": "box",
+          "size": [
+            0.3,
+            3.4,
+            0.18
+          ],
+          "position": [
+            0.15,
+            1.7,
+            0
+          ]
+        },
+        {
+          "shape": "box",
+          "size": [
+            0.3,
+            3.4,
+            0.18
+          ],
+          "position": [
+            1.85,
+            1.7,
+            0
+          ]
+        },
+        {
+          "shape": "box",
+          "size": [
+            1.4,
+            1.0,
+            0.18
+          ],
+          "position": [
+            1,
+            2.9,
+            0
+          ]
+        }
+      ],
+      "opening": [
+        1.4,
+        2.4
+      ],
+      "kind": "edge",
+      "separator": true,
+      "passable": true,
+      "seals": true,
+      "label": "门墙"
+    },
+    "roof": {
+      "footprint": [
+        2,
+        2
+      ],
+      "kind": "cover",
+      "label": "平屋顶",
+      "collisions": [
+        {
+          "shape": "box",
+          "size": [
+            2,
+            0.2,
+            2
+          ],
+          "position": [
+            1,
+            -0.1,
+            1
+          ]
+        }
+      ]
+    },
+    "stairs": {
+      "footprint": [
+        2,
+        6
+      ],
+      "collisions": [
+        {
+          "width": 2.0,
+          "shape": "wedge",
+          "length": 6.0,
+          "height": 3.6
+        }
+      ],
+      "kind": "connector",
+      "rise": 3.6,
+      "label": "直跑楼梯 2×6米"
+    },
+    "floor": {
+      "footprint": [
+        2,
+        2
+      ],
+      "kind": "cell",
+      "label": "地板 / 楼板",
+      "collisions": [
+        {
+          "shape": "box",
+          "size": [
+            2,
+            0.2,
+            2
+          ],
+          "position": [
+            1,
+            -0.1,
+            1
+          ]
+        }
+      ]
+    },
+    "chair": {
+      "footprint": [
+        0.984,
+        0.988
+      ],
+      "approach": [
+        0,
+        0,
+        0.9
+      ],
+      "surface": 0.42,
+      "scene": "res://assets/furniture/prism/prism_geo_chair.tscn",
+      "kind": "furniture",
+      "anchor": "Anchor_Seat",
+      "tags": [
+        "seat"
+      ],
+      "label": "椅子"
+    },
+    "door_leaf": {
+      "kind": "internal",
+      "label": "门扇",
+      "collisions": [
+        {
+          "shape": "box",
+          "size": [
+            1.36,
+            2.37,
+            0.07
+          ],
+          "position": [
+            0.68,
+            1.2,
+            0
+          ]
+        }
+      ]
+    },
+    "wall": {
+      "collisions": [
+        {
+          "shape": "box",
+          "size": [
+            2,
+            3.4,
+            0.18
+          ],
+          "position": [
+            1,
+            1.7,
+            0
+          ]
+        }
+      ],
+      "kind": "edge",
+      "separator": true,
+      "passable": false,
+      "seals": true,
+      "label": "实墙"
+    }
+  },
+  "story_height": 3.6,
+  "cell_size": 2.0,
+  "rhino_document_modified": false,
+  "version": 1,
+  "slab_thickness": 0.2,
+  "parts": [
+    {
+      "name": "floor__0",
+      "component": "floor",
+      "material": "timber"
+    },
+    {
+      "name": "roof__0",
+      "component": "roof",
+      "material": "roof"
+    },
+    {
+      "name": "wall__0",
+      "component": "wall",
+      "material": "wall"
+    },
+    {
+      "name": "door__0",
+      "component": "door",
+      "material": "wall"
+    },
+    {
+      "name": "door__1",
+      "component": "door",
+      "material": "wall"
+    },
+    {
+      "name": "door__2",
+      "component": "door",
+      "material": "wall"
+    },
+    {
+      "name": "arch__0",
+      "component": "arch",
+      "material": "wall"
+    },
+    {
+      "name": "arch__1",
+      "component": "arch",
+      "material": "wall"
+    },
+    {
+      "name": "arch__2",
+      "component": "arch",
+      "material": "wall"
+    },
+    {
+      "name": "window__0",
+      "component": "window",
+      "material": "wall"
+    },
+    {
+      "name": "window__1",
+      "component": "window",
+      "material": "wall"
+    },
+    {
+      "name": "window__2",
+      "component": "window",
+      "material": "wall"
+    },
+    {
+      "name": "window__3",
+      "component": "window",
+      "material": "wall"
+    },
+    {
+      "name": "window__4",
+      "component": "window",
+      "material": "timber"
+    },
+    {
+      "name": "window__5",
+      "component": "window",
+      "material": "timber"
+    },
+    {
+      "name": "window__6",
+      "component": "window",
+      "material": "timber"
+    },
+    {
+      "name": "window__7",
+      "component": "window",
+      "material": "timber"
+    },
+    {
+      "name": "window__8",
+      "component": "window",
+      "material": "glass"
+    },
+    {
+      "name": "door_leaf__0",
+      "component": "door_leaf",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__0",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__1",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__2",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__3",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__4",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__5",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__6",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__7",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__8",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__9",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__10",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__11",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__12",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__13",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__14",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__15",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__16",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__17",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__18",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__19",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__20",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__21",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__22",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "stairs__23",
+      "component": "stairs",
+      "material": "timber"
+    },
+    {
+      "name": "entry_ramp__0",
+      "component": "entry_ramp",
+      "material": "timber"
+    },
+    {
+      "name": "railing__0",
+      "component": "railing",
+      "material": "metal"
+    },
+    {
+      "name": "railing__1",
+      "component": "railing",
+      "material": "metal"
+    },
+    {
+      "name": "railing__2",
+      "component": "railing",
+      "material": "metal"
+    },
+    {
+      "name": "railing__3",
+      "component": "railing",
+      "material": "metal"
+    }
+  ]
+}

@@ -33,6 +33,8 @@ const CHURCH_RUINS := preload("res://scripts/world/church_ruins.gd")
 const BEACH_SLOPE := preload("res://scripts/world/beach_slope.gd")
 const SANDBAR_PAVILION := preload("res://scripts/world/sandbar_pavilion.gd")
 const CAPE_TOWN := preload("res://scripts/world/cape_town.gd")
+const CONSTRUCTION := preload("res://scripts/construction/construction_world.gd")
+var construction
 var cape_town
 var sandbar_pavilion
 var church_ruins
@@ -98,7 +100,9 @@ func _ready() -> void:
 	camper.automation_enabled=automation_enabled;camper.set_physics_process(false);camper.set_process_unhandled_input(false);camper.visible=false
 	camper.calibrate_wheels()
 	camper.respawn_resolver=_resolve_camper_respawn
-	_load_mask();_environment();_build_model();add_child(ROAD_JUNCTION.new());_build_terrain_repairs();_build_oval_atrium();_build_initial_ruin();_build_island_saddle();_build_landmark_ring();_build_terrace_ruins();_build_water_court();_build_earth_pavilion();_build_sunken_archive();_build_church_ruins();_build_upper_ring();_build_surface_detail_trial();_build_sandbar_pavilion();_build_cape_town();_hud()
+	_load_mask();_environment();_build_model();add_child(ROAD_JUNCTION.new());_build_terrain_repairs();_build_oval_atrium();_build_initial_ruin();_build_island_saddle();_build_landmark_ring();_build_terrace_ruins();_build_water_court();_build_earth_pavilion();_build_sunken_archive();_build_church_ruins();_build_upper_ring();_build_surface_detail_trial();_build_sandbar_pavilion();_build_cape_town()
+	construction=CONSTRUCTION.new();construction.world=self;add_child(construction)
+	_hud()
 	camera=Camera3D.new();camera.near=0.15;camera.far=10000;camera.fov=58;add_child(camera)
 	await get_tree().physics_frame;await get_tree().physics_frame
 	for proposal: Dictionary in metadata.spawns:
@@ -171,6 +175,7 @@ func _ready() -> void:
 	grass_wind.initialize(vegetation);grass_wind.set_mode(GRASS_WIND.Mode.AUTO)
 	sunken_archive.install_courtyard_grass(vegetation)
 	_sync_meadow_color()
+	construction.bind_grass(vegetation.grass_material)
 	foliage_style=FOLIAGE_STYLE.new()
 	foliage_style.bind_streamer(vegetation)
 	_initialize_water()
@@ -473,6 +478,7 @@ func _hud() -> void:
 	status=Label.new();status.add_theme_font_size_override("font_size",14);status.add_theme_color_override("font_color",Color("c2d0d9"));box.add_child(status)
 	var edit_button:=Button.new();edit_button.text="植物编辑 · F4";box.add_child(edit_button)
 	edit_button.pressed.connect(func():if planting!=null and test_ready:planting.toggle())
+	var build_button:=Button.new();build_button.text="建筑构件 · F7";box.add_child(build_button);build_button.pressed.connect(construction.toggle)
 	world_audio=WORLD_AUDIO.new();world_audio.name="WorldAudio";add_child(world_audio);world_audio.add_controls(box)
 	surface_detail_trial.add_controls(box)
 	for control in box.get_children():
@@ -492,6 +498,7 @@ func set_review_ui_visible(enabled: bool) -> void:
 
 func _input(event: InputEvent) -> void:
 	# Handle globally so H also works while the spawn menu has keyboard focus.
+	if construction!=null and construction.active:return
 	if event is InputEventKey and event.pressed and not event.echo:
 		var key: int=event.physical_keycode if event.physical_keycode!=0 else event.keycode
 		if key==KEY_F4 and not event.alt_pressed and not event.ctrl_pressed and planting!=null and test_ready:
@@ -520,7 +527,20 @@ func resolve_spawn(proposal: Dictionary) -> Dictionary:
 		var hit:=_ray(base+Vector3(offset.x,0,offset.y),proposal.get("highest",false))
 		if hit.is_empty() or (hit.normal as Vector3).y<0.72:continue
 		if proposal.has("required_floor_kind") and hit.collider.get_meta("surface_kind", "")!=proposal.required_floor_kind:continue
+		# Coincident host/landing faces can exchange hit order when unrelated
+		# bodies are added. Resolve the requested source only at the SAME height.
+		if proposal.has("required_source_id") and hit.collider.get_meta("source_id", "")!=proposal.required_source_id:
+			var probe:=PhysicsRayQueryParameters3D.create(hit.position+Vector3.UP*.02,hit.position-Vector3.UP*.02,ACTOR_SOLID_LAYER)
+			probe.hit_back_faces=true
+			var excluded: Array[RID]=[]
+			for attempt in range(8):
+				excluded.append(hit.collider.get_rid());probe.exclude=excluded
+				var candidate:=get_world_3d().direct_space_state.intersect_ray(probe)
+				if candidate.is_empty():break
+				hit=candidate
+				if hit.collider.get_meta("source_id", "")==proposal.required_source_id:break
 		if proposal.has("required_source_id") and hit.collider.get_meta("source_id", "")!=proposal.required_source_id:continue
+		if (hit.normal as Vector3).y<.72:continue
 		var floor_point: Vector3=hit.position
 		var clearance: float=proposal.get("minimum_edge_clearance_m",0.0)
 		var supported:=true
@@ -639,6 +659,7 @@ func show_overview() -> void:
 	camera.position=Vector3(-160,1800,2100);camera.look_at(Vector3(-250,15,400));camera.make_current()
 
 func is_world_input_allowed() -> bool:
+	if construction!=null and construction.active:return false
 	if WORLD_CONTROL.is_world_input_blocked(get_tree()):
 		return false
 	if planting != null and planting.active:
@@ -662,6 +683,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		camera.rotation.y-=event.relative.x*.003;camera.rotation.x=clampf(camera.rotation.x-event.relative.y*.003,-1.5,1.5)
 
 func _process(delta: float) -> void:
+	if construction!=null and construction.active:return
 	if planting!=null and planting.active:return
 	if not free_mode or automation_enabled:return
 	var direction:=Vector3(float(Input.is_physical_key_pressed(KEY_D))-float(Input.is_physical_key_pressed(KEY_A)),float(Input.is_physical_key_pressed(KEY_E))-float(Input.is_physical_key_pressed(KEY_Q)),float(Input.is_physical_key_pressed(KEY_S))-float(Input.is_physical_key_pressed(KEY_W)))

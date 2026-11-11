@@ -21,6 +21,9 @@ uniform float biome_warp_distance = 4.0;
 uniform float biome_transition_half_width = 5.0;
 uniform float biome_center_x = 0.0;
 #include "res://shaders/environment/meadow_zone.gdshaderinc"
+#ifdef GRASS_GUST_DEMO
+#include "res://shaders/environment/construction_grass.gdshaderinc"
+#endif
 uniform float biome_instance_overlap = 0.0;
 instance uniform vec4 variant_tint : source_color = vec4(1.0);
 // Flowering and autumn trees reuse the same alpha silhouette but replace the
@@ -325,7 +328,12 @@ void vertex() {
 			if(data.a>.5 && (data.r<.55 || abs(world_origin.y-data.g)>.20)) { grass_lod_visibility=0.0; }
 		}
 	}
-	if ((skip_invisible_grass || use_atrium_grass_cut || use_terrace_grass_cut || use_earth_pavilion_grass_support || use_sunken_archive_grass_cut || use_church_grass_cut || use_cape_town_grass_cut) && grass_lod_visibility < 0.5) {
+	bool construction_hidden=false;
+#ifdef GRASS_GUST_DEMO
+	construction_hidden=construction_grass_cut(world_origin);
+	if (construction_hidden) { grass_lod_visibility=0.0; }
+#endif
+	if ((construction_hidden || skip_invisible_grass || use_atrium_grass_cut || use_terrace_grass_cut || use_earth_pavilion_grass_support || use_sunken_archive_grass_cut || use_church_grass_cut || use_cape_town_grass_cut) && grass_lod_visibility < 0.5) {
 		VERTEX = vec3(0.0);
 	} else {
 		vec3 palette_origin = mix(
