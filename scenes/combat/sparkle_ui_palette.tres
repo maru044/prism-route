@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="EncounterUIPalette" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/combat/encounter_ui_palette.gd" id="1"]
+
+[resource]
+resource_name = "花火"
+script = ExtResource("1")
+glass_top = Color(0.26, 0.145, 0.40, 1)
+glass_bottom = Color(0.25, 0.43, 0.68, 1)
+glass_sheen = Color(0.77, 0.81, 1.0, 1)
+edge_upper = Color(0.35, 0.16, 0.58, 1)
+edge_lower = Color(0.05, 0.53, 0.62, 1)
+edge_motif = Color(0.82, 0.72, 0.97, 1)
+edge_strength = 0.78
+rail = Color(0.14, 0.094, 0.196, 0.74)
+player_low = Color(1, 0.66, 0.84, 1)
+player_high = Color(0.95, 0.29, 0.67, 1)
+opponent_low = Color(0.965, 0.18, 0.455, 1)
+opponent_high = Color(1, 0.68, 0.26, 1)
+text = Color(1, 0.973, 1, 1)
+secondary = Color(0.886, 0.835, 0.98, 1)
+accent = Color(0.627, 0.91, 1, 1)
+speaker = Color(1, 0.675, 0.85, 1)
+shade = Color(0.067, 0.047, 0.137, 1)

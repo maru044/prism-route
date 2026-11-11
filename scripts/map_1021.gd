@@ -85,6 +85,7 @@ var vegetation_bake_only := false
 var review_ui_visible := true
 # Developer/review overlays only. Gameplay prompts must not register here.
 var review_ui_layers: Array[CanvasLayer] = []
+var encounter_ui_active := false
 
 func vec(value: Array) -> Vector3:
 	return Vector3(value[0],value[1],value[2])
@@ -490,15 +491,21 @@ func _hud() -> void:
 
 func set_review_ui_visible(enabled: bool) -> void:
 	review_ui_visible=enabled
-	for layer in review_ui_layers:layer.visible=enabled
-	if not enabled:
+	for layer in review_ui_layers:layer.visible=enabled and not encounter_ui_active
+	if not enabled or encounter_ui_active:
 		get_viewport().gui_release_focus()
 		if surface_detail_trial!=null:surface_detail_trial.hide_settings()
 		if world_audio!=null:world_audio.hide_settings()
 
+func set_encounter_ui_active(active: bool) -> void:
+	if encounter_ui_active==active:return
+	encounter_ui_active=active
+	set_review_ui_visible(review_ui_visible)
+	if is_instance_valid(character.switch_wheel):character.switch_wheel.visible=not active
+
 func _input(event: InputEvent) -> void:
 	# Handle globally so H also works while the spawn menu has keyboard focus.
-	if construction!=null and construction.active:return
+	if encounter_ui_active or (construction!=null and construction.active):return
 	if event is InputEventKey and event.pressed and not event.echo:
 		var key: int=event.physical_keycode if event.physical_keycode!=0 else event.keycode
 		if key==KEY_F4 and not event.alt_pressed and not event.ctrl_pressed and planting!=null and test_ready:

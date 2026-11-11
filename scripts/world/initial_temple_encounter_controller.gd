@@ -74,6 +74,8 @@ const VALID_TRANSITIONS: Dictionary = {
 const TurnCombatManagerClass := preload("res://scripts/combat/turn_combat_manager.gd")
 const DialoguePanelClass := preload("res://scenes/narrative/dialogue_panel.gd")
 const TurnCombatHUDClass := preload("res://scenes/combat/turn_combat_hud.gd")
+const EncounterPalette := preload("res://scenes/combat/encounter_ui_palette.gd")
+
 const PleasureComponentClass := preload("res://scripts/combat/pleasure_component.gd")
 const SparkleTutorialDialogueClass := preload("res://scripts/narrative/sparkle_tutorial_dialogue.gd")
 const CorpseControllerClass := preload("res://scripts/characters/corpse_ragdoll_controller.gd")
@@ -100,6 +102,8 @@ const MASTER_CONFIGS: Dictionary = {
 		"mtoon": "ganyu"
 	}
 }
+
+@export var ui_palette: EncounterPalette = preload("res://scenes/combat/sparkle_ui_palette.tres")
 
 var current_state: EncounterState = EncounterState.AVAILABLE
 var temple_node: Node3D
@@ -267,6 +271,7 @@ func _build_subsystems() -> void:
 	# 5. UI Canvas Layer
 	var canvas := CanvasLayer.new()
 	canvas.name = "TempleCombatCanvas"
+	canvas.layer = 12
 	temple_node.add_child(canvas)
 	
 	interact_prompt = Label.new()
@@ -283,11 +288,15 @@ func _build_subsystems() -> void:
 	
 	combat_hud = TurnCombatHUDClass.new()
 	combat_hud.name = "TurnCombatHUD"
+	combat_hud.palette = ui_palette
+	combat_hud.opponent_name = "花火"
 	combat_hud.visible = false
 	canvas.add_child(combat_hud)
 	
 	dialogue_panel = DialoguePanelClass.new()
 	dialogue_panel.name = "DialoguePanel"
+	dialogue_panel.palette = ui_palette
+	dialogue_panel.opponent_name = "花火"
 	dialogue_panel.visible = false
 	canvas.add_child(dialogue_panel)
 	
@@ -706,6 +715,7 @@ func _begin_seamless_combat_staging() -> void:
 	_set_combat_visuals(true)
 	_set_encounter_state(EncounterState.COMBAT)
 
+	combat_hud.reset_battle()
 	combat_hud.visible = true
 	var hud_tween := temple_node.create_tween()
 	hud_tween.tween_property(combat_hud, "modulate:a", 1.0, 0.25)
@@ -837,9 +847,10 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 	var source: int = payload.get("source", DialogueManagerClass.DialogueSource.WORLD_INTERACTION)
 	var policy: int = payload.get("resume_policy", DialogueManagerClass.ResumePolicy.RETURN_TO_WORLD)
 	
-	# Mid-battle dialogue floating resolution
+	# Return the dialogue panel to its bottom dock for the result sequence.
 	if current_state == EncounterState.COMBAT:
 		dialogue_panel.visible = false
+		combat_hud.set_chat_open(false)
 		combat_hud.visible = true
 		
 		var cheat_data: Dictionary = dialogue_manager.consume_battle_cheats()
@@ -878,7 +889,15 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 
 func _on_combat_phase_changed(phase: int) -> void:
 	combat_hud.update_round(combat_manager.round_count)
-	combat_hud.set_input_enabled(phase == TurnCombatManagerClass.Phase.PLAYER_INPUT)
+	var labels := {
+		TurnCombatManagerClass.Phase.PLAYER_INPUT: "你的回合",
+		TurnCombatManagerClass.Phase.PLAYER_ACTION: "行动结算",
+		TurnCombatManagerClass.Phase.NPC_ACTION: "花火回合",
+		TurnCombatManagerClass.Phase.MID_BATTLE_DIALOGUE: "战中交涉",
+		TurnCombatManagerClass.Phase.VICTORY: "对决胜利",
+		TurnCombatManagerClass.Phase.DEFEAT: "对决败北",
+	}
+	combat_hud.set_input_enabled(phase == TurnCombatManagerClass.Phase.PLAYER_INPUT, labels.get(phase, "回合准备"))
 
 func _on_combat_ended(winner: String, _loser: String, _reason: String) -> void:
 	dialogue_manager.reset_battle_cheats()
@@ -932,6 +951,7 @@ func _on_combat_ended(winner: String, _loser: String, _reason: String) -> void:
 		)
 
 func _on_mid_battle_dialogue_requested(reason: String) -> void:
+	combat_hud.set_chat_open(true)
 	dialogue_panel.visible = true
 	var graph: Dictionary = SparkleTutorialDialogueClass.get_dialogue_graph()
 	var start_node := "mid_battle_manual" if reason == "player_manual_call" else "mid_battle_edging"
@@ -1394,5 +1414,10 @@ func _set_encounter_state(new_state: EncounterState) -> bool:
 		return false
 	var old_state := current_state
 	current_state = new_state
+	if world != null and world.has_method("set_encounter_ui_active"):
+		world.set_encounter_ui_active(new_state in [
+			EncounterState.INTRO_DIALOGUE, EncounterState.STAGING_TRANSITION,
+			EncounterState.COMBAT, EncounterState.RESULT_DIALOGUE,
+		])
 	encounter_state_changed.emit(old_state, new_state)
 	return true
