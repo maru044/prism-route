@@ -108,6 +108,7 @@ func set_source_visible(id: String,enabled: bool) -> void:
 
 func geometry_excludes_tree(p:Vector3) -> bool:
 	if world.construction!=null and world.construction.tree_excluded(p):return true
+	if world.npc_waypoint_ruins.blocks_tree(p):return true
 	if world.cape_town!=null and world.cape_town.blocks_tree(p):return true
 	return world.sunken_archive!=null and world.sunken_archive.blocks_grass(p)
 

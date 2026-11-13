@@ -33,12 +33,16 @@ const CHURCH_RUINS := preload("res://scripts/world/church_ruins.gd")
 const BEACH_SLOPE := preload("res://scripts/world/beach_slope.gd")
 const SANDBAR_PAVILION := preload("res://scripts/world/sandbar_pavilion.gd")
 const LAGOON_RUINS := preload("res://scripts/world/lagoon_ruins.gd")
+const NPC_WAYPOINT_RUINS := preload("res://scripts/world/npc_waypoint_ruins.gd")
+const NPC_PLACEMENT_PREVIEW := preload("res://scripts/world/npc_placement_preview.gd")
 const CAPE_TOWN := preload("res://scripts/world/cape_town.gd")
 const CONSTRUCTION := preload("res://scripts/construction/construction_world.gd")
 var construction
 var cape_town
 var sandbar_pavilion
 var lagoon_ruins := LAGOON_RUINS.new()
+var npc_waypoint_ruins := NPC_WAYPOINT_RUINS.new()
+var npc_placement_preview
 var church_ruins
 var sunken_archive
 var terrain_repairs
@@ -110,8 +114,15 @@ func _ready() -> void:
 	camper.respawn_resolver=_resolve_camper_respawn
 	_load_mask();_environment();_build_model();add_child(ROAD_JUNCTION.new());_build_terrain_repairs();_build_oval_atrium();_build_initial_ruin();_build_island_saddle();_build_landmark_ring();_build_terrace_ruins();_build_water_court();_build_earth_pavilion();_build_sunken_archive();_build_church_ruins();_build_upper_ring();_build_surface_detail_trial();_build_sandbar_pavilion();_build_cape_town()
 	add_child(lagoon_ruins)
+	add_child(npc_waypoint_ruins)
 	construction=CONSTRUCTION.new();construction.world=self;add_child(construction)
+	if not vegetation_bake_only and FileAccess.file_exists(NPC_PLACEMENT_PREVIEW.CATALOG) and (OS.has_feature("editor") or "--npc-placement-preview" in OS.get_cmdline_user_args()):
+		npc_placement_preview = NPC_PLACEMENT_PREVIEW.new()
+		npc_placement_preview.name = "NPCPlacementPreview"
+		add_child(npc_placement_preview)
 	_hud()
+	if npc_placement_preview != null:
+		npc_placement_preview.initialize(self)
 	camera=Camera3D.new();camera.near=0.15;camera.far=10000;camera.fov=58;add_child(camera)
 	await get_tree().physics_frame;await get_tree().physics_frame
 	for proposal: Dictionary in metadata.spawns:
@@ -178,6 +189,9 @@ func _ready() -> void:
 	terrain_repairs.install_grass_cells(vegetation.volume_streamer)
 	church_ruins.install_grass_cells(vegetation.volume_streamer)
 	cape_town.install_grass_cells(vegetation.volume_streamer)
+	npc_waypoint_ruins.install_grass_cells(vegetation.volume_streamer, self)
+	npc_waypoint_ruins.bind_grass(vegetation.grass_material)
+	vegetation.volume_streamer.waypoint_grass_cell_filter = npc_waypoint_ruins.overlaps_grass_cell
 	cape_town.bind_vegetation(vegetation)
 	upper_ring.plant_courtyard(vegetation)
 	grass_wind=GRASS_WIND.new();add_child(grass_wind)
@@ -400,6 +414,7 @@ func _load_mask() -> void:
 	terrain_material.set_shader_parameter("mask_extent_xz",Vector2(metadata.extent_xz[0],metadata.extent_xz[1]))
 
 func architectural_band(p: Vector3,margin:=0.0) -> bool:
+	if npc_waypoint_ruins.blocks_grass(p):return true
 	if cape_town!=null:
 		var town_band: int=cape_town.grass_band(p,margin)
 		if town_band>=0:return town_band==1
@@ -520,6 +535,8 @@ func _hud() -> void:
 	for i in metadata.spawns.size():spawn_menu.add_item("%d  %s" % [i+1,metadata.spawns[i].name])
 	spawn_menu.item_selected.connect(select_spawn);box.add_child(spawn_menu)
 	status=Label.new();status.add_theme_font_size_override("font_size",14);status.add_theme_color_override("font_color",Color("c2d0d9"));box.add_child(status)
+	if npc_placement_preview != null:
+		npc_placement_preview.add_controls(box)
 	var edit_button:=Button.new();edit_button.text="植物编辑 · F4";box.add_child(edit_button)
 	edit_button.pressed.connect(func():if planting!=null and test_ready:planting.toggle())
 	var build_button:=Button.new();build_button.text="建筑构件 · F7";box.add_child(build_button);build_button.pressed.connect(construction.toggle)
@@ -545,6 +562,8 @@ func set_review_ui_visible(enabled: bool) -> void:
 	if not enabled or encounter_ui_active:
 		get_viewport().gui_release_focus()
 		if is_instance_valid(graphics_menu):graphics_menu.get_popup().hide()
+		if npc_placement_preview != null:
+			npc_placement_preview.close_menu()
 		if world_audio!=null:world_audio.hide_settings()
 
 func set_encounter_ui_active(active: bool) -> void:

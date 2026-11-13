@@ -1,0 +1,272 @@
+[gd_scene format=3]
+
+[ext_resource type="ShaderMaterial" path="res://assets/world/cliff_b_test/architecture.tres" id="1_concrete"]
+[ext_resource type="Script" path="res://scripts/world/interactive_furniture.gd" id="2_furniture"]
+
+[sub_resource type="StandardMaterial3D" id="BenchMaterial"]
+albedo_color = Color(0.65, 0.62, 0.54, 1)
+roughness = 0.84
+
+[sub_resource type="BoxMesh" id="Part1Mesh"]
+size = Vector3(6, 0.22, 4)
+
+[sub_resource type="BoxShape3D" id="Part1Shape"]
+size = Vector3(6, 0.22, 4)
+
+[sub_resource type="BoxMesh" id="Part2Mesh"]
+size = Vector3(0.82, 0.16, 0.78)
+
+[sub_resource type="BoxShape3D" id="Part2Shape"]
+size = Vector3(0.82, 0.16, 0.78)
+
+[sub_resource type="BoxMesh" id="Part3Mesh"]
+size = Vector3(0.6, 2.91, 0.58)
+
+[sub_resource type="BoxShape3D" id="Part3Shape"]
+size = Vector3(0.6, 2.91, 0.58)
+
+[sub_resource type="BoxMesh" id="Part4Mesh"]
+size = Vector3(3.42, 0.44, 0.72)
+
+[sub_resource type="BoxShape3D" id="Part4Shape"]
+size = Vector3(3.42, 0.44, 0.72)
+
+[sub_resource type="BoxMesh" id="Part5Mesh"]
+size = Vector3(1.19, 0.44, 0.72)
+
+[sub_resource type="BoxShape3D" id="Part5Shape"]
+size = Vector3(1.19, 0.44, 0.72)
+
+[sub_resource type="BoxMesh" id="Part6Mesh"]
+size = Vector3(0.36, 0.37, 0.56)
+
+[sub_resource type="BoxShape3D" id="Part6Shape"]
+size = Vector3(0.36, 0.37, 0.56)
+
+[sub_resource type="BoxMesh" id="Part7Mesh"]
+size = Vector3(0.31, 0.31, 0.59)
+
+[sub_resource type="BoxShape3D" id="Part7Shape"]
+size = Vector3(0.31, 0.31, 0.59)
+
+[sub_resource type="BoxMesh" id="Part8Mesh"]
+size = Vector3(3.71, 0.79, 0.38)
+
+[sub_resource type="BoxShape3D" id="Part8Shape"]
+size = Vector3(3.71, 0.79, 0.38)
+
+[sub_resource type="BoxMesh" id="Part9Mesh"]
+size = Vector3(2.99, 0.1, 0.45)
+
+[sub_resource type="BoxShape3D" id="Part9Shape"]
+size = Vector3(2.99, 0.1, 0.45)
+
+[sub_resource type="BoxMesh" id="Part10Mesh"]
+size = Vector3(0.39, 0.49, 1.0)
+
+[sub_resource type="BoxShape3D" id="Part10Shape"]
+size = Vector3(0.39, 0.49, 1.0)
+
+[sub_resource type="BoxMesh" id="Part11Mesh"]
+size = Vector3(0.5, 0.36, 0.35)
+
+[sub_resource type="BoxShape3D" id="Part11Shape"]
+size = Vector3(0.5, 0.36, 0.35)
+
+[sub_resource type="BoxMesh" id="Part12Mesh"]
+size = Vector3(1.4, 0.11, 0.48)
+
+[sub_resource type="BoxShape3D" id="Part12Shape"]
+size = Vector3(1.4, 0.11, 0.48)
+
+[sub_resource type="BoxMesh" id="Part13Mesh"]
+size = Vector3(0.22, 0.31, 0.35)
+
+[sub_resource type="BoxShape3D" id="Part13Shape"]
+size = Vector3(0.22, 0.31, 0.35)
+
+[node name="WaypointRuin" type="Node3D"]
+
+[node name="Structure" type="StaticBody3D" parent="."]
+collision_layer = 33
+collision_mask = 0
+metadata/surface_kind = "Structure"
+
+[node name="Bench" type="Node3D" parent="."]
+position = Vector3(0, 0, -1.01)
+script = ExtResource("2_furniture")
+furniture_id = "generic_block_bench"
+furniture_name_zh = "遗迹长凳"
+seat_surface_height = 0.42
+metadata/interaction_status = "anchors_ready"
+
+[node name="Body" type="StaticBody3D" parent="Bench"]
+collision_layer = 33
+collision_mask = 0
+metadata/surface_kind = "Structure"
+
+[node name="Anchor_Seat" type="Marker3D" parent="Bench"]
+position = Vector3(0, 0.42, 0)
+
+[node name="Anchor_Front" type="Marker3D" parent="Bench"]
+position = Vector3(0, 0, 0.68)
+rotation = Vector3(0, 3.14159265, 0)
+
+[node name="NPC_Primary" type="Marker3D" parent="."]
+position = Vector3(1.08, 0, 0.36)
+
+[node name="NPC_Secondary" type="Marker3D" parent="."]
+position = Vector3(-1.08, 0, 0.36)
+
+[node name="Entrance" type="Marker3D" parent="."]
+position = Vector3(0, 0, 1.94)
+
+[node name="Floor" type="MeshInstance3D" parent="Structure"]
+position = Vector3(0, -0.11, 0)
+mesh = SubResource("Part1Mesh")
+material_override = ExtResource("1_concrete")
+
+[node name="FloorCollision" type="CollisionShape3D" parent="Structure"]
+position = Vector3(0, -0.11, 0)
+shape = SubResource("Part1Shape")
+
+[node name="LeftPierFoot" type="MeshInstance3D" parent="Structure"]
+position = Vector3(-2.43, 0.08, 1.17)
+mesh = SubResource("Part2Mesh")
+material_override = ExtResource("1_concrete")
+
+[node name="LeftPierFootCollision" type="CollisionShape3D" parent="Structure"]
+position = Vector3(-2.43, 0.08, 1.17)
+shape = SubResource("Part2Shape")
+
+[node name="RightPierFoot" type="MeshInstance3D" parent="Structure"]
+position = Vector3(2.43, 0.08, 1.17)
+mesh = SubResource("Part2Mesh")
+material_override = ExtResource("1_concrete")
+
+[node name="RightPierFootCollision" type="CollisionShape3D" parent="Structure"]
+position = Vector3(2.43, 0.08, 1.17)
+shape = SubResource("Part2Shape")
+
+[node name="LeftPier" type="MeshInstance3D" parent="Structure"]
+position = Vector3(-2.43, 1.455, 1.17)
+mesh = SubResource("Part3Mesh")
+material_override = ExtResource("1_concrete")
+
+[node name="LeftPierCollision" type="CollisionShape3D" parent="Structure"]
+position = Vector3(-2.43, 1.455, 1.17)
+shape = SubResource("Part3Shape")
+
+[node name="RightPier" type="MeshInstance3D" parent="Structure"]
+position = Vector3(2.43, 1.455, 1.17)
+mesh = SubResource("Part3Mesh")
+material_override = ExtResource("1_concrete")
+
+[node name="RightPierCollision" type="CollisionShape3D" parent="Structure"]
+position = Vector3(2.43, 1.455, 1.17)
+shape = SubResource("Part3Shape")
+
+[node name="LongLintel" type="MeshInstance3D" parent="Structure"]
+position = Vector3(-0.95, 3.045, 1.17)
+mesh = SubResource("Part4Mesh")
+material_override = ExtResource("1_concrete")
+
+[node name="LongLintelCollision" type="CollisionShape3D" parent="Structure"]
+position = Vector3(-0.95, 3.045, 1.17)
+shape = SubResource("Part4Shape")
+
+[node name="ShortLintel" type="MeshInstance3D" parent="Structure"]
+position = Vector3(2.22, 3.045, 1.17)
+mesh = SubResource("Part5Mesh")
+material_override = ExtResource("1_concrete")
+
+[node name="ShortLintelCollision" type="CollisionShape3D" parent="Structure"]
+position = Vector3(2.22, 3.045, 1.17)
+shape = SubResource("Part5Shape")
+
+[node name="LintelFractureLeft" type="MeshInstance3D" parent="Structure"]
+position = Vector3(0.76, 3.02, 1.2)
+rotation = Vector3(0, 0.39, 0)
+mesh = SubResource("Part6Mesh")
+material_override = ExtResource("1_concrete")
+
+[node name="LintelFractureLeftCollision" type="CollisionShape3D" parent="Structure"]
+position = Vector3(0.76, 3.02, 1.2)
+rotation = Vector3(0, 0.39, 0)
+shape = SubResource("Part6Shape")
+
+[node name="LintelFractureRight" type="MeshInstance3D" parent="Structure"]
+position = Vector3(1.61, 3.06, 1.17)
+rotation = Vector3(0, -0.53, 0)
+mesh = SubResource("Part7Mesh")
+material_override = ExtResource("1_concrete")
+
+[node name="LintelFractureRightCollision" type="CollisionShape3D" parent="Structure"]
+position = Vector3(1.61, 3.06, 1.17)
+rotation = Vector3(0, -0.53, 0)
+shape = SubResource("Part7Shape")
+
+[node name="BackWall" type="MeshInstance3D" parent="Structure"]
+position = Vector3(-0.69, 0.395, -1.74)
+mesh = SubResource("Part8Mesh")
+material_override = ExtResource("1_concrete")
+
+[node name="BackWallCollision" type="CollisionShape3D" parent="Structure"]
+position = Vector3(-0.69, 0.395, -1.74)
+shape = SubResource("Part8Shape")
+
+[node name="BackWallCap" type="MeshInstance3D" parent="Structure"]
+position = Vector3(-0.99, 0.84, -1.74)
+mesh = SubResource("Part9Mesh")
+material_override = ExtResource("1_concrete")
+
+[node name="BackWallCapCollision" type="CollisionShape3D" parent="Structure"]
+position = Vector3(-0.99, 0.84, -1.74)
+shape = SubResource("Part9Shape")
+
+[node name="BrokenReturn" type="MeshInstance3D" parent="Structure"]
+position = Vector3(-2.64, 0.245, -1.25)
+mesh = SubResource("Part10Mesh")
+material_override = ExtResource("1_concrete")
+
+[node name="BrokenReturnCollision" type="CollisionShape3D" parent="Structure"]
+position = Vector3(-2.64, 0.245, -1.25)
+shape = SubResource("Part10Shape")
+
+[node name="WallEnd" type="MeshInstance3D" parent="Structure"]
+position = Vector3(1.35, 0.18, -1.74)
+rotation = Vector3(0, -0.16, 0)
+mesh = SubResource("Part11Mesh")
+material_override = ExtResource("1_concrete")
+
+[node name="WallEndCollision" type="CollisionShape3D" parent="Structure"]
+position = Vector3(1.35, 0.18, -1.74)
+rotation = Vector3(0, -0.16, 0)
+shape = SubResource("Part11Shape")
+
+[node name="BenchSeat" type="MeshInstance3D" parent="Bench/Body"]
+position = Vector3(0, 0.365, 0)
+mesh = SubResource("Part12Mesh")
+material_override = SubResource("BenchMaterial")
+
+[node name="BenchSeatCollision" type="CollisionShape3D" parent="Bench/Body"]
+position = Vector3(0, 0.365, 0)
+shape = SubResource("Part12Shape")
+
+[node name="BenchLeftLeg" type="MeshInstance3D" parent="Bench/Body"]
+position = Vector3(-0.49, 0.155, 0)
+mesh = SubResource("Part13Mesh")
+material_override = SubResource("BenchMaterial")
+
+[node name="BenchLeftLegCollision" type="CollisionShape3D" parent="Bench/Body"]
+position = Vector3(-0.49, 0.155, 0)
+shape = SubResource("Part13Shape")
+
+[node name="BenchRightLeg" type="MeshInstance3D" parent="Bench/Body"]
+position = Vector3(0.49, 0.155, 0)
+mesh = SubResource("Part13Mesh")
+material_override = SubResource("BenchMaterial")
+
+[node name="BenchRightLegCollision" type="CollisionShape3D" parent="Bench/Body"]
+position = Vector3(0.49, 0.155, 0)
+shape = SubResource("Part13Shape")

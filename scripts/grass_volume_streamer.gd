@@ -78,6 +78,7 @@ var water_query := PhysicsRayQueryParameters3D.new()
 var exposure_query := PhysicsRayQueryParameters3D.new()
 var max_water_y := -INF
 var space: PhysicsDirectSpaceState3D
+var waypoint_grass_cell_filter: Callable
 
 func initialize(owner_vegetation,owner_world) -> void:
 	vegetation=owner_vegetation;world_scene=owner_world
@@ -457,6 +458,8 @@ func _upload_piece() -> void:
 				transforms.append(Transform3D(Basis(Vector3(buffer[at],buffer[at+4],buffer[at+8]),Vector3(buffer[at+1],buffer[at+5],buffer[at+9]),Vector3(buffer[at+2],buffer[at+6],buffer[at+10])),Vector3(buffer[at+3],buffer[at+7],buffer[at+11])))
 				custom.append(Color(buffer[at+12],buffer[at+13],buffer[at+14],buffer[at+15]))
 			node=vegetation._make_multimesh_node("Grass_"+group,display_mesh,transforms,vegetation.grass_material,0,end+CELL*1.5,custom)
+		if waypoint_grass_cell_filter.is_valid() and waypoint_grass_cell_filter.call(cell, CELL):
+			node.set_instance_shader_parameter("waypoint_grass_candidate", true)
 		var upload_time:=Time.get_ticks_usec()-upload_start
 		staging.upload_usec+=upload_time;_record("upload_usec",upload_time,false)
 		node.set_meta("grass_population",group);node.cast_shadow=GeometryInstance3D.SHADOW_CASTING_SETTING_OFF;node.extra_cull_margin=1.5

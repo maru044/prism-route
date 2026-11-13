@@ -65,6 +65,8 @@ func run() -> void:
 	for beach_file: String in ["assets/world/beach_slope_1107/manifest.json","assets/environment/beach_sand/sources.json"]:
 		if not beach_file in includes.split(","):includes+=("," if not includes.is_empty() else "")+beach_file
 	if not "assets/construction/basic_kit/catalog.json" in includes.split(","):includes+=",assets/construction/basic_kit/catalog.json"
+	for waypoint_file: String in ["assets/world/npc_waypoint_ruins/*.json", "assets/world/npc_waypoint_ruins/*.grass"]:
+		if not waypoint_file in includes.split(","):includes+=","+waypoint_file
 	config.set_value("preset.0","include_filter",includes)
 	var exclusions: PackedStringArray=["docs/*","screenshots/*","archive/*","experiments/*","assets/water/review/*","assets/world/current_map_validation/review/*","assets/world/current_map_validation/grass_bake/manifest_part_*.json","*.3dm","*.3dmbak","*.blend","*.blend1","*.TMP"]
 	var bake_root: String="res://assets/world/current_map_validation/grass_bake/"

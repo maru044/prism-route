@@ -1,0 +1,358 @@
+{
+  "cells": {
+    "-14_0_18": {
+      "bounds": [
+        [
+          -5.13681077957153,
+          1.48758125305176,
+          -5.14034414291382,
+          34.2591781616211,
+          12.5589437484741,
+          34.3042373657227
+        ],
+        [
+          -5.09116744995117,
+          1.48279857635498,
+          -5.05651521682739,
+          34.1285095214844,
+          12.5633249282837,
+          34.0846633911133
+        ]
+      ],
+      "compressed_bytes": 108248,
+      "far_count": 3774,
+      "instances": 19260,
+      "near_count": 15486,
+      "raw_bytes": 269640,
+      "removed_roots": 385,
+      "resource_offset": 830601,
+      "resource_path": "res://assets/world/npc_waypoint_ruins/roots.grass",
+      "root_count": 4815,
+      "seed": 694393867.0,
+      "sha256": "eb12557428ed358d4c80e50b135787e263c3e3c0784bff2998ad6fab18732a0c",
+      "source_sha256": "b259f4c3854a4a44f33c1bda2ced9dfbb0cf0158f2933298db57199e429fdbc6"
+    },
+    "-2_0_-23": {
+      "bounds": [
+        [
+          -5.09814453125,
+          -4.70331335067749,
+          -5.14530372619629,
+          34.2517318725586,
+          11.0821189880371,
+          34.3005714416504
+        ],
+        [
+          -5.07173538208008,
+          -4.70220041275024,
+          -5.15978670120239,
+          34.1252403259277,
+          11.0810489654541,
+          34.2345428466797
+        ]
+      ],
+      "compressed_bytes": 121278,
+      "far_count": 3995,
+      "instances": 20076,
+      "near_count": 16081,
+      "raw_bytes": 281064,
+      "removed_roots": 181,
+      "resource_offset": 709323,
+      "resource_path": "res://assets/world/npc_waypoint_ruins/roots.grass",
+      "root_count": 5019,
+      "seed": 306932928.0,
+      "sha256": "9efcf26b2adab86f8bbd10c3b99d97dfd3074bce15ba4e8ee4286daec0972fc9",
+      "source_sha256": "c560a191062bc84e59b62a56719f550bbdf807f2cabe7901f6561b727a72011c"
+    },
+    "-2_0_-24": {
+      "bounds": [
+        [
+          -5.13091707229614,
+          -3.76813673973084,
+          -5.12643241882324,
+          34.2428169250488,
+          10.4092788696289,
+          34.2063980102539
+        ],
+        [
+          -5.17534160614014,
+          -3.75340890884399,
+          -5.16036510467529,
+          34.2419853210449,
+          10.3931198120117,
+          34.3042755126953
+        ]
+      ],
+      "compressed_bytes": 123142,
+      "far_count": 4210,
+      "instances": 20744,
+      "near_count": 16534,
+      "raw_bytes": 290416,
+      "removed_roots": 14,
+      "resource_offset": 586181,
+      "resource_path": "res://assets/world/npc_waypoint_ruins/roots.grass",
+      "root_count": 5186,
+      "seed": 325299311.0,
+      "sha256": "e709cd070a9283cd029f8a5f19d4ae2709bbbe389f0727340ef9919d19c70e31",
+      "source_sha256": "d1034304a9d3c4fffdbd45d2591da70f556c81fe27b7b42ceb0e8c8e26d5fc31"
+    },
+    "-38_1_47": {
+      "bounds": [
+        [
+          -4.91456460952759,
+          6.17585182189941,
+          11.6331481933594,
+          34.0066833496094,
+          9.69770050048828,
+          17.5246925354004
+        ],
+        [
+          -4.98399353027344,
+          6.17585182189941,
+          11.807825088501,
+          34.0559730529785,
+          9.69770050048828,
+          17.3237495422363
+        ]
+      ],
+      "compressed_bytes": 8934,
+      "far_count": 446,
+      "instances": 2144,
+      "near_count": 1698,
+      "raw_bytes": 30016,
+      "removed_roots": 327,
+      "resource_offset": 1375686,
+      "resource_path": "res://assets/world/npc_waypoint_ruins/roots.grass",
+      "root_count": 536,
+      "seed": 2508533115.0,
+      "sha256": "b9c643938f193733202d8c2cc28f4bf0d19c41e1863e48602f61da02ff12579a",
+      "source_sha256": "8ea2e6ac50be27444b93b618b313c5850be8db92b72f29e036b3051f97420a43"
+    },
+    "-38_1_48": {
+      "bounds": [
+        [
+          -5.14311790466309,
+          6.17584800720215,
+          -5.09541749954224,
+          34.264762878418,
+          9.69770431518555,
+          34.2555313110352
+        ],
+        [
+          -5.12970590591431,
+          6.17584800720215,
+          -4.91155481338501,
+          34.279541015625,
+          9.69770431518555,
+          33.9481353759766
+        ]
+      ],
+      "compressed_bytes": 87416,
+      "far_count": 4189,
+      "instances": 20464,
+      "near_count": 16275,
+      "raw_bytes": 286496,
+      "removed_roots": 84,
+      "resource_offset": 1384620,
+      "resource_path": "res://assets/world/npc_waypoint_ruins/roots.grass",
+      "root_count": 5116,
+      "seed": 2498620828.0,
+      "sha256": "c11d4e02e867cb16165996e3dfc184c6fa1cebf98aadd9ff05b75837b6643a9a",
+      "source_sha256": "1f5e9a2a64a4dae9737f781c37072b1f0cff543c2eb7dee5f9e46b4b4b815d7a"
+    },
+    "-3_0_-23": {
+      "bounds": [
+        [
+          -5.14081811904907,
+          -4.83051013946533,
+          -5.14641332626343,
+          34.2864532470703,
+          10.8934097290039,
+          34.2728538513184
+        ],
+        [
+          -5.14544630050659,
+          -4.82937335968018,
+          -5.09076309204102,
+          34.2770385742188,
+          10.8665428161621,
+          34.0755653381348
+        ]
+      ],
+      "compressed_bytes": 121109,
+      "far_count": 4080,
+      "instances": 20104,
+      "near_count": 16024,
+      "raw_bytes": 281456,
+      "removed_roots": 174,
+      "resource_offset": 465072,
+      "resource_path": "res://assets/world/npc_waypoint_ruins/roots.grass",
+      "root_count": 5026,
+      "seed": 397564271.0,
+      "sha256": "24f8f6d66bdf56057baf38b466ba71659374461e975bd7b6adbecbb1d321fa89",
+      "source_sha256": "6dfc749b10bab944698822350402f5ffbde4aaed6432079d79751e5458e0ad39"
+    },
+    "-3_0_-24": {
+      "bounds": [
+        [
+          -5.16575002670288,
+          -4.06986331939697,
+          -5.15139579772949,
+          34.3030700683594,
+          10.8280334472656,
+          34.2261352539063
+        ],
+        [
+          -5.13229751586914,
+          -4.06725978851318,
+          -5.12975549697876,
+          34.2758941650391,
+          10.8257579803467,
+          34.1623458862305
+        ]
+      ],
+      "compressed_bytes": 124059,
+      "far_count": 4127,
+      "instances": 20744,
+      "near_count": 16617,
+      "raw_bytes": 290416,
+      "removed_roots": 14,
+      "resource_offset": 341013,
+      "resource_path": "res://assets/world/npc_waypoint_ruins/roots.grass",
+      "root_count": 5186,
+      "seed": 379230656.0,
+      "sha256": "7b62c83defe6e3360c22cb53dcc508250e5cc451beddfa0089a631770fe12410",
+      "source_sha256": "1f4e79e24b498594da0916772a5811f2e4c610944d6a909fadde629ed5a388ac"
+    },
+    "-5_0_14": {
+      "bounds": [
+        [
+          -5.15320920944214,
+          1.82786989212036,
+          -5.15236282348633,
+          34.3311042785645,
+          11.8035755157471,
+          34.2756652832031
+        ],
+        [
+          -4.99021196365356,
+          1.85981035232544,
+          -5.1572265625,
+          34.0573577880859,
+          11.7488842010498,
+          34.3373794555664
+        ]
+      ],
+      "compressed_bytes": 107952,
+      "far_count": 3937,
+      "instances": 19260,
+      "near_count": 15323,
+      "raw_bytes": 269640,
+      "removed_roots": 385,
+      "resource_offset": 1267734,
+      "resource_path": "res://assets/world/npc_waypoint_ruins/roots.grass",
+      "root_count": 4815,
+      "seed": 103221076.0,
+      "sha256": "0be572adbbc934d455157a7a79a59755536deef81fcc3766f9f739ddcc230960",
+      "source_sha256": "6c3bac64d0e3433402db789845a9414500591517fa71c38c23c975132ed528ac"
+    },
+    "10_0_-2": {
+      "bounds": [
+        [
+          -5.16292285919189,
+          -4.82414150238037,
+          -5.18256759643555,
+          34.3184394836426,
+          27.1512184143066,
+          34.3306312561035
+        ],
+        [
+          -5.13949298858643,
+          -4.82392549514771,
+          -5.16339635848999,
+          34.2803497314453,
+          27.1297588348389,
+          34.3286361694336
+        ]
+      ],
+      "compressed_bytes": 341013,
+      "far_count": 15483,
+      "instances": 77340,
+      "near_count": 61857,
+      "raw_bytes": 1082760,
+      "removed_roots": 420,
+      "resource_offset": 0,
+      "resource_path": "res://assets/world/npc_waypoint_ruins/roots.grass",
+      "root_count": 19335,
+      "seed": 776683695.0,
+      "sha256": "94e1e56cb1a75f7c9623250c67b2618531ffa950e91e7f738a860caf68d1b61c",
+      "source_sha256": "b1178e8f24133381088bb2337b127dd62475d136c5d6991bfbcbef387338a037"
+    },
+    "4_0_6": {
+      "bounds": [
+        [
+          -5.16210651397705,
+          -4.82394456863403,
+          -5.17332601547241,
+          34.3251342773438,
+          32.0120277404785,
+          34.349910736084
+        ],
+        [
+          -5.12524366378784,
+          -4.8239049911499,
+          -5.12781429290771,
+          34.2274475097656,
+          31.9805755615234,
+          34.3058090209961
+        ]
+      ],
+      "compressed_bytes": 223524,
+      "far_count": 10554,
+      "instances": 52744,
+      "near_count": 42190,
+      "raw_bytes": 738416,
+      "removed_roots": 377,
+      "resource_offset": 938849,
+      "resource_path": "res://assets/world/npc_waypoint_ruins/roots.grass",
+      "root_count": 13186,
+      "seed": 393222399.0,
+      "sha256": "297f8bba773d37ff5eef386fa35cbff41928c99883755cb9541eab1f1534dfec",
+      "source_sha256": "01e10e4b6e8f59db5c16a0f5540b7239c0269e314be0d0767b81d507e0eecc93"
+    },
+    "7_1_2": {
+      "bounds": [
+        [
+          -5.14929294586182,
+          -4.88576030731201,
+          -5.11731290817261,
+          34.3177680969238,
+          12.5810451507568,
+          34.2941055297852
+        ],
+        [
+          -5.02315664291382,
+          -4.87563133239746,
+          -5.04147672653198,
+          34.1385879516602,
+          12.5774517059326,
+          34.1325988769531
+        ]
+      ],
+      "compressed_bytes": 105361,
+      "far_count": 3342,
+      "instances": 17208,
+      "near_count": 13866,
+      "raw_bytes": 240912,
+      "removed_roots": 400,
+      "resource_offset": 1162373,
+      "resource_path": "res://assets/world/npc_waypoint_ruins/roots.grass",
+      "root_count": 4302,
+      "seed": 409442867.0,
+      "sha256": "b8a24fb13f0868c9828c0ede0c260fe80b13937c2eaefc19e357a7399d1108e8",
+      "source_sha256": "b33046053be3b022de4821e0603dced306be151c50bd5e2a3bbea3e9172c9946"
+    }
+  },
+  "layout": "b7889cbd450fd0a3f0c4f6e5f85aee6208040f1089f48590d934d84403181df9",
+  "signature": "ba956502a5277980535f7cf593721cb5134809971f52bead4c27ffa765ecd70a"
+}

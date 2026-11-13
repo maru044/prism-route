@@ -62,7 +62,11 @@ instance uniform vec3 tree_palette_anchor_world = vec3(0.0);
 instance uniform float use_tree_canopy_normal = 0.0;
 instance uniform vec3 tree_canopy_center_world = vec3(0.0);
 instance uniform vec3 tree_canopy_radii = vec3(1.0);
+#ifdef GRASS_GUST_DEMO
+const float tree_local_normal_weight = 0.34;
+#else
 instance uniform float tree_local_normal_weight : hint_range(0.0, 1.0) = 0.34;
+#endif
 uniform bool use_tree_local_canopy_normal = false;
 uniform vec3 tree_canopy_center_local = vec3(0.0);
 uniform vec3 tree_canopy_radii_local = vec3(1.0);
@@ -145,6 +149,11 @@ uniform vec4 sunken_archive_cut_bounds = vec4(0.0,0.0,1.0,1.0);
 uniform bool use_church_grass_cut = false;
 uniform sampler2D church_grass_cut : filter_nearest, repeat_disable;
 uniform vec4 church_cut_bounds = vec4(0.0,0.0,1.0,1.0);
+uniform bool use_waypoint_grass_cut = false;
+uniform vec4 waypoint_grass_sites[7];
+#ifdef GRASS_GUST_DEMO
+instance uniform bool waypoint_grass_candidate = false;
+#endif
 uniform bool use_cape_town_grass_cut = false;
 uniform sampler2D cape_town_grass_cut : filter_nearest, repeat_disable;
 uniform vec4 cape_town_cut_bounds = vec4(0.0,0.0,1.0,1.0);
@@ -329,11 +338,30 @@ void vertex() {
 		}
 	}
 	bool construction_hidden=false;
+	bool waypoint_hidden=false;
 #ifdef GRASS_GUST_DEMO
+	if (use_waypoint_grass_cut && waypoint_grass_candidate) {
+		for (int site = 0; site < 7; site++) {
+			vec4 placement = waypoint_grass_sites[site];
+			vec3 offset = world_origin - placement.xyz;
+			if (abs(offset.y) > 1.05 || any(greaterThan(abs(offset.xz), vec2(7.0)))) {
+				continue;
+			}
+			float c = cos(placement.w);
+			float s = sin(placement.w);
+			vec2 local = vec2(c*offset.x - s*offset.z, s*offset.x + c*offset.z);
+			if ((abs(local.x) < 3.42 && abs(local.y) < 2.42)
+				|| (abs(local.x) < 1.72 && local.y >= 2.0 && local.y < 5.92)) {
+				grass_lod_visibility = 0.0;
+				waypoint_hidden = true;
+				break;
+			}
+		}
+	}
 	construction_hidden=construction_grass_cut(world_origin);
 	if (construction_hidden) { grass_lod_visibility=0.0; }
 #endif
-	if ((construction_hidden || skip_invisible_grass || use_atrium_grass_cut || use_terrace_grass_cut || use_earth_pavilion_grass_support || use_sunken_archive_grass_cut || use_church_grass_cut || use_cape_town_grass_cut) && grass_lod_visibility < 0.5) {
+	if ((construction_hidden || waypoint_hidden || skip_invisible_grass || use_atrium_grass_cut || use_terrace_grass_cut || use_earth_pavilion_grass_support || use_sunken_archive_grass_cut || use_church_grass_cut || use_cape_town_grass_cut) && grass_lod_visibility < 0.5) {
 		VERTEX = vec3(0.0);
 	} else {
 		vec3 palette_origin = mix(

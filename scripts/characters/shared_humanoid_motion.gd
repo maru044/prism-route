@@ -39,12 +39,17 @@ var body_root := -1
 var root_displacement := Vector3.ZERO
 var _model_origin := Vector3.ZERO
 var _skeleton_in_actor := Transform3D.IDENTITY
+var preview_model: PackedScene
+var preview_pose_only := false
 
 func _ready() -> void:
 	motion = load(motion_resource) as Animation
 	assert(motion != null and motion.get_meta("shared_humanoid_schema", 0) == 1)
 	duration = motion.length
-	character = load(model_resource).instantiate()
+	var packed := preview_model if preview_model != null else load(model_resource) as PackedScene
+	character = packed.instantiate()
+	if preview_pose_only:
+		character.process_mode = Node.PROCESS_MODE_DISABLED
 	add_child(character)
 	skeleton = character.find_child("GeneralSkeleton", true, false)
 	assert(skeleton != null)
@@ -82,6 +87,15 @@ func _ready() -> void:
 	assert(translation_track >= 0)
 	_model_origin = character.position
 	_skeleton_in_actor = global_transform.affine_inverse() * skeleton.global_transform
+	if preview_pose_only:
+		for child in skeleton.get_children():
+			if child is SkeletonModifier3D:
+				child.active = false
+		sample_time(0.0)
+		ready_for_review = true
+		set_process(false)
+		initialized.emit()
+		return
 	controller = character.find_child("VRMSpringBoneController", true, false)
 	if controller:
 		controller.process_mode = Node.PROCESS_MODE_DISABLED
