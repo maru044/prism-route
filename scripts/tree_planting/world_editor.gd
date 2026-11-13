@@ -49,11 +49,13 @@ func initialize(scene) -> void:
 	if not load_error.is_empty():
 		var clean=profile.duplicate();clean.test_edits_path="user://world_planting/nonexistent_baseline_only.json";store.open(clean)
 		push_warning("Planting edits not loaded: "+load_error)
+	if world.cape_town!=null:world.cape_town.conform_tree_baseline(store)
 	for id: String in store.baseline.keys():
 		var row: Dictionary=store.baseline[id];var p:=Vector3(row.position[0],row.position[1],row.position[2])
 		p=world.upper_ring.adjusted_tree_position(p)
 		if world.initial_ruin.planting_mask.blocks(p,3.) or world.upper_ring.planting_mask.excludes_tree(p):store.baseline.erase(id)
-		else:row.position=[p.x,p.y,p.z]
+		# Ground adjustment changes elevation only; retain the source XZ precision.
+		else:row.position=[row.position[0],p.y,row.position[2]]
 	for row: Dictionary in world.upper_ring.manifest.trees:
 		var id:=ring_id(row);ring_ids[id]=true
 		store.baseline[id]={"id":id,"position":row.position.duplicate(),"yaw":row.yaw,"scale":row.scale,"species":["small","broad","upright"][int(row.model)],"palette":"green","surface":"upper_ring_bed_"+str(row.bed)}
@@ -106,7 +108,7 @@ func set_source_visible(id: String,enabled: bool) -> void:
 
 func geometry_excludes_tree(p:Vector3) -> bool:
 	if world.construction!=null and world.construction.tree_excluded(p):return true
-	if world.cape_town!=null and world.cape_town.blocks_grass(p):return true
+	if world.cape_town!=null and world.cape_town.blocks_tree(p):return true
 	return world.sunken_archive!=null and world.sunken_archive.blocks_grass(p)
 
 func record_is_excluded(row: Dictionary) -> bool:

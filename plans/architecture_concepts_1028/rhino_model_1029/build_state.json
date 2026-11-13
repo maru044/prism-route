@@ -1,0 +1,2703 @@
+{
+  "placement": {
+    "approach_nodes": [
+      [
+        568.0,
+        -268.0
+      ],
+      [
+        534.2809448242188,
+        -263.5017395019531
+      ],
+      [
+        462.28094482421875,
+        -191.50173950195312
+      ],
+      [
+        456.28094482421875,
+        -179.50173950195312
+      ],
+      [
+        455.1417202906231,
+        -156.85430072655777
+      ]
+    ],
+    "length": 60,
+    "rear_floor": 61.65,
+    "astar_nodes": [
+      [
+        567.2809448242188,
+        -266.5017395019531
+      ],
+      [
+        564.2809448242188,
+        -266.5017395019531
+      ],
+      [
+        561.2809448242188,
+        -266.5017395019531
+      ],
+      [
+        558.2809448242188,
+        -266.5017395019531
+      ],
+      [
+        555.2809448242188,
+        -266.5017395019531
+      ],
+      [
+        552.2809448242188,
+        -266.5017395019531
+      ],
+      [
+        549.2809448242188,
+        -266.5017395019531
+      ],
+      [
+        546.2809448242188,
+        -266.5017395019531
+      ],
+      [
+        543.2809448242188,
+        -263.5017395019531
+      ],
+      [
+        540.2809448242188,
+        -263.5017395019531
+      ],
+      [
+        537.2809448242188,
+        -263.5017395019531
+      ],
+      [
+        534.2809448242188,
+        -263.5017395019531
+      ],
+      [
+        531.2809448242188,
+        -260.5017395019531
+      ],
+      [
+        528.2809448242188,
+        -257.5017395019531
+      ],
+      [
+        525.2809448242188,
+        -254.50173950195312
+      ],
+      [
+        522.2809448242188,
+        -251.50173950195312
+      ],
+      [
+        519.2809448242188,
+        -248.50173950195312
+      ],
+      [
+        516.2809448242188,
+        -245.50173950195312
+      ],
+      [
+        513.2809448242188,
+        -242.50173950195312
+      ],
+      [
+        510.28094482421875,
+        -239.50173950195312
+      ],
+      [
+        507.28094482421875,
+        -236.50173950195312
+      ],
+      [
+        504.28094482421875,
+        -233.50173950195312
+      ],
+      [
+        501.28094482421875,
+        -230.50173950195312
+      ],
+      [
+        498.28094482421875,
+        -227.50173950195312
+      ],
+      [
+        495.28094482421875,
+        -224.50173950195312
+      ],
+      [
+        492.28094482421875,
+        -221.50173950195312
+      ],
+      [
+        489.28094482421875,
+        -218.50173950195312
+      ],
+      [
+        486.28094482421875,
+        -215.50173950195312
+      ],
+      [
+        483.28094482421875,
+        -212.50173950195312
+      ],
+      [
+        480.28094482421875,
+        -209.50173950195312
+      ],
+      [
+        477.28094482421875,
+        -206.50173950195312
+      ],
+      [
+        474.28094482421875,
+        -203.50173950195312
+      ],
+      [
+        471.28094482421875,
+        -200.50173950195312
+      ],
+      [
+        468.28094482421875,
+        -197.50173950195312
+      ],
+      [
+        465.28094482421875,
+        -194.50173950195312
+      ],
+      [
+        462.28094482421875,
+        -191.50173950195312
+      ],
+      [
+        462.28094482421875,
+        -188.50173950195312
+      ],
+      [
+        459.28094482421875,
+        -185.50173950195312
+      ],
+      [
+        459.28094482421875,
+        -182.50173950195312
+      ],
+      [
+        456.28094482421875,
+        -179.50173950195312
+      ],
+      [
+        456.28094482421875,
+        -176.50173950195312
+      ],
+      [
+        456.28094482421875,
+        -173.50173950195312
+      ],
+      [
+        456.28094482421875,
+        -170.50173950195312
+      ],
+      [
+        456.28094482421875,
+        -167.50173950195312
+      ],
+      [
+        456.28094482421875,
+        -164.50173950195312
+      ],
+      [
+        456.28094482421875,
+        -161.50173950195312
+      ],
+      [
+        456.28094482421875,
+        -158.50173950195312
+      ],
+      [
+        456.28094482421875,
+        -155.50173950195312
+      ]
+    ],
+    "entry_floor": 60.45,
+    "front_center": [
+      444.0,
+      -129.0
+    ],
+    "long_axis": [
+      -0.37139067635410367,
+      0.9284766908852592
+    ],
+    "right_axis": [
+      0.9284766908852592,
+      0.37139067635410367
+    ],
+    "main_floor": 61.05,
+    "astar_max_grade": 0.39061370886776664,
+    "lower_landing": 55.05,
+    "astar_length": 174.5512985522207,
+    "width": 30
+  },
+  "tag": "PR_InitialTriangle_20261029_v1",
+  "interactions": {
+    "npc_idle": {
+      "anchors": [
+        {
+          "forward_cad": [
+            0.37139067635410367,
+            -0.9284766908852592,
+            0
+          ],
+          "name": "NPC_Idle",
+          "source_id": "b37a7aff-61e7-49f6-b9c6-29b77186efab",
+          "position_cad": [
+            434.7152330911474,
+            -105.78808272786853,
+            61.05
+          ]
+        }
+      ],
+      "root_position_cad": [
+        434.7152330911474,
+        -105.78808272786853,
+        61.05
+      ],
+      "forward_cad": [
+        0.37139067635410367,
+        -0.9284766908852592,
+        0
+      ],
+      "id": "initial_temple_npc_01"
+    },
+    "version": 1,
+    "furniture": [
+      {
+        "motion_profiles": [],
+        "forward_cad": [
+          -0.9284766908852592,
+          -0.37139067635410367,
+          0
+        ],
+        "anchors": [
+          {
+            "forward_cad": [
+              -0.9284766908852592,
+              -0.37139067635410367,
+              0
+            ],
+            "name": "Anchor_Seat",
+            "source_id": "6ab1935b-d648-4cb4-910b-da6b17b7ef71",
+            "local_position": [
+              0,
+              0.42,
+              0.1
+            ],
+            "position_cad": [
+              446.32119172721315,
+              -110.83899592628433,
+              61.47
+            ]
+          },
+          {
+            "forward_cad": [
+              0.9284766908852592,
+              0.37139067635410367,
+              0
+            ],
+            "name": "Anchor_Front",
+            "source_id": "c3faefc5-ec20-4bce-96f0-d5b26e0cdd7c",
+            "local_position": [
+              0,
+              0,
+              1.05
+            ],
+            "position_cad": [
+              445.43913887087217,
+              -111.19181706882073,
+              61.05
+            ]
+          }
+        ],
+        "interaction_status": "anchors_ready",
+        "id": "seat_01",
+        "type": "seat",
+        "surface_height": 0.42,
+        "root_position_cad": [
+          446.4140393963017,
+          -110.80185685864892,
+          61.05
+        ],
+        "usable_surface": {
+          "depth": 0.45,
+          "center": [
+            0,
+            0.1
+          ],
+          "width": 1.2
+        },
+        "geometry_ids": [
+          "a44989db-1751-4e81-a457-716015e6072e",
+          "a3fc9b66-9412-4f5a-af1a-ffc044a8acdd"
+        ]
+      },
+      {
+        "motion_profiles": [],
+        "forward_cad": [
+          -0.9284766908852592,
+          -0.37139067635410367,
+          0
+        ],
+        "anchors": [
+          {
+            "forward_cad": [
+              -0.9284766908852592,
+              -0.37139067635410367,
+              0
+            ],
+            "name": "Anchor_Desk_Surface",
+            "source_id": "aa1b744d-93d9-4b60-83c7-258ecc3f9cf2",
+            "local_position": [
+              0,
+              0.838,
+              0.32
+            ],
+            "position_cad": [
+              437.94633197542817,
+              -99.11047836702173,
+              61.888
+            ]
+          },
+          {
+            "forward_cad": [
+              0.9284766908852592,
+              0.37139067635410367,
+              0
+            ],
+            "name": "Anchor_Front",
+            "source_id": "5331a4f8-a4f0-4bc2-a489-2a3d0f4d26ea",
+            "local_position": [
+              0,
+              0,
+              1.1
+            ],
+            "position_cad": [
+              437.22212015653764,
+              -99.40016309457793,
+              61.05
+            ]
+          }
+        ],
+        "interaction_status": "anchors_ready",
+        "id": "table_01",
+        "type": "desk",
+        "surface_height": 0.838,
+        "root_position_cad": [
+          438.24344451651143,
+          -98.99163335058842,
+          61.05
+        ],
+        "usable_surface": {
+          "depth": 0.35,
+          "center": [
+            0,
+            0.28
+          ],
+          "width": 1.2
+        },
+        "geometry_ids": [
+          "ba8dc154-a167-4d1c-952f-7292d7b9e615",
+          "aea12c29-3ff0-4615-85e2-dd425a4bc726"
+        ]
+      },
+      {
+        "motion_profiles": [],
+        "forward_cad": [
+          0.37139067635410367,
+          -0.9284766908852592,
+          0
+        ],
+        "anchors": [
+          {
+            "forward_cad": [
+              0.37139067635410367,
+              -0.9284766908852592,
+              0
+            ],
+            "name": "Anchor_Bed_Center",
+            "source_id": "a2182552-eeb9-49ee-a633-cbedc5f733bc",
+            "local_position": [
+              0,
+              0.46,
+              0
+            ],
+            "position_cad": [
+              430.25854497489814,
+              -89.2611976301109,
+              61.51
+            ]
+          },
+          {
+            "forward_cad": [
+              0.37139067635410367,
+              -0.9284766908852592,
+              0
+            ],
+            "name": "Anchor_BedEdge_Front",
+            "source_id": "411d3d62-99ec-46e7-a18d-b3c9e2dd435c",
+            "local_position": [
+              0,
+              0.46,
+              1.25
+            ],
+            "position_cad": [
+              430.7227833203408,
+              -90.42179349371747,
+              61.51
+            ]
+          },
+          {
+            "forward_cad": [
+              -0.37139067635410367,
+              0.9284766908852592,
+              0
+            ],
+            "name": "Anchor_Front",
+            "source_id": "759f5501-b2fc-4452-b862-834c218985a6",
+            "local_position": [
+              0,
+              0,
+              2.1
+            ],
+            "position_cad": [
+              431.03846539524176,
+              -91.21099868096995,
+              61.05
+            ]
+          }
+        ],
+        "interaction_status": "anchors_ready",
+        "id": "rest_01",
+        "type": "bed",
+        "surface_height": 0.46,
+        "root_position_cad": [
+          430.25854497489814,
+          -89.2611976301109,
+          61.05
+        ],
+        "usable_surface": {
+          "depth": 2.45,
+          "center": [
+            0,
+            0
+          ],
+          "width": 1.85
+        },
+        "geometry_ids": [
+          "e8b0a1d1-89a1-4851-8e1e-0f41c6434f89",
+          "7151052e-5bc2-4a21-a25a-e7aef5d19f06"
+        ]
+      }
+    ]
+  },
+  "objects": [
+    {
+      "phase": "01_foundation_stairs",
+      "id": "53c8c0f0-9b66-416d-a80c-12ff2a2e2909",
+      "category": "foundation",
+      "name": "PR_Foundation_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "0e0dc1b9-47cb-4093-aeed-59eec5250f93",
+      "category": "foundation",
+      "name": "PR_Foundation_01"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "b657023a-f8c7-4983-b2e8-8df418182403",
+      "category": "foundation",
+      "name": "PR_Foundation_02"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "6b281187-6de6-4678-a39b-36285a09af47",
+      "category": "foundation",
+      "name": "PR_Foundation_03"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "3edba3b7-1734-4a2b-9450-199de25a9e34",
+      "category": "foundation",
+      "name": "PR_Foundation_04"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "377ecec8-5191-4c3f-a22f-4a0695cd0d34",
+      "category": "foundation",
+      "name": "PR_Foundation_05"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "6651c881-5b23-46bc-8e7c-78b069795d39",
+      "category": "foundation",
+      "name": "PR_Foundation_06"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "1340191c-0fb6-4ba2-bf07-4fd69f25f36b",
+      "category": "foundation",
+      "name": "PR_Foundation_07"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "0a7260f4-c9bb-42fb-bac8-7e64f897fb1f",
+      "category": "foundation",
+      "name": "PR_Foundation_08"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "a14f88ad-8dbb-47d4-ad6c-ed985f44e8ff",
+      "category": "foundation",
+      "name": "PR_Foundation_09"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "45ca6e14-b613-4299-a844-6cc61784ce7b",
+      "category": "foundation",
+      "name": "PR_Foundation_10"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "8548d314-dd04-457b-8f48-24e8c82210ac",
+      "category": "foundation",
+      "name": "PR_Foundation_11"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "4bf2368b-8f92-4b1c-aa82-03a821978b23",
+      "category": "floor",
+      "name": "PR_Courtyard_Floor_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "de0f99a9-da84-4c8d-91ca-b21e588c890c",
+      "category": "floor",
+      "name": "PR_Courtyard_Floor_01"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "668360b3-1914-45ac-af1e-6e436a71fd0c",
+      "category": "floor",
+      "name": "PR_Courtyard_Floor_02"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "2d7bc257-1144-43ef-91d6-7868184cd5c4",
+      "category": "floor",
+      "name": "PR_InternalStair_9.0_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "490de2a6-3ddd-4f5b-883d-72312a004fbf",
+      "category": "floor",
+      "name": "PR_InternalStair_9.0_01"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "ba41fd9b-9870-4688-a72b-e67025b150c7",
+      "category": "floor",
+      "name": "PR_InternalStair_9.0_02"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "7ccc31e5-06ba-46d0-8051-307cc1c6d040",
+      "category": "floor",
+      "name": "PR_InternalStair_9.0_03"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "8df1f173-6e4c-4f4c-9adf-9b1f0cb91905",
+      "category": "floor",
+      "name": "PR_InternalStair_47.5_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "42022e78-5e3c-4ca6-9488-7c42c0e64e9c",
+      "category": "floor",
+      "name": "PR_InternalStair_47.5_01"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "1f5ea226-cd76-4265-9366-5153a7f14007",
+      "category": "floor",
+      "name": "PR_InternalStair_47.5_02"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "6c7b1b13-3dc2-463c-90e0-571de7cc7227",
+      "category": "floor",
+      "name": "PR_InternalStair_47.5_03"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "29c59a05-658e-4fc3-868e-486d1556229a",
+      "category": "entry",
+      "name": "PR_EntryFlight_1_Tread_01"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "8bad520b-94dc-485d-bff5-cdd2d6616954",
+      "category": "entry",
+      "name": "PR_EntryFlight_1_Tread_02"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "beaed1e2-9b13-4bd2-97d2-75c5c38d53b1",
+      "category": "entry",
+      "name": "PR_EntryFlight_1_Tread_03"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "391534e1-dbe4-4ca9-86c3-b32098fd8dec",
+      "category": "entry",
+      "name": "PR_EntryFlight_1_Tread_04"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "244238e0-9666-449b-8d91-353b85c1fcca",
+      "category": "entry",
+      "name": "PR_EntryFlight_1_Tread_05"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "54d3032e-0784-4568-958a-61be07a25362",
+      "category": "entry",
+      "name": "PR_EntryFlight_1_Tread_06"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "079386c5-a766-4818-837f-b5099e94aef4",
+      "category": "entry",
+      "name": "PR_EntryFlight_1_Tread_07"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "27d4af03-dc80-4e5f-b0f8-b2f4e6f52b63",
+      "category": "entry",
+      "name": "PR_EntryFlight_1_Tread_08"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "17dc7891-be4c-4133-b95a-42816d998430",
+      "category": "entry",
+      "name": "PR_EntryFlight_1_Tread_09"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "5ca47471-96ca-4afd-880b-64570935a565",
+      "category": "entry",
+      "name": "PR_EntryFlight_1_Tread_10"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "d6e9ab06-9426-4b64-8064-e1ec26355b2d",
+      "category": "entry",
+      "name": "PR_EntryFlight_1_Tread_11"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "75c2954c-b1bd-4b99-ba74-0b9c1dcf633b",
+      "category": "entry",
+      "name": "PR_EntryFlight_1_Tread_12"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "a3a9ef9a-ccc4-4f80-81c0-d7991d883e77",
+      "category": "entry",
+      "name": "PR_EntryFlight_1_Tread_13"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "bede7016-5e81-47cc-90ea-f5cb234e7f52",
+      "category": "entry",
+      "name": "PR_EntryFlight_1_Tread_14"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "2528193e-1370-4e13-967a-6df1f40899be",
+      "category": "entry",
+      "name": "PR_EntryFlight_1_Tread_15"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "82d8f0d3-93bc-4d9a-a74b-8820484552d2",
+      "category": "entry",
+      "name": "PR_EntryFlight_1_Tread_16"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "838149fd-368d-40ad-b3f9-35909bded86f",
+      "category": "entry",
+      "name": "PR_EntryFlight_1_Tread_17"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "76ec0963-8de2-4705-9ea5-836a24584d42",
+      "category": "entry",
+      "name": "PR_EntryFlight_1_Tread_18"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "c91c8906-caf4-42b3-bc45-3d761daf842e",
+      "category": "entry",
+      "name": "PR_EntryFlight_2_Tread_01"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "f117e0d3-e8bc-4940-9485-5197fd15990d",
+      "category": "entry",
+      "name": "PR_EntryFlight_2_Tread_02"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "b73cc72d-d81f-40d5-822e-610e4a5e76c8",
+      "category": "entry",
+      "name": "PR_EntryFlight_2_Tread_03"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "68a67de6-c9ac-4763-a499-1e000ad963bd",
+      "category": "entry",
+      "name": "PR_EntryFlight_2_Tread_04"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "a99e1b18-eab4-4a6a-a581-f360a7c60a43",
+      "category": "entry",
+      "name": "PR_EntryFlight_2_Tread_05"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "d490f9ae-b829-42d6-b1f6-0bbe49315edb",
+      "category": "entry",
+      "name": "PR_EntryFlight_2_Tread_06"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "c48096ed-8969-45b8-9bda-4d91ad496296",
+      "category": "entry",
+      "name": "PR_EntryFlight_2_Tread_07"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "20b34f2f-b2d2-4aac-863d-246eca1ec185",
+      "category": "entry",
+      "name": "PR_EntryFlight_2_Tread_08"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "dbfed2f1-1000-4037-8094-1340e26cb7c1",
+      "category": "entry",
+      "name": "PR_EntryFlight_2_Tread_09"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "80172883-4f3f-49f4-9bc1-7103bd02c0a0",
+      "category": "entry",
+      "name": "PR_EntryFlight_2_Tread_10"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "27b64138-edd9-4fb9-bfd8-e2b5d20a7200",
+      "category": "entry",
+      "name": "PR_EntryFlight_2_Tread_11"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "8eb48bd4-80e5-4efb-b73a-c4392d91d661",
+      "category": "entry",
+      "name": "PR_EntryFlight_2_Tread_12"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "b13af1ec-8232-4741-8e16-b150f6892838",
+      "category": "entry",
+      "name": "PR_EntryFlight_2_Tread_13"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "144e8758-935d-44b6-a32b-7b2155d50715",
+      "category": "entry",
+      "name": "PR_EntryFlight_2_Tread_14"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "91a870df-fa96-4eef-9168-e006fd716a63",
+      "category": "entry",
+      "name": "PR_EntryFlight_2_Tread_15"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "4d030f6c-4101-4ba2-b99e-343810cc3db5",
+      "category": "entry",
+      "name": "PR_EntryFlight_2_Tread_16"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "127ccea6-8a62-42ff-b5a5-dee9f584b35b",
+      "category": "entry",
+      "name": "PR_EntryFlight_2_Tread_17"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "74255a98-5f60-441e-b785-83f9aeeb81fe",
+      "category": "entry",
+      "name": "PR_EntryFlight_2_Tread_18"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "bc332fd9-45e0-4246-8139-22cc96bf9905",
+      "category": "entry",
+      "name": "PR_EntryLandingCap_Lower"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "46104f0e-1fa4-42c3-9cb1-f59b3484521c",
+      "category": "entry",
+      "name": "PR_EntryLandingCap_Middle"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "2bb35add-6868-48d0-b3d7-9cf540949780",
+      "category": "entry",
+      "name": "PR_EntryLandingCap_Upper"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "6945d2c3-1be8-4e4b-b492-5ee5a3385a73",
+      "category": "entry",
+      "name": "PR_StairCheek_-1_0"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "4ffeb114-c9c8-4bb7-b178-262e18d3796e",
+      "category": "entry",
+      "name": "PR_StairCheek_-1_1"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "21d19d74-6072-4ad5-ad93-c5d16bdb485b",
+      "category": "entry",
+      "name": "PR_StairCheek_-1_2"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "a8c61bf7-5ebf-4b5a-af25-e84c3376709d",
+      "category": "entry",
+      "name": "PR_StairCheek_1_0"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "4eb95f64-40df-4c05-8d80-589e0cd94051",
+      "category": "entry",
+      "name": "PR_StairCheek_1_1"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "52eadbea-724e-4af8-8d02-c2e418021309",
+      "category": "entry",
+      "name": "PR_StairCheek_1_2"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "40d16300-39f7-4522-9499-96e4f54d660c",
+      "category": "entry",
+      "name": "PR_Approach_000_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "76cc4944-979b-4f98-8674-510bccfdafe7",
+      "category": "entry",
+      "name": "PR_Approach_000_01"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "7dc9ab6e-b20e-4427-816c-20fc508e7ff5",
+      "category": "entry",
+      "name": "PR_Approach_000_02"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "55cb454c-c212-4b9a-b2c6-01ff06f21680",
+      "category": "entry",
+      "name": "PR_Approach_000_03"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "b1d7bedd-9ce7-49f0-828d-08535f27e505",
+      "category": "entry",
+      "name": "PR_Approach_000_04"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "153d29d1-bdab-4d71-8be5-78c54e7f543c",
+      "category": "entry",
+      "name": "PR_Approach_000_05"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "077129eb-199f-40df-ac82-4d24a02a894a",
+      "category": "entry",
+      "name": "PR_Approach_000_06"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "6b13ce85-4365-42c5-9df0-d4c7814c3984",
+      "category": "entry",
+      "name": "PR_Approach_000_07"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "7b57f42f-7196-4352-8d56-35e678087328",
+      "category": "entry",
+      "name": "PR_Approach_000_08"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "5df8c7c3-60f6-4d97-900b-859fe579f3a7",
+      "category": "entry",
+      "name": "PR_Approach_000_09"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "1f422ebb-b63f-4a97-8763-37fbd29abac0",
+      "category": "entry",
+      "name": "PR_Approach_000_10"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "e4a88b0e-a632-4cb7-a0fe-5f4d2dc36b25",
+      "category": "entry",
+      "name": "PR_Approach_000_11"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "89878e8c-db07-4489-ab83-40576159ea33",
+      "category": "entry",
+      "name": "PR_Approach_000_12"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "e4ef6a6b-3264-44eb-82c8-d9705979160b",
+      "category": "entry",
+      "name": "PR_Approach_000_13"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "a27121ac-e420-48e2-bf65-2660e9e41c16",
+      "category": "entry",
+      "name": "PR_Approach_000_14"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "a52481cd-0df7-4c1c-80f7-ce0f331ad483",
+      "category": "entry",
+      "name": "PR_Approach_000_15"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "a662a229-7b76-469f-a1da-87c4f377da7b",
+      "category": "entry",
+      "name": "PR_Approach_000_16"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "99fd9363-3ecd-4446-82ce-70946664a3a3",
+      "category": "entry",
+      "name": "PR_Approach_000_17"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "9e66d3d1-e161-47c8-acc9-f851104166b0",
+      "category": "entry",
+      "name": "PR_Approach_000_18"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "d8a184ae-55ac-4daa-b967-2b977ff4b582",
+      "category": "entry",
+      "name": "PR_Approach_000_19"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "48800d66-bc0a-4495-ace1-6527954eba27",
+      "category": "entry",
+      "name": "PR_Approach_000_20"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "3b0dbe13-eb21-4f4b-85b9-a1d81f65c43e",
+      "category": "entry",
+      "name": "PR_Approach_000_21"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "851410b7-4fd8-441c-99a8-da0b2e69f40b",
+      "category": "entry",
+      "name": "PR_Approach_001_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "1770bf08-a7ec-46ea-a63a-7203fd4ad65a",
+      "category": "entry",
+      "name": "PR_Approach_002_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "50001ff1-534a-411a-bf84-282160f2920b",
+      "category": "entry",
+      "name": "PR_Approach_003_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "a07aca8e-c8d5-484e-91d6-451e296ae4fc",
+      "category": "entry",
+      "name": "PR_Approach_004_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "1a86535e-dc92-4717-b4dd-e9b137c697c9",
+      "category": "entry",
+      "name": "PR_Approach_005_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "07cce1a3-1dad-4d54-8623-e9400fe65379",
+      "category": "entry",
+      "name": "PR_Approach_006_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "e1dc47f4-7e31-429c-bc04-452ea7281002",
+      "category": "entry",
+      "name": "PR_Approach_007_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "06dfbb99-595c-4f57-92cd-1a9311192eec",
+      "category": "entry",
+      "name": "PR_Approach_008_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "8e7080eb-10d2-458f-8bbd-73b84b8c8a96",
+      "category": "entry",
+      "name": "PR_Approach_009_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "740e8f65-b305-45c9-81c4-90a182168d9a",
+      "category": "entry",
+      "name": "PR_Approach_010_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "0526b8e8-f591-4e3c-b0e9-8b529d3da265",
+      "category": "entry",
+      "name": "PR_Approach_011_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "461201dd-f007-4df0-b0fe-3206a9b2a417",
+      "category": "entry",
+      "name": "PR_Approach_012_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "3d2f6434-db80-44be-ad12-d2ecaeb7a686",
+      "category": "entry",
+      "name": "PR_Approach_013_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "5722fa0b-5e84-47bf-8570-d43a9baf1071",
+      "category": "entry",
+      "name": "PR_Approach_014_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "c96a335c-2558-45c5-8b32-532eab746ee2",
+      "category": "entry",
+      "name": "PR_Approach_015_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "4e6a249c-bd8f-431a-a9a7-e7b3ce2e45ed",
+      "category": "entry",
+      "name": "PR_Approach_016_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "af31a197-1dfd-4f25-a0c5-232823d5e292",
+      "category": "entry",
+      "name": "PR_Approach_017_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "1fab36a0-e6e1-4841-810c-0510f4cd94d6",
+      "category": "entry",
+      "name": "PR_Approach_018_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "e1fb5417-6c30-4538-ae76-f166cdddaeca",
+      "category": "entry",
+      "name": "PR_Approach_019_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "3090c26f-8bb8-4435-b2e1-3697a0ac9d66",
+      "category": "entry",
+      "name": "PR_Approach_020_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "db4c347b-49df-4ec1-9e87-dde94e31302c",
+      "category": "entry",
+      "name": "PR_Approach_021_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "28218694-aeee-47f6-b0b6-93f12b3ce747",
+      "category": "entry",
+      "name": "PR_Approach_022_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "93b0921b-7453-4abd-85fe-bff4f27c780b",
+      "category": "entry",
+      "name": "PR_Approach_023_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "0a594e36-f57b-4a97-bdb5-dd13f346bc43",
+      "category": "entry",
+      "name": "PR_Approach_024_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "ae6e516a-9f12-4a40-b7f1-2a24e52f1ebe",
+      "category": "entry",
+      "name": "PR_Approach_025_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "21e815aa-76d5-4957-88a2-830f3c5ecd7c",
+      "category": "entry",
+      "name": "PR_Approach_026_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "5ab3c6c4-2905-4053-840f-8d381ebab653",
+      "category": "entry",
+      "name": "PR_Approach_027_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "a82cae66-286c-4449-ae77-09a8734cba29",
+      "category": "entry",
+      "name": "PR_Approach_028_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "abc90f63-4821-41dc-8ac6-a4e67c618c39",
+      "category": "entry",
+      "name": "PR_Approach_029_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "1aa37c41-0445-4e58-8c23-05744c97204c",
+      "category": "entry",
+      "name": "PR_Approach_030_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "a7bf8c33-66c9-4e3d-a312-9a4db277ed11",
+      "category": "entry",
+      "name": "PR_Approach_031_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "e22a2073-e8e2-45dc-b3e0-d27a4460cab5",
+      "category": "entry",
+      "name": "PR_Approach_032_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "98021bb5-c5f4-4501-bbd5-cf1c834e07b8",
+      "category": "entry",
+      "name": "PR_Approach_033_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "aa22f429-ce9c-4383-a432-d976127ddcba",
+      "category": "entry",
+      "name": "PR_Approach_034_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "e24efeaa-0722-44e4-86ec-95a02348354d",
+      "category": "entry",
+      "name": "PR_Approach_035_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "8d443181-5921-48ce-a009-13cfe11d17c0",
+      "category": "entry",
+      "name": "PR_Approach_036_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "26f085d2-a92a-493d-8f52-36c701ffd128",
+      "category": "entry",
+      "name": "PR_Approach_037_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "59fe853a-c545-4f55-a03a-eddceb7e70ac",
+      "category": "entry",
+      "name": "PR_Approach_038_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "220f02db-5945-4ae1-b0b6-f846bec1b775",
+      "category": "entry",
+      "name": "PR_Approach_039_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "1dc916bc-e35c-4bd9-bbe2-46cfffdf384f",
+      "category": "entry",
+      "name": "PR_Approach_040_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "cdb00e37-7c22-4bae-8765-d8e20b21b5c5",
+      "category": "entry",
+      "name": "PR_Approach_041_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "91f2567a-e767-428a-ab38-a93f04429ebf",
+      "category": "entry",
+      "name": "PR_Approach_042_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "a010198d-0c46-4f45-9591-c9e10950032a",
+      "category": "entry",
+      "name": "PR_Approach_043_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "8e0c2e5e-e01d-4b01-9e4d-4205ee5449fe",
+      "category": "entry",
+      "name": "PR_Approach_044_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "146b999c-5e65-4e4c-81ca-cc300474e151",
+      "category": "entry",
+      "name": "PR_Approach_045_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "d0e35112-5889-48fa-9938-edd93011c131",
+      "category": "entry",
+      "name": "PR_Approach_046_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "a499438e-11f8-42ff-910f-162c77457306",
+      "category": "entry",
+      "name": "PR_Approach_047_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "0c9ed8b2-d8de-4cb7-9e3a-1ff2ad9498a4",
+      "category": "entry",
+      "name": "PR_Approach_048_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "e3c7b1be-0f14-4aa6-b31f-7a88ed9919bc",
+      "category": "entry",
+      "name": "PR_Approach_049_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "345259d1-a0ea-479a-a505-bdef29c92907",
+      "category": "entry",
+      "name": "PR_Approach_050_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "1b1be95d-9d2f-46b2-a70b-acc5f8757e04",
+      "category": "entry",
+      "name": "PR_Approach_051_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "4d4d3bdd-e903-496d-a832-6149a5d3fe13",
+      "category": "entry",
+      "name": "PR_Approach_052_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "78cabbc2-9453-4e52-b8cf-e2e0de120669",
+      "category": "entry",
+      "name": "PR_Approach_053_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "52a98093-31bc-4c7e-a117-ae3c51ae08b8",
+      "category": "entry",
+      "name": "PR_Approach_054_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "f87075bd-b9b1-41e5-8336-9ba18f85e8e3",
+      "category": "entry",
+      "name": "PR_Approach_055_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "1102c524-cfa7-4ecd-a8bb-f242c8112b04",
+      "category": "entry",
+      "name": "PR_Approach_056_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "1acb35de-fe21-4ca4-9d42-30d7aa0e753c",
+      "category": "entry",
+      "name": "PR_Approach_057_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "080bf4ec-d349-4619-8918-3b809cb8d248",
+      "category": "entry",
+      "name": "PR_Approach_058_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "5946a5fd-d87c-4326-80e4-787e3c211a32",
+      "category": "entry",
+      "name": "PR_Approach_059_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "ed25f145-6b35-44bb-93c2-5827867aa523",
+      "category": "entry",
+      "name": "PR_Approach_060_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "da3dce7a-d976-4c17-80ac-c7388e38ca71",
+      "category": "entry",
+      "name": "PR_Approach_061_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "2b8f8521-25c0-4d38-a287-596117a2c813",
+      "category": "entry",
+      "name": "PR_Approach_062_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "ed56d72a-f155-43be-bb6b-3435ea8e1adb",
+      "category": "entry",
+      "name": "PR_Approach_063_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "6d6cbf55-e282-4b53-b4ef-3d55ca9ab971",
+      "category": "entry",
+      "name": "PR_Approach_064_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "c2a51766-87c9-44fe-8641-49b6bb2a01d5",
+      "category": "entry",
+      "name": "PR_Approach_065_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "605a36d0-e53a-4d4d-8003-66fcb99b598e",
+      "category": "entry",
+      "name": "PR_Approach_066_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "1a494943-8bc7-4846-b500-48df678e3dea",
+      "category": "entry",
+      "name": "PR_Approach_067_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "094a6852-ab39-472a-b622-636996bbb0e1",
+      "category": "entry",
+      "name": "PR_Approach_068_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "432d267a-d352-4738-ab06-4540e9748148",
+      "category": "entry",
+      "name": "PR_Approach_069_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "eca7d2a2-02f1-4f06-895a-74e2d6dabb45",
+      "category": "entry",
+      "name": "PR_Approach_070_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "dd65d2b4-396d-47a5-8e27-fe2431ef094a",
+      "category": "entry",
+      "name": "PR_Approach_071_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "0ecf210d-d5b2-492b-a8e5-81235b6f286d",
+      "category": "entry",
+      "name": "PR_Approach_072_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "263e1109-a340-49f7-8e6d-acfab129f909",
+      "category": "entry",
+      "name": "PR_Approach_073_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "4a19d97d-e347-4301-bdcb-771812a6e0f2",
+      "category": "entry",
+      "name": "PR_Approach_074_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "331c0f33-1a3e-4824-bf12-d02b0d05068f",
+      "category": "entry",
+      "name": "PR_Approach_075_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "89bc3d7b-05a2-468b-9c77-fa18699f99ee",
+      "category": "entry",
+      "name": "PR_Approach_076_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "c5e917e9-4187-4655-bc1a-6e5d7e96077d",
+      "category": "entry",
+      "name": "PR_Approach_077_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "bab33599-e3a4-4c8e-bc26-f5b7d31f5125",
+      "category": "entry",
+      "name": "PR_Approach_078_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "36531586-f170-49c3-b992-8443806c8d6f",
+      "category": "entry",
+      "name": "PR_Approach_079_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "99341808-429f-436e-a55e-8acd826a30de",
+      "category": "entry",
+      "name": "PR_Approach_080_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "c9158512-3afd-4573-bc09-8d872ce12124",
+      "category": "entry",
+      "name": "PR_Approach_081_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "db9b8229-f13c-48a9-9d6e-27e78f954d7a",
+      "category": "entry",
+      "name": "PR_Approach_082_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "fbdac5fd-b393-4cd7-9743-e1940330e6b1",
+      "category": "entry",
+      "name": "PR_Approach_083_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "4f3eb715-315c-4086-b49d-80e8e99e7252",
+      "category": "entry",
+      "name": "PR_Approach_084_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "48fde6a6-782d-48ce-ad10-b400359e1c44",
+      "category": "entry",
+      "name": "PR_Approach_085_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "26911c17-b445-41d1-a8f6-4330272a90c8",
+      "category": "entry",
+      "name": "PR_Approach_086_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "25a3b680-de9d-4a46-9605-2584f0c185d3",
+      "category": "entry",
+      "name": "PR_Approach_087_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "d48b467f-8e4a-483c-b112-62fb81ac9705",
+      "category": "entry",
+      "name": "PR_Approach_088_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "d0fd226c-6074-45cb-95fc-11e7c5759f0d",
+      "category": "entry",
+      "name": "PR_Approach_089_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "8fb82651-c3d9-4e2f-b19b-cba735c230f5",
+      "category": "entry",
+      "name": "PR_Approach_090_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "f50a82b1-5405-479d-bdbf-772e8a4d2937",
+      "category": "entry",
+      "name": "PR_Approach_091_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "3a9ca503-7559-4bce-994d-a88c196cecb9",
+      "category": "entry",
+      "name": "PR_Approach_092_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "40ab0484-2c1f-45b6-be0b-8ac57eab8a4b",
+      "category": "entry",
+      "name": "PR_Approach_093_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "bc5ed12a-7168-4777-b3fd-12cdd070af68",
+      "category": "entry",
+      "name": "PR_Approach_094_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "189c6030-9ce8-44c5-841e-1d51163e27ea",
+      "category": "entry",
+      "name": "PR_Approach_095_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "119e591c-ce4a-420b-aa6f-207591f7a981",
+      "category": "entry",
+      "name": "PR_Approach_096_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "a90d31d4-5703-4a80-a63e-87be7e352129",
+      "category": "entry",
+      "name": "PR_Approach_097_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "9813a2ee-2fb8-4c63-9919-3767aa8567a3",
+      "category": "entry",
+      "name": "PR_Approach_098_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "24c756f7-623f-4ba7-a228-d69146266d95",
+      "category": "entry",
+      "name": "PR_Approach_099_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "96a11aca-2489-4c59-a43d-58239d937384",
+      "category": "entry",
+      "name": "PR_Approach_100_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "23398725-0635-4fe8-a6ad-996d4ee3fac6",
+      "category": "entry",
+      "name": "PR_Approach_101_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "94b49e6e-a205-463b-a36e-0d6a11b56144",
+      "category": "entry",
+      "name": "PR_Approach_102_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "f7d1ecf9-90e1-42f4-a19c-8fb77ecb4543",
+      "category": "entry",
+      "name": "PR_Approach_103_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "4c60910b-9755-4e64-a89e-d394206b8bd4",
+      "category": "entry",
+      "name": "PR_Approach_104_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "3f739770-c624-4ad5-b1b5-4a4590f3a01b",
+      "category": "entry",
+      "name": "PR_Approach_105_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "e5ef24e7-57f4-4fd6-8ff2-893cac367d87",
+      "category": "entry",
+      "name": "PR_Approach_106_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "3f64109b-be81-4a41-b46b-97f5dc35735a",
+      "category": "entry",
+      "name": "PR_Approach_107_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "267424ec-9727-4012-97a0-15b60cd2ad06",
+      "category": "entry",
+      "name": "PR_Approach_108_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "90a1d781-a811-4b56-802e-6693bf9713db",
+      "category": "entry",
+      "name": "PR_Approach_109_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "7522b9fe-e501-4c8c-b434-4238e6d3fbcc",
+      "category": "entry",
+      "name": "PR_Approach_110_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "d044f625-d7e7-4b4d-82f2-8ae1fd31fbbc",
+      "category": "entry",
+      "name": "PR_Approach_111_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "3c7668bc-bac8-43eb-993a-80b024bbbec8",
+      "category": "entry",
+      "name": "PR_Approach_112_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "d8de4b00-1b24-4b8f-b4f7-8357814f5533",
+      "category": "entry",
+      "name": "PR_Approach_113_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "712d9e2c-f3ae-4e35-a1a1-ebf37faad380",
+      "category": "entry",
+      "name": "PR_Approach_114_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "5c15fa86-9072-4ef3-b14c-d623f042a72e",
+      "category": "entry",
+      "name": "PR_Approach_115_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "7f343dc1-eb85-4478-8034-af69eb19af89",
+      "category": "entry",
+      "name": "PR_Approach_116_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "c79c2c00-d797-4e53-b50a-3edc4cbbed42",
+      "category": "entry",
+      "name": "PR_Approach_117_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "6e529c53-842e-400e-86d6-75c01d430d8f",
+      "category": "entry",
+      "name": "PR_Approach_118_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "ef675119-c344-4d23-9006-fc3b64ab4573",
+      "category": "entry",
+      "name": "PR_Approach_119_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "e8ebd949-40ed-48dd-8eed-79fbc3d1d867",
+      "category": "entry",
+      "name": "PR_Approach_120_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "4eeb4749-69d5-4e92-aef0-1cd9353e7116",
+      "category": "entry",
+      "name": "PR_Approach_121_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "bae2806b-ff9e-401b-b698-d96dfac14787",
+      "category": "entry",
+      "name": "PR_Approach_122_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "19b90dfa-c85e-4d68-822d-254aff135ab4",
+      "category": "entry",
+      "name": "PR_Approach_123_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "729709a5-19de-4449-9cf4-41dc6687d60a",
+      "category": "entry",
+      "name": "PR_Approach_124_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "970a156f-42f9-4801-a225-cbef6a3284fd",
+      "category": "entry",
+      "name": "PR_Approach_125_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "695b821d-d3e7-4f46-9d6a-f87a0db62838",
+      "category": "entry",
+      "name": "PR_Approach_126_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "1b098641-eebb-478b-b1a4-ad65a9033384",
+      "category": "entry",
+      "name": "PR_Approach_127_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "7372b219-8b58-4080-b202-d522574b60aa",
+      "category": "entry",
+      "name": "PR_Approach_127_01"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "675cdb4f-5449-49ad-85a1-f929d0c78aca",
+      "category": "entry",
+      "name": "PR_Approach_127_02"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "80cd7df4-2896-4857-9610-77de577f152f",
+      "category": "entry",
+      "name": "PR_Approach_128_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "ce475671-91a7-4b02-9eb5-1e590cc64a91",
+      "category": "entry",
+      "name": "PR_Approach_128_01"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "4d7ff31a-3906-4312-93f0-a1a9cb507574",
+      "category": "entry",
+      "name": "PR_Approach_128_02"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "96f1f39b-4c38-408e-967c-f95c606e9f4e",
+      "category": "entry",
+      "name": "PR_Approach_128_03"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "284e2763-291d-42af-a15b-c2b518f493a3",
+      "category": "entry",
+      "name": "PR_Approach_128_04"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "8213b15d-63e5-4920-b1b4-3bac5b8a6192",
+      "category": "entry",
+      "name": "PR_Approach_129_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "a41818a5-8cfe-416a-b76a-80c5e42f4ce1",
+      "category": "entry",
+      "name": "PR_Approach_130_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "43d427ad-7e2d-4b74-9a75-3bbf98a9e90a",
+      "category": "entry",
+      "name": "PR_Approach_131_00"
+    },
+    {
+      "phase": "01_foundation_stairs",
+      "id": "386b6ac1-12db-445d-a16b-837927f62f6c",
+      "category": "entry",
+      "name": "PR_CaveWalk_Transition"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "5d8d8183-b100-4d05-89cf-8af41a3bd656",
+      "category": "front",
+      "name": "PR_LowWall_-1"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "278149f7-a471-4715-ae57-15a02378d818",
+      "category": "front",
+      "name": "PR_LowWall_Coping_-1"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "8d05f909-46b3-4dd7-badc-12e2a63fad13",
+      "category": "front",
+      "name": "PR_EntryPier_-4.45"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "0de13201-1c23-4978-bdf4-bd9f590d2e0c",
+      "category": "front",
+      "name": "PR_EntryPierCap_-4.45"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "df55568d-85ba-42bb-a175-45096500f539",
+      "category": "front",
+      "name": "PR_EntryPier_-14.95"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "3baa0345-c0bb-481b-8f4a-8ed44da3ace9",
+      "category": "front",
+      "name": "PR_EntryPierCap_-14.95"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "ef5a8b0b-12fc-4aa3-9f3e-98feb36b0b9b",
+      "category": "front",
+      "name": "PR_LowWall_1"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "a2cdaf71-2ed5-491e-b149-3badd7ee371a",
+      "category": "front",
+      "name": "PR_LowWall_Coping_1"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "1e08456d-1281-453c-8a57-bc642bc8c57b",
+      "category": "front",
+      "name": "PR_EntryPier_+4.45"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "5ad3c6bb-6f4b-40f9-91e6-441c517b7bec",
+      "category": "front",
+      "name": "PR_EntryPierCap_+4.45"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "e5ae428c-b963-4a5d-aa41-6de15bae9261",
+      "category": "front",
+      "name": "PR_EntryPier_+14.95"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "84481050-4b1c-4adf-b05c-287be00808f6",
+      "category": "front",
+      "name": "PR_EntryPierCap_+14.95"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "79ea5880-b293-4687-b94d-c45fa671f6a0",
+      "category": "colonnade",
+      "name": "PR_LeftSill_00"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "00941d85-1ac8-4324-b146-7982ca08d7b3",
+      "category": "colonnade",
+      "name": "PR_LeftSill_01"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "abe18e04-e779-495a-b91d-29c7667775c0",
+      "category": "colonnade",
+      "name": "PR_LeftSill_02"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "00b7f077-87bf-44f2-a3c0-5799697b1b1c",
+      "category": "colonnade",
+      "name": "PR_LeftSill_03"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "c0d44a2f-9b91-45d3-838e-6efd6d82b796",
+      "category": "colonnade",
+      "name": "PR_LeftSill_04"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "e45b2d9e-65cf-4317-90a2-14778fde53c8",
+      "category": "colonnade",
+      "name": "PR_Left_SlopingLintel"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "84512e7e-724d-4bb1-8290-113b362c8178",
+      "category": "colonnade",
+      "name": "PR_LeftColumnBase_00"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "6d7f8b69-e7cc-4def-9e19-79f1f3aa2645",
+      "category": "colonnade",
+      "name": "PR_LeftColumn_00"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "1e3c4e43-4938-4cb1-a822-1582de3ac0b2",
+      "category": "colonnade",
+      "name": "PR_LeftCapital_00"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "1ec35d84-138f-4257-8d87-116d8830d824",
+      "category": "colonnade",
+      "name": "PR_LeftColumnBase_01"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "551547d7-7c33-4913-8d32-c969d75d66c3",
+      "category": "colonnade",
+      "name": "PR_LeftColumn_01"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "d28a49c3-874b-4a87-916f-c07addf23449",
+      "category": "colonnade",
+      "name": "PR_LeftCapital_01"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "04e488d6-7296-4459-a660-5025636721ce",
+      "category": "colonnade",
+      "name": "PR_LeftColumnBase_02"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "41f90593-d90b-49d4-8ca2-fe569a6c6482",
+      "category": "colonnade",
+      "name": "PR_LeftColumn_02"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "faff5f71-3ab2-41e3-b5bb-4ca674db466d",
+      "category": "colonnade",
+      "name": "PR_LeftCapital_02"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "706cc0cf-9955-441b-8e67-97b626339add",
+      "category": "colonnade",
+      "name": "PR_LeftColumnBase_03"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "b306463a-530a-49bc-a7c8-3cccac18f823",
+      "category": "colonnade",
+      "name": "PR_LeftColumn_03"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "2df46ef5-dc00-4278-9317-277482c25cbf",
+      "category": "colonnade",
+      "name": "PR_LeftCapital_03"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "e04d4dfd-67a1-405c-8043-fe8a82538358",
+      "category": "colonnade",
+      "name": "PR_LeftColumnBase_04"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "a8bb5dc4-a572-4222-9c54-c6243a8e706e",
+      "category": "colonnade",
+      "name": "PR_LeftColumn_04"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "d72e59cc-ac18-4497-ab5f-3580ac1a3038",
+      "category": "colonnade",
+      "name": "PR_LeftCapital_04"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "ff900a4a-012b-46ea-a2bb-14b80676413e",
+      "category": "colonnade",
+      "name": "PR_LeftColumnBase_05"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "8957990b-8964-4841-bf71-cf9843b91a24",
+      "category": "colonnade",
+      "name": "PR_LeftColumn_05"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "90ae999a-72d0-4ccd-b8f6-7a1c20f2619f",
+      "category": "colonnade",
+      "name": "PR_LeftCapital_05"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "c77005ea-bdde-4e2a-981e-997b577336c7",
+      "category": "colonnade",
+      "name": "PR_LeftColumnBase_06"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "fe705372-bb8c-42d1-aeac-5030f4d52ac0",
+      "category": "colonnade",
+      "name": "PR_LeftColumn_06"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "f2736ea4-146a-4961-b60a-ba177389ec1a",
+      "category": "colonnade",
+      "name": "PR_LeftCapital_06"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "70dc733d-fa82-48a6-80e5-f1a2691b299e",
+      "category": "colonnade",
+      "name": "PR_LeftColumnBase_07"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "072d6102-4088-4b7b-892b-1f27bd6a7723",
+      "category": "colonnade",
+      "name": "PR_LeftColumn_07"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "3a189336-e75c-4804-9ee9-418f471eab85",
+      "category": "colonnade",
+      "name": "PR_LeftCapital_07"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "ad254656-981e-4f60-9693-e0ab93088bbe",
+      "category": "highwall",
+      "name": "PR_Right_TallWall"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "a27e9ed9-2a0a-491e-bd79-44b7d9c57e19",
+      "category": "highwall",
+      "name": "PR_RightPier_00"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "bfad485a-5817-41c2-a92a-7baea83beb5b",
+      "category": "highwall",
+      "name": "PR_RightPierCap_00"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "0db272b6-5855-455d-a7e1-87bea900621d",
+      "category": "highwall",
+      "name": "PR_RightPier_01"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "096fa46e-1c72-4134-9357-0c71597812ee",
+      "category": "highwall",
+      "name": "PR_RightPierCap_01"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "bc44e516-90c9-439a-a77e-e7359d902fa4",
+      "category": "highwall",
+      "name": "PR_RightPier_02"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "6aa9c694-440d-4140-a6c8-f9bdd0666293",
+      "category": "highwall",
+      "name": "PR_RightPierCap_02"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "1f00b692-bb5d-4019-b86b-6d56f988fe56",
+      "category": "highwall",
+      "name": "PR_RightPier_03"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "e3bfe198-8cde-4b67-b132-3c8736678fa7",
+      "category": "highwall",
+      "name": "PR_RightPierCap_03"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "497881d9-3ac4-4502-bb2f-987b93a47a15",
+      "category": "highwall",
+      "name": "PR_RightPier_04"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "70deb874-d3a4-4a84-91dc-c82501f52106",
+      "category": "highwall",
+      "name": "PR_RightPierCap_04"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "ce7922e7-72c6-4548-b1b5-b0b45f08b2a6",
+      "category": "highwall",
+      "name": "PR_RightPier_05"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "c4271b55-5d5c-4af6-b876-f314f1b0f1bd",
+      "category": "highwall",
+      "name": "PR_RightPierCap_05"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "20de9ab4-59d8-4246-bc86-382289fdbf15",
+      "category": "highwall",
+      "name": "PR_RightPier_06"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "0e4f46eb-4fad-439b-b3ee-9c695acd9f4e",
+      "category": "highwall",
+      "name": "PR_RightPierCap_06"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "40348fd1-e282-4d6f-be68-42e2a6e9a318",
+      "category": "foundation",
+      "name": "PR_ButtressFoot_00"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "90d54cde-84ef-4ac7-987e-3dccdf6a9beb",
+      "category": "highwall",
+      "name": "PR_RightButtress_00"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "f1d4a628-9aad-4694-a359-2e431b3f324b",
+      "category": "foundation",
+      "name": "PR_ButtressFoot_01"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "a5c8b920-9891-4beb-ae18-0059607e193e",
+      "category": "highwall",
+      "name": "PR_RightButtress_01"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "4c03094c-4b00-47cc-838a-a153d6e2660b",
+      "category": "foundation",
+      "name": "PR_ButtressFoot_02"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "a7de2346-1c9f-4efa-884e-9b412aea0549",
+      "category": "highwall",
+      "name": "PR_RightButtress_02"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "c1787fc6-ba48-40b2-a389-c95ea222b314",
+      "category": "foundation",
+      "name": "PR_ButtressFoot_03"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "c6ad6125-0427-4a65-8de8-1b74a84b58f1",
+      "category": "highwall",
+      "name": "PR_RightButtress_03"
+    },
+    {
+      "phase": "02_walls_colonnade",
+      "id": "40fce247-30f3-414a-a5ca-4eb9681d81ae",
+      "category": "colonnade",
+      "name": "PR_RearTip_Infill"
+    },
+    {
+      "phase": "03_roof_summoning",
+      "id": "08428dc7-4e06-482b-a771-61f845fdc211",
+      "name": "PR_Broken_InclinedRoof",
+      "category": "roof"
+    },
+    {
+      "phase": "03_roof_summoning",
+      "id": "de4b3cf4-63d8-431d-a973-c5efed4c6772",
+      "name": "PR_RoofCrossRib_00",
+      "category": "roof"
+    },
+    {
+      "phase": "03_roof_summoning",
+      "id": "811b8d9a-e2b4-404f-a5d1-6457dc5b96e2",
+      "name": "PR_RoofCrossRib_01",
+      "category": "roof"
+    },
+    {
+      "phase": "03_roof_summoning",
+      "id": "e4cb8582-c5a6-449c-97bf-ffb46b7f5441",
+      "name": "PR_RoofCrossRib_02",
+      "category": "roof"
+    },
+    {
+      "phase": "03_roof_summoning",
+      "id": "7beac9bb-bfe5-43ea-a2cd-54c72590d7c2",
+      "name": "PR_RoofCrossRib_03",
+      "category": "roof"
+    },
+    {
+      "phase": "03_roof_summoning",
+      "id": "aa6e163f-fe16-4699-bd7b-1dbd979f2c1b",
+      "name": "PR_RoofCrossRib_04",
+      "category": "roof"
+    },
+    {
+      "phase": "03_roof_summoning",
+      "id": "fc583f90-236b-40e8-ac41-571eb0a328d4",
+      "name": "PR_RoofEdgeBeam_-1",
+      "category": "roof"
+    },
+    {
+      "phase": "03_roof_summoning",
+      "id": "bad45202-a616-4988-8a02-2a5596be0b4d",
+      "name": "PR_RoofEdgeBeam_1",
+      "category": "roof"
+    },
+    {
+      "phase": "03_roof_summoning",
+      "id": "ca1d0c03-e6ab-4468-bcd5-d6d0e6e15f15",
+      "name": "PR_AngledPierBase_0",
+      "category": "roof"
+    },
+    {
+      "phase": "03_roof_summoning",
+      "id": "6fafb11f-750a-4b27-907c-e59215f923eb",
+      "name": "PR_AngledPier_0",
+      "category": "roof"
+    },
+    {
+      "phase": "03_roof_summoning",
+      "id": "97e7aabc-e4d6-4782-a59d-2561ee9553d6",
+      "name": "PR_AngledPierBase_1",
+      "category": "roof"
+    },
+    {
+      "phase": "03_roof_summoning",
+      "id": "09db9bd8-9012-4461-9ac6-e3e2a1f9425d",
+      "name": "PR_AngledPier_1",
+      "category": "roof"
+    },
+    {
+      "phase": "03_roof_summoning",
+      "id": "18d093ca-770e-4be5-924b-82f935c2b794",
+      "name": "PR_FallenFragment_0",
+      "category": "roof"
+    },
+    {
+      "phase": "03_roof_summoning",
+      "id": "152f7934-e335-4ddb-bf7b-0afa420de6b7",
+      "name": "PR_FallenFragment_1",
+      "category": "roof"
+    },
+    {
+      "phase": "03_roof_summoning",
+      "id": "7851de40-7138-40da-b3d1-0086ef3c4650",
+      "name": "PR_FallenFragment_2",
+      "category": "roof"
+    },
+    {
+      "phase": "04_npc_furniture",
+      "name": "PR_Temple_seat_01_Base",
+      "id": "a44989db-1751-4e81-a457-716015e6072e",
+      "category": "furniture"
+    },
+    {
+      "phase": "04_npc_furniture",
+      "name": "PR_Temple_seat_01_Surface",
+      "id": "a3fc9b66-9412-4f5a-af1a-ffc044a8acdd",
+      "category": "furniture"
+    },
+    {
+      "phase": "04_npc_furniture",
+      "name": "PR_Temple_table_01_Base",
+      "id": "ba8dc154-a167-4d1c-952f-7292d7b9e615",
+      "category": "furniture"
+    },
+    {
+      "phase": "04_npc_furniture",
+      "name": "PR_Temple_table_01_Surface",
+      "id": "aea12c29-3ff0-4615-85e2-dd425a4bc726",
+      "category": "furniture"
+    },
+    {
+      "phase": "04_npc_furniture",
+      "name": "PR_Temple_rest_01_Base",
+      "id": "e8b0a1d1-89a1-4851-8e1e-0f41c6434f89",
+      "category": "furniture"
+    },
+    {
+      "phase": "04_npc_furniture",
+      "name": "PR_Temple_rest_01_Surface",
+      "id": "7151052e-5bc2-4a21-a25a-e7aef5d19f06",
+      "category": "furniture"
+    }
+  ],
+  "checks": {
+    "approach": {
+      "risers": 131,
+      "end_z": 55.05,
+      "curve_nodes": [
+        [
+          568.0,
+          -268.0
+        ],
+        [
+          534.2809448242188,
+          -263.5017395019531
+        ],
+        [
+          462.28094482421875,
+          -191.50173950195312
+        ],
+        [
+          456.28094482421875,
+          -179.50173950195312
+        ],
+        [
+          455.1417202906231,
+          -156.85430072655777
+        ]
+      ],
+      "length_m": 171.43031751660064,
+      "landing_interval_risers": 18,
+      "step_stations": [
+        64.723691307288,
+        66.22308183950315,
+        67.72247237171833,
+        68.97196448189763,
+        70.4713550141128,
+        71.7208471242921,
+        72.72044081243554,
+        73.96993292261484,
+        74.96952661075831,
+        75.96912029890174,
+        76.70388360428055,
+        77.07388360428055,
+        77.44388360428056,
+        77.81388360428056,
+        78.18388360428057,
+        78.55388360428057,
+        78.92388360428058,
+        79.29388360428058,
+        81.09388360428058,
+        81.46388360428058,
+        81.83388360428059,
+        82.20388360428059,
+        82.5738836042806,
+        82.9438836042806,
+        83.3138836042806,
+        83.68388360428061,
+        84.05388360428061,
+        84.42388360428062,
+        84.79388360428062,
+        85.16388360428063,
+        85.53388360428063,
+        85.90388360428064,
+        86.27388360428064,
+        86.64388360428065,
+        87.01388360428065,
+        87.38388360428065,
+        89.18388360428065,
+        89.55388360428066,
+        89.92388360428066,
+        90.29388360428067,
+        90.66388360428067,
+        91.03388360428067,
+        91.40388360428068,
+        91.77388360428068,
+        92.14388360428069,
+        92.5138836042807,
+        92.8838836042807,
+        93.2538836042807,
+        93.6238836042807,
+        93.99388360428071,
+        94.36388360428072,
+        94.73388360428072,
+        95.10388360428072,
+        95.47388360428073,
+        97.27388360428073,
+        97.64388360428073,
+        98.01388360428074,
+        98.38388360428074,
+        98.75388360428074,
+        99.12388360428075,
+        99.49388360428075,
+        99.86388360428076,
+        100.23388360428076,
+        100.60388360428077,
+        100.97388360428077,
+        101.34388360428078,
+        101.71388360428078,
+        102.08388360428079,
+        102.45388360428079,
+        102.8238836042808,
+        103.1938836042808,
+        103.5638836042808,
+        105.3638836042808,
+        105.7338836042808,
+        106.10388360428081,
+        106.47388360428081,
+        106.84388360428082,
+        107.21388360428082,
+        107.58388360428083,
+        107.95388360428083,
+        108.32388360428084,
+        108.69388360428084,
+        109.06388360428085,
+        109.43388360428085,
+        109.80388360428086,
+        110.17388360428086,
+        110.54388360428086,
+        110.91388360428087,
+        111.28388360428087,
+        111.65388360428088,
+        113.45388360428088,
+        113.95368044835261,
+        114.33337571446019,
+        114.7033757144602,
+        115.2031725585319,
+        115.70296940260364,
+        116.08266466871122,
+        116.45266466871122,
+        116.95246151278293,
+        117.44032837553598,
+        117.81032837553599,
+        118.18032837553599,
+        118.550328375536,
+        118.920328375536,
+        119.290328375536,
+        119.66032837553601,
+        120.03032837553602,
+        120.40032837553602,
+        122.20032837553602,
+        122.9500236416436,
+        123.69971890775119,
+        124.44941417385877,
+        125.69890628403809,
+        126.69849997218151,
+        128.44778892643254,
+        130.19707788068357,
+        131.69646841289875,
+        133.1958589451139,
+        134.4453510552932,
+        135.69484316547252,
+        136.94433527565184,
+        137.94392896379526,
+        139.19342107397458,
+        140.4429131841539,
+        141.94230371636903,
+        143.69159267062005,
+        146.44047531301456,
+        154.68712324019796,
+        167.69031751660063,
+        168.06031751660063,
+        168.43031751660064
+      ],
+      "width_m": 3.2,
+      "min_ground_clearance_samples_m": 0.04472046581178546,
+      "start_z": 35.4,
+      "riser_m": 0.15,
+      "minimum_tread_m": 0.37000000000000455,
+      "minimum_periodic_landing_m": 1.8
+    },
+    "entry_stairs": {
+      "risers": 36,
+      "tread_m": 0.35,
+      "width_m": 7.2,
+      "riser_m": 0.15,
+      "middle_landing_m": 2.4,
+      "total_rise_m": 5.4
+    },
+    "foundation_bands": [
+      {
+        "bottom": 52.61047440260899,
+        "v": [
+          0.0,
+          4.0
+        ],
+        "top": 60.2
+      },
+      {
+        "bottom": 54.072714860557745,
+        "v": [
+          4.0,
+          9.0
+        ],
+        "top": 60.2
+      },
+      {
+        "bottom": 54.70902047105381,
+        "v": [
+          9.0,
+          10.4
+        ],
+        "top": 60.2
+      },
+      {
+        "bottom": 54.94113547154621,
+        "v": [
+          10.4,
+          17.0
+        ],
+        "top": 60.8
+      },
+      {
+        "bottom": 56.06847778472531,
+        "v": [
+          17.0,
+          24.0
+        ],
+        "top": 60.8
+      },
+      {
+        "bottom": 56.82001682619845,
+        "v": [
+          24.0,
+          31.0
+        ],
+        "top": 60.8
+      },
+      {
+        "bottom": 56.920847951165605,
+        "v": [
+          31.0,
+          38.0
+        ],
+        "top": 60.8
+      },
+      {
+        "bottom": 57.0024823873832,
+        "v": [
+          38.0,
+          45.0
+        ],
+        "top": 60.8
+      },
+      {
+        "bottom": 56.96976012306033,
+        "v": [
+          45.0,
+          47.5
+        ],
+        "top": 60.8
+      },
+      {
+        "bottom": 56.74206114892636,
+        "v": [
+          47.5,
+          48.9
+        ],
+        "top": 60.8
+      },
+      {
+        "bottom": 55.62185248679729,
+        "v": [
+          48.9,
+          54.0
+        ],
+        "top": 61.4
+      },
+      {
+        "bottom": 53.645666132625685,
+        "v": [
+          54.0,
+          60.0
+        ],
+        "top": 61.4
+      }
+    ],
+    "internal_stairs": {
+      "tread_m": 0.35,
+      "riser_m": 0.15,
+      "risers_each": 4,
+      "flights": 2
+    },
+    "walls": {
+      "front_gate_clear_width_m": 7.2,
+      "statues": 0,
+      "external_buttresses": 4,
+      "nominal_heights_m": [
+        6,
+        12,
+        18
+      ],
+      "colonnade_columns": 8
+    },
+    "roof": {
+      "skylight_slots": 2,
+      "thickness_m": 0.55,
+      "ribs": 5,
+      "dais_under_remaining_roof": true,
+      "main_support_piers": 2
+    },
+    "npc_idle": [
+      434.7152330911474,
+      -105.78808272786853,
+      61.05
+    ]
+  },
+  "phases": [
+    "01_foundation_stairs",
+    "02_walls_colonnade",
+    "03_roof_summoning",
+    "04_npc_furniture"
+  ]
+}

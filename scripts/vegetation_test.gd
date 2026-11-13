@@ -2,6 +2,7 @@ extends Node3D
 
 @export var biome_demo := false
 @export var grove_demo := false
+@export var coastal_palette_demo := false
 @export_group("Biome color test")
 @export var grass_dry_tint := Color.WHITE
 @export var grass_green_tint := Color(0.77, 0.88, 0.78)
@@ -109,7 +110,9 @@ func _ready() -> void:
 		add_child(trunk_comparison);trunk_comparison.initialize(self)
 		grass_color_study=load("res://scripts/grass_color_study.gd").new()
 		add_child(grass_color_study);grass_color_study.initialize(self)
-	if grove_demo and "--capture-character" in arguments:
+	if grove_demo and "--capture-coastal-palette" in arguments:
+		grass_color_study.capture_review()
+	elif grove_demo and "--capture-character" in arguments:
 		var camera := get_node("OrbitCamera") as Camera3D
 		camera.set_process(false)
 		var character_target := Vector3(4.0, 1.0, 2.4)

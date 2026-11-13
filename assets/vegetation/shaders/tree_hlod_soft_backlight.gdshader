@@ -78,6 +78,7 @@ varying float tree_lod_visibility;
 varying float directional_impostor_frame;
 varying float species_light_warp;
 varying vec3 palette_tint;
+varying float coastal_tree_weight;
 varying float painted_light_detail;
 varying vec3 canopy_center_view;
 varying vec2 canopy_projected_radii;
@@ -94,6 +95,7 @@ vec3 decode_octahedral(vec2 encoded) {
 void vertex() {
 	vec3 authored_vertex = VERTEX;
 	vec3 world_origin = (MODEL_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
+	coastal_tree_weight=coastal_tree_enabled ? coastal_weight(world_origin) : 0.0;
 	directional_impostor_frame = 0.0;
 	if (use_directional_impostor) {
 		vec3 to_camera = normalize(CAMERA_POSITION_WORLD - world_origin);
@@ -294,8 +296,8 @@ void fragment() {
 			mix(0.94, 1.04, clamp(value, 0.0, 1.0)),
 			species_texture_detail
 		);
-		ALBEDO = mix(species_shadow_color.rgb, species_mid_color.rgb, 0.42) * detail
-			* (species_biome_tint ? palette_tint : vec3(1.0));
+		ALBEDO = mix(mix(species_shadow_color.rgb,coastal_tree_shadow.rgb,coastal_tree_weight), mix(species_mid_color.rgb,coastal_tree_mid.rgb,coastal_tree_weight), 0.42) * detail
+			* mix((species_biome_tint ? palette_tint : vec3(1.0)),vec3(1.0),coastal_tree_weight);
 	} else {
 		vec3 base = mix(tex.rgb, canopy_base_color.rgb * color_tint.rgb, canopy_color_uniformity);
 		ALBEDO = base * palette_tint * variant_tint.rgb;
@@ -323,15 +325,15 @@ void light() {
 		float shadow_weight = 1.0 - smoothstep(0.10, 0.58, light_t);
 		float sun_weight = smoothstep(0.62, 0.92, light_t);
 		float mid_weight = max(0.0, 1.0 - shadow_weight - sun_weight);
-		vec3 palette = species_shadow_color.rgb * shadow_weight
-			+ species_mid_color.rgb * mid_weight
-			+ species_light_color.rgb * sun_weight;
+		vec3 palette = mix(species_shadow_color.rgb,coastal_tree_shadow.rgb,coastal_tree_weight) * shadow_weight
+			+ mix(species_mid_color.rgb,coastal_tree_mid.rgb,coastal_tree_weight) * mid_weight
+			+ mix(species_light_color.rgb,coastal_tree_light.rgb,coastal_tree_weight) * sun_weight;
 		float artistic_diffuse = smoothstep(
 			-0.32,
 			0.68,
 			ndotl + species_light_warp
 		);
-		DIFFUSE_LIGHT += palette * (species_biome_tint ? palette_tint : vec3(1.0)) * painted_light_detail * LIGHT_COLOR * foliage_attenuation
+		DIFFUSE_LIGHT += palette * mix((species_biome_tint ? palette_tint : vec3(1.0)),vec3(1.0),coastal_tree_weight) * painted_light_detail * LIGHT_COLOR * foliage_attenuation
 			* artistic_diffuse * species_art_direct_strength * 0.42;
 	} else {
 		DIFFUSE_LIGHT += ALBEDO * LIGHT_COLOR * foliage_attenuation * wrapped;

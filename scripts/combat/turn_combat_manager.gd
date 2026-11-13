@@ -7,6 +7,9 @@ signal phase_changed(new_phase: int)
 signal log_message_emitted(message: String)
 signal mid_battle_dialogue_requested(reason: String)
 signal combat_ended(winner: String, loser: String, reason: String)
+signal koujou_triggered(speaker: String, text: String, emotion: String)
+
+const SparkleDialogueClass := preload("res://scripts/narrative/sparkle_tutorial_dialogue.gd")
 
 enum Phase {
 	INACTIVE,
@@ -89,11 +92,15 @@ func execute_player_action(action: Resource) -> void:
 			"nipples": zone_desc = "敏感双乳"
 			"anal": zone_desc = "紧致菊部"
 			"clitoris": zone_desc = "私密花核"
+		var extra_badge := "（造成 +%.1f%% 快感 · %s）" % [gained, zone_desc]
 		log_message_emitted.emit("主人施展【%s】，刺激了花火的%s，造成了 +%.1f%% 快感！" % [action.action_name, zone_desc, gained])
+		var koujou: Dictionary = SparkleDialogueClass.get_zone_reaction(action.target_zone, npc_pleasure.current_pleasure)
+		koujou_triggered.emit(koujou.get("speaker", "花火"), koujou.get("text", ""), extra_badge)
 	else:
 		log_message_emitted.emit("主人采取了【%s】姿态，本回合快感减免 50%%！" % action.action_name)
+		koujou_triggered.emit("状态", "采取了防守姿态，本回合受到的快感减免 50%！", "")
 		
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(1.8).timeout
 	
 	if _check_battle_state():
 		return
@@ -143,10 +150,13 @@ func _advance_to_npc_turn() -> void:
 	# NPC AI Decision
 	if is_tutorial_round and round_count == 1:
 		# Teaching Kill: Overwhelming unblockable blow
-		log_message_emitted.emit("花火娇笑着伏下身，使出了新手导师绝技【神级深喉绝顶侍奉】！")
+		var attack_koujou: Dictionary = SparkleDialogueClass.get_npc_attack_line("teaching_kill")
 		var raw_dmg := 150.0
 		player_pleasure.add_pleasure(raw_dmg, "mouth")
+		koujou_triggered.emit(attack_koujou.get("speaker", "花火"), attack_koujou.get("text", ""), "（受到极强烈的绝顶侍奉，快感 +100%！）")
+		log_message_emitted.emit("花火娇笑着伏下身，使出了新手导师绝技【神级深喉绝顶侍奉】！")
 		log_message_emitted.emit("极致温热的包裹无视防御，让主人受到极度强烈的快感冲击（+100.0%）！")
+		await get_tree().create_timer(2.2).timeout
 	else:
 		# Regular round: Smooth balanced damage (15% to 18%)
 		var choices := ["tongue", "deep_throat", "eye_contact"]
@@ -167,7 +177,10 @@ func _advance_to_npc_turn() -> void:
 		var total_defense: float = clampf(round_action_defense + temporary_defense_modifier, 0.0, 0.95)
 		var actual_dmg: float = raw_dmg * (1.0 - total_defense)
 		var gained: float = player_pleasure.add_pleasure(actual_dmg)
+		var attack_koujou: Dictionary = SparkleDialogueClass.get_npc_attack_line(chosen)
+		koujou_triggered.emit(attack_koujou.get("speaker", "花火"), attack_koujou.get("text", ""), "（主人受到 +%.1f%% 快感）" % gained)
 		log_message_emitted.emit("花火施展了【%s】，对主人造成了 +%.1f%% 快感！" % [skill_name, gained])
+		await get_tree().create_timer(1.8).timeout
 		
 	# Reset round defense & consume temporary defense
 	round_action_defense = 0.0

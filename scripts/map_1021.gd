@@ -32,11 +32,13 @@ const ROAD_JUNCTION := preload("res://scripts/world/road_junction.gd")
 const CHURCH_RUINS := preload("res://scripts/world/church_ruins.gd")
 const BEACH_SLOPE := preload("res://scripts/world/beach_slope.gd")
 const SANDBAR_PAVILION := preload("res://scripts/world/sandbar_pavilion.gd")
+const LAGOON_RUINS := preload("res://scripts/world/lagoon_ruins.gd")
 const CAPE_TOWN := preload("res://scripts/world/cape_town.gd")
 const CONSTRUCTION := preload("res://scripts/construction/construction_world.gd")
 var construction
 var cape_town
 var sandbar_pavilion
+var lagoon_ruins := LAGOON_RUINS.new()
 var church_ruins
 var sunken_archive
 var terrain_repairs
@@ -50,6 +52,8 @@ var upper_ring
 const SURFACE_DETAIL_TRIAL := preload("res://scripts/world/architecture_detail_trial.gd")
 const ACTOR_SOLID_LAYER := 32
 const NPC_SOLID_LAYER := 64
+const GRAPHICS_SETTINGS_PATH := "user://graphics.cfg"
+enum GraphicsQuality { HIGH, MEDIUM, LOWEST }
 var water_manager
 var initial_ruin
 var surface_detail_trial
@@ -77,6 +81,9 @@ var spawn_index := 0
 var resolved_spawns: Array[Dictionary] = []
 var status: Label
 var spawn_menu: OptionButton
+var graphics_menu: OptionButton
+var graphics_environment: Environment
+var graphics_quality: int = GraphicsQuality.HIGH
 var dragging := false
 var tree_placement_report: Dictionary = {}
 var character_mode := true
@@ -102,6 +109,7 @@ func _ready() -> void:
 	camper.calibrate_wheels()
 	camper.respawn_resolver=_resolve_camper_respawn
 	_load_mask();_environment();_build_model();add_child(ROAD_JUNCTION.new());_build_terrain_repairs();_build_oval_atrium();_build_initial_ruin();_build_island_saddle();_build_landmark_ring();_build_terrace_ruins();_build_water_court();_build_earth_pavilion();_build_sunken_archive();_build_church_ruins();_build_upper_ring();_build_surface_detail_trial();_build_sandbar_pavilion();_build_cape_town()
+	add_child(lagoon_ruins)
 	construction=CONSTRUCTION.new();construction.world=self;add_child(construction)
 	_hud()
 	camera=Camera3D.new();camera.near=0.15;camera.far=10000;camera.fov=58;add_child(camera)
@@ -175,6 +183,7 @@ func _ready() -> void:
 	grass_wind=GRASS_WIND.new();add_child(grass_wind)
 	grass_wind.initialize(vegetation);grass_wind.set_mode(GRASS_WIND.Mode.AUTO)
 	sunken_archive.install_courtyard_grass(vegetation)
+	_apply_grass_quality()
 	_sync_meadow_color()
 	construction.bind_grass(vegetation.grass_material)
 	foliage_style=FOLIAGE_STYLE.new()
@@ -260,6 +269,7 @@ func _initialize_water() -> void:
 	terrain_repairs.register_reflections(water_manager)
 	sunken_archive.register_reflections(water_manager)
 	sandbar_pavilion.register_reflections(water_manager)
+	lagoon_ruins.register_reflections(water_manager)
 	cape_town.register_reflections(water_manager)
 
 func _build_cape_town() -> void:
@@ -451,11 +461,44 @@ func _environment() -> void:
 	env.sky_rotation.y=deg_to_rad(HDRI_BRIGHT_AZIMUTH_DEGREES-SUN_AZIMUTH_DEGREES)
 	env.ambient_light_source=Environment.AMBIENT_SOURCE_SKY;env.ambient_light_energy=0.38
 	env.reflected_light_source=Environment.REFLECTION_SOURCE_SKY;env.tonemap_mode=Environment.TONE_MAPPER_ACES
-	env.tonemap_exposure=0.82;env.ssao_enabled=true;env.ssao_radius=1.1;env.ssao_intensity=0.85
+	env.tonemap_exposure=0.82;env.ssao_radius=1.1;env.ssao_intensity=0.85
 	var world:=WorldEnvironment.new();world.environment=env;add_child(world)
 	var sun:=DirectionalLight3D.new();sun.rotation_degrees=Vector3(-48,180.0-SUN_AZIMUTH_DEGREES,0);sun.light_energy=0.72
 	sun.light_color=Color(1.0,0.95,0.86);sun.shadow_enabled=true;sun.directional_shadow_max_distance=180;add_child(sun)
-	get_viewport().msaa_3d=Viewport.MSAA_4X
+	graphics_environment = env
+	var config := ConfigFile.new()
+	if config.load(GRAPHICS_SETTINGS_PATH) == OK:
+		var previous: Variant = config.get_value("graphics", "performance", false)
+		var fallback := GraphicsQuality.MEDIUM if previous is bool and previous else GraphicsQuality.HIGH
+		var saved: Variant = config.get_value("graphics", "preset", fallback)
+		if saved is int and saved >= GraphicsQuality.HIGH and saved <= GraphicsQuality.LOWEST:
+			graphics_quality = saved
+	_apply_graphics_quality()
+
+func _apply_graphics_quality() -> void:
+	var viewport := get_viewport()
+	var high := graphics_quality == GraphicsQuality.HIGH
+	viewport.msaa_3d = Viewport.MSAA_4X if high else Viewport.MSAA_2X
+	viewport.scaling_3d_scale = 1.0 if high else 0.90
+	graphics_environment.ssao_enabled = high
+	_apply_grass_quality()
+
+func _apply_grass_quality() -> void:
+	if vegetation == null:
+		return
+	var show_grass := graphics_quality != GraphicsQuality.LOWEST
+	vegetation.volume_streamer.set_rendering_enabled(show_grass)
+	if is_instance_valid(sunken_archive.courtyard_grass):
+		sunken_archive.courtyard_grass.visible = show_grass
+
+func _on_graphics_quality_selected(index: int) -> void:
+	graphics_quality = index
+	_apply_graphics_quality()
+	var config := ConfigFile.new()
+	config.set_value("graphics", "preset", graphics_quality)
+	var error := config.save(GRAPHICS_SETTINGS_PATH)
+	if error != OK:
+		push_warning("Could not save graphics quality: " + error_string(error))
 
 func _noise() -> NoiseTexture2D:
 	var result:=NoiseTexture2D.new();result.width=512;result.height=512;result.seamless=true
@@ -481,7 +524,14 @@ func _hud() -> void:
 	edit_button.pressed.connect(func():if planting!=null and test_ready:planting.toggle())
 	var build_button:=Button.new();build_button.text="建筑构件 · F7";box.add_child(build_button);build_button.pressed.connect(construction.toggle)
 	world_audio=WORLD_AUDIO.new();world_audio.name="WorldAudio";add_child(world_audio);world_audio.add_controls(box)
-	surface_detail_trial.add_controls(box)
+	graphics_menu = OptionButton.new()
+	graphics_menu.name = "GraphicsQuality"
+	graphics_menu.add_item("画质 · 高画质")
+	graphics_menu.add_item("画质 · 中画质")
+	graphics_menu.add_item("画质 · 最低画质")
+	graphics_menu.select(graphics_quality)
+	graphics_menu.item_selected.connect(_on_graphics_quality_selected)
+	box.add_child(graphics_menu)
 	for control in box.get_children():
 		if control is BaseButton:control.custom_minimum_size.y=36;control.focus_mode=Control.FOCUS_NONE
 	var performance_monitor:=PERFORMANCE_MONITOR.new()
@@ -494,7 +544,7 @@ func set_review_ui_visible(enabled: bool) -> void:
 	for layer in review_ui_layers:layer.visible=enabled and not encounter_ui_active
 	if not enabled or encounter_ui_active:
 		get_viewport().gui_release_focus()
-		if surface_detail_trial!=null:surface_detail_trial.hide_settings()
+		if is_instance_valid(graphics_menu):graphics_menu.get_popup().hide()
 		if world_audio!=null:world_audio.hide_settings()
 
 func set_encounter_ui_active(active: bool) -> void:

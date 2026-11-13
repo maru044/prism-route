@@ -110,7 +110,8 @@ def main():
                           'report':'res://assets/characters/mmd_selected/manifest.json','profile':default_profile,'shared':True,
                           'translation_policy':'shared_world','presentation_offset':[0,0,0]})
             print('SHARED_SELECTED '+json.dumps({'clip':record['id'],'bytes':record['bytes'],'reused':record['reused']}),flush=True)
-        pack_record = {'id':item['id'],'label':item['label'],'selected':True,'shared':True,'duration':item['duration'],
+        pack_record = {'id':item['id'],'source_library':'mmd',
+                      'label':item['label'],'selected':True,'shared':True,'duration':item['duration'],
                       'frame_start':item['frame_start'],'frame_end':item['frame_end'],'loop_preview':False,'loop_status':'source segment; seam not modified',
                       'source_tracks':[{'file':r['source_file'],'sha256':r['source_sha256']} for r in item['roles']],
                       'roles':roles,'references':[r['reference'] for r in clip_reports],

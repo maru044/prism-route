@@ -69,6 +69,8 @@ void fragment() {
             meadow=mix(meadow,mix(far_ground_dry.rgb,far_ground_green.rgb,transition),far_mix);
         }
     }
+    meadow=coastal_ground_colour(meadow,world_position,
+        use_far_meadow_color ? smoothstep(meadow_color_fade.x,meadow_color_fade.y,distance(CAMERA_POSITION_WORLD,world_position)) : 0.0);
     meadow*=mix(1.0,0.985+fine*0.015,meadow_detail_strength);
     ALBEDO=mix(vec3(0.92,0.90,0.86),meadow,grass);
     ROUGHNESS=mix(0.28,0.95,grass);

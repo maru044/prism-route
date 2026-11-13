@@ -182,7 +182,7 @@
       "material_key": "soil",
       "grain": "y",
       "render": true,
-      "category": "landscape",
+      "category": "terrain",
       "kind": "Structure",
       "name": "square/soil",
       "collision": true,
@@ -222,7 +222,7 @@
       "kind": "Structure",
       "name": "town_01/plinth",
       "collision": true,
-      "id": "f9ce89db-dcc0-4183-b3be-e48a06f49658",
+      "id": "7388a027-2fb6-4a39-a2f4-78c96aea60ac",
       "vertex_count": 36,
       "triangle_count": 20
     },
@@ -672,7 +672,7 @@
       "kind": "Structure",
       "name": "town_07/plinth",
       "collision": true,
-      "id": "2a4d7a05-ac8a-484d-89e1-c623d495e6ea",
+      "id": "7b93ba48-b6cc-445f-9c33-ccb71dcd69e8",
       "vertex_count": 36,
       "triangle_count": 20
     },
@@ -924,7 +924,7 @@
       "kind": "Structure",
       "name": "town_02/plinth",
       "collision": true,
-      "id": "eae11fe6-01fc-48ea-aeb8-02daf5b2582b",
+      "id": "60e23939-ab60-4c03-a8c1-a7b1b40e5de4",
       "vertex_count": 36,
       "triangle_count": 20
     },
@@ -1536,7 +1536,7 @@
       "kind": "Structure",
       "name": "town_08/plinth",
       "collision": true,
-      "id": "ae2af77f-d1e5-4b97-87f6-5b9f6ab57c64",
+      "id": "9d2c2869-9c27-4923-b405-bc660b12d93e",
       "vertex_count": 36,
       "triangle_count": 20
     },
@@ -1932,7 +1932,7 @@
       "kind": "Structure",
       "name": "town_03/plinth",
       "collision": true,
-      "id": "828ce616-0000-4467-a30e-26c9cfed2cbf",
+      "id": "0f72c67a-bfd7-42cc-9608-4fcb23ca1f10",
       "vertex_count": 36,
       "triangle_count": 20
     },
@@ -2382,7 +2382,7 @@
       "kind": "Structure",
       "name": "town_09/plinth",
       "collision": true,
-      "id": "75de7262-cba9-4cf1-b538-86347f6d5fb5",
+      "id": "68f3c473-97e0-4fb6-b704-4d73a5f56bcf",
       "vertex_count": 36,
       "triangle_count": 20
     },
@@ -2796,7 +2796,7 @@
       "kind": "Structure",
       "name": "town_04/plinth",
       "collision": true,
-      "id": "844cdaf7-27c1-456d-b3c7-10ecb72d1d1b",
+      "id": "c5a4f37d-e408-42c2-bbf7-8bd65c8a5055",
       "vertex_count": 36,
       "triangle_count": 20
     },
@@ -3246,7 +3246,7 @@
       "kind": "Structure",
       "name": "town_10/plinth",
       "collision": true,
-      "id": "d5e99b83-349f-4c14-a20e-8f297070b478",
+      "id": "94095648-e553-4eb1-a73d-a012f5bc7020",
       "vertex_count": 36,
       "triangle_count": 20
     },
@@ -3660,7 +3660,7 @@
       "kind": "Structure",
       "name": "town_05/plinth",
       "collision": true,
-      "id": "df599924-936e-4dde-9cbb-ac3cc3898019",
+      "id": "8c0b21f8-611a-4a65-9505-3101d3aa9266",
       "vertex_count": 36,
       "triangle_count": 20
     },
@@ -4272,7 +4272,7 @@
       "kind": "Structure",
       "name": "town_11/plinth",
       "collision": true,
-      "id": "31704c08-1453-444b-b632-22b256276ce2",
+      "id": "fd59ffb5-83cc-41e0-843e-e3d22e543721",
       "vertex_count": 36,
       "triangle_count": 20
     },
@@ -4668,7 +4668,7 @@
       "kind": "Structure",
       "name": "town_06/plinth",
       "collision": true,
-      "id": "84008e97-4828-472b-9936-ae7cce54a286",
+      "id": "511a6d16-c33e-49ac-bb13-a147326de57b",
       "vertex_count": 36,
       "triangle_count": 20
     },
@@ -5118,7 +5118,7 @@
       "kind": "Structure",
       "name": "town_12/plinth",
       "collision": true,
-      "id": "376acef7-31de-4e17-8db2-56822e6d1087",
+      "id": "6c885dad-f67b-47de-a05d-13a3a12d18d1",
       "vertex_count": 36,
       "triangle_count": 20
     },
@@ -5370,7 +5370,7 @@
       "kind": "Structure",
       "name": "town_13/plinth",
       "collision": true,
-      "id": "8fffa0dc-7a99-4934-9cba-a87059932c8e",
+      "id": "fa4d716f-d62a-422a-9680-e84bc3bcd5cd",
       "vertex_count": 36,
       "triangle_count": 20
     },
@@ -14401,9 +14401,9 @@
     "grass_coverage": 0.5,
     "report": {
       "land_m2": 340440,
-      "grass_m2": 283014,
+      "grass_m2": 283393,
       "beach_m2": 35945,
-      "hardscape_m2": 21481
+      "hardscape_m2": 21102
     }
   }
 }

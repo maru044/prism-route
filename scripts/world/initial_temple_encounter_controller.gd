@@ -321,6 +321,7 @@ func _build_subsystems() -> void:
 	dialogue_manager.dialogue_ended.connect(_on_dialogue_ended)
 	
 	combat_manager.log_message_emitted.connect(combat_hud.append_log)
+	combat_manager.koujou_triggered.connect(combat_hud.display_koujou)
 	combat_manager.phase_changed.connect(_on_combat_phase_changed)
 	combat_manager.combat_ended.connect(_on_combat_ended)
 	combat_manager.mid_battle_dialogue_requested.connect(_on_mid_battle_dialogue_requested)
@@ -330,6 +331,7 @@ func _build_subsystems() -> void:
 	
 	player_pleasure.pleasure_changed.connect(combat_hud.update_player_pleasure)
 	npc_pleasure.pleasure_changed.connect(combat_hud.update_npc_pleasure)
+	combat_hud.set_opponent_pleasure(npc_pleasure)
 
 func get_npc_interaction_position() -> Vector3:
 	if npc_avatar and is_instance_valid(npc_avatar):
@@ -804,17 +806,22 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 		
 	if current_state == EncounterState.FURNITURE_SERVICE_ACTIVE:
-		var is_dismiss := false
-		if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept") or event.is_action_pressed("ui_cancel"):
-			is_dismiss = true
-		elif InputMap.has_action("cancel") and event.is_action_pressed("cancel"):
-			is_dismiss = true
-		elif event is InputEventKey and event.pressed:
-			if event.keycode in [KEY_E, KEY_SPACE, KEY_ESCAPE]:
+		if dialogue_manager and dialogue_manager.session_active:
+			if (event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE) or event.is_action_pressed("ui_cancel"):
+				_finish_furniture_service()
+				return
+		else:
+			var is_dismiss := false
+			if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept") or event.is_action_pressed("ui_cancel"):
 				is_dismiss = true
-		if is_dismiss:
-			_finish_furniture_service()
-			return
+			elif InputMap.has_action("cancel") and event.is_action_pressed("cancel"):
+				is_dismiss = true
+			elif event is InputEventKey and event.pressed:
+				if event.keycode in [KEY_E, KEY_SPACE, KEY_ESCAPE]:
+					is_dismiss = true
+			if is_dismiss:
+				_finish_furniture_service()
+				return
 		
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT:
@@ -882,6 +889,8 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 		_begin_furniture_service_staging("honban")
 	elif action == DialogueManagerClass.ACTION_SPARE:
 		_begin_furniture_service_staging("virgin")
+	elif action == DialogueManagerClass.ACTION_FINISH_SERVICE or action == "finish_service":
+		_finish_furniture_service()
 	elif action == DialogueManagerClass.ACTION_CLOSE:
 		dialogue_panel.visible = false
 		_restore_world_controls()
@@ -1323,13 +1332,26 @@ func _begin_furniture_service_staging(service_type: String = "virgin") -> void:
 	tutorial_completed = true
 	
 	if service_hud:
-		service_hud.text = title_text + "\n右键环绕视角 | 滚轮缩放视距 | 中键复位视角 | WASD微调对焦 | 按【E】或【空格】结束侍奉"
+		service_hud.text = title_text + "\n右键环绕视角 | 滚轮缩放视距 | 中键复位视角 | WASD微调对焦 | 按【E】直接完成侍奉"
 		service_hud.visible = true
 	print("【大世界演出】成功步入家具开启乞命侍奉: " + title_text)
+	
+	var start_node: String = "service_virgin_start" if service_type == "virgin" else "service_honban_start"
+	if dialogue_panel and is_instance_valid(dialogue_panel):
+		dialogue_panel.visible = true
+	if dialogue_manager and is_instance_valid(dialogue_manager):
+		dialogue_manager.start_dialogue(
+			SparkleTutorialDialogueClass.get_dialogue_graph(),
+			start_node,
+			DialogueManagerClass.DialogueSource.POST_BATTLE_RESULT,
+			DialogueManagerClass.ResumePolicy.END_COMBAT
+		)
 
 func _finish_furniture_service() -> void:
 	if service_hud and is_instance_valid(service_hud):
 		service_hud.visible = false
+	if dialogue_panel and is_instance_valid(dialogue_panel):
+		dialogue_panel.visible = false
 	_set_combat_visuals(false)
 	
 	var char_node := _get_world_character()

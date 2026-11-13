@@ -9,12 +9,15 @@ var cut: Image
 var cut_texture: ImageTexture
 var ground_material: ShaderMaterial
 var installed_cells := 0
+var tree_rules: Dictionary
+var tree_baseline_report: Dictionary={"scoped":0,"restored":0,"excluded":0,"manual_preserved":0,"reasons":{}}
 
 func _init() -> void:
 	manifest=JSON.parse_string(FileAccess.get_file_as_string(TOWN_MANIFEST))
 
 func _ready() -> void:
 	name="CapeTown"
+	tree_rules=JSON.parse_string(FileAccess.get_file_as_string(world.ASSETS+"tree_layout_metadata.json"))
 	var config: Dictionary=manifest.ground_cut
 	cut=Image.create_from_data(config.size[0],config.size[1],false,Image.FORMAT_RGBAH,FileAccess.get_file_as_bytes("res://assets/world/cape_town_1110/"+str(config.path)))
 	cut_texture=ImageTexture.create_from_image(cut)
@@ -51,7 +54,7 @@ func _ready() -> void:
 	for mesh: MeshInstance3D in geometry.find_children("*","MeshInstance3D",true,false):
 		var id:=str(mesh.name).get_slice("_",1)
 		var row: Dictionary=by_id[id]
-		mesh.material_override=materials[row.material_key]
+		mesh.material_override=ground_material if row.category=="terrain" else materials[row.material_key]
 		mesh.visible=bool(row.render);mesh.set_meta("source_id",id);meshes_by_source[id]=mesh
 		if not row.collision:continue
 		var body:=StaticBody3D.new();body.collision_layer=49 if row.category=="terrain" else 33;body.collision_mask=0
@@ -102,19 +105,59 @@ func bind_vegetation(vegetation: Node) -> void:
 	vegetation.grass_material.set_shader_parameter("use_cape_town_grass_cut",true)
 	vegetation.grass_material.set_shader_parameter("cape_town_grass_cut",cut_texture)
 	vegetation.grass_material.set_shader_parameter("cape_town_cut_bounds",Vector4(bounds.origin[0],bounds.origin[1],bounds.extent[0],bounds.extent[1]))
-	# Match the CAD planar u axis; interaction roots separately use right-handed +Z.
+
+func tree_exclusion(p: Vector3) -> String:
+	var data:=ground_data(p)
+	if data.a<.5:return ""
+	if absf(p.y-data.g)>.20:return "obsolete_height"
+	# Same architecture/shore margins as build_map_1021_trees.py, applied to new land.
+	if data.r<3.:return "architecture"
+	if data.b<float(manifest.ground_cut.beach_width_m)+float(manifest.ground_cut.beach_feather_m)*.5+8.:return "beach"
 	var f:=Vector3(manifest.forward[0],0,manifest.forward[2]);var r:=f.cross(Vector3.UP)
 	var origin:=Vector3(manifest.site_cad[0]-1450.,0,1150.-manifest.site_cad[1])
-	var transforms: Array[Transform3D]=[]
-	# Existing project tree models/palettes/LOD. No planting-save mutation.
-	for p: Vector2 in [Vector2(-6,-2),Vector2(6,3),Vector2(-30,18),Vector2(30,18),Vector2(-60,42),Vector2(60,42),Vector2(-60,-42),Vector2(60,-42),Vector2(-96,130),Vector2(-67,130)]:
-		var point:=origin+r*p.x+f*p.y+Vector3.UP*1.38
-		transforms.append(Transform3D(Basis(Vector3.UP,p.x*.1),point))
-	for transform: Transform3D in transforms:
-		# Keep LOD visibility centered on the individual crown. A town-wide
-		# MultiMesh AABB can cull all crowns while their trunks remain visible.
-		var tree:=Node3D.new();tree.name="TownShadeTree";tree.position=transform.origin;add_child(tree)
-		var local_transforms: Array[Transform3D]=[Transform3D(transform.basis,Vector3.ZERO)]
-		for level in 3:vegetation._add_tree_lod_level(tree,1,local_transforms,0,level,0.)
-		var body:=StaticBody3D.new();body.position=transform.origin+Vector3.UP*2.;body.collision_layer=33;body.collision_mask=0;add_child(body)
-		var shape:=CollisionShape3D.new();var cylinder:=CylinderShape3D.new();cylinder.radius=.28;cylinder.height=4.;shape.shape=cylinder;body.add_child(shape)
+	var delta:=p-origin;var u:=delta.dot(r);var v:=delta.dot(f)
+	var approach_distance:=Vector2(maxf(absf(u)-3.5,0.),maxf(float(manifest.site_measurement.road_join_v)-v, maxf(v+13.03,0.))).length()
+	var roundabout_distance:=maxf(13.-Vector2(u,v).length(),maxf(Vector2(u,v).length()-20.,0.))
+	if minf(approach_distance,roundabout_distance)<float(tree_rules.road_projection_clearance_m):return "road"
+	if Vector2(p.x-manifest.spawn[0],p.z-manifest.spawn[2]).length()<10.:return "spawn"
+	# Additional exclusions only; no new sampling, density, species or palette rules.
+	if v>140. and v<240. and absf(u+83.)<13.:return "torii_view"
+	return ""
+
+func blocks_tree(p: Vector3) -> bool:return not tree_exclusion(p).is_empty()
+
+func _tree_ground(p: Vector3) -> Dictionary:
+	var data:=ground_data(p)
+	var expected:=data.g if data.a>.5 else p.y
+	var q:=PhysicsRayQueryParameters3D.create(Vector3(p.x,expected+3.1,p.z),Vector3(p.x,expected-3.1,p.z),16)
+	q.hit_back_faces=true
+	return get_world_3d().direct_space_state.intersect_ray(q)
+
+func conform_tree_baseline(store: RefCounted) -> void:
+	# Keep the original global algorithm's IDs, XZ, yaw, scale, species and palette.
+	# This is terrain conformity and exclusion, never another tree distribution.
+	for id: String in store.baseline.keys():
+		var row: Dictionary=store.baseline[id];var original:=Vector3(row.position[0],row.position[1],row.position[2])
+		if ground_data(original).a<.5:continue
+		tree_baseline_report.scoped+=1
+		if store.edits.has(id) or store.removed.has(id):tree_baseline_report.manual_preserved+=1;continue
+		var hit:=_tree_ground(original);var reason:=""
+		var p:=original
+		if hit.is_empty() or float(hit.normal.y)<.85:reason="empty_or_steep"
+		else:
+			p.y=hit.position.y;reason=tree_exclusion(p)
+			if reason.is_empty():
+				var q:=PhysicsRayQueryParameters3D.create(p+Vector3.UP*8.,p-Vector3.UP*.15,4)
+				q.hit_back_faces=true
+				if not get_world_3d().direct_space_state.intersect_ray(q).is_empty():reason="water"
+			if reason.is_empty():
+				var probe:=float(tree_rules.edge_probe_distance_m)
+				for offset: Vector3 in [Vector3(probe,0,0),Vector3(-probe,0,0),Vector3(0,0,probe),Vector3(0,0,-probe)]:
+					var edge:=_tree_ground(p+offset)
+					if edge.is_empty() or absf(float(edge.position.y)-p.y)>3.:reason="edge";break
+		if not reason.is_empty():
+			store.baseline.erase(id);tree_baseline_report.excluded+=1
+			tree_baseline_report.reasons[reason]=int(tree_baseline_report.reasons.get(reason,0))+1
+		else:
+			row.position=[row.position[0],p.y,row.position[2]];tree_baseline_report.restored+=1
+	print("CAPE_TOWN_ORIGINAL_TREE_LAYOUT ",JSON.stringify(tree_baseline_report))

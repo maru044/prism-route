@@ -28,6 +28,7 @@ const ACTION_KILL: String = "kill"
 const ACTION_SPARE: String = "spare"
 const ACTION_SPARE_VIRGIN: String = "spare_virgin"
 const ACTION_SPARE_HONBAN: String = "spare_honban"
+const ACTION_FINISH_SERVICE: String = "finish_service"
 const ACTION_CLOSE: String = "close"
 
 const REGISTERED_ACTIONS: Dictionary = {
@@ -37,6 +38,7 @@ const REGISTERED_ACTIONS: Dictionary = {
 	ACTION_SPARE: true,
 	ACTION_SPARE_VIRGIN: true,
 	ACTION_SPARE_HONBAN: true,
+	ACTION_FINISH_SERVICE: true,
 	ACTION_CLOSE: true
 }
 

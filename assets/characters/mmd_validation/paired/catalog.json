@@ -5,7 +5,64 @@
   "coordinate_policy": "preserve_authored_shared_world",
   "packs": [
     {
+      "id": "kk_ekiben",
+      "source_library": "koikatsu",
+      "label": "駅弁 · Koikatsu",
+      "display_label": "双人 · 駅弁 · Koikatsu（备用）",
+      "description_zh": "备用动作。优先使用现有的悬空抱操（Loop 33 - Suspended Congress）。",
+      "duration": 1.3333333333333333,
+      "frame_start": 0,
+      "frame_end": 40,
+      "source_tracks": [
+        {
+          "file": "h/anim/male/02_00_00.unity3d/khs_m_n08 · M_WLoop1",
+          "bundle": "h/anim/male/02_00_00.unity3d",
+          "controller": "khs_m_n08",
+          "state": "M_WLoop1",
+          "path_id": "1412143358049686199",
+          "prefab": "p_cm_body_00",
+          "sha256": "f89f4b0f0ee61a4a85184ba638c115f9350058877b87adaa166d1bfaa3706f58"
+        },
+        {
+          "file": "h/anim/female/02_00_00.unity3d/khs_f_n08 · M_WLoop1",
+          "bundle": "h/anim/female/02_00_00.unity3d",
+          "controller": "khs_f_n08",
+          "state": "M_WLoop1",
+          "path_id": "-3800762451180124815",
+          "prefab": "p_cf_body_bone",
+          "sha256": "af2907df07fd2160f912230025da87ee38e4f8a467b61e0ce450344ff0dafc04"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A · 刻晴",
+          "profile": "keqing",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_ekiben_a.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world"
+        },
+        {
+          "id": "B",
+          "label": "角色 B · 甘雨",
+          "profile": "ganyu",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_ekiben_b.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world"
+        }
+      ],
+      "selected": true,
+      "shared": true,
+      "loop_preview": true,
+      "seamless_loop": true
+    },
+    {
       "id": "loop03",
+      "source_library": "mmd",
       "label": "Loop 03",
       "duration": 16.0,
       "frame_start": 0,
@@ -138,6 +195,7 @@
     },
     {
       "id": "shared_mmd_role_a",
+      "source_library": "mmd",
       "label": "MMD 共享轨道 A",
       "duration": 16.0,
       "frame_start": 0,
@@ -223,6 +281,7 @@
     },
     {
       "id": "shared_mmd_role_b",
+      "source_library": "mmd",
       "label": "MMD 共享轨道 B",
       "duration": 16.0,
       "frame_start": 0,
@@ -308,6 +367,7 @@
     },
     {
       "id": "shared_pair",
+      "source_library": "mmd",
       "label": "Loop 03 · 共享人形转换",
       "duration": 16.0,
       "frame_start": 0,
@@ -356,6 +416,7 @@
     },
     {
       "id": "mmd_0a3f6ba5f5de",
+      "source_library": "mmd",
       "label": "Armchair Paizuri - By Ademar440",
       "selected": true,
       "shared": true,
@@ -432,6 +493,7 @@
     },
     {
       "id": "mmd_16a2ecfb7781",
+      "source_library": "mmd",
       "label": "BJ in Bed",
       "selected": true,
       "shared": true,
@@ -508,6 +570,7 @@
     },
     {
       "id": "mmd_67d58e9d607e",
+      "source_library": "mmd",
       "label": "Dominating FJ",
       "selected": true,
       "shared": true,
@@ -584,6 +647,7 @@
     },
     {
       "id": "mmd_6e891982bb51",
+      "source_library": "mmd",
       "label": "Loop 02",
       "selected": true,
       "shared": true,
@@ -638,6 +702,7 @@
     },
     {
       "id": "mmd_71dec5bd8390",
+      "source_library": "mmd",
       "label": "Loop 03",
       "selected": true,
       "shared": true,
@@ -714,6 +779,7 @@
     },
     {
       "id": "mmd_aec34d147925",
+      "source_library": "mmd",
       "label": "Loop 05",
       "selected": true,
       "shared": true,
@@ -790,6 +856,7 @@
     },
     {
       "id": "mmd_9957977a1355",
+      "source_library": "mmd",
       "label": "Loop 08",
       "selected": true,
       "shared": true,
@@ -866,6 +933,7 @@
     },
     {
       "id": "mmd_fcc0340f8227",
+      "source_library": "mmd",
       "label": "Loop 13 - KBJ",
       "selected": true,
       "shared": true,
@@ -942,6 +1010,7 @@
     },
     {
       "id": "mmd_8c5c490fb87c",
+      "source_library": "mmd",
       "label": "Loop 17 - Chikan 01",
       "selected": true,
       "shared": true,
@@ -1018,6 +1087,7 @@
     },
     {
       "id": "mmd_beee0d2eb57b",
+      "source_library": "mmd",
       "label": "Loop 20 - Chikan 03",
       "selected": true,
       "shared": true,
@@ -1094,6 +1164,7 @@
     },
     {
       "id": "mmd_7869c66910b9",
+      "source_library": "mmd",
       "label": "Loop 27 - Twin Angels-V2",
       "selected": true,
       "shared": true,
@@ -1192,6 +1263,7 @@
     },
     {
       "id": "mmd_781d8c87fd79",
+      "source_library": "mmd",
       "label": "Welcome - BJV2 2021 Uptade",
       "selected": true,
       "shared": true,
@@ -1268,6 +1340,7 @@
     },
     {
       "id": "mmd_87e004f6db53",
+      "source_library": "mmd",
       "label": "Bath House Service V2",
       "selected": true,
       "shared": true,
@@ -1344,6 +1417,7 @@
     },
     {
       "id": "mmd_43916ffe3d35",
+      "source_library": "mmd",
       "label": "Just Tonight - By Ademar440",
       "selected": true,
       "shared": true,
@@ -1420,6 +1494,7 @@
     },
     {
       "id": "mmd_2864892bd378",
+      "source_library": "mmd",
       "label": "LHDS V3 - By Ademar440",
       "selected": true,
       "shared": true,
@@ -1496,6 +1571,7 @@
     },
     {
       "id": "mmd_160b1e7a411c",
+      "source_library": "mmd",
       "label": "Lap Sitting",
       "selected": true,
       "shared": true,
@@ -1572,6 +1648,7 @@
     },
     {
       "id": "mmd_1256ad646811",
+      "source_library": "mmd",
       "label": "Loop 07 - Spooning",
       "selected": true,
       "shared": true,
@@ -1648,6 +1725,7 @@
     },
     {
       "id": "mmd_c63e75bc7057",
+      "source_library": "mmd",
       "label": "Loop 33 - Suspended Congress",
       "selected": true,
       "shared": true,
@@ -1724,6 +1802,7 @@
     },
     {
       "id": "mmd_fca4bab1635f",
+      "source_library": "mmd",
       "label": "TSFB V2",
       "selected": true,
       "shared": true,
@@ -1800,6 +1879,7 @@
     },
     {
       "id": "mmd_86e40adc8f14",
+      "source_library": "mmd",
       "label": "Thigh service",
       "selected": true,
       "shared": true,
@@ -1873,9 +1953,1685 @@
       },
       "description_zh": "站姿紧密相拥的大腿夹蹭（素股 / Thigh service）。男女双方站立在地面（0.00m）紧紧相拥，女方将双腿夹住男方大腿内侧轻轻磨蹭，双手环抱男方颈背。动作既是深情的站立拥抱，又带有脸红心跳的素股调情，日常互动极佳。",
       "display_label": "【日常温存】站姿相拥股间素股 (Thigh service)"
+    },
+    {
+      "id": "kk_sakiname",
+      "source_library": "koikatsu",
+      "label": "先舐め＋竿舐め · Koikatsu",
+      "title_zh": "轻柔舔弄前戏",
+      "category": "foreplay",
+      "category_zh": "前戏侍奉",
+      "display_label": "【前戏侍奉】轻柔舔弄前戏 (先舐め＋竿舐め · KK)",
+      "description_zh": "以轻柔舔弄与浅尝为主的温和口部前戏循环，适合战斗初段挑逗阶段与近距表情特写。",
+      "placement": {
+        "type": "ground",
+        "type_zh": "共享世界原点",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "地面 / 地毯（坐跪前戏）"
+      },
+      "roles_desc": {
+        "A": "侍奉女方 - 俯身专注前端与柱身轻柔舔弄",
+        "B": "受役男方 (竿役) - 坐姿自然前倾接受前戏"
+      },
+      "duration": 1.3333333333333333,
+      "frame_start": 0,
+      "frame_end": 40,
+      "source_tracks": [
+        {
+          "file": "h/anim/female/01_00_00.unity3d/khh_f_05 · M_WLoop1",
+          "bundle": "h/anim/female/01_00_00.unity3d",
+          "controller": "khh_f_05",
+          "state": "M_WLoop1",
+          "path_id": "7215141777861050631",
+          "prefab": "p_cf_body_bone",
+          "sha256": "c1b25fb9fa8ce1088783fdd5ddab98e8fc046b99a897cf6dc21473a48530c9d2"
+        },
+        {
+          "file": "h/anim/male/01_00_00.unity3d/khh_m_05 · M_WLoop1",
+          "bundle": "h/anim/male/01_00_00.unity3d",
+          "controller": "khh_m_05",
+          "state": "M_WLoop1",
+          "path_id": "-1521343707268798333",
+          "prefab": "p_cm_body_00",
+          "sha256": "aa7164d14b57f8868118fd11ad4dc1f280d08dfa4aaec92fa488773690513ae0"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A · 刻晴",
+          "profile": "keqing",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_sakiname_a.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "侍奉女方 - 俯身专注前端与柱身轻柔舔弄"
+        },
+        {
+          "id": "B",
+          "label": "角色 B · 甘雨",
+          "profile": "ganyu",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_sakiname_b.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "受役男方 (竿役) - 坐姿自然前倾接受前戏"
+        }
+      ],
+      "selected": true,
+      "shared": true,
+      "loop_preview": true,
+      "seamless_loop": true
+    },
+    {
+      "id": "kk_ryoutekoki",
+      "source_library": "koikatsu",
+      "label": "両手コキ · Koikatsu",
+      "title_zh": "面对面双手手交",
+      "category": "foreplay",
+      "category_zh": "前戏侍奉",
+      "display_label": "【前戏侍奉】面对面双手手交 (両手コキ · KK)",
+      "description_zh": "区别于背后拥抱手交，双方正面相对并可进行双手协同挤压与眼神交流的前戏循环。",
+      "placement": {
+        "type": "ground",
+        "type_zh": "共享世界原点",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "地面 / 坐垫（面对面手口配合）"
+      },
+      "roles_desc": {
+        "A": "侍奉女方 - 跪于身前用双手包覆上下抚弄",
+        "B": "受役男方 (竿役) - 正面坐姿承受双手包覆刺激"
+      },
+      "duration": 1.3333333333333333,
+      "frame_start": 0,
+      "frame_end": 40,
+      "source_tracks": [
+        {
+          "file": "h/anim/female/01_00_00.unity3d/khh_f_02 · M_WLoop1",
+          "bundle": "h/anim/female/01_00_00.unity3d",
+          "controller": "khh_f_02",
+          "state": "M_WLoop1",
+          "path_id": "-2180728000368455676",
+          "prefab": "p_cf_body_bone",
+          "sha256": "c1b25fb9fa8ce1088783fdd5ddab98e8fc046b99a897cf6dc21473a48530c9d2"
+        },
+        {
+          "file": "h/anim/male/01_00_00.unity3d/khh_m_02 · M_WLoop1",
+          "bundle": "h/anim/male/01_00_00.unity3d",
+          "controller": "khh_m_02",
+          "state": "M_WLoop1",
+          "path_id": "-8763616499447476296",
+          "prefab": "p_cm_body_00",
+          "sha256": "aa7164d14b57f8868118fd11ad4dc1f280d08dfa4aaec92fa488773690513ae0"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A · 刻晴",
+          "profile": "keqing",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_ryoutekoki_a.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "侍奉女方 - 跪于身前用双手包覆上下抚弄"
+        },
+        {
+          "id": "B",
+          "label": "角色 B · 甘雨",
+          "profile": "ganyu",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_ryoutekoki_b.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "受役男方 (竿役) - 正面坐姿承受双手包覆刺激"
+        }
+      ],
+      "selected": true,
+      "shared": true,
+      "loop_preview": true,
+      "seamless_loop": true
+    },
+    {
+      "id": "kk_nohand_fera",
+      "source_library": "koikatsu",
+      "label": "立ちノーハンドフェラ · Koikatsu",
+      "title_zh": "站姿无手纯口交",
+      "category": "oral",
+      "category_zh": "口交侍奉",
+      "display_label": "【口交侍奉】站姿无手纯口交 (立ちノーハンドフェラ · KK)",
+      "description_zh": "侍奉方双手背在身后或完全不借手扶，仅靠唇舌吞吐侍奉站立中的对象，服从反差感强。",
+      "placement": {
+        "type": "ground",
+        "type_zh": "共享世界原点",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "地面（站立与跪姿）"
+      },
+      "roles_desc": {
+        "A": "侍奉女方 - 双膝跪地不用手部扶握、纯口唇吞吐",
+        "B": "受役男方 (竿役) - 站立低头俯视侍奉过程"
+      },
+      "duration": 1.3333333333333333,
+      "frame_start": 0,
+      "frame_end": 40,
+      "source_tracks": [
+        {
+          "file": "h/anim/female/01_00_00.unity3d/khh_f_42 · M_WLoop1",
+          "bundle": "h/anim/female/01_00_00.unity3d",
+          "controller": "khh_f_42",
+          "state": "M_WLoop1",
+          "path_id": "-8382747149321122102",
+          "prefab": "p_cf_body_bone",
+          "sha256": "c1b25fb9fa8ce1088783fdd5ddab98e8fc046b99a897cf6dc21473a48530c9d2"
+        },
+        {
+          "file": "h/anim/male/01_00_00.unity3d/khh_m_42 · M_WLoop1",
+          "bundle": "h/anim/male/01_00_00.unity3d",
+          "controller": "khh_m_42",
+          "state": "M_WLoop1",
+          "path_id": "4207183866455704421",
+          "prefab": "p_cm_body_00",
+          "sha256": "aa7164d14b57f8868118fd11ad4dc1f280d08dfa4aaec92fa488773690513ae0"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A · 刻晴",
+          "profile": "keqing",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_nohand_fera_a.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "侍奉女方 - 双膝跪地不用手部扶握、纯口唇吞吐"
+        },
+        {
+          "id": "B",
+          "label": "角色 B · 甘雨",
+          "profile": "ganyu",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_nohand_fera_b.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "受役男方 (竿役) - 站立低头俯视侍奉过程"
+        }
+      ],
+      "selected": true,
+      "shared": true,
+      "loop_preview": true,
+      "seamless_loop": true
+    },
+    {
+      "id": "kk_isu_matagari_fera",
+      "source_library": "koikatsu",
+      "label": "椅子またがりフェラ · Koikatsu",
+      "title_zh": "跨坐椅子俯身口交",
+      "category": "oral",
+      "category_zh": "口交侍奉",
+      "display_label": "【口交侍奉】跨坐椅子俯身口交 (椅子またがりフェラ · KK)",
+      "description_zh": "侍奉方跨坐在对方腿前椅沿上贴近俯身吞吐，身体贴合度与互动亲密感比单纯跪姿更高。",
+      "placement": {
+        "type": "ground",
+        "type_zh": "共享世界原点",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "单人椅 / 座椅（座高 ~0.42m）"
+      },
+      "roles_desc": {
+        "A": "侍奉女方 - 跨坐对方膝前俯身贴近口部侍奉",
+        "B": "受役男方 (竿役) - 端坐椅上仰身承受"
+      },
+      "duration": 1.3333333333333333,
+      "frame_start": 0,
+      "frame_end": 40,
+      "source_tracks": [
+        {
+          "file": "h/anim/female/01_13_00.unity3d/khh_f_50 · M_WLoop1",
+          "bundle": "h/anim/female/01_13_00.unity3d",
+          "controller": "khh_f_50",
+          "state": "M_WLoop1",
+          "path_id": "-5159156306679630342",
+          "prefab": "p_cf_body_bone",
+          "sha256": "f5499b395fc78dc637dfef928a125343588883a744bdc77a19771ebdd69e3077"
+        },
+        {
+          "file": "h/anim/male/01_13_00.unity3d/khh_m_50 · M_WLoop1",
+          "bundle": "h/anim/male/01_13_00.unity3d",
+          "controller": "khh_m_50",
+          "state": "M_WLoop1",
+          "path_id": "-7068591685009069389",
+          "prefab": "p_cm_body_00",
+          "sha256": "6d4ed6002b7b02696c6ca330fcbd4150aaf26929050765d255b69146724467cd"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A · 刻晴",
+          "profile": "keqing",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_isu_matagari_fera_a.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "侍奉女方 - 跨坐对方膝前俯身贴近口部侍奉"
+        },
+        {
+          "id": "B",
+          "label": "角色 B · 甘雨",
+          "profile": "ganyu",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_isu_matagari_fera_b.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "受役男方 (竿役) - 端坐椅上仰身承受"
+        }
+      ],
+      "selected": true,
+      "shared": true,
+      "loop_preview": true,
+      "seamless_loop": true
+    },
+    {
+      "id": "kk_tachi_paizuri_kuwae",
+      "source_library": "koikatsu",
+      "label": "立ちパイズリ+咥え · Koikatsu",
+      "title_zh": "站姿夹胸兼含吮",
+      "category": "oral",
+      "category_zh": "口交侍奉",
+      "display_label": "【口交侍奉】站姿夹胸兼含吮 (立ちパイズリ+咥え · KK)",
+      "description_zh": "填补既有卧姿之外的站立胸前侍奉，侍奉方蹲跪夹紧胸部的同时配合唇部含吮。",
+      "placement": {
+        "type": "ground",
+        "type_zh": "共享世界原点",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "地面（站姿高低配）"
+      },
+      "roles_desc": {
+        "A": "侍奉女方 - 半蹲挟紧胸部并抬头配合口部含吮",
+        "B": "受役男方 (竿役) - 站立扶肩俯视"
+      },
+      "duration": 1.3333333333333333,
+      "frame_start": 0,
+      "frame_end": 40,
+      "source_tracks": [
+        {
+          "file": "h/anim/female/01_00_00.unity3d/khh_f_47 · M_WLoop1",
+          "bundle": "h/anim/female/01_00_00.unity3d",
+          "controller": "khh_f_47",
+          "state": "M_WLoop1",
+          "path_id": "-1789046697923059996",
+          "prefab": "p_cf_body_bone",
+          "sha256": "c1b25fb9fa8ce1088783fdd5ddab98e8fc046b99a897cf6dc21473a48530c9d2"
+        },
+        {
+          "file": "h/anim/male/01_00_00.unity3d/khh_m_47 · M_WLoop1",
+          "bundle": "h/anim/male/01_00_00.unity3d",
+          "controller": "khh_m_47",
+          "state": "M_WLoop1",
+          "path_id": "-2899012319953585210",
+          "prefab": "p_cm_body_00",
+          "sha256": "aa7164d14b57f8868118fd11ad4dc1f280d08dfa4aaec92fa488773690513ae0"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A · 刻晴",
+          "profile": "keqing",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_tachi_paizuri_kuwae_a.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "侍奉女方 - 半蹲挟紧胸部并抬头配合口部含吮"
+        },
+        {
+          "id": "B",
+          "label": "角色 B · 甘雨",
+          "profile": "ganyu",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_tachi_paizuri_kuwae_b.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "受役男方 (竿役) - 站立扶肩俯视"
+        }
+      ],
+      "selected": true,
+      "shared": true,
+      "loop_preview": true,
+      "seamless_loop": true
+    },
+    {
+      "id": "kk_oshitsuke_paizuri",
+      "source_library": "koikatsu",
+      "label": "押し付けパイズリ · Koikatsu",
+      "title_zh": "贴身压迫乳交",
+      "category": "foreplay",
+      "category_zh": "前戏侍奉",
+      "display_label": "【前戏侍奉】贴身压迫乳交 (押し付けパイズリ · KK)",
+      "description_zh": "主动将前端压入柔软胸壑间紧密滑动的高主导感前戏循环，完整双方同框。",
+      "placement": {
+        "type": "ground",
+        "type_zh": "共享世界原点",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "地面 / 低榻"
+      },
+      "roles_desc": {
+        "A": "侍奉女方 - 聚拢双峰仰承贴合滑动",
+        "B": "施力男方 (竿役) - 上身前压主导节奏"
+      },
+      "duration": 1.3333333333333333,
+      "frame_start": 0,
+      "frame_end": 40,
+      "source_tracks": [
+        {
+          "file": "h/anim/female/01_00_00.unity3d/khh_f_13 · M_WLoop1",
+          "bundle": "h/anim/female/01_00_00.unity3d",
+          "controller": "khh_f_13",
+          "state": "M_WLoop1",
+          "path_id": "-3418149926055226709",
+          "prefab": "p_cf_body_bone",
+          "sha256": "c1b25fb9fa8ce1088783fdd5ddab98e8fc046b99a897cf6dc21473a48530c9d2"
+        },
+        {
+          "file": "h/anim/male/01_00_00.unity3d/khh_m_13 · M_WLoop1",
+          "bundle": "h/anim/male/01_00_00.unity3d",
+          "controller": "khh_m_13",
+          "state": "M_WLoop1",
+          "path_id": "-8756889654804161094",
+          "prefab": "p_cm_body_00",
+          "sha256": "aa7164d14b57f8868118fd11ad4dc1f280d08dfa4aaec92fa488773690513ae0"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A · 刻晴",
+          "profile": "keqing",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_oshitsuke_paizuri_a.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "侍奉女方 - 聚拢双峰仰承贴合滑动"
+        },
+        {
+          "id": "B",
+          "label": "角色 B · 甘雨",
+          "profile": "ganyu",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_oshitsuke_paizuri_b.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "施力男方 (竿役) - 上身前压主导节奏"
+        }
+      ],
+      "selected": true,
+      "shared": true,
+      "loop_preview": true,
+      "seamless_loop": true
+    },
+    {
+      "id": "kk_mitchaku_tekoki",
+      "source_library": "koikatsu",
+      "label": "密着手コキ · Koikatsu",
+      "title_zh": "站姿贴身耳语手交",
+      "category": "foreplay",
+      "category_zh": "前戏侍奉",
+      "display_label": "【前戏侍奉】站姿贴身耳语手交 (密着手コキ · KK)",
+      "description_zh": "双方站立极近距离贴身相依，一手扶抱耳边低语、一手施以节律抚弄，很适合搭配战中聊天。",
+      "placement": {
+        "type": "ground",
+        "type_zh": "共享世界原点",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "地面（站姿并肩贴近）"
+      },
+      "roles_desc": {
+        "A": "侍奉女方 - 紧贴肩侧轻语并进行手部刺激",
+        "B": "受役男方 (竿役) - 站立微倚身旁"
+      },
+      "duration": 1.3333333333333333,
+      "frame_start": 0,
+      "frame_end": 40,
+      "source_tracks": [
+        {
+          "file": "h/anim/female/01_20_00.unity3d/khh_f_52 · M_WLoop1",
+          "bundle": "h/anim/female/01_20_00.unity3d",
+          "controller": "khh_f_52",
+          "state": "M_WLoop1",
+          "path_id": "-3077777062648361892",
+          "prefab": "p_cf_body_bone",
+          "sha256": "535657e852fd2c1f7572167db77b3bc3d85027adf17b70b1b1c838f24863af33"
+        },
+        {
+          "file": "h/anim/male/01_20_00.unity3d/khh_m_52 · M_WLoop1",
+          "bundle": "h/anim/male/01_20_00.unity3d",
+          "controller": "khh_m_52",
+          "state": "M_WLoop1",
+          "path_id": "5110077046567746664",
+          "prefab": "p_cm_body_00",
+          "sha256": "5d9cd34638799249109012df4957946717e4060a6c38504b35e1748afa436c31"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A · 刻晴",
+          "profile": "keqing",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_mitchaku_tekoki_a.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "侍奉女方 - 紧贴肩侧轻语并进行手部刺激"
+        },
+        {
+          "id": "B",
+          "label": "角色 B · 甘雨",
+          "profile": "ganyu",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_mitchaku_tekoki_b.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "受役男方 (竿役) - 站立微倚身旁"
+        }
+      ],
+      "selected": true,
+      "shared": true,
+      "loop_preview": true,
+      "seamless_loop": true
+    },
+    {
+      "id": "kk_tanetsuke_press",
+      "source_library": "koikatsu",
+      "label": "種付けプレス · Koikatsu",
+      "title_zh": "深压折腿正常位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "display_label": "【本番性爱】深压折腿正常位 (種付けプレス · KK)",
+      "description_zh": "以全身重心向下深压的强主导型正常位，压迫感与插入深度感明显强于常规仰卧。",
+      "placement": {
+        "type": "ground",
+        "type_zh": "共享世界原点",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "地面 / 大床"
+      },
+      "roles_desc": {
+        "A": "受纳女方 - 仰卧抬腿曲膝承受下压",
+        "B": "施力男方 (竿役) - 俯身重心下压深顶推进"
+      },
+      "duration": 1.3333333333333333,
+      "frame_start": 0,
+      "frame_end": 40,
+      "source_tracks": [
+        {
+          "file": "h/anim/female/02_06_00.unity3d/khs_f_n23 · M_WLoop1",
+          "bundle": "h/anim/female/02_06_00.unity3d",
+          "controller": "khs_f_n23",
+          "state": "M_WLoop1",
+          "path_id": "-5374549388617152805",
+          "prefab": "p_cf_body_bone",
+          "sha256": "0478444164845496c4c51a656eaac7c982ca7e9dc3a5b2696d1b10c394365c49"
+        },
+        {
+          "file": "h/anim/male/02_06_00.unity3d/khs_m_n23 · M_WLoop1",
+          "bundle": "h/anim/male/02_06_00.unity3d",
+          "controller": "khs_m_n23",
+          "state": "M_WLoop1",
+          "path_id": "1831743671920265281",
+          "prefab": "p_cm_body_00",
+          "sha256": "9d78ba08ad5b503de908c1d763f2d5396c3fa1299c7f793c2c38cfef0e03aba7"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A · 刻晴",
+          "profile": "keqing",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_tanetsuke_press_a.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "受纳女方 - 仰卧抬腿曲膝承受下压"
+        },
+        {
+          "id": "B",
+          "label": "角色 B · 甘雨",
+          "profile": "ganyu",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_tanetsuke_press_b.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "施力男方 (竿役) - 俯身重心下压深顶推进"
+        }
+      ],
+      "selected": true,
+      "shared": true,
+      "loop_preview": true,
+      "seamless_loop": true
+    },
+    {
+      "id": "kk_manguri_seijoui",
+      "source_library": "koikatsu",
+      "label": "マングリ正常位 · Koikatsu",
+      "title_zh": "M字折叠压腿正常位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "display_label": "【本番性爱】M字折叠压腿正常位 (マングリ正常位 · KK)",
+      "description_zh": "将受纳方双腿大幅折向胸口呈全折叠造型，肢体张力与立体轮廓极具特写观赏性。",
+      "placement": {
+        "type": "ground",
+        "type_zh": "共享世界原点",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "地面 / 大床"
+      },
+      "roles_desc": {
+        "A": "受纳女方 - 双腿高折压胸完全展开",
+        "B": "施力男方 (竿役) - 托压折叠双腿深位推进"
+      },
+      "duration": 1.3333333333333333,
+      "frame_start": 0,
+      "frame_end": 40,
+      "source_tracks": [
+        {
+          "file": "h/anim/female/02_12_00.unity3d/khs_f_n24 · M_WLoop1",
+          "bundle": "h/anim/female/02_12_00.unity3d",
+          "controller": "khs_f_n24",
+          "state": "M_WLoop1",
+          "path_id": "458588863201632309",
+          "prefab": "p_cf_body_bone",
+          "sha256": "ca64d9cb54dde5f42b1002815af3b4f0c8e5b2776892d295a35ed2138f72e962"
+        },
+        {
+          "file": "h/anim/male/02_12_00.unity3d/khs_m_n24 · M_WLoop1",
+          "bundle": "h/anim/male/02_12_00.unity3d",
+          "controller": "khs_m_n24",
+          "state": "M_WLoop1",
+          "path_id": "1432759710619710992",
+          "prefab": "p_cm_body_00",
+          "sha256": "fc9e57792e270d17730ff3e4d60ca98c4f1b34990b1c17133f8c7f14da5258bc"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A · 刻晴",
+          "profile": "keqing",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_manguri_seijoui_a.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "受纳女方 - 双腿高折压胸完全展开"
+        },
+        {
+          "id": "B",
+          "label": "角色 B · 甘雨",
+          "profile": "ganyu",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_manguri_seijoui_b.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "施力男方 (竿役) - 托压折叠双腿深位推进"
+        }
+      ],
+      "selected": true,
+      "shared": true,
+      "loop_preview": true,
+      "seamless_loop": true
+    },
+    {
+      "id": "kk_udehippari_kouhai",
+      "source_library": "koikatsu",
+      "label": "腕引っ張り後背位 · Koikatsu",
+      "title_zh": "拉臂掌控后背位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "display_label": "【本番性爱】拉臂掌控后背位 (腕引っ張り後背位 · KK)",
+      "description_zh": "在后背位基础上手持拉住对方手臂牵制动作，支配感与动态拉扯力远超一般跪趴。",
+      "placement": {
+        "type": "ground",
+        "type_zh": "共享世界原点",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "地面 / 大床"
+      },
+      "roles_desc": {
+        "A": "受纳女方 - 双臂被向后牵引俯身承受",
+        "B": "施力男方 (竿役) - 自后拽臂控场推进"
+      },
+      "duration": 1.3333333333333333,
+      "frame_start": 0,
+      "frame_end": 40,
+      "source_tracks": [
+        {
+          "file": "h/anim/female/02_00_00.unity3d/khs_f_n02 · M_WLoop1",
+          "bundle": "h/anim/female/02_00_00.unity3d",
+          "controller": "khs_f_n02",
+          "state": "M_WLoop1",
+          "path_id": "-6104995104557329899",
+          "prefab": "p_cf_body_bone",
+          "sha256": "af2907df07fd2160f912230025da87ee38e4f8a467b61e0ce450344ff0dafc04"
+        },
+        {
+          "file": "h/anim/male/02_00_00.unity3d/khs_m_n02 · M_WLoop1",
+          "bundle": "h/anim/male/02_00_00.unity3d",
+          "controller": "khs_m_n02",
+          "state": "M_WLoop1",
+          "path_id": "2159141889668827203",
+          "prefab": "p_cm_body_00",
+          "sha256": "f89f4b0f0ee61a4a85184ba638c115f9350058877b87adaa166d1bfaa3706f58"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A · 刻晴",
+          "profile": "keqing",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_udehippari_kouhai_a.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "受纳女方 - 双臂被向后牵引俯身承受"
+        },
+        {
+          "id": "B",
+          "label": "角色 B · 甘雨",
+          "profile": "ganyu",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_udehippari_kouhai_b.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "施力男方 (竿役) - 自后拽臂控场推进"
+        }
+      ],
+      "selected": true,
+      "shared": true,
+      "loop_preview": true,
+      "seamless_loop": true
+    },
+    {
+      "id": "kk_neback",
+      "source_library": "koikatsu",
+      "label": "寝バック · Koikatsu",
+      "title_zh": "贴床俯卧后背位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "display_label": "【本番性爱】贴床俯卧后背位 (寝バック · KK)",
+      "description_zh": "把受纳方完全压趴在床面或地板上的紧密贴合后背位，体感沉重亲密。",
+      "placement": {
+        "type": "ground",
+        "type_zh": "共享世界原点",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "地面 / 双人床面"
+      },
+      "roles_desc": {
+        "A": "受纳女方 - 完全俯趴延展承受",
+        "B": "施力男方 (竿役) - 自上贴脊覆盖推进"
+      },
+      "duration": 1.3333333333333333,
+      "frame_start": 0,
+      "frame_end": 40,
+      "source_tracks": [
+        {
+          "file": "h/anim/female/02_13_00.unity3d/khs_f_n26 · M_WLoop1",
+          "bundle": "h/anim/female/02_13_00.unity3d",
+          "controller": "khs_f_n26",
+          "state": "M_WLoop1",
+          "path_id": "4687031406452838963",
+          "prefab": "p_cf_body_bone",
+          "sha256": "ef3113bc6a10abb65b8f1d51c9290d52483bed60d589127016197247388105ab"
+        },
+        {
+          "file": "h/anim/male/02_13_00.unity3d/khs_m_n26 · M_WLoop1",
+          "bundle": "h/anim/male/02_13_00.unity3d",
+          "controller": "khs_m_n26",
+          "state": "M_WLoop1",
+          "path_id": "-199492035765436112",
+          "prefab": "p_cm_body_00",
+          "sha256": "ffb947d003bf8b25c7aa927952cb13dd63b2fc235080e1aac9d1da4d49f5dd31"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A · 刻晴",
+          "profile": "keqing",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_neback_a.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "受纳女方 - 完全俯趴延展承受"
+        },
+        {
+          "id": "B",
+          "label": "角色 B · 甘雨",
+          "profile": "ganyu",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_neback_b.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "施力男方 (竿役) - 自上贴脊覆盖推进"
+        }
+      ],
+      "selected": true,
+      "shared": true,
+      "loop_preview": true,
+      "seamless_loop": true
+    },
+    {
+      "id": "kk_isu_taimen",
+      "source_library": "koikatsu",
+      "label": "椅子対面 · Koikatsu",
+      "title_zh": "椅子面对面抱坐位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "display_label": "【本番性爱】椅子面对面抱坐位 (椅子対面 · KK)",
+      "description_zh": "坐在椅子上面对面紧抱起伏的交合体位，和既有背面 Lap Sitting 刚好构成正反双拼。",
+      "placement": {
+        "type": "ground",
+        "type_zh": "共享世界原点",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "单人椅 / 座椅"
+      },
+      "roles_desc": {
+        "A": "跨坐女方 - 面对面环抱肩颈上下起伏",
+        "B": "受座男方 (竿役) - 稳坐椅面双臂揽抱腰臀"
+      },
+      "duration": 1.3333333333333333,
+      "frame_start": 0,
+      "frame_end": 40,
+      "source_tracks": [
+        {
+          "file": "h/anim/female/02_00_00.unity3d/khs_f_n09 · M_WLoop1",
+          "bundle": "h/anim/female/02_00_00.unity3d",
+          "controller": "khs_f_n09",
+          "state": "M_WLoop1",
+          "path_id": "2225115618064346513",
+          "prefab": "p_cf_body_bone",
+          "sha256": "af2907df07fd2160f912230025da87ee38e4f8a467b61e0ce450344ff0dafc04"
+        },
+        {
+          "file": "h/anim/male/02_00_00.unity3d/khs_m_n09 · M_WLoop1",
+          "bundle": "h/anim/male/02_00_00.unity3d",
+          "controller": "khs_m_n09",
+          "state": "M_WLoop1",
+          "path_id": "-860504148415720659",
+          "prefab": "p_cm_body_00",
+          "sha256": "f89f4b0f0ee61a4a85184ba638c115f9350058877b87adaa166d1bfaa3706f58"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A · 刻晴",
+          "profile": "keqing",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_isu_taimen_a.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "跨坐女方 - 面对面环抱肩颈上下起伏"
+        },
+        {
+          "id": "B",
+          "label": "角色 B · 甘雨",
+          "profile": "ganyu",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_isu_taimen_b.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "受座男方 (竿役) - 稳坐椅面双臂揽抱腰臀"
+        }
+      ],
+      "selected": true,
+      "shared": true,
+      "loop_preview": true,
+      "seamless_loop": true
+    },
+    {
+      "id": "kk_isu_back",
+      "source_library": "koikatsu",
+      "label": "椅子バック · Koikatsu",
+      "title_zh": "扶椅背站姿后背位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "display_label": "【本番性爱】扶椅背站姿后背位 (椅子バック · KK)",
+      "description_zh": "站姿状态下双手撑扶椅背的前倾后背位，适配神殿石椅与建筑栏杆锚点。",
+      "placement": {
+        "type": "ground",
+        "type_zh": "共享世界原点",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "单人椅 / 椅背支撑"
+      },
+      "roles_desc": {
+        "A": "受纳女方 - 双手扶稳椅背翘臀迎合",
+        "B": "施力男方 (竿役) - 站立扶胯从后推进"
+      },
+      "duration": 1.3333333333333333,
+      "frame_start": 0,
+      "frame_end": 40,
+      "source_tracks": [
+        {
+          "file": "h/anim/female/02_00_00.unity3d/khs_f_11 · M_WLoop1",
+          "bundle": "h/anim/female/02_00_00.unity3d",
+          "controller": "khs_f_11",
+          "state": "M_WLoop1",
+          "path_id": "3269837485003646555",
+          "prefab": "p_cf_body_bone",
+          "sha256": "af2907df07fd2160f912230025da87ee38e4f8a467b61e0ce450344ff0dafc04"
+        },
+        {
+          "file": "h/anim/male/02_00_00.unity3d/khs_m_11 · M_WLoop1",
+          "bundle": "h/anim/male/02_00_00.unity3d",
+          "controller": "khs_m_11",
+          "state": "M_WLoop1",
+          "path_id": "-8333636169969520379",
+          "prefab": "p_cm_body_00",
+          "sha256": "f89f4b0f0ee61a4a85184ba638c115f9350058877b87adaa166d1bfaa3706f58"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A · 刻晴",
+          "profile": "keqing",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_isu_back_a.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "受纳女方 - 双手扶稳椅背翘臀迎合"
+        },
+        {
+          "id": "B",
+          "label": "角色 B · 甘雨",
+          "profile": "ganyu",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_isu_back_b.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "施力男方 (竿役) - 站立扶胯从后推进"
+        }
+      ],
+      "selected": true,
+      "shared": true,
+      "loop_preview": true,
+      "seamless_loop": true
+    },
+    {
+      "id": "kk_sofa_kijoui",
+      "source_library": "koikatsu",
+      "label": "ソファ騎乗位 · Koikatsu",
+      "title_zh": "沙发／长榻骑乘位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "display_label": "【本番性爱】沙发／长榻骑乘位 (ソファ騎乗位 · KK)",
+      "description_zh": "专为客厅沙发、长榻及休息长椅打造的坐姿上方骑乘循环，双腿自然垂落倚靠。",
+      "placement": {
+        "type": "ground",
+        "type_zh": "共享世界原点",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "沙发 / 软榻 / 单人椅"
+      },
+      "roles_desc": {
+        "A": "骑乘女方 - 上方跨坐主动摆腰律动",
+        "B": "坐卧男方 (竿役) - 后仰靠于沙发扶承腰侧"
+      },
+      "duration": 1.3333333333333333,
+      "frame_start": 0,
+      "frame_end": 40,
+      "source_tracks": [
+        {
+          "file": "h/anim/female/02_13_00.unity3d/khs_f_n27 · M_WLoop1",
+          "bundle": "h/anim/female/02_13_00.unity3d",
+          "controller": "khs_f_n27",
+          "state": "M_WLoop1",
+          "path_id": "-577264419957006959",
+          "prefab": "p_cf_body_bone",
+          "sha256": "ef3113bc6a10abb65b8f1d51c9290d52483bed60d589127016197247388105ab"
+        },
+        {
+          "file": "h/anim/male/02_13_00.unity3d/khs_m_n27 · M_WLoop1",
+          "bundle": "h/anim/male/02_13_00.unity3d",
+          "controller": "khs_m_n27",
+          "state": "M_WLoop1",
+          "path_id": "5077069074621443785",
+          "prefab": "p_cm_body_00",
+          "sha256": "ffb947d003bf8b25c7aa927952cb13dd63b2fc235080e1aac9d1da4d49f5dd31"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A · 刻晴",
+          "profile": "keqing",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_sofa_kijoui_a.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "骑乘女方 - 上方跨坐主动摆腰律动"
+        },
+        {
+          "id": "B",
+          "label": "角色 B · 甘雨",
+          "profile": "ganyu",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_sofa_kijoui_b.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "坐卧男方 (竿役) - 后仰靠于沙发扶承腰侧"
+        }
+      ],
+      "selected": true,
+      "shared": true,
+      "loop_preview": true,
+      "seamless_loop": true
+    },
+    {
+      "id": "kk_tsukue_nei",
+      "source_library": "koikatsu",
+      "label": "机寝位 · Koikatsu",
+      "title_zh": "桌面仰卧站插位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "display_label": "【本番性爱】桌面仰卧站插位 (机寝位 · KK)",
+      "description_zh": "让受纳方仰躺到案桌表面、主导方站在桌前高腿进入，与扶桌背向 TSFB V2 正反互补。",
+      "placement": {
+        "type": "ground",
+        "type_zh": "共享世界原点",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "长案桌 / 桌面（~0.80m 高度）"
+      },
+      "roles_desc": {
+        "A": "受纳女方 - 仰躺于桌面抬腿承接",
+        "B": "施力男方 (竿役) - 站在桌沿双手分扶推进"
+      },
+      "duration": 1.3333333333333333,
+      "frame_start": 0,
+      "frame_end": 40,
+      "source_tracks": [
+        {
+          "file": "h/anim/female/02_00_00.unity3d/khs_f_n13 · M_WLoop1",
+          "bundle": "h/anim/female/02_00_00.unity3d",
+          "controller": "khs_f_n13",
+          "state": "M_WLoop1",
+          "path_id": "7698265982536208779",
+          "prefab": "p_cf_body_bone",
+          "sha256": "af2907df07fd2160f912230025da87ee38e4f8a467b61e0ce450344ff0dafc04"
+        },
+        {
+          "file": "h/anim/male/02_00_00.unity3d/khs_m_n13 · M_WLoop1",
+          "bundle": "h/anim/male/02_00_00.unity3d",
+          "controller": "khs_m_n13",
+          "state": "M_WLoop1",
+          "path_id": "-298777781173408414",
+          "prefab": "p_cm_body_00",
+          "sha256": "f89f4b0f0ee61a4a85184ba638c115f9350058877b87adaa166d1bfaa3706f58"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A · 刻晴",
+          "profile": "keqing",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_tsukue_nei_a.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "受纳女方 - 仰躺于桌面抬腿承接"
+        },
+        {
+          "id": "B",
+          "label": "角色 B · 甘雨",
+          "profile": "ganyu",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_tsukue_nei_b.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "施力男方 (竿役) - 站在桌沿双手分扶推进"
+        }
+      ],
+      "selected": true,
+      "shared": true,
+      "loop_preview": true,
+      "seamless_loop": true
+    },
+    {
+      "id": "kk_kabe_taimen_ashiage",
+      "source_library": "koikatsu",
+      "label": "壁対面片足上げ · Koikatsu",
+      "title_zh": "壁咚抬单腿面对面位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "display_label": "【本番性爱】壁咚抬单腿面对面位 (壁対面片足上げ · KK)",
+      "description_zh": "依托墙面或石柱把女方一条腿高抬架起进行正面站插，极具戏剧壁咚张力。",
+      "placement": {
+        "type": "ground",
+        "type_zh": "共享世界原点",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "墙面 / 立柱（壁靠交互）"
+      },
+      "roles_desc": {
+        "A": "受纳女方 - 背倚墙壁单腿高抬钩腰",
+        "B": "施力男方 (竿役) - 贴近壁面单手托腿正面推进"
+      },
+      "duration": 1.3333333333333333,
+      "frame_start": 0,
+      "frame_end": 40,
+      "source_tracks": [
+        {
+          "file": "h/anim/female/02_00_00.unity3d/khs_f_n17 · M_WLoop1",
+          "bundle": "h/anim/female/02_00_00.unity3d",
+          "controller": "khs_f_n17",
+          "state": "M_WLoop1",
+          "path_id": "-8864923013056633413",
+          "prefab": "p_cf_body_bone",
+          "sha256": "af2907df07fd2160f912230025da87ee38e4f8a467b61e0ce450344ff0dafc04"
+        },
+        {
+          "file": "h/anim/male/02_00_00.unity3d/khs_m_n17 · M_WLoop1",
+          "bundle": "h/anim/male/02_00_00.unity3d",
+          "controller": "khs_m_n17",
+          "state": "M_WLoop1",
+          "path_id": "38419366877867769",
+          "prefab": "p_cm_body_00",
+          "sha256": "f89f4b0f0ee61a4a85184ba638c115f9350058877b87adaa166d1bfaa3706f58"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A · 刻晴",
+          "profile": "keqing",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_kabe_taimen_ashiage_a.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "受纳女方 - 背倚墙壁单腿高抬钩腰"
+        },
+        {
+          "id": "B",
+          "label": "角色 B · 甘雨",
+          "profile": "ganyu",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_kabe_taimen_ashiage_b.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "施力男方 (竿役) - 贴近壁面单手托腿正面推进"
+        }
+      ],
+      "selected": true,
+      "shared": true,
+      "loop_preview": true,
+      "seamless_loop": true
+    },
+    {
+      "id": "kk_kabe_back_ashiage",
+      "source_library": "koikatsu",
+      "label": "片足上げ壁バック · Koikatsu",
+      "title_zh": "扶墙抬单腿后背位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "display_label": "【本番性爱】扶墙抬单腿后背位 (片足上げ壁バック · KK)",
+      "description_zh": "单手扶墙保持平衡同时高抬一条腿接受背后站插，与正面壁咚形成完整墙面正反双拼。",
+      "placement": {
+        "type": "ground",
+        "type_zh": "共享世界原点",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "墙面 / 立柱（壁靠交互）"
+      },
+      "roles_desc": {
+        "A": "受纳女方 - 扶墙单脚独立另一腿悬空抬起",
+        "B": "施力男方 (竿役) - 站立后方托扶大腿推进"
+      },
+      "duration": 1.3333333333333333,
+      "frame_start": 0,
+      "frame_end": 40,
+      "source_tracks": [
+        {
+          "file": "h/anim/female/02_00_00.unity3d/khs_f_n18 · M_WLoop1",
+          "bundle": "h/anim/female/02_00_00.unity3d",
+          "controller": "khs_f_n18",
+          "state": "M_WLoop1",
+          "path_id": "-5251433830122830125",
+          "prefab": "p_cf_body_bone",
+          "sha256": "af2907df07fd2160f912230025da87ee38e4f8a467b61e0ce450344ff0dafc04"
+        },
+        {
+          "file": "h/anim/male/02_00_00.unity3d/khs_m_n18 · M_WLoop1",
+          "bundle": "h/anim/male/02_00_00.unity3d",
+          "controller": "khs_m_n18",
+          "state": "M_WLoop1",
+          "path_id": "8170489153620710230",
+          "prefab": "p_cm_body_00",
+          "sha256": "f89f4b0f0ee61a4a85184ba638c115f9350058877b87adaa166d1bfaa3706f58"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A · 刻晴",
+          "profile": "keqing",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_kabe_back_ashiage_a.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "受纳女方 - 扶墙单脚独立另一腿悬空抬起"
+        },
+        {
+          "id": "B",
+          "label": "角色 B · 甘雨",
+          "profile": "ganyu",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_kabe_back_ashiage_b.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "施力男方 (竿役) - 站立后方托扶大腿推进"
+        }
+      ],
+      "selected": true,
+      "shared": true,
+      "loop_preview": true,
+      "seamless_loop": true
+    },
+    {
+      "id": "kk_isu_kunni",
+      "source_library": "koikatsu",
+      "label": "椅子クンニ · Koikatsu",
+      "title_zh": "双女椅子百合舔阴",
+      "category": "yuri",
+      "category_zh": "百合协同",
+      "display_label": "【百合协同】双女椅子百合舔阴 (椅子クンニ · KK)",
+      "description_zh": "一位女伴仰坐椅上敞腿、另一位女伴跪伏腿间亲吻舔弄的上下立体百合前戏。",
+      "placement": {
+        "type": "ground",
+        "type_zh": "共享世界原点",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "单人椅 / 座椅"
+      },
+      "roles_desc": {
+        "A": "侍奉方 - 跪趴椅子前俯首细腻舔弄",
+        "B": "受侍方 - 分腿倚坐椅上仰首喘息"
+      },
+      "duration": 1.3333333333333333,
+      "frame_start": 0,
+      "frame_end": 40,
+      "source_tracks": [
+        {
+          "file": "h/anim/female/05_10_00.unity3d/khr_f_01_01 · M_WLoop",
+          "bundle": "h/anim/female/05_10_00.unity3d",
+          "controller": "khr_f_01_01",
+          "state": "M_WLoop",
+          "path_id": "-982785638618345802",
+          "prefab": "p_cf_body_bone",
+          "sha256": "2824c65819a1b4ad0b7989c4f93435a9e95acfef7f0fdc7294411d5fe70fa8ad"
+        },
+        {
+          "file": "h/anim/female/05_10_00.unity3d/khr_f_01_00 · M_WLoop",
+          "bundle": "h/anim/female/05_10_00.unity3d",
+          "controller": "khr_f_01_00",
+          "state": "M_WLoop",
+          "path_id": "-318733141614903049",
+          "prefab": "p_cf_body_bone",
+          "sha256": "2824c65819a1b4ad0b7989c4f93435a9e95acfef7f0fdc7294411d5fe70fa8ad"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A · 刻晴",
+          "profile": "keqing",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_isu_kunni_a.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "侍奉方 - 跪趴椅子前俯首细腻舔弄"
+        },
+        {
+          "id": "B",
+          "label": "角色 B · 甘雨",
+          "profile": "ganyu",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_isu_kunni_b.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "受侍方 - 分腿倚坐椅上仰首喘息"
+        }
+      ],
+      "selected": true,
+      "shared": true,
+      "loop_preview": true,
+      "seamless_loop": true
+    },
+    {
+      "id": "kk_tagai_ijiri",
+      "source_library": "koikatsu",
+      "label": "互い弄り · Koikatsu",
+      "title_zh": "站姿双女相互爱抚",
+      "category": "yuri",
+      "category_zh": "百合协同",
+      "display_label": "【百合协同】站姿双女相互爱抚 (互い弄り · KK)",
+      "description_zh": "两位女性站立面对面零距离贴靠并同步彼此挑逗爱抚，补齐站立态百合互动。",
+      "placement": {
+        "type": "ground",
+        "type_zh": "共享世界原点",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "地面（站姿贴近）"
+      },
+      "roles_desc": {
+        "A": "百合角色 1 - 紧靠回应并同步手部挑逗",
+        "B": "百合角色 2 - 贴身前探与对方交替爱抚"
+      },
+      "duration": 1.3333333333333333,
+      "frame_start": 0,
+      "frame_end": 40,
+      "source_tracks": [
+        {
+          "file": "h/anim/female/05_10_00.unity3d/khr_f_02_01 · MM_WLoop",
+          "bundle": "h/anim/female/05_10_00.unity3d",
+          "controller": "khr_f_02_01",
+          "state": "MM_WLoop",
+          "path_id": "-2561934837088606300",
+          "prefab": "p_cf_body_bone",
+          "sha256": "2824c65819a1b4ad0b7989c4f93435a9e95acfef7f0fdc7294411d5fe70fa8ad"
+        },
+        {
+          "file": "h/anim/female/05_10_00.unity3d/khr_f_02_00 · MM_WLoop",
+          "bundle": "h/anim/female/05_10_00.unity3d",
+          "controller": "khr_f_02_00",
+          "state": "MM_WLoop",
+          "path_id": "1043378019359336645",
+          "prefab": "p_cf_body_bone",
+          "sha256": "2824c65819a1b4ad0b7989c4f93435a9e95acfef7f0fdc7294411d5fe70fa8ad"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A · 刻晴",
+          "profile": "keqing",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_tagai_ijiri_a.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "百合角色 1 - 紧靠回应并同步手部挑逗"
+        },
+        {
+          "id": "B",
+          "label": "角色 B · 甘雨",
+          "profile": "ganyu",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_tagai_ijiri_b.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "百合角色 2 - 贴身前探与对方交替爱抚"
+        }
+      ],
+      "selected": true,
+      "shared": true,
+      "loop_preview": true,
+      "seamless_loop": true
+    },
+    {
+      "id": "kk_kijoui_kunni",
+      "source_library": "koikatsu",
+      "label": "騎乗位クンニ · Koikatsu",
+      "title_zh": "3P 骑乘兼坐脸舔弄",
+      "category": "threesome",
+      "category_zh": "多人协同",
+      "display_label": "【多人协同】3P 骑乘兼坐脸舔弄 (騎乗位クンニ · KK)",
+      "description_zh": "三位角色同时参与的进阶 3P 组合：一人仰卧、一人上方骑乘、第三位协同进行上下方舔弄互动。",
+      "placement": {
+        "type": "ground",
+        "type_zh": "共享世界原点",
+        "base_height": 0.0,
+        "ground_offset": 0.0,
+        "prop_needed": "地面 / 大床"
+      },
+      "roles_desc": {
+        "A": "主控骑乘女方 - 跨坐腰腹主动律动",
+        "B": "受役男方 (竿役) - 仰卧地面承接骑乘与坐颜双线刺激",
+        "C": "协同侍奉女方 - 俯身在侧同步舔弄辅助"
+      },
+      "duration": 1.3333333333333333,
+      "frame_start": 0,
+      "frame_end": 40,
+      "source_tracks": [
+        {
+          "file": "h/anim/female/07_20_00.unity3d/khs3_f_00_00 · M_WLoop1",
+          "bundle": "h/anim/female/07_20_00.unity3d",
+          "controller": "khs3_f_00_00",
+          "state": "M_WLoop1",
+          "path_id": "2665641766087862656",
+          "prefab": "p_cf_body_bone",
+          "sha256": "979e8b9cdf25f785d283e91e2b1734ce0dfa61b3fa9d4289b9509ae3e7d7c774"
+        },
+        {
+          "file": "h/anim/male/07_20_00.unity3d/khs3_m_00 · M_WLoop1",
+          "bundle": "h/anim/male/07_20_00.unity3d",
+          "controller": "khs3_m_00",
+          "state": "M_WLoop1",
+          "path_id": "-554704583725507671",
+          "prefab": "p_cm_body_00",
+          "sha256": "cacee971fca1106d43786108ac2045b8384a0b29560ae08175e621147b53faa1"
+        },
+        {
+          "file": "h/anim/female/07_20_00.unity3d/khs3_f_00_01 · M_WLoop1",
+          "bundle": "h/anim/female/07_20_00.unity3d",
+          "controller": "khs3_f_00_01",
+          "state": "M_WLoop1",
+          "path_id": "9211703797584963907",
+          "prefab": "p_cf_body_bone",
+          "sha256": "979e8b9cdf25f785d283e91e2b1734ce0dfa61b3fa9d4289b9509ae3e7d7c774"
+        }
+      ],
+      "roles": [
+        {
+          "id": "A",
+          "label": "角色 A · 刻晴",
+          "profile": "keqing",
+          "model": "res://assets/characters/mmd_validation/keqing_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_kijoui_kunni_a.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "主控骑乘女方 - 跨坐腰腹主动律动"
+        },
+        {
+          "id": "B",
+          "label": "角色 B · 甘雨",
+          "profile": "ganyu",
+          "model": "res://assets/characters/mmd_validation/paired/ganyu_physics.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_kijoui_kunni_b.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "受役男方 (竿役) - 仰卧地面承接骑乘与坐颜双线刺激"
+        },
+        {
+          "id": "C",
+          "label": "角色 C · 花火",
+          "profile": "huahuo",
+          "model": "res://assets/characters/import_tests_local/huahuo/huahuo_fixed.vrm",
+          "motion": "res://assets/characters/mmd_validation/paired/kk_kijoui_kunni_c.tres",
+          "report": "res://assets/characters/mmd_validation/paired/catalog.json",
+          "shared": true,
+          "translation_policy": "shared_world",
+          "presentation_offset": [
+            0,
+            0,
+            0
+          ],
+          "label_zh": "协同侍奉女方 - 俯身在侧同步舔弄辅助"
+        }
+      ],
+      "selected": true,
+      "shared": true,
+      "loop_preview": true,
+      "seamless_loop": true
     }
   ],
   "entries": [
+    {
+      "id": "kk_ekiben_all",
+      "pack": "kk_ekiben",
+      "label": "駅弁 · Koikatsu",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作"
+    },
     {
       "id": "loop03_pair",
       "pack": "loop03",
@@ -2265,6 +4021,287 @@
       "category": "intimate_daily",
       "category_zh": "日常温存",
       "display_label": "【日常温存】站姿相拥股间素股 (Thigh service)"
+    },
+    {
+      "id": "kk_sakiname_all",
+      "pack": "kk_sakiname",
+      "label": "双人 · 先舐め＋竿舐め · Koikatsu",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作",
+      "title_zh": "轻柔舔弄前戏",
+      "category": "foreplay",
+      "category_zh": "前戏侍奉",
+      "display_label": "【前戏侍奉】轻柔舔弄前戏 (先舐め＋竿舐め · KK)"
+    },
+    {
+      "id": "kk_ryoutekoki_all",
+      "pack": "kk_ryoutekoki",
+      "label": "双人 · 両手コキ · Koikatsu",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作",
+      "title_zh": "面对面双手手交",
+      "category": "foreplay",
+      "category_zh": "前戏侍奉",
+      "display_label": "【前戏侍奉】面对面双手手交 (両手コキ · KK)"
+    },
+    {
+      "id": "kk_nohand_fera_all",
+      "pack": "kk_nohand_fera",
+      "label": "双人 · 立ちノーハンドフェラ · Koikatsu",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作",
+      "title_zh": "站姿无手纯口交",
+      "category": "oral",
+      "category_zh": "口交侍奉",
+      "display_label": "【口交侍奉】站姿无手纯口交 (立ちノーハンドフェラ · KK)"
+    },
+    {
+      "id": "kk_isu_matagari_fera_all",
+      "pack": "kk_isu_matagari_fera",
+      "label": "双人 · 椅子またがりフェラ · Koikatsu",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作",
+      "title_zh": "跨坐椅子俯身口交",
+      "category": "oral",
+      "category_zh": "口交侍奉",
+      "display_label": "【口交侍奉】跨坐椅子俯身口交 (椅子またがりフェラ · KK)"
+    },
+    {
+      "id": "kk_tachi_paizuri_kuwae_all",
+      "pack": "kk_tachi_paizuri_kuwae",
+      "label": "双人 · 立ちパイズリ+咥え · Koikatsu",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作",
+      "title_zh": "站姿夹胸兼含吮",
+      "category": "oral",
+      "category_zh": "口交侍奉",
+      "display_label": "【口交侍奉】站姿夹胸兼含吮 (立ちパイズリ+咥え · KK)"
+    },
+    {
+      "id": "kk_oshitsuke_paizuri_all",
+      "pack": "kk_oshitsuke_paizuri",
+      "label": "双人 · 押し付けパイズリ · Koikatsu",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作",
+      "title_zh": "贴身压迫乳交",
+      "category": "foreplay",
+      "category_zh": "前戏侍奉",
+      "display_label": "【前戏侍奉】贴身压迫乳交 (押し付けパイズリ · KK)"
+    },
+    {
+      "id": "kk_mitchaku_tekoki_all",
+      "pack": "kk_mitchaku_tekoki",
+      "label": "双人 · 密着手コキ · Koikatsu",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作",
+      "title_zh": "站姿贴身耳语手交",
+      "category": "foreplay",
+      "category_zh": "前戏侍奉",
+      "display_label": "【前戏侍奉】站姿贴身耳语手交 (密着手コキ · KK)"
+    },
+    {
+      "id": "kk_tanetsuke_press_all",
+      "pack": "kk_tanetsuke_press",
+      "label": "双人 · 種付けプレス · Koikatsu",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作",
+      "title_zh": "深压折腿正常位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "display_label": "【本番性爱】深压折腿正常位 (種付けプレス · KK)"
+    },
+    {
+      "id": "kk_manguri_seijoui_all",
+      "pack": "kk_manguri_seijoui",
+      "label": "双人 · マングリ正常位 · Koikatsu",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作",
+      "title_zh": "M字折叠压腿正常位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "display_label": "【本番性爱】M字折叠压腿正常位 (マングリ正常位 · KK)"
+    },
+    {
+      "id": "kk_udehippari_kouhai_all",
+      "pack": "kk_udehippari_kouhai",
+      "label": "双人 · 腕引っ張り後背位 · Koikatsu",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作",
+      "title_zh": "拉臂掌控后背位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "display_label": "【本番性爱】拉臂掌控后背位 (腕引っ張り後背位 · KK)"
+    },
+    {
+      "id": "kk_neback_all",
+      "pack": "kk_neback",
+      "label": "双人 · 寝バック · Koikatsu",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作",
+      "title_zh": "贴床俯卧后背位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "display_label": "【本番性爱】贴床俯卧后背位 (寝バック · KK)"
+    },
+    {
+      "id": "kk_isu_taimen_all",
+      "pack": "kk_isu_taimen",
+      "label": "双人 · 椅子対面 · Koikatsu",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作",
+      "title_zh": "椅子面对面抱坐位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "display_label": "【本番性爱】椅子面对面抱坐位 (椅子対面 · KK)"
+    },
+    {
+      "id": "kk_isu_back_all",
+      "pack": "kk_isu_back",
+      "label": "双人 · 椅子バック · Koikatsu",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作",
+      "title_zh": "扶椅背站姿后背位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "display_label": "【本番性爱】扶椅背站姿后背位 (椅子バック · KK)"
+    },
+    {
+      "id": "kk_sofa_kijoui_all",
+      "pack": "kk_sofa_kijoui",
+      "label": "双人 · ソファ騎乗位 · Koikatsu",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作",
+      "title_zh": "沙发／长榻骑乘位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "display_label": "【本番性爱】沙发／长榻骑乘位 (ソファ騎乗位 · KK)"
+    },
+    {
+      "id": "kk_tsukue_nei_all",
+      "pack": "kk_tsukue_nei",
+      "label": "双人 · 机寝位 · Koikatsu",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作",
+      "title_zh": "桌面仰卧站插位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "display_label": "【本番性爱】桌面仰卧站插位 (机寝位 · KK)"
+    },
+    {
+      "id": "kk_kabe_taimen_ashiage_all",
+      "pack": "kk_kabe_taimen_ashiage",
+      "label": "双人 · 壁対面片足上げ · Koikatsu",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作",
+      "title_zh": "壁咚抬单腿面对面位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "display_label": "【本番性爱】壁咚抬单腿面对面位 (壁対面片足上げ · KK)"
+    },
+    {
+      "id": "kk_kabe_back_ashiage_all",
+      "pack": "kk_kabe_back_ashiage",
+      "label": "双人 · 片足上げ壁バック · Koikatsu",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作",
+      "title_zh": "扶墙抬单腿后背位",
+      "category": "intercourse",
+      "category_zh": "本番性爱",
+      "display_label": "【本番性爱】扶墙抬单腿后背位 (片足上げ壁バック · KK)"
+    },
+    {
+      "id": "kk_isu_kunni_all",
+      "pack": "kk_isu_kunni",
+      "label": "双人 · 椅子クンニ · Koikatsu",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作",
+      "title_zh": "双女椅子百合舔阴",
+      "category": "yuri",
+      "category_zh": "百合协同",
+      "display_label": "【百合协同】双女椅子百合舔阴 (椅子クンニ · KK)"
+    },
+    {
+      "id": "kk_tagai_ijiri_all",
+      "pack": "kk_tagai_ijiri",
+      "label": "双人 · 互い弄り · Koikatsu",
+      "roles": [
+        "A",
+        "B"
+      ],
+      "kind": "入选动作",
+      "title_zh": "站姿双女相互爱抚",
+      "category": "yuri",
+      "category_zh": "百合协同",
+      "display_label": "【百合协同】站姿双女相互爱抚 (互い弄り · KK)"
+    },
+    {
+      "id": "kk_kijoui_kunni_all",
+      "pack": "kk_kijoui_kunni",
+      "label": "三人 · 騎乗位クンニ · Koikatsu",
+      "roles": [
+        "A",
+        "B",
+        "C"
+      ],
+      "kind": "入选动作",
+      "title_zh": "3P 骑乘兼坐脸舔弄",
+      "category": "threesome",
+      "category_zh": "多人协同",
+      "display_label": "【多人协同】3P 骑乘兼坐脸舔弄 (騎乗位クンニ · KK)"
     }
   ]
 }

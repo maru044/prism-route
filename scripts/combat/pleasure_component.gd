@@ -9,6 +9,12 @@ signal climax_reached()
 # Standard edging thresholds
 const EDGING_PREVIEW_THRESHOLD: float = 85.0 # Visual/heartbeat warning state
 const EDGING_CRITICAL_THRESHOLD: float = 90.0 # Combat dialogue interruption threshold
+const DEFAULT_ZONE_MULTIPLIERS: Dictionary = {
+	"mouth": 1.0,
+	"nipples": 1.15,
+	"anal": 1.1,
+	"clitoris": 1.25,
+}
 
 @export var character_name: String = "Actor"
 @export var max_pleasure: float = 100.0
@@ -40,19 +46,22 @@ func reset() -> void:
 	damage_dealt_multiplier = 1.0
 	pleasure_changed.emit(current_pleasure, max_pleasure, 0.0)
 
+func get_zone_multiplier(zone: String) -> float:
+	match zone:
+		"mouth": return sensitivity_mouth
+		"nipples": return sensitivity_nipples
+		"anal": return sensitivity_anal
+		"clitoris": return sensitivity_clitoris
+		_: return float(DEFAULT_ZONE_MULTIPLIERS.get(zone, 1.0))
+
+func get_effective_multiplier(zone: String) -> float:
+	return get_zone_multiplier(zone) * damage_taken_multiplier
+
 func add_pleasure(amount: float, zone: String = "") -> float:
 	if has_reached_climax:
 		return 0.0
 		
-	var multiplier := 1.0
-	match zone:
-		"mouth": multiplier = sensitivity_mouth
-		"nipples": multiplier = sensitivity_nipples
-		"anal": multiplier = sensitivity_anal
-		"clitoris": multiplier = sensitivity_clitoris
-		_: multiplier = 1.0
-		
-	var actual_gain: float = amount * multiplier * damage_taken_multiplier
+	var actual_gain: float = amount * get_effective_multiplier(zone)
 	var old_val: float = current_pleasure
 	current_pleasure += actual_gain
 	

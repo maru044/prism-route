@@ -8,6 +8,7 @@ const SHADERS := {
 const FILL_STRENGTH := 0.06
 const SHADOW_RELIEF := 0.0
 const BIOME_PARAMETERS := preload("res://scripts/meadow_palette.gd").BIOME_PARAMETERS
+const MEADOW := preload("res://scripts/meadow_palette.gd")
 const TREE_DRY_TINT := Color(1.03,0.98,0.82)
 const TREE_GREEN_TINT := Color(0.83,0.97,0.89)
 const GREEN_VALUES := {
@@ -47,6 +48,15 @@ func _register(node: GeometryInstance3D) -> void:
 		for name: String in parameters:material.set_shader_parameter(name,parameters[name])
 		material.set_shader_parameter("foliage_backlight_fill",FILL_STRENGTH)
 		material.set_shader_parameter("foliage_shadow_relief",SHADOW_RELIEF)
+		MEADOW.apply_coastal(material)
+		# All three world crown LODs share the root-height-qualified colour field.
+		var radii: Variant=material.get_shader_parameter("tree_canopy_radii_local")
+		var large_crown: bool = radii is Vector3 and radii.x > 5.0
+		var ordinary_green_crown: bool = not instance_palette and green and not large_crown
+		material.set_shader_parameter("coastal_tree_enabled",large_crown or ordinary_green_crown)
+		if ordinary_green_crown:
+			for parameter: String in MEADOW.COAST_GREEN_CROWN:
+				material.set_shader_parameter(parameter, MEADOW.COAST_GREEN_CROWN[parameter])
 		# Keep source values available for future species and offline art review.
 		records.append({"material":material,"baseline":source.shader,"candidate":material.shader,
 			"parameters":parameters,"green":green,"nodes":[],

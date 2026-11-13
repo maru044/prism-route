@@ -1,0 +1,89 @@
+{
+  "source_document": "D:\\Prism Route\\map\\map_current.3dm",
+  "units": "Meters",
+  "base_id": "577d868b-7597-4058-83f8-4b630606b305",
+  "hill_id": "0e79433e-80e9-48f1-ab77-3786fdc3819f",
+  "footprint_net_area_m2": 79690.0567254275,
+  "site_xy_axis_extents_m": [
+    443.76123046875,
+    701.0512847900391
+  ],
+  "base_top_z_range_m": [
+    34.99836730957031,
+    52.99949264526367
+  ],
+  "terrain_peak_z_m": 60.188446044921875,
+  "three_tips": [
+    [
+      291.2809305610736,
+      218.5495461938694,
+      35.000000000000014
+    ],
+    [
+      646.8127394103218,
+      61.73981945333438,
+      34.99999999999968
+    ],
+    [
+      730.5489105575989,
+      -482.5042028086295,
+      52.99999865310923
+    ]
+  ],
+  "three_boundary_arcs": [
+    {
+      "vertices": "AB",
+      "boundary_length_xy": 491.2864888488745,
+      "chord_xy": 388.5770933856751
+    },
+    {
+      "vertices": "BC",
+      "boundary_length_xy": 654.3753444069955,
+      "chord_xy": 550.6480746595661
+    },
+    {
+      "vertices": "CA",
+      "boundary_length_xy": 884.2098330053202,
+      "chord_xy": 827.3044888314619
+    }
+  ],
+  "boundary_perimeter_xy_m": 2029.8716662611894,
+  "upper_ridge": {
+    "definition": "Combined exposed terrain Z >= 55 m; NOT a flat building pad.",
+    "sample_spacing_m": 3.0,
+    "approx_area_m2": 2313,
+    "xy_axis_extents_m": [
+      39.0,
+      93.0
+    ],
+    "xy_bounds_m": [
+      [
+        417.28094482421875,
+        -167.50173950195312
+      ],
+      [
+        456.28094482421875,
+        -74.50173950195312
+      ]
+    ],
+    "highest_sample_xyz": [
+      441.28094482421875,
+      -125.50173950195312,
+      60.168130265563974
+    ],
+    "largest_gentle_component": {
+      "definition": "Z >= 55 m AND sampled slope <= 10 degrees; connected cells.",
+      "approx_area_m2": 450,
+      "xy_axis_extents_m": [
+        18.0,
+        54.0
+      ]
+    }
+  },
+  "method": "Live Rhino NURBS boundary projection and area; trimmed-face meshes at 0.02 m tolerance; vertical rays on a 3 m XY grid; topmost base/hill surface; finite-difference slopes.",
+  "notes": [
+    "Bounding extents do not describe a rectangular usable site.",
+    "Three boundary lengths are curved arc lengths, not straight wall lengths.",
+    "No terrain was flattened, added, deleted or saved by this measurement."
+  ]
+}

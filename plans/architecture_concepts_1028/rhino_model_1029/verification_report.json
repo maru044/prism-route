@@ -1,0 +1,32 @@
+{
+  "approach_minimum_tread_m": 0.37000000000000455, 
+  "failures": [], 
+  "court_ground_samples": 4080, 
+  "approach_ground_samples": 1431, 
+  "new_closed_valid_solids": 328, 
+  "new_objects": 328, 
+  "court_min_clearance_m": 0.27640889242242395, 
+  "approach_length_m": 171.43031751660064, 
+  "entry_stairs": {
+    "total_rise_m": 5.4000000000000004, 
+    "width_m": 7.2000000000000002, 
+    "middle_landing_m": 2.3999999999999999, 
+    "riser_m": 0.14999999999999999, 
+    "tread_m": 0.34999999999999998, 
+    "risers": 36
+  }, 
+  "passed": true, 
+  "approach_riser_m": 0.14999999999999999, 
+  "approach_min_clearance_m": 0.04472199169069313, 
+  "corridor_obstacle_hits": [], 
+  "summon_anchor": [
+    434.71523309114741, 
+    -105.78808272786853, 
+    61.5
+  ], 
+  "original_objects_verified": 233, 
+  "central_corridor_samples": 279, 
+  "roof_above_dais_m": 14.825004620736118, 
+  "broken_notch_open": true, 
+  "approach_risers": 131
+}

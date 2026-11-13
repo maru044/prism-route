@@ -72,7 +72,8 @@ def prepare():
  assert sc.doc.Path.replace('\\','/').replace('//','/').lower()=='d:/prism route/map/map_current.3dm'
  if not os.path.isdir(CACHE):os.makedirs(CACHE)
  opts=Rhino.FileIO.SerializationOptions();before={str(o.Id):(int(o.Geometry.DataCRC(0)),o.Attributes.ToJSON(opts))for o in objects()}
- selected=[o for o in objects()if visible(o)and isinstance(o.Geometry,(G.Brep,G.Mesh,G.SubD,G.Extrusion))]
+ selected=[o for o in objects()if visible(o)and isinstance(o.Geometry,(G.Brep,G.Mesh,G.SubD,G.Extrusion))
+           and o.Attributes.GetUserString('pr_feature')!='north_lagoon_ruins']
  selected.sort(key=lambda o:str(o.Id))
  d={'before':before,'ids':[str(o.Id)for o in selected],'index':0,'records':[],'center':[1450,1150,0]}
  sc.sticky[TAG]=d

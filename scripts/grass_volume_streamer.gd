@@ -53,6 +53,7 @@ var world_scene
 var columns: Dictionary = {}
 var indexed_cells_count:=0
 var render_configured:=false
+var rendering_enabled := true
 # Presentation hook: choose geometry BEFORE allocating/uploading a MultiMesh.
 # Generation and baked root buffers remain independent of display LOD.
 var presentation_mesh_selector: Callable
@@ -145,8 +146,38 @@ func _distance_squared(cell: Vector3i,point: Vector3) -> float:
 	var minimum:=Vector3(cell)*CELL
 	return point.distance_squared_to(point.clamp(minimum,minimum+Vector3.ONE*CELL))
 
+func set_rendering_enabled(enabled: bool) -> void:
+	if rendering_enabled == enabled:
+		return
+	rendering_enabled = enabled
+	visible = enabled
+	if enabled:
+		refresh()
+		return
+	for chunk: Node3D in active.values():
+		vegetation._remove_chunk_nodes_from_tracking(chunk)
+		chunk.hide()
+		chunk.queue_free()
+	total_unloaded += active.size()
+	active.clear()
+	if not staging.is_empty():
+		staging.chunk.queue_free()
+		staging.clear()
+	required.clear()
+	queue.clear()
+	online_queue.clear()
+	ready_cells.clear()
+	paused.clear()
+	work.clear()
+	requested_at.clear()
+	visible_at.clear()
+	prediction_velocity = Vector3.ZERO
+	have_position = false
+	last_build_usec = 0
+	last_commit_usec = 0
+
 func refresh() -> void:
-	if not is_instance_valid(vegetation.target):return
+	if not rendering_enabled or not is_instance_valid(vegetation.target):return
 	var refresh_start:=Time.get_ticks_usec()
 	_update_frustum()
 	center=vegetation.target.global_position
@@ -228,6 +259,11 @@ func _score(cell: Vector3i) -> float:
 	return 2000+distance-minf(age*12,1800)
 
 func tick(delta: float) -> void:
+	if not rendering_enabled:
+		# Retire already queued worker tasks without requesting or uploading more grass.
+		if not store.jobs.is_empty():
+			store.poll()
+		return
 	var tick_start:=Time.get_ticks_usec()
 	if not render_configured:
 		vegetation.grass_material.set_shader_parameter("skip_invisible_grass",not "--grass-legacy-vertices" in OS.get_cmdline_user_args())

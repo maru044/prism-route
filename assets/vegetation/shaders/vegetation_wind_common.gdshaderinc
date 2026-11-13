@@ -423,6 +423,13 @@ void vertex() {
 			}
 			palette_tint = mix(palette_dry.rgb, palette_green.rgb, transition)
 				* subtle_value;
+			#ifdef GRASS_GUST_DEMO
+			float coast = coastal_weight(world_origin);
+			if (coast > 0.0) {
+				vec3 coastal = coastal_grass_colour(world_origin);
+				palette_tint = mix(palette_tint, coastal * subtle_value, coast);
+			}
+			#endif
 		}
 		float direction_length = max(length(wind_direction), 0.0001);
 		vec2 direction = wind_direction / direction_length;

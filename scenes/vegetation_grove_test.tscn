@@ -7,6 +7,7 @@
 script = ExtResource("1_main")
 biome_demo = true
 grove_demo = true
+coastal_palette_demo = true
 
 [node name="OrbitCamera" type="Camera3D" parent="."]
 current = true
@@ -23,6 +24,6 @@ offset_left = 24.0
 offset_top = 22.0
 offset_right = 1050.0
 offset_bottom = 74.0
-text = "Ganyu vegetation test    Tab: return to playable world\nWASD: move    Q/E: down/up    Shift: fast    Right-drag: look    Wheel: forward/back"
+text = "青蓝海岸草 / 紫罗兰大树 · 左下角切换配色\nWASD 移动 · Q/E 升降 · 右键转向 · 滚轮前后 · Tab 返回大世界"
 theme_override_colors/font_color = Color(1, 1, 1, 0.82)
 theme_override_font_sizes/font_size = 22

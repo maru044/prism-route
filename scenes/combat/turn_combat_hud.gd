@@ -9,6 +9,13 @@ enum CommandPage { ROOT, CATEGORIES, SKILLS }
 const UI := preload("res://scenes/combat/encounter_ui_style.gd")
 const Card := preload("res://scenes/combat/encounter_card.gd")
 const EDGE_BACKDROP := preload("res://scenes/combat/encounter_edge_backdrop.gdshader")
+const PleasureComponentClass := preload("res://scripts/combat/pleasure_component.gd")
+const ZONE_NAMES := {
+	"mouth": ["口腔", "柔嫩口腔"],
+	"nipples": ["双乳", "敏感双乳"],
+	"anal": ["菊部", "紧致菊部"],
+	"clitoris": ["花核", "私密花核"],
+}
 const ACTIONS := {
 	"caress": preload("res://assets/combat/actions/action_caress.tres"),
 	"nipples": preload("res://assets/combat/actions/action_nipples.tres"),
@@ -31,14 +38,18 @@ var npc_pleasure_label: Label
 var round_label: Label
 var phase_label: Label
 var log_box: RichTextLabel
+var koujou_box: RichTextLabel
 
 var _root_menu: HBoxContainer
 var _categories: HBoxContainer
 var _skills: VBoxContainer
 var _back_button: Card
 var _command_page := CommandPage.ROOT
+var _current_group := ""
 var _description: Label
+var _action_tags: Label
 var _bottom: Control
+var _opponent_pleasure: Node
 var _input_enabled := false
 var _chat_open := false
 var _player_tween: Tween
@@ -197,19 +208,38 @@ func _build_bottom() -> void:
 	dock.offset_bottom = -38
 	dock.alignment = BoxContainer.ALIGNMENT_END
 	_bottom.add_child(dock)
-	_description = UI.text_label("", 28, palette.text, palette)
+	_description = UI.text_label("", 26, palette.text, palette)
 	_description.add_theme_font_override("font", UI.command_font())
 	_description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	dock.add_child(_description)
 
+	_action_tags = UI.text_label("", 18, palette.accent, palette)
+	_action_tags.add_theme_font_override("font", UI.interface_font())
+	_action_tags.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_action_tags.hide()
+	dock.add_child(_action_tags)
+
+	koujou_box = RichTextLabel.new()
+	koujou_box.name = "CombatKoujouBox"
+	koujou_box.bbcode_enabled = true
+	koujou_box.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	koujou_box.add_theme_font_override("normal_font", UI.command_font())
+	koujou_box.add_theme_font_size_override("normal_font_size", 24)
+	koujou_box.add_theme_color_override("default_color", palette.text)
+	koujou_box.add_theme_color_override("font_outline_color", palette.shade)
+	koujou_box.add_theme_constant_override("outline_size", 4)
+	koujou_box.custom_minimum_size.y = 80
+	dock.add_child(koujou_box)
+	koujou_box.hide()
+
 	log_box = RichTextLabel.new()
 	log_box.name = "BattleLog"
-	log_box.custom_minimum_size.y = 53
+	log_box.custom_minimum_size.y = 35
 	log_box.scroll_following = true
-	log_box.add_theme_font_size_override("normal_font_size", 20)
+	log_box.add_theme_font_size_override("normal_font_size", 18)
 	log_box.add_theme_color_override("default_color", palette.secondary)
 	log_box.add_theme_color_override("font_outline_color", palette.shade)
-	log_box.add_theme_constant_override("outline_size", 4)
+	log_box.add_theme_constant_override("outline_size", 3)
 	dock.add_child(log_box)
 	log_box.get_v_scroll_bar().self_modulate.a = 0.0
 	log_box.get_v_scroll_bar().mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -232,37 +262,92 @@ func _refresh_command_page() -> void:
 	_skills.visible = not _chat_open and _command_page == CommandPage.SKILLS
 	_back_button.visible = not _chat_open and _command_page != CommandPage.ROOT
 	_description.visible = _skills.visible
+	_action_tags.visible = _skills.visible
+
+func set_opponent_pleasure(comp: Node) -> void:
+	_opponent_pleasure = comp
+
+func _get_zone_multiplier(zone: String) -> float:
+	if _opponent_pleasure != null and is_instance_valid(_opponent_pleasure) and _opponent_pleasure.has_method("get_zone_multiplier"):
+		return _opponent_pleasure.get_zone_multiplier(zone)
+	return float(PleasureComponentClass.DEFAULT_ZONE_MULTIPLIERS.get(zone, 1.0))
+
+func _get_extra_multiplier() -> float:
+	if _opponent_pleasure != null and is_instance_valid(_opponent_pleasure) and "damage_taken_multiplier" in _opponent_pleasure:
+		return float(_opponent_pleasure.damage_taken_multiplier)
+	return 1.0
+
+func _format_multiplier(mult: float) -> String:
+	var rounded := snappedf(mult, 0.01)
+	if is_equal_approx(rounded, snappedf(rounded, 0.1)):
+		return "×%.1f" % rounded
+	return "×%.2f" % rounded
+
+func _format_action_badges(action: TurnActionResource) -> Dictionary:
+	if action.self_pleasure_defense > 0.0:
+		var def_pct := action.self_pleasure_defense * 100.0
+		return {
+			"card_detail": "减免 %.0f%%" % def_pct,
+			"card_sub": "防反姿态",
+			"bottom_tags": "《防御姿态》  《本回合受击快感 -%.0f%%》" % def_pct,
+		}
+	var names: Array = ZONE_NAMES.get(action.target_zone, ["全身", "全身感官"])
+	var zone_mult := _get_zone_multiplier(action.target_zone)
+	var extra_mult := _get_extra_multiplier()
+	var mult_str := _format_multiplier(zone_mult)
+	var expected_gain := action.base_pleasure * zone_mult * extra_mult
+	var bottom := "《部位: %s》  《敏感倍率 %s》  《预计快感 +%.1f%%》" % [names[1], mult_str, expected_gain]
+	if extra_mult > 1.01:
+		bottom += "  《识趣加成 %s》" % _format_multiplier(extra_mult)
+	return {
+		"card_detail": "♥  +%.0f%%" % action.base_pleasure,
+		"card_sub": "%s %s" % [names[0], mult_str],
+		"bottom_tags": bottom,
+	}
 
 func _show_group(id: String) -> void:
 	if not _input_enabled or _chat_open or _command_page != CommandPage.CATEGORIES:
+		return
+	if koujou_box:
+		koujou_box.hide()
+	_current_group = id
+	_populate_skills(id)
+	_command_page = CommandPage.SKILLS
+	_refresh_command_page()
+
+func _populate_skills(id: String) -> void:
+	if not GROUPS.has(id):
 		return
 	for child in _skills.get_children():
 		_skills.remove_child(child)
 		child.queue_free()
 	for action_id: String in GROUPS[id]:
 		var action: TurnActionResource = ACTIONS[action_id]
+		var badges := _format_action_badges(action)
 		var button := Card.new()
 		button.name = action_id.capitalize()
-		var effect := "♥  +%.0f%%" % action.base_pleasure
-		if action.self_pleasure_defense > 0:
-			effect = "减免 %.0f%%" % (action.self_pleasure_defense * 100.0)
-		button.configure(action.action_name, palette, Card.Kind.SKILL, effect)
+		button.configure(action.action_name, palette, Card.Kind.SKILL, badges["card_detail"], badges["card_sub"])
 		button.custom_minimum_size.y = 84
 		button.pressed.connect(_choose_action.bind(action))
 		button.mouse_entered.connect(_feature_action.bind(button, action))
 		button.focus_entered.connect(_feature_action.bind(button, action))
 		_skills.add_child(button)
 	_feature_action(_skills.get_child(0) as Card, ACTIONS[GROUPS[id][0]])
-	_command_page = CommandPage.SKILLS
-	_refresh_command_page()
 
 func _feature_action(featured: Card, action: TurnActionResource) -> void:
 	for button: Card in _skills.get_children():
 		button.set_featured(button == featured)
+	if koujou_box:
+		koujou_box.hide()
 	_description.text = action.description if not action.description.is_empty() else action.action_name
+	_action_tags.text = _format_action_badges(action)["bottom_tags"]
+	_description.show()
+	_action_tags.show()
 
 func _choose_action(action: Resource) -> void:
 	if _input_enabled and not _chat_open and _command_page == CommandPage.SKILLS:
+		_description.hide()
+		_action_tags.hide()
 		action_chosen.emit(action)
 
 func _request_chat() -> void:
@@ -271,7 +356,11 @@ func _request_chat() -> void:
 
 func reset_battle() -> void:
 	_command_page = CommandPage.ROOT
+	_current_group = ""
 	set_chat_open(false)
+	if koujou_box:
+		koujou_box.clear()
+		koujou_box.hide()
 	log_box.clear()
 	log_box.hide()
 	update_player_pleasure(0.0, 100.0, 0.0)
@@ -280,6 +369,8 @@ func reset_battle() -> void:
 func set_chat_open(open: bool) -> void:
 	_chat_open = open
 	_bottom.visible = not open
+	if not open and _command_page == CommandPage.SKILLS and not _current_group.is_empty():
+		_populate_skills(_current_group)
 	_refresh_command_page()
 	_sync_input()
 
@@ -303,6 +394,18 @@ func _set_gauge(gauge: ProgressBar, label: Label, percentage: float, previous: T
 func update_round(round_num: int) -> void:
 	round_label.text = "第 %02d 回合" % round_num
 
+func display_koujou(speaker: String, text: String, extra_log: String = "") -> void:
+	_description.hide()
+	_action_tags.hide()
+	if koujou_box:
+		var formatted := "[color=#ff99bb][b]【%s】[/b][/color] %s" % [speaker, text]
+		if not extra_log.is_empty():
+			formatted += "\n[color=#b8e4ff][font_size=19]%s[/font_size][/color]" % extra_log
+		koujou_box.text = formatted
+		koujou_box.show()
+	if log_box:
+		log_box.hide()
+
 func append_log(message: String) -> void:
 	if message.begins_with("===") or message.begins_with("---") or message.begins_with("【玩家回合】"):
 		return
@@ -315,6 +418,8 @@ func set_input_enabled(enabled: bool, phase_text: String = "") -> void:
 	_input_enabled = enabled
 	if not phase_text.is_empty():
 		phase_label.text = phase_text
+	if enabled and not _chat_open and _command_page == CommandPage.SKILLS and not _current_group.is_empty():
+		_populate_skills(_current_group)
 	_sync_input()
 
 func _sync_input() -> void:

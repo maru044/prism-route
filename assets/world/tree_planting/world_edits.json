@@ -245,7 +245,8 @@
 		"base_009568",
 		"base_018866",
 		"base_015519",
-		"base_016835"
+		"base_016835",
+		"base_015243"
 	],
 	"terrain": "res://assets/world/current_map_validation/current_region.glb",
 	"trees": [
@@ -12806,6 +12807,981 @@
 			"species": "small",
 			"surface": "95094d17-bdb0-4407-bdca-d26ab1deaad7",
 			"yaw": 1.75887203216553
+		},
+		{
+			"id": "base_016920",
+			"palette": "cherry",
+			"position": [
+				657.141662597656,
+				1.19999980926514,
+				-1084.63452148438
+			],
+			"scale": 1.13038837909698,
+			"species": "broad",
+			"surface": "2fa0fb6a-09fc-4610-a4b4-f4d92e55f925",
+			"yaw": 5.37368059158325
+		},
+		{
+			"id": "tree_ba4ba9b9f694d99c3d87366f",
+			"palette": "cherry",
+			"position": [
+				653.697692871094,
+				1.19999980926514,
+				-1034.12927246094
+			],
+			"scale": 1.0,
+			"species": "broad",
+			"surface": "2fa0fb6a-09fc-4610-a4b4-f4d92e55f925",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_41f0263f7e1a918ed74100bd",
+			"palette": "cherry",
+			"position": [
+				621.031066894531,
+				1.20000076293945,
+				-1068.59692382813
+			],
+			"scale": 1.0,
+			"species": "broad",
+			"surface": "2fa0fb6a-09fc-4610-a4b4-f4d92e55f925",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_157134abe9342c95365c506c",
+			"palette": "cherry",
+			"position": [
+				664.572082519531,
+				1.19999885559082,
+				-1078.65283203125
+			],
+			"scale": 1.0,
+			"species": "broad",
+			"surface": "2fa0fb6a-09fc-4610-a4b4-f4d92e55f925",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_3842076e5e046ec4f39db5a2",
+			"palette": "green",
+			"position": [
+				648.339050292969,
+				1.19999933242798,
+				-1033.97241210938
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "2fa0fb6a-09fc-4610-a4b4-f4d92e55f925",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_6e40cd46cd42b34a89259ac8",
+			"palette": "green",
+			"position": [
+				662.675720214844,
+				1.19999885559082,
+				-1032.29699707031
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "2fa0fb6a-09fc-4610-a4b4-f4d92e55f925",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_707614d8a59d739df156eaf5",
+			"palette": "green",
+			"position": [
+				663.511596679688,
+				1.19999885559082,
+				-1039.85144042969
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "2fa0fb6a-09fc-4610-a4b4-f4d92e55f925",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_c78e544fd169859033e3226d",
+			"palette": "green",
+			"position": [
+				618.257202148438,
+				1.19999980926514,
+				-1057.38500976563
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "2fa0fb6a-09fc-4610-a4b4-f4d92e55f925",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_14c8d052a91549a249a08a65",
+			"palette": "green",
+			"position": [
+				619.435974121094,
+				1.20000076293945,
+				-1071.79736328125
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "2fa0fb6a-09fc-4610-a4b4-f4d92e55f925",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_a116c9205abfb578f7179092",
+			"palette": "green",
+			"position": [
+				609.975463867188,
+				1.19999957084656,
+				-1064.826171875
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "2fa0fb6a-09fc-4610-a4b4-f4d92e55f925",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_6f0356bdda2a64619795f172",
+			"palette": "green",
+			"position": [
+				631.103454589844,
+				1.19999980926514,
+				-1081.36071777344
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "2fa0fb6a-09fc-4610-a4b4-f4d92e55f925",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_e8157841f7f71d241d57c668",
+			"palette": "green",
+			"position": [
+				627.754821777344,
+				1.19999980926514,
+				-1077.56042480469
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "2fa0fb6a-09fc-4610-a4b4-f4d92e55f925",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_e93c7b8b852085bc22998681",
+			"palette": "green",
+			"position": [
+				638.282775878906,
+				1.19999980926514,
+				-1084.91296386719
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "2fa0fb6a-09fc-4610-a4b4-f4d92e55f925",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_83cbeac3c0dc63ff2106d59f",
+			"palette": "green",
+			"position": [
+				642.772888183594,
+				1.19999885559082,
+				-1084.62536621094
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "2fa0fb6a-09fc-4610-a4b4-f4d92e55f925",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_7f6ed05f1c2a0df6e614ca1c",
+			"palette": "green",
+			"position": [
+				653.91064453125,
+				1.20000076293945,
+				-1084.2001953125
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "2fa0fb6a-09fc-4610-a4b4-f4d92e55f925",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_a427c9d648fe7fc787dca025",
+			"palette": "green",
+			"position": [
+				667.216125488281,
+				1.20000076293945,
+				-1077.05346679688
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "2fa0fb6a-09fc-4610-a4b4-f4d92e55f925",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_7cbc3d8e6af14a8c88ec7b02",
+			"palette": "cherry",
+			"position": [
+				621.0849609375,
+				1.19999980926514,
+				-1053.28576660156
+			],
+			"scale": 1.0,
+			"species": "broad",
+			"surface": "2fa0fb6a-09fc-4610-a4b4-f4d92e55f925",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_de2bee7a24075bf0ed05adca",
+			"palette": "green",
+			"position": [
+				639.137756347656,
+				1.19999980926514,
+				-1035.39624023438
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "2fa0fb6a-09fc-4610-a4b4-f4d92e55f925",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_c5db32011abf9d4cda279698",
+			"palette": "green",
+			"position": [
+				624.978637695313,
+				1.20000076293945,
+				-1045.11926269531
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "2fa0fb6a-09fc-4610-a4b4-f4d92e55f925",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_96267715e3025421c367a4c3",
+			"palette": "green",
+			"position": [
+				616.85009765625,
+				1.19999885559082,
+				-1067.73718261719
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "2fa0fb6a-09fc-4610-a4b4-f4d92e55f925",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_f7bc6355302ce428a942458a",
+			"palette": "green",
+			"position": [
+				621.843933105469,
+				1.19999980926514,
+				-1069.46569824219
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "2fa0fb6a-09fc-4610-a4b4-f4d92e55f925",
+			"yaw": 0.0
+		},
+		{
+			"id": "tree_0e276ef0e9086bda79bce957",
+			"palette": "green",
+			"position": [
+				631.1240234375,
+				1.19999980926514,
+				-1080.83361816406
+			],
+			"scale": 1.0,
+			"species": "small",
+			"surface": "2fa0fb6a-09fc-4610-a4b4-f4d92e55f925",
+			"yaw": 0.0
+		},
+		{
+			"id": "base_013994",
+			"palette": "cherry",
+			"position": [
+				297.881439208984,
+				-0.0351452827453613,
+				-512.293884277344
+			],
+			"scale": 0.918383419513702,
+			"species": "broad",
+			"surface": "1da83a02-adcc-4ab8-9e5b-0beafdabdb96",
+			"yaw": 1.22184121608734
+		},
+		{
+			"id": "base_005864",
+			"palette": "cherry",
+			"position": [
+				251.694030761719,
+				1.46832919120789,
+				-539.568725585938
+			],
+			"scale": 1.14872097969055,
+			"species": "broad",
+			"surface": "1da83a02-adcc-4ab8-9e5b-0beafdabdb96",
+			"yaw": 0.510331332683563
+		},
+		{
+			"id": "base_004241",
+			"palette": "cherry",
+			"position": [
+				277.070068359375,
+				1.41418528556824,
+				-538.713012695313
+			],
+			"scale": 0.9463130235672,
+			"species": "broad",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 1.82945990562439
+		},
+		{
+			"id": "base_002662",
+			"palette": "green",
+			"position": [
+				286.444274902344,
+				1.89565122127533,
+				-512.172424316406
+			],
+			"scale": 0.848234891891479,
+			"species": "upright",
+			"surface": "1da83a02-adcc-4ab8-9e5b-0beafdabdb96",
+			"yaw": 5.18693065643311
+		},
+		{
+			"id": "base_014958",
+			"palette": "green",
+			"position": [
+				301.326782226563,
+				-0.233867764472961,
+				-526.272766113281
+			],
+			"scale": 1.12386500835419,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 2.24955868721008
+		},
+		{
+			"id": "base_008411",
+			"palette": "green",
+			"position": [
+				303.518920898438,
+				0.835012912750244,
+				-535.991577148438
+			],
+			"scale": 0.851579368114471,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 0.894127190113068
+		},
+		{
+			"id": "base_000780",
+			"palette": "green",
+			"position": [
+				268.294769287109,
+				2.05907726287842,
+				-525.566955566406
+			],
+			"scale": 0.875194549560547,
+			"species": "upright",
+			"surface": "1da83a02-adcc-4ab8-9e5b-0beafdabdb96",
+			"yaw": 2.33521580696106
+		},
+		{
+			"id": "base_018433",
+			"palette": "green",
+			"position": [
+				279.811889648438,
+				1.15779316425323,
+				-543.399169921875
+			],
+			"scale": 0.957354962825775,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 0.884801983833313
+		},
+		{
+			"id": "base_005541",
+			"palette": "green",
+			"position": [
+				352.491821289063,
+				0.262226104736328,
+				-604.036987304688
+			],
+			"scale": 1.12767243385315,
+			"species": "broad",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 1.02772009372711
+		},
+		{
+			"id": "base_006116",
+			"palette": "cherry",
+			"position": [
+				336.999267578125,
+				-0.263729095458984,
+				-578.661499023438
+			],
+			"scale": 0.971477746963501,
+			"species": "broad",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 1.84208965301514
+		},
+		{
+			"id": "base_015700",
+			"palette": "green",
+			"position": [
+				327.782501220703,
+				0.827544689178467,
+				-571.459350585938
+			],
+			"scale": 0.935366749763489,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 4.60335397720337
+		},
+		{
+			"id": "base_009589",
+			"palette": "cherry",
+			"position": [
+				345.215637207031,
+				0.800570487976074,
+				-596.711120605469
+			],
+			"scale": 1.09832811355591,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 4.19412422180176
+		},
+		{
+			"id": "base_009027",
+			"palette": "green",
+			"position": [
+				329.718627929688,
+				0.986255407333374,
+				-575.205505371094
+			],
+			"scale": 0.831657826900482,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.69368767738342
+		},
+		{
+			"id": "base_016688",
+			"palette": "green",
+			"position": [
+				357.491058349609,
+				0.918436527252197,
+				-615.328735351563
+			],
+			"scale": 1.16863286495209,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 2.3513331413269
+		},
+		{
+			"id": "base_005709",
+			"palette": "green",
+			"position": [
+				363.942016601563,
+				0.794764041900635,
+				-623.946533203125
+			],
+			"scale": 1.03060233592987,
+			"species": "upright",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.43045783042908
+		},
+		{
+			"id": "base_014746",
+			"palette": "green",
+			"position": [
+				339.768798828125,
+				1.01553428173065,
+				-590.072814941406
+			],
+			"scale": 1.17223525047302,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 0.909544408321381
+		},
+		{
+			"id": "base_004810",
+			"palette": "green",
+			"position": [
+				299.531616210938,
+				1.69896602630615,
+				-501.758636474609
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "1da83a02-adcc-4ab8-9e5b-0beafdabdb96",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_b7038ede95df66712cff6591",
+			"palette": "green",
+			"position": [
+				304.545043945313,
+				1.66540908813477,
+				-541.895141601563
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_0ba3d8c2bcbab12ccf4e2ab8",
+			"palette": "green",
+			"position": [
+				295.633178710938,
+				2.02883911132813,
+				-530.638305664063
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_760490a2d6eafeb841ab43cd",
+			"palette": "green",
+			"position": [
+				288.26220703125,
+				1.99820709228516,
+				-517.948547363281
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_4e12d9ec8ded525315750c85",
+			"palette": "green",
+			"position": [
+				292.18701171875,
+				1.86448097229004,
+				-522.769470214844
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_349af6292138425df6afbf48",
+			"palette": "green",
+			"position": [
+				262.668518066406,
+				2.05592918395996,
+				-529.616394042969
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "1da83a02-adcc-4ab8-9e5b-0beafdabdb96",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_02c0d9ce8d88157a0d072b66",
+			"palette": "green",
+			"position": [
+				256.909820556641,
+				2.2490348815918,
+				-532.679931640625
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "1da83a02-adcc-4ab8-9e5b-0beafdabdb96",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_3d713f6e13052e139bfa8c03",
+			"palette": "green",
+			"position": [
+				284.580627441406,
+				1.67603492736816,
+				-545.104736328125
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_5b53ea65ef98b2980948bedc",
+			"palette": "green",
+			"position": [
+				290.356506347656,
+				1.71548652648926,
+				-553.360046386719
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_f9c0ab68c8691d39a364208f",
+			"palette": "green",
+			"position": [
+				293.973205566406,
+				1.72502517700195,
+				-558.5986328125
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_3337091d189ceb8ed880f0f4",
+			"palette": "green",
+			"position": [
+				296.040710449219,
+				1.44035148620605,
+				-563.114929199219
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_9982a08051389699d2365f93",
+			"palette": "green",
+			"position": [
+				302.791015625,
+				1.70100975036621,
+				-571.626831054688
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_b765cc14dc49a1d2b00b92f6",
+			"palette": "green",
+			"position": [
+				306.202087402344,
+				1.73492050170898,
+				-576.435913085938
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_1c24e90f4393f365d2e881ce",
+			"palette": "green",
+			"position": [
+				308.264007568359,
+				1.50623512268066,
+				-580.666748046875
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_0c5c52d8d3b639f7d7acb59b",
+			"palette": "green",
+			"position": [
+				315.231964111328,
+				1.77105712890625,
+				-589.416931152344
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_f1500020d2c394d57d23e696",
+			"palette": "green",
+			"position": [
+				317.311889648438,
+				1.5954475402832,
+				-593.46337890625
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_94589ac314548b4fcda7d7b3",
+			"palette": "green",
+			"position": [
+				320.497131347656,
+				1.65436935424805,
+				-597.80126953125
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_1e85b44739da9f9caaa17260",
+			"palette": "green",
+			"position": [
+				324.453125,
+				1.66454696655273,
+				-603.527160644531
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_464b7dd5724718bf60cf6cf5",
+			"palette": "green",
+			"position": [
+				328.775817871094,
+				1.4762134552002,
+				-610.956115722656
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_1beac5607cbdff9c4c0adc0d",
+			"palette": "green",
+			"position": [
+				318.474670410156,
+				1.59433364868164,
+				-562.078002929688
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_b1f849efad94c36de4bc283a",
+			"palette": "green",
+			"position": [
+				321.9609375,
+				1.71822166442871,
+				-567.928100585938
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_585d1a22e9f7710f2e54ac72",
+			"palette": "green",
+			"position": [
+				325.642578125,
+				1.69699478149414,
+				-573.248107910156
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_853a69f41418e659c46993fc",
+			"palette": "green",
+			"position": [
+				329.84912109375,
+				1.42001342773438,
+				-577.861267089844
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_e79300bc7c699cf94675411f",
+			"palette": "green",
+			"position": [
+				319.484924316406,
+				-1.8199291229248,
+				-545.088439941406
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_30d957e70eceb79000f4bb24",
+			"palette": "green",
+			"position": [
+				328.242370605469,
+				-1.8118896484375,
+				-557.586303710938
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_dd4199d984ddef829cb09092",
+			"palette": "green",
+			"position": [
+				330.004028320313,
+				0.0280170440673828,
+				-570.223510742188
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "9ab5b45b-2843-4434-9c33-18f78ee13247",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_baff638caa82e686b7aff23b",
+			"palette": "green",
+			"position": [
+				338.276153564453,
+				-3.05117988586426,
+				-564.446716308594
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "a2a15e34-a9db-4e6a-a4ce-be472804bd15",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_bddfe50afeaabf3335550400",
+			"palette": "green",
+			"position": [
+				307.351776123047,
+				0.115657806396484,
+				-503.352233886719
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "1da83a02-adcc-4ab8-9e5b-0beafdabdb96",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_e96105b692f40a0830d08753",
+			"palette": "green",
+			"position": [
+				308.240203857422,
+				1.68548202514648,
+				-493.428497314453
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "1da83a02-adcc-4ab8-9e5b-0beafdabdb96",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_fd93deed56824f2804c04af9",
+			"palette": "green",
+			"position": [
+				315.670745849609,
+				-1.1612548828125,
+				-502.745208740234
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "1da83a02-adcc-4ab8-9e5b-0beafdabdb96",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_294c4f1d3c7d0f88076eff0c",
+			"palette": "green",
+			"position": [
+				248.024322509766,
+				0.235866546630859,
+				-546.61669921875
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "1da83a02-adcc-4ab8-9e5b-0beafdabdb96",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_d09acd57fd50cbade5f72d59",
+			"palette": "green",
+			"position": [
+				237.324462890625,
+				2.15423202514648,
+				-545.501892089844
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "1da83a02-adcc-4ab8-9e5b-0beafdabdb96",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_18d1051103347a5d7e9040b0",
+			"palette": "green",
+			"position": [
+				231.312957763672,
+				2.61107444763184,
+				-546.682373046875
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "1da83a02-adcc-4ab8-9e5b-0beafdabdb96",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_18798953a15f558f8fd41d9d",
+			"palette": "green",
+			"position": [
+				231.356918334961,
+				1.53250885009766,
+				-551.50048828125
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "1da83a02-adcc-4ab8-9e5b-0beafdabdb96",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_d4564e364637bc8854ad8dba",
+			"palette": "green",
+			"position": [
+				241.572402954102,
+				-2.55547142028809,
+				-560.781372070313
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "1da83a02-adcc-4ab8-9e5b-0beafdabdb96",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_9c8c3b9d235dc49c741acbf5",
+			"palette": "green",
+			"position": [
+				246.759429931641,
+				-1.80456352233887,
+				-554.964782714844
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "1da83a02-adcc-4ab8-9e5b-0beafdabdb96",
+			"yaw": 3.12030005455017
+		},
+		{
+			"id": "tree_fd076a6908851ecafa6fd03d",
+			"palette": "green",
+			"position": [
+				232.333465576172,
+				-1.88655281066895,
+				-563.421264648438
+			],
+			"scale": 1.11182904243469,
+			"species": "small",
+			"surface": "1da83a02-adcc-4ab8-9e5b-0beafdabdb96",
+			"yaw": 3.12030005455017
 		}
 	],
 	"version": 1

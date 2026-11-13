@@ -11,7 +11,7 @@ var _response := 0.0
 var _response_target := 0.0
 var _response_tween: Tween
 
-func configure(title: String, palette: UI.Palette, kind: Kind, detail := "") -> void:
+func configure(title: String, palette: UI.Palette, kind: Kind, detail := "", sub_detail := "") -> void:
 	text = title
 	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	add_theme_font_override("font", UI.interface_font())
@@ -65,16 +65,35 @@ func configure(title: String, palette: UI.Palette, kind: Kind, detail := "") -> 
 	surface.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
 	if kind == Kind.SKILL:
-		var stat := UI.text_label(detail, 20, palette.secondary, palette)
+		var stat_row := UI.row(10)
+		stat_row.alignment = BoxContainer.ALIGNMENT_CENTER
+		add_child(stat_row)
+		stat_row.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		stat_row.anchor_top = .5
+		stat_row.offset_top = 3
+		stat_row.offset_bottom = -6
+
+		var stat := UI.text_label(detail, 19, palette.secondary, palette)
 		stat.add_theme_font_override("font", UI.interface_font())
 		stat.add_theme_constant_override("outline_size", 0)
-		stat.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		stat.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		add_child(stat)
-		stat.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		stat.anchor_top = .5
-		stat.offset_top = 3
-		stat.offset_bottom = -6
+		stat.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		stat_row.add_child(stat)
+
+		if not sub_detail.is_empty():
+			var sep := UI.text_label("·", 18, Color(palette.secondary, 0.55), palette)
+			sep.add_theme_font_override("font", UI.interface_font())
+			sep.add_theme_constant_override("outline_size", 0)
+			sep.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			sep.size_flags_vertical = Control.SIZE_EXPAND_FILL
+			stat_row.add_child(sep)
+
+			var sub_stat := UI.text_label(sub_detail, 18, palette.accent, palette)
+			sub_stat.add_theme_font_override("font", UI.interface_font())
+			sub_stat.add_theme_constant_override("outline_size", 0)
+			sub_stat.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			sub_stat.size_flags_vertical = Control.SIZE_EXPAND_FILL
+			stat_row.add_child(sub_stat)
 	elif kind == Kind.CHOICE:
 		var index := UI.text_label(detail, 19, palette.glass_sheen, palette)
 		index.add_theme_font_override("font", UI.interface_font())

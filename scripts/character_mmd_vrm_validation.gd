@@ -24,6 +24,7 @@ var heading := Label.new()
 var hair_on := true
 var clothes_on := true
 var partner_on := false # 暂时的选择：双人亲密交互碰撞不可预测，容易引起服饰/发丝高频震颤，默认关闭
+var stage_collisions_on := false
 var group := Node3D.new()
 var scope_select := OptionButton.new()
 var view_mode := OptionButton.new()
@@ -289,17 +290,23 @@ func _build_library_ui() -> void:
 	skeleton_toggle.text = "骨架"
 	row.add_child(skeleton_toggle)
 	skeleton_toggle.toggled.connect(func(value): overlay.visible = value)
-	for field in ["头发物理","服饰物理","对方碰撞"]:
+	for field in ["头发物理","服饰物理","对方碰撞","地面／家具碰撞"]:
 		var toggle := CheckButton.new()
 		toggle.text = field
-		toggle.button_pressed = (field != "对方碰撞")
+		toggle.button_pressed = field in ["头发物理", "服饰物理"]
 		if field == "对方碰撞":
 			toggle.tooltip_text = "【暂时的选择】默认关闭以防服饰高频震颤。需要观察对方身体碰撞对衣发的影响时可手动开启。"
+		elif field == "地面／家具碰撞":
+			toggle.tooltip_text = "默认关闭。检查衣发与预览地面或可见家具的接触时开启。"
 		row.add_child(toggle)
 		toggle.toggled.connect(func(value):
-			if field=="头发物理": hair_on=value
-			elif field=="服饰物理": clothes_on=value
-			else: partner_on=value
+			match field:
+				"头发物理": hair_on = value
+				"服饰物理": clothes_on = value
+				"对方碰撞": partner_on = value
+				"地面／家具碰撞":
+					stage_collisions_on = value
+					_sync_stage_collisions()
 			_apply_physics())
 	var pose_mgr_btn := Button.new()
 	pose_mgr_btn.text = "📷 姿态捕获与管理"
@@ -310,6 +317,12 @@ func _build_library_ui() -> void:
 	hint.text = "同一时间轴控制全部角色 · 右键旋转/微调视线 · 滚轮缩放/视场 · [V] 第一人称 · [P] 姿态管理器 · 空格播放/暂停"
 	controls.add_child(hint)
 	_build_pose_manager_ui(layer)
+
+func _source_badge(item: Dictionary) -> String:
+	match item.get("source_library", ""):
+		"koikatsu": return "【恋活】"
+		"mmd": return "【MMD】"
+	return ""
 
 func _filter_entries() -> void:
 	filtered_entries.clear()
@@ -324,19 +337,20 @@ func _filter_entries() -> void:
 				entry=candidate
 				break
 		if entry.is_empty():continue
-		var haystack:String=item.label + " " + item.get("title_zh", "") + " " + item.get("category_zh", "") + " " + item.get("description_zh", "")
+		var badge := _source_badge(item)
+		var haystack:String=badge + " " + item.label + " " + item.get("title_zh", "") + " " + item.get("category_zh", "") + " " + item.get("description_zh", "")
 		if item.has("placement"):
 			haystack += " " + str(item.placement.get("type_zh", "")) + " " + str(item.placement.get("prop_needed", ""))
 		for track in item.source_tracks:haystack+=" "+str(track.file)
 		if not search.text.is_empty() and not haystack.to_lower().contains(search.text.to_lower()): continue
 		filtered_entries.append(entry)
-		var display_title: String = item.get("display_label", "%d人 · %s" % [people,item.label])
+		var display_title: String = badge + String(item.get("display_label", "%d人 · %s" % [people,item.label]))
 		library_list.add_item(display_title)
 		var tooltip_desc: String = item.get("description_zh", "")
 		if not tooltip_desc.is_empty():
 			library_list.set_item_tooltip(filtered_entries.size()-1, "%s\n\n%s\n\n%d–%d 帧 · %.2f 秒 · %d 个角色位" % [display_title, tooltip_desc, item.frame_start, item.frame_end, item.duration, people])
 		else:
-			library_list.set_item_tooltip(filtered_entries.size()-1, "%s\n%d–%d 帧 · %.2f 秒 · %d 个角色位" % [item.label, item.frame_start, item.frame_end, item.duration, people])
+			library_list.set_item_tooltip(filtered_entries.size()-1, "%s\n%d–%d 帧 · %.2f 秒 · %d 个角色位" % [display_title, item.frame_start, item.frame_end, item.duration, people])
 		if item.id==current_pack:library_list.select(filtered_entries.size()-1)
 	count_label.text="%d 个动作组 · 每组只列一次" % filtered_entries.size()
 	library_list.custom_minimum_size.y=clampf(filtered_entries.size()*30.0+12.0,150,344)
@@ -510,7 +524,7 @@ func select_entry(id: String) -> void:
 		var file:String=str(pack.source_tracks[i].file).replace("\\","/").get_file()
 		source_labels.append("%s：%s" % [pack.roles[i].label,file])
 	var title_display: String = pack.get("display_label", entry.label)
-	heading.text = title_display + "  |  " + " / ".join(role_labels)
+	heading.text = _source_badge(pack) + title_display + "  |  " + " / ".join(role_labels)
 	if pack.has("title_zh"):
 		var pinfo: Dictionary = pack.get("placement", {})
 		var rdesc_lines: Array[String] = []
@@ -609,6 +623,19 @@ func _add_ground_collision(bounds: AABB) -> void:
 	shape.shape=box
 	body.add_child(shape)
 	add_child(body)
+	_sync_stage_collisions()
+
+func _sync_stage_collisions() -> void:
+	if is_instance_valid(ground_body):
+		ground_body.collision_layer = 1 if stage_collisions_on else 0
+	if is_instance_valid(furniture_instance):
+		var collision_active := stage_collisions_on and furniture_instance.visible
+		furniture_instance.process_mode = Node.PROCESS_MODE_INHERIT if collision_active else Node.PROCESS_MODE_DISABLED
+
+func _set_furniture_preview_visible(shown: bool) -> void:
+	if not is_instance_valid(furniture_instance): return
+	furniture_instance.visible = shown
+	_sync_stage_collisions()
 
 func _seek_animation(value: float) -> void:
 	for instance in actors.values(): instance.seek(value)
@@ -619,8 +646,10 @@ func _advance_animation(delta: float) -> void:
 	var wrapped: bool=pack.get("loop_preview", false) and next_time>=duration
 	time=fmod(next_time,duration) if wrapped else minf(next_time,duration)
 	# One absolute time sample, never one independent delta accumulator per role.
+	# A prepared seam can keep the spring history across an ordinary wrap.
+	var reset_physics: bool = delta > 0.1 or (wrapped and not pack.get("seamless_loop", false))
 	for instance in actors.values():
-		if delta>.1 or wrapped: instance.seek(time)
+		if reset_physics: instance.seek(time)
 		else: instance.sample_time(time)
 	for proxy in role_proxies.values(): proxy.update_proxies()
 
@@ -787,8 +816,7 @@ func _on_furniture_selected(index: int) -> void:
 	if index == 0:
 		furniture_visible = false
 		auto_furn_match = false
-		if furniture_instance:
-			furniture_instance.visible = false
+		_set_furniture_preview_visible(false)
 	elif index == 1:
 		furniture_visible = true
 		auto_furn_match = true
@@ -862,10 +890,10 @@ func _auto_match_furniture() -> void:
 				_load_furniture(item, default_offset, default_rot)
 				break
 	else:
-		if furniture_instance:
-			furniture_instance.visible = false
+		_set_furniture_preview_visible(false)
 
 func _load_furniture(data: Dictionary, default_pos: Vector3 = Vector3.ZERO, default_rot_deg: float = 0.0) -> void:
+	_set_furniture_preview_visible(false)
 	for c in furniture_root.get_children():
 		c.queue_free()
 	furniture_instance = null
@@ -876,7 +904,7 @@ func _load_furniture(data: Dictionary, default_pos: Vector3 = Vector3.ZERO, defa
 	if res:
 		furniture_instance = res.instantiate()
 		furniture_root.add_child(furniture_instance)
-		furniture_instance.visible = furniture_visible
+		_set_furniture_preview_visible(furniture_visible)
 		_set_furniture_sliders(default_pos, default_rot_deg)
 
 func _set_furniture_sliders(pos: Vector3, rot_deg: float) -> void:

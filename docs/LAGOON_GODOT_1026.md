@@ -67,3 +67,11 @@
 
 验证：`tools/verify_lagoon_1026.gd`，可加 `-- --capture` 检查正式植被并截图。
 独立 Windows 发布包尚未重新导出。
+
+## 北泻湖白色遗迹 · 2026-11-13
+
+Rhino 主图层为 `建筑::北泻湖白色遗迹`。桥外侧是断台与主弧肋，最高点约 9.74 m。内岸用低墙围出局部轮廓，沙洲外侧以浅水中的断板和残檐收尾。三组基座均落在北泻湖 0 m 水面轮廓内。
+
+Rhino 作者入口为 `tools/build_lagoon_ruins.py` 的 `prepare()`、`apply()` 和 `export_source()`。校验水域及桥岸间距后，按 `pr_feature=north_lagoon_ruins` 更新 23 件闭合网格。项目根运行 `python tools/build_lagoon_ruins.py --package`，在 Godot 导入 `assets/world/north_lagoon_ruins/ruins.glb`。确认后在 Rhino 调用 `save_native()`。
+
+正式世界加载三个静态网格，共 1,082 个三角面，使用共享建筑材质、角色层碰撞及现有水面倒影。基础地图导出按功能标签跳过这组构件，避免与独立 GLB 重叠。构件位于水中且使用独立的角色碰撞层，沿用既有草地烘焙。

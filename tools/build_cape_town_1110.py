@@ -173,7 +173,9 @@ def house(index,x,z,a,w,d,storeys,public=False):
     # Chamfered corner shops and complete elevations, with different roof silhouettes.
     c=3.5 if public else .8
     outline=[[-w/2,-d/2],[w/2,-d/2],[w/2,d/2-c],[w/2-c,d/2],[-w/2+c,d/2],[-w/2,d/2-c]]
-    add(key+'/plinth',poly([[p[0]*1.04,p[1]*1.05] for p in outline],1.20,FLOOR),'stone','floor',key)
+    # The slab owns the finished face. A plinth at FLOOR duplicates its entire
+    # top surface and z-fights in every ground-floor interior.
+    add(key+'/plinth',poly([[p[0]*1.04,p[1]*1.05] for p in outline],1.20,FLOOR-.16),'stone','floor',key)
     add(key+'/porch_floor',box(0,d/2+1.35,w-1,2.7,1.18,FLOOR),'ivory','floor',key)
     add(key+'/front_path',box(0,d/2+8.0,5.2,10.6,1.16,1.32),'ivory','street',key)
     for level in range(storeys):
@@ -355,7 +357,8 @@ def prepare():
     add('street/sidewalk',ring(0,0,20.1,23,1.12,1.32,gap=True),'ivory','street')
     add('street/pedestrian_ring',ring(0,0,68.5,71.5,1.16,1.32),'ivory','street')
     add('square/island_rim',ring(0,0,11.8,12.4,1.2,1.47),'ivory','landscape')
-    add('square/soil',ring(0,0,.1,11.8,1.18,1.38),'soil','landscape')
+    # Real raised planting support, not a hardscape exclusion.
+    add('square/soil',ring(0,0,.1,11.8,1.18,1.38),'soil','terrain')
     # A fragmented tilted loop echoes the existing world language without a giant tower.
     pieces=[]
     for i in range(32):
@@ -412,8 +415,47 @@ def export_source():
     BASE['_dump'](path,data)
     return result
 
+def audit_finished_surfaces(source):
+    """Compare actual upward triangles; coplanar touching edges are harmless."""
+    def cross(a,b,c):return (b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0])
+    def area(p):return abs(sum(p[i][0]*p[(i+1)%len(p)][1]-p[(i+1)%len(p)][0]*p[i][1] for i in range(len(p)))/2) if len(p)>2 else 0.
+    def overlap(subject,clip):
+        for a,b in zip(clip,clip[1:]+clip[:1]):
+            output=[]
+            if not subject:break
+            previous=subject[-1];before=cross(a,b,previous)
+            for current in subject:
+                after=cross(a,b,current)
+                if (after>=0)!=(before>=0):
+                    t=before/(before-after)
+                    output.append([previous[j]+(current[j]-previous[j])*t for j in range(2)])
+                if after>=0:output.append(current)
+                previous=current;before=after
+            subject=output
+        return area(subject)
+    report=[]
+    for building in source['buildings']:
+        faces=[];height=building['floor_height']
+        for row in source['objects']:
+            if row['building_id']!=building['id'] or not row['render']:continue
+            triangles=[]
+            for i in range(0,len(row['indices']),3):
+                tri=[row['vertices'][j] for j in row['indices'][i:i+3]]
+                if max(abs(p[2]-height) for p in tri)<.003 and cross(*tri)>.000001:triangles.append([p[:2] for p in tri])
+            if triangles:faces.append((row['name'],triangles))
+        total=0.
+        for i,(name,triangles) in enumerate(faces):
+            for other,others in faces[i+1:]:
+                shared=sum(overlap(tri,list(clip)) for tri in triangles for clip in others)
+                # Rhino Mesh vertices are float32 near CAD coordinates ~2000m;
+                # nominally touching long edges can overlap by a sub-mm sliver.
+                assert shared<.01,'Coplanar finished surfaces: %s / %s / %.6f m2'%(name,other,shared)
+                total+=shared
+        report.append(dict(building=building['id'],finished_height=height,coplanar_overlap_m2=total,finished_components=[r[0] for r in faces]))
+    BASE['_dump'](os.path.join(BASE['CACHE'],'floor_surface_audit.json'),dict(passed=True,buildings=report))
+    print(json.dumps(dict(checked_buildings=len(report),coplanar_finished_overlap=False)))
+
 def package(rebuild_geometry=True):
-    if rebuild_geometry:BASE['package']('town.glb','Prism Route / Rhino cape town')
     # One half-float field: grass SDF / finished height / coast distance / footprint.
     # Beach is ONLY a shoreline strip. The clipped landward seam is not coastline.
     from PIL import Image,ImageDraw,ImageFilter
@@ -421,6 +463,8 @@ def package(rebuild_geometry=True):
     from scipy.ndimage import distance_transform_edt
     from build_east_earth_pavilion_1102 import raster
     source=json.load(io.open(os.path.join(BASE['CACHE'],'source.json'),encoding='utf-8'))
+    audit_finished_surfaces(source)
+    if rebuild_geometry:BASE['package']('town.glb','Prism Route / Rhino cape town')
     objects=[r for r in source['objects'] if r['category'] in ['terrain','street']]
     points=[BASE['godot'](p) for row in objects for p in row['vertices']]
     x0=math.floor(min(p[0] for p in points))-2;z0=math.floor(min(p[2] for p in points))-2
@@ -452,7 +496,7 @@ def package(rebuild_geometry=True):
     hard=Image.new('L',size,0);hd=ImageDraw.Draw(hard)
     for row in source['objects']:
         if not row['collision'] or row['category']=='terrain':continue
-        if row['category'] not in ['street','floor','walls','ramp','furniture','landscape','structure','guard']:continue
+        if row['category'] not in ['street','floor','walls','ramp','furniture','landscape','structure','guard','landmark']:continue
         vertices=[BASE['godot'](p) for p in row['vertices']]
         for i in range(0,len(row['indices']),3):
             hd.polygon([(vertices[j][0]-x0,vertices[j][2]-z0) for j in row['indices'][i:i+3]],fill=255)
