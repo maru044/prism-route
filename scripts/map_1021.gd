@@ -618,28 +618,52 @@ func _llm_world_status() -> Dictionary:
 			destinations.append({"id": row.key, "name": row.name})
 	var actor := active_actor()
 	var point := actor.global_position
+	var nearest_name := ""
+	var nearest_distance := INF
+	for row: Dictionary in resolved_spawns:
+		if row.is_empty():
+			continue
+		var distance := point.distance_to(row.floor_position)
+		if distance < nearest_distance:
+			nearest_distance = distance
+			nearest_name = str(row.name)
 	var spawn_name := ""
 	if spawn_index >= 0 and spawn_index < resolved_spawns.size():
 		spawn_name = str(resolved_spawns[spawn_index].get("name", ""))
 	return {
 		"actor_mode": "character" if character_mode else "camper",
+		"character_id": character.active_character_id,
+		"actor_name": character.ROSTER_PROFILES.get(character.active_character_id, {}).get("name", "玩家") if character_mode else "房车",
 		"position": [point.x, point.y, point.z],
 		"last_preview_spawn": spawn_name,
+		"nearest_landmark": {"name": nearest_name, "distance_m": snappedf(nearest_distance, 0.1)} if not nearest_name.is_empty() else {},
+		"teleport_blocker": _llm_teleport_blocker(),
 		"tutorial_completed": game_progress.tutorial_completed,
 		"destinations": destinations,
 	}
 
-func _llm_teleport(destination_id: String) -> String:
-	var editing: bool = (construction != null and construction.active) or (planting != null and planting.active)
-	if not test_ready or not has_llm_panel_open() or encounter_ui_active or switching_actor or editing:
-		return "当前状态无法传送。"
+func _llm_teleport_blocker() -> String:
+	if not test_ready:
+		return "世界仍在加载。"
+	if not has_llm_panel_open() or llm_panel.client.route != "assistant":
+		return "请打开游戏助手确认传送。"
+	if encounter_ui_active or switching_actor:
+		return "请结束当前交互或角色切换后重试。"
+	if (construction != null and construction.active) or (planting != null and planting.active):
+		return "请先退出编辑模式。"
+	return ""
+
+func _llm_teleport(destination_id: String) -> Dictionary:
+	var blocker := _llm_teleport_blocker()
+	if not blocker.is_empty():
+		return {"ok": false, "message": blocker}
 	for i in resolved_spawns.size():
 		var row := resolved_spawns[i]
 		if row.get("key") == destination_id:
 			llm_panel.close_panel()
 			select_spawn(i)
-			return "已到达 " + str(row.name) + "。"
-	return "该地点当前不可用。"
+			return {"ok": true, "message": "已到达 " + str(row.name) + "。"}
+	return {"ok": false, "message": "该地点当前不可用。"}
 
 func set_review_ui_visible(enabled: bool) -> void:
 	review_ui_visible=enabled

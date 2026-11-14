@@ -7,6 +7,11 @@ const CONNECT_TIMEOUT_MS := 30000
 const RESPONSE_TIMEOUT_MS := 120000
 const STREAM_END_GRACE_MS := 2000
 const MAX_RESPONSE_BYTES := 4 * 1024 * 1024
+const MAX_ERROR_BYTES := 8192
+const ERROR_BODY_TIMEOUT_MS := 2000
+static var _sensitive_error := RegEx.create_from_string(
+	r"""(?i)\b(?:authorization|api[-_ ]?key|access[-_ ]?token|proxy[-_ ]?password|password|secret)["']?[ \t]*[:=][ \t]*(?:bearer[ \t]+)?(?:"[^"]*"|'[^']*'|[^,\s;]+)|\bbearer[ \t]+[^,\s;]+|\b(?:sk-|AIza)[A-Za-z0-9_-]{8,}"""
+)
 
 var _client: HTTPClient
 var _target: Dictionary
@@ -22,6 +27,7 @@ var _data := PackedStringArray()
 var _after_cr := false
 var _stream_finish := ""
 var _has_stream_text := false
+var _response_key := ""
 
 func _ready() -> void:
 	set_process(false)
@@ -46,9 +52,11 @@ static func endpoint(raw: String) -> Dictionary:
 
 func start(url: String, key: String, payload: Dictionary) -> String:
 	cancel()
+	var validation := connection_error(url, key)
+	if not validation.is_empty():
+		return validation
 	_target = endpoint(url)
-	if _target.is_empty() or "\r" in key or "\n" in key:
-		return "请输入有效的 HTTPS 接口地址。"
+	_response_key = key
 	_client = HTTPClient.new()
 	_stream = bool(payload.get("stream", false))
 	_headers = PackedStringArray([
@@ -83,10 +91,22 @@ func cancel() -> void:
 	_after_cr = false
 	_stream_finish = ""
 	_has_stream_text = false
+	_response_key = ""
+
+static func connection_error(url: String, key: String) -> String:
+	if endpoint(url).is_empty():
+		return "接口地址无效。请填写 HTTPS 地址和有效端口，本机回环地址也可使用 HTTP。"
+	for index in key.length():
+		var code := key.unicode_at(index)
+		if code < 32 or code == 127:
+			return "API 密钥含有换行、制表符或其他控制字符。"
+	return ""
 
 func _process(_delta: float) -> void:
 	if Time.get_ticks_msec() > _deadline:
-		if _stream and not _stream_finish.is_empty():
+		if _is_http_error():
+			_finish_http_error()
+		elif _stream and not _stream_finish.is_empty():
 			_finish_stream()
 		else:
 			_finish({}, _timeout_error())
@@ -105,13 +125,24 @@ func _process(_delta: float) -> void:
 	if _client.has_response() and _code < 0:
 		_code = _client.get_response_code()
 		_deadline = Time.get_ticks_msec() + RESPONSE_TIMEOUT_MS
-		if _code < 200 or _code >= 300:
+		if _is_http_error():
+			_deadline = Time.get_ticks_msec() + ERROR_BODY_TIMEOUT_MS
+		else:
+			var format_error := _response_format_error(_client.get_response_headers_as_dictionary())
+			if not format_error.is_empty():
+				_finish({}, format_error)
+				return
+	if _is_http_error():
+		if state != HTTPClient.STATUS_BODY:
+			_finish_http_error()
+			return
+		var chunk := _client.read_response_body_chunk()
+		var remaining := MAX_ERROR_BYTES - _buffer.size()
+		if chunk.size() > remaining:
 			_finish({}, _http_error(_code))
-			return
-		var format_error := _response_format_error(_client.get_response_headers_as_dictionary())
-		if not format_error.is_empty():
-			_finish({}, format_error)
-			return
+		else:
+			_buffer.append_array(chunk)
+		return
 	if state == HTTPClient.STATUS_BODY:
 		var chunk := _client.read_response_body_chunk()
 		if not chunk.is_empty():
@@ -278,3 +309,21 @@ static func _http_error(code: int) -> String:
 		404:
 			return "找不到接口或模型 · HTTP 404。"
 	return "模型接口返回 HTTP %d。" % code
+
+func _is_http_error() -> bool:
+	return _code >= 0 and (_code < 200 or _code >= 300)
+
+func _finish_http_error() -> void:
+	var summary := _http_error(_code)
+	var payload: Variant = JSON.parse_string(_buffer.get_string_from_utf8()) if not _buffer.is_empty() else null
+	if payload is Dictionary:
+		var error: Variant = payload.get("error")
+		var detail: Variant = error.get("message", "") if error is Dictionary else payload.get("message", error)
+		if detail is String and not detail.is_empty():
+			if not _response_key.is_empty():
+				detail = detail.replace(_response_key, "[已隐藏]")
+			detail = detail.replace("\r", " ").replace("\n", " ").replace("\t", " ")
+			detail = _sensitive_error.sub(detail, "[已隐藏]", true).strip_edges().left(240)
+			if not detail.is_empty():
+				summary += " " + detail
+	_finish({}, summary)

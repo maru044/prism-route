@@ -34,7 +34,7 @@ func run() -> void:
 	var client := Client.new()
 	root.add_child(client)
 	client.profiles[Client.DIALOGUE] = {
-		"url": "http://%s:%d/v1" % [LOCALHOST, server.get_local_port()], "model": "fixture", "key": "",
+		"url": "http://%s:%d/v1" % [LOCALHOST, server.get_local_port()], "model": "fixture", "key": "fixture-private-key",
 	}
 	var text := _sse({"choices": [{"delta": {"content": "你好"}}]})
 	var stop := _sse({"choices": [{"delta": {}, "finish_reason": "stop"}]})
@@ -56,6 +56,7 @@ func run() -> void:
 		{"name": "JSON instead of SSE", "body": "{}", "mime": "application/json", "text": "", "error": "普通 JSON"},
 		{"name": "HTML instead of SSE", "body": "<html></html>", "mime": "text/html", "text": "", "error": "返回了网页"},
 		{"name": "rate limit", "body": "{}", "code": 429, "mime": "application/json", "text": "", "error": "429"},
+		{"name": "HTTP error detail redaction", "body": JSON.stringify({"error": {"message": "invalid model; API key: fixture-private-key; Authorization: Bearer other-private-key"}}), "code": 400, "mime": "application/json", "text": "", "error": "HTTP 400。 invalid model", "redacted": true},
 		{"name": "cancel before text", "body": "", "text": "", "status": "已停止", "cancel": true},
 		{"name": "stalled before text", "body": ": keepalive\r\n\r\n", "text": "", "error": "第一段", "held": true, "timeout": true},
 		{"name": "stalled after text", "body": text + ": keepalive\r\n\r\n", "text": "你好", "error": "中途", "held": true, "timeout": true},
@@ -64,9 +65,15 @@ func run() -> void:
 		await _run_case(server, client, fixture)
 	await _verify_report_panel()
 	_verify_model_routes()
+	_verify_context_budget()
+	_verify_teleport_lifecycle()
+	if not Transport.connection_error("http://127.0.0.1:8080", "").is_empty() \
+			or not Transport.connection_error("https://fixture.invalid", "bad\nkey").contains("密钥") \
+			or not Transport.connection_error("http://fixture.invalid", "").contains("地址"):
+		_fail("connection settings", "validation failed to distinguish URL and key")
 	client.free()
 	server.stop()
-	print("LLM_STREAM cases=", cases.size(), " report_panel=1 model_routes=1 failures=", _failures)
+	print("LLM_STREAM cases=", cases.size(), " report_panel=1 model_routes=1 context_budget=1 teleport_lifecycle=1 failures=", _failures)
 	quit(0 if _failures == 0 else 1)
 
 func _verify_model_routes() -> void:
@@ -98,6 +105,10 @@ func _verify_model_routes() -> void:
 	capture.finished.emit(tool_message, "")
 	if capture.sends != sends or reads.size() != client.MAX_TOOL_ROUNDS or client.pending:
 		_fail("model routes", "tool call executed after reaching the limit")
+	client.retry()
+	if not capture.request.has("tools") or capture.request.model != "updated-fixture":
+		_fail("model routes", "retry lost read-only tool access or updated profile")
+	capture.finished.emit({"content": "retry answer"}, "")
 
 	client.open(Client.DIALOGUE, "same-scope", {})
 	client.send("dialogue question")
@@ -120,6 +131,97 @@ func _verify_model_routes() -> void:
 		_fail("model routes", "assistant request reused old settings or dialogue history")
 	capture.finished.emit({"content": "assistant answer"}, "")
 	client.free()
+
+func _verify_context_budget() -> void:
+	var client := Client.new()
+	var capture := CaptureTransport.new()
+	client._transport.free()
+	client._transport = capture
+	root.add_child(client)
+	client.profiles[Client.DIALOGUE] = {"url": "https://fixture.invalid", "model": "fixture", "key": ""}
+	client.open(Client.DIALOGUE, "budget", {
+		"user": "FixturePlayer", "char": "FixtureNPC", "description": "FixtureCharacter",
+		"personality": "FixturePersonality", "scenario": "FixtureScene", "persona": "FixturePersona",
+	})
+	for i in range(6):
+		client.send("问题%d" % i)
+		capture.delta_received.emit("回复%d" % i)
+		capture.finished.emit({}, "")
+	var budget := 160
+	client._history_budget[Client.DIALOGUE] = budget
+	client.profiles[Client.DIALOGUE].model = "fixture-PG"
+	client.send("最后的问题")
+	var messages: Array = capture.request.messages
+	if _role_contents(messages, "user") != ["问题5", "最后的问题"] or _role_contents(messages, "assistant") != ["回复5"]:
+		_fail("context budget", "history did not preserve the newest complete turns")
+	if client.history.size() != 7:
+		_fail("context budget", "request budget changed local history")
+	var before: String = messages.front().content
+	var after: String = messages.back().content
+	if not _ordered_text(before, ["核心设定集", "[Game rules]", "<FixtureNPC>", "FixtureCharacter", "FixturePersonality", "</FixtureNPC>", "FixtureScene", "FixturePersona"]):
+		_fail("context budget", "dynamic markers or legacy worldbook priority are out of order")
+	if not after.contains("<censorship_bypass>") or after.contains("img-prompt") or after.contains("{{//"):
+		_fail("context budget", "model condition or prompt cleanup is incorrect")
+	client.stop()
+	var sends := capture.sends
+	if client.send("长".repeat(budget)) or client.history.size() != 7 or capture.sends != sends \
+			or not client.status.contains("超过发送历史预算") or client.pending:
+		_fail("context budget", "oversize current turn was sent or left pending")
+	client.free()
+
+func _verify_teleport_lifecycle() -> void:
+	var client := Client.new()
+	var capture := CaptureTransport.new()
+	client._transport.free()
+	client._transport = capture
+	root.add_child(client)
+	client.profiles[Client.ASSISTANT] = {"url": "https://fixture.invalid", "model": "fixture", "key": ""}
+	client.world_status = func(): return {"destinations": [{"id": "one"}, {"id": "two"}]}
+	var attempts: Array[String] = []
+	client.world_teleport = func(destination: String):
+		attempts.append(destination)
+		return {"ok": attempts.size() > 1, "message": "fixture result"}
+	client.open(Client.ASSISTANT, "offer", {})
+	client.send("propose")
+	capture.finished.emit({"tool_calls": [
+		{"id": "first", "function": {"name": "propose_teleport", "arguments": JSON.stringify({"destination_id": "one"})}},
+		{"id": "second", "function": {"name": "propose_teleport", "arguments": JSON.stringify({"destination_id": "two"})}},
+	]}, "")
+	if not capture.request.messages.back().content.contains("one_teleport_proposal_per_turn"):
+		_fail("teleport lifecycle", "a duplicate proposal was accepted")
+	capture.finished.emit({"content": "offered"}, "")
+	client.confirm_teleport()
+	if attempts != ["one"] or client.teleport_offer() != "one":
+		_fail("teleport lifecycle", "failed confirmation consumed the offer")
+	client.send("unrelated")
+	client.confirm_teleport()
+	capture.finished.emit({"content": "answer"}, "")
+	if attempts != ["one"] or client.teleport_offer() != "one":
+		_fail("teleport lifecycle", "new or pending turn invalidated or executed the offer")
+	client.confirm_teleport()
+	client.confirm_teleport()
+	if attempts != ["one", "one"] or not client.teleport_offer().is_empty():
+		_fail("teleport lifecycle", "success did not consume exactly one offer")
+	client.undo()
+	if client.can_retry():
+		_fail("teleport lifecycle", "tool turn containing a committed action was retryable")
+	client.free()
+
+func _ordered_text(text: String, tokens: Array) -> bool:
+	var cursor := 0
+	for token: String in tokens:
+		var position := text.find(token, cursor)
+		if position < 0:
+			return false
+		cursor = position + token.length()
+	return true
+
+func _role_contents(messages: Array, role: String) -> Array:
+	var contents := []
+	for message: Dictionary in messages:
+		if message.role == role:
+			contents.append(message.content)
+	return contents
 
 func _verify_report_panel() -> void:
 	var panel := ChatPanel.new()
@@ -171,7 +273,7 @@ func _verify_report_panel() -> void:
 
 func _run_case(server: TCPServer, client: Node, fixture: Dictionary) -> void:
 	var title: String = fixture.name
-	client.open(Client.DIALOGUE, title, {"user": "FixturePlayer", "description": "FixtureCharacter"})
+	client.open(Client.DIALOGUE, title, {"user": "FixturePlayer", "char": "FixtureNPC", "description": "FixtureCharacter"})
 	if not client.send("stream fixture"):
 		_fail(title, "could not send request")
 		return
@@ -199,10 +301,13 @@ func _run_case(server: TCPServer, client: Node, fixture: Dictionary) -> void:
 		client.stop()
 		return
 	var messages: Array = payload.messages
-	if messages.size() != 3 or not messages[0].content.contains("[Game rules]") or not messages[0].content.contains("核心设定集") or not messages[0].content.contains("FixtureCharacter") \
-			or messages[1] != {"role": "user", "content": "stream fixture"} \
-			or messages[2].role != "system" or not messages[2].content.contains("FixturePlayer") \
-			or not messages[2].content.contains("活人感") or messages[2].content.contains("{{user}}") \
+	var before: String = messages.front().content
+	var after: String = messages.back().content
+	if _role_contents(messages, "user") != ["stream fixture"] \
+			or not _ordered_text(before, ["核心设定集", "[Game rules]", "<FixtureNPC>", "FixtureCharacter", "</FixtureNPC>"]) \
+			or not after.contains("FixturePlayer") or not after.contains("活人感") \
+			or before.contains("{{//") or after.contains("{{//") or after.contains("{{user}}") \
+			or after.contains("<censorship_bypass>") or after.contains("img-prompt") \
 			or not payload.stream or payload.has("tools") or payload.has("tool_choice"):
 		_fail(title, "unexpected dialogue prompt composition")
 	if fixture.get("cancel", false):
@@ -256,6 +361,8 @@ func _run_case(server: TCPServer, client: Node, fixture: Dictionary) -> void:
 	if fixture.has("error"):
 		if not client.status.contains(fixture.error):
 			_fail(title, "unexpected error: " + client.status)
+		if fixture.get("redacted", false) and (client.status.contains("fixture-private-key") or client.status.contains("other-private-key")):
+			_fail(title, "HTTP details disclosed a credential")
 	elif client.status != fixture.status:
 		_fail(title, "unexpected status: " + client.status)
 

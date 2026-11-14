@@ -45,6 +45,9 @@
     "group_nudge_prompt": "reborn/before_history.md"
   },
   "game_dialogue": {
+    "model_contains": {
+      "2f2729f4-5d93-4268-a242-165a9c894e60": "pg"
+    },
     "worldbook": [
       "worldbook/核心设定集.md",
       "worldbook/世界规则.md"
@@ -73,6 +76,10 @@
       "f65144f0-d39e-43e6-84e7-5c1d78a1a23d",
       "2f2729f4-5d93-4268-a242-165a9c894e60"
     ]
+  },
+  "request_history_budget_bytes": {
+    "dialogue": 65536,
+    "assistant": 32768
   },
   "prompt_order": [
     {"identifier": "a579e015-eed7-45c4-aa1d-24c6df2974ea", "name": "（别关）（必看）免责声明", "role": "system", "marker": false, "injection_position": 0, "injection_depth": 4, "injection_order": 100, "system_prompt": false, "forbid_overrides": false, "enabled": true, "markdown": "reborn/before_history.md"},

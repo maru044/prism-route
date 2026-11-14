@@ -42,7 +42,7 @@ flowchart TD
 - **传输和界面。** 现有功能包括 SSE 分片、Unicode 转义解码、超时提示、发送与停止共用按钮、倒回、重新生成、版本切换和续写。报告默认折叠，下一轮和续写回传玩家原文与所选回复的可见正文。[HTTP 传输](../scripts/ai/chat_transport.gd) · [LLM 面板](../scripts/ai/llm_panel.gd)
 - **辅助工具。** 已接入 `get_world_status` 和 `propose_teleport`。查询返回实际世界状态，传送提议只接受有效定位点，确认后由 Godot 通过现有流程执行。旧客户端工具手册供查阅，运行时工具定义以代码为准。[工具实现](../scripts/ai/game_llm_client.gd) · [旧客户端参考](../assets/ai/reference/系统工具调用手册.md)
 
-当前回归用本机模拟接口检查 17 项流式行为，以及报告面板和模型路由。真实模型的延迟、额度和回复风格取决于所配置的服务。复跑命令见项目 README。[回归用例](../tools/verify_llm_stream.gd) · [运行与排障](../README.md#流式回复排障)
+当前回归用本机模拟接口检查流式行为、报告面板、模型路由、上下文预算和传送提议。真实模型的延迟、额度和回复风格取决于所配置的服务。复跑命令见项目 README。[回归用例](../tools/verify_llm_stream.gd) · [运行与排障](../README.md#流式回复排障)
 
 ## 4. 后续路线图
 

@@ -116,11 +116,12 @@ func _build_ui() -> void:
 	_key.secret = true
 	var save_row := HBoxContainer.new()
 	_settings.add_child(save_row)
-	_remember.text = "在本机记住密钥"
+	_remember.text = "在本机记住密钥（明文保存）"
 	save_row.add_child(_remember)
 	_button(save_row, "保存", _save_settings)
 
 	_status.add_theme_color_override("font_color", palette.accent)
+	_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	dock.add_child(_status)
 	var prompt := HBoxContainer.new()
 	prompt.add_theme_constant_override("separation", 8)
@@ -229,7 +230,7 @@ func _refresh() -> void:
 	_status.text = client.status
 	_send.text = "停止" if client.pending else "发送"
 	_undo.disabled = last.is_empty() or client.pending
-	_retry.disabled = last.is_empty() or client.pending or last.get("tool_used", false)
+	_retry.disabled = not client.can_retry()
 	_continue.visible = client.route == Client.DIALOGUE
 	_continue.disabled = not client.can_continue_reply()
 	var has_versions: bool = last.get("replies", []).size() > 1
@@ -239,6 +240,7 @@ func _refresh() -> void:
 	_next.disabled = client.pending
 	var destination: String = client.teleport_offer()
 	_teleport.visible = not destination.is_empty()
+	_teleport.disabled = client.pending
 	_teleport.text = "确认传送"
 	if _teleport.visible and client.world_status.is_valid():
 		var state: Dictionary = client.world_status.call()
