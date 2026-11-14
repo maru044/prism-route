@@ -24,8 +24,14 @@ func run() -> void:
 	}
 	var text := _sse({"choices": [{"delta": {"content": "你好"}}]})
 	var stop := _sse({"choices": [{"delta": {}, "finish_reason": "stop"}]})
+	var escaped_first := _text_event("已收到" + r"\u4f")
+	var escaped_final := _text_event("60" + r"\u{1F") + _text_event("642}" + r"\uD83D")
+	escaped_final += _text_event(r"\uD") + _text_event("E42") + stop
 	var cases := [
 		{"name": "split UTF-8", "body": text + stop + "data: [DONE]\r\n\r\n", "text": "你好", "status": ""},
+		{"name": "split literal Unicode", "body": escaped_final, "first": escaped_first, "visible": "已收到", "text": "已收到你🙂🙂", "status": ""},
+		{"name": "invalid or escaped Unicode", "body": _text_event(r"\\u4f60 \u{110000} \uD83D\\u4f60 \u4f") + stop, "text": r"\\u4f60 \u{110000} \uD83D\\u4f60 \u4f", "status": ""},
+		{"name": "cancel with incomplete Unicode", "body": "", "first": escaped_first, "visible": "已收到", "text": "已收到" + r"\u4f", "status": "已停止", "cancel_after_text": true},
 		{"name": "finish reason and open connection", "body": text + stop, "text": "你好", "status": "", "held": true},
 		{"name": "truncated stream", "body": text + "data: {", "text": "你好", "error": "中断"},
 		{"name": "server event error", "body": text + _sse({"error": {"message": "fixture"}}), "text": "你好", "error": "错误事件"},
@@ -87,13 +93,24 @@ func _run_case(server: TCPServer, client: Node, fixture: Dictionary) -> void:
 		peer.disconnect_from_host()
 	else:
 		var body: String = fixture.body
-		var bytes := body.to_utf8_buffer()
+		var first: String = fixture.get("first", "")
+		var bytes := (first + body).to_utf8_buffer()
 		var mime: String = fixture.get("mime", "text/event-stream")
 		var code: int = fixture.get("code", 200)
 		var held: bool = fixture.get("held", false)
 		var length_header := "" if held else "Content-Length: %d\r\n" % bytes.size()
 		var headers := "HTTP/1.1 %d Test\r\nContent-Type: %s\r\n%sConnection: close\r\n\r\n" % [code, mime, length_header]
-		if title == "split UTF-8":
+		if not first.is_empty():
+			peer.put_data((headers + first).to_utf8_buffer())
+			while client.partial.is_empty() and client.pending and Time.get_ticks_msec() < deadline:
+				await process_frame
+			if client.partial != fixture.visible or not client.pending:
+				_fail(title, "incomplete escape was displayed or preceding text was delayed")
+			if fixture.get("cancel_after_text", false):
+				client.stop()
+			else:
+				peer.put_data(body.to_utf8_buffer())
+		elif title == "split UTF-8":
 			var split_at := bytes.find(0xe4) + 1
 			peer.put_data(headers.to_utf8_buffer() + bytes.slice(0, split_at))
 			await create_timer(0.06).timeout
@@ -150,3 +167,6 @@ func _fail(title: String, detail: String) -> void:
 
 func _sse(data: Dictionary) -> String:
 	return "data: " + JSON.stringify(data) + "\r\n\r\n"
+
+func _text_event(text: String) -> String:
+	return _sse({"choices": [{"delta": {"content": text}}]})

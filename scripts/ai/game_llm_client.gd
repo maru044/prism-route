@@ -54,6 +54,10 @@ var _dialogue_merge := true
 var _dialogue_worldbook := ""
 var _dialogue_style: Array[Dictionary] = []
 var _dialogue_config_error := ""
+var _dialogue_escape_tail := ""
+var _unicode_escape := RegEx.create_from_string(
+	r"\\\\|\\u([dD][89a-bA-B][0-9a-fA-F]{2})\\u([dD][c-fC-F][0-9a-fA-F]{2})|\\u\{([0-9a-fA-F]{1,6})\}|\\u([0-9a-fA-F]{4})|(\\(?:u(?:\{[0-9a-fA-F]{0,6}|[0-9a-fA-F]{0,3})?)?)\z"
+)
 
 func _ready() -> void:
 	add_child(_transport)
@@ -220,6 +224,7 @@ func _can_start() -> bool:
 func _start(operation: String) -> void:
 	_operation = operation
 	partial = ""
+	_dialogue_escape_tail = ""
 	status = "等待模型。"
 	_tool_rounds = 0
 	_proposed_destination = ""
@@ -295,9 +300,51 @@ func _dispatch() -> void:
 
 func _receive_delta(text: String) -> void:
 	if pending and route == DIALOGUE:
-		partial += text
+		partial += _decode_dialogue_fragment(text)
 		status = "生成中。"
 		changed.emit()
+
+func _decode_dialogue_fragment(fragment: String, final := false) -> String:
+	var incoming := _dialogue_escape_tail + fragment
+	_dialogue_escape_tail = ""
+	var output := PackedStringArray()
+	var cursor := 0
+	var matches := _unicode_escape.search_all(incoming)
+	for index in matches.size():
+		var match_result := matches[index]
+		var start := match_result.get_start()
+		var end := match_result.get_end()
+		output.append(incoming.substr(cursor, start - cursor))
+		var token := match_result.get_string()
+		var point := -1
+		if not match_result.get_string(1).is_empty():
+			var high := match_result.get_string(1).hex_to_int()
+			var low := match_result.get_string(2).hex_to_int()
+			point = 0x10000 + ((high - 0xd800) << 10) + low - 0xdc00
+		elif not match_result.get_string(3).is_empty():
+			point = match_result.get_string(3).hex_to_int()
+		elif not match_result.get_string(4).is_empty():
+			point = match_result.get_string(4).hex_to_int()
+		var high_surrogate := point >= 0xd800 and point <= 0xdbff and not match_result.get_string(4).is_empty()
+		if not final and high_surrogate:
+			var rest := incoming.substr(end).to_lower()
+			if rest.is_empty() or (
+				index + 1 == matches.size() - 1 and matches[index + 1].get_start() == end
+				and not matches[index + 1].get_string(5).is_empty()
+				and rest.length() < 6 and (r"\ud".begins_with(rest) or rest.begins_with(r"\ud"))
+			):
+				_dialogue_escape_tail = incoming.substr(start)
+				return "".join(output)
+		if not final and not match_result.get_string(5).is_empty():
+			_dialogue_escape_tail = token
+			return "".join(output)
+		if point > 0 and point <= 0x10ffff and not (point >= 0xd800 and point <= 0xdfff):
+			output.append(String.chr(point))
+		else:
+			output.append(token)
+		cursor = end
+	output.append(incoming.substr(cursor))
+	return "".join(output)
 
 func _receive_result(message: Dictionary, error: String) -> void:
 	if not pending:
@@ -368,6 +415,8 @@ func confirm_teleport() -> void:
 	changed.emit()
 
 func _complete(error: String) -> void:
+	if route == DIALOGUE:
+		partial += _decode_dialogue_fragment("", true)
 	var turn: Dictionary = history.back()
 	if not partial.is_empty():
 		if _operation == "continue":
