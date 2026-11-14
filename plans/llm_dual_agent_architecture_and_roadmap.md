@@ -38,7 +38,7 @@ flowchart TD
 ## 3. 当前实现
 
 - **正式场景入口。** 初始神殿花火的剧情对话面板提供「自由对话」，退出后回到原来的台词。场景预览左侧提供「游戏助手」。自由对话目前传入花火和初始神殿的基本信息。[地图入口](../scripts/map_1021.gd) · [剧情对话面板](../scenes/narrative/dialogue_panel.gd)
-- **对话请求。** 客户端从 `reborn.json` 读取生成参数、消息合并模式和 Markdown 启用列表。当前启用 22 段 Reborn 正文和两份世界书条目。Markdown 在运行时按配置加载。[Reborn 运行配置](../assets/ai/reborn.json) · [LLM 客户端](../scripts/ai/game_llm_client.gd)
+- **对话请求。** 客户端从 `reborn.json` 读取生成参数、消息合并模式和 Markdown 文件清单。Reborn 和世界书共用文件头的 `depth` 与 `order`。核心设定固定在历史前，世界规则用 `depth: 0` 放在最后一条聊天消息之后、`<game>` 格式要求之前。[Reborn 运行配置](../assets/ai/reborn.json) · [LLM 客户端](../scripts/ai/game_llm_client.gd)
 - **传输和界面。** 现有功能包括 SSE 分片、Unicode 转义解码、超时提示、发送与停止共用按钮、倒回、重新生成、版本切换和续写。报告默认折叠，下一轮和续写回传玩家原文与所选回复的可见正文。[HTTP 传输](../scripts/ai/chat_transport.gd) · [LLM 面板](../scripts/ai/llm_panel.gd)
 - **辅助工具。** 已接入 `get_world_status` 和 `propose_teleport`。查询返回实际世界状态，传送提议只接受有效定位点，确认后由 Godot 通过现有流程执行。旧客户端工具手册供查阅，运行时工具定义以代码为准。[工具实现](../scripts/ai/game_llm_client.gd) · [旧客户端参考](../assets/ai/reference/系统工具调用手册.md)
 

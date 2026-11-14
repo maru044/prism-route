@@ -158,8 +158,10 @@ func _verify_context_budget() -> void:
 		_fail("context budget", "request budget changed local history")
 	var before: String = messages.front().content
 	var after: String = messages.back().content
-	if not _ordered_text(before, ["核心设定集", "[Game rules]", "<FixtureNPC>", "FixtureCharacter", "FixturePersonality", "</FixtureNPC>", "FixtureScene", "FixturePersona"]):
-		_fail("context budget", "dynamic markers or legacy worldbook priority are out of order")
+	if not _ordered_text(before, ["核心设定集", "<FixtureNPC>", "FixtureCharacter", "FixturePersonality", "</FixtureNPC>", "FixtureScene", "FixturePersona"]) \
+			or before.contains("[Game rules]") or after.contains("核心设定集") \
+			or not _ordered_text(after, ["[Game rules]", "<game></game>"]):
+		_fail("context budget", "worldbook placement or dynamic marker order is incorrect")
 	if not after.contains("<censorship_bypass>") or after.contains("img-prompt") or after.contains("{{//"):
 		_fail("context budget", "model condition or prompt cleanup is incorrect")
 	client.stop()
@@ -304,8 +306,10 @@ func _run_case(server: TCPServer, client: Node, fixture: Dictionary) -> void:
 	var before: String = messages.front().content
 	var after: String = messages.back().content
 	if _role_contents(messages, "user") != ["stream fixture"] \
-			or not _ordered_text(before, ["核心设定集", "[Game rules]", "<FixtureNPC>", "FixtureCharacter", "</FixtureNPC>"]) \
-			or not after.contains("FixturePlayer") or not after.contains("活人感") \
+			or not _ordered_text(before, ["核心设定集", "<FixtureNPC>", "FixtureCharacter", "</FixtureNPC>"]) \
+			or not before.contains("FixturePlayer") or before.contains("[Game rules]") or after.contains("核心设定集") \
+			or not _ordered_text(after, ["[Game rules]", "故事的整体氛围应始终保持", "<game></game>"]) \
+			or after.count("故事的整体氛围应始终保持") != 1 \
 			or before.contains("{{//") or after.contains("{{//") or after.contains("{{user}}") \
 			or after.contains("<censorship_bypass>") or after.contains("img-prompt") \
 			or not payload.stream or payload.has("tools") or payload.has("tool_choice"):

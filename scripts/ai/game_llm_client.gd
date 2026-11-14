@@ -9,9 +9,9 @@ const DIALOGUE := "dialogue"
 const ASSISTANT := "assistant"
 const MAX_TOOL_ROUNDS := 3
 const DEFAULT_HISTORY_BUDGET := {DIALOGUE: 65536, ASSISTANT: 32768}
-const DIALOGUE_MARKERS := [
-	"worldInfoBefore", "charDescription", "charPersonality", "scenario", "worldInfoAfter",
-	"personaDescription", "dialogueExamples", "chatHistory",
+const BEFORE_HISTORY := -1
+const DIALOGUE_CONTEXT_KEYS := [
+	"description", "personality", "scenario", "world_after", "persona", "dialogue_examples",
 ]
 const RETRYABLE_TOOLS := ["get_world_status", "propose_teleport"]
 const TOOLS := [
@@ -71,7 +71,6 @@ var _proposed_destination := ""
 var _dialogue_generation: Dictionary
 var _dialogue_merge := true
 var _history_budget := DEFAULT_HISTORY_BUDGET.duplicate()
-var _dialogue_worldbook := ""
 var _dialogue_entries: Array[Dictionary] = []
 var _dialogue_config_error := ""
 var _dialogue_escape_tail := ""
@@ -92,7 +91,7 @@ func _ready() -> void:
 
 func _load_dialogue_config() -> void:
 	var preset: Variant = JSON.parse_string(FileAccess.get_file_as_string(DIALOGUE_CONFIG_PATH))
-	if not preset is Dictionary or not preset.get("generation") is Dictionary or not preset.get("game_dialogue") is Dictionary:
+	if not preset is Dictionary or not preset.get("generation") is Dictionary or not preset.get("prompt_files") is Array:
 		_dialogue_config_error = "无法读取自由对话配置 reborn.json。"
 		return
 	var budgets: Dictionary = preset.get("request_history_budget_bytes", {})
@@ -105,63 +104,74 @@ func _load_dialogue_config() -> void:
 			_dialogue_generation[field] = int(value) if field == "max_tokens" else value
 	var processing: Dictionary = preset.get("spreset", {}).get("message_processing", {})
 	_dialogue_merge = bool(processing.get("enabled", true)) and processing.get("mode", "merge") == "merge"
-	_dialogue_config_error = _load_dialogue_markdown(preset)
+	_dialogue_config_error = _load_dialogue_markdown(preset.prompt_files)
 
-func _load_dialogue_markdown(preset: Dictionary) -> String:
-	var runtime: Dictionary = preset.game_dialogue
-	if not runtime.get("worldbook") is Array or not runtime.get("prompt_ids") is Array or not preset.get("prompt_order") is Array:
-		return "自由对话配置缺少世界书或正文顺序。"
-	var world_entries: Array[Dictionary] = []
-	for file: String in runtime.worldbook:
+func _load_dialogue_markdown(files: Array) -> String:
+	_dialogue_entries.clear()
+	var seen_positions := {}
+	for file: String in files:
 		var raw := _read_dialogue_markdown(file)
 		var separator := raw.find("\n---\n")
 		if separator < 0:
-			return "世界书缺少文件或条目头 · " + file
+			return "提示词缺少文件或条目头 · " + file
 		var header: Variant = JSON.parse_string(raw.left(separator))
-		if not header is Dictionary or not (header.get("depth") is float or header.get("depth") is int):
-			return "世界书的条目头无效 · " + file
-		if header.get("enabled", true) and header.get("role", "system") == "system":
-			world_entries.append({"depth": int(header.depth), "index": world_entries.size(), "body": raw.substr(separator + 5).strip_edges()})
-	world_entries.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
-		return a.index < b.index if a.depth == b.depth else a.depth > b.depth
+		if not header is Dictionary or not header.get("entries", [header]) is Array:
+			return "提示词的条目头无效 · " + file
+		if not header.get("enabled", true) or header.get("role", "system") != "system":
+			continue
+		var markdown := raw.substr(separator + 5)
+		for row: Variant in header.get("entries", [header]):
+			if not row is Dictionary:
+				return "提示词的条目无效 · " + file
+			if not row.get("enabled", true):
+				continue
+			var problem := _load_dialogue_entry(file, markdown, header, row, seen_positions)
+			if not problem.is_empty():
+				return problem
+	if _dialogue_entries.is_empty():
+		return "自由对话没有启用的提示词。"
+	_dialogue_entries.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		if a.depth == b.depth:
+			return a.order < b.order
+		return a.depth == BEFORE_HISTORY or (b.depth != BEFORE_HISTORY and a.depth > b.depth)
 	)
-	var bodies := PackedStringArray()
-	for entry: Dictionary in world_entries:
-		bodies.append(entry.body)
-	_dialogue_worldbook = "\n\n".join(bodies)
-	var pending_ids: Array = runtime.prompt_ids.duplicate()
-	var markdown_files := {}
-	var model_conditions: Dictionary = runtime.get("model_contains", {})
-	var history_marker_found := false
-	for row: Dictionary in preset.prompt_order:
-		var id: String = row.identifier
-		if row.enabled and row.marker and id in DIALOGUE_MARKERS:
-			_dialogue_entries.append({"marker": id})
-			history_marker_found = history_marker_found or id == "chatHistory"
-		if not pending_ids.has(id):
-			continue
-		pending_ids.erase(id)
-		if not row.enabled:
-			continue
-		var model_filter := str(model_conditions.get(id, "")).to_lower()
-		if row.get("spreset_condition_enabled", false) and model_filter.is_empty():
-			return "自由对话正文缺少模型条件 · " + id
-		var file: String = row.get("markdown", "")
-		if row.marker or row.role != "system" or row.injection_position != 0 or file.is_empty():
-			return "自由对话正文配置无效 · " + id
-		if not markdown_files.has(file):
-			markdown_files[file] = _read_dialogue_markdown(file)
-		var text: String = markdown_files[file]
+	return ""
+
+func _load_dialogue_entry(file: String, markdown: String, header: Dictionary, row: Dictionary, seen_positions: Dictionary) -> String:
+	var id: String = row.get("id", "")
+	var context_key: String = row.get("context", "")
+	var label := file + " · " + (id if context_key.is_empty() else context_key)
+	var depth_value: Variant = row.get("depth", header.get("depth"))
+	var order: Variant = row.get("order", header.get("order"))
+	var before_history: bool = depth_value is String and depth_value == "before_history"
+	if (not before_history and not _is_nonnegative_integer(depth_value)) or not _is_nonnegative_integer(order):
+		return "提示词的 depth 或 order 无效 · " + label
+	var depth := BEFORE_HISTORY if before_history else int(depth_value)
+	var position := Vector2i(depth, int(order))
+	if seen_positions.has(position):
+		return "提示词的 depth 和 order 重复 · " + label + " / " + seen_positions[position]
+	if not context_key.is_empty() and (context_key not in DIALOGUE_CONTEXT_KEYS or not id.is_empty()):
+		return "提示词的动态资料键无效 · " + label
+	if header.has("entries") and id.is_empty() and context_key.is_empty():
+		return "提示词的条目缺少 id 或 context · " + label
+	var content := markdown.strip_edges()
+	if not id.is_empty():
 		var opening := "<!-- prompt:%s -->\n" % id
-		var start := text.find(opening)
-		var end := text.find("\n<!-- /prompt -->", start + opening.length()) if start >= 0 else -1
+		var start := markdown.find(opening)
+		var end := markdown.find("\n<!-- /prompt -->", start + opening.length()) if start >= 0 else -1
 		if end < 0:
-			return "找不到自由对话正文 · " + file + " · " + id
+			return "找不到自由对话正文 · " + label
 		start += opening.length()
-		_dialogue_entries.append({"content": text.substr(start, end - start), "model_filter": model_filter})
-	if not history_marker_found:
-		return "自由对话配置缺少聊天历史标记。"
-	return "" if pending_ids.is_empty() else "自由对话配置引用了未知正文。"
+		content = markdown.substr(start, end - start)
+	seen_positions[position] = label
+	_dialogue_entries.append({
+		"depth": depth, "order": int(order), "context": context_key, "content": content,
+		"model_filter": str(row.get("model_contains", header.get("model_contains", ""))).to_lower(),
+	})
+	return ""
+
+static func _is_nonnegative_integer(value: Variant) -> bool:
+	return (value is int or value is float) and value >= 0 and value <= 2147483647 and value == int(value)
 
 static func _read_dialogue_markdown(file: String) -> String:
 	return FileAccess.get_file_as_string(DIALOGUE_CONFIG_PATH.get_base_dir().path_join(file)).trim_prefix("\ufeff").replace("\r\n", "\n")
@@ -331,26 +341,21 @@ static func _message_bytes(messages: Array) -> int:
 func _build_dialogue_messages(history_messages: Array) -> Array:
 	var messages: Array = [{"role": "system", "content": "保持当前角色语气和场景。"}]
 	var model: String = _request_profile.model.to_lower()
-	var dynamic := {
-		"worldInfoBefore": _dialogue_worldbook,
-		"charDescription": context.get("description", ""),
-		"charPersonality": context.get("personality", ""),
-		"scenario": context.get("scenario", ""),
-		"worldInfoAfter": context.get("world_after", ""),
-		"personaDescription": context.get("persona", ""),
-		"dialogueExamples": context.get("dialogue_examples", ""),
-	}
+	var history_index := 0
 	for row: Dictionary in _dialogue_entries:
-		var marker: String = row.get("marker", "")
-		if marker == "chatHistory":
-			messages.append_array(history_messages)
-			continue
 		var model_filter: String = row.get("model_filter", "")
 		if not model_filter.is_empty() and not model.contains(model_filter):
 			continue
-		var content: String = dynamic.get(marker, "") if not marker.is_empty() else row.content
+		var insert_at := 0 if row.depth == BEFORE_HISTORY else maxi(0, history_messages.size() - row.depth)
+		while history_index < insert_at:
+			messages.append(history_messages[history_index])
+			history_index += 1
+		var content: String = row.content if row.context.is_empty() else context.get(row.context, "")
 		if not content.is_empty():
 			messages.append({"role": "system", "content": _expand_dialogue_prompt(content)})
+	while history_index < history_messages.size():
+		messages.append(history_messages[history_index])
+		history_index += 1
 	return messages
 
 static func dialogue_sections(raw: String, streaming := false) -> Dictionary:

@@ -1,3 +1,23 @@
+{
+  "depth": "before_history",
+  "entries": [
+    {"id": "enhanceDefinitions", "order": 10},
+    {"id": "3df19ba7-b44d-4d46-b17a-de514d86e5d5", "order": 20},
+    {"id": "ab29af7b-4f0e-402f-8236-80b15800e554", "order": 40},
+    {"context": "description", "order": 50},
+    {"context": "personality", "order": 60},
+    {"id": "34aca678-07d4-4aeb-96ca-37f78617c525", "order": 70},
+    {"context": "scenario", "order": 80},
+    {"context": "world_after", "order": 90},
+    {"id": "7a077e05-2616-4b58-b725-53c80ecf4931", "order": 100},
+    {"context": "persona", "order": 110},
+    {"id": "9c015364-9395-46a6-b6dc-fca5637e9f06", "order": 120},
+    {"id": "nsfw", "order": 130},
+    {"context": "dialogue_examples", "order": 140}
+  ]
+}
+---
+
 # Reborn — Before chat history
 
 ## （别关）（必看）免责声明

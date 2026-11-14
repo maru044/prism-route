@@ -32,9 +32,11 @@
 
 入口固定决定模型。自由对话使用对话配置，发送文本消息和生成参数。游戏助手负责普通问答和游戏操作，整轮工具循环沿用发送时的辅助模型、地址和密钥，最多执行三轮工具调用。两个入口各自保存会话，切换时结束当前请求。配置缺失或请求失败会在当前入口报错。
 
-Reborn 的生成参数和注入顺序记录在 [reborn.json](assets/ai/reborn.json)。项目内正文集中在 [历史前](assets/ai/reborn/before_history.md) 和 [历史后](assets/ai/reborn/after_history.md) 两份 Markdown。每段正文用稳定 ID 标记，JSON 在原位置保留世界书、角色描述和聊天历史等动态标记。编辑正文时保留 HTML 注释里的段落 ID 和边界。原始导出留在项目外。
+Reborn 的生成参数和提示词文件清单记录在 [reborn.json](assets/ai/reborn.json)。Reborn 的[历史前正文](assets/ai/reborn/before_history.md)、[历史后正文](assets/ai/reborn/after_history.md)与世界书均使用 Markdown 开头的 JSON 文件头，文件头和正文用独立一行 `---` 分隔。原始导出留在项目外。
 
-自由对话按 `game_dialogue` 的启用列表和 `prompt_order` 组装。世界书进入 `worldInfoBefore`，内部按旧客户端的 `depth` 降序。同深度保持配置中的顺序。场景、角色资料和聊天历史各进入对应标记，部分场景没有配置的可选资料留空。`injection_position: 0` 的正文按列表排序。组装时移除作者注释宏，条件正文按 `model_contains` 匹配模型 ID。配置出错时，对话栏显示具体文件或条目。
+`depth: "before_history"` 固定在聊天历史前，`depth: 0` 紧接最后一条聊天消息，正整数 `depth` 从裁剪后的聊天末尾倒数消息。历史不足时，对应条目放在固定前置内容之后、第一条聊天消息之前。同一深度的 `order` 越小越靠前，且必须唯一，文件清单顺序不影响位置。《核心设定集》属于固定前置，《世界规则》位于 `depth: 0`，在 `<game>` 格式要求前。
+
+单段 Markdown 直接使用文件头的 `depth` 和 `order`。多段 Markdown 在 `entries` 中用 `id` 指向正文标记，或用 `context` 引入角色、场景等动态资料。条目可继承文件的 `depth`，也可单独指定。编辑正文时保留 HTML 注释里的段落 ID 和边界。可用 `enabled: false` 停用条目，或用 `model_contains` 按模型 ID 匹配。配置错误会显示具体文件或条目。
 
 游戏版提示词已移除插图要求，以及「情绪别太激烈」中与世界规则逐字相同的两句。世界规则仍保留这两句。发送历史预算在 `request_history_budget_bytes` 中按入口配置，默认自由对话 64 KiB、游戏助手 32 KiB。按序列化字节数保留最近的完整回合，本地历史和固定设定继续保留。这是历史预算，模型的总上下文和输出上限仍取决于服务端。
 
