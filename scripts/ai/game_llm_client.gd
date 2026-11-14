@@ -51,6 +51,9 @@ var _tool_rounds := 0
 var _proposed_destination := ""
 var _dialogue_generation: Dictionary
 var _dialogue_merge := true
+var _dialogue_worldbook := ""
+var _dialogue_style: Array[Dictionary] = []
+var _dialogue_config_error := ""
 
 func _ready() -> void:
 	add_child(_transport)
@@ -65,7 +68,8 @@ func _ready() -> void:
 
 func _load_dialogue_config() -> void:
 	var preset: Variant = JSON.parse_string(FileAccess.get_file_as_string(DIALOGUE_CONFIG_PATH))
-	if not preset is Dictionary or not preset.get("generation") is Dictionary:
+	if not preset is Dictionary or not preset.get("generation") is Dictionary or not preset.get("game_dialogue") is Dictionary:
+		_dialogue_config_error = "无法读取自由对话配置 reborn.json。"
 		return
 	var generation: Dictionary = preset.generation
 	for field in ["temperature", "top_p", "max_tokens"]:
@@ -74,6 +78,57 @@ func _load_dialogue_config() -> void:
 			_dialogue_generation[field] = int(value) if field == "max_tokens" else value
 	var processing: Dictionary = preset.get("spreset", {}).get("message_processing", {})
 	_dialogue_merge = bool(processing.get("enabled", true)) and processing.get("mode", "merge") == "merge"
+	_dialogue_config_error = _load_dialogue_markdown(preset)
+
+func _load_dialogue_markdown(preset: Dictionary) -> String:
+	var runtime: Dictionary = preset.game_dialogue
+	if not runtime.get("worldbook") is Array or not runtime.get("prompt_ids") is Array or not preset.get("prompt_order") is Array:
+		return "自由对话配置缺少世界书或正文顺序。"
+	var world_entries: Array[Dictionary] = []
+	for file: String in runtime.worldbook:
+		var raw := _read_dialogue_markdown(file)
+		var separator := raw.find("\n---\n")
+		if separator < 0:
+			return "世界书缺少文件或条目头 · " + file
+		var header: Variant = JSON.parse_string(raw.left(separator))
+		if not header is Dictionary or not (header.get("depth") is float or header.get("depth") is int):
+			return "世界书的条目头无效 · " + file
+		if header.get("enabled", true) and header.get("role", "system") == "system":
+			world_entries.append({"depth": int(header.depth), "body": raw.substr(separator + 5).strip_edges()})
+	world_entries.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a.depth > b.depth)
+	var bodies := PackedStringArray()
+	for entry: Dictionary in world_entries:
+		bodies.append(entry.body)
+	_dialogue_worldbook = "\n\n".join(bodies)
+	var pending_ids: Array = runtime.prompt_ids.duplicate()
+	var markdown_files := {}
+	var past_history := false
+	for row: Dictionary in preset.prompt_order:
+		var id: String = row.identifier
+		if id == "chatHistory":
+			past_history = true
+		if not pending_ids.has(id):
+			continue
+		pending_ids.erase(id)
+		if not row.enabled:
+			continue
+		var file: String = row.get("markdown", "")
+		if row.marker or row.role != "system" or row.injection_position != 0 or file.is_empty():
+			return "自由对话正文配置无效 · " + id
+		if not markdown_files.has(file):
+			markdown_files[file] = _read_dialogue_markdown(file)
+		var text: String = markdown_files[file]
+		var opening := "<!-- prompt:%s -->\n" % id
+		var start := text.find(opening)
+		var end := text.find("\n<!-- /prompt -->", start + opening.length()) if start >= 0 else -1
+		if end < 0:
+			return "找不到自由对话正文 · " + file + " · " + id
+		start += opening.length()
+		_dialogue_style.append({"after_history": past_history, "content": text.substr(start, end - start)})
+	return "" if pending_ids.is_empty() else "自由对话配置引用了未知正文。"
+
+static func _read_dialogue_markdown(file: String) -> String:
+	return FileAccess.get_file_as_string(DIALOGUE_CONFIG_PATH.get_base_dir().path_join(file)).trim_prefix("\ufeff").replace("\r\n", "\n")
 
 func save_profile(channel: String, url: String, model: String, key: String, remember_key: bool) -> String:
 	if Transport.endpoint(url).is_empty() or model.strip_edges().is_empty():
@@ -155,6 +210,8 @@ func stop() -> void:
 func _can_start() -> bool:
 	if not configured():
 		status = "请先配置这个入口的模型。"
+	elif route == DIALOGUE and not _dialogue_config_error.is_empty():
+		status = _dialogue_config_error
 	else:
 		return true
 	changed.emit()
@@ -182,7 +239,16 @@ func _start(operation: String) -> void:
 				context.get("description", ""), context.get("scenario", ""),
 			],
 		}]
+		if not _dialogue_worldbook.is_empty():
+			var wb := _dialogue_worldbook.replace("{{user}}", str(context.get("user", "玩家"))).replace("{{char}}", str(context.get("char", "")))
+			_request_messages.append({"role": "system", "content": wb})
+		for row: Dictionary in _dialogue_style:
+			if not row.after_history:
+				_append_dialogue_style(row.content)
 		_request_messages.append_array(messages)
+		for row: Dictionary in _dialogue_style:
+			if row.after_history:
+				_append_dialogue_style(row.content)
 		if operation == "continue":
 			_request_messages.append({"role": "user", "content": "接着上一条回复继续，只写新增内容。"})
 		if _dialogue_merge:
@@ -196,6 +262,13 @@ func _start(operation: String) -> void:
 	pending = true
 	changed.emit()
 	_dispatch()
+
+func _append_dialogue_style(text: String) -> void:
+	text = text.replace("{{user}}", str(context.get("user", "玩家")))
+	text = text.replace("{{char}}", str(context.get("char", "")))
+	while text.contains("{{roll 1d100}}"):
+		text = text.replace("{{roll 1d100}}", str(randi_range(1, 100)))
+	_request_messages.append({"role": "system", "content": text})
 
 static func _merge_dialogue_messages(messages: Array) -> Array[Dictionary]:
 	var merged: Array[Dictionary] = []

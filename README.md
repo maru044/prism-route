@@ -32,7 +32,9 @@
 
 Reborn 的生成参数和注入顺序记录在 [reborn.json](assets/ai/reborn.json)。项目内正文集中在 [历史前](assets/ai/reborn/before_history.md) 和 [历史后](assets/ai/reborn/after_history.md) 两份 Markdown。每段正文用稳定 ID 标记，JSON 在原位置保留世界书、角色描述和聊天历史等动态标记。编辑正文时保留 HTML 注释里的段落 ID 和边界。原始导出留在项目外。
 
-当前自由对话从 `reborn.json` 读取 `temperature`、`top_p`、`max_tokens` 和消息合并模式，角色提示仍取自游戏场景。两份 Markdown 和 `worldbook/` 目前只作为编辑和核对资料，游戏不注入其中的正文，Windows 导出也排除这两个目录。供应商私有请求参数、酒馆网页扩展和脚本留在项目外的原件中。两份原导出中的反向代理鉴权字段已清空。实际凭据通过游戏内「连接设置」填写。
+自由对话启动时读取 `reborn.json` 的生成参数和消息合并模式，并用 `game_dialogue` 指定运行时读取的条目：[核心设定集](assets/ai/worldbook/核心设定集.md) 与 [世界规则](assets/ai/worldbook/世界规则.md) 放在聊天历史前（按 `depth` 降序排列）；完整 Reborn 前置设定、伪装对话及后置文风与格式控制正文按原顺序拼装生效。场景提供当前角色和地点。配置缺失时，发送按钮会显示具体文件或条目。
+
+旧客户端专用的工具调用手册已移至 [参考目录](assets/ai/reference/系统工具调用手册.md) 留存，避免正式目录占位与逻辑干扰。Windows 导出包含 `reborn.json`、历史前后正文、核心设定集与世界规则。两份原导出中的反向代理鉴权字段已清空。实际凭据通过游戏内「连接设置」填写。
 
 旧客户端的「开篇伪装对话」和「末尾格式要求」已从迁移副本移除，避免与 Reborn 的开场和输出格式叠加。Reborn 的普通请求 `assistant_prefill` 为空，`continue_prefill` 是酒馆的续写专用选项。游戏的「续写」用上一条实际回复和一条续写指令。世界书目录中的旧工具调用手册仅供参考，自由对话的请求不读取它。
 

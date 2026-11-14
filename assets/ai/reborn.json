@@ -44,6 +44,36 @@
     "impersonation_prompt": "reborn/before_history.md",
     "group_nudge_prompt": "reborn/before_history.md"
   },
+  "game_dialogue": {
+    "worldbook": [
+      "worldbook/核心设定集.md",
+      "worldbook/世界规则.md"
+    ],
+    "prompt_ids": [
+      "enhanceDefinitions",
+      "3df19ba7-b44d-4d46-b17a-de514d86e5d5",
+      "ab29af7b-4f0e-402f-8236-80b15800e554",
+      "34aca678-07d4-4aeb-96ca-37f78617c525",
+      "7a077e05-2616-4b58-b725-53c80ecf4931",
+      "9c015364-9395-46a6-b6dc-fca5637e9f06",
+      "nsfw",
+      "jailbreak",
+      "2cb59685-23fb-4187-9dec-4d9765af9e79",
+      "3682cbc5-2edd-46ab-9466-a670908b67e7",
+      "37fc5f95-679d-4aba-83c7-21e15a60919d",
+      "b614d087-a9c0-44cd-a006-0045e95dd014",
+      "0fb9ef19-6676-4acb-a844-6c870a81a2df",
+      "d6fa9105-b1ec-4079-a3be-a608388a4812",
+      "80aa69d4-0bcf-4f95-a0be-60a50cfb5376",
+      "968c1caa-a85b-42c0-a81a-840c372d61a8",
+      "ee33ae12-feea-42fd-98fe-97c995903f11",
+      "9fcf4beb-5996-4d01-8490-7332502bc422",
+      "c0db6fd9-86a0-4678-b896-d26ee9a02771",
+      "456c5c49-f1b4-4fc2-afc9-3a1851f1a20f",
+      "f65144f0-d39e-43e6-84e7-5c1d78a1a23d",
+      "2f2729f4-5d93-4268-a242-165a9c894e60"
+    ]
+  },
   "prompt_order": [
     {"identifier": "a579e015-eed7-45c4-aa1d-24c6df2974ea", "name": "（别关）（必看）免责声明", "role": "system", "marker": false, "injection_position": 0, "injection_depth": 4, "injection_order": 100, "system_prompt": false, "forbid_overrides": false, "enabled": true, "markdown": "reborn/before_history.md"},
     {"identifier": "main", "name": "（不要关）初始化", "role": "system", "marker": false, "injection_position": 0, "injection_depth": 4, "injection_order": 100, "system_prompt": true, "forbid_overrides": true, "enabled": true, "markdown": "reborn/before_history.md"},

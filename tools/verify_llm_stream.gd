@@ -48,7 +48,7 @@ func run() -> void:
 
 func _run_case(server: TCPServer, client: Node, fixture: Dictionary) -> void:
 	var title: String = fixture.name
-	client.open(Client.DIALOGUE, title, {})
+	client.open(Client.DIALOGUE, title, {"user": "FixturePlayer", "description": "FixtureCharacter"})
 	if not client.send("stream fixture"):
 		_fail(title, "could not send request")
 		return
@@ -61,15 +61,27 @@ func _run_case(server: TCPServer, client: Node, fixture: Dictionary) -> void:
 		_fail(title, "no loopback connection")
 		client.stop()
 		return
-	var request := ""
-	while not request.contains("\r\n\r\n") and Time.get_ticks_msec() < deadline:
+	var request := PackedByteArray()
+	var payload: Variant
+	while payload == null and Time.get_ticks_msec() < deadline:
 		await process_frame
 		peer.poll()
 		var available := peer.get_available_bytes()
 		if available > 0:
-			request += peer.get_utf8_string(available)
-	if not request.begins_with("POST /v1/chat/completions "):
-		_fail(title, "unexpected request path")
+			request.append_array(peer.get_data(available)[1])
+			payload = _request_payload(request)
+	if not payload is Dictionary:
+		_fail(title, "missing or malformed request")
+		peer.disconnect_from_host()
+		client.stop()
+		return
+	var messages: Array = payload.messages
+	if messages.size() != 3 or not messages[0].content.contains("[Game rules]") or not messages[0].content.contains("核心设定集") or not messages[0].content.contains("FixtureCharacter") \
+			or messages[1] != {"role": "user", "content": "stream fixture"} \
+			or messages[2].role != "system" or not messages[2].content.contains("FixturePlayer") \
+			or not messages[2].content.contains("活人感") or messages[2].content.contains("{{user}}") \
+			or not payload.stream or payload.has("tools") or payload.has("tool_choice"):
+		_fail(title, "unexpected dialogue prompt composition")
 	if fixture.get("cancel", false):
 		client.stop()
 		peer.disconnect_from_host()
@@ -112,6 +124,25 @@ func _run_case(server: TCPServer, client: Node, fixture: Dictionary) -> void:
 			_fail(title, "unexpected error: " + client.status)
 	elif client.status != fixture.status:
 		_fail(title, "unexpected status: " + client.status)
+
+func _request_payload(bytes: PackedByteArray) -> Variant:
+	var boundary := bytes.find(13)
+	while boundary >= 0 and boundary + 3 < bytes.size():
+		if bytes[boundary + 1] == 10 and bytes[boundary + 2] == 13 and bytes[boundary + 3] == 10:
+			break
+		boundary = bytes.find(13, boundary + 1)
+	if boundary < 0 or boundary + 3 >= bytes.size():
+		return null
+	var header := bytes.slice(0, boundary).get_string_from_utf8()
+	if not header.begins_with("POST /v1/chat/completions "):
+		return null
+	var body_start := boundary + 4
+	for line in header.split("\r\n"):
+		if line.to_lower().begins_with("content-length:"):
+			var size := int(line.get_slice(":", 1).strip_edges())
+			if bytes.size() - body_start >= size:
+				return JSON.parse_string(bytes.slice(body_start, body_start + size).get_string_from_utf8())
+	return null
 
 func _fail(title: String, detail: String) -> void:
 	printerr(title, " — ", detail)
