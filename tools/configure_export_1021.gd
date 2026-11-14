@@ -67,10 +67,9 @@ func run() -> void:
 	if not "assets/construction/basic_kit/catalog.json" in includes.split(","):includes+=",assets/construction/basic_kit/catalog.json"
 	for waypoint_file: String in ["assets/world/npc_waypoint_ruins/*.json", "assets/world/npc_waypoint_ruins/*.grass"]:
 		if not waypoint_file in includes.split(","):includes+=","+waypoint_file
-	for dialogue_file: String in ["assets/ai/reborn.json", "assets/ai/reborn/before_history.md", "assets/ai/reborn/after_history.md", "assets/ai/worldbook/核心设定集.md", "assets/ai/worldbook/世界规则.md"]:
-		if not dialogue_file in includes.split(","):includes+=","+dialogue_file
+	if not "assets/ai/worldbook/*.md" in includes.split(","):includes+=",assets/ai/worldbook/*.md"
 	config.set_value("preset.0","include_filter",includes)
-	var exclusions: PackedStringArray=["docs/*","screenshots/*","archive/*","experiments/*","assets/ai/reference/*","assets/ai/worldbook/角色信息与世界观.md","assets/ai/worldbook/user人设预留.md","assets/water/review/*","assets/world/current_map_validation/review/*","assets/world/current_map_validation/grass_bake/manifest_part_*.json","*.3dm","*.3dmbak","*.blend","*.blend1","*.TMP"]
+	var exclusions: PackedStringArray=["docs/*","screenshots/*","archive/*","experiments/*","assets/ai/reference/*","assets/water/review/*","assets/world/current_map_validation/review/*","assets/world/current_map_validation/grass_bake/manifest_part_*.json","*.3dm","*.3dmbak","*.blend","*.blend1","*.TMP"]
 	var bake_root: String="res://assets/world/current_map_validation/grass_bake/"
 	var bake: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(bake_root+"manifest.json"))
 	for name in DirAccess.get_files_at(bake_root):

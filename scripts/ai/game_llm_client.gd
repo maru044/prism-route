@@ -4,15 +4,12 @@ signal changed
 
 const Transport := preload("res://scripts/ai/chat_transport.gd")
 const SETTINGS_PATH := "user://llm_client.cfg"
-const DIALOGUE_CONFIG_PATH := "res://assets/ai/reborn.json"
+const DIALOGUE_PROMPT_DIR := "res://assets/ai/worldbook"
+const DIALOGUE_GENERATION := {"temperature": 1.08, "top_p": 0.98, "max_tokens": 8000}
 const DIALOGUE := "dialogue"
 const ASSISTANT := "assistant"
 const MAX_TOOL_ROUNDS := 3
 const DEFAULT_HISTORY_BUDGET := {DIALOGUE: 65536, ASSISTANT: 32768}
-const BEFORE_HISTORY := -1
-const DIALOGUE_CONTEXT_KEYS := [
-	"description", "personality", "scenario", "world_after", "persona", "dialogue_examples",
-]
 const RETRYABLE_TOOLS := ["get_world_status", "propose_teleport"]
 const TOOLS := [
 	{
@@ -37,7 +34,7 @@ const TOOLS := [
 ]
 
 static var _dialogue_tag := RegEx.create_from_string(r"(?i)<(/?)(game|report_nya~?|think_nya~?)>")
-static var _prompt_macro := RegEx.create_from_string(r"(?s)\{\{(?://.*?|user|char|roll 1d100)\}\}")
+static var _prompt_macro := RegEx.create_from_string(r"(?s)\{\{(?://.*?|roll 1d100|user|char|description|personality|scenario|world_after|persona|dialogue_examples)\}\}")
 static var _dialogue_tag_prefixes := [
 	"<game>", "</game>", "<report_nya>", "</report_nya>", "<think_nya>", "</think_nya>",
 	"<report_nya~>", "</report_nya~>", "<think_nya~>", "</think_nya~>",
@@ -68,8 +65,6 @@ var _request_profile: Dictionary
 var _operation := ""
 var _tool_rounds := 0
 var _proposed_destination := ""
-var _dialogue_generation: Dictionary
-var _dialogue_merge := true
 var _history_budget := DEFAULT_HISTORY_BUDGET.duplicate()
 var _dialogue_entries: Array[Dictionary] = []
 var _dialogue_config_error := ""
@@ -82,99 +77,45 @@ func _ready() -> void:
 	add_child(_transport)
 	_transport.delta_received.connect(_receive_delta)
 	_transport.finished.connect(_receive_result)
-	_load_dialogue_config()
+	_dialogue_config_error = _load_dialogue_markdown()
 	var config := ConfigFile.new()
 	if config.load(SETTINGS_PATH) == OK:
 		for channel: String in profiles:
 			for field in ["url", "model", "key"]:
 				profiles[channel][field] = str(config.get_value(channel, field, profiles[channel][field]))
 
-func _load_dialogue_config() -> void:
-	var preset: Variant = JSON.parse_string(FileAccess.get_file_as_string(DIALOGUE_CONFIG_PATH))
-	if not preset is Dictionary or not preset.get("generation") is Dictionary or not preset.get("prompt_files") is Array:
-		_dialogue_config_error = "无法读取自由对话配置 reborn.json。"
-		return
-	var budgets: Dictionary = preset.get("request_history_budget_bytes", {})
-	for channel: String in DEFAULT_HISTORY_BUDGET:
-		_history_budget[channel] = maxi(1, int(budgets.get(channel, DEFAULT_HISTORY_BUDGET[channel])))
-	var generation: Dictionary = preset.generation
-	for field in ["temperature", "top_p", "max_tokens"]:
-		var value: Variant = generation.get(field)
-		if value is float or value is int:
-			_dialogue_generation[field] = int(value) if field == "max_tokens" else value
-	var processing: Dictionary = preset.get("spreset", {}).get("message_processing", {})
-	_dialogue_merge = bool(processing.get("enabled", true)) and processing.get("mode", "merge") == "merge"
-	_dialogue_config_error = _load_dialogue_markdown(preset.prompt_files)
-
-func _load_dialogue_markdown(files: Array) -> String:
+func _load_dialogue_markdown() -> String:
 	_dialogue_entries.clear()
-	var seen_positions := {}
-	for file: String in files:
-		var raw := _read_dialogue_markdown(file)
+	var files_by_depth := {}
+	for file: String in DirAccess.get_files_at(DIALOGUE_PROMPT_DIR):
+		if file.get_extension() != "md":
+			continue
+		var path := DIALOGUE_PROMPT_DIR.path_join(file)
+		var raw := FileAccess.get_file_as_string(path).trim_prefix("\ufeff").replace("\r\n", "\n")
 		var separator := raw.find("\n---\n")
 		if separator < 0:
 			return "提示词缺少文件或条目头 · " + file
 		var header: Variant = JSON.parse_string(raw.left(separator))
-		if not header is Dictionary or not header.get("entries", [header]) is Array:
+		if not header is Dictionary:
 			return "提示词的条目头无效 · " + file
-		if not header.get("enabled", true) or header.get("role", "system") != "system":
-			continue
-		var markdown := raw.substr(separator + 5)
-		for row: Variant in header.get("entries", [header]):
-			if not row is Dictionary:
-				return "提示词的条目无效 · " + file
-			if not row.get("enabled", true):
-				continue
-			var problem := _load_dialogue_entry(file, markdown, header, row, seen_positions)
-			if not problem.is_empty():
-				return problem
+		var value: Variant = header.get("depth")
+		if not _is_nonnegative_integer(value):
+			return "提示词的 depth 必须为非负整数 · " + file
+		var depth := int(value)
+		if files_by_depth.has(depth):
+			return "提示词的 depth 重复，请把同深度正文合入同一文件 · " + files_by_depth[depth] + " / " + file
+		var content := raw.substr(separator + 5).strip_edges()
+		if content.is_empty():
+			return "提示词正文为空 · " + file
+		files_by_depth[depth] = file
+		_dialogue_entries.append({"depth": depth, "content": content})
 	if _dialogue_entries.is_empty():
-		return "自由对话没有启用的提示词。"
-	_dialogue_entries.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
-		if a.depth == b.depth:
-			return a.order < b.order
-		return a.depth == BEFORE_HISTORY or (b.depth != BEFORE_HISTORY and a.depth > b.depth)
-	)
-	return ""
-
-func _load_dialogue_entry(file: String, markdown: String, header: Dictionary, row: Dictionary, seen_positions: Dictionary) -> String:
-	var id: String = row.get("id", "")
-	var context_key: String = row.get("context", "")
-	var label := file + " · " + (id if context_key.is_empty() else context_key)
-	var depth_value: Variant = row.get("depth", header.get("depth"))
-	var order: Variant = row.get("order", header.get("order"))
-	var before_history: bool = depth_value is String and depth_value == "before_history"
-	if (not before_history and not _is_nonnegative_integer(depth_value)) or not _is_nonnegative_integer(order):
-		return "提示词的 depth 或 order 无效 · " + label
-	var depth := BEFORE_HISTORY if before_history else int(depth_value)
-	var position := Vector2i(depth, int(order))
-	if seen_positions.has(position):
-		return "提示词的 depth 和 order 重复 · " + label + " / " + seen_positions[position]
-	if not context_key.is_empty() and (context_key not in DIALOGUE_CONTEXT_KEYS or not id.is_empty()):
-		return "提示词的动态资料键无效 · " + label
-	if header.has("entries") and id.is_empty() and context_key.is_empty():
-		return "提示词的条目缺少 id 或 context · " + label
-	var content := markdown.strip_edges()
-	if not id.is_empty():
-		var opening := "<!-- prompt:%s -->\n" % id
-		var start := markdown.find(opening)
-		var end := markdown.find("\n<!-- /prompt -->", start + opening.length()) if start >= 0 else -1
-		if end < 0:
-			return "找不到自由对话正文 · " + label
-		start += opening.length()
-		content = markdown.substr(start, end - start)
-	seen_positions[position] = label
-	_dialogue_entries.append({
-		"depth": depth, "order": int(order), "context": context_key, "content": content,
-		"model_filter": str(row.get("model_contains", header.get("model_contains", ""))).to_lower(),
-	})
+		return "世界书目录里没有自由对话提示词。"
+	_dialogue_entries.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a.depth > b.depth)
 	return ""
 
 static func _is_nonnegative_integer(value: Variant) -> bool:
 	return (value is int or value is float) and value >= 0 and value <= 2147483647 and value == int(value)
-
-static func _read_dialogue_markdown(file: String) -> String:
-	return FileAccess.get_file_as_string(DIALOGUE_CONFIG_PATH.get_base_dir().path_join(file)).trim_prefix("\ufeff").replace("\r\n", "\n")
 
 func save_profile(channel: String, url: String, model: String, key: String, remember_key: bool) -> String:
 	if not profiles.has(channel):
@@ -301,8 +242,7 @@ func _start(operation: String) -> void:
 		_request_messages = _build_dialogue_messages(messages)
 		if operation == "continue":
 			_request_messages.append({"role": "user", "content": "接着上一条回复继续，只写新增内容。"})
-		if _dialogue_merge:
-			_request_messages = _merge_dialogue_messages(_request_messages)
+		_request_messages = _merge_dialogue_messages(_request_messages)
 	else:
 		_request_messages = [{
 			"role": "system",
@@ -340,19 +280,15 @@ static func _message_bytes(messages: Array) -> int:
 
 func _build_dialogue_messages(history_messages: Array) -> Array:
 	var messages: Array = [{"role": "system", "content": "保持当前角色语气和场景。"}]
-	var model: String = _request_profile.model.to_lower()
 	var history_index := 0
 	for row: Dictionary in _dialogue_entries:
-		var model_filter: String = row.get("model_filter", "")
-		if not model_filter.is_empty() and not model.contains(model_filter):
-			continue
-		var insert_at := 0 if row.depth == BEFORE_HISTORY else maxi(0, history_messages.size() - row.depth)
+		var insert_at := maxi(0, history_messages.size() - row.depth)
 		while history_index < insert_at:
 			messages.append(history_messages[history_index])
 			history_index += 1
-		var content: String = row.content if row.context.is_empty() else context.get(row.context, "")
+		var content := _expand_dialogue_prompt(row.content)
 		if not content.is_empty():
-			messages.append({"role": "system", "content": _expand_dialogue_prompt(content)})
+			messages.append({"role": "system", "content": content})
 	while history_index < history_messages.size():
 		messages.append(history_messages[history_index])
 		history_index += 1
@@ -394,13 +330,15 @@ func _expand_dialogue_prompt(text: String) -> String:
 	var cursor := 0
 	for matched in _prompt_macro.search_all(text):
 		parts.append(text.substr(cursor, matched.get_start() - cursor))
-		match matched.get_string():
-			"{{user}}":
+		var key := matched.get_string().trim_prefix("{{").trim_suffix("}}")
+		match key:
+			"user":
 				parts.append(str(context.get("user", "玩家")))
-			"{{char}}":
-				parts.append(str(context.get("char", "")))
-			"{{roll 1d100}}":
+			"roll 1d100":
 				parts.append(str(randi_range(1, 100)))
+			_:
+				if not key.begins_with("//"):
+					parts.append(str(context.get(key, "")))
 		cursor = matched.get_end()
 	parts.append(text.substr(cursor))
 	return "".join(parts)
@@ -417,7 +355,7 @@ static func _merge_dialogue_messages(messages: Array) -> Array[Dictionary]:
 func payload() -> Dictionary:
 	var body := {"model": _request_profile.get("model", ""), "messages": _request_messages, "stream": route == DIALOGUE}
 	if route == DIALOGUE:
-		body.merge(_dialogue_generation)
+		body.merge(DIALOGUE_GENERATION)
 	elif _allows_tools():
 		body["tools"] = TOOLS
 	return body

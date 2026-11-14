@@ -147,9 +147,15 @@ func _verify_context_budget() -> void:
 		client.send("问题%d" % i)
 		capture.delta_received.emit("回复%d" % i)
 		capture.finished.emit({}, "")
+	var full_messages: Array = capture.request.messages
+	# Before the final four chat messages: reply 3, question 4, reply 4, question 5.
+	if full_messages.size() != 14 or full_messages[7].content != "问题3" \
+			or full_messages[8].role != "system" or not full_messages[8].content.contains("[Game rules]") \
+			or full_messages[9].content != "回复3" or full_messages[12].content != "问题5" \
+			or JSON.stringify(full_messages).count("[Game rules]") != 1:
+		_fail("worldbook depth", "world rules must be inserted before the final four chat messages")
 	var budget := 160
 	client._history_budget[Client.DIALOGUE] = budget
-	client.profiles[Client.DIALOGUE].model = "fixture-PG"
 	client.send("最后的问题")
 	var messages: Array = capture.request.messages
 	if _role_contents(messages, "user") != ["问题5", "最后的问题"] or _role_contents(messages, "assistant") != ["回复5"]:
@@ -158,12 +164,12 @@ func _verify_context_budget() -> void:
 		_fail("context budget", "request budget changed local history")
 	var before: String = messages.front().content
 	var after: String = messages.back().content
-	if not _ordered_text(before, ["核心设定集", "<FixtureNPC>", "FixtureCharacter", "FixturePersonality", "</FixtureNPC>", "FixtureScene", "FixturePersona"]) \
-			or before.contains("[Game rules]") or after.contains("核心设定集") \
-			or not _ordered_text(after, ["[Game rules]", "<game></game>"]):
+	if messages.size() != 5 \
+			or not _ordered_text(before, ["[game Materials]", "核心设定集", "<FixtureNPC>", "FixtureCharacter", "FixturePersonality", "</FixtureNPC>", "FixtureScene", "FixturePersona", "[Game rules]"]) \
+			or after.contains("[Game rules]") or after.contains("核心设定集"):
 		_fail("context budget", "worldbook placement or dynamic marker order is incorrect")
-	if not after.contains("<censorship_bypass>") or after.contains("img-prompt") or after.contains("{{//"):
-		_fail("context budget", "model condition or prompt cleanup is incorrect")
+	if not _has_final_dialogue_format(messages) or after.contains("img-prompt") or before.contains("{{//") or after.contains("{{//"):
+		_fail("context budget", "shared prompt or prompt cleanup is incorrect")
 	client.stop()
 	var sends := capture.sends
 	if client.send("长".repeat(budget)) or client.history.size() != 7 or capture.sends != sends \
@@ -224,6 +230,13 @@ func _role_contents(messages: Array, role: String) -> Array:
 		if message.role == role:
 			contents.append(message.content)
 	return contents
+
+func _has_final_dialogue_format(messages: Array) -> bool:
+	var final_system: Dictionary = messages.back()
+	return final_system.role == "system" \
+		and _ordered_text(final_system.content, ["<game></game>", "【当前回复的结束边界】", "<censorship_bypass>"]) \
+		and final_system.content.ends_with("</censorship_bypass>") \
+		and JSON.stringify(messages).count("<censorship_bypass>") == 1
 
 func _verify_report_panel() -> void:
 	var panel := ChatPanel.new()
@@ -305,13 +318,12 @@ func _run_case(server: TCPServer, client: Node, fixture: Dictionary) -> void:
 	var messages: Array = payload.messages
 	var before: String = messages.front().content
 	var after: String = messages.back().content
-	if _role_contents(messages, "user") != ["stream fixture"] \
-			or not _ordered_text(before, ["核心设定集", "<FixtureNPC>", "FixtureCharacter", "</FixtureNPC>"]) \
-			or not before.contains("FixturePlayer") or before.contains("[Game rules]") or after.contains("核心设定集") \
-			or not _ordered_text(after, ["[Game rules]", "故事的整体氛围应始终保持", "<game></game>"]) \
-			or after.count("故事的整体氛围应始终保持") != 1 \
+	if messages.size() != 3 or _role_contents(messages, "user") != ["stream fixture"] \
+			or not _ordered_text(before, ["[game Materials]", "核心设定集", "<FixtureNPC>", "FixtureCharacter", "</FixtureNPC>", "[Game rules]", "故事的整体氛围应始终保持"]) \
+			or not before.contains("FixturePlayer") or after.contains("核心设定集") \
+			or JSON.stringify(messages).count("[Game rules]") != 1 or JSON.stringify(messages).count("[game Materials]") != 1 \
 			or before.contains("{{//") or after.contains("{{//") or after.contains("{{user}}") \
-			or after.contains("<censorship_bypass>") or after.contains("img-prompt") \
+			or not _has_final_dialogue_format(messages) or after.contains("img-prompt") \
 			or not payload.stream or payload.has("tools") or payload.has("tool_choice"):
 		_fail(title, "unexpected dialogue prompt composition")
 	if fixture.get("cancel", false):
