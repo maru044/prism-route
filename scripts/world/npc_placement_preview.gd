@@ -39,7 +39,7 @@ func initialize(map: Node3D) -> void:
 		menu.add_child(popup)
 		menu.add_submenu_item(region, String(popup.name))
 		popup.id_pressed.connect(_review_site)
-		var secondary := region == "次要点位" or region == SITES.CAPE_VISITORS
+		var secondary := region in ["次要点位", SITES.CAPE_VISITORS, SITES.CLIFF_WALKWAY]
 		for row: Array in SITES.REGIONS[region]:
 			var marker := _make_site(row, secondary)
 			popup.add_item(row[1], sites.size())
@@ -149,7 +149,7 @@ func _instance_actor(site: Marker3D, packed: PackedScene) -> void:
 	actor.motion_resource = IDLE
 	actor.preview_pose_only = true
 	actor.initialized.connect(func():
-		MTOON.apply(actor.character, site.get_meta("character_id"))
+		MTOON.apply(actor.character, site.get_meta("character_id"), true)
 	)
 	actors[site] = actor
 	site.add_child(actor)

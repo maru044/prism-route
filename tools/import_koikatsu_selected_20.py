@@ -21,7 +21,7 @@ sys.path.insert(0, r"C:\Users\PC\AppData\Local\Temp\prism-unitypy")
 sys.modules.setdefault("etcpak", types.ModuleType("etcpak"))
 
 import UnityPy  # noqa: E402
-from build_motion_review import numbers, quaternion, slerp  # noqa: E402
+from build_motion_review import close_walk_loop, numbers, quaternion, slerp  # noqa: E402
 
 KK_ABDATA = pathlib.Path(r"D:\参考资料\KK\[ScrewThisNoise] Koikatsu BetterRepack RX22\abdata")
 KK_CSV = pathlib.Path(r"D:\Prism Route\research\Koikatsu RX22 动作\游戏内动作索引.csv")
@@ -556,7 +556,7 @@ def smooth_periodic_pos(p_arr):
     return p
 
 
-def write_kk_clip(tres_name, times, rest_w, pose_w, name_to_idx, source_meta, out_path):
+def write_kk_clip(tres_name, times, rest_w, pose_w, name_to_idx, source_meta, out_path, *, hermite_loop=False):
     pelvis = name_to_idx["cf_j_waist02"]
     height = abs(float(rest_w[pelvis][1, 3]))
     assert height > 0.1
@@ -573,12 +573,24 @@ def write_kk_clip(tres_name, times, rest_w, pose_w, name_to_idx, source_meta, ou
         'metadata/rotation_space = "skeleton_world_rest_delta"',
         'metadata/translation_space = "physical_pelvis_rest_delta_metres"',
     ]
-    track = 0
+    rotations = {}
     for semantic, kk_bone in BONE_MAP.items():
         bi = name_to_idx[kk_bone]
         r_inv = np.linalg.inv(rest_w[bi][:3, :3])
-        q_list = [quaternion(pw[bi][:3, :3] @ r_inv) for pw in pose_w]
-        q_arr = smooth_periodic_quats(np.asarray(q_list, dtype=float))
+        rotations[semantic] = np.asarray([quaternion(pw[bi][:3, :3] @ r_inv) for pw in pose_w])
+    raw_trans = np.asarray([pw[pelvis][:3, 3] - rest_w[pelvis][:3, 3] for pw in pose_w], dtype=float)
+    if hermite_loop:
+        rotations, trans = close_walk_loop(times, rotations, raw_trans)
+    else:
+        rotations = {bone: smooth_periodic_quats(values) for bone, values in rotations.items()}
+        trans = smooth_periodic_pos(raw_trans)
+
+    track = 0
+    for semantic, values in rotations.items():
+        q_arr = np.asarray(values)
+        for i in range(1, len(q_arr)):
+            if np.dot(q_arr[i - 1], q_arr[i]) < 0:
+                q_arr[i] = -q_arr[i]
         is_constant = np.max(np.minimum(np.linalg.norm(q_arr - q_arr[0], axis=1), np.linalg.norm(q_arr + q_arr[0], axis=1))) < 1e-7
         use_times = times[:1] if is_constant else times
         use_vals = q_arr[:1] if is_constant else q_arr
@@ -592,8 +604,6 @@ def write_kk_clip(tres_name, times, rest_w, pose_w, name_to_idx, source_meta, ou
         ]
         track += 1
 
-    raw_trans = np.asarray([pw[pelvis][:3, 3] - rest_w[pelvis][:3, 3] for pw in pose_w], dtype=float)
-    trans = smooth_periodic_pos(raw_trans)
     keys = np.column_stack((times, np.ones(len(times)), trans))
     lines += [
         f'tracks/{track}/type = "position_3d"',

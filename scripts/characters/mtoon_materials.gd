@@ -37,6 +37,20 @@ const FORMAL_GANYU_ALPHA := {
 	"脸红": BaseMaterial3D.TRANSPARENCY_ALPHA_DEPTH_PRE_PASS,
 }
 
+# Exact roster VRM names keep accessory and expression materials out of
+# the hair and eye lighting branches.
+const NPC_SURFACE_ALIASES := {
+	"颜1": "颜", "新脸": "脸", "二重": "睫", "牙": "牙齿", "歯": "齿",
+	"肌1": "肌", "肌2": "肌", "肌3": "肌", "肌4": "肌",
+	"皮肤1": "皮肤", "腿皮肤": "皮肤", "脖子": "皮肤",
+	"白目": "眼白", "目白": "眼白", "眼": "目", "眼睛1": "目",
+	"髮": "髪", "髮2": "髪", "髪2": "髪", "髮+": "髪+", "发+": "髪+",
+	"前髪": "髪", "前髮": "髪", "后髪": "髪", "后髮": "髪",
+	"侧髪": "髪", "侧髮": "髪", "髪鬓": "髪", "髮辫": "髪", "后髪辫": "髪",
+	"前髪+": "髪+", "后髮+": "髪+", "发sph+": "髪+", "髮sph+": "髪+",
+	"髪spa+": "髪+", "髮spa+": "髪+", "前髪spa+": "髪+", "前髮spa+": "髪+",
+}
+
 static func create(source: StandardMaterial3D, region: String, transparency_override: int = -1) -> ShaderMaterial:
 	var material := ShaderMaterial.new()
 	var transparency: int = source.transparency if transparency_override < 0 else transparency_override
@@ -86,7 +100,7 @@ static func create_formal(source: StandardMaterial3D, region: String, surface_na
 	material.set_shader_parameter("wet_levels", dry)
 	return material
 
-static func apply_to_vrm_shader_material(source_mat: ShaderMaterial, surface_name: String, _character_id: String) -> ShaderMaterial:
+static func apply_to_vrm_shader_material(source_mat: ShaderMaterial, surface_name: String, _character_id: String, npc_lighting := false) -> ShaderMaterial:
 	var mat := source_mat.duplicate() as ShaderMaterial
 	var orig_shader_path: String = ""
 	if source_mat.shader != null:
@@ -116,10 +130,11 @@ static func apply_to_vrm_shader_material(source_mat: ShaderMaterial, surface_nam
 	# Upward sky normal indirect light blend for clean anime luminous look
 	mat.set_shader_parameter("_IndirectLightIntensity", 0.35)
 	
-	var is_face: bool = surface_name in ["面", "面1", "面2", "脸", "颜", "颜2", "眉", "眉毛", "睫", "口", "口舌", "齿", "牙齿", "舌头", "口腔"]
-	var is_skin: bool = surface_name in ["肌", "皮肤", "新胖次"]
-	var is_eye: bool = surface_name in ["目", "眼睛", "眼白", "星目", "目星"]
-	var is_hair: bool = surface_name in ["发", "头发", "髪", "髪+"]
+	var lighting_name: String = NPC_SURFACE_ALIASES.get(surface_name, surface_name) if npc_lighting else surface_name
+	var is_face: bool = lighting_name in ["面", "面1", "面2", "脸", "颜", "颜2", "眉", "眉毛", "睫", "口", "口舌", "齿", "牙齿", "舌头", "口腔"]
+	var is_skin: bool = lighting_name in ["肌", "皮肤", "新胖次"]
+	var is_eye: bool = lighting_name in ["目", "眼睛", "眼白", "星目", "目星"]
+	var is_hair: bool = lighting_name in ["发", "头发", "髪", "髪+"]
 	var is_metal: bool = surface_name in ["衣饰铁", "外套衣饰铁", "怀表", "神之眼", "腰饰", "角", "胸饰", "背饰铃铛", "裙饰铁", "鞋子饰"]
 	
 	var shade_col_param = mat.get_shader_parameter("_ShadeColor")
@@ -170,7 +185,7 @@ static func apply_to_vrm_shader_material(source_mat: ShaderMaterial, surface_nam
 		
 	return mat
 
-static func apply(character: Node3D, character_id: String = "auto") -> Dictionary:
+static func apply(character: Node3D, character_id: String = "auto", npc_lighting := false) -> Dictionary:
 	var result := {
 		"converted": 0,
 		"skipped": [],
@@ -203,7 +218,8 @@ static func apply(character: Node3D, character_id: String = "auto") -> Dictionar
 			var cull_mode_str := "cull_back"
 			
 			if source is StandardMaterial3D:
-				var region: String = "face" if name_value in ["面1", "面2", "脸", "颜"] else ("skin" if name_value in ["肌", "皮肤"] else "body")
+				var lighting_name: String = NPC_SURFACE_ALIASES.get(name_value, name_value) if npc_lighting else name_value
+				var region: String = "face" if lighting_name in ["面1", "面2", "脸", "颜"] else ("skin" if lighting_name in ["肌", "皮肤"] else "body")
 				if detected_id == "ganyu":
 					target_mat = create_formal(source, region, name_value)
 				else:
@@ -211,7 +227,7 @@ static func apply(character: Node3D, character_id: String = "auto") -> Dictionar
 				mesh.set_surface_override_material(index, target_mat)
 				result.converted += 1
 			elif source is ShaderMaterial:
-				target_mat = apply_to_vrm_shader_material(source, name_value, detected_id)
+				target_mat = apply_to_vrm_shader_material(source, name_value, detected_id, npc_lighting)
 				mesh.set_surface_override_material(index, target_mat)
 				result.converted += 1
 			else:

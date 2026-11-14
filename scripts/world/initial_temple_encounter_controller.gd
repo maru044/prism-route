@@ -297,6 +297,7 @@ func _build_subsystems() -> void:
 	dialogue_panel.name = "DialoguePanel"
 	dialogue_panel.palette = ui_palette
 	dialogue_panel.opponent_name = "花火"
+	dialogue_panel.enable_free_dialogue = world != null and world.has_method("show_free_dialogue")
 	dialogue_panel.visible = false
 	canvas.add_child(dialogue_panel)
 	
@@ -318,6 +319,10 @@ func _build_subsystems() -> void:
 	dialogue_manager.choices_presented.connect(dialogue_panel.display_choices)
 	dialogue_panel.option_selected.connect(dialogue_manager.choose_option)
 	dialogue_panel.next_pressed.connect(dialogue_manager.advance_text)
+	dialogue_panel.free_dialogue_requested.connect(func():
+		if dialogue_manager.session_active and is_instance_valid(world):
+			world.show_free_dialogue(dialogue_panel, "花火")
+	)
 	dialogue_manager.dialogue_ended.connect(_on_dialogue_ended)
 	
 	combat_manager.log_message_emitted.connect(combat_hud.append_log)
@@ -484,6 +489,8 @@ func _get_world_character() -> Node:
 	return null
 
 func tick(delta: float) -> void:
+	if is_instance_valid(world) and world.has_method("has_llm_panel_open") and world.has_llm_panel_open():
+		return
 	if current_state == EncounterState.COMBAT or current_state == EncounterState.FURNITURE_SERVICE_ACTIVE:
 		if not (dialogue_panel and is_instance_valid(dialogue_panel) and dialogue_panel.visible):
 			_process_combat_camera_keys(delta)
@@ -798,6 +805,8 @@ func _process_combat_camera_keys(delta: float) -> void:
 		_update_combat_camera_transform()
 
 func _unhandled_input(event: InputEvent) -> void:
+	if is_instance_valid(world) and world.has_method("has_llm_panel_open") and world.has_llm_panel_open():
+		return
 	if current_state != EncounterState.COMBAT and current_state != EncounterState.FURNITURE_SERVICE_ACTIVE:
 		return
 	if dialogue_panel and is_instance_valid(dialogue_panel) and dialogue_panel.visible:
@@ -850,6 +859,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_update_combat_camera_transform()
 
 func _on_dialogue_ended(payload: Dictionary) -> void:
+	if is_instance_valid(world) and world.has_method("close_free_dialogue"):
+		world.close_free_dialogue()
 	var action: String = payload.get("action", "close")
 	var source: int = payload.get("source", DialogueManagerClass.DialogueSource.WORLD_INTERACTION)
 	var policy: int = payload.get("resume_policy", DialogueManagerClass.ResumePolicy.RETURN_TO_WORLD)

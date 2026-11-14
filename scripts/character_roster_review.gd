@@ -4,10 +4,18 @@ const ACTOR=preload("res://scenes/characters/shared_humanoid_actor.tscn")
 const CATALOG="res://assets/characters/roster/catalog.json"
 @export_file("*.json") var catalog_resource: String=CATALOG
 const CLIPS="res://assets/characters/roster/neutral_clips.json"
+const KOIKATSU_CLIPS := {
+	"idle": "res://assets/characters/roster/motions/koikatsu_idle.tres",
+	"walk": "res://assets/characters/roster/motions/koikatsu_walk.tres",
+	"run": "res://assets/characters/roster/motions/koikatsu_run.tres",
+}
 var profiles: Array=[]
 var clips: Array=[]
 var shared_clips: Dictionary={}
 var actor
+var comparison_actor
+var compare := CheckButton.new()
+var comparison_time := 0.0
 var camera: Camera3D
 var model_select:=OptionButton.new()
 var motion_select:=OptionButton.new()
@@ -65,6 +73,9 @@ func _build_ui() -> void:
 	model_select.item_selected.connect(select_model);column.add_child(model_select)
 	for row: Dictionary in clips:motion_select.add_item(row.label)
 	motion_select.item_selected.connect(select_motion);column.add_child(motion_select)
+	compare.text="同屏对比恋活"
+	compare.toggled.connect(_toggle_comparison)
+	column.add_child(compare)
 	for value in [.5,.75,1.]:
 		speed_select.add_item("播放速度：%.2f×"%value);speed_select.set_item_metadata(speed_select.item_count-1,value)
 	speed_select.select(2);speed_select.item_selected.connect(_on_speed_selected);column.add_child(speed_select)
@@ -72,7 +83,11 @@ func _build_ui() -> void:
 	pause.text="暂停";pause.pressed.connect(func():playing=not playing;pause.text="暂停" if playing else "播放");column.add_child(pause)
 	timeline.min_value=0;timeline.max_value=1;timeline.step=.001;timeline.custom_minimum_size.x=250;column.add_child(timeline)
 	timeline.value_changed.connect(func(value: float):
-		if not syncing and is_instance_valid(actor) and not loading:time=value;actor.seek(time))
+		if not syncing and is_instance_valid(actor) and not loading:
+			time=value;actor.seek(time)
+			if is_instance_valid(comparison_actor):
+				comparison_time=value/actor.duration*comparison_actor.duration
+				comparison_actor.seek(comparison_time))
 	hair.text="头发物理";hair.button_pressed=true;clothes.text="服饰物理";clothes.button_pressed=true
 	for toggle in [hair,clothes]:column.add_child(toggle);toggle.toggled.connect(_physics)
 	grounding.text="预览接地辅助（额外）";grounding.button_pressed=false;column.add_child(grounding)
@@ -82,14 +97,57 @@ func _build_ui() -> void:
 func select_model(index: int) -> void:
 	if loading:return
 	var saved_time:=time
-	loading=true;ready_for_review=false;model_select.disabled=true;motion_select.disabled=true
+	_set_loading(true)
 	if is_instance_valid(actor):actor.free()
-	actor=ACTOR.instantiate();actor.model_resource=profiles[index].model;actor.motion_resource=clips[motion_select.selected].resource
+	if is_instance_valid(comparison_actor):comparison_actor.free()
+	var clip: Dictionary=clips[motion_select.selected]
+	actor=ACTOR.instantiate();actor.model_resource=profiles[index].model;actor.motion_resource=clip.resource
 	actor.auto_play=false;actor.environment_mask=1;add_child(actor)
 	while not actor.ready_for_review:await get_tree().process_frame
 	time=minf(saved_time,actor.duration);actor.seek(time);timeline.max_value=actor.duration;actor.set_physics_enabled(hair.button_pressed,clothes.button_pressed)
 	status.text="%s\n%d 根骨骼 · %d 条物理链"%[profiles[index].label,actor.skeleton.get_bone_count(),actor.all_springs.size()]
-	loading=false;ready_for_review=true;model_select.select(index);model_select.disabled=false;motion_select.disabled=false
+	compare.button_pressed=compare.button_pressed and KOIKATSU_CLIPS.has(clip.id)
+	if compare.button_pressed:
+		await _load_comparison()
+	model_select.select(index)
+	_set_loading(false)
+
+func _set_loading(value: bool) -> void:
+	loading=value;ready_for_review=not value
+	model_select.disabled=value;motion_select.disabled=value
+	compare.disabled=value or not KOIKATSU_CLIPS.has(clips[motion_select.selected].id)
+
+func _toggle_comparison(enabled: bool) -> void:
+	if loading or not is_instance_valid(actor):return
+	if enabled:
+		_set_loading(true)
+		time=0.;actor.seek(0.)
+		await _load_comparison()
+		_set_loading(false)
+		_camera()
+	elif is_instance_valid(comparison_actor):
+		comparison_actor.free()
+		actor.position=Vector3.ZERO
+		actor.seek(time)
+		_camera()
+
+func _load_comparison() -> void:
+	comparison_actor=ACTOR.instantiate()
+	comparison_actor.model_resource=actor.model_resource
+	comparison_actor.motion_resource=KOIKATSU_CLIPS[clips[motion_select.selected].id]
+	comparison_actor.environment_mask=1
+	_layout_comparison()
+	add_child(comparison_actor)
+	while not comparison_actor.ready_for_review:await get_tree().process_frame
+	comparison_time=fposmod(time,comparison_actor.duration)
+	comparison_actor.set_physics_enabled(hair.button_pressed,clothes.button_pressed)
+	comparison_actor.seek(comparison_time)
+
+func _layout_comparison() -> void:
+	if not is_instance_valid(comparison_actor):return
+	var side:=camera.global_basis.x*.76
+	actor.position=-side
+	comparison_actor.position=side
 
 func select_motion(index: int) -> void:
 	if loading or not is_instance_valid(actor):return
@@ -100,9 +158,17 @@ func select_motion(index: int) -> void:
 		if actor.motion.track_get_type(track)==Animation.TYPE_ROTATION_3D:actor.rotation_tracks[semantic]=track
 		elif actor.motion.track_get_type(track)==Animation.TYPE_POSITION_3D:actor.translation_track=track
 	actor.translation_scale=actor.target_height/float(actor.motion.get_meta("reference_height"));time=0.;actor.seek(0.);timeline.max_value=actor.duration
+	if is_instance_valid(comparison_actor):
+		comparison_time=0.0
+		if KOIKATSU_CLIPS.has(clips[index].id):
+			comparison_actor.set_motion(KOIKATSU_CLIPS[clips[index].id])
+		else:
+			compare.button_pressed=false
+	compare.disabled=not KOIKATSU_CLIPS.has(clips[index].id)
 
 func _physics(_value: bool) -> void:
 	if is_instance_valid(actor) and not loading:actor.set_physics_enabled(hair.button_pressed,clothes.button_pressed)
+	if is_instance_valid(comparison_actor) and not loading:comparison_actor.set_physics_enabled(hair.button_pressed,clothes.button_pressed)
 
 func _on_speed_selected(index: int) -> void:
 	playback_speed=float(speed_select.get_item_metadata(index))
@@ -112,30 +178,43 @@ func _process(delta: float) -> void:
 	if playing:
 		time+=delta*playback_speed
 		if time>=actor.duration:time=fmod(time,actor.duration)
+		if is_instance_valid(comparison_actor):
+			comparison_time=fposmod(comparison_time+delta*playback_speed,comparison_actor.duration)
 	# Formal locomotion is already in place. Its constant anchor was removed by
 	# the world controller; cancelling every frame erases the balancing pelvis
 	# sway AND the target pivot compensation. Keep a fixed presentation origin.
 	# Automatic wraps only sample the next pose; seek() would reset the springs.
 	actor.sample_time(time);actor.position=Vector3.ZERO
-	# Preview-only root lift. Shared poses and exported VRM remain immutable;
-	# this is not a foot IK solver or a gameplay contact-quality claim.
-	grounding_lift=0.
-	if grounding.button_pressed:
-		var lowest:=INF
-		for semantic in ["LeftFoot","RightFoot","LeftToes","RightToes"]:
-			if not actor.semantic_bones.has(semantic):continue
-			var index: int=actor.semantic_bones[semantic];var rest: Transform3D=actor.rest_world[index]
-			var sole:=rest.affine_inverse()*Vector3(rest.origin.x,0.,rest.origin.z)
-			var pose: Transform3D=actor.skeleton.get_bone_global_pose(index)
-			lowest=minf(lowest,(actor.skeleton.global_transform*(pose*sole)).y)
-		if is_finite(lowest):grounding_lift=clampf(.003-lowest,0.,.3);actor.position.y=grounding_lift
+	if is_instance_valid(comparison_actor):
+		comparison_actor.sample_time(comparison_time)
+		_layout_comparison()
+		comparison_actor.position.y=_grounding_lift(comparison_actor)
+	grounding_lift=_grounding_lift(actor)
+	actor.position.y=grounding_lift
 	syncing=true;timeline.value=time;syncing=false
 	time_label.text="%.2f×  |  %.2f / %.2f 秒"%[playback_speed,time,actor.duration]
+	if is_instance_valid(comparison_actor):
+		time_label.text="%.2f×\n左 · 现用   %.2f / %.2f 秒\n右 · 恋活   %.2f / %.2f 秒"%[
+			playback_speed,time,actor.duration,comparison_time,comparison_actor.duration]
+
+func _grounding_lift(sample_actor) -> float:
+	if not grounding.button_pressed:return 0.0
+	var lowest:=INF
+	for semantic in ["LeftFoot","RightFoot","LeftToes","RightToes"]:
+		if not sample_actor.semantic_bones.has(semantic):continue
+		var index: int=sample_actor.semantic_bones[semantic]
+		var rest: Transform3D=sample_actor.rest_world[index]
+		var sole:=rest.affine_inverse()*Vector3(rest.origin.x,0.,rest.origin.z)
+		var pose: Transform3D=sample_actor.skeleton.get_bone_global_pose(index)
+		lowest=minf(lowest,(sample_actor.skeleton.global_transform*(pose*sole)).y)
+	return clampf(.003-lowest,0.,.3) if is_finite(lowest) else 0.0
 
 func _camera() -> void:
 	var target:=Vector3(0,.98,0)
-	camera.position=target+Vector3(sin(yaw)*cos(pitch),sin(pitch),cos(yaw)*cos(pitch))*distance
+	var view_distance:=maxf(distance,3.5) if is_instance_valid(comparison_actor) else distance
+	camera.position=target+Vector3(sin(yaw)*cos(pitch),sin(pitch),cos(yaw)*cos(pitch))*view_distance
 	camera.look_at(target)
+	_layout_comparison()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode==KEY_SPACE:pause.pressed.emit()

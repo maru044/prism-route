@@ -3,6 +3,7 @@ extends Control
 
 signal option_selected(index: int)
 signal next_pressed()
+signal free_dialogue_requested()
 
 const INPUT_GROUP := "dialogue_input_panels"
 const UI := preload("res://scenes/combat/encounter_ui_style.gd")
@@ -10,6 +11,7 @@ const Card := preload("res://scenes/combat/encounter_card.gd")
 
 @export var palette: UI.Palette = UI.DEFAULT_PALETTE
 @export var opponent_name := "对手"
+var enable_free_dialogue := false
 
 var speaker_label: Label
 var text_label: RichTextLabel
@@ -72,13 +74,22 @@ func _build_ui() -> void:
 	choices_container.hide()
 	_choices_scroll.add_child(choices_container)
 
+	var actions := HBoxContainer.new()
+	actions.alignment = BoxContainer.ALIGNMENT_END
+	_dock.add_child(actions)
+	if enable_free_dialogue:
+		var free_dialogue := Card.new()
+		free_dialogue.configure("自由对话", palette, Card.Kind.CONTINUE)
+		free_dialogue.custom_minimum_size = Vector2(144, 44)
+		free_dialogue.pressed.connect(func(): free_dialogue_requested.emit())
+		actions.add_child(free_dialogue)
 	var prompt := Card.new()
 	prompt.configure("空格  ·  继续  ›", palette, Card.Kind.CONTINUE)
 	prompt_label = prompt
 	prompt_label.custom_minimum_size = Vector2(182, 44)
 	prompt_label.size_flags_horizontal = Control.SIZE_SHRINK_END
 	prompt_label.pressed.connect(func(): next_pressed.emit())
-	_dock.add_child(prompt_label)
+	actions.add_child(prompt_label)
 
 func display_text(speaker: String, content: String, _emotion: String = "") -> void:
 	speaker_label.text = speaker

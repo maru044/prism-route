@@ -18,7 +18,9 @@ const INITIAL_RUIN := preload("res://scenes/world/initial_ruin.tscn")
 const DIALOGUE_INPUT := preload("res://scenes/narrative/dialogue_panel.gd")
 const WORLD_CONTROL := preload("res://scripts/world/world_control_context.gd")
 const GAME_PROGRESS := preload("res://scripts/progress/game_progress.gd")
+const LLM_PANEL := preload("res://scripts/ai/llm_panel.gd")
 var game_progress := GAME_PROGRESS.new()
+var llm_panel: CanvasLayer
 const UPPER_RING := preload("res://scenes/world/upper_ring.tscn")
 const ISLAND_SADDLE := preload("res://scenes/world/island_saddle.tscn")
 const OVAL_ATRIUM := preload("res://scripts/world/oval_atrium.gd")
@@ -549,12 +551,95 @@ func _hud() -> void:
 	graphics_menu.select(graphics_quality)
 	graphics_menu.item_selected.connect(_on_graphics_quality_selected)
 	box.add_child(graphics_menu)
+	var assistant_button := Button.new()
+	assistant_button.name = "GameAssistant"
+	assistant_button.text = "游戏助手"
+	assistant_button.pressed.connect(_open_llm_assistant)
+	box.add_child(assistant_button)
 	for control in box.get_children():
 		if control is BaseButton:control.custom_minimum_size.y=36;control.focus_mode=Control.FOCUS_NONE
 	var performance_monitor:=PERFORMANCE_MONITOR.new()
 	performance_monitor.world_scene=self;add_child(performance_monitor)
 	review_ui_layers.append(performance_monitor)
 	set_review_ui_visible(not "--no-ui" in OS.get_cmdline_user_args())
+
+func _get_llm_panel() -> CanvasLayer:
+	if llm_panel == null:
+		llm_panel = LLM_PANEL.new()
+		llm_panel.name = "GameLLMPanel"
+		llm_panel.palette = preload("res://scenes/combat/sparkle_ui_palette.tres")
+		llm_panel.client.world_status = _llm_world_status
+		llm_panel.client.world_teleport = _llm_teleport
+		add_child(llm_panel)
+	return llm_panel
+
+func _open_llm_assistant() -> void:
+	if not test_ready or switching_actor or not is_world_input_allowed():
+		return
+	var panel := _get_llm_panel()
+	character.set_control_enabled(false)
+	camper.set_physics_process(false)
+	camper.set_process_unhandled_input(false)
+	dragging = false
+	panel.panel_closed.connect(_sync_actor_controls, CONNECT_ONE_SHOT)
+	panel.open_panel("assistant", "world")
+
+func show_free_dialogue(panel: Control, speaker: String) -> void:
+	var chat := _get_llm_panel()
+	if chat.visible:
+		return
+	panel.set_process_input(false)
+	panel.hide()
+	var manager = initial_ruin.encounter.dialogue_manager
+	var session_id: int = manager.session_id
+	chat.panel_closed.connect(func():
+		if is_instance_valid(panel):
+			panel.set_process_input(true)
+			panel.visible = is_instance_valid(manager) and manager.session_active and manager.session_id == session_id
+	, CONNECT_ONE_SHOT)
+	chat.open_panel("dialogue", "initial_temple_sparkle", {
+		"char": speaker,
+		"user": "玩家",
+		"description": "此刻与你交谈的是 Prism Route 初始神殿的花火。",
+		"scenario": "你与玩家正在初始神殿交谈。保持当前的游戏场景。",
+	})
+
+func has_llm_panel_open() -> bool:
+	return is_instance_valid(llm_panel) and llm_panel.visible
+
+func close_free_dialogue() -> void:
+	if has_llm_panel_open() and llm_panel.client.route == "dialogue":
+		llm_panel.close_panel()
+
+func _llm_world_status() -> Dictionary:
+	var destinations: Array[Dictionary] = []
+	for row: Dictionary in resolved_spawns:
+		if not row.is_empty():
+			destinations.append({"id": row.key, "name": row.name})
+	var actor := active_actor()
+	var point := actor.global_position
+	var spawn_name := ""
+	if spawn_index >= 0 and spawn_index < resolved_spawns.size():
+		spawn_name = str(resolved_spawns[spawn_index].get("name", ""))
+	return {
+		"actor_mode": "character" if character_mode else "camper",
+		"position": [point.x, point.y, point.z],
+		"last_preview_spawn": spawn_name,
+		"tutorial_completed": game_progress.tutorial_completed,
+		"destinations": destinations,
+	}
+
+func _llm_teleport(destination_id: String) -> String:
+	var editing: bool = (construction != null and construction.active) or (planting != null and planting.active)
+	if not test_ready or not has_llm_panel_open() or encounter_ui_active or switching_actor or editing:
+		return "当前状态无法传送。"
+	for i in resolved_spawns.size():
+		var row := resolved_spawns[i]
+		if row.get("key") == destination_id:
+			llm_panel.close_panel()
+			select_spawn(i)
+			return "已到达 " + str(row.name) + "。"
+	return "该地点当前不可用。"
 
 func set_review_ui_visible(enabled: bool) -> void:
 	review_ui_visible=enabled
@@ -573,6 +658,7 @@ func set_encounter_ui_active(active: bool) -> void:
 	if is_instance_valid(character.switch_wheel):character.switch_wheel.visible=not active
 
 func _input(event: InputEvent) -> void:
+	if has_llm_panel_open():return
 	# Handle globally so H also works while the spawn menu has keyboard focus.
 	if encounter_ui_active or (construction!=null and construction.active):return
 	if event is InputEventKey and event.pressed and not event.echo:
@@ -759,6 +845,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		camera.rotation.y-=event.relative.x*.003;camera.rotation.x=clampf(camera.rotation.x-event.relative.y*.003,-1.5,1.5)
 
 func _process(delta: float) -> void:
+	if has_llm_panel_open():return
 	if construction!=null and construction.active:return
 	if planting!=null and planting.active:return
 	if not free_mode or automation_enabled:return

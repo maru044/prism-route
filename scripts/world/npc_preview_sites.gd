@@ -2,6 +2,7 @@ extends RefCounted
 ## Stand positions from the world placement plan. Ruin points use live anchors.
 
 const CAPE_VISITORS := "海岬小镇 · 来访角色"
+const CLIFF_WALKWAY := "异形镂空崖壁 · 底层步道"
 
 const REGIONS := {
 	"浅水庭院": [
@@ -56,11 +57,15 @@ const REGIONS := {
 	],
 	"椭圆中庭与上层环庭": [
 		["jingliu", "镜流", Vector3(-917.000, 68.040, 1110.000), -45.0],
-		["fu_xuan", "符玄", Vector3(-323.000, 72.600, 876.000), -135.0],
+		["fu_xuan", "符玄 · 中层上段", Vector3(-415.000, 57.800, 875.500), 119.0],
 		["qingque", "青雀", Vector3(-417.000, 63.000, 910.000), 90.0],
 		["miyabi", "星见雅", Vector3(-391.960, 35.000, 818.383), -135.0],
-		["bronya", "布洛妮娅", Vector3(-317.000, 72.600, 884.000), 0.0],
+		["bronya", "布洛妮娅 · 中层下段", Vector3(-301.000, 45.800, 848.500), -91.0],
 		["seele", "希儿", Vector3(-380.000, 35.000, 813.000), -60.0],
+	],
+	CLIFF_WALKWAY: [
+		["nilou", "妮露 · 临水廊柱间", Vector3(-473.000, 0.660, 783.000), 147.0],
+		["charlotte", "夏洛蒂 · 观水坐凳旁", Vector3(-423.000, 0.660, 738.000), 151.0],
 	],
 	"初始神殿与洞穴": [
 		["sparkle", "花火", ^"NPC_Idle"],
