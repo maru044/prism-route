@@ -598,10 +598,8 @@ func show_free_dialogue(panel: Control, speaker: String) -> void:
 			panel.visible = is_instance_valid(manager) and manager.session_active and manager.session_id == session_id
 	, CONNECT_ONE_SHOT)
 	chat.open_panel("dialogue", "initial_temple_sparkle", {
-		"char": speaker,
-		"user": "玩家",
-		"description": "此刻与你交谈的是 Prism Route 初始神殿的花火。",
-		"scenario": "你与玩家正在初始神殿交谈。保持当前的游戏场景。",
+		"npc_name": speaker,
+		"dialogue_location": "初始神殿",
 	})
 
 func has_llm_panel_open() -> bool:

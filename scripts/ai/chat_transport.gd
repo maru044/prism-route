@@ -9,9 +9,14 @@ const STREAM_END_GRACE_MS := 2000
 const MAX_RESPONSE_BYTES := 4 * 1024 * 1024
 const MAX_ERROR_BYTES := 8192
 const ERROR_BODY_TIMEOUT_MS := 2000
+const RETRYABLE_HTTP_CODES := [408, 429, 500, 502, 503, 504]
 static var _sensitive_error := RegEx.create_from_string(
 	r"""(?i)\b(?:authorization|api[-_ ]?key|access[-_ ]?token|proxy[-_ ]?password|password|secret)["']?[ \t]*[:=][ \t]*(?:bearer[ \t]+)?(?:"[^"]*"|'[^']*'|[^,\s;]+)|\bbearer[ \t]+[^,\s;]+|\b(?:sk-|AIza)[A-Za-z0-9_-]{8,}"""
 )
+static var _request_id_format := RegEx.create_from_string(r"^[A-Za-z0-9._:-]{1,128}$")
+static var _retry_date_format := RegEx.create_from_string(r"^[A-Za-z]{3}, [0-9]{2} [A-Za-z]{3} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT$")
+
+var failure_details := {}
 
 var _client: HTTPClient
 var _target: Dictionary
@@ -28,6 +33,10 @@ var _after_cr := false
 var _stream_finish := ""
 var _has_stream_text := false
 var _response_key := ""
+var _request_id := ""
+var _retry_after := ""
+var _retry_after_seconds := -1
+var _quota_exhausted := false
 
 func _ready() -> void:
 	set_process(false)
@@ -52,6 +61,7 @@ static func endpoint(raw: String) -> Dictionary:
 
 func start(url: String, key: String, payload: Dictionary) -> String:
 	cancel()
+	failure_details = {"stage": "连接接口"}
 	var validation := connection_error(url, key)
 	if not validation.is_empty():
 		return validation
@@ -71,6 +81,7 @@ func start(url: String, key: String, payload: Dictionary) -> String:
 	var error := _client.connect_to_host(_target.host, _target.port, tls)
 	if error != OK:
 		cancel()
+		failure_details.retryable = error in [ERR_CANT_CONNECT, ERR_CONNECTION_ERROR, ERR_TIMEOUT]
 		return "连接失败 · " + error_string(error)
 	_deadline = Time.get_ticks_msec() + CONNECT_TIMEOUT_MS
 	set_process(true)
@@ -92,6 +103,10 @@ func cancel() -> void:
 	_stream_finish = ""
 	_has_stream_text = false
 	_response_key = ""
+	_request_id = ""
+	_retry_after = ""
+	_retry_after_seconds = -1
+	_quota_exhausted = false
 
 static func connection_error(url: String, key: String) -> String:
 	if endpoint(url).is_empty():
@@ -109,7 +124,7 @@ func _process(_delta: float) -> void:
 		elif _stream and not _stream_finish.is_empty():
 			_finish_stream()
 		else:
-			_finish({}, _timeout_error())
+			_finish({}, _timeout_error(), true)
 		return
 	_client.poll()
 	var state := _client.get_status()
@@ -120,15 +135,17 @@ func _process(_delta: float) -> void:
 		_headers.clear()
 		_request_body = ""
 		if error != OK:
-			_finish({}, "发送失败 · " + error_string(error))
+			_finish({}, "发送失败 · " + error_string(error), error == ERR_CONNECTION_ERROR)
 		return
 	if _client.has_response() and _code < 0:
 		_code = _client.get_response_code()
+		var headers := _client.get_response_headers_as_dictionary()
+		_read_diagnostic_headers(headers)
 		_deadline = Time.get_ticks_msec() + RESPONSE_TIMEOUT_MS
 		if _is_http_error():
 			_deadline = Time.get_ticks_msec() + ERROR_BODY_TIMEOUT_MS
 		else:
-			var format_error := _response_format_error(_client.get_response_headers_as_dictionary())
+			var format_error := _response_format_error(headers)
 			if not format_error.is_empty():
 				_finish({}, format_error)
 				return
@@ -139,7 +156,7 @@ func _process(_delta: float) -> void:
 		var chunk := _client.read_response_body_chunk()
 		var remaining := MAX_ERROR_BYTES - _buffer.size()
 		if chunk.size() > remaining:
-			_finish({}, _http_error(_code))
+			_finish({}, _status_hint({}))
 		else:
 			_buffer.append_array(chunk)
 		return
@@ -166,18 +183,18 @@ func _process(_delta: float) -> void:
 		elif not _stream and _code >= 200 and not _buffer.is_empty():
 			_read_json()
 		else:
-			_finish({}, "连接在回复完成前中断。")
+			_finish({}, "连接在回复完成前中断。", true)
 	elif state == HTTPClient.STATUS_CONNECTION_ERROR:
 		if _stream and not _stream_finish.is_empty():
 			_finish_stream()
 		else:
-			_finish({}, "连接在回复完成前中断。" if _sent else "无法连接到接口。")
+			_finish({}, "连接在回复完成前中断。" if _sent else "无法连接到接口。", true)
 	elif state == HTTPClient.STATUS_CANT_RESOLVE:
 		_finish({}, "无法解析接口域名。请检查地址和 DNS。")
 	elif state == HTTPClient.STATUS_TLS_HANDSHAKE_ERROR:
 		_finish({}, "HTTPS 握手失败。请检查证书和系统时间。")
 	elif state == HTTPClient.STATUS_CANT_CONNECT:
-		_finish({}, "无法连接到接口。请检查服务地址和网络。")
+		_finish({}, "无法连接到接口。请检查服务地址和网络。", true)
 
 func _timeout_error() -> String:
 	if not _sent:
@@ -218,12 +235,12 @@ func _read_stream(chunk: PackedByteArray) -> void:
 						delta_received.emit(chunk_text)
 					_finish_stream(true)
 					return
-				var event: Variant = JSON.parse_string(raw)
+				var event: Variant = _parse_json(raw)
 				if not event is Dictionary:
 					_finish_stream_error(chunk_text, "模型返回了无效的流式 JSON。")
 					return
 				if event.has("error"):
-					_finish_stream_error(chunk_text, "接口在流式回复中返回了错误事件。")
+					_finish_stream_error(chunk_text, _append_error_detail("接口在流式回复中返回了错误事件。", event))
 					return
 				var choices: Variant = event.get("choices", [])
 				if not choices is Array:
@@ -262,9 +279,12 @@ func _finish_stream_error(visible_text: String, error: String) -> void:
 	_finish({}, error)
 
 func _read_json() -> void:
-	var result: Variant = JSON.parse_string(_buffer.get_string_from_utf8())
-	if not result is Dictionary or result.has("error"):
-		_finish({}, "模型接口返回了无效的 JSON 或错误信息。")
+	var result: Variant = _parse_json(_buffer.get_string_from_utf8())
+	if not result is Dictionary:
+		_finish({}, "游戏助手接口返回了无效的 JSON。")
+		return
+	if result.has("error"):
+		_finish({}, _append_error_detail("接口在 JSON 回复中返回了错误。", result))
 		return
 	var choices: Variant = result.get("choices")
 	if not choices is Array or choices.is_empty() or not choices[0] is Dictionary:
@@ -278,10 +298,27 @@ func _read_json() -> void:
 	if choice.get("finish_reason") in ["content_filter", "safety"]:
 		_finish({}, "模型未继续生成。")
 		return
+	var format_error := assistant_format_error(message)
+	if not format_error.is_empty():
+		_finish({}, format_error)
+		return
+	var calls: Variant = message.get("tool_calls")
+	if choice.get("finish_reason") == "tool_calls" and (calls == null or calls.is_empty()):
+		_finish({}, "模型声明了工具调用，但未返回调用内容。")
+		return
 	if choice.get("finish_reason") == "length":
 		_finish(message, "回复达到模型的输出上限。")
 		return
 	_finish(message, "")
+
+static func assistant_format_error(message: Dictionary) -> String:
+	var content: Variant = message.get("content")
+	if content != null and not content is String:
+		return "游戏助手返回了格式无效的正文。"
+	var calls: Variant = message.get("tool_calls")
+	if (calls != null and not calls is Array) or message.get("function_call") != null:
+		return "游戏助手返回了格式无效或不支持的工具调用。"
+	return ""
 
 func _finish_stream(done := false) -> void:
 	match _stream_finish:
@@ -296,34 +333,94 @@ func _finish_stream(done := false) -> void:
 		_:
 			_finish({}, "" if done else "连接在回复完成前中断。")
 
-func _finish(message: Dictionary, error: String) -> void:
+func _finish(message: Dictionary, error: String, network_failure := false) -> void:
+	var stage := "连接接口"
+	if _sent:
+		stage = "等待 HTTP 响应" if _code < 0 else "读取回复"
+	if _is_http_error():
+		stage = "接口拒绝请求"
+	elif _stream and _code >= 0:
+		stage = "读取流式正文" if _has_stream_text else "等待流式正文"
+	failure_details = {
+		"stage": stage, "http_code": _code, "request_id": _request_id, "retry_after": _retry_after,
+		"retry_after_seconds": _retry_after_seconds,
+		"retryable": network_failure or (_code in RETRYABLE_HTTP_CODES and not _quota_exhausted),
+	}
 	cancel()
 	finished.emit(message, error)
 
 static func _http_error(code: int) -> String:
 	match code:
+		400, 422:
+			return "接口拒绝请求参数 · HTTP %d。请核对模型 ID、接口兼容性与上下文限额。" % code
+		402:
+			return "接口要求付费或余额不足 · HTTP 402。请检查账户或代理额度。"
 		401, 403:
 			return "接口拒绝了请求 · HTTP %d。请检查 API 密钥与模型权限。" % code
 		429:
-			return "接口额度不足或请求过于频繁 · HTTP 429。"
+			return "接口限制了请求 · HTTP 429。请检查速率限制和账户额度。"
 		404:
 			return "找不到接口或模型 · HTTP 404。"
+		413:
+			return "请求超过接口大小上限 · HTTP 413。请缩短输入，或减少历史和提示词。"
+	if code >= 500 and code < 600:
+		return "接口或代理暂时无法处理请求 · HTTP %d。可稍后重新生成。" % code
+	if code >= 300 and code < 400:
+		return "接口返回了重定向 · HTTP %d。请填写最终的 API 地址。" % code
 	return "模型接口返回 HTTP %d。" % code
 
 func _is_http_error() -> bool:
 	return _code >= 0 and (_code < 200 or _code >= 300)
 
 func _finish_http_error() -> void:
-	var summary := _http_error(_code)
-	var payload: Variant = JSON.parse_string(_buffer.get_string_from_utf8()) if not _buffer.is_empty() else null
-	if payload is Dictionary:
-		var error: Variant = payload.get("error")
-		var detail: Variant = error.get("message", "") if error is Dictionary else payload.get("message", error)
-		if detail is String and not detail.is_empty():
-			if not _response_key.is_empty():
-				detail = detail.replace(_response_key, "[已隐藏]")
-			detail = detail.replace("\r", " ").replace("\n", " ").replace("\t", " ")
-			detail = _sensitive_error.sub(detail, "[已隐藏]", true).strip_edges().left(240)
-			if not detail.is_empty():
-				summary += " " + detail
-	_finish({}, summary)
+	var payload: Variant = _parse_json(_buffer.get_string_from_utf8()) if not _buffer.is_empty() else null
+	var fields: Dictionary = payload if payload is Dictionary else {}
+	_finish({}, _append_error_detail(_status_hint(fields), fields))
+
+static func _parse_json(text: String) -> Variant:
+	var parser := JSON.new()
+	return parser.data if parser.parse(text) == OK else null
+
+func _status_hint(payload: Dictionary) -> String:
+	var error: Variant = payload.get("error")
+	var fields: Dictionary = error if error is Dictionary else payload
+	var kind := str(fields.get("type", ""))
+	var code := str(fields.get("code", ""))
+	if code == "context_length_exceeded":
+		return "请求超过模型上下文上限 · HTTP %d。请缩短输入或减少历史。" % _code
+	if _code == 429 and (code in ["insufficient_quota", "billing_hard_limit_reached"] or kind == "insufficient_quota"):
+		_quota_exhausted = true
+		_retry_after = ""
+		_retry_after_seconds = -1
+		return "账户或代理额度不足 · HTTP 429。请检查额度或余额。"
+	var hint := _http_error(_code)
+	if not _retry_after.is_empty():
+		hint += " 建议等待 · " + _retry_after
+	return hint
+
+func _append_error_detail(summary: String, payload: Dictionary) -> String:
+	var error: Variant = payload.get("error")
+	var detail: Variant = error.get("message", "") if error is Dictionary else payload.get("message", error)
+	if detail is String and not detail.is_empty():
+		if not _response_key.is_empty():
+			detail = detail.replace(_response_key, "[已隐藏]")
+		detail = detail.replace("\r", " ").replace("\n", " ").replace("\t", " ")
+		detail = _sensitive_error.sub(detail, "[已隐藏]", true).strip_edges().left(240)
+		if not detail.is_empty():
+			return summary + " " + detail
+	return summary
+
+func _read_diagnostic_headers(headers: Dictionary) -> void:
+	for key: String in headers:
+		var name := key.to_lower()
+		var value := str(headers[key]).strip_edges()
+		if name in ["x-request-id", "request-id", "x-goog-request-id"] and _request_id.is_empty():
+			if _request_id_format.search(value) != null and (_response_key.is_empty() or not value.contains(_response_key)) \
+					and _sensitive_error.search(value) == null:
+				_request_id = value
+		elif name == "retry-after" and _code in RETRYABLE_HTTP_CODES:
+			if value.is_valid_int() and value.length() <= 9 and int(value) >= 0:
+				_retry_after_seconds = int(value)
+				_retry_after = "%d 秒" % _retry_after_seconds
+			elif _retry_date_format.search(value) != null:
+				_retry_after = "至 " + value

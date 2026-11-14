@@ -26,6 +26,7 @@ var _undo: Button
 var _previous: Button
 var _next: Button
 var _teleport: Button
+var _copy_diagnostic: Button
 var _drafts := {}
 var _thread_id := ""
 var _expanded_reports := {}
@@ -45,7 +46,7 @@ func open_panel(route: String, scope: String, context: Dictionary = {}) -> void:
 	_draft.text = _drafts.get(_thread_id, "")
 	_expanded_reports.clear()
 	client.open(route, scope, context)
-	_title.text = str(context.get("char", "自由对话")) + "  ·  自由对话" if route == Client.DIALOGUE else "游戏助手"
+	_title.text = str(context.get("npc_name", "自由对话")) + "  ·  自由对话" if route == Client.DIALOGUE else "游戏助手"
 	_load_settings()
 	_settings.visible = not client.configured()
 	show()
@@ -122,7 +123,12 @@ func _build_ui() -> void:
 
 	_status.add_theme_color_override("font_color", palette.accent)
 	_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	dock.add_child(_status)
+	var status_row := HBoxContainer.new()
+	dock.add_child(status_row)
+	_status.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	status_row.add_child(_status)
+	_copy_diagnostic = _button(status_row, "复制诊断", func(): DisplayServer.clipboard_set(client.diagnostic))
+	_copy_diagnostic.hide()
 	var prompt := HBoxContainer.new()
 	prompt.add_theme_constant_override("separation", 8)
 	dock.add_child(prompt)
@@ -214,20 +220,18 @@ func _refresh() -> void:
 	var turns: Array = client.history
 	var last: Dictionary = turns.back() if not turns.is_empty() else {}
 	_transcript.clear()
-	var speaker := str(client.context.get("char", "游戏助手"))
+	var speaker := str(client.context.get("npc_name", "游戏助手"))
 	for i in turns.size():
 		var turn: Dictionary = turns[i]
 		_line("你", turn.user, palette.accent)
 		if turn.active >= 0:
 			var response: Dictionary = turn.replies[turn.active]
-			var raw: String = response.text
 			var growing := i == turns.size() - 1 and client.is_continuing()
-			if growing:
-				raw += client.partial
-			_reply_line(speaker, raw, "" if growing else response.note, Vector2i(i, turn.active), growing)
+			_reply_line(speaker, response, Vector2i(i, turn.active), client.partial if growing else "", growing)
 	if client.pending and not client.partial.is_empty() and not client.is_continuing():
-		_reply_line(speaker, client.partial, "", Vector2i(turns.size() - 1, last.replies.size()), true)
+		_reply_line(speaker, {}, Vector2i(turns.size() - 1, last.replies.size()), client.partial, true)
 	_status.text = client.status
+	_copy_diagnostic.visible = not client.diagnostic.is_empty()
 	_send.text = "停止" if client.pending else "发送"
 	_undo.disabled = last.is_empty() or client.pending
 	_retry.disabled = not client.can_retry()
@@ -255,8 +259,10 @@ func _line(speaker: String, text: String, color: Color) -> void:
 	_transcript.pop()
 	_transcript.add_text(text + "\n\n")
 
-func _reply_line(speaker: String, raw: String, note: String, key: Vector2i, streaming: bool) -> void:
-	var sections := Client.dialogue_sections(raw, streaming) if client.route == Client.DIALOGUE else {"body": raw, "report": ""}
+func _reply_line(speaker: String, reply: Dictionary, key: Vector2i, partial_text: String, streaming: bool) -> void:
+	var sections := Client.reply_sections(reply, partial_text, streaming) if client.route == Client.DIALOGUE \
+		else {"body": reply.get("text", "") + partial_text, "report": ""}
+	var note: String = "" if streaming else reply.get("note", "")
 	var body: String = sections.body
 	if not note.is_empty():
 		body += (" " if not body.is_empty() else "") + "〔%s〕" % note

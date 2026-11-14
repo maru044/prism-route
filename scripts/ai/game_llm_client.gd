@@ -5,10 +5,14 @@ signal changed
 const Transport := preload("res://scripts/ai/chat_transport.gd")
 const SETTINGS_PATH := "user://llm_client.cfg"
 const DIALOGUE_PROMPT_DIR := "res://assets/ai/worldbook"
+const PLAYER_PROFILE_FILE := "玩家人设.md"
+const LOCAL_PLAYER_PROFILE := "user://" + PLAYER_PROFILE_FILE
 const DIALOGUE_GENERATION := {"temperature": 1.08, "top_p": 0.98, "max_tokens": 8000}
 const DIALOGUE := "dialogue"
 const ASSISTANT := "assistant"
 const MAX_TOOL_ROUNDS := 3
+const MAX_ASSISTANT_RETRIES := 2
+const MAX_ASSISTANT_RETRY_WAIT := 10
 const DEFAULT_HISTORY_BUDGET := {DIALOGUE: 65536, ASSISTANT: 32768}
 const RETRYABLE_TOOLS := ["get_world_status", "propose_teleport"]
 const TOOLS := [
@@ -34,7 +38,7 @@ const TOOLS := [
 ]
 
 static var _dialogue_tag := RegEx.create_from_string(r"(?i)<(/?)(game|report_nya~?|think_nya~?)>")
-static var _prompt_macro := RegEx.create_from_string(r"(?s)\{\{(?://.*?|roll 1d100|user|char|description|personality|scenario|world_after|persona|dialogue_examples)\}\}")
+static var _prompt_token := RegEx.create_from_string(r"\{\{//|\{\{(?:roll 1d100|npc_name|dialogue_location)\}\}|\{\{|\}\}")
 static var _dialogue_tag_prefixes := [
 	"<game>", "</game>", "<report_nya>", "</report_nya>", "<think_nya>", "</think_nya>",
 	"<report_nya~>", "</report_nya~>", "<think_nya~>", "</think_nya~>",
@@ -52,6 +56,7 @@ var history: Array
 var pending := false
 var partial := ""
 var status := ""
+var diagnostic := ""
 var world_status: Callable
 var world_teleport: Callable
 
@@ -64,6 +69,8 @@ var _request_messages: Array
 var _request_profile: Dictionary
 var _operation := ""
 var _tool_rounds := 0
+var _assistant_retries := 0
+var _assistant_retry_timer: Timer
 var _proposed_destination := ""
 var _history_budget := DEFAULT_HISTORY_BUDGET.duplicate()
 var _dialogue_entries: Array[Dictionary] = []
@@ -77,37 +84,54 @@ func _ready() -> void:
 	add_child(_transport)
 	_transport.delta_received.connect(_receive_delta)
 	_transport.finished.connect(_receive_result)
-	_dialogue_config_error = _load_dialogue_markdown()
+	_assistant_retry_timer = Timer.new()
+	_assistant_retry_timer.one_shot = true
+	_assistant_retry_timer.timeout.connect(_retry_assistant_request)
+	add_child(_assistant_retry_timer)
 	var config := ConfigFile.new()
 	if config.load(SETTINGS_PATH) == OK:
 		for channel: String in profiles:
 			for field in ["url", "model", "key"]:
 				profiles[channel][field] = str(config.get_value(channel, field, profiles[channel][field]))
 
-func _load_dialogue_markdown() -> String:
+func _load_dialogue_markdown(local_profile_path := LOCAL_PLAYER_PROFILE) -> String:
 	_dialogue_entries.clear()
 	var files_by_depth := {}
 	for file: String in DirAccess.get_files_at(DIALOGUE_PROMPT_DIR):
 		if file.get_extension() != "md":
 			continue
 		var path := DIALOGUE_PROMPT_DIR.path_join(file)
+		if file == PLAYER_PROFILE_FILE:
+			if OS.has_feature("template") and not FileAccess.file_exists(local_profile_path):
+				var profile := FileAccess.open(local_profile_path, FileAccess.WRITE)
+				if profile != null:
+					profile.store_buffer(FileAccess.get_file_as_bytes(path))
+					profile.close()
+			if FileAccess.file_exists(local_profile_path):
+				path = local_profile_path
 		var raw := FileAccess.get_file_as_string(path).trim_prefix("\ufeff").replace("\r\n", "\n")
-		var separator := raw.find("\n---\n")
-		if separator < 0:
-			return "提示词缺少文件或条目头 · " + file
-		var header: Variant = JSON.parse_string(raw.left(separator))
+		if file == PLAYER_PROFILE_FILE and raw.strip_edges().is_empty():
+			continue
+		var separator := raw.find("\n---")
+		var body_start := separator + 4
+		if separator < 0 or (body_start < raw.length() and raw[body_start] != "\n"):
+			return "提示词缺少文件或条目头 · " + path
+		var parser := JSON.new()
+		var header: Variant = parser.data if parser.parse(raw.left(separator)) == OK else null
 		if not header is Dictionary:
-			return "提示词的条目头无效 · " + file
+			return "提示词的条目头无效 · " + path
 		var value: Variant = header.get("depth")
 		if not _is_nonnegative_integer(value):
-			return "提示词的 depth 必须为非负整数 · " + file
+			return "提示词的 depth 必须为非负整数 · " + path
 		var depth := int(value)
-		if files_by_depth.has(depth):
-			return "提示词的 depth 重复，请把同深度正文合入同一文件 · " + files_by_depth[depth] + " / " + file
-		var content := raw.substr(separator + 5).strip_edges()
+		var content := raw.substr(body_start).strip_edges()
 		if content.is_empty():
-			return "提示词正文为空 · " + file
-		files_by_depth[depth] = file
+			if file == PLAYER_PROFILE_FILE:
+				continue
+			return "提示词正文为空 · " + path
+		if files_by_depth.has(depth):
+			return "提示词的 depth 重复，请把同深度正文合入同一文件 · " + files_by_depth[depth] + " / " + path
+		files_by_depth[depth] = path
 		_dialogue_entries.append({"depth": depth, "content": content})
 	if _dialogue_entries.is_empty():
 		return "世界书目录里没有自由对话提示词。"
@@ -141,11 +165,14 @@ func open(channel: String, scope: String, speaker_context: Dictionary) -> void:
 	stop()
 	_route = channel
 	context = speaker_context
+	if channel == DIALOGUE:
+		_dialogue_config_error = _load_dialogue_markdown()
 	_thread_id = channel + "/" + scope
 	if not _threads.has(_thread_id):
 		_threads[_thread_id] = []
 	history = _threads[_thread_id]
 	status = ""
+	diagnostic = ""
 	changed.emit()
 
 func configured() -> bool:
@@ -180,7 +207,7 @@ func continue_reply() -> void:
 func can_continue_reply() -> bool:
 	if route != DIALOGUE or pending:
 		return false
-	var body: String = dialogue_sections(active_reply().get("text", "")).body
+	var body: String = reply_sections(active_reply()).body
 	return not body.strip_edges().is_empty()
 
 func undo() -> Variant:
@@ -190,6 +217,7 @@ func undo() -> Variant:
 	if _teleport_offers.get(_thread_id, {}).get("turn", -1) == history.size():
 		_teleport_offers.erase(_thread_id)
 	status = ""
+	diagnostic = ""
 	changed.emit()
 	return removed.user
 
@@ -213,6 +241,7 @@ func is_continuing() -> bool:
 
 func stop() -> void:
 	if pending:
+		_assistant_retry_timer.stop()
 		_transport.cancel()
 		_complete("已停止")
 
@@ -232,7 +261,10 @@ func _start(operation: String) -> void:
 	partial = ""
 	_dialogue_escape_tail = ""
 	status = "等待模型。"
+	diagnostic = ""
+	_transport.failure_details = {}
 	_tool_rounds = 0
+	_assistant_retries = 0
 	_proposed_destination = ""
 	var messages := _build_request_history(operation)
 	if messages.is_empty():
@@ -258,13 +290,19 @@ func _build_request_history(operation: String) -> Array:
 	var remaining: int = _history_budget[route]
 	for i in range(history.size() - 1, -1, -1):
 		var turn: Dictionary = history[i]
+		var earlier := i < history.size() - 1
+		var reply: Dictionary = turn.replies[turn.active] if turn.active >= 0 else {}
+		if earlier and (reply.is_empty() or not reply.note.is_empty()):
+			continue
 		var rows := [{"role": "user", "content": turn.user}]
-		if turn.active >= 0 and (i < history.size() - 1 or operation == "continue"):
-			var content: String = turn.replies[turn.active].text
+		if not reply.is_empty() and (earlier or operation == "continue"):
+			var content: String = reply.text
 			if route == DIALOGUE:
-				content = dialogue_sections(content).body
-			if not content.is_empty():
+				content = reply_sections(reply).body
+			if not content.strip_edges().is_empty():
 				rows.append({"role": "assistant", "content": content})
+			elif earlier:
+				continue
 		var bytes := _message_bytes(rows)
 		if bytes > remaining:
 			break
@@ -295,9 +333,12 @@ func _build_dialogue_messages(history_messages: Array) -> Array:
 	return messages
 
 static func dialogue_sections(raw: String, streaming := false) -> Dictionary:
-	var body := PackedStringArray()
+	var plain := PackedStringArray()
+	var game := PackedStringArray()
 	var reports := PackedStringArray()
 	var in_report := false
+	var in_game := false
+	var has_game := false
 	var cursor := 0
 	for matched in _dialogue_tag.search_all(raw):
 		var tag := matched.get_string(2).to_lower()
@@ -306,9 +347,14 @@ static func dialogue_sections(raw: String, streaming := false) -> Dictionary:
 		var segment := raw.substr(cursor, matched.get_start() - cursor)
 		if in_report:
 			reports.append(segment)
+		elif in_game:
+			game.append(segment)
 		else:
-			body.append(segment)
-		if tag != "game":
+			plain.append(segment)
+		if tag == "game":
+			in_game = matched.get_string(1).is_empty()
+			has_game = has_game or in_game
+		else:
 			in_report = matched.get_string(1).is_empty()
 		cursor = matched.get_end()
 	var tail := raw.substr(cursor)
@@ -321,26 +367,53 @@ static func dialogue_sections(raw: String, streaming := false) -> Dictionary:
 				break
 	if in_report:
 		reports.append(tail)
+	elif in_game:
+		game.append(tail)
 	else:
-		body.append(tail)
-	return {"body": "".join(body), "report": "\n\n".join(reports).strip_edges()}
+		plain.append(tail)
+	return {"body": "".join(game if has_game else plain), "report": "\n\n".join(reports).strip_edges()}
+
+static func reply_sections(reply: Dictionary, partial_text := "", streaming := false) -> Dictionary:
+	var sections := dialogue_sections(reply.get("text", ""))
+	var fragments: Array = reply.get("continuations", [])
+	if streaming:
+		fragments = fragments + [partial_text]
+	for index in fragments.size():
+		var part := dialogue_sections(fragments[index], streaming and index == fragments.size() - 1)
+		sections.body += part.body
+		if not part.report.is_empty():
+			sections.report += ("\n\n" if not sections.report.is_empty() else "") + part.report
+	return sections
 
 func _expand_dialogue_prompt(text: String) -> String:
 	var parts := PackedStringArray()
 	var cursor := 0
-	for matched in _prompt_macro.search_all(text):
+	var comment_depth := 0
+	for matched in _prompt_token.search_all(text):
+		var token := matched.get_string()
+		if comment_depth > 0:
+			match token:
+				"{{//", "{{":
+					comment_depth += 1
+				"}}":
+					comment_depth -= 1
+					if comment_depth == 0:
+						cursor = matched.get_end()
+			continue
+		if token in ["{{", "}}"]:
+			continue
 		parts.append(text.substr(cursor, matched.get_start() - cursor))
-		var key := matched.get_string().trim_prefix("{{").trim_suffix("}}")
-		match key:
-			"user":
-				parts.append(str(context.get("user", "玩家")))
-			"roll 1d100":
+		match token:
+			"{{//":
+				comment_depth = 1
+			"{{roll 1d100}}":
 				parts.append(str(randi_range(1, 100)))
 			_:
-				if not key.begins_with("//"):
-					parts.append(str(context.get(key, "")))
+				var key := token.trim_prefix("{{").trim_suffix("}}")
+				parts.append(str(context.get(key, "未指定")))
 		cursor = matched.get_end()
-	parts.append(text.substr(cursor))
+	if comment_depth == 0:
+		parts.append(text.substr(cursor))
 	return "".join(parts)
 
 static func _merge_dialogue_messages(messages: Array) -> Array[Dictionary]:
@@ -364,8 +437,30 @@ func _dispatch() -> void:
 	if not pending:
 		return
 	var error: String = _transport.start(_request_profile.url, _request_profile.key, payload())
-	if not error.is_empty():
+	if not error.is_empty() and not _schedule_assistant_retry(error):
 		_complete(error)
+
+func _schedule_assistant_retry(error: String) -> bool:
+	if route != ASSISTANT or _tool_rounds > 0 or _assistant_retries >= MAX_ASSISTANT_RETRIES or not partial.is_empty():
+		return false
+	var details: Dictionary = _transport.failure_details
+	if not details.get("retryable", false):
+		return false
+	var seconds: int = details.get("retry_after_seconds", -1)
+	if seconds > MAX_ASSISTANT_RETRY_WAIT or (seconds < 0 and not str(details.get("retry_after", "")).is_empty()):
+		return false
+	var wait_seconds := maxi(1 << _assistant_retries, seconds)
+	_assistant_retries += 1
+	status = "%s %d 秒后重试（%d/%d）。" % [error, wait_seconds, _assistant_retries, MAX_ASSISTANT_RETRIES]
+	_assistant_retry_timer.start(wait_seconds)
+	changed.emit()
+	return true
+
+func _retry_assistant_request() -> void:
+	if pending and route == ASSISTANT:
+		status = "正在重试游戏助手请求。"
+		changed.emit()
+		_dispatch()
 
 func _receive_delta(text: String) -> void:
 	if pending and route == DIALOGUE:
@@ -421,14 +516,24 @@ func _receive_result(message: Dictionary, error: String) -> void:
 	if route == ASSISTANT:
 		if message.get("content") is String:
 			partial = message.content
-		var calls: Variant = message.get("tool_calls", [])
-		if error.is_empty() and calls is Array and not calls.is_empty():
-			if not _allows_tools() or calls.size() > 8:
-				_complete("此请求未开放工具调用或调用次数已达上限。")
-				return
-			_follow_tools(calls, message.get("content"))
+	var calls: Variant = message.get("tool_calls", [])
+	if not error.is_empty():
+		if not _schedule_assistant_retry(error):
+			_complete(error)
+		return
+	if route == ASSISTANT:
+		var format_error := Transport.assistant_format_error(message)
+		if not format_error.is_empty():
+			partial = ""
+			_complete(format_error)
 			return
-	_complete(error)
+	if calls is Array and not calls.is_empty():
+		if not _allows_tools() or calls.size() > 8:
+			_complete("此请求未开放工具调用或调用次数已达上限。")
+			return
+		_follow_tools(calls, message.get("content"))
+		return
+	_complete("")
 
 func _allows_tools() -> bool:
 	return route == ASSISTANT and world_status.is_valid() and _tool_rounds < MAX_TOOL_ROUNDS
@@ -442,7 +547,9 @@ func _follow_tools(calls: Array, text: Variant) -> void:
 			return
 		var id: String = call.id
 		var function: Dictionary = call.function
-		if id.is_empty() or ids.has(id) or not function.get("name") is String or not function.get("arguments") is String:
+		if id.strip_edges().is_empty() or ids.has(id) or not function.get("name") is String \
+				or function.name.strip_edges().is_empty() or not function.get("arguments") is String \
+				or call.get("type", "function") != "function":
 			_complete("模型返回了格式无效的工具调用。")
 			return
 		ids[id] = true
@@ -497,22 +604,40 @@ func confirm_teleport() -> void:
 func _complete(error: String) -> void:
 	if route == DIALOGUE:
 		partial += _decode_dialogue_fragment("", true)
+	var final_error := error
+	var body: String = dialogue_sections(partial).body if route == DIALOGUE else partial
+	if route == DIALOGUE and final_error.is_empty() and body.strip_edges().is_empty():
+		final_error = "模型未返回正文，可以重新生成。"
 	var turn: Dictionary = history.back()
 	if not partial.is_empty():
 		if _operation == "continue":
 			var reply: Dictionary = turn.replies[turn.active]
-			reply.text += partial
-			reply.note = error
+			if not reply.has("continuations"):
+				reply.continuations = []
+			reply.continuations.append(partial)
+			if not body.strip_edges().is_empty():
+				reply.note = final_error
 		else:
-			turn.replies.append({"text": partial, "note": error})
+			turn.replies.append({"text": partial, "note": final_error})
 			turn.active = turn.replies.size() - 1
-	status = error
-	if error.is_empty() and not _proposed_destination.is_empty():
+	status = final_error
+	if route == ASSISTANT and final_error.is_empty() and body.strip_edges().is_empty() and _proposed_destination.is_empty():
+		status = "游戏助手已完成请求。" if _tool_rounds > 0 else "游戏助手没有返回文字。"
+	if final_error.is_empty() and not _proposed_destination.is_empty():
 		if not teleport_offer().is_empty() and teleport_offer() != _proposed_destination:
 			status = "已替换上一条待确认的传送提议。"
 		_teleport_offers[_thread_id] = {"destination": _proposed_destination, "turn": history.size() - 1}
-	elif status.is_empty() and partial.is_empty():
-		status = "模型没有返回文本。"
+	if not final_error.is_empty() and final_error != "已停止":
+		var details: Dictionary = _transport.failure_details
+		var lines := PackedStringArray(["入口 · " + ("自由对话" if route == DIALOGUE else "游戏助手"),
+			"阶段 · " + str(details.get("stage", "处理回复"))])
+		if details.get("http_code", 0) > 0:
+			lines.append("HTTP %d" % details.http_code)
+		if not str(details.get("request_id", "")).is_empty():
+			lines.append("请求 ID · " + details.request_id)
+		if not str(details.get("retry_after", "")).is_empty():
+			lines.append("建议等待 · " + details.retry_after)
+		diagnostic = "\n".join(lines)
 	pending = false
 	partial = ""
 	_request_messages = []
