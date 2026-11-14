@@ -2,10 +2,24 @@ extends SceneTree
 
 const Transport := preload("res://scripts/ai/chat_transport.gd")
 const Client := preload("res://scripts/ai/game_llm_client.gd")
+const ChatPanel := preload("res://scripts/ai/llm_panel.gd")
 const LOCALHOST := "127.0.0.1"
 const CASE_TIMEOUT_MS := 5000
 
 var _failures := 0
+
+class CaptureTransport extends Transport:
+	var request: Dictionary
+	var url := ""
+	var key := ""
+	var sends := 0
+
+	func start(target: String, credential: String, body: Dictionary) -> String:
+		url = target
+		key = credential
+		request = body.duplicate(true)
+		sends += 1
+		return ""
 
 func _initialize() -> void:
 	run.call_deferred()
@@ -38,6 +52,7 @@ func run() -> void:
 		{"name": "invalid choices after text", "body": text + _sse({"choices": {}}), "text": "你好", "error": "无效的流式选项"},
 		{"name": "output token limit", "body": text + _sse({"choices": [{"finish_reason": "length"}]}), "text": "你好", "error": "输出上限"},
 		{"name": "unexpected tool turn", "body": _sse({"choices": [{"finish_reason": "tool_calls"}]}), "text": "", "error": "只接收文本"},
+		{"name": "unexpected tool delta", "body": text + _sse({"choices": [{"delta": {"tool_calls": [{"index": 0}]}}]}), "text": "你好", "error": "只接收文本"},
 		{"name": "JSON instead of SSE", "body": "{}", "mime": "application/json", "text": "", "error": "普通 JSON"},
 		{"name": "HTML instead of SSE", "body": "<html></html>", "mime": "text/html", "text": "", "error": "返回了网页"},
 		{"name": "rate limit", "body": "{}", "code": 429, "mime": "application/json", "text": "", "error": "429"},
@@ -47,10 +62,112 @@ func run() -> void:
 	]
 	for fixture: Dictionary in cases:
 		await _run_case(server, client, fixture)
+	await _verify_report_panel()
+	_verify_model_routes()
 	client.free()
 	server.stop()
-	print("LLM_STREAM cases=", cases.size(), " failures=", _failures)
+	print("LLM_STREAM cases=", cases.size(), " report_panel=1 model_routes=1 failures=", _failures)
 	quit(0 if _failures == 0 else 1)
+
+func _verify_model_routes() -> void:
+	var client := Client.new()
+	var capture := CaptureTransport.new()
+	client._transport.free()
+	client._transport = capture
+	root.add_child(client)
+	client.profiles[Client.ASSISTANT] = {"url": "https://assistant.invalid", "model": "flash-fixture", "key": "assistant-fixture"}
+	client.profiles[Client.DIALOGUE] = {"url": "https://dialogue.invalid", "model": "argon-fixture", "key": "dialogue-fixture"}
+	var reads: Array[bool] = []
+	client.world_status = func():
+		reads.append(true)
+		return {"location": "world fixture"}
+	var tool_message := {"tool_calls": [{"id": "route-test", "function": {"name": "get_world_status", "arguments": "{}"}}]}
+
+	client.open(Client.ASSISTANT, "same-scope", {})
+	client.send("assistant question")
+	if capture.request.model != "flash-fixture" or capture.request.stream or not capture.request.has("tools"):
+		_fail("model routes", "assistant request used the wrong model or tool mode")
+	client.profiles[Client.ASSISTANT] = {"url": "https://updated.invalid", "model": "updated-fixture", "key": "updated-fixture"}
+	for offset in client.MAX_TOOL_ROUNDS:
+		capture.finished.emit(tool_message, "")
+		if capture.request.model != "flash-fixture" or capture.url != "https://assistant.invalid" or capture.key != "assistant-fixture":
+			_fail("model routes", "assistant tool round changed its connection profile")
+		if capture.request.has("tools") != (offset + 1 < client.MAX_TOOL_ROUNDS):
+			_fail("model routes", "assistant tool budget was not enforced")
+	var sends := capture.sends
+	capture.finished.emit(tool_message, "")
+	if capture.sends != sends or reads.size() != client.MAX_TOOL_ROUNDS or client.pending:
+		_fail("model routes", "tool call executed after reaching the limit")
+
+	client.open(Client.DIALOGUE, "same-scope", {})
+	client.send("dialogue question")
+	if capture.request.model != "argon-fixture" or capture.url != "https://dialogue.invalid" or capture.key != "dialogue-fixture" \
+			or not capture.request.stream or capture.request.has("tools") or capture.request.has("tool_choice") \
+			or capture.request.has("functions") or capture.request.has("function_call") \
+			or JSON.stringify(capture.request.messages).contains("assistant question"):
+		_fail("model routes", "assistant settings, history, or tools entered the dialogue request")
+	sends = capture.sends
+	capture.finished.emit(tool_message, "")
+	if capture.sends != sends or reads.size() != client.MAX_TOOL_ROUNDS:
+		_fail("model routes", "dialogue response executed a tool")
+
+	client.send("dialogue cancellation")
+	client.open(Client.ASSISTANT, "same-scope", {})
+	if client.pending or client.history.size() != 1 or client.history[0].user != "assistant question":
+		_fail("model routes", "entry switch did not cancel or restore the separate history")
+	client.send("another assistant question")
+	if capture.request.model != "updated-fixture" or JSON.stringify(capture.request.messages).contains("dialogue question"):
+		_fail("model routes", "assistant request reused old settings or dialogue history")
+	capture.finished.emit({"content": "assistant answer"}, "")
+	client.free()
+
+func _verify_report_panel() -> void:
+	var panel := ChatPanel.new()
+	var capture := CaptureTransport.new()
+	panel.client._transport.free()
+	panel.client._transport = capture
+	root.add_child(panel)
+	var client = panel.client
+	client.profiles[Client.DIALOGUE] = {"url": "https://fixture.invalid", "model": "fixture", "key": ""}
+	panel.open_panel(Client.DIALOGUE, "report", {})
+	await process_frame
+	client.send("question")
+	capture.delta_received.emit("<rep")
+	if panel._transcript.get_parsed_text().contains("<rep"):
+		_fail("report panel", "partial tag was displayed")
+	capture.delta_received.emit("ort_nya~>REPORT 内容 <game>标签示例</game></report_nya~><game>正文")
+	var visible_text := panel._transcript.get_parsed_text()
+	if not visible_text.contains("正文") or visible_text.contains("REPORT 内容") or visible_text.contains("标签示例") or not visible_text.contains("查看报告"):
+		_fail("report panel", "body or collapsed report state is wrong")
+	panel._transcript.meta_clicked.emit(Vector2i(0, 0))
+	if not panel._transcript.get_parsed_text().contains("REPORT 内容"):
+		_fail("report panel", "report did not expand")
+	capture.delta_received.emit("</game>")
+	capture.finished.emit({}, "")
+	if not panel._transcript.get_parsed_text().contains("REPORT 内容"):
+		_fail("report panel", "expansion lost on completion")
+	panel._transcript.meta_clicked.emit(Vector2i(0, 0))
+	if panel._transcript.get_parsed_text().contains("REPORT 内容"):
+		_fail("report panel", "report did not collapse")
+	client.continue_reply()
+	if not {"role": "assistant", "content": "正文"} in capture.request.messages:
+		_fail("report panel", "history did not preserve clean body")
+	capture.delta_received.emit("继续")
+	capture.finished.emit({}, "")
+	if not panel._transcript.get_parsed_text().contains("正文继续"):
+		_fail("report panel", "plain continuation lost")
+	client.send("follow up")
+	if not {"role": "assistant", "content": "正文继续"} in capture.request.messages:
+		_fail("report panel", "follow-up history included formatting")
+	capture.delta_received.emit("<think_nya~>STOP REPORT")
+	client.stop()
+	if panel._transcript.get_parsed_text().contains("STOP REPORT") or not panel._continue.disabled:
+		_fail("report panel", "stopped report leaked")
+	panel._transcript.meta_clicked.emit(Vector2i(1, 0))
+	if not panel._transcript.get_parsed_text().contains("STOP REPORT"):
+		_fail("report panel", "stopped report not inspectable")
+	panel.close_panel()
+	panel.free()
 
 func _run_case(server: TCPServer, client: Node, fixture: Dictionary) -> void:
 	var title: String = fixture.name

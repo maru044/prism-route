@@ -215,6 +215,9 @@ func _read_stream(chunk: PackedByteArray) -> void:
 					_has_stream_text = true
 					if _stream_finish.is_empty():
 						_deadline = Time.get_ticks_msec() + RESPONSE_TIMEOUT_MS
+				if delta.get("tool_calls") or delta.get("function_call"):
+					_finish_stream_error(chunk_text, "自由对话入口只接收文本回复。")
+					return
 			elif line.begins_with("data:"):
 				_data.append(line.substr(5).trim_prefix(" "))
 		else:

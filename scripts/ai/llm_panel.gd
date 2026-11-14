@@ -28,6 +28,7 @@ var _next: Button
 var _teleport: Button
 var _drafts := {}
 var _thread_id := ""
+var _expanded_reports := {}
 
 func _ready() -> void:
 	layer = 25
@@ -42,6 +43,7 @@ func open_panel(route: String, scope: String, context: Dictionary = {}) -> void:
 		return
 	_thread_id = route + "/" + scope
 	_draft.text = _drafts.get(_thread_id, "")
+	_expanded_reports.clear()
 	client.open(route, scope, context)
 	_title.text = str(context.get("char", "自由对话")) + "  ·  自由对话" if route == Client.DIALOGUE else "游戏助手"
 	_load_settings()
@@ -101,6 +103,7 @@ func _build_ui() -> void:
 	_transcript.add_theme_color_override("font_outline_color", palette.shade)
 	_transcript.add_theme_constant_override("outline_size", 3)
 	_transcript.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_transcript.meta_clicked.connect(_toggle_report)
 	dock.add_child(_transcript)
 
 	dock.add_child(_settings)
@@ -198,6 +201,9 @@ func _send_or_stop() -> void:
 func _undo_turn() -> void:
 	var text: Variant = client.undo()
 	if text is String:
+		for key: Vector2i in _expanded_reports.keys():
+			if key.x >= client.history.size():
+				_expanded_reports.erase(key)
 		_draft.text = text
 		_draft.set_caret_line(_draft.get_line_count() - 1)
 		_draft.set_caret_column(_draft.get_line(_draft.get_caret_line()).length())
@@ -206,7 +212,6 @@ func _undo_turn() -> void:
 func _refresh() -> void:
 	var turns: Array = client.history
 	var last: Dictionary = turns.back() if not turns.is_empty() else {}
-	var reply: Dictionary = client.active_reply()
 	_transcript.clear()
 	var speaker := str(client.context.get("char", "游戏助手"))
 	for i in turns.size():
@@ -218,15 +223,15 @@ func _refresh() -> void:
 			var growing := i == turns.size() - 1 and client.is_continuing()
 			if growing:
 				raw += client.partial
-			_line(speaker, raw + (" 〔%s〕" % response.note if not growing and not response.note.is_empty() else ""), palette.speaker)
+			_reply_line(speaker, raw, "" if growing else response.note, Vector2i(i, turn.active), growing)
 	if client.pending and not client.partial.is_empty() and not client.is_continuing():
-		_line(speaker, client.partial, palette.speaker)
+		_reply_line(speaker, client.partial, "", Vector2i(turns.size() - 1, last.replies.size()), true)
 	_status.text = client.status
 	_send.text = "停止" if client.pending else "发送"
 	_undo.disabled = last.is_empty() or client.pending
 	_retry.disabled = last.is_empty() or client.pending or last.get("tool_used", false)
 	_continue.visible = client.route == Client.DIALOGUE
-	_continue.disabled = reply.is_empty() or client.pending
+	_continue.disabled = not client.can_continue_reply()
 	var has_versions: bool = last.get("replies", []).size() > 1
 	_previous.visible = has_versions
 	_next.visible = has_versions
@@ -247,3 +252,36 @@ func _line(speaker: String, text: String, color: Color) -> void:
 	_transcript.add_text(speaker + "  ")
 	_transcript.pop()
 	_transcript.add_text(text + "\n\n")
+
+func _reply_line(speaker: String, raw: String, note: String, key: Vector2i, streaming: bool) -> void:
+	var sections := Client.dialogue_sections(raw, streaming) if client.route == Client.DIALOGUE else {"body": raw, "report": ""}
+	var body: String = sections.body
+	if not note.is_empty():
+		body += (" " if not body.is_empty() else "") + "〔%s〕" % note
+	if not body.is_empty():
+		_line(speaker, body, palette.speaker)
+	var report: String = sections.report
+	if report.is_empty():
+		return
+	var expanded := _expanded_reports.has(key)
+	_transcript.push_color(palette.secondary)
+	_transcript.push_meta(key, RichTextLabel.META_UNDERLINE_ON_HOVER)
+	_transcript.add_text("▾ 收起报告" if expanded else "▸ 查看报告")
+	_transcript.pop()
+	_transcript.add_text("\n")
+	if expanded:
+		_transcript.add_text(report + "\n")
+	_transcript.pop()
+	_transcript.add_text("\n")
+
+func _toggle_report(key: Variant) -> void:
+	if not key is Vector2i:
+		return
+	var scroll_bar := _transcript.get_v_scroll_bar()
+	var offset := scroll_bar.value
+	if _expanded_reports.has(key):
+		_expanded_reports.erase(key)
+	else:
+		_expanded_reports[key] = true
+	_refresh()
+	scroll_bar.set_value.call_deferred(offset)

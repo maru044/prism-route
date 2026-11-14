@@ -30,11 +30,19 @@ const TOOLS := [
 	},
 ]
 
+static var _dialogue_tag := RegEx.create_from_string(r"(?i)<(/?)(game|report_nya~?|think_nya~?)>")
+static var _dialogue_tag_prefixes := [
+	"<game>", "</game>", "<report_nya>", "</report_nya>", "<think_nya>", "</think_nya>",
+	"<report_nya~>", "</report_nya~>", "<think_nya~>", "</think_nya~>",
+]
+
 var profiles := {
 	DIALOGUE: {"url": "", "model": "gemini-4-argon", "key": ""},
 	ASSISTANT: {"url": "", "model": "gemini-3.8-flash", "key": ""},
 }
-var route := ASSISTANT
+var route: String:
+	get:
+		return _route
 var context: Dictionary
 var history: Array
 var pending := false
@@ -44,8 +52,10 @@ var world_status: Callable
 var world_teleport: Callable
 
 var _transport = Transport.new()
+var _route := ASSISTANT
 var _threads := {}
 var _request_messages: Array
+var _request_profile: Dictionary
 var _operation := ""
 var _tool_rounds := 0
 var _proposed_destination := ""
@@ -135,6 +145,8 @@ static func _read_dialogue_markdown(file: String) -> String:
 	return FileAccess.get_file_as_string(DIALOGUE_CONFIG_PATH.get_base_dir().path_join(file)).trim_prefix("\ufeff").replace("\r\n", "\n")
 
 func save_profile(channel: String, url: String, model: String, key: String, remember_key: bool) -> String:
+	if not profiles.has(channel):
+		return "未知的模型入口。"
 	if Transport.endpoint(url).is_empty() or model.strip_edges().is_empty():
 		return "请填写有效的接口地址和模型 ID。"
 	var config := ConfigFile.new()
@@ -148,8 +160,10 @@ func save_profile(channel: String, url: String, model: String, key: String, reme
 	return ""
 
 func open(channel: String, scope: String, speaker_context: Dictionary) -> void:
+	if not profiles.has(channel):
+		return
 	stop()
-	route = channel
+	_route = channel
 	context = speaker_context
 	var thread_id := channel + "/" + scope
 	if not _threads.has(thread_id):
@@ -176,9 +190,15 @@ func retry() -> void:
 	_start("retry")
 
 func continue_reply() -> void:
-	if route != DIALOGUE or pending or active_reply().is_empty() or not _can_start():
+	if not can_continue_reply() or not _can_start():
 		return
 	_start("continue")
+
+func can_continue_reply() -> bool:
+	if route != DIALOGUE or pending:
+		return false
+	var body: String = dialogue_sections(active_reply().get("text", "")).body
+	return not body.strip_edges().is_empty()
 
 func undo() -> Variant:
 	if pending or history.is_empty():
@@ -223,6 +243,7 @@ func _can_start() -> bool:
 
 func _start(operation: String) -> void:
 	_operation = operation
+	_request_profile = profiles[route].duplicate()
 	partial = ""
 	_dialogue_escape_tail = ""
 	status = "等待模型。"
@@ -235,6 +256,8 @@ func _start(operation: String) -> void:
 		var include_reply := i < history.size() - 1 or operation == "continue"
 		if include_reply and turn.active >= 0:
 			var content: String = turn.replies[turn.active].text
+			if route == DIALOGUE:
+				content = dialogue_sections(content).body
 			if not content.is_empty():
 				messages.append({"role": "assistant", "content": content})
 	if route == DIALOGUE:
@@ -268,6 +291,37 @@ func _start(operation: String) -> void:
 	changed.emit()
 	_dispatch()
 
+static func dialogue_sections(raw: String, streaming := false) -> Dictionary:
+	var body := PackedStringArray()
+	var reports := PackedStringArray()
+	var in_report := false
+	var cursor := 0
+	for matched in _dialogue_tag.search_all(raw):
+		var tag := matched.get_string(2).to_lower()
+		if in_report and tag == "game":
+			continue
+		var segment := raw.substr(cursor, matched.get_start() - cursor)
+		if in_report:
+			reports.append(segment)
+		else:
+			body.append(segment)
+		if tag != "game":
+			in_report = matched.get_string(1).is_empty()
+		cursor = matched.get_end()
+	var tail := raw.substr(cursor)
+	var start := tail.rfind("<")
+	if start >= 0 and (streaming or in_report or tail.length() - start >= 3):
+		var suffix := tail.substr(start).to_lower()
+		for tag: String in _dialogue_tag_prefixes:
+			if tag.begins_with(suffix):
+				tail = tail.left(start)
+				break
+	if in_report:
+		reports.append(tail)
+	else:
+		body.append(tail)
+	return {"body": "".join(body), "report": "\n\n".join(reports).strip_edges()}
+
 func _append_dialogue_style(text: String) -> void:
 	text = text.replace("{{user}}", str(context.get("user", "玩家")))
 	text = text.replace("{{char}}", str(context.get("char", "")))
@@ -285,16 +339,17 @@ static func _merge_dialogue_messages(messages: Array) -> Array[Dictionary]:
 	return merged
 
 func payload() -> Dictionary:
-	var body := {"model": profiles[route].model, "messages": _request_messages, "stream": route == DIALOGUE}
+	var body := {"model": _request_profile.get("model", ""), "messages": _request_messages, "stream": route == DIALOGUE}
 	if route == DIALOGUE:
 		body.merge(_dialogue_generation)
-	elif world_status.is_valid() and _operation == "send" and _tool_rounds < MAX_TOOL_ROUNDS:
+	elif _allows_tools():
 		body["tools"] = TOOLS
 	return body
 
 func _dispatch() -> void:
-	var profile: Dictionary = profiles[route]
-	var error: String = _transport.start(profile.url, profile.key, payload())
+	if not pending:
+		return
+	var error: String = _transport.start(_request_profile.url, _request_profile.key, payload())
 	if not error.is_empty():
 		_complete(error)
 
@@ -354,12 +409,15 @@ func _receive_result(message: Dictionary, error: String) -> void:
 			partial = message.content
 		var calls: Variant = message.get("tool_calls", [])
 		if error.is_empty() and calls is Array and not calls.is_empty():
-			if not payload().has("tools") or calls.size() > 8:
+			if not _allows_tools() or calls.size() > 8:
 				_complete("此请求未开放工具调用或调用次数已达上限。")
 				return
 			_follow_tools(calls, message.get("content"))
 			return
 	_complete(error)
+
+func _allows_tools() -> bool:
+	return route == ASSISTANT and world_status.is_valid() and _operation == "send" and _tool_rounds < MAX_TOOL_ROUNDS
 
 func _follow_tools(calls: Array, text: Variant) -> void:
 	var accepted: Array = []
@@ -434,5 +492,6 @@ func _complete(error: String) -> void:
 	pending = false
 	partial = ""
 	_request_messages = []
+	_request_profile = {}
 	_proposed_destination = ""
 	changed.emit()
