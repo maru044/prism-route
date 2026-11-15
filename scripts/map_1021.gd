@@ -518,10 +518,7 @@ func _on_graphics_quality_selected(index: int) -> void:
 		push_warning("Could not save graphics quality: " + error_string(error))
 
 func _noise() -> NoiseTexture2D:
-	var result:=NoiseTexture2D.new();result.width=512;result.height=512;result.seamless=true
-	result.generate_mipmaps=true
-	var noise:=FastNoiseLite.new();noise.seed=46129;noise.frequency=0.012;noise.noise_type=FastNoiseLite.TYPE_SIMPLEX_SMOOTH;noise.fractal_octaves=4
-	result.noise=noise;return result
+	return MEADOW_PALETTE.make_biome_noise()
 
 func _hud() -> void:
 	var layer:=CanvasLayer.new();add_child(layer)

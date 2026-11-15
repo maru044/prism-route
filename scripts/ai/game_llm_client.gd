@@ -80,6 +80,8 @@ var _unicode_escape := RegEx.create_from_string(
 	r"\\\\|\\u([dD][89a-bA-B][0-9a-fA-F]{2})\\u([dD][c-fC-F][0-9a-fA-F]{2})|\\u\{([0-9a-fA-F]{1,6})\}|\\u([0-9a-fA-F]{4})|(\\(?:u(?:\{[0-9a-fA-F]{0,6}|[0-9a-fA-F]{0,3})?)?)\z"
 )
 
+static var _session_keys: Dictionary = {}
+
 func _ready() -> void:
 	add_child(_transport)
 	_transport.delta_received.connect(_receive_delta)
@@ -93,6 +95,8 @@ func _ready() -> void:
 		for channel: String in profiles:
 			for field in ["url", "model", "key"]:
 				profiles[channel][field] = str(config.get_value(channel, field, profiles[channel][field]))
+			if _session_keys.has(channel):
+				profiles[channel].key = _session_keys[channel]
 
 func _load_dialogue_markdown(local_profile_path := LOCAL_PLAYER_PROFILE) -> String:
 	_dialogue_entries.clear()
@@ -156,6 +160,7 @@ func save_profile(channel: String, url: String, model: String, key: String, reme
 	config.set_value(channel, "key", key.strip_edges() if remember_key else "")
 	if config.save(SETTINGS_PATH) != OK:
 		return "无法写入本机连接设置。"
+	_session_keys[channel] = key.strip_edges()
 	profiles[channel] = {"url": url.strip_edges(), "model": model.strip_edges(), "key": key.strip_edges()}
 	return ""
 

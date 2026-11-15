@@ -35,6 +35,20 @@ const GROUND := {"ground_dry":Color("b1a064"),"ground_green":Color("71944b")}
 # Screen-calibrated distant meadow, separate from the darker root layer.
 const FAR_GROUND := {"far_ground_dry":Color("f9ca6b"),"far_ground_green":Color("69af3f")}
 
+static func make_biome_noise() -> NoiseTexture2D:
+	var texture := NoiseTexture2D.new()
+	texture.width = 512
+	texture.height = 512
+	texture.seamless = true
+	texture.generate_mipmaps = true
+	var noise := FastNoiseLite.new()
+	noise.seed = 46129
+	noise.frequency = .012
+	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
+	noise.fractal_octaves = 4
+	texture.noise = noise
+	return texture
+
 static func apply_grass(material: ShaderMaterial) -> void:
 	for parameter: String in GRASS:material.set_shader_parameter(parameter,GRASS[parameter])
 	for parameter: String in ZONE:material.set_shader_parameter(parameter,ZONE[parameter])

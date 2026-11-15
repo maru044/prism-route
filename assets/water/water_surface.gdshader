@@ -12,6 +12,7 @@ uniform bool planar_enabled = false;
 uniform float reflection_mix = 0.0;
 uniform vec2 reflection_texel = vec2(0.001);
 uniform float sky_yaw = 1.473;
+uniform float sky_reflection_energy = 1.0;
 uniform vec4 shallow_color : source_color = vec4(0.24, 0.69, 0.65, 1.0);
 uniform vec4 deep_color : source_color = vec4(0.075, 0.36, 0.46, 1.0);
 uniform float absorption = 0.65;
@@ -96,7 +97,7 @@ void fragment() {
     vec3 n = normalize(vec3(-gradient.x, 1.0, -gradient.y));
     vec3 to_eye = normalize(CAMERA_POSITION_WORLD - world_position);
     vec3 reflection_direction = reflect(-to_eye, n);
-    vec3 reflection = reflected_sky(reflection_direction);
+    vec3 reflection = reflected_sky(reflection_direction) * sky_reflection_energy;
 
     if (planar_enabled && reflection_mix > 0.001) {
         vec4 projected = reflection_vp * vec4(world_position, 1.0);

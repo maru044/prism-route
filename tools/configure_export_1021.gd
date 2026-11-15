@@ -1,6 +1,8 @@
 extends SceneTree
 ## Resolve resource dependencies directly; headless filesystem caches can omit them.
 const ROOTS := [
+	"res://scenes/ui/title_screen.tscn",
+	"res://scenes/main.tscn",
 	"res://scenes/map_1021.tscn", "res://assets/world/current_map_validation/current_region.glb",
 	"res://assets/world/current_map_validation/landscape_mask.res", "res://assets/world/current_map_validation/landscape.gdshader",
 	"res://assets/world/cliff_b_test/architecture.tres", "res://scripts/water/water_manager.gd",

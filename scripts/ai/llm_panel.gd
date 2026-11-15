@@ -14,11 +14,6 @@ var _title := Label.new()
 var _transcript := RichTextLabel.new()
 var _draft := TextEdit.new()
 var _status := Label.new()
-var _settings := VBoxContainer.new()
-var _url := LineEdit.new()
-var _model := LineEdit.new()
-var _key := LineEdit.new()
-var _remember := CheckButton.new()
 var _send: Button
 var _retry: Button
 var _continue: Button
@@ -47,13 +42,11 @@ func open_panel(route: String, scope: String, context: Dictionary = {}) -> void:
 	_expanded_reports.clear()
 	client.open(route, scope, context)
 	_title.text = str(context.get("npc_name", "自由对话")) + "  ·  自由对话" if route == Client.DIALOGUE else "游戏助手"
-	_load_settings()
-	_settings.visible = not client.configured()
+	if not client.configured():
+		client.status = "请在标题界面的设置中填写 API 连接。"
+		_refresh()
 	show()
-	if _settings.visible:
-		_url.grab_focus()
-	else:
-		_draft.grab_focus()
+	_draft.grab_focus()
 
 func close_panel() -> void:
 	if not visible:
@@ -92,7 +85,6 @@ func _build_ui() -> void:
 	_title.add_theme_color_override("font_color", palette.speaker)
 	_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	top.add_child(_title)
-	_button(top, "连接设置", _toggle_settings)
 	_button(top, "关闭", close_panel)
 
 	_transcript.custom_minimum_size.y = 246
@@ -106,20 +98,6 @@ func _build_ui() -> void:
 	_transcript.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_transcript.meta_clicked.connect(_toggle_report)
 	dock.add_child(_transcript)
-
-	dock.add_child(_settings)
-	for field in [_url, _model, _key]:
-		field.custom_minimum_size.y = 34
-		_settings.add_child(field)
-	_url.placeholder_text = "接口地址，例如 https://服务地址/v1"
-	_model.placeholder_text = "模型 ID"
-	_key.placeholder_text = "API 密钥"
-	_key.secret = true
-	var save_row := HBoxContainer.new()
-	_settings.add_child(save_row)
-	_remember.text = "在本机记住密钥（明文保存）"
-	save_row.add_child(_remember)
-	_button(save_row, "保存", _save_settings)
 
 	_status.add_theme_color_override("font_color", palette.accent)
 	_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -158,33 +136,6 @@ func _button(parent: Container, label: String, callback: Callable) -> Button:
 	parent.add_child(button)
 	return button
 
-func _toggle_settings() -> void:
-	if client.pending:
-		return
-	_settings.visible = not _settings.visible
-	if _settings.visible:
-		_load_settings()
-		_url.grab_focus()
-	else:
-		_draft.grab_focus()
-
-func _load_settings() -> void:
-	var profile: Dictionary = client.profiles[client.route]
-	_url.text = profile.url
-	_model.text = profile.model
-	_key.text = profile.key
-	var config := ConfigFile.new()
-	_remember.button_pressed = config.load(Client.SETTINGS_PATH) == OK and not str(config.get_value(client.route, "key", "")).is_empty()
-
-func _save_settings() -> void:
-	if client.pending:
-		return
-	client.status = client.save_profile(client.route, _url.text, _model.text, _key.text, _remember.button_pressed)
-	if client.status.is_empty():
-		_settings.hide()
-		_draft.grab_focus()
-	_refresh()
-
 func _input(event: InputEvent) -> void:
 	if not visible or not event is InputEventKey or not event.pressed or event.echo:
 		return
@@ -201,7 +152,10 @@ func _input(event: InputEvent) -> void:
 func _send_or_stop() -> void:
 	if client.pending:
 		client.stop()
-	elif not _settings.visible and client.send(_draft.text):
+	elif not client.configured():
+		client.status = "请在标题界面的设置中填写 API 连接。"
+		_refresh()
+	elif client.send(_draft.text):
 		_draft.clear()
 		_draft.grab_focus()
 

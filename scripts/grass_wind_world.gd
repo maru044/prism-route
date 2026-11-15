@@ -31,27 +31,20 @@ var profile := {"configure_usec":0,"configure_count":0,"lod_refresh_usec":0,"lod
 func initialize(owner_vegetation) -> void:
 	vegetation = owner_vegetation
 	material = vegetation.grass_material
-	# Preserve the exact world's biome, alpha, LOD and interaction settings.
-	var settings: Dictionary = {}
-	for uniform: Dictionary in material.shader.get_shader_uniform_list():
-		var value: Variant = material.get_shader_parameter(uniform.name)
-		if value != null:
-			settings[uniform.name] = value
-	material.shader = SHADER
-	for parameter: String in settings:
-		material.set_shader_parameter(parameter, settings[parameter])
-	SETTINGS.apply(material, SETTINGS.DEFAULT_PARAMETERS)
+	apply_wind_material(material)
 	mesh = vegetation._extract_first_mesh(MESH)
 	mesh.surface_set_material(0, material)
 	reference_mesh = mesh
 	# Both models have the same unbent envelope. The baked-store AABB already
 	# grows that envelope conservatively to include wind and actor interaction.
 	assert(mesh.get_aabb().is_equal_approx(vegetation.grass_mesh.get_aabb()))
-	mesh = _build_lod_mesh(4)
+	mesh = make_presentation_mesh(reference_mesh, material, 4)
 	vegetation.grass_mesh = mesh
-	lod_meshes = {4:mesh, 2:_build_lod_mesh(2), 1:_build_lod_mesh(1)}
-	material.set_shader_parameter("gust_shared_curve",true)
-	material.set_shader_parameter("gust_distance_lod",true)
+	lod_meshes = {
+		4: mesh,
+		2: make_presentation_mesh(reference_mesh, material, 2),
+		1: make_presentation_mesh(reference_mesh, material, 1),
+	}
 	var stream: Node = vegetation.volume_streamer
 	stream.presentation_mesh_selector=select_mesh_for_bounds
 	stream.presentation_far_mesh=lod_meshes[1]
@@ -80,7 +73,22 @@ func _configure_node(node: Node) -> void:
 		if profile_enabled:
 			profile.configure_usec+=Time.get_ticks_usec()-started;profile.configure_count+=1
 
-func _build_lod_mesh(segments: int) -> ArrayMesh:
+static func apply_wind_material(material: ShaderMaterial) -> void:
+	# Preserve the exact world's biome, alpha, LOD and interaction settings.
+	var settings: Dictionary = {}
+	for uniform: Dictionary in material.shader.get_shader_uniform_list():
+		var value: Variant = material.get_shader_parameter(uniform.name)
+		if value != null:
+			settings[uniform.name] = value
+	material.shader = SHADER
+	for parameter: String in settings:
+		material.set_shader_parameter(parameter, settings[parameter])
+	SETTINGS.apply(material, SETTINGS.DEFAULT_PARAMETERS)
+	material.set_shader_parameter("gust_shared_curve",true)
+	material.set_shader_parameter("gust_distance_lod",true)
+
+
+static func make_presentation_mesh(source: Mesh, material: ShaderMaterial, segments: int) -> ArrayMesh:
 	var arrays: Array = []
 	arrays.resize(Mesh.ARRAY_MAX)
 	var vertices := PackedVector3Array()
@@ -88,8 +96,8 @@ func _build_lod_mesh(segments: int) -> ArrayMesh:
 	var colors := PackedColorArray()
 	var uvs := PackedVector2Array()
 	var indices := PackedInt32Array()
-	var width := mesh.get_aabb().size.x
-	var height := mesh.get_aabb().size.y
+	var width := source.get_aabb().size.x
+	var height := source.get_aabb().size.y
 	for card in 3:
 		var angle := float(card)*PI/3.0
 		var right := Vector3(cos(angle),0,-sin(angle))*width*0.5

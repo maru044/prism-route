@@ -66,6 +66,8 @@ const ROSTER_PROFILES: Dictionary = {
 @export var camera_min_pitch := -1.35
 @export var camera_max_pitch := 1.25
 @export var camera_pivot_height := 1.08
+# The title scene uses the complete player appearance and idle animation.
+@export var presentation_only := false
 
 @onready var visual: Node3D = $Visual
 @onready var collision_shape: CollisionShape3D = $CollisionShape3D
@@ -102,6 +104,10 @@ func _ready() -> void:
 	
 	camera_pivot.position = Vector3(0, camera_pivot_height, 0)
 	respawn_transform = global_transform
+
+	if presentation_only:
+		set_control_enabled(false)
+		return
 	
 	switch_wheel = WHEEL_SCENE.instantiate()
 	add_child(switch_wheel)
