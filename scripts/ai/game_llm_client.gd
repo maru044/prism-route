@@ -46,6 +46,7 @@ const TOOLS := [
 
 static var _dialogue_tag := RegEx.create_from_string(r"(?i)<(/?)(game|report_nya~?|think_nya~?)>")
 static var _prompt_token := RegEx.create_from_string(r"\{\{//|\{\{(?:roll 1d100|npc_name|dialogue_location)\}\}|\{\{|\}\}")
+static var _dialogue_role_marker := RegEx.create_from_string(r"\|(用户|小猫之神)\|")
 static var _dialogue_tag_prefixes := [
 	"<game>", "</game>", "<report_nya>", "</report_nya>", "<think_nya>", "</think_nya>",
 	"<report_nya~>", "</report_nya~>", "<think_nya~>", "</think_nya~>",
@@ -277,17 +278,8 @@ func _start(operation: String, turn: Dictionary) -> bool:
 	_assistant_retries = 0
 	_proposed_destination = ""
 	_world_status_read = false
-	var prompt: Array[Dictionary] = []
-	var fixed := _message_tokens(DIALOGUE_SYSTEM if route == DIALOGUE else ASSISTANT_SYSTEM)
-	if route == DIALOGUE:
-		for row: Dictionary in _dialogue_entries:
-			var content := _expand_dialogue_prompt(row.content)
-			if not content.is_empty():
-				prompt.append({"depth": row.depth, "content": content})
-				fixed += _message_tokens({"role": "system", "content": content})
-		if operation == "continue":
-			fixed += _message_tokens(CONTINUE_MESSAGE)
-	elif _allows_tools():
+	var fixed := fixed_dialogue_tokens(operation) if route == DIALOGUE else _message_tokens(ASSISTANT_SYSTEM)
+	if route == ASSISTANT and _allows_tools():
 		fixed += _text_tokens(JSON.stringify(TOOLS))
 	var messages := _build_request_history(operation, turn, _context_limit_tokens - OUTPUT_TOKEN_RESERVE - fixed)
 	if messages.is_empty():
@@ -297,9 +289,7 @@ func _start(operation: String, turn: Dictionary) -> bool:
 	if operation == "send":
 		history.append(turn)
 	if route == DIALOGUE:
-		_request_messages = _build_dialogue_messages(messages, prompt)
-		if operation == "continue":
-			_request_messages.append(CONTINUE_MESSAGE)
+		_request_messages = _build_dialogue_messages(messages, operation)
 		_request_messages = _merge_dialogue_messages(_request_messages)
 	else:
 		_request_messages = [ASSISTANT_SYSTEM]
@@ -369,19 +359,102 @@ static func _message_tokens(message: Dictionary) -> int:
 		cost += _text_tokens(message.tool_call_id)
 	return cost
 
-func _build_dialogue_messages(history_messages: Array, prompt: Array[Dictionary]) -> Array:
-	var messages: Array = [DIALOGUE_SYSTEM]
+static func _extract_dialogue_examples(text: String) -> Dictionary:
+	var matches := _dialogue_role_marker.search_all(text)
+	if matches.is_empty():
+		return {"head": text, "examples": []}
+	var head := text.substr(0, matches[0].get_start()).strip_edges()
+	var examples: Array[Dictionary] = []
+	for i in matches.size():
+		var matched := matches[i]
+		var role := "user" if matched.get_string(1) == "用户" else "assistant"
+		var start := matched.get_end()
+		var end := matches[i + 1].get_start() if i + 1 < matches.size() else text.length()
+		var segment := text.substr(start, end - start).strip_edges()
+		if not segment.is_empty():
+			examples.append({"role": role, "content": segment})
+	return {"head": head, "examples": examples}
+
+func _parsed_dialogue_prompts(entries: Array = []) -> Dictionary:
+	var list: Array = entries if not entries.is_empty() else _dialogue_entries
+	var head_prompt := DIALOGUE_SYSTEM.content
+	var examples: Array[Dictionary] = []
+	var mid_prompts: Array[Dictionary] = []
+	var format_content := ""
+	for row: Dictionary in list:
+		var raw_content: String = row.get("content", "")
+		var content := _expand_dialogue_prompt(raw_content)
+		if content.is_empty():
+			continue
+		var depth: int = int(row.get("depth", 0))
+		if depth == 999:
+			var extracted := _extract_dialogue_examples(content)
+			if not extracted.head.is_empty():
+				head_prompt += "\n\n" + extracted.head
+			examples = extracted.examples
+		elif depth == 0:
+			format_content = content
+		else:
+			mid_prompts.append({"depth": depth, "content": content})
+	mid_prompts.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a.depth > b.depth)
+	return {
+		"head": head_prompt,
+		"examples": examples,
+		"mid": mid_prompts,
+		"format": format_content,
+	}
+
+func fixed_dialogue_tokens(operation := "send") -> int:
+	var parsed := _parsed_dialogue_prompts()
+	var fixed := _message_tokens({"role": "system", "content": parsed.head})
+	for ex: Dictionary in parsed.examples:
+		fixed += _message_tokens(ex)
+	for mid: Dictionary in parsed.mid:
+		fixed += _message_tokens({"role": "system", "content": mid.content})
+	if not parsed.format.is_empty():
+		fixed += _message_tokens({"role": "assistant", "content": parsed.format})
+	if operation == "continue":
+		fixed += _message_tokens(CONTINUE_MESSAGE)
+	return fixed
+
+func _build_dialogue_messages(history_messages: Array, operation := "send", entries: Array = []) -> Array:
+	var parsed := _parsed_dialogue_prompts(entries)
+	var request_messages: Array = [{"role": "system", "content": parsed.head}]
+	request_messages.append_array(parsed.examples)
+
+	var slotted_history: Array = []
 	var history_index := 0
-	for row: Dictionary in prompt:
+	var mid_prompts: Array[Dictionary] = parsed.mid
+	for row: Dictionary in mid_prompts:
 		var insert_at := maxi(0, history_messages.size() - row.depth)
 		while history_index < insert_at:
-			messages.append(history_messages[history_index])
+			slotted_history.append(history_messages[history_index].duplicate())
 			history_index += 1
-		messages.append({"role": "system", "content": row.content})
+		slotted_history.append({"role": "system", "content": row.content})
 	while history_index < history_messages.size():
-		messages.append(history_messages[history_index])
+		slotted_history.append(history_messages[history_index].duplicate())
 		history_index += 1
-	return messages
+
+	var format_content: String = parsed.format
+	if operation == "continue":
+		if not format_content.is_empty():
+			if slotted_history.is_empty() or slotted_history.back().role != "assistant":
+				slotted_history.append({"role": "assistant", "content": format_content})
+			else:
+				slotted_history.back().content += "\n\n" + format_content
+		slotted_history.append(CONTINUE_MESSAGE)
+	else:
+		var current_user: Dictionary = slotted_history.pop_back() if not slotted_history.is_empty() else {}
+		if not format_content.is_empty():
+			if slotted_history.is_empty() or slotted_history.back().role != "assistant":
+				slotted_history.append({"role": "assistant", "content": format_content})
+			else:
+				slotted_history.back().content += "\n\n" + format_content
+		if not current_user.is_empty():
+			slotted_history.append(current_user)
+
+	request_messages.append_array(slotted_history)
+	return request_messages
 
 static func dialogue_sections(raw: String, streaming := false) -> Dictionary:
 	var plain := PackedStringArray()

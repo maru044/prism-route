@@ -107,6 +107,7 @@ func run() -> void:
 	_verify_model_routes()
 	_verify_assistant_retry()
 	_verify_context_budget()
+	_verify_dialogue_request_matrix()
 	_verify_tool_context_budget()
 	_verify_blank_player_profile(client)
 	_verify_teleport_lifecycle()
@@ -116,7 +117,7 @@ func run() -> void:
 		_fail("connection settings", "validation failed to distinguish URL and key")
 	client.free()
 	server.stop()
-	print("LLM_STREAM cases=", cases.size(), " assistant_http=", assistant_cases.size(), " report_panel=1 model_routes=1 context_budget=1 tool_context=1 player_profile=1 teleport_lifecycle=1 title_model_list=1 failures=", _failures)
+	print("LLM_STREAM cases=", cases.size(), " assistant_http=", assistant_cases.size(), " report_panel=1 model_routes=1 context_budget=1 dialogue_matrix=1 tool_context=1 player_profile=1 teleport_lifecycle=1 title_model_list=1 failures=", _failures)
 	quit(0 if _failures == 0 else 1)
 
 func _verify_endpoint_paths() -> void:
@@ -366,36 +367,112 @@ func _verify_context_budget() -> void:
 		capture.finished.emit({}, "")
 	var full_messages: Array = capture.request.messages
 	# Before the final four chat messages: reply 3, question 4, reply 4, question 5.
-	if full_messages.size() != 14 or full_messages[7].content != "问题3" \
-			or full_messages[8].role != "system" or not full_messages[8].content.contains("[Game rules]") \
-			or full_messages[9].content != "回复3" or full_messages[12].content != "问题5" \
+	if full_messages.size() != 35 or full_messages[29].content != "问题3" \
+			or full_messages[30].role != "system" or not full_messages[30].content.contains("[Game rules]") \
+			or full_messages[31].content != "回复3" or full_messages[34].content != "问题5" \
 			or JSON.stringify(full_messages).count("[Game rules]") != 1:
 		_fail("worldbook depth", "world rules must be inserted before the final four chat messages")
-	var budget := Client.OUTPUT_TOKEN_RESERVE + Client._message_tokens(Client.DIALOGUE_SYSTEM)
-	for row: Dictionary in client._dialogue_entries:
-		budget += Client._message_tokens({"content": client._expand_dialogue_prompt(row.content)})
+	var budget := Client.OUTPUT_TOKEN_RESERVE + client.fixed_dialogue_tokens()
 	for content: String in ["问题5", "回复5", "最后的问题"]:
 		budget += Client._message_tokens({"content": content})
 	client._context_limit_tokens = budget + 3
 	client.send("最后的问题")
 	var messages: Array = capture.request.messages
-	if _role_contents(messages, "user") != ["问题5", "最后的问题"] or _role_contents(messages, "assistant") != ["回复5"]:
+	if _role_contents(messages, "user").slice(-2) != ["问题5", "最后的问题"] or not messages[messages.size() - 2].content.begins_with("回复5"):
 		_fail("context budget", "history did not preserve the newest complete turns")
 	if client.history.size() != 7 or client.omitted_turns != 5 or capture.request.max_tokens != 8000:
 		_fail("context budget", "request budget changed local history")
 	var before: String = messages.front().content
-	var after: String = messages.back().content
-	if messages.size() != 5 \
-			or not _ordered_text(before, ["[game Materials]", "玩家称呼：", "核心设定集", "当前对话对象：FixtureNPC", "当前对话地点：FixtureLocation", "[Game rules]"]) \
-			or after.contains("[Game rules]") or after.contains("核心设定集"):
+	var worldbook: String = messages[22].content
+	var after: String = messages[messages.size() - 2].content
+	if messages.size() != 26 \
+			or not _ordered_text(before, ["保持当前角色语气和场景。", "Two models take turns to respond.", "[Model Card - Gemini]", "[Model Card - Miku]"]) \
+			or not _ordered_text(worldbook, ["[game Materials]", "玩家称呼：", "核心设定集", "当前对话对象：FixtureNPC", "当前对话地点：FixtureLocation", "[Game rules]"]) \
+			or after.contains("[Game rules]") or after.contains("核心设定集") or messages.back().content.contains("核心设定集"):
 		_fail("context budget", "worldbook placement or dynamic marker order is incorrect")
-	if not _has_final_dialogue_format(messages) or after.contains("img-prompt") or before.contains("{{//") or after.contains("{{//"):
+	if not _has_final_dialogue_format(messages) or after.contains("img-prompt") or before.contains("{{//") or after.contains("{{//") or worldbook.contains("{{//"):
 		_fail("context budget", "shared prompt or prompt cleanup is incorrect")
 	client.stop()
 	var sends := capture.sends
 	if client.send("长".repeat(budget)) or client.history.size() != 7 or capture.sends != sends \
 			or not client.status.contains("上下文预算") or client.pending:
 		_fail("context budget", "oversize current turn was sent or left pending")
+	client.free()
+
+func _verify_dialogue_request_matrix() -> void:
+	var client := Client.new()
+	var capture := CaptureTransport.new()
+	client._transport.free()
+	client._transport = capture
+	root.add_child(client)
+	client.profiles[Client.DIALOGUE] = {"url": "https://fixture.invalid", "model": "fixture", "key": ""}
+	client.open(Client.DIALOGUE, "matrix", {
+		"npc_name": "FixtureNPC", "dialogue_location": "FixtureLocation",
+	})
+
+	# 1. 首轮发送
+	client.send("首轮用户输入")
+	var m1: Array = capture.request.messages
+	if m1.size() != 25 \
+			or m1[0].role != "system" or not m1[0].content.contains("Two models take turns to respond.") \
+			or m1[1].role != "assistant" or not m1[1].content.contains("给我闭嘴啦") \
+			or m1[21].role != "assistant" or not m1[21].content.contains("好耶！那我们开始了") \
+			or m1[22].role != "system" or not m1[22].content.contains("核心设定集") or not m1[22].content.contains("[Game rules]") \
+			or m1[23].role != "assistant" or not m1[23].content.contains("<game></game>") or not m1[23].content.ends_with("</censorship_bypass>") \
+			or m1[24].role != "user" or m1[24].content != "首轮用户输入" \
+			or not _has_final_dialogue_format(m1):
+		_fail("dialogue matrix: first round", "unexpected message assembly in first round")
+
+	# 2. 历史不足四条（1轮历史已完成，当前为第2轮发送）
+	capture.delta_received.emit("<game>首轮模型回复</game>")
+	capture.finished.emit({}, "")
+	client.send("第二轮用户输入")
+	var m2: Array = capture.request.messages
+	if m2.size() != 26 \
+			or m2[22].role != "system" or not m2[22].content.contains("核心设定集") or not m2[22].content.contains("[Game rules]") \
+			or m2[23].role != "user" or m2[23].content != "首轮用户输入" \
+			or m2[24].role != "assistant" or not m2[24].content.begins_with("首轮模型回复") or not m2[24].content.ends_with("</censorship_bypass>") \
+			or m2[25].role != "user" or m2[25].content != "第二轮用户输入" \
+			or not _has_final_dialogue_format(m2):
+		_fail("dialogue matrix: history < 4", "unexpected message assembly when history < 4")
+
+	# 3. 历史超过四条（2轮历史已完成，当前为第3轮发送，H = 5）
+	capture.delta_received.emit("<game>第二轮模型回复</game>")
+	capture.finished.emit({}, "")
+	client.send("第三轮用户输入")
+	var m3: Array = capture.request.messages
+	if m3.size() != 29 \
+			or m3[22].role != "system" or not m3[22].content.contains("核心设定集") or m3[22].content.contains("[Game rules]") \
+			or m3[23].role != "user" or m3[23].content != "首轮用户输入" \
+			or m3[24].role != "system" or not m3[24].content.contains("[Game rules]") \
+			or m3[25].role != "assistant" or m3[25].content != "首轮模型回复" \
+			or m3[26].role != "user" or m3[26].content != "第二轮用户输入" \
+			or m3[27].role != "assistant" or not m3[27].content.begins_with("第二轮模型回复") or not m3[27].content.ends_with("</censorship_bypass>") \
+			or m3[28].role != "user" or m3[28].content != "第三轮用户输入" \
+			or not _has_final_dialogue_format(m3):
+		_fail("dialogue matrix: history >= 4", "unexpected message assembly when history >= 4")
+
+	# 4. 重生成测试 (retry)
+	capture.finished.emit({}, "simulated failure to allow retry")
+	client.retry()
+	var m_retry: Array = capture.request.messages
+	if m_retry.size() != 29 \
+			or m_retry[27].role != "assistant" or not m_retry[27].content.ends_with("</censorship_bypass>") \
+			or m_retry[28].role != "user" or m_retry[28].content != "第三轮用户输入" \
+			or not _has_final_dialogue_format(m_retry):
+		_fail("dialogue matrix: retry", "unexpected message assembly in retry")
+
+	# 5. 续写测试 (continue)
+	capture.delta_received.emit("<game>第三轮部分回复")
+	capture.finished.emit({}, "")
+	client.continue_reply()
+	var m_cont: Array = capture.request.messages
+	if m_cont.size() != 31 \
+			or m_cont[29].role != "assistant" or not m_cont[29].content.begins_with("第三轮部分回复") or not m_cont[29].content.ends_with("</censorship_bypass>") \
+			or m_cont[30].role != "user" or m_cont[30].content != Client.CONTINUE_MESSAGE.content \
+			or not _has_final_dialogue_format(m_cont):
+		_fail("dialogue matrix: continue", "unexpected message assembly in continue")
+
 	client.free()
 
 func _verify_tool_context_budget() -> void:
@@ -503,10 +580,14 @@ func _role_contents(messages: Array, role: String) -> Array:
 	return contents
 
 func _has_final_dialogue_format(messages: Array) -> bool:
-	var final_system: Dictionary = messages.back()
-	return final_system.role == "system" \
-		and _ordered_text(final_system.content, ["<game></game>", "【当前回复的结束边界】", "<censorship_bypass>"]) \
-		and final_system.content.ends_with("</censorship_bypass>") \
+	if messages.size() < 2:
+		return false
+	var final_msg: Dictionary = messages.back()
+	var penultimate: Dictionary = messages[messages.size() - 2]
+	return final_msg.role == "user" \
+		and penultimate.role == "assistant" \
+		and _ordered_text(penultimate.content, ["<game></game>", "【当前回复的结束边界】", "<censorship_bypass>"]) \
+		and penultimate.content.ends_with("</censorship_bypass>") \
 		and JSON.stringify(messages).count("<censorship_bypass>") == 1
 
 func _verify_report_panel() -> void:
@@ -539,7 +620,7 @@ func _verify_report_panel() -> void:
 	if panel._transcript.get_parsed_text().contains("REPORT 内容"):
 		_fail("report panel", "report did not collapse")
 	client.continue_reply()
-	if not {"role": "assistant", "content": "正文"} in capture.request.messages:
+	if not capture.request.messages.any(func(m: Dictionary): return m.role == "assistant" and m.content.begins_with("正文")):
 		_fail("report panel", "history did not preserve clean body")
 	capture.delta_received.emit("继续")
 	capture.finished.emit({}, "")
@@ -554,7 +635,7 @@ func _verify_report_panel() -> void:
 	if not panel._transcript.get_parsed_text().contains("不完整的续写") or not panel._transcript.get_parsed_text().contains("续写失败样例"):
 		_fail("failed continuation", "partial continuation or its error was hidden")
 	client.send("follow up")
-	if not {"role": "assistant", "content": "正文继续下一段"} in capture.request.messages or JSON.stringify(capture.request.messages).contains("不完整的续写"):
+	if not capture.request.messages.any(func(m: Dictionary): return m.role == "assistant" and m.content.begins_with("正文继续下一段")) or JSON.stringify(capture.request.messages).contains("不完整的续写"):
 		_fail("failed continuation", "follow-up lost the successful reply or included the failed fragment")
 	capture.delta_received.emit("<think_nya~>STOP REPORT")
 	if panel._send.text != "停止":
@@ -583,13 +664,11 @@ func _verify_report_panel() -> void:
 	if not panel._copy_diagnostic.visible or not panel._transcript.get_parsed_text().contains("test HTTP failure"):
 		_fail("failed turns", "closing the panel lost the error and diagnostic")
 	client.send("new turn")
-	if _role_contents(capture.request.messages, "user") != ["question", "new turn"] or not panel._status.text.contains("2 个未完成回合"):
+	if _role_contents(capture.request.messages, "user").slice(-2) != ["question", "new turn"] or not panel._status.text.contains("2 个未完成回合"):
 		_fail("failed turns", "failed user messages entered the new request")
 	capture.delta_received.emit("new answer")
 	capture.finished.emit({}, "")
-	var budget := Client.OUTPUT_TOKEN_RESERVE + Client._message_tokens(Client.DIALOGUE_SYSTEM)
-	for row: Dictionary in client._dialogue_entries:
-		budget += Client._message_tokens({"content": client._expand_dialogue_prompt(row.content)})
+	var budget := Client.OUTPUT_TOKEN_RESERVE + client.fixed_dialogue_tokens()
 	for content: String in ["new turn", "new answer", "trimmed"]:
 		budget += Client._message_tokens({"content": content})
 	client._context_limit_tokens = budget + 3
@@ -638,12 +717,13 @@ func _run_case(server: TCPServer, client: Node, fixture: Dictionary) -> void:
 		if payload.stream or not payload.has("tools") or _role_contents(messages, "user") != ["stream fixture"] \
 				or before.contains("[Game rules]"):
 			_fail(title, "unexpected assistant request composition")
-	elif messages.size() != 3 or _role_contents(messages, "user") != ["stream fixture"] \
-			or not _ordered_text(before, ["[game Materials]", "玩家称呼：", "核心设定集", "当前对话对象：FixtureNPC", "当前对话地点：FixtureLocation", "[Game rules]", "故事的整体氛围应始终保持"]) \
-			or after.contains("核心设定集") \
+	elif messages.size() != 25 or messages.back().content != "stream fixture" \
+			or not _ordered_text(messages.front().content, ["保持当前角色语气和场景。", "Two models take turns to respond.", "[Model Card - Gemini]", "[Model Card - Miku]"]) \
+			or not _ordered_text(messages[22].content, ["[game Materials]", "玩家称呼：", "核心设定集", "当前对话对象：FixtureNPC", "当前对话地点：FixtureLocation", "[Game rules]", "故事的整体氛围应始终保持"]) \
+			or messages.back().content.contains("核心设定集") \
 			or JSON.stringify(messages).count("[Game rules]") != 1 or JSON.stringify(messages).count("[game Materials]") != 1 \
-			or before.contains("{{") or after.contains("{{") \
-			or not _has_final_dialogue_format(messages) or after.contains("img-prompt") \
+			or JSON.stringify(messages).contains("{{") \
+			or not _has_final_dialogue_format(messages) or messages[23].content.contains("img-prompt") \
 			or not payload.stream or payload.has("tools") or payload.has("tool_choice"):
 		_fail(title, "unexpected dialogue prompt composition")
 	if fixture.get("cancel", false):
