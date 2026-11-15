@@ -152,6 +152,8 @@ func run() -> void:
 			for entry: Dictionary in overlaps:diagnostic.overlaps.append({"path":str(entry.collider.get_path()),"construction":entry.collider.get_meta("construction_id","")})
 		report["existing_oval_spawn_diagnostic"]=diagnostic;print("CONSTRUCTION_EXISTING_SPAWN ",JSON.stringify(diagnostic))
 	check(home.plots.size()==2,"Both actual plots installed")
+	check(home.hud._thumbnail_atlas != null and home.hud.photo_ids().size() == 12,"Twelve studio photos available")
+	check(home.hud._markers.size() == 2,"Compass uses both resolved home approaches")
 	check(plot.root.basis.determinant()>.999,"Plot transform is right handed")
 	check(world.vegetation.volume_streamer.store.manifest.signature==STORE.signature(world),"Immutable root bake remains valid")
 	check(world.vegetation.grass_material.get_shader_parameter("construction_grass_enabled")==true,"Dynamic grass mask bound to live grass")
@@ -214,11 +216,46 @@ func run() -> void:
 	await walk(plot.root.to_global(Vector3(27,.24,29)),plot.root.to_global(Vector3(27,.24,21)),"corridor_open_doors")
 	await walk(plot.root.to_global(Vector3(31,.24,29)),plot.root.to_global(Vector3(31,3.84,21)),"stairs_up")
 	await walk(plot.root.to_global(Vector3(31,3.84,21)),plot.root.to_global(Vector3(31,.24,29)),"stairs_down")
-	# Input routing through real engine events, including numeric hotkey isolation.
+	# Input routing follows the physical player and isolates map shortcuts.
 	var previous_spawn: int=world.spawn_index
-	key(KEY_F7);await frames(2);check(home.active,"F7 enters construction mode")
+	key(KEY_F7);await frames(2);check(not home.active,"Old global F7 retired")
+	check(home.eligible_plot() == "coastal","Standing on coastal lower floor enables building")
+	key(KEY_F5);await frames(2);check(home.active and home.selected_plot == "coastal","F5 enters the current home")
+	check(not home.hud._compass.visible and home.hud.panel.visible,"Editor replaces exploration HUD")
 	key(KEY_1);await frames(2);check(world.spawn_index==previous_spawn,"Numeric keys do not switch world spawn while building")
 	key(KEY_ESCAPE);await frames(2);check(not home.active,"Escape exits construction mode")
+	var lagoon: Dictionary = home.plots.lowland
+	check(lagoon.data.pieces.size() > 20 and lagoon.data.rooms.any(func(row: Dictionary): return row.kind == "indoor"),
+			"Lowland has a real starter home with a covered room")
+	for row: Dictionary in lagoon.data.pieces.values():
+		if row.definition == "door":
+			home.toggle_door("lowland", row.id)
+	await walk(lagoon.root.to_global(Vector3(27,.04,35)),lagoon.root.to_global(Vector3(27,.24,29)),"lagoon_entry")
+	check(home.eligible_plot() == "lowland","Player at the lagoon gets the local F5 prompt")
+	key(KEY_F5);await frames(2)
+	check(home.active and home.selected_plot == "lowland","F5 binds to the lagoon without a remote plot selector")
+	var existing: int = lagoon.data.pieces.size()
+	home.select_piece("floor")
+	var camera: Camera3D = world.camera
+	var target: Vector3 = lagoon.root.to_global(Vector3(36, .2, 34))
+	mouse_click(camera.unproject_position(target))
+	await frames(2)
+	check(lagoon.data.pieces.size() == existing + 1, "Click in the world places the chosen floor")
+	check(home.grass_cut(lagoon.root.to_global(Vector3(37, 0, 35))), "GUI placement updates the lowland grass mask")
+	home.change_history(false)
+	check(lagoon.data.pieces.size() == existing and not home.grass_cut(lagoon.root.to_global(Vector3(37, 0, 35))),
+			"Undo from the player editor restores the lowland grass")
+	key(KEY_ESCAPE);await frames(2)
+	world.character.global_position += Vector3.UP * 9
+	check(home.eligible_plot().is_empty(),"Identical XZ on an unrelated elevation is blocked")
+	key(KEY_F5);await frames(2)
+	check(not home.active,"F5 cannot enter from an unrelated elevation")
+	var cave: int = world.resolved_spawns.find_custom(func(row: Dictionary): return row.get("key") == "spawn_cave")
+	if cave >= 0:
+		await world.select_spawn(cave)
+		await frames(8)
+		key(KEY_F5);await frames(2)
+		check(not home.active and not home.hud._prompt.visible,"No build prompt or entry from the initial cave")
 	if DisplayServer.get_name()!="headless":await captures(home,plot)
 	for path: String in protected:check(FileAccess.get_sha256("res://"+path)==protected[path],"Protected source unchanged: "+path)
 	report.merge({"passed":failures.is_empty(),"checks":checks,"failures":failures,"sample_pieces":data.pieces.size(),"rooms":data.rooms,"tree_records_excluded":removed_counts,"walks":walks,"source":"scenes/main.tscn","root_bake_preserved":true,"furniture_status":"anchors_ready"})
@@ -226,8 +263,22 @@ func run() -> void:
 	print("CONSTRUCTION_VERIFY ",JSON.stringify(report));quit(0 if failures.is_empty() else 1)
 
 func key(code: Key) -> void:
-	var event:=InputEventKey.new();event.physical_keycode=code;event.pressed=true;Input.parse_input_event(event)
-	var release:=InputEventKey.new();release.physical_keycode=code;release.pressed=false;Input.parse_input_event(release)
+	for pressed: bool in [true, false]:
+		var event:=InputEventKey.new();event.physical_keycode=code;event.pressed=pressed;Input.parse_input_event(event)
+
+func mouse_click(point: Vector2) -> void:
+	var motion := InputEventMouseMotion.new()
+	motion.position = point
+	motion.global_position = point
+	root.push_input(motion, true)
+	for pressed: bool in [true, false]:
+		var event := InputEventMouseButton.new()
+		event.button_index = MOUSE_BUTTON_LEFT
+		event.button_mask = MOUSE_BUTTON_MASK_LEFT if pressed else 0
+		event.position = point
+		event.global_position = point
+		event.pressed = pressed
+		root.push_input(event, true)
 
 func ray_floor(p: Vector3) -> Dictionary:
 	var query:=PhysicsRayQueryParameters3D.create(p,p-Vector3.UP*.4,32);query.exclude=[world.character.get_rid()];return world.get_world_3d().direct_space_state.intersect_ray(query)

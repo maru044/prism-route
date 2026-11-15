@@ -19,6 +19,7 @@ const WORLD := "res://scenes/main.tscn"
 const UI := preload("res://scenes/combat/encounter_ui_style.gd")
 const PALETTE := preload("res://scenes/combat/temple_paper_palette.tres")
 const SETTINGS := preload("res://scripts/ui/title_api_settings.gd")
+const LOADING_SCREEN := preload("res://scripts/ui/title_loading.gd")
 
 var _menu: VBoxContainer
 var _start_button: Button
@@ -48,7 +49,6 @@ func _ready() -> void:
 	_setup_sea(camera, _setup_lighting())
 	_setup_menu()
 	_setup_audio()
-	set_process(false)
 	_plant_meadow(coast.find_child("TitleMeadow", true, false) as MeshInstance3D, vegetation)
 
 
@@ -350,33 +350,18 @@ func _close_settings() -> void:
 func _start_game() -> void:
 	if _loading:
 		return
-	var error := ResourceLoader.load_threaded_request(WORLD, "PackedScene")
-	if error != OK:
-		_start_status.text = "无法加载游戏（%s）" % error_string(error)
-		return
 	_loading = true
-	_start_status.text = "正在加载…"
-	for item in _menu.get_children():
-		if item is Button:
-			item.release_focus()
-			item.disabled = true
-	set_process(true)
+	_menu.hide()
+	var loading_screen := LOADING_SCREEN.new()
+	loading_screen.name = "WorldLoadingScreen"
+	loading_screen.load_failed.connect(_on_load_failed, CONNECT_ONE_SHOT)
+	get_tree().root.add_child(loading_screen)
+	loading_screen.start(WORLD)
 
 
-func _process(_delta: float) -> void:
-	var status := ResourceLoader.load_threaded_get_status(WORLD)
-	if status == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
-		return
-	if status == ResourceLoader.THREAD_LOAD_LOADED:
-		var world := ResourceLoader.load_threaded_get(WORLD) as PackedScene
-		if world != null and get_tree().change_scene_to_packed(world) == OK:
-			set_process(false)
-			return
+func _on_load_failed() -> void:
 	_loading = false
-	set_process(false)
-	for item in _menu.get_children():
-		if item is Button:
-			item.disabled = false
+	_menu.show()
 	_start_status.text = "无法加载游戏。"
 	_start_button.grab_focus()
 

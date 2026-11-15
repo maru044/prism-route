@@ -69,7 +69,7 @@ func wall_crosses(row: Dictionary,polygon: PackedVector2Array) -> bool:
 
 func validate(row: Dictionary) -> String:
 	if not definitions.has(row.definition):return "未知组件"
-	if int(row.story)<0 or int(row.story)>1:return "验证版支持两层"
+	if int(row.story)<0 or int(row.story)>1:return "家园可建一层或二层"
 	var d: Dictionary=definitions[row.definition];var kind: String=d.kind
 	if kind=="internal":return "内部零件不能单独放置"
 	var floors:=floor_map(int(row.story))
@@ -102,7 +102,7 @@ func validate(row: Dictionary) -> String:
 	elif kind=="ramp":
 		if int(row.story)!=0:return "入口坡道仅用于地面"
 	elif kind=="connector":
-		if int(row.story)!=0:return "验证版楼梯连接一二层"
+		if int(row.story)!=0:return "楼梯从一层通往二层"
 		for c: Vector2i in cells:
 			if not floors.has(c):return "楼梯需要完整底层支撑"
 			if floor_map(1).has(c):return "先移除楼梯上方楼板"
@@ -255,3 +255,37 @@ func example() -> void:
 	assert(place("desk",1,24,24,2,false).ok)
 	assert(place("chair",1,24,22,0,false).ok)
 	undo_stack.clear();redo_stack.clear();analyze()
+
+func lowland_example(remember := false) -> bool:
+	if not pieces.is_empty():
+		return false
+	var previous := snapshot()
+	var layout: Array[Array] = []
+	for x in range(22, 32, 2):
+		for z in range(22, 30, 2):
+			layout.append(["floor", x, z, 0])
+			layout.append(["roof", x, z, 0])
+		layout.append(["window", x, 22, 0])
+		var front := "door" if x == 26 else ("window" if x in [24, 28] else "wall")
+		layout.append([front, x, 30, 0])
+	for z in range(22, 30, 2):
+		layout.append(["window" if z == 24 else "wall", 22, z, 1])
+		layout.append(["window" if z == 26 else "wall", 32, z, 1])
+	for x in [24, 26, 28]:
+		layout.append(["floor", x, 30, 0])
+		layout.append(["roof", x, 30, 0])
+	layout.append(["railing", 24, 30, 1])
+	layout.append(["railing", 30, 30, 1])
+	layout.append(["entry_ramp", 26, 32, 0])
+	layout.append(["bed", 24, 24, 0])
+	layout.append(["desk", 29, 23, 0])
+	layout.append(["chair", 29, 25, 0])
+	for row: Array in layout:
+		if not place(row[0], 0, row[1], row[2], row[3], false).ok:
+			restore(previous)
+			return false
+	if remember:
+		undo_stack.append(previous)
+		redo_stack.clear()
+	analyze()
+	return true

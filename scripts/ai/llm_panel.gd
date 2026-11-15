@@ -147,7 +147,8 @@ func _input(event: InputEvent) -> void:
 			close_panel()
 	elif event.keycode == KEY_ENTER and event.ctrl_pressed:
 		get_viewport().set_input_as_handled()
-		_send_or_stop()
+		if not client.pending:
+			_send_or_stop()
 
 func _send_or_stop() -> void:
 	if client.pending:
@@ -182,11 +183,19 @@ func _refresh() -> void:
 			var response: Dictionary = turn.replies[turn.active]
 			var growing := i == turns.size() - 1 and client.is_continuing()
 			_reply_line(speaker, response, Vector2i(i, turn.active), client.partial if growing else "", growing)
+		var notice: String = turn.get("result", {}).get("notice", "")
+		if not notice.is_empty():
+			_line("状态", notice, palette.secondary)
 	if client.pending and not client.partial.is_empty() and not client.is_continuing():
 		_reply_line(speaker, {}, Vector2i(turns.size() - 1, last.replies.size()), client.partial, true)
 	_status.text = client.status
+	if client.omitted_turns > 0:
+		_status.text += ("\n" if not _status.text.is_empty() else "") + "本次上下文省略了 %d 个较早回合。" % client.omitted_turns
+	if client.incomplete_turns > 0:
+		_status.text += ("\n" if not _status.text.is_empty() else "") + "%d 个未完成回合未纳入本次上下文。" % client.incomplete_turns
 	_copy_diagnostic.visible = not client.diagnostic.is_empty()
 	_send.text = "停止" if client.pending else "发送"
+	_draft.placeholder_text = "生成中，可先输入下一条消息" if client.pending else "输入消息 · Ctrl+Enter 发送"
 	_undo.disabled = last.is_empty() or client.pending
 	_retry.disabled = not client.can_retry()
 	_continue.visible = client.route == Client.DIALOGUE

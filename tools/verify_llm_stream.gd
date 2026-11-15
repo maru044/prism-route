@@ -3,6 +3,7 @@ extends SceneTree
 const Transport := preload("res://scripts/ai/chat_transport.gd")
 const Client := preload("res://scripts/ai/game_llm_client.gd")
 const ChatPanel := preload("res://scripts/ai/llm_panel.gd")
+const TitleSettings := preload("res://scripts/ui/title_api_settings.gd")
 const LOCALHOST := "127.0.0.1"
 const CASE_TIMEOUT_MS := 5000
 
@@ -31,10 +32,12 @@ func run() -> void:
 		printerr("Cannot listen on loopback: ", error_string(bind_error))
 		quit(1)
 		return
+	_verify_endpoint_paths()
+	await _verify_title_model_list(server)
 	var client := Client.new()
 	root.add_child(client)
 	client.profiles[Client.DIALOGUE] = {
-		"url": "http://%s:%d/v1" % [LOCALHOST, server.get_local_port()], "model": "fixture", "key": "fixture-private-key",
+		"url": "http://%s:%d" % [LOCALHOST, server.get_local_port()], "model": "fixture", "key": "fixture-private-key",
 	}
 	client.profiles[Client.ASSISTANT] = client.profiles[Client.DIALOGUE].duplicate()
 	var text := _sse({"choices": [{"delta": {"content": "你好"}}]})
@@ -55,15 +58,25 @@ func run() -> void:
 		{"name": "unexpected tool turn", "body": _sse({"choices": [{"finish_reason": "tool_calls"}]}), "text": "", "error": "只接收文本"},
 		{"name": "unexpected tool delta", "body": text + _sse({"choices": [{"delta": {"tool_calls": [{"index": 0}]}}]}), "text": "你好", "error": "只接收文本"},
 		{"name": "JSON instead of SSE", "body": "{}", "mime": "application/json", "text": "", "error": "普通 JSON"},
+		{"name": "mislabeled JSON", "body": '{"choices":[]}', "mime": "text/plain", "text": "", "held": true, "error": "普通 JSON", "diagnostic": ["检查响应格式"]},
+		{"name": "plain text instead of SSE", "body": "Plain proxy reply\r\n", "mime": "text/plain", "text": "", "held": true, "error": "未返回 SSE", "diagnostic": ["检查响应格式"]},
+		{"name": "one-word plain proxy reply", "body": "Forbidden\r\n", "mime": "text/plain", "text": "", "error": "未返回 SSE"},
+		{"name": "SSE without MIME", "body": text + stop, "mime": "", "text": "你好", "status": ""},
+		{"name": "SSE under generic MIME", "body": "\ufeff:keepalive\r\n\r\nid: 5\r\n" + text + stop, "mime": "text/plain", "text": "你好", "status": ""},
+		{"name": "invalid delta content", "body": text + _sse({"choices": [{"delta": {"content": ["not text"]}}]}), "text": "你好", "error": "格式无效的流式正文"},
+		{"name": "stream refusal", "body": _sse({"choices": [{"delta": {"refusal": "server refusal"}}]}), "text": "", "error": "明确拒绝"},
 		{"name": "HTML instead of SSE", "body": "<html></html>", "mime": "text/html", "text": "", "error": "返回了网页"},
 		{"name": "rate limit", "body": "{}", "code": 429, "mime": "application/json", "text": "", "error": "429"},
-		{"name": "HTTP error detail redaction", "body": JSON.stringify({"error": {"message": "invalid model; API key: fixture-private-key; Authorization: Bearer other-private-key"}}), "code": 400, "mime": "application/json", "response_headers": "X-Request-ID: fixture-private-key\r\n", "text": "", "error": "invalid model", "diagnostic": ["HTTP 400"], "redacted": true},
+		{"name": "HTTP error detail redaction", "body": JSON.stringify({"error": {"message": "invalid model; API key: fixture-private-key; Authorization: Bearer other-private-key; https://fixture.invalid; stream fixture"}}), "code": 400, "mime": "application/json", "response_headers": "X-Request-ID: fixture-private-key\r\n", "text": "", "error": "invalid model", "diagnostic": ["HTTP 400", "模型 · fixture", "invalid model"], "redacted": true},
+		{"name": "FastAPI field detail", "body": '{"detail":[{"msg":"Field required"},{"msg":"Input should be a string"}]}', "code": 422, "text": "", "error": "Field required / Input should be a string", "diagnostic": ["HTTP 422"]},
 		{"name": "cancel before text", "body": "", "text": "", "status": "已停止", "cancel": true},
 		{"name": "stalled before text", "body": ": keepalive\r\n\r\n", "text": "", "error": "第一段", "held": true, "timeout": true},
 		{"name": "stalled after text", "body": text + ": keepalive\r\n\r\n", "text": "你好", "error": "中途", "held": true, "timeout": true},
 		{"name": "report without body", "body": _text_event("<report_nya~>report</report_nya~><game>  </game>") + stop, "text": "<report_nya~>report</report_nya~><game>  </game>", "error": "未返回正文"},
 		{"name": "retry after", "body": "{}", "code": 429, "response_headers": "Retry-After: 30\r\nX-Request-ID: req-test\r\n", "text": "", "error": "30 秒", "diagnostic": ["HTTP 429", "req-test", "30 秒"], "retryable": true},
 		{"name": "quota exhausted", "body": '{"error":{"code":"insufficient_quota"}}', "code": 429, "response_headers": "Retry-After: 30\r\n", "text": "", "error": "额度不足", "retryable": false},
+		{"name": "proxy balance exhausted", "body": '{"detail":"Insufficient balance"}', "code": 429, "response_headers": "Retry-After: 1\r\n", "text": "", "error": "额度不足", "retryable": false},
+		{"name": "plain proxy balance exhausted", "body": "Insufficient balance", "mime": "text/plain", "code": 429, "text": "", "error": "额度不足", "retryable": false},
 		{"name": "context too large", "body": '{"error":{"code":"context_length_exceeded"}}', "code": 400, "text": "", "error": "上下文上限"},
 		{"name": "payload too large", "body": "{}", "code": 413, "text": "", "error": "大小上限"},
 		{"name": "proxy unavailable", "body": "{}", "code": 503, "text": "", "error": "稍后重新生成", "retryable": true},
@@ -76,6 +89,10 @@ func run() -> void:
 		return {}
 	var assistant_cases := [
 		{"name": "assistant text", "body": '{"choices":[{"message":{"content":"OK"}}]}', "text": "OK", "status": ""},
+		{"name": "assistant JSON without MIME", "body": '{"choices":[{"message":{"content":"OK"}}]}', "mime": "", "text": "OK", "status": ""},
+		{"name": "assistant received SSE", "body": text + stop, "mime": "text/event-stream", "text": "", "error": "返回了 SSE"},
+		{"name": "assistant received mislabeled SSE", "body": text + stop, "mime": "text/plain", "text": "", "error": "返回了 SSE"},
+		{"name": "assistant refusal", "body": '{"choices":[{"message":{"content":null,"refusal":"server refusal"}}]}', "text": "", "error": "明确拒绝"},
 		{"name": "assistant invalid JSON", "body": "{", "text": "", "error": "无效的 JSON"},
 		{"name": "assistant empty body", "body": '{"choices":[{"message":{"content":"  "}}]}', "text": "  ", "status": "游戏助手没有返回文字。"},
 		{"name": "assistant invalid tool array", "body": '{"choices":[{"message":{"content":"unexpected","tool_calls":{}}}]}', "text": "", "error": "无效或不支持的工具调用"},
@@ -90,6 +107,7 @@ func run() -> void:
 	_verify_model_routes()
 	_verify_assistant_retry()
 	_verify_context_budget()
+	_verify_tool_context_budget()
 	_verify_blank_player_profile(client)
 	_verify_teleport_lifecycle()
 	if not Transport.connection_error("http://127.0.0.1:8080", "").is_empty() \
@@ -98,8 +116,112 @@ func run() -> void:
 		_fail("connection settings", "validation failed to distinguish URL and key")
 	client.free()
 	server.stop()
-	print("LLM_STREAM cases=", cases.size(), " assistant_http=", assistant_cases.size(), " report_panel=1 model_routes=1 context_budget=1 player_profile=1 teleport_lifecycle=1 failures=", _failures)
+	print("LLM_STREAM cases=", cases.size(), " assistant_http=", assistant_cases.size(), " report_panel=1 model_routes=1 context_budget=1 tool_context=1 player_profile=1 teleport_lifecycle=1 title_model_list=1 failures=", _failures)
 	quit(0 if _failures == 0 else 1)
+
+func _verify_endpoint_paths() -> void:
+	var fixtures := {
+		"https://gcli.ggchan.dev": "",
+		"https://fixture.invalid/": "",
+		"https://fixture.invalid/v1": "/v1",
+		"https://fixture.invalid/v1beta/openai/": "/v1beta/openai",
+		"https://fixture.invalid/proxy/v1/chat/completions/": "/proxy/v1",
+		"https://fixture.invalid/proxy/models": "/proxy",
+	}
+	for address: String in fixtures:
+		for resource: String in ["/models", "/chat/completions"]:
+			if Transport.endpoint(address, resource).get("path") != fixtures[address] + resource:
+				_fail("API base address", "path did not match the configured base: " + address + " " + resource)
+
+func _verify_title_model_list(server: TCPServer) -> void:
+	var settings := TitleSettings.new()
+	root.add_child(settings)
+	settings.open()
+	await process_frame
+	_verify_title_address_drag(settings._url)
+	await process_frame
+	settings._url.text = "http://%s:%d" % [LOCALHOST, server.get_local_port()]
+	settings._key.text = "fixture-model-list-key"
+	settings._fetch_button.pressed.emit()
+	var deadline := Time.get_ticks_msec() + CASE_TIMEOUT_MS
+	var peer := server.take_connection()
+	while peer == null and Time.get_ticks_msec() < deadline:
+		await process_frame
+		peer = server.take_connection()
+	if peer == null:
+		_fail("title model list", "button did not connect to the configured endpoint")
+		settings.free()
+		return
+	var request := PackedByteArray()
+	while not request.get_string_from_ascii().contains("\r\n\r\n") and Time.get_ticks_msec() < deadline:
+		await process_frame
+		peer.poll()
+		if peer.get_status() != StreamPeerTCP.STATUS_CONNECTED:
+			break
+		var available := peer.get_available_bytes()
+		if available > 0:
+			request.append_array(peer.get_data(available)[1])
+	var header := request.get_string_from_ascii()
+	if not header.begins_with("GET /models HTTP/1.1\r\n") \
+			or not header.contains("Authorization: Bearer fixture-model-list-key\r\n") \
+			or not header.ends_with("\r\n\r\n"):
+		_fail("title model list", "request did not use the matching API base path and current key")
+		peer.disconnect_from_host()
+		settings.free()
+		return
+	var body := '{"data":[{"id":"vendor/model:latest","name":"Display name"},{"id":"vendor/model:latest"},{"id":null}]}'
+	peer.put_data(("HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: %d\r\nConnection: close\r\n\r\n%s" % [body.length(), body]).to_utf8_buffer())
+	while settings._fetch_button.disabled and Time.get_ticks_msec() < deadline:
+		await process_frame
+	peer.disconnect_from_host()
+	if settings._model_menu.item_count != 1:
+		_fail("title model list", "client did not receive exactly one valid model ID")
+	else:
+		settings._model_menu.index_pressed.emit(0)
+		if settings._model.text != "vendor/model:latest":
+			_fail("title model list", "selection did not use the provider's exact model ID")
+		settings._load_route(Client.ASSISTANT)
+		if settings._model_menu.item_count != 0 or settings._model_menu.visible:
+			_fail("title model list", "switching routes retained the old provider's items")
+	settings.free()
+
+func _verify_title_address_drag(field: LineEdit) -> void:
+	var url := "https://gateway.example.test/teams/prism/openai/v1"
+	field.text = url
+	field.select_all()
+	var start := field.get_global_transform_with_canvas() * Vector2(89, field.size.y / 2.0)
+	var end := start + Vector2(80, 0)
+	var click := InputEventMouseButton.new()
+	click.position = start
+	click.global_position = start
+	click.button_index = MOUSE_BUTTON_LEFT
+	click.button_mask = MOUSE_BUTTON_MASK_LEFT
+	click.pressed = true
+	root.push_input(click, true)
+	var motion := InputEventMouseMotion.new()
+	motion.position = end
+	motion.global_position = end
+	motion.relative = end - start
+	motion.button_mask = MOUSE_BUTTON_MASK_LEFT
+	root.push_input(motion, true)
+	click = click.duplicate()
+	click.position = end
+	click.global_position = end
+	click.button_mask = 0
+	click.pressed = false
+	root.push_input(click, true)
+	var first := field.get_selection_from_column()
+	var last := field.get_selection_to_column()
+	if not field.has_selection() or first <= 0 or last >= url.length():
+		_fail("title address drag", "dragging from selected text did not select a partial range")
+		return
+	var letter := InputEventKey.new()
+	letter.keycode = KEY_X
+	letter.unicode = "x".unicode_at(0)
+	letter.pressed = true
+	root.push_input(letter, true)
+	if field.text != url.left(first) + "x" + url.substr(last):
+		_fail("title address drag", "typing did not replace the selected range")
 
 func _verify_model_routes() -> void:
 	var client := Client.new()
@@ -198,10 +320,12 @@ func _verify_assistant_retry() -> void:
 	if client.pending or not client._assistant_retry_timer.is_stopped() or capture.sends != sends:
 		_fail("assistant retry", "automatic retry ran after tools")
 	client.send("tool without final text")
-	capture.finished.emit({"tool_calls": [{"id": "empty-tool", "function": {"name": "get_world_status", "arguments": "{}"}}]}, "")
+	capture.finished.emit({"content": "让我查一下", "tool_calls": [{"id": "empty-tool", "function": {"name": "get_world_status", "arguments": "{}"}}]}, "")
 	sends = capture.sends
+	if capture.request.messages[-2].content != "让我查一下":
+		_fail("assistant tools", "tool-call commentary was lost from the tool request")
 	capture.finished.emit({"content": null}, "")
-	if client.pending or capture.sends != sends or client.status != "游戏助手已完成请求。":
+	if client.pending or capture.sends != sends or client.status != "已查询游戏状态，模型未返回说明。" or not client.active_reply().is_empty():
 		_fail("assistant retry", "tool-only success was treated as a failure")
 	client.send("long retry after")
 	sends = capture.sends
@@ -247,13 +371,17 @@ func _verify_context_budget() -> void:
 			or full_messages[9].content != "回复3" or full_messages[12].content != "问题5" \
 			or JSON.stringify(full_messages).count("[Game rules]") != 1:
 		_fail("worldbook depth", "world rules must be inserted before the final four chat messages")
-	var budget := 160
-	client._history_budget[Client.DIALOGUE] = budget
+	var budget := Client.OUTPUT_TOKEN_RESERVE + Client._message_tokens(Client.DIALOGUE_SYSTEM)
+	for row: Dictionary in client._dialogue_entries:
+		budget += Client._message_tokens({"content": client._expand_dialogue_prompt(row.content)})
+	for content: String in ["问题5", "回复5", "最后的问题"]:
+		budget += Client._message_tokens({"content": content})
+	client._context_limit_tokens = budget + 3
 	client.send("最后的问题")
 	var messages: Array = capture.request.messages
 	if _role_contents(messages, "user") != ["问题5", "最后的问题"] or _role_contents(messages, "assistant") != ["回复5"]:
 		_fail("context budget", "history did not preserve the newest complete turns")
-	if client.history.size() != 7:
+	if client.history.size() != 7 or client.omitted_turns != 5 or capture.request.max_tokens != 8000:
 		_fail("context budget", "request budget changed local history")
 	var before: String = messages.front().content
 	var after: String = messages.back().content
@@ -266,8 +394,40 @@ func _verify_context_budget() -> void:
 	client.stop()
 	var sends := capture.sends
 	if client.send("长".repeat(budget)) or client.history.size() != 7 or capture.sends != sends \
-			or not client.status.contains("超过发送历史预算") or client.pending:
+			or not client.status.contains("上下文预算") or client.pending:
 		_fail("context budget", "oversize current turn was sent or left pending")
+	client.free()
+
+func _verify_tool_context_budget() -> void:
+	var client := Client.new()
+	var capture := CaptureTransport.new()
+	client._transport.free()
+	client._transport = capture
+	root.add_child(client)
+	client.profiles[Client.ASSISTANT] = {"url": "https://fixture.invalid", "model": "fixture", "key": ""}
+	client.world_status = func(): return {"location": "地".repeat(180)}
+	client.open(Client.ASSISTANT, "tool context", {})
+	client.send("older " + "字".repeat(240))
+	capture.finished.emit({"content": "old answer"}, "")
+	client.send("newer")
+	capture.finished.emit({"content": "new answer"}, "")
+	client.send("current query")
+	var budget := Client.OUTPUT_TOKEN_RESERVE + Client._text_tokens(JSON.stringify(Client.TOOLS))
+	for row: Dictionary in capture.request.messages:
+		budget += Client._message_tokens(row)
+	client.stop()
+	client._context_limit_tokens = budget + 5
+	client.retry()
+	var tool_message := {"tool_calls": [{"id": "budget-check", "function": {"name": "get_world_status", "arguments": "{}"}}]}
+	capture.finished.emit(tool_message, "")
+	if _role_contents(capture.request.messages, "user") != ["newer", "current query"] \
+			or capture.request.messages.back().role != "tool" or client.omitted_turns != 1:
+		_fail("tool context", "tool output budget split a round or dropped the current query")
+	var sends := capture.sends
+	client.world_status = func(): return {"location": "地".repeat(500)}
+	capture.finished.emit(tool_message, "")
+	if capture.sends != sends or client.pending or not client.status.contains("上下文预算"):
+		_fail("tool context", "oversize tool output was dispatched")
 	client.free()
 
 func _verify_blank_player_profile(client: Node) -> void:
@@ -304,7 +464,11 @@ func _verify_teleport_lifecycle() -> void:
 	]}, "")
 	if not capture.request.messages.back().content.contains("one_teleport_proposal_per_turn"):
 		_fail("teleport lifecycle", "a duplicate proposal was accepted")
-	capture.finished.emit({"content": "offered"}, "")
+	if client.teleport_offer() != "" or not attempts.is_empty():
+		_fail("teleport lifecycle", "proposal was presented or executed before the tool request ended")
+	capture.finished.emit({}, "follow-up failed")
+	if client.teleport_offer() != "one" or not client.status.contains("传送提议仍可确认"):
+		_fail("teleport lifecycle", "failed follow-up lost the pending proposal")
 	client.confirm_teleport()
 	if attempts != ["one"] or client.teleport_offer() != "one":
 		_fail("teleport lifecycle", "failed confirmation consumed the offer")
@@ -384,12 +548,24 @@ func _verify_report_panel() -> void:
 	client.continue_reply()
 	capture.delta_received.emit("续写杂文<game>下一段</game>尾部杂文")
 	capture.finished.emit({}, "")
+	client.continue_reply()
+	capture.delta_received.emit("不完整的续写")
+	capture.finished.emit({}, "续写失败样例")
+	if not panel._transcript.get_parsed_text().contains("不完整的续写") or not panel._transcript.get_parsed_text().contains("续写失败样例"):
+		_fail("failed continuation", "partial continuation or its error was hidden")
 	client.send("follow up")
-	if not {"role": "assistant", "content": "正文继续下一段"} in capture.request.messages:
-		_fail("report panel", "follow-up history included formatting")
+	if not {"role": "assistant", "content": "正文继续下一段"} in capture.request.messages or JSON.stringify(capture.request.messages).contains("不完整的续写"):
+		_fail("failed continuation", "follow-up lost the successful reply or included the failed fragment")
 	capture.delta_received.emit("<think_nya~>STOP REPORT")
 	if panel._send.text != "停止":
 		_fail("report panel", "send button did not change to stop during streaming")
+	var shortcut := InputEventKey.new()
+	shortcut.keycode = KEY_ENTER
+	shortcut.ctrl_pressed = true
+	shortcut.pressed = true
+	panel._input(shortcut)
+	if not client.pending or not panel._draft.placeholder_text.contains("生成中"):
+		_fail("pending shortcut", "Ctrl+Enter stopped generation or showed a send hint")
 	panel._send.pressed.emit()
 	if client.pending or panel._send.text != "发送":
 		_fail("report panel", "stop button did not cancel and restore send")
@@ -402,9 +578,24 @@ func _verify_report_panel() -> void:
 	capture.finished.emit({}, "test HTTP failure")
 	if not panel._copy_diagnostic.visible or not client.can_retry():
 		_fail("failed turns", "failure diagnostics or manual retry unavailable")
+	panel.close_panel()
+	panel.open_panel(Client.DIALOGUE, "report", {})
+	if not panel._copy_diagnostic.visible or not panel._transcript.get_parsed_text().contains("test HTTP failure"):
+		_fail("failed turns", "closing the panel lost the error and diagnostic")
 	client.send("new turn")
-	if _role_contents(capture.request.messages, "user") != ["question", "new turn"]:
+	if _role_contents(capture.request.messages, "user") != ["question", "new turn"] or not panel._status.text.contains("2 个未完成回合"):
 		_fail("failed turns", "failed user messages entered the new request")
+	capture.delta_received.emit("new answer")
+	capture.finished.emit({}, "")
+	var budget := Client.OUTPUT_TOKEN_RESERVE + Client._message_tokens(Client.DIALOGUE_SYSTEM)
+	for row: Dictionary in client._dialogue_entries:
+		budget += Client._message_tokens({"content": client._expand_dialogue_prompt(row.content)})
+	for content: String in ["new turn", "new answer", "trimmed"]:
+		budget += Client._message_tokens({"content": content})
+	client._context_limit_tokens = budget + 3
+	client.send("trimmed")
+	if not panel._status.text.contains("省略了 1 个较早回合"):
+		_fail("context budget", "panel did not show truncation")
 	panel.close_panel()
 	panel.free()
 
@@ -439,6 +630,8 @@ func _run_case(server: TCPServer, client: Node, fixture: Dictionary) -> void:
 		client.stop()
 		return
 	var messages: Array = payload.messages
+	if payload.has("temperature") or payload.has("top_p"):
+		_fail(title, "request still sends obsolete sampling parameters")
 	var before: String = messages.front().content
 	var after: String = messages.back().content
 	if route == Client.ASSISTANT:
@@ -464,7 +657,8 @@ func _run_case(server: TCPServer, client: Node, fixture: Dictionary) -> void:
 		var code: int = fixture.get("code", 200)
 		var held: bool = fixture.get("held", false)
 		var length_header := "" if held else "Content-Length: %d\r\n" % bytes.size()
-		var headers := "HTTP/1.1 %d Test\r\nContent-Type: %s\r\n%s%sConnection: close\r\n\r\n" % [code, mime, length_header, fixture.get("response_headers", "")]
+		var content_type := "" if mime.is_empty() else "Content-Type: %s\r\n" % mime
+		var headers := "HTTP/1.1 %d Test\r\n%s%s%sConnection: close\r\n\r\n" % [code, content_type, length_header, fixture.get("response_headers", "")]
 		if not first.is_empty():
 			peer.put_data((headers + first).to_utf8_buffer())
 			while client.partial.is_empty() and client.pending and Time.get_ticks_msec() < deadline:
@@ -507,7 +701,8 @@ func _run_case(server: TCPServer, client: Node, fixture: Dictionary) -> void:
 		if not client.status.contains(fixture.error):
 			_fail(title, "unexpected error: " + client.status)
 		if fixture.get("redacted", false) and ((client.status + client.diagnostic).contains("fixture-private-key") \
-				or (client.status + client.diagnostic).contains("other-private-key")):
+				or (client.status + client.diagnostic).contains("other-private-key") or client.diagnostic.contains("stream fixture") \
+				or (client.status + client.diagnostic).contains("https://fixture.invalid")):
 			_fail(title, "HTTP details disclosed a credential")
 		for expected: String in fixture.get("diagnostic", []):
 			if not client.diagnostic.contains(expected):
@@ -524,7 +719,7 @@ func _request_payload(bytes: PackedByteArray) -> Variant:
 	if boundary < 0 or boundary + 3 >= bytes.size():
 		return null
 	var header := bytes.slice(0, boundary).get_string_from_utf8()
-	if not header.begins_with("POST /v1/chat/completions "):
+	if not header.begins_with("POST /chat/completions "):
 		return null
 	var body_start := boundary + 4
 	for line in header.split("\r\n"):

@@ -79,6 +79,7 @@ var vegetation
 var foliage_style
 var grass_wind
 var test_ready := false
+var startup_model: PackedScene
 var automation_enabled := false
 var free_mode := false
 var overview_mode := false
@@ -104,6 +105,7 @@ func vec(value: Array) -> Vector3:
 	return Vector3(value[0],value[1],value[2])
 
 func _ready() -> void:
+	var loading_from_title := startup_model != null
 	if "--verify-export" in OS.get_cmdline_user_args() or "--verify-world-clusters" in OS.get_cmdline_user_args() or "--verify-world-audio" in OS.get_cmdline_user_args():automation_enabled=true
 	metadata=JSON.parse_string(FileAccess.get_file_as_string(ASSETS+"metadata.json"))
 	# Preserve legacy query layers for planting, while actors ignore paint.
@@ -114,7 +116,30 @@ func _ready() -> void:
 	camper.automation_enabled=automation_enabled;camper.set_physics_process(false);camper.set_process_unhandled_input(false);camper.visible=false
 	camper.calibrate_wheels()
 	camper.respawn_resolver=_resolve_camper_respawn
-	_load_mask();_environment();_build_model();add_child(ROAD_JUNCTION.new());_build_terrain_repairs();_build_oval_atrium();_build_initial_ruin();_build_island_saddle();_build_landmark_ring();_build_terrace_ruins();_build_water_court();_build_earth_pavilion();_build_sunken_archive();_build_church_ruins();_build_upper_ring();_build_surface_detail_trial();_build_sandbar_pavilion();_build_cape_town()
+	_load_mask()
+	_environment()
+	await _build_model()
+	add_child(ROAD_JUNCTION.new())
+	_build_terrain_repairs()
+	_build_oval_atrium()
+	if loading_from_title:
+		await get_tree().process_frame
+	_build_initial_ruin()
+	_build_island_saddle()
+	_build_landmark_ring()
+	_build_terrace_ruins()
+	_build_water_court()
+	if loading_from_title:
+		await get_tree().process_frame
+	_build_earth_pavilion()
+	_build_sunken_archive()
+	_build_church_ruins()
+	_build_upper_ring()
+	_build_surface_detail_trial()
+	if loading_from_title:
+		await get_tree().process_frame
+	_build_sandbar_pavilion()
+	_build_cape_town()
 	add_child(lagoon_ruins)
 	add_child(npc_waypoint_ruins)
 	construction=CONSTRUCTION.new();construction.world=self;add_child(construction)
@@ -179,8 +204,12 @@ func _ready() -> void:
 		test_ready=true
 		return
 	planting=PLANTING.new();planting.name="WorldPlantingEditor";add_child(planting);planting.initialize(self)
+	if loading_from_title:
+		await get_tree().process_frame
 	vegetation=VEGETATION.new();vegetation.world_scene=self;add_child(vegetation)
 	vegetation.initialize(character,_noise(),2)
+	if loading_from_title:
+		await get_tree().process_frame
 	oval_atrium.bind_grass(vegetation.grass_material)
 	terrace_ruins.bind_grass(vegetation.grass_material)
 	earth_pavilion.bind_grass(vegetation.grass_material)
@@ -204,6 +233,8 @@ func _ready() -> void:
 	construction.bind_grass(vegetation.grass_material)
 	foliage_style=FOLIAGE_STYLE.new()
 	foliage_style.bind_streamer(vegetation)
+	if loading_from_title:
+		await get_tree().process_frame
 	_initialize_water()
 	world_audio.initialize(self)
 	tree_placement_report=JSON.parse_string(FileAccess.get_file_as_string(ASSETS+"tree_layout_metadata.json"))
@@ -439,7 +470,11 @@ func architectural_band(p: Vector3,margin:=0.0) -> bool:
 func _build_model() -> void:
 	# Use the imported scene: its ArrayMeshes contain generated LODs and
 	# shadow meshes. Runtime GLTFDocument parsing bypasses those import steps.
-	var packed: PackedScene=load(ASSETS+"current_region.glb")
+	var packed := startup_model
+	var yield_for_loading_screen := packed != null
+	startup_model = null
+	if packed == null:
+		packed = load(ASSETS + "current_region.glb") as PackedScene
 	assert(packed!=null)
 	model=packed.instantiate();add_child(model)
 	var architecture: Material=load("res://assets/world/cliff_b_test/architecture.tres")
@@ -449,7 +484,11 @@ func _build_model() -> void:
 	var water:=ShaderMaterial.new();water.shader=load("res://assets/world/map_1012_test/water.gdshader")
 	var byid: Dictionary={}
 	for row: Dictionary in metadata.object_records:byid[row.id]=row
+	var slice_start := Time.get_ticks_usec()
 	for node in model.find_children("*","MeshInstance3D",true,false):
+		if yield_for_loading_screen and Time.get_ticks_usec() - slice_start > 16000:
+			await get_tree().process_frame
+			slice_start = Time.get_ticks_usec()
 		var mesh:=node as MeshInstance3D;var id:=str(mesh.name).get_slice("_",1)
 		# Remove both the old render mesh and its prospective collision before building the reviewed hosts.
 		if id in OVAL_ATRIUM.REPLACED_IDS or id in EARTH_PAVILION.REPLACED_IDS or id in TERRAIN_REPAIRS.REPLACED_IDS or id in SUNKEN_ARCHIVE.REPLACED_IDS or id in ROAD_JUNCTION.REPLACED_IDS or id in BEACH_SLOPE.REPLACED_IDS:
@@ -538,7 +577,6 @@ func _hud() -> void:
 		npc_placement_preview.add_controls(box)
 	var edit_button:=Button.new();edit_button.text="植物编辑 · F4";box.add_child(edit_button)
 	edit_button.pressed.connect(func():if planting!=null and test_ready:planting.toggle())
-	var build_button:=Button.new();build_button.text="建筑构件 · F7";box.add_child(build_button);build_button.pressed.connect(construction.toggle)
 	world_audio=WORLD_AUDIO.new();world_audio.name="WorldAudio";add_child(world_audio);world_audio.add_controls(box)
 	graphics_menu = OptionButton.new()
 	graphics_menu.name = "GraphicsQuality"
