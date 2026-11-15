@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EncounterUIPalette" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/combat/encounter_ui_palette.gd" id="1"]
+[ext_resource type="Resource" path="res://scenes/combat/sparkle_ui_palette.tres" id="2"]
+
+[resource]
+resource_name = "神殿 · 淡蓝纸纹"
+script = ExtResource("1")
+paper = true
+edge_strength = 0.0
+gauge_palette = ExtResource("2")
+text = Color(0.1412, 0.2471, 0.3333, 1)
+secondary = Color(0.298, 0.3882, 0.4549, 1)
+accent = Color(0.2392, 0.3765, 0.4667, 1)
+speaker = Color(0.1922, 0.3412, 0.4627, 1)

@@ -11,7 +11,7 @@ var _response := 0.0
 var _response_target := 0.0
 var _response_tween: Tween
 
-func configure(title: String, palette: UI.Palette, kind: Kind, detail := "", sub_detail := "") -> void:
+func configure(title: String, palette: UI.Palette, kind: Kind, detail := "", sub_detail := "", mark := "") -> void:
 	text = title
 	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	add_theme_font_override("font", UI.interface_font())
@@ -44,17 +44,26 @@ func configure(title: String, palette: UI.Palette, kind: Kind, detail := "", sub
 		Kind.CONTINUE:
 			point_size = 19
 			density = .50
+	if palette.paper and not mark.is_empty():
+		add_theme_font_override("font", UI.command_font())
+		alignment = HORIZONTAL_ALIGNMENT_LEFT
+		empty.content_margin_left = 57
+		empty.content_margin_right = 100 if kind == Kind.SKILL else 20
+		empty.content_margin_bottom = 0
 	add_theme_font_size_override("font_size", point_size)
 	for state: String in ["normal", "hover", "pressed", "hover_pressed", "disabled"]:
 		add_theme_stylebox_override(state, empty)
 	add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 
-	_plate = ShaderMaterial.new()
-	_plate.shader = PLATE
-	_plate.set_shader_parameter("face", palette.glass_top)
-	_plate.set_shader_parameter("tint", palette.glass_bottom)
-	_plate.set_shader_parameter("light_color", palette.glass_sheen)
-	_plate.set_shader_parameter("density", density)
+	if palette.paper:
+		_plate = UI.paper_material(palette, density)
+	else:
+		_plate = ShaderMaterial.new()
+		_plate.shader = PLATE
+		_plate.set_shader_parameter("face", palette.glass_top)
+		_plate.set_shader_parameter("tint", palette.glass_bottom)
+		_plate.set_shader_parameter("light_color", palette.glass_sheen)
+		_plate.set_shader_parameter("density", density)
 
 	var surface := ColorRect.new()
 	surface.name = "Plate"
@@ -64,7 +73,23 @@ func configure(title: String, palette: UI.Palette, kind: Kind, detail := "", sub
 	add_child(surface)
 	surface.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
-	if kind == Kind.SKILL:
+	if palette.paper and not mark.is_empty():
+		var icon := UI.ink_mark(self, mark, palette.paper_ink, Rect2(18, 0, 26, 26))
+		icon.anchor_top = .5
+		icon.anchor_bottom = .5
+		icon.offset_top = -13
+		icon.offset_bottom = 13
+	if kind == Kind.SKILL and palette.paper:
+		var stat := UI.text_label(detail, 18, palette.accent, palette)
+		stat.add_theme_font_override("font", UI.interface_font())
+		stat.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		stat.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		add_child(stat)
+		stat.anchor_left = .68
+		stat.anchor_right = 1.0
+		stat.anchor_bottom = 1.0
+		stat.offset_right = -18
+	elif kind == Kind.SKILL:
 		var stat_row := UI.row(10)
 		stat_row.alignment = BoxContainer.ALIGNMENT_CENTER
 		add_child(stat_row)
@@ -95,7 +120,7 @@ func configure(title: String, palette: UI.Palette, kind: Kind, detail := "", sub
 			sub_stat.size_flags_vertical = Control.SIZE_EXPAND_FILL
 			stat_row.add_child(sub_stat)
 	elif kind == Kind.CHOICE:
-		var index := UI.text_label(detail, 19, palette.glass_sheen, palette)
+		var index := UI.text_label(detail, 19, palette.paper_ink if palette.paper else palette.glass_sheen, palette)
 		index.add_theme_font_override("font", UI.interface_font())
 		index.add_theme_constant_override("outline_size", 0)
 		index.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

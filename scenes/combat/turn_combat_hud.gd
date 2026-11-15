@@ -27,6 +27,7 @@ const GROUPS := {
 	"toy": ["toy_vibe"],
 	"endure": ["endure"],
 }
+const ACTION_MARKS := {"caress": "spark", "nipples": "ripple", "toy_vibe": "tag", "endure": "guard"}
 
 @export var palette: UI.Palette = UI.DEFAULT_PALETTE
 @export var opponent_name := "对手"
@@ -40,15 +41,17 @@ var phase_label: Label
 var log_box: RichTextLabel
 var koujou_box: RichTextLabel
 
-var _root_menu: HBoxContainer
-var _categories: HBoxContainer
+var _root_menu: BoxContainer
+var _categories: BoxContainer
 var _skills: VBoxContainer
 var _back_button: Card
 var _command_page := CommandPage.ROOT
 var _current_group := ""
 var _description: Label
 var _action_tags: Label
+var _skill_heading: Label
 var _bottom: Control
+var _paper_frame: Control
 var _opponent_pleasure: Node
 var _input_enabled := false
 var _chat_open := false
@@ -58,7 +61,8 @@ var _npc_tween: Tween
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_build_edge_backdrop()
+	if palette.edge_strength > 0.0:
+		_build_edge_backdrop()
 	_build_bottom()
 	_build_commands()
 	_build_gauges()
@@ -81,13 +85,33 @@ func _build_edge_backdrop() -> void:
 func _build_commands() -> void:
 	var command_area := UI.column(8)
 	command_area.name = "Commands"
-	command_area.position = Vector2(128, 30)
-	command_area.custom_minimum_size.x = 386
 	add_child(command_area)
+	if palette.paper:
+		command_area.anchor_left = .0935
+		command_area.anchor_right = .3055
+		command_area.anchor_top = .086
+		command_area.anchor_bottom = .086
+	else:
+		command_area.position = Vector2(128, 30)
+		command_area.custom_minimum_size.x = 386
 
 	var status := UI.row(14)
-	command_area.add_child(status)
-	round_label = UI.text_label("第 01 回合", 21, palette.text, palette)
+	if palette.paper:
+		var header := Control.new()
+		header.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		header.custom_minimum_size.y = 54
+		command_area.add_child(header)
+		header.add_child(status)
+		status.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		status.offset_left = 14
+		status.offset_right = -14
+		UI.paper_backing(status, palette, Vector2(14, 0))
+	else:
+		command_area.add_child(status)
+	round_label = UI.text_label("第 01 回合", 27 if palette.paper else 21, palette.text, palette)
+	if palette.paper:
+		round_label.add_theme_font_override("font", UI.command_font())
+		round_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	status.add_child(round_label)
 	phase_label = UI.text_label("", 18, palette.accent, palette)
 	status.add_child(phase_label)
@@ -100,35 +124,36 @@ func _build_commands() -> void:
 	_back_button.pressed.connect(_go_back)
 	command_area.add_child(_back_button)
 
-	_root_menu = UI.row(8)
+	_root_menu = UI.column(8) if palette.paper else UI.row(8)
 	_root_menu.name = "RootMenu"
 	command_area.add_child(_root_menu)
 	var battle := Card.new()
 	battle.name = "BattleTab"
-	battle.configure("战斗", palette, Card.Kind.TAB)
-	battle.custom_minimum_size.y = 54
+	battle.configure("战斗", palette, Card.Kind.TAB, "", "", "ripple")
+	battle.custom_minimum_size.y = 80 if palette.paper else 54
 	battle.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	battle.pressed.connect(_open_battle)
 	_root_menu.add_child(battle)
 
 	var chat := Card.new()
 	chat.name = "ChatTab"
-	chat.configure("对话", palette, Card.Kind.TAB)
-	chat.custom_minimum_size.y = 54
+	chat.configure("对话", palette, Card.Kind.TAB, "", "", "voice")
+	chat.custom_minimum_size.y = 80 if palette.paper else 54
 	chat.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	chat.pressed.connect(_request_chat)
 	_root_menu.add_child(chat)
 
-	_categories = UI.row(8)
+	_categories = UI.column(8) if palette.paper else UI.row(8)
 	_categories.name = "Categories"
 	command_area.add_child(_categories)
 	var category_names := {"tease": "挑逗", "toy": "道具", "endure": "忍耐"}
+	var category_marks := {"tease": "spark", "toy": "tag", "endure": "guard"}
 	for id: String in category_names:
 		var button := Card.new()
 		button.name = id.capitalize()
-		button.custom_minimum_size.y = 42
+		button.custom_minimum_size.y = 72 if palette.paper else 42
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		button.configure(category_names[id], palette, Card.Kind.CATEGORY)
+		button.configure(category_names[id], palette, Card.Kind.CATEGORY, "", "", category_marks[id])
 		button.pressed.connect(_show_group.bind(id))
 		_categories.add_child(button)
 	_skills = UI.column(6)
@@ -137,19 +162,21 @@ func _build_commands() -> void:
 	_refresh_command_page()
 
 func _build_gauges() -> void:
-	player_pleasure_bar = _gauge("PlayerGauge", false, palette.player_low, palette.player_high)
-	npc_pleasure_bar = _gauge("OpponentGauge", true, palette.opponent_low, palette.opponent_high)
-	player_pleasure_label = _gauge_caption(player_pleasure_bar, "我方", "♥", palette.player_low)
-	npc_pleasure_label = _gauge_caption(npc_pleasure_bar, opponent_name, "♥", palette.opponent_high)
+	var colors := palette.gauge_palette if palette.gauge_palette else palette
+	player_pleasure_bar = _gauge("PlayerGauge", false, colors.player_low, colors.player_high, colors.rail)
+	npc_pleasure_bar = _gauge("OpponentGauge", true, colors.opponent_low, colors.opponent_high, colors.rail)
+	player_pleasure_label = _gauge_caption(player_pleasure_bar, "我方", colors.player_low, colors)
+	npc_pleasure_label = _gauge_caption(npc_pleasure_bar, opponent_name, colors.opponent_high, colors)
 
-func _gauge(node_name: String, right: bool, low: Color, high: Color) -> ProgressBar:
+func _gauge(node_name: String, right: bool, low: Color, high: Color, rail: Color) -> ProgressBar:
 	var gauge := ProgressBar.new()
 	gauge.name = node_name
-	gauge.anchor_left = float(right)
-	gauge.anchor_right = float(right)
-	gauge.anchor_top = .023
-	gauge.anchor_bottom = .55
-	var inset := -79.0 if right else 79.0
+	var edge := (.955 if right else .045) if palette.paper else float(right)
+	gauge.anchor_left = edge
+	gauge.anchor_right = edge
+	gauge.anchor_top = .147 if palette.paper else .023
+	gauge.anchor_bottom = .635 if palette.paper else .55
+	var inset := 0.0 if palette.paper else (-79.0 if right else 79.0)
 	gauge.offset_left = inset - 7
 	gauge.offset_right = inset + 7
 	gauge.max_value = 100.0
@@ -157,7 +184,7 @@ func _gauge(node_name: String, right: bool, low: Color, high: Color) -> Progress
 	gauge.show_percentage = false
 	gauge.fill_mode = ProgressBar.FILL_BOTTOM_TO_TOP
 	gauge.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	gauge.add_theme_stylebox_override("background", _rail_style(palette.rail, palette.rail))
+	gauge.add_theme_stylebox_override("background", _rail_style(rail, rail))
 	gauge.add_theme_stylebox_override("fill", _rail_style(high, low))
 	add_child(gauge)
 	return gauge
@@ -176,7 +203,7 @@ func _rail_style(top: Color, bottom: Color) -> StyleBoxTexture:
 	style.texture_margin_bottom = 7
 	return style
 
-func _gauge_caption(gauge: ProgressBar, title: String, icon: String, tint: Color) -> Label:
+func _gauge_caption(gauge: ProgressBar, title: String, tint: Color, colors: UI.Palette) -> Label:
 	var caption := UI.column(0)
 	caption.anchor_left = .5
 	caption.anchor_right = .5
@@ -186,8 +213,9 @@ func _gauge_caption(gauge: ProgressBar, title: String, icon: String, tint: Color
 	caption.offset_right = 52
 	caption.offset_top = 9
 	gauge.add_child(caption)
-	for item in [[icon, 22, tint], ["0.0%", 19, palette.text], [title, 20, tint]]:
-		var label := UI.text_label(item[0], item[1], item[2], palette)
+	for item in [["♥", 22, tint], ["0.0%", 19, colors.text], [title, 20, tint]]:
+		var label := UI.text_label(item[0], item[1], item[2], colors)
+		label.add_theme_constant_override("outline_size", 4)
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		caption.add_child(label)
 	return caption.get_child(1) as Label
@@ -198,16 +226,24 @@ func _build_bottom() -> void:
 	_bottom.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_bottom)
 	_bottom.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	_bottom.add_child(UI.bottom_fade(palette))
-	var dock := UI.column(5)
-	dock.anchor_left = .168
-	dock.anchor_right = .832
-	dock.anchor_top = 1.0
-	dock.anchor_bottom = 1.0
-	dock.offset_top = -208
-	dock.offset_bottom = -38
-	dock.alignment = BoxContainer.ALIGNMENT_END
-	_bottom.add_child(dock)
+	var dock: VBoxContainer
+	if palette.paper:
+		dock = UI.paper_dialogue_dock(_bottom, palette, 6)
+		_paper_frame = dock.get_parent()
+		_skill_heading = UI.text_label("", 23, palette.speaker, palette)
+		_skill_heading.add_theme_font_override("font", UI.command_font())
+		dock.add_child(_skill_heading)
+	else:
+		_bottom.add_child(UI.bottom_fade(palette))
+		dock = UI.column(5)
+		dock.anchor_left = .168
+		dock.anchor_right = .832
+		dock.anchor_top = 1.0
+		dock.anchor_bottom = 1.0
+		dock.offset_top = -208
+		dock.offset_bottom = -38
+		dock.alignment = BoxContainer.ALIGNMENT_END
+		_bottom.add_child(dock)
 	_description = UI.text_label("", 26, palette.text, palette)
 	_description.add_theme_font_override("font", UI.command_font())
 	_description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -227,7 +263,7 @@ func _build_bottom() -> void:
 	koujou_box.add_theme_font_size_override("normal_font_size", 24)
 	koujou_box.add_theme_color_override("default_color", palette.text)
 	koujou_box.add_theme_color_override("font_outline_color", palette.shade)
-	koujou_box.add_theme_constant_override("outline_size", 4)
+	koujou_box.add_theme_constant_override("outline_size", 0 if palette.paper else 4)
 	koujou_box.custom_minimum_size.y = 80
 	dock.add_child(koujou_box)
 	koujou_box.hide()
@@ -239,11 +275,19 @@ func _build_bottom() -> void:
 	log_box.add_theme_font_size_override("normal_font_size", 18)
 	log_box.add_theme_color_override("default_color", palette.secondary)
 	log_box.add_theme_color_override("font_outline_color", palette.shade)
-	log_box.add_theme_constant_override("outline_size", 3)
+	log_box.add_theme_constant_override("outline_size", 0 if palette.paper else 3)
 	dock.add_child(log_box)
 	log_box.get_v_scroll_bar().self_modulate.a = 0.0
 	log_box.get_v_scroll_bar().mouse_filter = Control.MOUSE_FILTER_IGNORE
 	log_box.hide()
+	if _paper_frame:
+		for content in [_description, koujou_box, log_box]:
+			content.visibility_changed.connect(_sync_paper_contents)
+		_sync_paper_contents()
+
+func _sync_paper_contents() -> void:
+	_skill_heading.visible = _description.visible
+	_paper_frame.visible = _description.visible or koujou_box.visible or log_box.visible
 
 func _open_battle() -> void:
 	if _input_enabled and not _chat_open and _command_page == CommandPage.ROOT:
@@ -326,7 +370,7 @@ func _populate_skills(id: String) -> void:
 		var badges := _format_action_badges(action)
 		var button := Card.new()
 		button.name = action_id.capitalize()
-		button.configure(action.action_name, palette, Card.Kind.SKILL, badges["card_detail"], badges["card_sub"])
+		button.configure(action.action_name, palette, Card.Kind.SKILL, badges["card_detail"], badges["card_sub"], ACTION_MARKS[action_id])
 		button.custom_minimum_size.y = 84
 		button.pressed.connect(_choose_action.bind(action))
 		button.mouse_entered.connect(_feature_action.bind(button, action))
@@ -339,6 +383,8 @@ func _feature_action(featured: Card, action: TurnActionResource) -> void:
 		button.set_featured(button == featured)
 	if koujou_box:
 		koujou_box.hide()
+	if _skill_heading:
+		_skill_heading.text = action.action_name
 	_description.text = action.description if not action.description.is_empty() else action.action_name
 	_action_tags.text = _format_action_badges(action)["bottom_tags"]
 	_description.show()
@@ -398,9 +444,11 @@ func display_koujou(speaker: String, text: String, extra_log: String = "") -> vo
 	_description.hide()
 	_action_tags.hide()
 	if koujou_box:
-		var formatted := "[color=#ff99bb][b]【%s】[/b][/color] %s" % [speaker, text]
+		var speaker_tint := palette.speaker.to_html(false) if palette.paper else "ff99bb"
+		var extra_tint := palette.accent.to_html(false) if palette.paper else "b8e4ff"
+		var formatted := "[color=#%s][b]【%s】[/b][/color] %s" % [speaker_tint, speaker, text]
 		if not extra_log.is_empty():
-			formatted += "\n[color=#b8e4ff][font_size=19]%s[/font_size][/color]" % extra_log
+			formatted += "\n[color=#%s][font_size=19]%s[/font_size][/color]" % [extra_tint, extra_log]
 		koujou_box.text = formatted
 		koujou_box.show()
 	if log_box:

@@ -13,6 +13,8 @@ extends Resource
 @export_range(0.0, 1.0, 0.01) var edge_strength := 0.78
 
 @export_group("Status bars")
+## Optional source for the rail, fill gradients and caption colors.
+@export var gauge_palette: EncounterUIPalette
 @export var rail := Color("#231832bc")
 @export var player_low := Color("#ffa8d5")
 @export var player_high := Color("#f34aab")
@@ -25,3 +27,10 @@ extends Resource
 @export var accent := Color("#a0e8ff")
 @export var speaker := Color("#ffacd9")
 @export var shade := Color("#110c23")
+
+@export_group("Paper")
+@export var paper := false
+@export var paper_face := Color("#f7fbf7")
+@export var paper_wash := Color("#e5f1f5")
+@export var paper_active := Color("#bad6e5")
+@export var paper_ink := Color("#597f97")

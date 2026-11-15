@@ -29,18 +29,20 @@ func _ready() -> void:
 	_build_ui()
 
 func _build_ui() -> void:
-	_scrim = UI.bottom_fade(palette)
-	add_child(_scrim)
-
-	_dock = UI.column(6)
+	if palette.paper:
+		_dock = UI.paper_dialogue_dock(self, palette, 6)
+	else:
+		_scrim = UI.bottom_fade(palette)
+		add_child(_scrim)
+		_dock = UI.column(6)
+		_dock.anchor_left = .168
+		_dock.anchor_right = .832
+		_dock.anchor_bottom = 1.0
+		_dock.offset_bottom = -38
+		_dock.alignment = BoxContainer.ALIGNMENT_END
+		_dock.minimum_size_changed.connect(_update_fade_height)
+		add_child(_dock)
 	_dock.name = "DialogueDock"
-	_dock.anchor_left = .168
-	_dock.anchor_right = .832
-	_dock.anchor_bottom = 1.0
-	_dock.offset_bottom = -38
-	_dock.alignment = BoxContainer.ALIGNMENT_END
-	_dock.minimum_size_changed.connect(_update_fade_height)
-	add_child(_dock)
 
 	speaker_label = UI.text_label("", 28, palette.speaker, palette)
 	speaker_label.add_theme_font_override("font", UI.command_font())
@@ -54,7 +56,7 @@ func _build_ui() -> void:
 	text_label.add_theme_color_override("font_outline_color", palette.shade)
 	text_label.add_theme_font_override("normal_font", UI.command_font())
 	text_label.add_theme_font_size_override("normal_font_size", 28)
-	text_label.add_theme_constant_override("outline_size", 3)
+	text_label.add_theme_constant_override("outline_size", 0 if palette.paper else 3)
 	text_label.add_theme_constant_override("line_separation", 6)
 	text_label.resized.connect(_update_text_height)
 	_dock.add_child(text_label)

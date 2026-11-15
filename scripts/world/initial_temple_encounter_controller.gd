@@ -103,7 +103,7 @@ const MASTER_CONFIGS: Dictionary = {
 	}
 }
 
-@export var ui_palette: EncounterPalette = preload("res://scenes/combat/sparkle_ui_palette.tres")
+@export var ui_palette: EncounterPalette = preload("res://scenes/combat/temple_paper_palette.tres")
 
 var current_state: EncounterState = EncounterState.AVAILABLE
 var temple_node: Node3D
