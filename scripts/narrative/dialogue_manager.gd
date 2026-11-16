@@ -139,6 +139,29 @@ func reset_battle_cheats() -> void:
 	blackboard["meta_cheat_mode"] = "none"
 	blackboard["edging_endure"] = false
 
+func get_variable(key: String, default_val: Variant = null) -> Variant:
+	if current_session:
+		return current_session.get_variable(key, default_val)
+	return blackboard.get(key, default_val)
+
+func set_variable(key: String, value: Variant) -> void:
+	if current_session:
+		current_session.set_variable(key, value)
+	blackboard[key] = value
+
+func has_variable(key: String) -> bool:
+	if current_session:
+		return current_session.has_variable(key)
+	return blackboard.has(key)
+
+func interpolate(text: String) -> String:
+	if current_session:
+		return current_session.interpolate(text)
+	var res := text
+	for k: String in blackboard:
+		res = res.replace("{" + k + "}", str(blackboard[k]))
+	return res
+
 func start_dialogue(
 	graph_data: Dictionary,
 	start_node: String = "start",
@@ -147,7 +170,9 @@ func start_dialogue(
 	p_encounter_context: Dictionary = {}
 ) -> void:
 	session_id += 1
-	current_session = DialogueSessionClass.new(session_id, graph_data, start_node, source, policy)
+	var char_id: String = graph_data.get("character_id", "")
+	var enc_id: String = graph_data.get("encounter_id", "")
+	current_session = DialogueSessionClass.new(session_id, graph_data, start_node, source, policy, char_id, enc_id)
 	# Isolated encounter context: prioritize passed context, otherwise duplicate default blackboard
 	if not p_encounter_context.is_empty():
 		current_session.encounter_context = p_encounter_context.duplicate(true)

@@ -76,7 +76,12 @@ func _run_test() -> void:
 			}
 		},
 		"attack_lines": {
-			"tongue": {"text": "本小姐才不会输给你！看招！", "emotion": "serious"}
+			"yunlai_sword": {
+				"name": "云来剑势·灵动突袭",
+				"damage": 15.0,
+				"text": "本小姐才不会输给你！看招！",
+				"emotion": "serious"
+			}
 		}
 	}
 	var keqing_strategy := CombatStrategyClass.new()
@@ -90,6 +95,14 @@ func _run_test() -> void:
 	assert(last_koujou.get("speaker") == "刻晴")
 	assert(last_koujou.get("text") == "唔……别小看我！")
 	print("  ✓ Keqing custom reactions triggered cleanly without modifying manager!")
+	
+	# Verify Keqing's custom NPC attack skill and line
+	var keqing_act: Dictionary = keqing_strategy.decide_npc_action(1, player_pleasure, npc_pleasure, combat_mgr.reaction_resolver)
+	assert(keqing_act["skill_id"] == "yunlai_sword")
+	assert(keqing_act["skill_name"] == "云来剑势·灵动突袭")
+	var keqing_attack_line: Dictionary = combat_mgr.reaction_resolver.get_attack_line("yunlai_sword")
+	assert(keqing_attack_line["text"] == "本小姐才不会输给你！看招！")
+	print("  ✓ Keqing custom attack skill '%s' and koujou verified!" % keqing_act["skill_name"])
 	
 	print("\n[Phase 3 SUCCESS] Decoupled TurnCombatManager fully validated!")
 	print("==================================================")

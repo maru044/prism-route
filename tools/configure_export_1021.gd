@@ -70,6 +70,7 @@ func run() -> void:
 	for waypoint_file: String in ["assets/world/npc_waypoint_ruins/*.json", "assets/world/npc_waypoint_ruins/*.grass"]:
 		if not waypoint_file in includes.split(","):includes+=","+waypoint_file
 	if not "assets/ai/worldbook/*.md" in includes.split(","):includes+=",assets/ai/worldbook/*.md"
+	if not "assets/ai/personas/*.md" in includes.split(","):includes+=",assets/ai/personas/*.md"
 	if not "assets/npc/**/*.json" in includes.split(","):includes+=",assets/npc/**/*.json"
 	config.set_value("preset.0","include_filter",includes)
 	var exclusions: PackedStringArray=["docs/*","screenshots/*","archive/*","experiments/*","assets/ai/reference/*","assets/water/review/*","assets/world/current_map_validation/review/*","assets/world/current_map_validation/grass_bake/manifest_part_*.json","*.3dm","*.3dmbak","*.blend","*.blend1","*.TMP"]

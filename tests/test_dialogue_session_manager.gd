@@ -64,6 +64,19 @@ func _init() -> void:
 	assert(received["text"] == "你好，主人！", "Variable interpolation must work")
 	print("  ✓ Text interpolation verified: %s" % received["text"])
 	
+	# Verify interface consistency: DialogueManager & DialogueSession get_variable / set_variable / has_variable / interpolate
+	assert(mgr.has_variable("master_name"))
+	assert(mgr.get_variable("master_name") == "主人")
+	assert(mgr.current_session.has_variable("master_name"))
+	assert(mgr.current_session.get_variable("master_name") == "主人")
+	
+	mgr.set_variable("test_favor", 100)
+	assert(mgr.get_variable("test_favor") == 100)
+	assert(mgr.current_session.get_variable("test_favor") == 100)
+	assert(mgr.interpolate("当前好感度: {test_favor}") == "当前好感度: 100")
+	assert(mgr.current_session.interpolate("当前好感度: {test_favor}") == "当前好感度: 100")
+	print("  ✓ Interface consistency between DialogueSession & DialogueManager verified 100%!")
+	
 	mgr.advance_text()
 	assert(received["choices"].size() == 2, "Choices must contain static + dynamic choice")
 	assert(received["choices"][1]["text"] == "【动态注入选项】由Provider提供")

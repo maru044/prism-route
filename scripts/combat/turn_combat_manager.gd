@@ -179,7 +179,7 @@ func _advance_to_npc_turn() -> void:
 	if combat_strategy == null:
 		combat_strategy = CombatStrategyClass.new()
 		
-	var decision: Dictionary = combat_strategy.decide_npc_action(round_count, player_pleasure, npc_pleasure)
+	var decision: Dictionary = combat_strategy.decide_npc_action(round_count, player_pleasure, npc_pleasure, reaction_resolver)
 	var skill_id: String = decision.get("skill_id", "tongue")
 	var skill_name: String = decision.get("skill_name", "灵巧舌尖缠绕")
 	var raw_dmg: float = decision.get("raw_damage", 16.0)

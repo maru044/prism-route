@@ -33,10 +33,23 @@ func get_zone_reaction(zone: String, pleasure_pct: float) -> Dictionary:
 		"emotion": line_data.get("emotion", "default")
 	}
 
+func get_available_attack_skills() -> Array:
+	return attack_lines.keys()
+
+func get_attack_skill_data(action_id: String) -> Dictionary:
+	return attack_lines.get(action_id, {})
+
 func get_attack_line(action_id: String) -> Dictionary:
-	var line_data: Dictionary = attack_lines.get(action_id, attack_lines.get("tongue", {}))
+	var line_data: Dictionary = {}
+	if attack_lines.has(action_id):
+		line_data = attack_lines[action_id]
+	elif not attack_lines.is_empty():
+		var first_key: String = str(attack_lines.keys()[0])
+		line_data = attack_lines[first_key]
 	return {
 		"speaker": speaker_name,
-		"text": line_data.get("text", "嘻嘻，轮到我进攻咯！"),
-		"emotion": line_data.get("emotion", "smirk")
+		"text": line_data.get("text", "看招！"),
+		"emotion": line_data.get("emotion", "default"),
+		"name": line_data.get("name", "灵巧攻势"),
+		"damage": float(line_data.get("damage", 16.0))
 	}

@@ -22,13 +22,18 @@ var character_context: Dictionary = {}
 ## 4. world_context: global world flags
 var world_context: Dictionary = {}
 
-func _init(p_id: int, p_graph: Dictionary, p_start: String, p_source: int = 0, p_policy: int = 0) -> void:
+func _init(p_id: int, p_graph: Dictionary, p_start: String, p_source: int = 0, p_policy: int = 0, p_character_id: String = "", p_encounter_id: String = "") -> void:
 	session_id = p_id
 	graph = p_graph
 	current_node_id = p_start
 	source = p_source
 	resume_policy = p_policy
+	character_id = p_character_id
+	encounter_id = p_encounter_id
 	is_active = true
+
+func has_variable(key: String) -> bool:
+	return session_variables.has(key) or encounter_context.has(key) or character_context.has(key) or world_context.has(key)
 
 func get_variable(key: String, default_val: Variant = null) -> Variant:
 	if session_variables.has(key):
@@ -40,6 +45,18 @@ func get_variable(key: String, default_val: Variant = null) -> Variant:
 	if world_context.has(key):
 		return world_context[key]
 	return default_val
+
+func set_variable(key: String, value: Variant) -> void:
+	if session_variables.has(key):
+		session_variables[key] = value
+	elif encounter_context.has(key):
+		encounter_context[key] = value
+	elif character_context.has(key):
+		character_context[key] = value
+	elif world_context.has(key):
+		world_context[key] = value
+	else:
+		encounter_context[key] = value
 
 func set_session_variable(key: String, value: Variant) -> void:
 	session_variables[key] = value

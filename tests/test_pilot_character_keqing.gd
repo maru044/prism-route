@@ -100,6 +100,19 @@ func _run_acceptance_test() -> void:
 	assert("黑丝" in combat_koujou.get("text") or "大腿" in combat_koujou.get("text"))
 	print("  ✓ Player stimulated thighs -> Keqing custom koujou: '%s'" % combat_koujou.get("text"))
 	
+	# NPC action: Keqing turn action decision & custom attack koujou
+	var npc_decision: Dictionary = combat_mgr.combat_strategy.decide_npc_action(1, player_pleasure, npc_pleasure, combat_mgr.reaction_resolver)
+	assert(npc_decision["skill_id"] in ["yunlai_sword", "starward_sword", "sensual_feint"])
+	assert(npc_decision["skill_name"] in ["云来剑势·灵动突袭", "天街巡游·柔情攻势", "假动作·贴面娇吟"])
+	var attack_koujou: Dictionary = combat_mgr.reaction_resolver.get_attack_line(npc_decision["skill_id"])
+	assert(attack_koujou.get("speaker") == "刻晴")
+	assert(attack_koujou.get("text") in [
+		"看招！以迅雷不及掩耳之势贴身进攻，可别眨眼哦！",
+		"剑影纷飞！用最细腻温柔的手法抚过你的敏感点，认输吧！",
+		"以为我要出剑？这可是贴身佯攻！耳边的娇喘，你能抵挡得住吗？"
+	])
+	print("  ✓ Keqing custom attack skill '%s' and koujou '%s' triggered cleanly!" % [npc_decision["skill_name"], attack_koujou["text"]])
+	
 	print("\n--- Step 3: Motion & Furniture Adaptive Resolution ---")
 	# Mock desk furniture in Sandbar
 	var desk := InteractiveFurnitureClass.new()
