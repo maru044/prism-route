@@ -44,7 +44,8 @@ class FrameGraph extends Control:
 func _ready() -> void:
 	name="PerformanceMonitor1021";layer=40
 	viewport_rid=get_viewport().get_viewport_rid()
-	RenderingServer.viewport_set_measure_render_time(viewport_rid,true)
+	hide()
+	set_process(false)
 	var root_control := Control.new();add_child(root_control)
 	root_control.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	root_control.mouse_filter=Control.MOUSE_FILTER_IGNORE
@@ -103,7 +104,22 @@ func _ready() -> void:
 	panel.minimum_size_changed.connect(_fit_panel)
 
 func _exit_tree() -> void:
-	if viewport_rid.is_valid():RenderingServer.viewport_set_measure_render_time(viewport_rid,false)
+	if is_processing() and viewport_rid.is_valid():RenderingServer.viewport_set_measure_render_time(viewport_rid,false)
+
+func set_monitoring(enabled: bool) -> void:
+	visible = enabled
+	if is_processing() == enabled:
+		return
+	set_process(enabled)
+	RenderingServer.viewport_set_measure_render_time(viewport_rid, enabled)
+	collecting = false
+	frame_times.clear()
+	timestamps.clear()
+	sample_elapsed = 0.0
+	render_cpu_sum = 0.0; render_gpu_sum = 0.0; render_samples = 0
+	water_cpu_sum = 0.0; water_cpu_peak = 0.0; water_cpu_samples = 0
+	stream_sum = 0.0; stream_peak = 0.0; stream_samples = 0
+	stream_phases.clear()
 
 func _label(text: String,font_size: int,color: Color=TEXT) -> Label:
 	var label := Label.new();label.text=text
@@ -235,7 +251,7 @@ func _refresh() -> void:
 		var ray: float=stream_phases.get("terrain_ray_usec",0)+stream_phases.get("water_ray_usec",0)+stream_phases.get("clearance_ray_usec",0)
 		var divisor: float=maxi(stream_samples,1)*1000.0
 		_set_value("sampling","%.2f / %.2f / %.2f" % [ray/divisor,stream_phases.get("mask_usec",0)/divisor,stream_phases.get("math_usec",0)/divisor])
-		if not stream.collect_detailed_timings or not stream.profiling:_set_value("sampling","F6 开启细分计时")
+		if not stream.collect_detailed_timings or not stream.profiling:_set_value("sampling","在设置中开启细分计时")
 		_set_value("upload","%.2f / %.2f" % [m.commit_ms,m.max_commit_ms])
 		_set_value("cpu_cache","%.0f / %d / %d" % [m.cache.cache_mib,m.cache.cache_hits,m.cache.disk_reads])
 		var wind=world_scene.get("grass_wind")

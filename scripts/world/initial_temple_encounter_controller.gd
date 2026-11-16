@@ -187,6 +187,11 @@ func initialize(
 			game_progress = world.get("progress")
 	if game_progress == null:
 		game_progress = load("res://scripts/progress/game_progress.gd").new()
+	tutorial_completed = game_progress.tutorial_completed
+	defeat_count = game_progress.initial_temple_defeat_count
+	if not game_progress.settlement_outcome.is_empty():
+		settlement_outcome = game_progress.settlement_outcome
+	companion_unlocked = game_progress.is_companion_unlocked("sparkle") or settlement_outcome == "kill"
 		
 	if temple_node != null:
 		var f_instances = temple_node.get("furniture_instances")
@@ -393,6 +398,10 @@ func _capture_world_context() -> void:
 			"free_mode": world.get("free_mode") if "free_mode" in world else false,
 			"overview_mode": world.get("overview_mode") if "overview_mode" in world else false
 		}
+		var player := _get_world_character()
+		if player != null and "visual" in player:
+			saved_world_context["player_position"] = player.global_position
+			saved_world_context["player_heading"] = player.visual.rotation.y - PI
 
 
 func get_active_master_id() -> String:

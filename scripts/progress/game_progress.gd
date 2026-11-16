@@ -50,12 +50,17 @@ func to_dict() -> Dictionary:
 	}
 
 func from_dict(data: Dictionary) -> void:
-	tutorial_completed = data.get("tutorial_completed", false)
-	initial_temple_defeat_count = int(data.get("initial_temple_defeat_count", 0))
+	tutorial_completed = data.get("tutorial_completed", false) == true
+	var defeats: Variant = data.get("initial_temple_defeat_count", 0)
+	initial_temple_defeat_count = maxi(0, int(defeats)) if (defeats is float or defeats is int) and is_finite(defeats) else 0
 	settlement_outcome = str(data.get("settlement_outcome", ""))
-	companion_unlocks.clear()
-	for c in data.get("companion_unlocks", []):
-		companion_unlocks.append(str(c))
-	world_unlocks.clear()
-	for w in data.get("world_unlocks", []):
-		world_unlocks.append(str(w))
+	companion_unlocks = _saved_ids(data.get("companion_unlocks"))
+	world_unlocks = _saved_ids(data.get("world_unlocks"))
+
+func _saved_ids(values: Variant) -> Array[String]:
+	var ids: Array[String] = []
+	if values is Array:
+		for id: Variant in values:
+			if id is String and not id.is_empty() and not ids.has(id):
+				ids.append(id)
+	return ids

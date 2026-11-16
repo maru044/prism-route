@@ -26,8 +26,7 @@ func run() -> void:
 		Engine.max_fps=0;DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 	scene=load("res://scenes/map_1021.tscn").instantiate();scene.automation_enabled=true;root.add_child(scene)
 	while not scene.test_ready:await process_frame
-	scene.get_node("PerformanceMonitor1021").visible=false
-	scene.get_node("PerformanceMonitor1021").set_process(false)
+	RenderingServer.viewport_set_measure_render_time(root.get_viewport_rid(), true)
 	scene.vegetation.set_process(false)
 	if "--baseline" in args:
 		scene.vegetation.volume_streamer.free()

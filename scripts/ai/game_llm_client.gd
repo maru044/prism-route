@@ -46,8 +46,7 @@ const TOOLS := [
 
 static var _dialogue_tag := RegEx.create_from_string(r"(?i)<(/?)(game|report_nya~?|think_nya~?)>")
 static var _prompt_token := RegEx.create_from_string(r"\{\{//|\{\{(?:roll 1d100|npc_name|dialogue_location)\}\}|\{\{|\}\}")
-static var _dialogue_role_marker := RegEx.create_from_string(r"\|(用户|小猫之神)\|")
-static var _username_regex := RegEx.create_from_string(r"\|用户：.*?\|")
+static var _dialogue_role_marker := RegEx.create_from_string(r"(?m)^\|(用户|小猫之神)\|")
 static var _dialogue_tag_prefixes := [
 	"<game>", "</game>", "<report_nya>", "</report_nya>", "<think_nya>", "</think_nya>",
 	"<report_nya~>", "</report_nya~>", "<think_nya~>", "</think_nya~>",
@@ -136,25 +135,15 @@ func _load_dialogue_markdown(local_profile_path := LOCAL_PLAYER_PROFILE) -> Stri
 		if not _is_nonnegative_integer(value):
 			return "提示词的 depth 必须为非负整数 · " + path
 		var depth := int(value)
-		var order: int = int(header.get("order", 0))
 		var entry_name: String = str(header.get("name", file.get_basename()))
 		var content := raw.substr(body_start).strip_edges()
 		if content.is_empty():
 			if file == PLAYER_PROFILE_FILE:
 				continue
 			return "提示词正文为空 · " + path
-		_dialogue_entries.append({"depth": depth, "order": order, "name": entry_name, "content": content})
+		_dialogue_entries.append({"depth": depth, "name": entry_name, "content": content})
 	if _dialogue_entries.is_empty():
 		return "世界书目录里没有自由对话提示词。"
-	_dialogue_entries.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
-		if a.depth != b.depth:
-			return a.depth > b.depth
-		var order_a: int = int(a.get("order", 0))
-		var order_b: int = int(b.get("order", 0))
-		if order_a != order_b:
-			return order_a < order_b
-		return str(a.get("name", "")) < str(b.get("name", ""))
-	)
 	return ""
 
 static func _is_nonnegative_integer(value: Variant) -> bool:
@@ -195,6 +184,58 @@ func open(channel: String, scope: String, speaker_context: Dictionary) -> void:
 
 func configured() -> bool:
 	return not profiles[route].url.is_empty() and not profiles[route].model.is_empty()
+
+func save_threads() -> Dictionary:
+	return _normalize_saved_threads(_threads)
+
+func pending_draft() -> String:
+	if pending and _operation == "send" and not history.is_empty() and not history.back().has("result"):
+		return history.back().user
+	return ""
+
+func restore_threads(threads: Variant) -> void:
+	_threads = _normalize_saved_threads(threads)
+
+func _normalize_saved_threads(value: Variant) -> Dictionary:
+	var threads := {}
+	if not value is Dictionary:
+		return threads
+	for id: Variant in value:
+		if not id is String or not (id.begins_with(DIALOGUE + "/") or id.begins_with(ASSISTANT + "/")) or not value[id] is Array:
+			continue
+		var turns: Array = []
+		for turn: Variant in value[id]:
+			if not turn is Dictionary or not turn.get("user") is String or not turn.get("replies") is Array or not turn.get("result") is Dictionary:
+				continue
+			var replies: Array = []
+			var active := -1
+			for index in turn.replies.size():
+				var reply: Variant = turn.replies[index]
+				if not reply is Dictionary or not reply.get("text") is String:
+					continue
+				if turn.get("active") == index:
+					active = replies.size()
+				var saved_reply := _saved_fragment(reply)
+				var continuations: Variant = reply.get("continuations", [])
+				if continuations is Array and not continuations.is_empty():
+					saved_reply["continuations"] = []
+					for part: Variant in continuations:
+						if part is Dictionary and part.get("text") is String:
+							saved_reply.continuations.append(_saved_fragment(part))
+				replies.append(saved_reply)
+			var incomplete: bool = turn.result.get("incomplete", false) == true
+			var notice := "本轮回复未完成" if incomplete else ""
+			turns.append({
+				"user": turn.user, "replies": replies, "active": active,
+				"action_committed": turn.get("action_committed", false) == true,
+				"result": {"status": notice, "notice": notice, "incomplete": incomplete},
+			})
+		threads[id] = turns
+	return threads
+
+func _saved_fragment(fragment: Dictionary) -> Dictionary:
+	var note: String = "" if str(fragment.get("note", "")).is_empty() else "回复未完成"
+	return {"text": fragment.text, "note": note}
 
 func send(text: String) -> bool:
 	if pending or text.strip_edges().is_empty() or not _can_start():
@@ -403,17 +444,12 @@ func _parsed_dialogue_prompts(entries: Array = []) -> Dictionary:
 		else:
 			mid_prompts.append({
 				"depth": depth,
-				"order": int(row.get("order", 0)),
 				"name": str(row.get("name", "")),
 				"content": content,
 			})
 	mid_prompts.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
 		if a.depth != b.depth:
 			return a.depth > b.depth
-		var order_a: int = int(a.get("order", 0))
-		var order_b: int = int(b.get("order", 0))
-		if order_a != order_b:
-			return order_a < order_b
 		return str(a.get("name", "")) < str(b.get("name", ""))
 	)
 	return {
@@ -436,37 +472,12 @@ func fixed_dialogue_tokens(operation := "send") -> int:
 		fixed += _message_tokens(CONTINUE_MESSAGE)
 	return fixed
 
-static func _clean_dialogue_content(text: String) -> String:
-	return _username_regex.sub(text, "", true)
-
 static func _squash_dialogue_messages(messages: Array) -> Array:
 	if messages.is_empty():
 		return []
 
-	var expanded: Array[Dictionary] = []
-	for message: Dictionary in messages:
-		var content: String = _clean_dialogue_content(str(message.get("content", "")))
-		var matches := _dialogue_role_marker.search_all(content)
-		if matches.is_empty():
-			expanded.append({"role": message.get("role", "system"), "content": content})
-			continue
-		var cursor := 0
-		var current_role: String = ""
-		for match_result in matches:
-			var segment := content.substr(cursor, match_result.get_start() - cursor).strip_edges()
-			if not segment.is_empty():
-				if not current_role.is_empty():
-					expanded.append({"role": current_role, "content": segment})
-				else:
-					expanded.append({"role": message.get("role", "system"), "content": segment})
-			current_role = "user" if match_result.get_string(1) == "用户" else "assistant"
-			cursor = match_result.get_end()
-		var tail := content.substr(cursor).strip_edges()
-		if not tail.is_empty() and not current_role.is_empty():
-			expanded.append({"role": current_role, "content": tail})
-
 	var merged: Array[Dictionary] = []
-	for msg: Dictionary in expanded:
+	for msg: Dictionary in messages:
 		if not merged.is_empty() and merged.back().role == msg.role:
 			var prev_c: String = merged.back().content
 			var cur_c: String = msg.content
@@ -475,7 +486,7 @@ static func _squash_dialogue_messages(messages: Array) -> Array:
 			elif not cur_c.is_empty():
 				merged.back().content = prev_c + "\n" + cur_c
 		else:
-			merged.append({"role": msg.role, "content": msg.content})
+			merged.append(msg.duplicate())
 
 	var history_start := 0
 	var system_contents := PackedStringArray()
@@ -557,30 +568,24 @@ func _build_dialogue_messages(history_messages: Array, operation := "send", entr
 	var raw_messages: Array = [{"role": "system", "content": parsed.head}]
 	raw_messages.append_array(parsed.examples)
 
-	var effective_history: Array = []
-	for msg: Dictionary in history_messages:
-		effective_history.append(msg.duplicate())
-	if operation == "continue":
-		effective_history.append(CONTINUE_MESSAGE.duplicate())
-
-	var slotted_history: Array = []
 	var history_index := 0
 	var mid_prompts: Array[Dictionary] = parsed.mid
 	for row: Dictionary in mid_prompts:
-		var insert_at := maxi(0, effective_history.size() - row.depth)
+		var insert_at := maxi(0, history_messages.size() - row.depth)
 		while history_index < insert_at:
-			slotted_history.append(effective_history[history_index])
+			raw_messages.append(history_messages[history_index])
 			history_index += 1
-		slotted_history.append({"role": "system", "content": row.content})
-	while history_index < effective_history.size():
-		slotted_history.append(effective_history[history_index])
+		raw_messages.append({"role": "system", "content": row.content})
+	while history_index < history_messages.size():
+		raw_messages.append(history_messages[history_index])
 		history_index += 1
+	if operation == "continue":
+		raw_messages.append(CONTINUE_MESSAGE)
 
 	var format_content: String = parsed.format
 	if not format_content.is_empty():
-		slotted_history.append({"role": "system", "content": format_content})
+		raw_messages.append({"role": "system", "content": format_content})
 
-	raw_messages.append_array(slotted_history)
 	return _squash_dialogue_messages(raw_messages)
 
 static func dialogue_sections(raw: String, streaming := false) -> Dictionary:

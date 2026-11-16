@@ -32,17 +32,20 @@ func initialize(map: Node3D) -> void:
 	for profile: Dictionary in catalog.profiles:
 		models[profile.id] = profile.model
 
-	var menu := review_menu.get_popup()
+	var menu := review_menu.get_popup() if is_instance_valid(review_menu) else null
 	for region: String in SITES.REGIONS:
-		var popup := PopupMenu.new()
-		popup.name = "Region%d" % menu.item_count
-		menu.add_child(popup)
-		menu.add_submenu_item(region, String(popup.name))
-		popup.id_pressed.connect(_review_site)
+		var popup: PopupMenu
+		if menu != null:
+			popup = PopupMenu.new()
+			popup.name = "Region%d" % menu.item_count
+			menu.add_child(popup)
+			menu.add_submenu_item(region, String(popup.name))
+			popup.id_pressed.connect(_review_site)
 		var secondary := region in ["次要点位", SITES.CAPE_VISITORS, SITES.CLIFF_WALKWAY]
 		for row: Array in SITES.REGIONS[region]:
 			var marker := _make_site(row, secondary)
-			popup.add_item(row[1], sites.size())
+			if popup != null:
+				popup.add_item(row[1], sites.size())
 			sites.append(marker)
 
 
@@ -54,6 +57,8 @@ func add_controls(container: VBoxContainer) -> void:
 
 
 func close_menu() -> void:
+	if not is_instance_valid(review_menu):
+		return
 	var menu := review_menu.get_popup()
 	for child: Node in menu.get_children():
 		if child is PopupMenu:
@@ -156,6 +161,8 @@ func _instance_actor(site: Marker3D, packed: PackedScene) -> void:
 
 
 func _review_site(index: int) -> void:
+	if is_instance_valid(world.settings_panel):
+		world.settings_panel.close()
 	if not world.test_ready or not world.is_world_input_allowed():
 		return
 	var site := sites[index]

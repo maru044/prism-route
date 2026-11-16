@@ -37,7 +37,7 @@ flowchart TD
 
 ## 3. 当前实现
 
-- **正式场景入口。** 初始神殿花火的剧情对话面板提供「自由对话」，退出后回到原来的台词。场景预览左侧提供「游戏助手」。自由对话目前传入花火和初始神殿的基本信息。[地图入口](../scripts/map_1021.gd) · [剧情对话面板](../scenes/narrative/dialogue_panel.gd)
+- **正式场景入口。** 初始神殿花火的剧情对话面板提供「自由对话」，退出后回到原来的台词。游戏内 Esc 设置底部提供「游戏助手」。自由对话目前传入花火和初始神殿的基本信息。[地图入口](../scripts/map_1021.gd) · [剧情对话面板](../scenes/narrative/dialogue_panel.gd)
 - **对话请求。** 客户端按 Markdown 文件头的 `depth` 装配正文。玩家人设有独立文件，角色与场景只读取游戏入口提供的对话对象和地点。世界规则使用深度 4，输出格式使用深度 0。相邻同角色消息合并后发送。[世界书目录](../assets/ai/worldbook) · [LLM 客户端](../scripts/ai/game_llm_client.gd)
 - **传输和界面。** 现有功能包括 SSE 分片、Unicode 转义解码、超时提示、发送与停止共用按钮、倒回、重新生成、版本切换和续写。自由对话由玩家手动重试，助手在执行工具前遇到暂时性故障时可自动重试至多两次。报告默认折叠，下一轮和续写回传玩家原文与所选回复的可见正文。[HTTP 传输](../scripts/ai/chat_transport.gd) · [LLM 面板](../scripts/ai/llm_panel.gd)
 - **辅助工具。** 已接入 `get_world_status` 和 `propose_teleport`。查询返回实际世界状态，传送提议只接受有效定位点，确认后由 Godot 通过现有流程执行。旧客户端工具手册供查阅，运行时工具定义以代码为准。[工具实现](../scripts/ai/game_llm_client.gd) · [旧客户端参考](../assets/ai/reference/系统工具调用手册.md)
@@ -48,11 +48,11 @@ flowchart TD
 
 酒馆实发请求的本地副本在 `D:\Prism Route\tmp\酒馆请求体.txt`，对应酒馆端预设 `D:\Prism Route\assets\Reborn2.4_Miku_pg.json` 与后处理扩展 `D:\Prism Route\assets\spreset\ChatSquash.js`。
 
-现已完全对齐原 SPreset 的发包消息结构：
+离线捕获确认了开场示例和末尾消息的结构。游戏世界书仍按本项目的深度规则装配，兼容端点的实际转发和模型回复待实机验证。
 1. **伪 JSON 与伪角色结构**：由 `_squash_dialogue_messages` 对组装完成的提示词执行原地转换。首条 `system` 消息以 `<clear>\n[{"role":"system","content":"..."},{"role":"fake_system","content":"` 开头；其后各轮转换为 `assistant` 与 `user` 交替的消息列表。每个 `assistant` 消息使用 `soliumbra` 与 `model: Pass` 闭合前序上下文，中间各轮 `user` 消息固定为 `"},{"role":"soliumbra","content":"`，末尾 `user` 消息固定为生成触发前缀 `"},{"role":"soliumbra","reasoning":"`。
-2. **核心设定集与动态深度**：将 `核心设定集.md` 调整为 `depth: 4, order: 100`，与 `世界规则.md`（`depth: 4, order: 10`）均按真实保留历史动态计算插入点 `maxi(0, history.size() - 4)`，在历史增长时随最新玩家输入向后移动，短历史时与玩家输入同处后段同一条消息内。
-3. **续写指令与尾部格式**：续写操作将 `CONTINUE_MESSAGE` 纳入当前轮次最后一条用户输入，深度 0 的格式段置于真实输入之后，经过 `ChatSquash` 转换后统一收敛至倒数第二条 `assistant`（携带 `Pass`）以及最后一条仅含引导前缀的 `user` 消息。
-4. **离线回归验证**：全套自动化用例（流式解包、报告面板、模型路由、上下文预算、动态深度插入与首尾契约）全部通过。详见 [回归用例](../tools/verify_llm_stream.gd)。
+2. **核心设定集与动态深度**。`核心设定集.md` 和 `世界规则.md` 均为深度 4，使用 Markdown 的 `depth` 计算插入位置，同深度按条目名称确定顺序。示例轮次和自动续写指令均排除在历史计数之外。历史不足四条时，在真实历史之前插入。
+3. **续写指令与尾部格式**。先按真实历史组装世界书，再追加 `CONTINUE_MESSAGE` 和深度 0 的格式段。转换后最后两条分别为包含格式段的 `assistant` 和仅含引导前缀的 `user`。角色标记只在深度 999 的开场示例中解析，普通玩家输入和历史回复均按原文进入组装。
+4. **离线回归验证**。请求捕获覆盖普通发送、重生成、续写深度、角色标记原样回传和两个入口的工具隔离。[回归用例](../tools/verify_llm_stream.gd)
 
 ## 4. 后续路线图
 

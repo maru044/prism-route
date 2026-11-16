@@ -2,6 +2,7 @@ extends Node3D
 ## Environmental beds use shoreline distance, tree proximity and roof cover.
 ## Foley follows existing gameplay events; no additional character physics.
 const BED := preload("res://scripts/audio/ambient_bed.gd")
+const PREFERENCES := preload("res://scripts/ui/game_preferences.gd")
 const WAVES := preload("res://assets/audio/world_1030/sea_waves.ogg")
 const LEAVES := preload("res://assets/audio/world_1030/wind_leaves.ogg")
 const GULLS := [preload("res://assets/audio/world_1030/gull_01.wav"),preload("res://assets/audio/world_1030/gull_02.wav"),preload("res://assets/audio/world_1030/gull_03.wav"),preload("res://assets/audio/world_1030/gull_04.wav")]
@@ -11,7 +12,7 @@ const STEPS := [preload("res://assets/audio/world_1030/water_step_01.wav"),prelo
 const STARTUP := preload("res://assets/audio/world_1030/vehicle_start.wav")
 const TREE_CELL := 32.0
 var world
-var settings: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://assets/audio/world_1030/settings.json"))
+var settings: Dictionary = PREFERENCES.audio()
 var listener: AudioListener3D
 var waves
 var leaves
@@ -37,7 +38,6 @@ var startup_count := 0
 var gull_count := 0
 var bird_count := 0
 var rng := RandomNumberGenerator.new()
-var popup: PopupPanel
 var lowpass := AudioEffectLowPassFilter.new()
 var ready_audio := false
 
@@ -204,19 +204,6 @@ func apply_volumes() -> void:
 		waves.silence(); leaves.silence(); gull.stop(); bird.stop(); startup.stop()
 		for voice in steps:voice.stop()
 
-func add_controls(box: VBoxContainer) -> void:
-	var button := Button.new(); button.text = "声音 · 音量设置"; button.focus_mode = Control.FOCUS_NONE; box.add_child(button)
-	popup = PopupPanel.new(); add_child(popup)
-	var margin := MarginContainer.new(); popup.add_child(margin)
-	for side in ["left","top","right","bottom"]:margin.add_theme_constant_override("margin_"+side,16)
-	var list := VBoxContainer.new(); list.custom_minimum_size.x = 300; margin.add_child(list)
-	var enabled := CheckBox.new(); enabled.text = "开启游戏声音"; enabled.button_pressed = bool(settings.enabled); list.add_child(enabled)
-	enabled.toggled.connect(func(value: bool):settings.enabled = value; apply_volumes())
-	for row: Array in [["master","总音量"],["ambience","环境 · 海浪 / 鸟鸣 / 风声"],["actions","动作 · 涉水 / 车辆启动"]]:
-		var label := Label.new(); label.text = str(row[1]); list.add_child(label)
-		var slider := HSlider.new(); slider.min_value = 0; slider.max_value = 1; slider.step = .01; slider.value = float(settings[row[0]]); list.add_child(slider)
-		slider.value_changed.connect(func(value: float):settings[row[0]] = value; apply_volumes())
-	button.pressed.connect(func():popup.popup(Rect2i(Vector2i(button.global_position+Vector2(button.size.x+12,0)),Vector2i(340,240))))
-
-func hide_settings() -> void:
-	if popup != null:popup.hide()
+func set_volume_setting(key: String, value: Variant) -> void:
+	settings[key] = value
+	apply_volumes()

@@ -60,6 +60,20 @@ func close_panel() -> void:
 func is_world_input_locked() -> bool:
 	return visible
 
+func save_snapshot() -> Dictionary:
+	var drafts := _drafts.duplicate()
+	if visible and not _thread_id.is_empty():
+		drafts[_thread_id] = _draft.text if not _draft.text.is_empty() else client.pending_draft()
+	return {"threads": client.save_threads(), "drafts": drafts}
+
+func restore_snapshot(snapshot: Dictionary) -> void:
+	client.restore_threads(snapshot.get("threads", {}))
+	var drafts: Variant = snapshot.get("drafts", {})
+	if drafts is Dictionary:
+		for id: Variant in drafts:
+			if id is String and drafts[id] is String:
+				_drafts[id] = drafts[id]
+
 func _build_ui() -> void:
 	add_child(_surface)
 	_surface.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)

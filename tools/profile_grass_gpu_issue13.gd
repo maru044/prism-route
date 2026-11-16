@@ -8,7 +8,7 @@ func run() -> void:
 	root.size=Vector2i(1920,1080)
 	scene=load("res://scenes/map_1021.tscn").instantiate();scene.automation_enabled=true;root.add_child(scene)
 	while not scene.test_ready:await process_frame
-	scene.get_node("PerformanceMonitor1021").visible=false;scene.get_node("PerformanceMonitor1021").set_process(false)
+	RenderingServer.viewport_set_measure_render_time(root.get_viewport_rid(), true)
 	await scene.select_spawn(5)
 	var vegetation=scene.vegetation;var stream=vegetation.volume_streamer
 	stream.refresh();var start:=Time.get_ticks_msec()

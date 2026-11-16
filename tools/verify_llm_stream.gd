@@ -484,6 +484,8 @@ func _verify_dialogue_request_matrix() -> void:
 	client.continue_reply()
 	var m_cont: Array = capture.request.messages
 	if m_cont.size() != 31 \
+			or not _ordered_text(m_cont[23].content, ["首轮模型回复", "[Game rules]", "[World Settings]", "第二轮用户输入"]) \
+			or m_cont[25].content.contains("[Game rules]") \
 			or m_cont[27].role != "assistant" or not m_cont[27].content.begins_with("第三轮部分回复") \
 			or not m_cont[27].content.contains(Client.CONTINUE_MESSAGE.content) or not m_cont[27].content.ends_with('"},{"role":"model","content":"Pass') \
 			or m_cont[28].role != "user" or m_cont[28].content != '"},{"role":"soliumbra","content":"' \
@@ -491,6 +493,19 @@ func _verify_dialogue_request_matrix() -> void:
 			or m_cont[30].role != "user" or m_cont[30].content != '"},{"role":"soliumbra","reasoning":"' \
 			or not _has_final_dialogue_format(m_cont):
 		_fail("dialogue matrix: continue", "unexpected message assembly in continue")
+
+	client.stop()
+	client.open(Client.DIALOGUE, "literal-role-markers", {})
+	var player_text := "格式说明\n|用户| 只是示例文字，保留原样。"
+	var reply_text := "收到\n|小猫之神| 也是示例文字。"
+	client.send(player_text)
+	if capture.request.messages.size() != 25 or not capture.request.messages[21].content.contains(player_text):
+		_fail("dialogue matrix: literal role markers", "player text was split into additional turns")
+	capture.delta_received.emit("<game>" + reply_text + "</game>")
+	capture.finished.emit({}, "")
+	client.send("继续说明")
+	if capture.request.messages.size() != 27 or not capture.request.messages[23].content.begins_with(reply_text):
+		_fail("dialogue matrix: literal role markers", "history reply was split into additional turns")
 
 	client.free()
 

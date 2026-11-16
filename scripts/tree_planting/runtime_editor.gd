@@ -111,9 +111,11 @@ func build_ui() -> void:
 	row=HBoxContainer.new();column.add_child(row)
 	undo_button=button_into(row,"撤销",undo);redo_button=button_into(row,"重做",redo)
 	button_into(column,"保存并应用 · Ctrl+S" if integrated else "保存测试布局",save_layout)
-	if integrated:button_into(column,"恢复选中树的原始状态",scene.restore_selected)
+	if integrated:
+		button_into(column,"恢复选中树的原始状态",scene.restore_selected)
+		button_into(column,"返回游戏",scene.leave)
 	status=label_into(column,"");status.add_theme_color_override("font_color",Color("b8e8b6"))
-	hint=label_into(column,"右键 + WASD/QE：飞行\n右键 + 滚轮：调速；Shift 加速\n中键平移；Alt+中键绕所选树旋转\n拖动树或坐标轴；Shift 精调 / Ctrl 吸附\nAlt+拖动复制；F 定位；Delete 删除\nCtrl+Z 撤销 / Ctrl+Shift+Z 重做\nEsc / 右键：取消正在进行的变换\n"+("F4 切换游玩；Ctrl+S 保存并应用" if integrated else "独立测试，不改 F5 主地图。"))
+	hint=label_into(column,"右键 + WASD/QE：飞行\n右键 + 滚轮：调速；Shift 加速\n中键平移；Alt+中键绕所选树旋转\n拖动树或坐标轴；Shift 精调 / Ctrl 吸附\nAlt+拖动复制；F 定位；Delete 删除\nCtrl+Z 撤销 / Ctrl+Shift+Z 重做\nEsc / 右键：取消正在进行的变换\n"+("Ctrl+S 保存并应用" if integrated else "独立测试，不改正式地图。"))
 	close_dialog=ConfirmationDialog.new();close_dialog.title="尚未保存植物布局" if integrated else "尚未保存测试布局"
 	close_dialog.dialog_text="保存当前种植改动后退出？";close_dialog.ok_button_text="保存并退出"
 	close_dialog.cancel_button_text="继续编辑";close_dialog.add_button("不保存退出",false,"discard")

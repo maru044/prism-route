@@ -1,7 +1,7 @@
 class_name WorldControlContext
 extends RefCounted
 ## Centralized arbiter for World Control Leases and global input blocking.
-## Ensures map shortcuts (e.g. Tab switch, 1-9 spawns, F, V, C) are blocked during dialogues, combat, and staging.
+## Keeps gameplay input out of settings, dialogue, combat, and staging.
 
 const GROUP_INPUT_BLOCKERS := "world_input_blockers"
 const DIALOGUE_PANEL_CLASS := preload("res://scenes/narrative/dialogue_panel.gd")

@@ -7,6 +7,9 @@ var planting
 var planting_edits_path := "res://assets/world/tree_planting/world_edits.json"
 @export var start_planting_editor:=false
 const PERFORMANCE_MONITOR := preload("res://scripts/performance_monitor_1021.gd")
+const GAME_SETTINGS := preload("res://scripts/ui/game_settings.gd")
+const PREFERENCES := preload("res://scripts/ui/game_preferences.gd")
+const GRAPHICS_UI := preload("res://scenes/combat/encounter_ui_style.gd")
 const FOLIAGE_STYLE := preload("res://scripts/foliage_style.gd")
 const GRASS_WIND := preload("res://scripts/grass_wind_world.gd")
 const MEADOW_PALETTE := preload("res://scripts/meadow_palette.gd")
@@ -18,6 +21,7 @@ const INITIAL_RUIN := preload("res://scenes/world/initial_ruin.tscn")
 const DIALOGUE_INPUT := preload("res://scenes/narrative/dialogue_panel.gd")
 const WORLD_CONTROL := preload("res://scripts/world/world_control_context.gd")
 const GAME_PROGRESS := preload("res://scripts/progress/game_progress.gd")
+const GAME_SAVE_SESSION := preload("res://scripts/progress/game_save_session.gd")
 const LLM_PANEL := preload("res://scripts/ai/llm_panel.gd")
 var game_progress := GAME_PROGRESS.new()
 var llm_panel: CanvasLayer
@@ -58,7 +62,6 @@ var upper_ring
 const SURFACE_DETAIL_TRIAL := preload("res://scripts/world/architecture_detail_trial.gd")
 const ACTOR_SOLID_LAYER := 32
 const NPC_SOLID_LAYER := 64
-const GRAPHICS_SETTINGS_PATH := "user://graphics.cfg"
 enum GraphicsQuality { HIGH, MEDIUM, LOWEST }
 var water_manager
 var initial_ruin
@@ -80,6 +83,9 @@ var foliage_style
 var grass_wind
 var test_ready := false
 var startup_model: PackedScene
+var enable_game_saves := false
+var startup_save: Dictionary = {}
+var save_session: GAME_SAVE_SESSION
 var automation_enabled := false
 var free_mode := false
 var overview_mode := false
@@ -88,7 +94,6 @@ var spawn_index := 0
 var resolved_spawns: Array[Dictionary] = []
 var status: Label
 var spawn_menu: OptionButton
-var graphics_menu: OptionButton
 var graphics_environment: Environment
 var graphics_quality: int = GraphicsQuality.HIGH
 var dragging := false
@@ -100,13 +105,33 @@ var review_ui_visible := true
 # Developer/review overlays only. Gameplay prompts must not register here.
 var review_ui_layers: Array[CanvasLayer] = []
 var encounter_ui_active := false
+var settings_panel: GAME_SETTINGS
+var performance_monitor: PERFORMANCE_MONITOR
+var developer_tools_enabled := false
+var performance_requested := false
+var detailed_timings_requested := false
+var _world_notice: Label
+var _world_notice_timer: Timer
 
 func vec(value: Array) -> Vector3:
 	return Vector3(value[0],value[1],value[2])
 
 func _ready() -> void:
 	var loading_from_title := startup_model != null
+	var args := OS.get_cmdline_user_args()
+	developer_tools_enabled = "--developer-tools" in args or "--npc-placement-preview" in args or "--planting-editor" in args or start_planting_editor
+	detailed_timings_requested = "--grass-profile" in args
 	if "--verify-export" in OS.get_cmdline_user_args() or "--verify-world-clusters" in OS.get_cmdline_user_args() or "--verify-world-audio" in OS.get_cmdline_user_args():automation_enabled=true
+	if enable_game_saves and not automation_enabled:
+		save_session = GAME_SAVE_SESSION.new()
+		save_session.name = "GameSaveSession"
+		save_session.world = self
+		save_session.sections = startup_save.get("sections", {})
+		game_progress.from_dict(save_session.read_section("progress"))
+		add_child(save_session)
+		get_tree().auto_accept_quit = false
+		get_window().close_requested.connect(_request_game_close)
+		startup_save.clear()
 	metadata=JSON.parse_string(FileAccess.get_file_as_string(ASSETS+"metadata.json"))
 	# Preserve legacy query layers for planting, while actors ignore paint.
 	character.collision_mask=ACTOR_SOLID_LAYER|NPC_SOLID_LAYER;camper.collision_mask=ACTOR_SOLID_LAYER|NPC_SOLID_LAYER
@@ -143,7 +168,7 @@ func _ready() -> void:
 	add_child(lagoon_ruins)
 	add_child(npc_waypoint_ruins)
 	construction=CONSTRUCTION.new();construction.world=self;add_child(construction)
-	if not vegetation_bake_only and FileAccess.file_exists(NPC_PLACEMENT_PREVIEW.CATALOG) and (OS.has_feature("editor") or "--npc-placement-preview" in OS.get_cmdline_user_args()):
+	if not vegetation_bake_only and FileAccess.file_exists(NPC_PLACEMENT_PREVIEW.CATALOG) and (OS.has_feature("editor") or developer_tools_enabled):
 		npc_placement_preview = NPC_PLACEMENT_PREVIEW.new()
 		npc_placement_preview.name = "NPCPlacementPreview"
 		add_child(npc_placement_preview)
@@ -193,6 +218,8 @@ func _ready() -> void:
 		for i in resolved_spawns.size():
 			if resolved_spawns[i].get("key","")=="cape_town":initial_spawn=i;break
 	await select_spawn(initial_spawn)
+	if save_session != null:
+		restore_world_save(save_session.read_section("world"))
 	if "--ruin-preview" in OS.get_cmdline_user_args() or "--ruin-stairs-preview" in OS.get_cmdline_user_args():
 		var forward:=vec(initial_ruin.planting_mask.manifest.forward)
 		var near: Vector3=initial_ruin.avatar.global_position-forward*2.45
@@ -522,21 +549,12 @@ func _environment() -> void:
 	var sun:=DirectionalLight3D.new();sun.rotation_degrees=Vector3(-48,180.0-SUN_AZIMUTH_DEGREES,0);sun.light_energy=0.72
 	sun.light_color=Color(1.0,0.95,0.86);sun.shadow_enabled=true;sun.directional_shadow_max_distance=180;add_child(sun)
 	graphics_environment = env
-	var config := ConfigFile.new()
-	if config.load(GRAPHICS_SETTINGS_PATH) == OK:
-		var previous: Variant = config.get_value("graphics", "performance", false)
-		var fallback := GraphicsQuality.MEDIUM if previous is bool and previous else GraphicsQuality.HIGH
-		var saved: Variant = config.get_value("graphics", "preset", fallback)
-		if saved is int and saved >= GraphicsQuality.HIGH and saved <= GraphicsQuality.LOWEST:
-			graphics_quality = saved
+	graphics_quality = PREFERENCES.quality()
 	_apply_graphics_quality()
 
 func _apply_graphics_quality() -> void:
-	var viewport := get_viewport()
-	var high := graphics_quality == GraphicsQuality.HIGH
-	viewport.msaa_3d = Viewport.MSAA_4X if high else Viewport.MSAA_2X
-	viewport.scaling_3d_scale = 1.0 if high else 0.90
-	graphics_environment.ssao_enabled = high
+	PREFERENCES.apply_viewport(get_viewport(), graphics_quality)
+	graphics_environment.ssao_enabled = graphics_quality == GraphicsQuality.HIGH
 	_apply_grass_quality()
 
 func _apply_grass_quality() -> void:
@@ -550,53 +568,106 @@ func _apply_grass_quality() -> void:
 func _on_graphics_quality_selected(index: int) -> void:
 	graphics_quality = index
 	_apply_graphics_quality()
-	var config := ConfigFile.new()
-	config.set_value("graphics", "preset", graphics_quality)
-	var error := config.save(GRAPHICS_SETTINGS_PATH)
-	if error != OK:
-		push_warning("Could not save graphics quality: " + error_string(error))
 
 func _noise() -> NoiseTexture2D:
 	return MEADOW_PALETTE.make_biome_noise()
 
 func _hud() -> void:
-	var layer:=CanvasLayer.new();add_child(layer)
-	review_ui_layers.append(layer)
-	var panel:=PanelContainer.new();panel.name="MapControls";panel.position=Vector2(20,18);layer.add_child(panel)
-	var style:=StyleBoxFlat.new();style.bg_color=Color(.055,.09,.11,.88)
-	style.content_margin_left=12;style.content_margin_right=12;style.content_margin_top=12;style.content_margin_bottom=12
-	for corner in ["top_left","top_right","bottom_left","bottom_right"]:style.set("corner_radius_"+corner,6)
-	panel.add_theme_stylebox_override("panel",style)
-	var box:=VBoxContainer.new();box.add_theme_constant_override("separation",8);panel.add_child(box)
-	var title:=Label.new();title.text="Prism Route · 场景预览";title.add_theme_font_size_override("font_size",20);box.add_child(title)
-	spawn_menu=OptionButton.new();spawn_menu.custom_minimum_size=Vector2(310,36)
-	for i in metadata.spawns.size():spawn_menu.add_item("%d  %s" % [i+1,metadata.spawns[i].name])
-	spawn_menu.item_selected.connect(select_spawn);box.add_child(spawn_menu)
-	status=Label.new();status.add_theme_font_size_override("font_size",14);status.add_theme_color_override("font_color",Color("c2d0d9"));box.add_child(status)
+	var layer := CanvasLayer.new()
+	layer.layer = 70
+	add_child(layer)
+	settings_panel = GAME_SETTINGS.new()
+	settings_panel.name = "GameSettings"
+	settings_panel.in_world = true
+	settings_panel.show_save_menu = save_session != null
+	settings_panel.allow_developer_tools = developer_tools_enabled
+	layer.add_child(settings_panel)
+	settings_panel.closed.connect(_sync_actor_controls)
+	settings_panel.quality_changed.connect(_on_graphics_quality_selected)
+	settings_panel.assistant_requested.connect(_open_llm_assistant)
+	settings_panel.monitor_changed.connect(set_performance_monitor)
+	settings_panel.detail_changed.connect(set_detailed_timings)
+	if save_session != null:
+		settings_panel.save_menu_requested.connect(save_session.open)
+	if developer_tools_enabled:
+		_build_developer_controls(settings_panel.developer_options)
+	world_audio = WORLD_AUDIO.new()
+	world_audio.name = "WorldAudio"
+	add_child(world_audio)
+	settings_panel.audio_changed.connect(world_audio.set_volume_setting)
+	performance_monitor = PERFORMANCE_MONITOR.new()
+	performance_monitor.world_scene = self
+	add_child(performance_monitor)
+	_world_notice = GRAPHICS_UI.text_label("", 22, GAME_SETTINGS.PALETTE.text, GAME_SETTINGS.PALETTE)
+	layer.add_child(_world_notice)
+	_world_notice.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+	_world_notice.offset_top = 118
+	_world_notice.offset_left = -290
+	_world_notice.offset_right = 290
+	_world_notice.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var notice_paper := GRAPHICS_UI.paper_backing(_world_notice, GAME_SETTINGS.PALETTE, Vector2(14, 9))
+	notice_paper.visible = false
+	_world_notice.hide()
+	_world_notice_timer = Timer.new()
+	_world_notice_timer.one_shot = true
+	_world_notice_timer.timeout.connect(_world_notice.hide)
+	add_child(_world_notice_timer)
+	set_review_ui_visible(not "--no-ui" in OS.get_cmdline_user_args())
+
+func _build_developer_controls(box: VBoxContainer) -> void:
+	spawn_menu = OptionButton.new()
+	for i in metadata.spawns.size():
+		spawn_menu.add_item("%d  %s" % [i + 1, metadata.spawns[i].name])
+	GAME_SETTINGS.style_dropdown(spawn_menu)
+	box.add_child(spawn_menu)
+	spawn_menu.item_selected.connect(func(index: int):
+		settings_panel.close()
+		select_spawn(index)
+	)
+	status = GRAPHICS_UI.text_label("", 18, GAME_SETTINGS.PALETTE.text, GAME_SETTINGS.PALETTE)
+	box.add_child(status)
 	if npc_placement_preview != null:
 		npc_placement_preview.add_controls(box)
-	var edit_button:=Button.new();edit_button.text="植物编辑 · F4";box.add_child(edit_button)
-	edit_button.pressed.connect(func():if planting!=null and test_ready:planting.toggle())
-	world_audio=WORLD_AUDIO.new();world_audio.name="WorldAudio";add_child(world_audio);world_audio.add_controls(box)
-	graphics_menu = OptionButton.new()
-	graphics_menu.name = "GraphicsQuality"
-	graphics_menu.add_item("画质 · 高画质")
-	graphics_menu.add_item("画质 · 中画质")
-	graphics_menu.add_item("画质 · 最低画质")
-	graphics_menu.select(graphics_quality)
-	graphics_menu.item_selected.connect(_on_graphics_quality_selected)
-	box.add_child(graphics_menu)
-	var assistant_button := Button.new()
-	assistant_button.name = "GameAssistant"
-	assistant_button.text = "游戏助手"
-	assistant_button.pressed.connect(_open_llm_assistant)
-	box.add_child(assistant_button)
-	for control in box.get_children():
-		if control is BaseButton:control.custom_minimum_size.y=36;control.focus_mode=Control.FOCUS_NONE
-	var performance_monitor:=PERFORMANCE_MONITOR.new()
-	performance_monitor.world_scene=self;add_child(performance_monitor)
-	review_ui_layers.append(performance_monitor)
-	set_review_ui_visible(not "--no-ui" in OS.get_cmdline_user_args())
+		GAME_SETTINGS.style_dropdown(npc_placement_preview.review_menu)
+	settings_panel.add_button(box, "植物编辑", func():
+		settings_panel.close()
+		if planting != null and test_ready:
+			planting.enter()
+	)
+	var views := GRAPHICS_UI.row(8)
+	box.add_child(views)
+	settings_panel.add_button(views, "自由相机", func():
+		settings_panel.close()
+		set_free(true)
+	)
+	settings_panel.add_button(views, "地图俯瞰", func():
+		settings_panel.close()
+		show_overview()
+	)
+	settings_panel.add_button(views, "恢复跟随", func():
+		settings_panel.close()
+		set_free(false)
+	)
+
+func set_performance_monitor(enabled: bool) -> void:
+	performance_requested = enabled
+	_refresh_performance_monitor()
+
+func set_detailed_timings(enabled: bool) -> void:
+	detailed_timings_requested = enabled
+	_refresh_performance_monitor()
+
+func _refresh_performance_monitor() -> void:
+	var enabled := performance_requested and review_ui_visible and not encounter_ui_active
+	if is_instance_valid(performance_monitor):
+		performance_monitor.set_monitoring(enabled)
+	if vegetation != null:
+		vegetation.volume_streamer.collect_detailed_timings = "--grass-profile" in OS.get_cmdline_user_args() or (enabled and detailed_timings_requested)
+
+func _show_world_notice(message: String) -> void:
+	_world_notice.text = message
+	_world_notice.show()
+	_world_notice_timer.start(3.0)
 
 func _get_llm_panel() -> CanvasLayer:
 	if llm_panel == null:
@@ -606,7 +677,73 @@ func _get_llm_panel() -> CanvasLayer:
 		llm_panel.client.world_status = _llm_world_status
 		llm_panel.client.world_teleport = _llm_teleport
 		add_child(llm_panel)
+		if save_session != null:
+			llm_panel.restore_snapshot(save_session.read_section("chat"))
 	return llm_panel
+
+func _request_game_close() -> void:
+	if not test_ready:
+		get_tree().quit()
+	elif planting != null and (planting.active or planting.dirty_session):
+		planting.runtime_editor.request_close()
+	else:
+		save_session.open("quit")
+
+func make_world_save() -> Dictionary:
+	var point := active_actor().global_position
+	var heading: float = character.visual.rotation.y - PI if character_mode else camper.rotation.y
+	if encounter_ui_active and character_mode and is_instance_valid(initial_ruin.encounter):
+		var context: Dictionary = initial_ruin.encounter.saved_world_context
+		point = context.get("player_position", point)
+		heading = context.get("player_heading", heading)
+	var fallback := ""
+	var location := ""
+	var best_distance := INF
+	for row: Dictionary in resolved_spawns:
+		if row.is_empty() or (not character_mode and row.get("character_only", false)):
+			continue
+		var distance := point.distance_squared_to(row.floor_position)
+		if distance < best_distance:
+			best_distance = distance
+			fallback = str(row.key)
+			location = str(row.name)
+	return {
+		"character_id": character.active_character_id,
+		"actor_mode": "character" if character_mode else "camper",
+		"position": [point.x, point.y, point.z],
+		"heading": heading,
+		"fallback_spawn": fallback,
+		"location": location,
+	}
+
+func restore_world_save(state: Dictionary) -> void:
+	if state.is_empty():
+		return
+	var character_id := str(state.get("character_id", ""))
+	if character.ROSTER_PROFILES.has(character_id):
+		character.switch_character(character_id)
+	var coords: Variant = state.get("position")
+	if coords is Array and coords.size() == 3 and coords.all(_finite_save_number):
+		var point := vec(coords)
+		var angle: Variant = state.get("heading")
+		var heading := float(angle) if _finite_save_number(angle) else 0.0
+		var on_foot: bool = state.get("actor_mode") != "camper"
+		var floor_hit := _find_actor_floor(point, heading, on_foot)
+		if not floor_hit.is_empty():
+			character_mode = on_foot
+			if on_foot:
+				character.set_spawn(floor_hit.position + Vector3.UP * .1, heading)
+			else:
+				_spawn_camper(floor_hit.position, heading)
+			_sync_actor_controls()
+			return
+	for index in resolved_spawns.size():
+		if not resolved_spawns[index].is_empty() and resolved_spawns[index].key == state.get("fallback_spawn"):
+			select_spawn(index)
+			break
+
+func _finite_save_number(value: Variant) -> bool:
+	return (value is int or value is float) and is_finite(value)
 
 func _open_llm_assistant() -> void:
 	if not test_ready or switching_actor or not is_world_input_allowed():
@@ -701,12 +838,11 @@ func _llm_teleport(destination_id: String) -> Dictionary:
 func set_review_ui_visible(enabled: bool) -> void:
 	review_ui_visible=enabled
 	for layer in review_ui_layers:layer.visible=enabled and not encounter_ui_active
+	_refresh_performance_monitor()
 	if not enabled or encounter_ui_active:
 		get_viewport().gui_release_focus()
-		if is_instance_valid(graphics_menu):graphics_menu.get_popup().hide()
 		if npc_placement_preview != null:
 			npc_placement_preview.close_menu()
-		if world_audio!=null:world_audio.hide_settings()
 
 func set_encounter_ui_active(active: bool) -> void:
 	if encounter_ui_active==active:return
@@ -715,19 +851,18 @@ func set_encounter_ui_active(active: bool) -> void:
 	if is_instance_valid(character.switch_wheel):character.switch_wheel.visible=not active
 
 func _input(event: InputEvent) -> void:
-	if has_llm_panel_open():return
-	# Handle globally so H also works while the spawn menu has keyboard focus.
-	if encounter_ui_active or (construction!=null and construction.active):return
-	if event is InputEventKey and event.pressed and not event.echo:
-		var key: int=event.physical_keycode if event.physical_keycode!=0 else event.keycode
-		if key==KEY_F4 and not event.alt_pressed and not event.ctrl_pressed and planting!=null and test_ready:
-			planting.toggle();get_viewport().set_input_as_handled();return
-		if planting!=null and planting.active and event.ctrl_pressed and key==KEY_S:
-			planting.save_test();get_viewport().set_input_as_handled();return
-		if planting!=null and planting.active:return
-		if key==KEY_H:
-			set_review_ui_visible(not review_ui_visible)
+	if not test_ready or has_llm_panel_open() or encounter_ui_active or (construction != null and construction.active):
+		return
+	if planting != null and planting.active:
+		if event is InputEventKey and event.pressed and not event.echo and event.ctrl_pressed and event.physical_keycode == KEY_S:
+			planting.save_test()
 			get_viewport().set_input_as_handled()
+		return
+	if not settings_panel.visible and not switching_actor and is_world_input_allowed() and event.is_action_pressed("ui_cancel") and not event.is_echo():
+		get_viewport().set_input_as_handled()
+		dragging = false
+		settings_panel.open()
+		_sync_actor_controls()
 
 func _ray(p: Vector3,highest:=false) -> Dictionary:
 	var top:=400.0 if highest else p.y+2.2
@@ -787,7 +922,9 @@ func select_spawn(index: int) -> void:
 		if floor_point.is_empty():character_mode=true;character.set_spawn((row.floor_position as Vector3)+Vector3.UP*.1,heading)
 		else:_spawn_camper(floor_point.position,heading)
 	_sync_actor_controls()
-	spawn_menu.select(index);status.text="%s · %.1f m" % [row.name,(row.floor_position as Vector3).y]
+	if is_instance_valid(spawn_menu):
+		spawn_menu.select(index)
+		status.text="%s · %.1f m" % [row.name,(row.floor_position as Vector3).y]
 	await get_tree().physics_frame
 
 func set_free(enabled: bool) -> void:
@@ -801,12 +938,13 @@ func active_camera() -> Camera3D:
 	return character.camera if character_mode else chase_camera
 
 func _sync_actor_controls() -> void:
+	var controls_open := is_instance_valid(settings_panel) and settings_panel.visible
 	character.visible=character_mode
 	character.process_mode=Node.PROCESS_MODE_INHERIT if character_mode and not (planting!=null and planting.active) else Node.PROCESS_MODE_DISABLED
-	character.set_control_enabled(character_mode and not free_mode)
+	character.set_control_enabled(character_mode and not free_mode and not controls_open)
 	camper.visible=not character_mode
-	camper.set_physics_process(not character_mode and not free_mode)
-	camper.set_process_unhandled_input(not character_mode and not free_mode)
+	camper.set_physics_process(not character_mode and not free_mode and not controls_open)
+	camper.set_process_unhandled_input(not character_mode and not free_mode and not controls_open)
 	if free_mode:camera.make_current()
 	else:active_camera().make_current()
 	if vegetation!=null:
@@ -831,7 +969,7 @@ func _resolve_camper_respawn(checkpoint: Transform3D) -> Variant:
 	floor_point=_find_actor_floor(row.floor_position,heading,false)
 	if not floor_point.is_empty():
 		return Transform3D(Basis(Vector3.UP,heading),floor_point.position+Vector3.UP*.12)
-	status.text="此处没有可安全放置房车的路面，请切换出生点"
+	_show_world_notice("此处没有可安全放置房车的路面")
 	return null
 
 func _find_actor_floor(base: Vector3,heading: float,use_character: bool) -> Dictionary:
@@ -867,7 +1005,7 @@ func set_character_mode(enabled: bool) -> void:
 	await get_tree().physics_frame
 	var floor_point:=_find_actor_floor(point,heading,enabled)
 	if floor_point.is_empty():
-		status.text="附近空间不足，先移动到开阔路面再按 C";switching_actor=false;_sync_actor_controls();return
+		_show_world_notice("附近空间不足，先移动到开阔路面再按 C");switching_actor=false;_sync_actor_controls();return
 	character_mode=enabled;free_mode=false;overview_mode=false
 	if enabled:character.set_spawn(floor_point.position+Vector3.UP*.1,heading)
 	else:_spawn_camper(floor_point.position,heading)
@@ -890,19 +1028,15 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		var key: int=event.physical_keycode if event.physical_keycode!=0 else event.keycode
-		if key>=KEY_1 and key<=KEY_9:select_spawn(key-KEY_1)
-		elif key==KEY_F:set_free(not free_mode)
-		elif key==KEY_V:show_overview()
-		elif key==KEY_C:set_character_mode(not character_mode)
-		elif key==KEY_B and vegetation!=null:vegetation.set_vegetation_enabled(not vegetation.vegetation_enabled)
-		elif key==KEY_F6 and vegetation!=null:
-			vegetation.volume_streamer.collect_detailed_timings=not vegetation.volume_streamer.collect_detailed_timings
+		if key == KEY_C and not event.ctrl_pressed and not event.alt_pressed:
+			set_character_mode(not character_mode)
+			get_viewport().set_input_as_handled()
 	if event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_RIGHT:dragging=event.pressed
 	if event is InputEventMouseMotion and free_mode and dragging:
 		camera.rotation.y-=event.relative.x*.003;camera.rotation.x=clampf(camera.rotation.x-event.relative.y*.003,-1.5,1.5)
 
 func _process(delta: float) -> void:
-	if has_llm_panel_open():return
+	if has_llm_panel_open() or (is_instance_valid(settings_panel) and settings_panel.visible):return
 	if construction!=null and construction.active:return
 	if planting!=null and planting.active:return
 	if not free_mode or automation_enabled:return

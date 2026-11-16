@@ -18,15 +18,26 @@ const WORLD_AUDIO := preload("res://scripts/audio/world_audio_1030.gd")
 const WORLD := "res://scenes/main.tscn"
 const UI := preload("res://scenes/combat/encounter_ui_style.gd")
 const PALETTE := preload("res://scenes/combat/temple_paper_palette.tres")
-const SETTINGS := preload("res://scripts/ui/title_api_settings.gd")
+const API_SETTINGS := preload("res://scripts/ui/title_api_settings.gd")
+const GAME_SETTINGS := preload("res://scripts/ui/game_settings.gd")
+const PREFERENCES := preload("res://scripts/ui/game_preferences.gd")
 const LOADING_SCREEN := preload("res://scripts/ui/title_loading.gd")
+const SAVE_STORE := preload("res://scripts/progress/game_save_store.gd")
+const SAVE_PANEL := preload("res://scripts/ui/game_save_panel.gd")
 
 var _menu: VBoxContainer
 var _start_button: Button
+var _load_button: Button
+var _save_panel: SAVE_PANEL
 var _start_status: Label
-var _settings: SETTINGS
+var _settings: GAME_SETTINGS
+var _api_settings: API_SETTINGS
+var _settings_button: Button
+var _api_button: Button
 var _loading := false
 var _ambient_gain := 1.0
+var _audio_config: Dictionary
+var _surf: AudioStreamPlayer
 var _gull: AudioStreamPlayer
 var _gull_timer: Timer
 var _last_gull := -1
@@ -34,6 +45,7 @@ var _gull_volume_db := -12.0
 
 
 func _ready() -> void:
+	PREFERENCES.apply_viewport(get_viewport(), PREFERENCES.quality())
 	var coast := COAST.instantiate() as Node3D
 	add_child(coast)
 	var camera := coast.find_child("TitleCamera", true, false) as Camera3D
@@ -280,18 +292,34 @@ func _setup_menu() -> void:
 	_menu.anchor_right = .234
 	_menu.anchor_top = .327
 	_menu.anchor_bottom = .327
-	_start_button = _add_menu_button("开始游戏", _start_game)
-	_add_menu_button("设置", _open_settings)
+	var latest := SAVE_STORE.latest()
+	var continue_button: Button
+	if not latest.is_empty():
+		continue_button = _add_menu_button("继续游戏", func(): _load_slot(SAVE_STORE.latest()))
+	_start_button = _add_menu_button("新游戏" if continue_button != null else "开始游戏", _start_game)
+	if continue_button != null:
+		_load_button = _add_menu_button("读取存档", _open_save_panel)
+	_settings_button = _add_menu_button("设置", _open_settings)
+	_api_button = _add_menu_button("API 配置", _open_api_settings)
 	_add_menu_button("退出游戏", get_tree().quit)
 	_start_status = UI.text_label("", 21, Color("#fff6e5"), UI.DEFAULT_PALETTE)
 	_start_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_menu.add_child(_start_status)
-	_start_button.grab_focus()
+	(continue_button if continue_button != null else _start_button).grab_focus()
 
-	_settings = SETTINGS.new()
-	_settings.hide()
+	_settings = GAME_SETTINGS.new()
 	root.add_child(_settings)
-	_settings.closed.connect(_close_settings)
+	_settings.closed.connect(_restore_menu.bind(_settings_button))
+	_settings.quality_changed.connect(func(index: int): PREFERENCES.apply_viewport(get_viewport(), index))
+	_settings.audio_changed.connect(_set_audio_setting)
+	_api_settings = API_SETTINGS.new()
+	_api_settings.hide()
+	root.add_child(_api_settings)
+	_api_settings.closed.connect(_restore_menu.bind(_api_button))
+	_save_panel = SAVE_PANEL.new()
+	root.add_child(_save_panel)
+	_save_panel.selected.connect(_load_slot)
+	_save_panel.closed.connect(func(): _restore_menu(_load_button if _load_button != null else _start_button))
 
 
 func _add_menu_button(caption: String, action: Callable) -> Button:
@@ -342,12 +370,34 @@ func _open_settings() -> void:
 	_settings.open()
 
 
-func _close_settings() -> void:
+func _open_api_settings() -> void:
+	_menu.hide()
+	_api_settings.open()
+
+
+func _restore_menu(button: Button) -> void:
 	_menu.show()
-	_menu.get_child(1).grab_focus()
+	button.grab_focus()
 
 
-func _start_game() -> void:
+func _open_save_panel() -> void:
+	_menu.hide()
+	_save_panel.open("load")
+
+
+func _load_slot(slot: String) -> void:
+	var snapshot := SAVE_STORE.read(slot)
+	if snapshot.is_empty():
+		if _save_panel.visible:
+			_save_panel.report("无法读取所选存档。")
+		else:
+			_start_status.text = "没有可读取的存档。"
+		return
+	_save_panel.hide()
+	_start_game(snapshot)
+
+
+func _start_game(snapshot: Dictionary = {}) -> void:
 	if _loading:
 		return
 	_loading = true
@@ -356,7 +406,7 @@ func _start_game() -> void:
 	loading_screen.name = "WorldLoadingScreen"
 	loading_screen.load_failed.connect(_on_load_failed, CONNECT_ONE_SHOT)
 	get_tree().root.add_child(loading_screen)
-	loading_screen.start(WORLD)
+	loading_screen.start(WORLD, snapshot)
 
 
 func _on_load_failed() -> void:
@@ -367,29 +417,42 @@ func _on_load_failed() -> void:
 
 
 func _setup_audio() -> void:
-	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://assets/audio/world_1030/settings.json"))
-	var config: Dictionary = data if data is Dictionary else {}
-	if not config.get("enabled", true):
-		return
-	_ambient_gain = float(config.get("master", .8)) * float(config.get("ambience", .85))
-	_gull_volume_db = float(config.get("gull_db", -6.0)) - 6.0
-	var surf := AudioStreamPlayer.new()
+	_audio_config = PREFERENCES.audio()
+	_gull_volume_db = float(_audio_config.get("gull_db", -6.0)) - 6.0
+	_surf = AudioStreamPlayer.new()
 	var loop := WORLD_AUDIO.WAVES.duplicate() as AudioStreamOggVorbis
 	loop.loop = true
-	surf.name = "TitleSurf"
-	surf.stream = loop
-	surf.volume_db = linear_to_db(maxf(.0001, _ambient_gain * float(config.get("waves_gain", .40))))
-	add_child(surf)
-	surf.play()
+	_surf.name = "TitleSurf"
+	_surf.stream = loop
+	add_child(_surf)
 	_gull = AudioStreamPlayer.new()
 	_gull.name = "TitleGulls"
-	_gull.volume_db = _gull_volume_db + linear_to_db(maxf(.0001, _ambient_gain))
 	add_child(_gull)
 	_gull_timer = Timer.new()
 	_gull_timer.one_shot = true
 	_gull_timer.timeout.connect(_play_gull)
 	add_child(_gull_timer)
-	_gull_timer.start(4.0)
+	_apply_audio_settings()
+
+
+func _set_audio_setting(key: String, value: Variant) -> void:
+	_audio_config[key] = value
+	_apply_audio_settings()
+
+
+func _apply_audio_settings() -> void:
+	_ambient_gain = float(_audio_config.master) * float(_audio_config.ambience)
+	_surf.volume_db = linear_to_db(maxf(.0001, _ambient_gain * float(_audio_config.waves_gain)))
+	_gull.volume_db = _gull_volume_db + linear_to_db(maxf(.0001, _ambient_gain))
+	if _audio_config.enabled:
+		if not _surf.playing:
+			_surf.play()
+		if _gull_timer.is_stopped():
+			_gull_timer.start(4.0)
+	else:
+		_surf.stop()
+		_gull.stop()
+		_gull_timer.stop()
 
 
 func _play_gull() -> void:

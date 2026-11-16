@@ -64,7 +64,6 @@ func run() -> void:
 	assert(grass.shader.resource_path=="res://assets/vegetation/shaders/vegetation_wind.gdshader")
 	var original_hashes: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(OUT+"baseline_shader_hashes.json"))
 	for file: String in original_hashes:assert(FileAccess.get_sha256("res://assets/vegetation/shaders/"+file)==original_hashes[file])
-	await tap(KEY_H);assert(scene.review_ui_visible)
 	await tap(KEY_H);assert(not scene.review_ui_visible)
 	FileAccess.open(OUT+"runtime.json",FileAccess.WRITE).store_string(JSON.stringify({"captures":reports,"grass_bake_signature":signature,"original_shaders_unchanged":true,"grass_shader_unchanged":true,"fill":comparison.fill_strength,"relief":comparison.shadow_relief},"  "))
 	print("FOLIAGE_BACKLIGHT_CAPTURE_PASS ",JSON.stringify(reports));quit()

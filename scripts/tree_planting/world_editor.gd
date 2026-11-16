@@ -71,7 +71,8 @@ func finish() -> void:
 	runtime_editor=UI.new();runtime_editor.scene=self;runtime_editor.integrated=true;add_child(runtime_editor)
 	set_editor_ui(false)
 	get_tree().auto_accept_quit=false
-	get_tree().root.close_requested.connect(runtime_editor.request_close)
+	if world.save_session == null:
+		get_tree().root.close_requested.connect(runtime_editor.request_close)
 	if not load_error.is_empty():say(load_error+"；原保存文件保留，修复前禁止覆盖")
 
 static func ring_id(row: Dictionary) -> String:return "ring_"+str(row.name)

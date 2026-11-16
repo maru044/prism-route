@@ -56,7 +56,7 @@ func _ready() -> void:
 	content.minimum_size_changed.connect(func(): page.custom_minimum_size = content.get_combined_minimum_size())
 	UI.paper_backing(content, PALETTE, Vector2(31, 29))
 
-	var title := UI.text_label("API 连接", 36, PALETTE.text, PALETTE)
+	var title := UI.text_label("API 配置", 36, PALETTE.text, PALETTE)
 	title.add_theme_font_override("font", UI.command_font())
 	content.add_child(title)
 	var routes := UI.row(10)

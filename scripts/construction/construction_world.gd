@@ -29,6 +29,7 @@ var look_drag:=false
 var save_path:=SAVE_PATH
 var initialized:=false
 var _save_timer: Timer
+const GAME_SAVES := preload("res://scripts/progress/game_save_store.gd")
 var _dirty := false
 var _lowland_example_placed := false
 var _home_markers: Array[Dictionary] = []
@@ -46,7 +47,12 @@ func _ready() -> void:
 		var image:=Image.create(MASK_SIZE,MASK_SIZE,false,Image.FORMAT_R8);image.fill(Color.BLACK)
 		plots[spec.id]={"spec":spec,"root":node,"data":data,"nodes":{},"image":image,"texture":ImageTexture.create_from_image(image)}
 	# Verification never touches a real player's save.
-	if not world.automation_enabled and FileAccess.file_exists(save_path):load_file(save_path,false)
+	var session: Node = world.get("save_session") if "save_session" in world else null
+	if session != null and session.sections.has("construction"):
+		restore_snapshot(session.read_section("construction"), false)
+	elif not world.automation_enabled and FileAccess.file_exists(save_path):
+		if session == null or GAME_SAVES.latest().is_empty():
+			load_file(save_path, false)
 	for id: String in plots:refresh(id)
 	_setup_editor()
 	initialized=true
@@ -109,16 +115,18 @@ func bind_grass(material: ShaderMaterial) -> void:
 		material.set_shader_parameter("construction_mask_"+pair[0],plot.texture)
 		material.set_shader_parameter("construction_inverse_"+pair[0],plot.root.global_transform.affine_inverse())
 
-func save_file(path: String) -> Error:
-	if not load_error.is_empty():return ERR_INVALID_DATA
+func save_snapshot() -> Dictionary:
 	var states: Dictionary={}
 	for id: String in plots:states[id]=plots[id].data.snapshot()
-	var body: Dictionary={"version":1,"catalog_sha":FileAccess.get_sha256("res://assets/construction/basic_kit/catalog.json"),"plots":states,"lowland_example_placed":_lowland_example_placed}
+	return {"version":1,"catalog_sha":FileAccess.get_sha256("res://assets/construction/basic_kit/catalog.json"),"plots":states,"lowland_example_placed":_lowland_example_placed}
+
+func save_file(path: String) -> Error:
+	if not load_error.is_empty():return ERR_INVALID_DATA
 	var error:=DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(path.get_base_dir()))
 	if error!=OK:return error
 	var file:=FileAccess.open(path+".tmp",FileAccess.WRITE)
 	if file==null:return FileAccess.get_open_error()
-	file.store_string(JSON.stringify(body))
+	file.store_string(JSON.stringify(save_snapshot()))
 	var write_error := file.get_error()
 	file.close()
 	if write_error != OK:
@@ -127,20 +135,26 @@ func save_file(path: String) -> Error:
 	return DirAccess.rename_absolute(path+".tmp",path)
 
 func load_file(path: String,update_scene:=true) -> bool:
-	var parsed: Variant=JSON.parse_string(FileAccess.get_file_as_string(path))
+	return restore_snapshot(JSON.parse_string(FileAccess.get_file_as_string(path)), update_scene)
+
+func restore_snapshot(parsed: Variant, update_scene:=true) -> bool:
 	if not parsed is Dictionary or parsed.get("version",0)!=1 or parsed.get("catalog_sha","")!=FileAccess.get_sha256("res://assets/construction/basic_kit/catalog.json"):
 		load_error="建造存档版本或组件规格不匹配，原文件保留";return false
+	if not parsed.get("plots") is Dictionary:
+		load_error="建造存档结构损坏，原文件保留";return false
 	var pending: Dictionary={}
 	for id: String in plots:
 		var state: Variant=parsed.get("plots",{}).get(id)
-		if not state is Dictionary or not state.get("pieces") is Dictionary or not state.get("rooms") is Array or not state.get("serial") is float or not state.get("room_serial") is float:
+		if not state is Dictionary or not state.get("pieces") is Dictionary or not state.get("rooms") is Array or not _number(state.get("serial")) or not _number(state.get("room_serial")):
 			load_error="建造存档结构损坏，原文件保留";return false
+		if not state.rooms.all(func(room: Variant): return room is Dictionary and room.get("id") is String and room.get("cells") is Array):
+			load_error="建造存档房间损坏，原文件保留";return false
 		for key: String in state.pieces:
 			var row: Variant=state.pieces[key]
 			if not row is Dictionary or row.get("id","")!=key or not kit.catalog.definitions.has(row.get("definition","")):
 				load_error="建造存档组件损坏";return false
 			for field in ["x","z","story","rotation"]:
-				if not row.get(field) is float or not is_finite(row[field]):load_error="建造存档坐标损坏";return false
+				if not _number(row.get(field)):load_error="建造存档坐标损坏";return false
 			if row.x<0 or row.x>60 or row.z<0 or row.z>60 or row.story<0 or row.story>1:
 				load_error="建造存档超出范围";return false
 		pending[id]=state
@@ -152,6 +166,9 @@ func load_file(path: String,update_scene:=true) -> bool:
 	if active:
 		_update_editor_state()
 	return true
+
+func _number(value: Variant) -> bool:
+	return (value is int or value is float) and is_finite(value)
 
 func is_world_input_locked() -> bool:
 	return active
@@ -375,7 +392,11 @@ func _queue_save() -> void:
 func _flush_save() -> Error:
 	if not _dirty:
 		return OK
-	var error := save_file(save_path)
+	var error: Error
+	if "save_session" in world and world.save_session != null:
+		error = world.save_session.save_game(GAME_SAVES.AUTO) if load_error.is_empty() else ERR_INVALID_DATA
+	else:
+		error = save_file(save_path)
 	if error == OK:
 		_dirty = false
 	return error
@@ -391,7 +412,7 @@ func _autosave() -> void:
 		hud.show_notice(_save_error(error))
 
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_WM_CLOSE_REQUEST and initialized and _dirty:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST and initialized and _dirty and (not "save_session" in world or world.save_session == null):
 		_flush_save()
 
 func _pointed_piece(mouse: Vector2) -> Dictionary:

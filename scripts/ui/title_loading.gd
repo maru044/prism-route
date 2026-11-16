@@ -16,6 +16,7 @@ var _elapsed := 0.0
 
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	layer = 100
 	add_to_group("world_input_blockers")
 	var backdrop := ColorRect.new()
@@ -81,7 +82,7 @@ func is_world_input_locked() -> bool:
 	return true
 
 
-func start(world_path: String) -> void:
+func start(world_path: String, snapshot: Dictionary = {}) -> void:
 	var tree := get_tree()
 	# Give the overlay a frame to draw before starting background work.
 	await tree.process_frame
@@ -99,11 +100,14 @@ func start(world_path: String) -> void:
 		_fail()
 		return
 	world.set("startup_model", model)
+	world.set("enable_game_saves", true)
+	world.set("startup_save", snapshot.duplicate(true))
 	if tree.change_scene_to_node(world) != OK:
 		world.free()
 		_fail()
 		return
 	await tree.scene_changed
+	tree.paused = false
 	while is_instance_valid(world) and tree.current_scene == world and not world.get("test_ready"):
 		await tree.process_frame
 	# Render a complete world frame under the overlay before revealing it.
