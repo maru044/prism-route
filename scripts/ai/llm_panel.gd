@@ -5,26 +5,37 @@ signal panel_closed
 const Client := preload("res://scripts/ai/game_llm_client.gd")
 const Style := preload("res://scenes/combat/encounter_ui_style.gd")
 const Card := preload("res://scenes/combat/encounter_card.gd")
+const PAPER_PALETTE := preload("res://scenes/combat/temple_paper_palette.tres")
 
 var client := Client.new()
-var palette: Style.Palette = Style.DEFAULT_PALETTE
+var palette: Style.Palette = PAPER_PALETTE
 
 var _surface := Control.new()
 var _title := Label.new()
-var _transcript := RichTextLabel.new()
+var _scroll := ScrollContainer.new()
+var _messages := Style.column(15)
+var _turn_views: Array[Dictionary] = []
+var _empty: Label
 var _draft := TextEdit.new()
 var _status := Label.new()
+var _status_row: HBoxContainer
+var _actions: HBoxContainer
 var _send: Button
 var _retry: Button
 var _continue: Button
 var _undo: Button
 var _previous: Button
 var _next: Button
+var _version: Label
 var _teleport: Button
+var _teleport_turn := -1
+var _teleport_destination := ""
 var _copy_diagnostic: Button
 var _drafts := {}
 var _thread_id := ""
 var _expanded_reports := {}
+var _follow_latest := true
+var _follow_queued := false
 
 func _ready() -> void:
 	layer = 25
@@ -40,10 +51,12 @@ func open_panel(route: String, scope: String, context: Dictionary = {}) -> void:
 	_thread_id = route + "/" + scope
 	_draft.text = _drafts.get(_thread_id, "")
 	_expanded_reports.clear()
+	_reset_transcript()
+	var speaker := str(context.get("npc_name", ""))
+	_title.text = "游戏助手" if route == Client.ASSISTANT else ("自由对话" if speaker.is_empty() else speaker + "  ·  自由对话")
 	client.open(route, scope, context)
-	_title.text = str(context.get("npc_name", "自由对话")) + "  ·  自由对话" if route == Client.DIALOGUE else "游戏助手"
 	if not client.configured():
-		client.status = "请在标题界面的设置中填写 API 连接。"
+		client.status = "请在标题界面的「API 配置」中填写连接。"
 		_refresh()
 	show()
 	_draft.grab_focus()
@@ -78,74 +91,141 @@ func _build_ui() -> void:
 	add_child(_surface)
 	_surface.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_surface.mouse_filter = Control.MOUSE_FILTER_STOP
-	var fade := Style.bottom_fade(palette)
-	fade.offset_top = -680.0
-	_surface.add_child(fade)
-	var dock := Style.column(8)
-	dock.anchor_left = .168
-	dock.anchor_right = .832
-	dock.anchor_top = 1.0
-	dock.anchor_bottom = 1.0
-	dock.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	dock.offset_bottom = -38.0
-	dock.offset_top = -38.0
-	_surface.add_child(dock)
+	var frame := MarginContainer.new()
+	_surface.add_child(frame)
+	frame.anchor_left = .15
+	frame.anchor_right = .85
+	frame.anchor_top = .10
+	frame.anchor_bottom = .90
+	frame.add_theme_constant_override("margin_left", 37)
+	frame.add_theme_constant_override("margin_right", 37)
+	frame.add_theme_constant_override("margin_top", 25)
+	frame.add_theme_constant_override("margin_bottom", 26)
+	var paper := Style.paper_backing(frame, palette)
+	var shadow := ColorRect.new()
+	shadow.color = Color("#233e5430")
+	shadow.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	paper.add_child(shadow)
+	paper.move_child(shadow, 0)
+	shadow.show_behind_parent = true
+	shadow.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	shadow.offset_top = 6
+	shadow.offset_left = 5
+	shadow.offset_right = 5
+	shadow.offset_bottom = 7
+	var dock := Style.column(12)
+	frame.add_child(dock)
 
-	var top := HBoxContainer.new()
-	top.add_theme_constant_override("separation", 8)
+	var top := Style.row(12)
 	dock.add_child(top)
 	_title.add_theme_font_override("font", Style.command_font())
-	_title.add_theme_font_size_override("font_size", 25)
+	_title.add_theme_font_size_override("font_size", 34)
 	_title.add_theme_color_override("font_color", palette.speaker)
 	_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	top.add_child(_title)
-	_button(top, "关闭", close_panel)
+	_button(top, "关闭", close_panel).tooltip_text = "Esc"
+	_add_rule(dock)
 
-	_transcript.custom_minimum_size.y = 246
-	_transcript.selection_enabled = true
-	_transcript.scroll_following = true
-	_transcript.add_theme_color_override("default_color", palette.text)
-	_transcript.add_theme_font_override("normal_font", Style.command_font())
-	_transcript.add_theme_font_size_override("normal_font_size", 21)
-	_transcript.add_theme_color_override("font_outline_color", palette.shade)
-	_transcript.add_theme_constant_override("outline_size", 3)
-	_transcript.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_transcript.meta_clicked.connect(_toggle_report)
-	dock.add_child(_transcript)
+	var transcript_frame := PanelContainer.new()
+	transcript_frame.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	transcript_frame.add_theme_stylebox_override("panel", _paper_box(Color(palette.paper_face, .52), 24, 18))
+	dock.add_child(transcript_frame)
+	_scroll.name = "ChatHistory"
+	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_scroll.custom_minimum_size.y = 130
+	transcript_frame.add_child(_scroll)
+	var scrollbar := _scroll.get_v_scroll_bar()
+	scrollbar.add_theme_stylebox_override("scroll", _paper_box(Color(palette.paper_ink, .12), 4, 0))
+	scrollbar.add_theme_stylebox_override("grabber", _paper_box(Color(palette.paper_ink, .47), 4, 4))
+	scrollbar.add_theme_stylebox_override("grabber_highlight", _paper_box(Color(palette.paper_ink, .62), 4, 4))
+	scrollbar.add_theme_stylebox_override("grabber_pressed", _paper_box(Color(palette.paper_ink, .80), 4, 4))
+	scrollbar.value_changed.connect(_on_scroll_moved)
+	scrollbar.changed.connect(_queue_follow_latest)
+	_messages.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_scroll.add_child(_messages)
+	_empty = Style.text_label("输入消息开始对话", 21, palette.secondary, palette)
+	_empty.add_theme_font_override("font", Style.interface_font())
+	_empty.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_empty.custom_minimum_size.y = 62
+	_empty.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_messages.add_child(_empty)
 
 	_status.add_theme_color_override("font_color", palette.accent)
+	_status.add_theme_font_override("font", Style.interface_font())
+	_status.add_theme_font_size_override("font_size", 17)
 	_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	var status_row := HBoxContainer.new()
-	dock.add_child(status_row)
+	_status_row = Style.row(12)
+	dock.add_child(_status_row)
 	_status.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	status_row.add_child(_status)
-	_copy_diagnostic = _button(status_row, "复制诊断", func(): DisplayServer.clipboard_set(client.diagnostic))
+	_status_row.add_child(_status)
+	_copy_diagnostic = _button(_status_row, "复制诊断", func(): DisplayServer.clipboard_set(client.diagnostic))
 	_copy_diagnostic.hide()
-	var prompt := HBoxContainer.new()
-	prompt.add_theme_constant_override("separation", 8)
+	_status_row.hide()
+
+	_actions = Style.row(10)
+	dock.add_child(_actions)
+	_undo = _button(_actions, "倒回", _undo_turn)
+	_retry = _button(_actions, "重新生成", client.retry)
+	_continue = _button(_actions, "续写", client.continue_reply)
+	var spacer := Control.new()
+	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_actions.add_child(spacer)
+	_previous = _button(_actions, "上一版", func(): client.swipe(-1))
+	_version = Style.text_label("", 17, palette.secondary, palette)
+	_version.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_actions.add_child(_version)
+	_next = _button(_actions, "下一版", func(): client.swipe(1))
+	_teleport = _button(_actions, "确认传送", client.confirm_teleport)
+	_teleport.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	_teleport.hide()
+
+	var prompt := Style.row(12)
 	dock.add_child(prompt)
-	_draft.custom_minimum_size.y = 66
+	_draft.custom_minimum_size.y = 82
 	_draft.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_draft.placeholder_text = "输入消息 · Ctrl+Enter 发送"
 	_draft.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY
+	_draft.add_theme_font_override("font", Style.interface_font())
+	_draft.add_theme_font_size_override("font_size", 22)
+	_draft.add_theme_color_override("font_color", palette.text)
+	_draft.add_theme_color_override("font_placeholder_color", palette.secondary)
+	_draft.add_theme_color_override("caret_color", palette.speaker)
+	_draft.add_theme_color_override("selection_color", palette.paper_active)
+	_draft.add_theme_stylebox_override("normal", _paper_box(palette.paper_face, 15, 12, .36))
+	var focus := _paper_box(Color.TRANSPARENT, 15, 12, .90)
+	focus.draw_center = false
+	_draft.add_theme_stylebox_override("focus", focus)
 	prompt.add_child(_draft)
 	_send = _button(prompt, "发送", _send_or_stop)
-	_send.custom_minimum_size.x = 112
+	_send.custom_minimum_size.x = 132
+	_send.add_theme_font_size_override("font_size", 24)
+	_send.set_featured(true)
 
-	var actions := HBoxContainer.new()
-	actions.add_theme_constant_override("separation", 7)
-	dock.add_child(actions)
-	_undo = _button(actions, "倒回", _undo_turn)
-	_retry = _button(actions, "重新生成", client.retry)
-	_continue = _button(actions, "续写", client.continue_reply)
-	_previous = _button(actions, "上一版", func(): client.swipe(-1))
-	_next = _button(actions, "下一版", func(): client.swipe(1))
-	_teleport = _button(actions, "确认传送", client.confirm_teleport)
+func _add_rule(parent: Container) -> void:
+	var divider := ColorRect.new()
+	divider.color = Color(palette.paper_ink, .44)
+	divider.custom_minimum_size.y = 1
+	divider.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	parent.add_child(divider)
+
+func _paper_box(color: Color, x_padding: float, y_padding: float, ink := 0.0) -> StyleBoxFlat:
+	var box := StyleBoxFlat.new()
+	box.bg_color = color
+	box.content_margin_left = x_padding
+	box.content_margin_right = x_padding
+	box.content_margin_top = y_padding
+	box.content_margin_bottom = y_padding
+	box.set_corner_radius_all(3)
+	if ink > 0:
+		box.border_color = Color(palette.paper_ink, ink)
+		box.set_border_width_all(1)
+	return box
 
 func _button(parent: Container, label: String, callback: Callable) -> Button:
 	var button := Card.new()
 	button.configure(label, palette, Card.Kind.CONTINUE)
-	button.custom_minimum_size = Vector2(82, 36)
+	button.custom_minimum_size = Vector2(maxf(76, float(label.length()) * 19 + 24), 38)
 	button.pressed.connect(callback)
 	parent.add_child(button)
 	return button
@@ -168,7 +248,7 @@ func _send_or_stop() -> void:
 	if client.pending:
 		client.stop()
 	elif not client.configured():
-		client.status = "请在标题界面的设置中填写 API 连接。"
+		client.status = "请在标题界面的「API 配置」中填写连接。"
 		_refresh()
 	elif client.send(_draft.text):
 		_draft.clear()
@@ -186,28 +266,15 @@ func _undo_turn() -> void:
 		_draft.grab_focus()
 
 func _refresh() -> void:
-	var turns: Array = client.history
-	var last: Dictionary = turns.back() if not turns.is_empty() else {}
-	_transcript.clear()
-	var speaker := str(client.context.get("npc_name", "游戏助手"))
-	for i in turns.size():
-		var turn: Dictionary = turns[i]
-		_line("你", turn.user, palette.accent)
-		if turn.active >= 0:
-			var response: Dictionary = turn.replies[turn.active]
-			var growing := i == turns.size() - 1 and client.is_continuing()
-			_reply_line(speaker, response, Vector2i(i, turn.active), client.partial if growing else "", growing)
-		var notice: String = turn.get("result", {}).get("notice", "")
-		if not notice.is_empty():
-			_line("状态", notice, palette.secondary)
-	if client.pending and not client.partial.is_empty() and not client.is_continuing():
-		_reply_line(speaker, {}, Vector2i(turns.size() - 1, last.replies.size()), client.partial, true)
+	var last: Dictionary = client.history.back() if not client.history.is_empty() else {}
+	_refresh_transcript()
 	_status.text = client.status
 	if client.omitted_turns > 0:
 		_status.text += ("\n" if not _status.text.is_empty() else "") + "本次上下文省略了 %d 个较早回合。" % client.omitted_turns
 	if client.incomplete_turns > 0:
 		_status.text += ("\n" if not _status.text.is_empty() else "") + "%d 个未完成回合未纳入本次上下文。" % client.incomplete_turns
 	_copy_diagnostic.visible = not client.diagnostic.is_empty()
+	_status_row.visible = not _status.text.is_empty() or _copy_diagnostic.visible
 	_send.text = "停止" if client.pending else "发送"
 	_draft.placeholder_text = "生成中，可先输入下一条消息" if client.pending else "输入消息 · Ctrl+Enter 发送"
 	_undo.disabled = last.is_empty() or client.pending
@@ -217,56 +284,186 @@ func _refresh() -> void:
 	var has_versions: bool = last.get("replies", []).size() > 1
 	_previous.visible = has_versions
 	_next.visible = has_versions
+	_version.visible = has_versions
+	if has_versions:
+		_version.text = "%d / %d" % [last.active + 1, last.replies.size()]
 	_previous.disabled = client.pending
 	_next.disabled = client.pending
-	var destination: String = client.teleport_offer()
-	_teleport.visible = not destination.is_empty()
-	_teleport.disabled = client.pending
-	_teleport.text = "确认传送"
-	if _teleport.visible and client.world_status.is_valid():
-		var state: Dictionary = client.world_status.call()
-		for row: Dictionary in state.get("destinations", []):
-			if row.id == destination:
-				_teleport.text = "确认传送 · " + row.name
-				break
 
-func _line(speaker: String, text: String, color: Color) -> void:
-	_transcript.push_color(color)
-	_transcript.add_text(speaker + "  ")
-	_transcript.pop()
-	_transcript.add_text(text + "\n\n")
+func _refresh_transcript() -> void:
+	var count := client.history.size()
+	if _teleport_turn >= count:
+		_detach_teleport()
+	while _turn_views.size() > count:
+		_remove_last_turn()
+	while _turn_views.size() < count:
+		var index := _turn_views.size()
+		_add_turn(index)
+		_update_reply(index)
+	if count > 0:
+		_update_reply(count - 1)
+	_empty.visible = count == 0
+	_refresh_teleport()
+	_queue_follow_latest()
 
-func _reply_line(speaker: String, reply: Dictionary, key: Vector2i, partial_text: String, streaming: bool) -> void:
-	var sections := Client.reply_sections(reply, partial_text, streaming) if client.route == Client.DIALOGUE \
-		else {"body": reply.get("text", "") + partial_text, "report": ""}
-	var note: String = "" if streaming else reply.get("note", "")
+func _reset_transcript() -> void:
+	_detach_teleport()
+	while not _turn_views.is_empty():
+		_remove_last_turn()
+	_follow_latest = true
+	_scroll.scroll_vertical = 0
+
+func _remove_last_turn() -> void:
+	var view: Dictionary = _turn_views.pop_back()
+	var row: Control = view.root
+	_messages.remove_child(row)
+	row.queue_free()
+
+func _add_turn(index: int) -> void:
+	var turn: Dictionary = client.history[index]
+	var row := Style.column(10)
+	_messages.add_child(row)
+	var player := _message_card(row, "你", true)
+	var question := _message_text(22, palette.text)
+	question.text = turn.user
+	player.add_child(question)
+	var speaker := str(client.context.get("npc_name", "自由对话")) if client.route == Client.DIALOGUE else "游戏助手"
+	var reply_box := _message_card(row, speaker, false)
+	var body := _message_text(22, palette.text)
+	reply_box.add_child(body)
+	var report_button := _button(reply_box, "▸ 查看报告", _toggle_report.bind(index))
+	report_button.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	var report := _message_text(18, palette.secondary)
+	reply_box.add_child(report)
+	var notice := _message_text(18, palette.secondary)
+	reply_box.add_child(notice)
+	_turn_views.append({
+		"root": row, "reply_lane": reply_box.get_parent().get_parent(), "reply_box": reply_box,
+		"body": body, "report_button": report_button, "report": report, "notice": notice, "reply_key": Vector2i(index, -1),
+	})
+
+func _message_card(row: VBoxContainer, speaker: String, is_player: bool) -> VBoxContainer:
+	var lane := Style.row(0)
+	row.add_child(lane)
+	var inset := Control.new()
+	inset.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	inset.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	if is_player:
+		lane.add_child(inset)
+	var card := PanelContainer.new()
+	var tint := palette.paper_face.lerp(palette.paper_wash, .87 if is_player else .15)
+	card.add_theme_stylebox_override("panel", _paper_box(tint, 20, 13, .28))
+	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	card.size_flags_stretch_ratio = 8.0
+	lane.add_child(card)
+	if not is_player:
+		lane.add_child(inset)
+	var content := Style.column(6)
+	card.add_child(content)
+	var name_label := Style.text_label(speaker, 18, palette.accent if is_player else palette.speaker, palette)
+	name_label.add_theme_font_override("font", Style.interface_font())
+	content.add_child(name_label)
+	return content
+
+func _message_text(point_size: int, color: Color) -> RichTextLabel:
+	var text := RichTextLabel.new()
+	text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	text.fit_content = true
+	text.scroll_active = false
+	text.mouse_force_pass_scroll_events = true
+	text.selection_enabled = true
+	text.context_menu_enabled = true
+	text.add_theme_color_override("default_color", color)
+	text.add_theme_font_override("normal_font", Style.interface_font())
+	text.add_theme_font_size_override("normal_font_size", point_size)
+	text.add_theme_constant_override("line_separation", 5)
+	return text
+
+func _update_reply(index: int) -> void:
+	var view := _turn_views[index]
+	var turn: Dictionary = client.history[index]
+	var shown: Dictionary = turn.replies[turn.active] if turn.active >= 0 else {}
+	var reply_index: int = turn.active
+	var streaming := index == client.history.size() - 1 and client.pending and (client.is_continuing() or not client.partial.is_empty())
+	if streaming and not client.is_continuing():
+		shown = {}
+		reply_index = turn.replies.size()
+	var fragment := client.partial if streaming else ""
+	var sections := Client.reply_sections(shown, fragment, streaming) if client.route == Client.DIALOGUE \
+		else {"body": shown.get("text", "") + fragment, "report": ""}
 	var body: String = sections.body
+	var note: String = "" if streaming else shown.get("note", "")
 	if not note.is_empty():
-		body += (" " if not body.is_empty() else "") + "〔%s〕" % note
-	if not body.is_empty():
-		_line(speaker, body, palette.speaker)
-	var report: String = sections.report
-	if report.is_empty():
-		return
-	var expanded := _expanded_reports.has(key)
-	_transcript.push_color(palette.secondary)
-	_transcript.push_meta(key, RichTextLabel.META_UNDERLINE_ON_HOVER)
-	_transcript.add_text("▾ 收起报告" if expanded else "▸ 查看报告")
-	_transcript.pop()
-	_transcript.add_text("\n")
-	if expanded:
-		_transcript.add_text(report + "\n")
-	_transcript.pop()
-	_transcript.add_text("\n")
+		body += ("\n" if not body.is_empty() else "") + "〔%s〕" % note
+	var notice: String = turn.get("result", {}).get("notice", "")
+	_set_message(view.body, body)
+	_set_message(view.notice, notice)
+	view.reply_key = Vector2i(index, reply_index)
+	var has_report: bool = not sections.report.is_empty()
+	var expanded := has_report and _expanded_reports.has(view.reply_key)
+	view.report_button.visible = has_report
+	view.report_button.text = "▾ 收起报告" if expanded else "▸ 查看报告"
+	_set_message(view.report, sections.report if expanded else "")
+	view.reply_lane.visible = not body.is_empty() or not notice.is_empty() or has_report or _teleport_turn == index
 
-func _toggle_report(key: Variant) -> void:
-	if not key is Vector2i:
-		return
-	var scroll_bar := _transcript.get_v_scroll_bar()
-	var offset := scroll_bar.value
+func _set_message(label: RichTextLabel, value: String) -> void:
+	if label.text != value:
+		label.text = value
+	label.visible = not value.is_empty()
+
+func _toggle_report(index: int) -> void:
+	var key: Vector2i = _turn_views[index].reply_key
+	_follow_latest = false
 	if _expanded_reports.has(key):
 		_expanded_reports.erase(key)
 	else:
 		_expanded_reports[key] = true
-	_refresh()
-	scroll_bar.set_value.call_deferred(offset)
+	_update_reply(index)
+
+func _detach_teleport() -> void:
+	_teleport.hide()
+	if _teleport.get_parent() != _actions:
+		_teleport.reparent(_actions, false)
+	_teleport_turn = -1
+	_teleport_destination = ""
+
+func _refresh_teleport() -> void:
+	var index := client.teleport_offer_turn()
+	var destination := client.teleport_offer()
+	if index != _teleport_turn:
+		var previous := _teleport_turn
+		_detach_teleport()
+		if previous >= 0 and previous < _turn_views.size():
+			_update_reply(previous)
+		if index >= 0 and index < _turn_views.size():
+			_teleport_turn = index
+			_teleport.reparent(_turn_views[index].reply_box, false)
+			_turn_views[index].reply_lane.show()
+			_teleport.show()
+	if destination != _teleport_destination and _teleport_turn >= 0:
+		_teleport_destination = destination
+		var place := destination
+		if client.world_status.is_valid():
+			var state: Dictionary = client.world_status.call()
+			for row: Dictionary in state.get("destinations", []):
+				if row.id == destination:
+					place = row.name
+					break
+		_teleport.text = "确认传送 · " + place
+		_teleport.custom_minimum_size.x = float(_teleport.text.length()) * 19 + 24
+	_teleport.disabled = client.pending
+
+func _on_scroll_moved(value: float) -> void:
+	var bar := _scroll.get_v_scroll_bar()
+	_follow_latest = value >= bar.max_value - bar.page - 24.0
+
+func _queue_follow_latest() -> void:
+	if _follow_latest and not _follow_queued:
+		_follow_queued = true
+		_scroll_to_latest.call_deferred()
+
+func _scroll_to_latest() -> void:
+	_follow_queued = false
+	if _follow_latest:
+		var bar := _scroll.get_v_scroll_bar()
+		_scroll.scroll_vertical = ceili(bar.max_value - bar.page)

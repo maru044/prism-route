@@ -872,6 +872,9 @@ func teleport_offer() -> String:
 		return ""
 	return _teleport_offers.get(_thread_id, {}).get("destination", "")
 
+func teleport_offer_turn() -> int:
+	return _teleport_offers.get(_thread_id, {}).get("turn", -1) if route == ASSISTANT else -1
+
 func confirm_teleport() -> void:
 	var destination := teleport_offer()
 	if pending or destination.is_empty() or not world_teleport.is_valid():

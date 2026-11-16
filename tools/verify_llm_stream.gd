@@ -633,6 +633,17 @@ func _has_final_dialogue_format(messages: Array) -> bool:
 		and penultimate.content.ends_with('</censorship_bypass>"},{"role":"model","content":"Pass') \
 		and JSON.stringify(messages).count("<censorship_bypass>") == 1
 
+func _visible_chat_text(panel: ChatPanel) -> String:
+	var lines := PackedStringArray()
+	for view: Dictionary in panel._turn_views:
+		for field: String in ["body", "report", "notice"]:
+			var label: RichTextLabel = view[field]
+			if label.is_visible_in_tree():
+				lines.append(label.get_parsed_text())
+		if view.report_button.is_visible_in_tree():
+			lines.append(view.report_button.text)
+	return "\n".join(lines)
+
 func _verify_report_panel() -> void:
 	var panel := ChatPanel.new()
 	var capture := CaptureTransport.new()
@@ -645,29 +656,29 @@ func _verify_report_panel() -> void:
 	await process_frame
 	client.send("question")
 	capture.delta_received.emit("<rep")
-	if panel._transcript.get_parsed_text().contains("<rep"):
+	if _visible_chat_text(panel).contains("<rep"):
 		_fail("report panel", "partial tag was displayed")
 	capture.delta_received.emit("ort_nya~>REPORT 内容 <game>标签示例</game></report_nya~>前置杂文<game>正文")
-	var visible_text := panel._transcript.get_parsed_text()
+	var visible_text := _visible_chat_text(panel)
 	if not visible_text.contains("正文") or visible_text.contains("REPORT 内容") or visible_text.contains("标签示例") \
 			or visible_text.contains("前置杂文") or not visible_text.contains("查看报告"):
 		_fail("report panel", "body or collapsed report state is wrong")
-	panel._transcript.meta_clicked.emit(Vector2i(0, 0))
-	if not panel._transcript.get_parsed_text().contains("REPORT 内容"):
+	panel._turn_views[0].report_button.pressed.emit()
+	if not _visible_chat_text(panel).contains("REPORT 内容"):
 		_fail("report panel", "report did not expand")
 	capture.delta_received.emit("</game>尾部杂文")
 	capture.finished.emit({}, "")
-	if not panel._transcript.get_parsed_text().contains("REPORT 内容") or panel._transcript.get_parsed_text().contains("尾部杂文"):
+	if not _visible_chat_text(panel).contains("REPORT 内容") or _visible_chat_text(panel).contains("尾部杂文"):
 		_fail("report panel", "expansion lost on completion")
-	panel._transcript.meta_clicked.emit(Vector2i(0, 0))
-	if panel._transcript.get_parsed_text().contains("REPORT 内容"):
+	panel._turn_views[0].report_button.pressed.emit()
+	if _visible_chat_text(panel).contains("REPORT 内容"):
 		_fail("report panel", "report did not collapse")
 	client.continue_reply()
 	if not capture.request.messages.any(func(m: Dictionary): return m.role == "assistant" and m.content.begins_with("正文")):
 		_fail("report panel", "history did not preserve clean body")
 	capture.delta_received.emit("继续")
 	capture.finished.emit({}, "")
-	if not panel._transcript.get_parsed_text().contains("正文继续"):
+	if not _visible_chat_text(panel).contains("正文继续"):
 		_fail("report panel", "plain continuation lost")
 	client.continue_reply()
 	capture.delta_received.emit("续写杂文<game>下一段</game>尾部杂文")
@@ -675,7 +686,7 @@ func _verify_report_panel() -> void:
 	client.continue_reply()
 	capture.delta_received.emit("不完整的续写")
 	capture.finished.emit({}, "续写失败样例")
-	if not panel._transcript.get_parsed_text().contains("不完整的续写") or not panel._transcript.get_parsed_text().contains("续写失败样例"):
+	if not _visible_chat_text(panel).contains("不完整的续写") or not _visible_chat_text(panel).contains("续写失败样例"):
 		_fail("failed continuation", "partial continuation or its error was hidden")
 	client.send("follow up")
 	if not capture.request.messages.any(func(m: Dictionary): return m.role == "assistant" and m.content.begins_with("正文继续下一段")) or JSON.stringify(capture.request.messages).contains("不完整的续写"):
@@ -693,10 +704,10 @@ func _verify_report_panel() -> void:
 	panel._send.pressed.emit()
 	if client.pending or panel._send.text != "发送":
 		_fail("report panel", "stop button did not cancel and restore send")
-	if panel._transcript.get_parsed_text().contains("STOP REPORT") or not panel._continue.disabled:
+	if _visible_chat_text(panel).contains("STOP REPORT") or not panel._continue.disabled:
 		_fail("report panel", "stopped report leaked")
-	panel._transcript.meta_clicked.emit(Vector2i(1, 0))
-	if not panel._transcript.get_parsed_text().contains("STOP REPORT"):
+	panel._turn_views[1].report_button.pressed.emit()
+	if not _visible_chat_text(panel).contains("STOP REPORT"):
 		_fail("report panel", "stopped report not inspectable")
 	client.send("failed HTTP turn")
 	capture.finished.emit({}, "test HTTP failure")
@@ -704,7 +715,7 @@ func _verify_report_panel() -> void:
 		_fail("failed turns", "failure diagnostics or manual retry unavailable")
 	panel.close_panel()
 	panel.open_panel(Client.DIALOGUE, "report", {})
-	if not panel._copy_diagnostic.visible or not panel._transcript.get_parsed_text().contains("test HTTP failure"):
+	if not panel._copy_diagnostic.visible or not _visible_chat_text(panel).contains("test HTTP failure"):
 		_fail("failed turns", "closing the panel lost the error and diagnostic")
 	client.send("new turn")
 	if _dialogue_user_contents(capture.request.messages).slice(-2) != ["question", "new turn"] or not panel._status.text.contains("2 个未完成回合"):

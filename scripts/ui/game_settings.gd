@@ -154,8 +154,7 @@ func _ready() -> void:
 	_add_guide_row(guide_box, "Shift", "疾跑加速 / 冲刺")
 	_add_guide_row(guide_box, "Space", "跳跃 / 房车刹车")
 	_add_guide_row(guide_box, "E", "场景交互 / 对话")
-	_add_guide_row(guide_box, "C", "切换操控角色")
-	_add_guide_row(guide_box, "F", "房车驾驶 / 步行切换")
+	_add_guide_row(guide_box, "C", "房车驾驶 / 步行切换")
 	_add_guide_row(guide_box, "ESC", "设置 / 暂停菜单")
 
 	if not in_world and not show_save_menu:

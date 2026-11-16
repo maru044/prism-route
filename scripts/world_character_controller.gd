@@ -54,7 +54,7 @@ const ROSTER_PROFILES: Dictionary = {
 	}
 }
 
-@export var active_character_id: String = "ganyu"
+@export var active_character_id: String = "lumine"
 @export var walking_speed := 1.65
 @export var running_speed := 4.3
 @export var jump_speed := 7.0

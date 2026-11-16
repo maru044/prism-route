@@ -674,7 +674,6 @@ func _get_llm_panel() -> CanvasLayer:
 	if llm_panel == null:
 		llm_panel = LLM_PANEL.new()
 		llm_panel.name = "GameLLMPanel"
-		llm_panel.palette = preload("res://scenes/combat/sparkle_ui_palette.tres")
 		llm_panel.client.world_status = _llm_world_status
 		llm_panel.client.world_teleport = _llm_teleport
 		add_child(llm_panel)
@@ -720,7 +719,9 @@ func make_world_save() -> Dictionary:
 func restore_world_save(state: Dictionary) -> void:
 	if state.is_empty():
 		return
-	var character_id := str(state.get("character_id", ""))
+	var character_id := str(state.get("character_id", "lumine"))
+	if character_id == "ganyu" or character_id.is_empty():
+		character_id = "lumine"
 	if character.ROSTER_PROFILES.has(character_id):
 		character.switch_character(character_id)
 	var coords: Variant = state.get("position")
