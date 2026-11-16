@@ -28,6 +28,10 @@ func _run_test() -> void:
 	# Test 1: Sparkle Tutorial Combat Flow
 	print("\n--- Test 1: Sparkle Tutorial Combat Flow ---")
 	combat_mgr.setup(player_pleasure, npc_pleasure)
+	var sparkle_strategy := SparkleTutorialStrategyClass.new(true)
+	var sparkle_reactions_path := "res://assets/npc/reactions/sparkle_temple.json"
+	var sparkle_reactions: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(sparkle_reactions_path))
+	combat_mgr.configure_npc("花火", sparkle_reactions, sparkle_strategy)
 	assert(combat_mgr.npc_name == "花火")
 	
 	var last_log := ""

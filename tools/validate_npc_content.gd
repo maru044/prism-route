@@ -73,6 +73,8 @@ func _validate_all() -> void:
 	_validate_dialogues()
 	_validate_reactions()
 	_validate_encounters()
+	_validate_spawns()
+	_validate_personas()
 
 func _validate_characters() -> void:
 	var dir := NPC_ROOT + "/characters"
@@ -206,6 +208,57 @@ func _validate_encounters() -> void:
 		for k in req:
 			if not d.has(k):
 				errors.append("[%s] Missing required field '%s' in EncounterDefinition" % [file, k])
+
+func _validate_spawns() -> void:
+	var dir := NPC_ROOT + "/spawns"
+	if not DirAccess.dir_exists_absolute(dir):
+		warnings.append("Directory not found: %s" % dir)
+		return
+	var da := DirAccess.open(dir)
+	if da == null:
+		return
+	for file in da.get_files():
+		if not file.ends_with(".json"):
+			continue
+		var path := dir + "/" + file
+		var d := _parse_json(path)
+		if d.is_empty():
+			continue
+		var req := ["spawn_id", "character_id", "region", "position", "heading"]
+		for k in req:
+			if not d.has(k):
+				errors.append("[%s] Missing required field '%s' in SpawnDefinition" % [file, k])
+		if d.has("position") and not (d["position"] is Array and d["position"].size() == 3):
+			errors.append("[%s] 'position' must be a 3-element Array" % file)
+
+func _validate_personas() -> void:
+	var dir := "res://assets/ai/personas"
+	if not DirAccess.dir_exists_absolute(dir):
+		warnings.append("Directory not found: %s" % dir)
+		return
+	var da := DirAccess.open(dir)
+	if da == null:
+		return
+	for file in da.get_files():
+		if not file.ends_with(".md"):
+			continue
+		var path := dir + "/" + file
+		var raw := FileAccess.get_file_as_string(path).trim_prefix("\ufeff").replace("\r\n", "\n")
+		var separator := raw.find("\n---")
+		if separator < 0:
+			errors.append("[%s] Persona markdown missing '---' separator" % file)
+			continue
+		var json := JSON.new()
+		if json.parse(raw.left(separator)) != OK or not (json.data is Dictionary):
+			errors.append("[%s] Invalid JSON header in persona markdown" % file)
+			continue
+		var header: Dictionary = json.data
+		if not header.has("depth") or not header.has("name"):
+			errors.append("[%s] Persona header missing 'depth' or 'name'" % file)
+		var body_start := separator + 4
+		var content := raw.substr(body_start).strip_edges()
+		if content.is_empty():
+			errors.append("[%s] Persona body content is empty" % file)
 
 func _parse_json(path: String) -> Dictionary:
 	var text := FileAccess.get_file_as_string(path)

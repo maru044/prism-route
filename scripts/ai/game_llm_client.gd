@@ -7,6 +7,13 @@ const ToolRegistry := preload("res://scripts/ai/assistant_tool_registry.gd")
 const AssistantPrompts := preload("res://scripts/ai/assistant_prompts.gd")
 const SETTINGS_PATH := "user://llm_client.cfg"
 const DIALOGUE_PROMPT_DIR := "res://assets/ai/worldbook"
+const PERSONAS_DIR := "res://assets/ai/personas"
+const CHARACTER_NAME_TO_ID := {
+	"花火": "sparkle",
+	"刻晴": "keqing",
+	"甘雨": "ganyu",
+	"胡桃": "hutao"
+}
 const PLAYER_PROFILE_FILE := "玩家人设.md"
 const LOCAL_PLAYER_PROFILE := "user://" + PLAYER_PROFILE_FILE
 const OUTPUT_TOKEN_RESERVE := 8000
@@ -415,8 +422,44 @@ static func _extract_dialogue_examples(text: String) -> Dictionary:
 			examples.append({"role": role, "content": segment})
 	return {"head": head, "examples": examples}
 
+func _resolve_character_id() -> String:
+	var c_id: String = str(context.get("character_id", ""))
+	if c_id.is_empty():
+		var npc_name: String = str(context.get("npc_name", ""))
+		c_id = CHARACTER_NAME_TO_ID.get(npc_name, "")
+	return c_id
+
+func _load_persona_entry(char_id: String) -> Dictionary:
+	var path := PERSONAS_DIR.path_join(char_id + ".md")
+	if not FileAccess.file_exists(path):
+		return {}
+	var raw := FileAccess.get_file_as_string(path).trim_prefix("\ufeff").replace("\r\n", "\n")
+	var separator := raw.find("\n---")
+	var body_start := separator + 4
+	if separator < 0 or (body_start < raw.length() and raw[body_start] != "\n"):
+		return {}
+	var parser := JSON.new()
+	var header: Variant = parser.data if parser.parse(raw.left(separator)) == OK else null
+	if not header is Dictionary:
+		return {}
+	var depth := int(header.get("depth", 850))
+	var entry_name: String = str(header.get("name", "角色设定 · " + char_id))
+	var content := raw.substr(body_start).strip_edges()
+	if content.is_empty():
+		return {}
+	return {"depth": depth, "name": entry_name, "content": content}
+
 func _parsed_dialogue_prompts(entries: Array = []) -> Dictionary:
-	var list: Array = entries if not entries.is_empty() else _dialogue_entries
+	var list: Array
+	if not entries.is_empty():
+		list = entries
+	else:
+		list = _dialogue_entries.duplicate(true)
+		var char_id := _resolve_character_id()
+		if not char_id.is_empty():
+			var persona_entry := _load_persona_entry(char_id)
+			if not persona_entry.is_empty():
+				list.append(persona_entry)
 	var head_prompt := DIALOGUE_SYSTEM.content
 	var examples: Array[Dictionary] = []
 	var mid_prompts: Array[Dictionary] = []

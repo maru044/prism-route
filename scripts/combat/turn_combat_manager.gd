@@ -12,7 +12,6 @@ signal koujou_triggered(speaker: String, text: String, emotion: String)
 
 const ReactionResolverClass := preload("res://scripts/combat/reaction_resolver.gd")
 const CombatStrategyClass := preload("res://scripts/combat/combat_strategy.gd")
-const SparkleTutorialStrategyClass := preload("res://scripts/combat/sparkle_tutorial_strategy.gd")
 
 enum Phase {
 	INACTIVE,
@@ -28,13 +27,13 @@ enum Phase {
 
 var player_pleasure: Node
 var npc_pleasure: Node
-var npc_name: String = "花火"
+var npc_name: String = "NPC"
 var reaction_resolver: RefCounted
 var combat_strategy: RefCounted
 
 var current_phase: Phase = Phase.INACTIVE
 var round_count: int = 1
-var is_tutorial_round: bool = true # Retained for backward compatibility
+var is_tutorial_round: bool = false
 
 var round_action_defense: float = 0.0
 var temporary_defense_modifier: float = 0.0 # From mid-battle dialogue (e.g. 咬牙坚持)
@@ -45,15 +44,9 @@ func setup(player_comp: Node, npc_comp: Node) -> void:
 	player_pleasure = player_comp
 	npc_pleasure = npc_comp
 	if reaction_resolver == null:
-		# Default fallback to Sparkle reactions JSON if present
-		var r_path := "res://assets/npc/reactions/sparkle_temple.json"
-		if FileAccess.file_exists(r_path):
-			var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(r_path))
-			reaction_resolver = ReactionResolverClass.new(data)
-		else:
-			reaction_resolver = ReactionResolverClass.new({"speaker": npc_name})
+		reaction_resolver = ReactionResolverClass.new({"speaker": npc_name})
 	if combat_strategy == null:
-		combat_strategy = SparkleTutorialStrategyClass.new(is_tutorial_round)
+		combat_strategy = CombatStrategyClass.new()
 
 func configure_npc(p_npc_name: String, p_reactions: Dictionary = {}, p_strategy: RefCounted = null) -> void:
 	npc_name = p_npc_name
@@ -67,7 +60,7 @@ func configure_npc(p_npc_name: String, p_reactions: Dictionary = {}, p_strategy:
 	elif combat_strategy == null:
 		combat_strategy = CombatStrategyClass.new()
 
-func start_combat(tutorial_mode: bool = true, meta_settings: Dictionary = {}) -> void:
+func start_combat(tutorial_mode: bool = false, meta_settings: Dictionary = {}) -> void:
 	is_tutorial_round = tutorial_mode
 	round_count = 1
 	round_action_defense = 0.0
@@ -76,11 +69,8 @@ func start_combat(tutorial_mode: bool = true, meta_settings: Dictionary = {}) ->
 	is_resolved = false
 	
 	if combat_strategy == null:
-		if is_tutorial_round:
-			combat_strategy = SparkleTutorialStrategyClass.new(true)
-		else:
-			combat_strategy = CombatStrategyClass.new()
-	elif combat_strategy is SparkleTutorialStrategyClass:
+		combat_strategy = CombatStrategyClass.new()
+	elif "is_tutorial_round" in combat_strategy:
 		combat_strategy.is_tutorial_round = is_tutorial_round
 		
 	player_pleasure.reset()

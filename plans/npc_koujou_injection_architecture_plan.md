@@ -1,13 +1,17 @@
-# 全角色口上注入与交互架构升级计划 (v2.0 深度重构版)
-(Universal NPC Koujou & Interaction Architecture Plan v2.0)
+# 全角色口上注入与交互架构升级计划 (v2.1 深度重构与解耦完善版)
+(Universal NPC Koujou & Interaction Architecture Plan v2.1)
 
-> **设计依据**：结合 [GitHub Issue #27 源码审计报告](https://github.com/maru044/prism-route/issues/27)，彻底摒弃“单一大 JSON 承载全部数据”和“通用大控制器堆砌 if/elif 状态机”的伪数据驱动陷阱，建立**分层实体解耦（角色/点位/遭遇）、不可变配置与运行时上下文隔离、可插拔行为策略（Pluggable Behaviors）、精确动作兼容性解析**的高扩展性叙事与遭遇战框架。
+> **设计依据**：结合 [GitHub Issue #27 源码审计报告](https://github.com/maru044/prism-route/issues/27)，彻底摒弃“单一大 JSON 承载全部数据”和“通用大控制器堆砌 if/elif 状态机”的伪数据驱动陷阱，建立**分层实体解耦（角色/点位/遭遇）、不可变配置与运行时上下文隔离、可插拔行为策略（Pluggable Behaviors）、精确动作兼容性解析、LLM Persona 动态按需注入**的高扩展性叙事与遭遇战框架。
 
 ---
 
-## 一、 核心原则与架构认知纠偏（参照 Issue #27）
+## 一、 核心原则与架构认知纠偏（参照 Issue #27 与运行时审计）
 
-在 v1.0 方案中，我们存在将“数据驱动”简单等同于“一个大 JSON 塞满所有东西”、将“通用机制”等同于“所有角色走同一条战斗奉仕流水线”的问题。v2.0 确立以下 5 项根本原则：
+在 v1.0 与 v2.0 初版演进中，系统经过全面实装与审计，进一步消除了以下关键耦合隐患：
+1. **DialogueManager 与 EncounterContext 隔离**：移除全局 blackboard 单例直引，支持独立传入上下文，修复 `graph_id` 信号读取 Bug。
+2. **TurnCombatManager 彻底去角色化**：移除内部残留的花火反应 JSON 回退与策略写死，由外部 Encounter Controller 显式注入。
+3. **LLM Persona 动态隔离装配**：在 `assets/ai/personas/` 物理隔离角色卡，依据当前对象动态装配，杜绝全局 Worldbook 提示词膨胀。
+4. **验证器全面覆盖**：Validator 纳管 characters、dialogues、reactions、encounters、spawns、personas 全要素。
 
 1. **复用运行机制，不强行统一角色行为与剧情流程**：
    - 对话推进、变量管理、动作调度、快感数值判定可以 100% 共享。

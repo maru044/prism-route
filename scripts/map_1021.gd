@@ -776,7 +776,7 @@ func _open_llm_dialogue() -> void:
 		"dialogue_location": location,
 	})
 
-func show_free_dialogue(panel: Control, speaker: String) -> void:
+func show_free_dialogue(panel: Control, speaker: String, character_id: String = "") -> void:
 	var chat := _get_llm_panel()
 	if chat.visible:
 		return
@@ -789,9 +789,24 @@ func show_free_dialogue(panel: Control, speaker: String) -> void:
 			panel.set_process_input(true)
 			panel.visible = is_instance_valid(manager) and manager.session_active and manager.session_id == session_id
 	, CONNECT_ONE_SHOT)
-	chat.open_panel("dialogue", "initial_temple_sparkle", {
+	
+	var resolved_id: String = character_id
+	if resolved_id.is_empty():
+		match speaker:
+			"花火": resolved_id = "sparkle"
+			"刻晴": resolved_id = "keqing"
+			"甘雨": resolved_id = "ganyu"
+			"胡桃": resolved_id = "hutao"
+			_: resolved_id = speaker.to_lower()
+			
+	var loc: String = "初始神殿" if resolved_id == "sparkle" else "大世界"
+	if resolved_id == "keqing":
+		loc = "沙洲度假遗址"
+		
+	chat.open_panel("dialogue", "npc_" + resolved_id, {
 		"npc_name": speaker,
-		"dialogue_location": "初始神殿",
+		"character_id": resolved_id,
+		"dialogue_location": loc,
 	})
 
 func has_llm_panel_open() -> bool:

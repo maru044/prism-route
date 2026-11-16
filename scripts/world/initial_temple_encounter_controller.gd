@@ -72,6 +72,8 @@ const VALID_TRANSITIONS: Dictionary = {
 	]
 }
 const TurnCombatManagerClass := preload("res://scripts/combat/turn_combat_manager.gd")
+const CombatStrategyClass := preload("res://scripts/combat/combat_strategy.gd")
+const SparkleTutorialStrategyClass := preload("res://scripts/combat/sparkle_tutorial_strategy.gd")
 const DialoguePanelClass := preload("res://scenes/narrative/dialogue_panel.gd")
 const TurnCombatHUDClass := preload("res://scenes/combat/turn_combat_hud.gd")
 const EncounterPalette := preload("res://scenes/combat/encounter_ui_palette.gd")
@@ -327,7 +329,7 @@ func _build_subsystems() -> void:
 	dialogue_panel.next_pressed.connect(dialogue_manager.advance_text)
 	dialogue_panel.free_dialogue_requested.connect(func():
 		if dialogue_manager.session_active and is_instance_valid(world):
-			world.show_free_dialogue(dialogue_panel, "花火")
+			world.show_free_dialogue(dialogue_panel, "花火", "sparkle")
 	)
 	dialogue_manager.dialogue_ended.connect(_on_dialogue_ended)
 	
@@ -400,6 +402,15 @@ func _get_dialogue_graph() -> Dictionary:
 		if json.parse(text) == OK and json.data is Dictionary:
 			return json.data
 	return SparkleTutorialDialogueClass.get_dialogue_graph()
+
+func _get_sparkle_reactions() -> Dictionary:
+	var path := "res://assets/npc/reactions/sparkle_temple.json"
+	if FileAccess.file_exists(path):
+		var text := FileAccess.get_file_as_string(path)
+		var json := JSON.new()
+		if json.parse(text) == OK and json.data is Dictionary:
+			return json.data
+	return {}
 
 func _capture_world_context() -> void:
 	if world != null:
@@ -621,11 +632,18 @@ func start_encounter_dialogue() -> void:
 	if start_node != "respawn_dialogue":
 		dialogue_manager.reset_battle_cheats()
 		
+	var encounter_ctx := {
+		"master_name": "主人",
+		"defeat_count": defeat_count,
+		"settlement_outcome": settlement_outcome,
+		"companion_unlocked": companion_unlocked
+	}
 	dialogue_manager.start_dialogue(
 		graph,
 		start_node,
 		DialogueManagerClass.DialogueSource.WORLD_INTERACTION,
-		DialogueManagerClass.ResumePolicy.RETURN_TO_WORLD
+		DialogueManagerClass.ResumePolicy.RETURN_TO_WORLD,
+		encounter_ctx
 	)
 
 func _begin_seamless_combat_staging() -> void:
@@ -749,6 +767,8 @@ func _begin_seamless_combat_staging() -> void:
 	hud_tween.tween_property(combat_hud, "modulate:a", 1.0, 0.25)
 
 	var is_tutorial := (defeat_count == 0)
+	var strategy := SparkleTutorialStrategyClass.new(is_tutorial)
+	combat_manager.configure_npc("花火", _get_sparkle_reactions(), strategy)
 	var cheat_data: Dictionary = dialogue_manager.consume_battle_cheats()
 	var meta_rules := {
 		"meta_cheat_mode": cheat_data.get("meta_cheat_mode", "none")
@@ -986,7 +1006,13 @@ func _on_combat_ended(winner: String, _loser: String, _reason: String) -> void:
 			graph,
 			"victory_node",
 			DialogueManagerClass.DialogueSource.POST_BATTLE_RESULT,
-			DialogueManagerClass.ResumePolicy.END_COMBAT
+			DialogueManagerClass.ResumePolicy.END_COMBAT,
+			{
+				"master_name": "主人",
+				"defeat_count": defeat_count,
+				"settlement_outcome": settlement_outcome,
+				"companion_unlocked": companion_unlocked
+			}
 		)
 
 func _on_mid_battle_dialogue_requested(reason: String) -> void:
@@ -1004,7 +1030,10 @@ func _on_mid_battle_dialogue_requested(reason: String) -> void:
 		if reason == "player_manual_call"
 		else DialogueManagerClass.ResumePolicy.NEXT_TURN
 	)
-	dialogue_manager.start_dialogue(graph, start_node, source, policy)
+	dialogue_manager.start_dialogue(graph, start_node, source, policy, {
+		"master_name": "主人",
+		"defeat_count": defeat_count
+	})
 
 func _execute_settlement_kill() -> void:
 	_set_encounter_state(EncounterState.SETTLEMENT)
@@ -1374,7 +1403,13 @@ func _begin_furniture_service_staging(service_type: String = "virgin") -> void:
 			_get_dialogue_graph(),
 			start_node,
 			DialogueManagerClass.DialogueSource.POST_BATTLE_RESULT,
-			DialogueManagerClass.ResumePolicy.END_COMBAT
+			DialogueManagerClass.ResumePolicy.END_COMBAT,
+			{
+				"master_name": "主人",
+				"defeat_count": defeat_count,
+				"settlement_outcome": settlement_outcome,
+				"companion_unlocked": companion_unlocked
+			}
 		)
 
 func _finish_furniture_service() -> void:

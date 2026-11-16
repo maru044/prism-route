@@ -117,16 +117,24 @@ func register_choice_provider(provider_id: String, provider: Callable) -> void:
 
 func consume_battle_cheats() -> Dictionary:
 	var cheats := {
-		"meta_cheat_enabled": blackboard.get("meta_cheat_enabled", false),
-		"meta_cheat_mode": blackboard.get("meta_cheat_mode", "none"),
-		"edging_endure": blackboard.get("edging_endure", false)
+		"meta_cheat_enabled": current_session.encounter_context.get("meta_cheat_enabled", false) if current_session else blackboard.get("meta_cheat_enabled", false),
+		"meta_cheat_mode": current_session.encounter_context.get("meta_cheat_mode", "none") if current_session else blackboard.get("meta_cheat_mode", "none"),
+		"edging_endure": current_session.encounter_context.get("edging_endure", false) if current_session else blackboard.get("edging_endure", false)
 	}
+	if current_session:
+		current_session.encounter_context["meta_cheat_enabled"] = false
+		current_session.encounter_context["meta_cheat_mode"] = "none"
+		current_session.encounter_context["edging_endure"] = false
 	blackboard["meta_cheat_enabled"] = false
 	blackboard["meta_cheat_mode"] = "none"
 	blackboard["edging_endure"] = false
 	return cheats
 
 func reset_battle_cheats() -> void:
+	if current_session:
+		current_session.encounter_context["meta_cheat_enabled"] = false
+		current_session.encounter_context["meta_cheat_mode"] = "none"
+		current_session.encounter_context["edging_endure"] = false
 	blackboard["meta_cheat_enabled"] = false
 	blackboard["meta_cheat_mode"] = "none"
 	blackboard["edging_endure"] = false
@@ -135,14 +143,19 @@ func start_dialogue(
 	graph_data: Dictionary,
 	start_node: String = "start",
 	source: DialogueSource = DialogueSource.WORLD_INTERACTION,
-	policy: ResumePolicy = ResumePolicy.RETURN_TO_WORLD
+	policy: ResumePolicy = ResumePolicy.RETURN_TO_WORLD,
+	p_encounter_context: Dictionary = {}
 ) -> void:
 	session_id += 1
 	current_session = DialogueSessionClass.new(session_id, graph_data, start_node, source, policy)
-	# Link encounter context from blackboard
-	current_session.encounter_context = blackboard
+	# Isolated encounter context: prioritize passed context, otherwise duplicate default blackboard
+	if not p_encounter_context.is_empty():
+		current_session.encounter_context = p_encounter_context.duplicate(true)
+	else:
+		current_session.encounter_context = blackboard.duplicate(true)
 	
-	dialogue_started.emit(current_graph.get("id", "unnamed_graph"))
+	var graph_id: String = current_graph.get("graph_id", current_graph.get("id", "unnamed_graph"))
+	dialogue_started.emit(graph_id)
 	_process_current_node()
 
 func choose_option(option_index: int) -> void:
@@ -162,6 +175,9 @@ func choose_option(option_index: int) -> void:
 		var modifications: Dictionary = selected_choice["set_blackboard"]
 		for k: String in modifications:
 			blackboard[k] = modifications[k]
+			if current_session:
+				current_session.encounter_context[k] = modifications[k]
+				current_session.set_variable(k, modifications[k])
 			meta_rule_changed.emit(k, modifications[k])
 			
 	if selected_choice.has("action"):
@@ -210,8 +226,14 @@ func _finish_with_action(raw_act: String) -> void:
 		
 	if act == ACTION_KILL:
 		blackboard["mercy_choice"] = "kill"
+		if current_session:
+			current_session.encounter_context["mercy_choice"] = "kill"
+			current_session.set_variable("mercy_choice", "kill")
 	elif act == ACTION_SPARE or act == ACTION_SPARE_VIRGIN or act == ACTION_SPARE_HONBAN:
 		blackboard["mercy_choice"] = act
+		if current_session:
+			current_session.encounter_context["mercy_choice"] = act
+			current_session.set_variable("mercy_choice", act)
 		
 	# Execute custom action handler if registered
 	if action_handlers.has(act):
