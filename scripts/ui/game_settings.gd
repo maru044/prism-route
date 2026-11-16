@@ -150,11 +150,11 @@ func _ready() -> void:
 	_section(page_help, "操作指南")
 	var guide_box := UI.column(6)
 	page_help.add_child(guide_box)
-	_add_guide_row(guide_box, "W / A / S / D", "角色移动 / 房车驾驶")
+	_add_guide_row(guide_box, "W / A / S / D", "角色移动 / 车辆驾驶")
 	_add_guide_row(guide_box, "Shift", "疾跑加速 / 冲刺")
-	_add_guide_row(guide_box, "Space", "跳跃 / 房车刹车")
+	_add_guide_row(guide_box, "Space", "跳跃 / 车辆刹车")
 	_add_guide_row(guide_box, "E", "场景交互 / 对话")
-	_add_guide_row(guide_box, "C", "房车驾驶 / 步行切换")
+	_add_guide_row(guide_box, "C", "切换角色与车辆")
 	_add_guide_row(guide_box, "ESC", "设置 / 暂停菜单")
 
 	if not in_world and not show_save_menu:
