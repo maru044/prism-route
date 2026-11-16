@@ -40,7 +40,7 @@ flowchart TD
 - **正式场景入口。** 初始神殿花火的剧情对话面板提供「自由对话」，退出后回到原来的台词。游戏内 Esc 设置底部提供「游戏助手」。自由对话目前传入花火和初始神殿的基本信息。[地图入口](../scripts/map_1021.gd) · [剧情对话面板](../scenes/narrative/dialogue_panel.gd)
 - **对话请求。** 客户端按 Markdown 文件头的 `depth` 装配正文。玩家人设有独立文件，角色与场景只读取游戏入口提供的对话对象和地点。世界规则使用深度 4，输出格式使用深度 0。相邻同角色消息合并后发送。[世界书目录](../assets/ai/worldbook) · [LLM 客户端](../scripts/ai/game_llm_client.gd)
 - **传输和界面。** 现有功能包括 SSE 分片、Unicode 转义解码、超时提示、发送与停止共用按钮、倒回、重新生成、版本切换和续写。自由对话由玩家手动重试，助手在执行工具前遇到暂时性故障时可自动重试至多两次。报告默认折叠，下一轮和续写回传玩家原文与所选回复的可见正文。[HTTP 传输](../scripts/ai/chat_transport.gd) · [LLM 面板](../scripts/ai/llm_panel.gd)
-- **辅助工具。** 已接入 `get_world_status` 和 `propose_teleport`。查询返回实际世界状态，传送提议只接受有效定位点，确认后由 Godot 通过现有流程执行。旧客户端工具手册供查阅，运行时工具定义以代码为准。[工具实现](../scripts/ai/game_llm_client.gd) · [旧客户端参考](../assets/ai/reference/系统工具调用手册.md)
+- **辅助工具。** 大世界模块注册 `get_world_status` 和 `propose_teleport`。注册表生成对外 schema 并校验调用参数，工具实现负责游戏规则。每轮发送时锁定工具列表，达到工具轮数上限后的整理请求只保留助手职责和已有工具结果。传送提议由玩家确认后交回大世界执行。[注册表](../scripts/ai/assistant_tool_registry.gd) · [大世界工具](../scripts/world/world_assistant_tools.gd) · [工具使用说明](../assets/ai/assistant/工具使用.md)
 
 当前回归用本机模拟接口检查流式行为、报告面板、模型路由、上下文预算和传送提议。真实模型的延迟、额度和回复风格取决于所配置的服务。复跑命令见项目 README。[回归用例](../tools/verify_llm_stream.gd) · [运行与排障](../README.md#流式回复排障)
 
@@ -69,6 +69,7 @@ flowchart TD
 
 ### 第三阶段：按游戏需求扩展 Flash 工具
 
-- 新工具从「游戏助手」调用。Godot 根据工具名、参数和实时世界状态决定是否可以执行，需要玩家确认的操作沿用确认流程。
+- 由所属游戏系统调用 `register_tool(name, description, parameters, handler)`，在《工具使用.md》新增同名的 `## tool_name` 章节。文件头使用 `agent: assistant`，职责和工具指南分别使用 `kind: system` 和 `kind: tool_guide`。已注册工具缺少说明时，助手显示缺少说明的工具名。
+- 执行函数接收参数字典和本轮共享状态，返回可序列化的结果字典。参数 schema 支持基本类型、枚举、对象和数组。需要玩家确认时，工具实现可参考传送注册本轮的 `offer`，提供按钮名称和确认回调，由回调实时校验并执行游戏操作。
 - 每次新增工具，先验证参数错误、请求中断、达到工具轮数上限和权限检查。自由对话的正文及报告继续用现有文本展示流程。
 - 长对话摘要留作独立功能，等上下文长度实际成为问题再评估。若使用 Flash 摘要 AIRP 会话，需要先确认允许将相关历史发给辅助端点。当前版本不会自动跨入口发送历史。

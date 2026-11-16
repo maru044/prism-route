@@ -565,6 +565,8 @@ func _navigation() -> void:
 				_home_markers.append({"position": row.floor_position, "name": plots[key.substr(5)].spec.name})
 	var plot_id := eligible_plot()
 	var label := str(plots[plot_id].spec.name) if not plot_id.is_empty() else ""
+	if label.is_empty() and not plot_id.is_empty():
+		label = "home"
 	var camera: Camera3D = world.get_viewport().get_camera_3d()
 	if camera:
 		hud.set_navigation(true, -camera.global_basis.z, world.active_actor().global_position, _home_markers, label)

@@ -3,6 +3,8 @@ extends Node
 signal changed
 
 const Transport := preload("res://scripts/ai/chat_transport.gd")
+const ToolRegistry := preload("res://scripts/ai/assistant_tool_registry.gd")
+const AssistantPrompts := preload("res://scripts/ai/assistant_prompts.gd")
 const SETTINGS_PATH := "user://llm_client.cfg"
 const DIALOGUE_PROMPT_DIR := "res://assets/ai/worldbook"
 const PLAYER_PROFILE_FILE := "玩家人设.md"
@@ -15,34 +17,8 @@ const MAX_ASSISTANT_RETRIES := 2
 const MAX_ASSISTANT_RETRY_WAIT := 10
 const CONTEXT_TOKEN_LIMIT := 1_000_000
 const DIALOGUE_SYSTEM := {"role": "system", "content": "保持当前角色语气和场景。"}
-const ASSISTANT_SYSTEM := {
-	"role": "system",
-	"content": "你是 Prism Route 的游戏助手。用中文回答。用游戏工具读取实际状态。传送由玩家在游戏界面确认。不要声称执行了没有成功的操作。",
-}
 const CONTINUE_MESSAGE := {"role": "user", "content": "接着上一条回复继续，只写新增内容。"}
 const CONTEXT_OVERFLOW := "当前请求超过约 100 万 token 的上下文预算。请缩短输入或提示词。"
-const RETRYABLE_TOOLS := ["get_world_status", "propose_teleport"]
-const TOOLS := [
-	{
-		"type": "function",
-		"function": {
-			"name": "get_world_status",
-			"description": "Read the current actor, location and preview destinations.",
-			"parameters": {"type": "object", "properties": {}, "additionalProperties": false},
-		},
-	},
-	{
-		"type": "function",
-		"function": {
-			"name": "propose_teleport",
-			"description": "Offer a preview destination for the player to confirm. Use its exact ID from get_world_status.",
-			"parameters": {
-				"type": "object", "properties": {"destination_id": {"type": "string"}},
-				"required": ["destination_id"], "additionalProperties": false,
-			},
-		},
-	},
-]
 
 static var _dialogue_tag := RegEx.create_from_string(r"(?i)<(/?)(game|report_nya~?|think_nya~?)>")
 static var _prompt_token := RegEx.create_from_string(r"\{\{//|\{\{(?:roll 1d100|npc_name|dialogue_location)\}\}|\{\{|\}\}")
@@ -67,22 +43,23 @@ var status := ""
 var diagnostic := ""
 var omitted_turns := 0
 var incomplete_turns := 0
-var world_status: Callable
-var world_teleport: Callable
-
+var assistant_prompt_directory := AssistantPrompts.DIRECTORY
 var _transport = Transport.new()
 var _route := ASSISTANT
 var _thread_id := ""
 var _threads := {}
-var _teleport_offers := {}
+var _action_offers := {}
+var _tool_registry := ToolRegistry.new()
+var _assistant_prompts := AssistantPrompts.new()
+var _request_tools: Dictionary = {}
+var _request_tool_specs: Array = []
+var _tool_turn: Dictionary = {}
 var _request_messages: Array
 var _request_profile: Dictionary
 var _operation := ""
 var _tool_rounds := 0
 var _assistant_retries := 0
 var _assistant_retry_timer: Timer
-var _proposed_destination := ""
-var _world_status_read := false
 var _context_limit_tokens := CONTEXT_TOKEN_LIMIT
 var _retained_turns := 0
 var _dialogue_entries: Array[Dictionary] = []
@@ -185,6 +162,9 @@ func open(channel: String, scope: String, speaker_context: Dictionary) -> void:
 func configured() -> bool:
 	return not profiles[route].url.is_empty() and not profiles[route].model.is_empty()
 
+func register_tool(name: String, description: String, parameters: Dictionary, handler: Callable) -> Error:
+	return _tool_registry.register(name, description, parameters, handler)
+
 func save_threads() -> Dictionary:
 	return _normalize_saved_threads(_threads)
 
@@ -267,8 +247,8 @@ func undo() -> Variant:
 	if pending or history.is_empty():
 		return null
 	var removed: Dictionary = history.pop_back()
-	if _teleport_offers.get(_thread_id, {}).get("turn", -1) == history.size():
-		_teleport_offers.erase(_thread_id)
+	if _action_offers.get(_thread_id, {}).get("turn", -1) == history.size():
+		_action_offers.erase(_thread_id)
 	_restore_last_status()
 	changed.emit()
 	return removed.user
@@ -315,6 +295,20 @@ func _restore_last_status() -> void:
 	incomplete_turns = result.get("incomplete_turns", 0)
 
 func _start(operation: String, turn: Dictionary) -> bool:
+	var assistant_system: Dictionary
+	if route == ASSISTANT:
+		_request_tools = _tool_registry.snapshot()
+		var prompt_error := _assistant_prompts.load_directory(assistant_prompt_directory)
+		if prompt_error.is_empty():
+			prompt_error = _assistant_prompts.validate_tools(_request_tools)
+		if not prompt_error.is_empty():
+			_request_tools.clear()
+			status = prompt_error
+			diagnostic = ""
+			changed.emit()
+			return false
+		_request_tool_specs = ToolRegistry.specifications(_request_tools)
+		assistant_system = _assistant_prompts.system_message(_request_tools)
 	_operation = operation
 	_request_profile = profiles[route].duplicate()
 	partial = ""
@@ -324,11 +318,10 @@ func _start(operation: String, turn: Dictionary) -> bool:
 	_transport.failure_details = {}
 	_tool_rounds = 0
 	_assistant_retries = 0
-	_proposed_destination = ""
-	_world_status_read = false
-	var fixed := fixed_dialogue_tokens(operation) if route == DIALOGUE else _message_tokens(ASSISTANT_SYSTEM)
+	_tool_turn.clear()
+	var fixed := fixed_dialogue_tokens(operation) if route == DIALOGUE else _message_tokens(assistant_system)
 	if route == ASSISTANT and _allows_tools():
-		fixed += _text_tokens(JSON.stringify(TOOLS))
+		fixed += _text_tokens(JSON.stringify(_request_tool_specs))
 	var messages := _build_request_history(operation, turn, _context_limit_tokens - OUTPUT_TOKEN_RESERVE - fixed)
 	if messages.is_empty():
 		status = CONTEXT_OVERFLOW
@@ -339,7 +332,7 @@ func _start(operation: String, turn: Dictionary) -> bool:
 	if route == DIALOGUE:
 		_request_messages = _build_dialogue_messages(messages, operation)
 	else:
-		_request_messages = [ASSISTANT_SYSTEM]
+		_request_messages = [assistant_system]
 		_request_messages.append_array(messages)
 	pending = true
 	changed.emit()
@@ -692,7 +685,7 @@ func payload() -> Dictionary:
 	if route == DIALOGUE:
 		body["max_tokens"] = OUTPUT_TOKEN_RESERVE
 	elif _allows_tools():
-		body["tools"] = TOOLS
+		body["tools"] = _request_tool_specs
 	return body
 
 func _dispatch() -> void:
@@ -799,7 +792,7 @@ func _receive_result(message: Dictionary, error: String) -> void:
 	_complete("")
 
 func _allows_tools() -> bool:
-	return route == ASSISTANT and world_status.is_valid() and _tool_rounds < MAX_TOOL_ROUNDS
+	return route == ASSISTANT and not _request_tools.is_empty() and _tool_rounds < MAX_TOOL_ROUNDS
 
 func _follow_tools(calls: Array, text: Variant) -> void:
 	var accepted: Array = []
@@ -819,9 +812,13 @@ func _follow_tools(calls: Array, text: Variant) -> void:
 		accepted.append({"id": id, "type": "function", "function": {"name": function.name, "arguments": function.arguments}})
 	_request_messages.append({"role": "assistant", "content": text, "tool_calls": accepted})
 	for call: Dictionary in accepted:
-		var result := _call_tool(call.function)
+		var result := ToolRegistry.execute(_request_tools, call.function.name, call.function.arguments, _tool_turn)
+		if not result.has("error") and not _tool_turn.has("empty_reply_notice"):
+			_tool_turn["empty_reply_notice"] = "工具已返回结果，游戏助手未提供说明。"
 		_request_messages.append({"role": "tool", "tool_call_id": call.id, "content": JSON.stringify(result)})
 	_tool_rounds += 1
+	if not _allows_tools():
+		_request_messages[0] = _assistant_prompts.system_message({})
 	if not _fit_tool_context():
 		_complete(CONTEXT_OVERFLOW)
 		return
@@ -832,7 +829,7 @@ func _follow_tools(calls: Array, text: Variant) -> void:
 func _fit_tool_context() -> bool:
 	var cost := OUTPUT_TOKEN_RESERVE
 	if _allows_tools():
-		cost += _text_tokens(JSON.stringify(TOOLS))
+		cost += _text_tokens(JSON.stringify(_request_tool_specs))
 	for row: Dictionary in _request_messages:
 		cost += _message_tokens(row)
 	var first := 1
@@ -845,53 +842,31 @@ func _fit_tool_context() -> bool:
 		_request_messages = [_request_messages.front()] + _request_messages.slice(first)
 	return cost <= _context_limit_tokens
 
-func _call_tool(function: Dictionary) -> Dictionary:
-	if function.name not in RETRYABLE_TOOLS:
-		return {"error": "tool_or_destination_unavailable"}
-	var args: Variant = JSON.parse_string(function.arguments)
-	if not args is Dictionary:
-		return {"error": "invalid_arguments"}
-	var state: Dictionary = world_status.call()
-	match function.name:
-		"get_world_status":
-			if args.is_empty():
-				_world_status_read = _world_status_read or not state.has("error")
-				return state
-		"propose_teleport":
-			if args.size() == 1 and args.get("destination_id") is String:
-				if not _proposed_destination.is_empty():
-					return {"error": "one_teleport_proposal_per_turn", "destination_id": _proposed_destination}
-				for destination: Dictionary in state.get("destinations", []):
-					if destination.id == args.destination_id:
-						_proposed_destination = destination.id
-						return {"status": "awaiting_player_confirmation", "destination": destination}
-	return {"error": "tool_or_destination_unavailable"}
+func action_offer() -> Dictionary:
+	var offer: Dictionary = _action_offers.get(_thread_id, {}) if route == ASSISTANT else {}
+	return {} if offer.is_empty() else {"id": offer.id, "label": offer.label, "turn": offer.turn}
 
-func teleport_offer() -> String:
-	if route != ASSISTANT:
-		return ""
-	return _teleport_offers.get(_thread_id, {}).get("destination", "")
-
-func teleport_offer_turn() -> int:
-	return _teleport_offers.get(_thread_id, {}).get("turn", -1) if route == ASSISTANT else -1
-
-func confirm_teleport() -> void:
-	var destination := teleport_offer()
-	if pending or destination.is_empty() or not world_teleport.is_valid():
+func confirm_action() -> void:
+	if pending or route != ASSISTANT:
 		return
-	var result: Dictionary = world_teleport.call(destination)
+	var offer: Dictionary = _action_offers.get(_thread_id, {})
+	if offer.is_empty():
+		return
+	var confirm: Callable = offer.confirm
+	var response: Variant = confirm.call() if confirm.is_valid() else null
+	var result: Dictionary = response if response is Dictionary else {}
 	if result.get("ok", false):
-		var offer: Dictionary = _teleport_offers[_thread_id]
 		var turn: Dictionary = history[offer.turn]
 		turn.action_committed = true
 		var saved: Dictionary = turn.result
-		saved.status = saved.status.trim_suffix(" · 传送提议仍可确认。")
-		saved.notice = saved.notice.trim_suffix(" · 传送提议仍可确认。")
+		var suffix: String = offer.get("retry_suffix", " · 操作提议仍可确认。")
+		saved.status = saved.status.trim_suffix(suffix)
+		saved.notice = saved.notice.trim_suffix(suffix)
 		if not saved.incomplete:
 			saved.status = ""
 			saved.notice = ""
-		_teleport_offers.erase(_thread_id)
-	status = str(result.get("message", "当前状态无法传送。"))
+		_action_offers.erase(_thread_id)
+	status = str(result.get("message", "当前无法完成该操作。"))
 	changed.emit()
 
 func _complete(error: String) -> void:
@@ -917,17 +892,20 @@ func _complete(error: String) -> void:
 	var notice := ""
 	if not final_error.is_empty() and partial.is_empty():
 		notice = ("续写 · " if _operation == "continue" else "") + final_error
-	if route == ASSISTANT and final_error.is_empty() and body.strip_edges().is_empty() and _proposed_destination.is_empty():
-		status = "已查询游戏状态，模型未返回说明。" if _world_status_read else "游戏助手没有返回文字。"
+	var offer: Dictionary = _tool_turn.get("offer", {}) if route == ASSISTANT else {}
+	if route == ASSISTANT and final_error.is_empty() and body.strip_edges().is_empty() and offer.is_empty():
+		status = _tool_turn.get("empty_reply_notice", "游戏助手没有返回文字。")
 		notice = status
-	if not _proposed_destination.is_empty():
+	if not offer.is_empty():
+		var previous := action_offer()
 		if not final_error.is_empty():
-			status += " · 传送提议仍可确认。"
-		elif not teleport_offer().is_empty() and teleport_offer() != _proposed_destination:
-			status = "已替换上一条待确认的传送提议。"
+			status += offer.get("retry_suffix", " · 操作提议仍可确认。")
+		elif not previous.is_empty() and previous.id != offer.id:
+			status = offer.get("replaced", "已替换上一条待确认的操作提议。")
 		elif body.strip_edges().is_empty():
-			status = "已有待确认的传送提议。"
-		_teleport_offers[_thread_id] = {"destination": _proposed_destination, "turn": history.size() - 1}
+			status = offer.get("pending", "已有待确认的操作提议。")
+		offer["turn"] = history.size() - 1
+		_action_offers[_thread_id] = offer
 		if body.strip_edges().is_empty():
 			notice = status
 	if not final_error.is_empty() and final_error != "已停止":
@@ -958,5 +936,7 @@ func _complete(error: String) -> void:
 	partial = ""
 	_request_messages = []
 	_request_profile = {}
-	_proposed_destination = ""
+	_tool_turn.clear()
+	_request_tools.clear()
+	_request_tool_specs.clear()
 	changed.emit()

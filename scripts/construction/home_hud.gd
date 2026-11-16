@@ -264,7 +264,7 @@ func set_navigation(enabled: bool, forward: Vector3, origin: Vector3, homes: Arr
 	if not enabled:
 		return
 	if _prompt.visible:
-		_prompt.text = "F5  建造家园  ·  " + eligible
+		_prompt.text = "F5  建造家园" if eligible == "home" else "F5  建造家园  ·  " + eligible
 	if Vector2(forward.x, forward.z).length_squared() > .0001:
 		_heading = rad_to_deg(atan2(forward.x, -forward.z))
 	_markers.clear()
@@ -313,7 +313,7 @@ func _draw_compass() -> void:
 			Vector2(x + 6, 46), Vector2(x + 6, 55), Vector2(x - 6, 55), Vector2(x - 6, 46), Vector2(x - 9, 46)])
 		_compass.draw_polyline(house, Color("#192c40"), 4, true)
 		_compass.draw_polyline(house, color, 2, true)
-		if bright:
+		if bright and not marker.name.is_empty():
 			_draw_text(font, "%s  %d m" % [marker.name, roundi(marker.meters)], Vector2(x, 75), 16, color)
 
 

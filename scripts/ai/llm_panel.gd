@@ -27,9 +27,8 @@ var _undo: Button
 var _previous: Button
 var _next: Button
 var _version: Label
-var _teleport: Button
-var _teleport_turn := -1
-var _teleport_destination := ""
+var _confirm: Button
+var _action_turn := -1
 var _copy_diagnostic: Button
 var _drafts := {}
 var _thread_id := ""
@@ -176,9 +175,9 @@ func _build_ui() -> void:
 	_version.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_actions.add_child(_version)
 	_next = _button(_actions, "下一版", func(): client.swipe(1))
-	_teleport = _button(_actions, "确认传送", client.confirm_teleport)
-	_teleport.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
-	_teleport.hide()
+	_confirm = _button(_actions, "确认", client.confirm_action)
+	_confirm.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	_confirm.hide()
 
 	var prompt := Style.row(12)
 	dock.add_child(prompt)
@@ -292,8 +291,8 @@ func _refresh() -> void:
 
 func _refresh_transcript() -> void:
 	var count := client.history.size()
-	if _teleport_turn >= count:
-		_detach_teleport()
+	if _action_turn >= count:
+		_detach_action()
 	while _turn_views.size() > count:
 		_remove_last_turn()
 	while _turn_views.size() < count:
@@ -303,11 +302,11 @@ func _refresh_transcript() -> void:
 	if count > 0:
 		_update_reply(count - 1)
 	_empty.visible = count == 0
-	_refresh_teleport()
+	_refresh_action()
 	_queue_follow_latest()
 
 func _reset_transcript() -> void:
-	_detach_teleport()
+	_detach_action()
 	while not _turn_views.is_empty():
 		_remove_last_turn()
 	_follow_latest = true
@@ -404,7 +403,7 @@ func _update_reply(index: int) -> void:
 	view.report_button.visible = has_report
 	view.report_button.text = "▾ 收起报告" if expanded else "▸ 查看报告"
 	_set_message(view.report, sections.report if expanded else "")
-	view.reply_lane.visible = not body.is_empty() or not notice.is_empty() or has_report or _teleport_turn == index
+	view.reply_lane.visible = not body.is_empty() or not notice.is_empty() or has_report or _action_turn == index
 
 func _set_message(label: RichTextLabel, value: String) -> void:
 	if label.text != value:
@@ -420,38 +419,29 @@ func _toggle_report(index: int) -> void:
 		_expanded_reports[key] = true
 	_update_reply(index)
 
-func _detach_teleport() -> void:
-	_teleport.hide()
-	if _teleport.get_parent() != _actions:
-		_teleport.reparent(_actions, false)
-	_teleport_turn = -1
-	_teleport_destination = ""
+func _detach_action() -> void:
+	_confirm.hide()
+	if _confirm.get_parent() != _actions:
+		_confirm.reparent(_actions, false)
+	_action_turn = -1
 
-func _refresh_teleport() -> void:
-	var index := client.teleport_offer_turn()
-	var destination := client.teleport_offer()
-	if index != _teleport_turn:
-		var previous := _teleport_turn
-		_detach_teleport()
+func _refresh_action() -> void:
+	var offer := client.action_offer()
+	var index: int = offer.get("turn", -1)
+	if index != _action_turn:
+		var previous := _action_turn
+		_detach_action()
 		if previous >= 0 and previous < _turn_views.size():
 			_update_reply(previous)
 		if index >= 0 and index < _turn_views.size():
-			_teleport_turn = index
-			_teleport.reparent(_turn_views[index].reply_box, false)
+			_action_turn = index
+			_confirm.reparent(_turn_views[index].reply_box, false)
 			_turn_views[index].reply_lane.show()
-			_teleport.show()
-	if destination != _teleport_destination and _teleport_turn >= 0:
-		_teleport_destination = destination
-		var place := destination
-		if client.world_status.is_valid():
-			var state: Dictionary = client.world_status.call()
-			for row: Dictionary in state.get("destinations", []):
-				if row.id == destination:
-					place = row.name
-					break
-		_teleport.text = "确认传送 · " + place
-		_teleport.custom_minimum_size.x = float(_teleport.text.length()) * 19 + 24
-	_teleport.disabled = client.pending
+			_confirm.show()
+	if _action_turn >= 0:
+		_confirm.text = offer.label
+		_confirm.custom_minimum_size.x = float(_confirm.text.length()) * 19 + 24
+	_confirm.disabled = client.pending
 
 func _on_scroll_moved(value: float) -> void:
 	var bar := _scroll.get_v_scroll_bar()

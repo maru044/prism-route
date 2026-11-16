@@ -3,6 +3,7 @@ extends SceneTree
 const Transport := preload("res://scripts/ai/chat_transport.gd")
 const Client := preload("res://scripts/ai/game_llm_client.gd")
 const ChatPanel := preload("res://scripts/ai/llm_panel.gd")
+const WorldTools := preload("res://scripts/world/world_assistant_tools.gd")
 const TitleSettings := preload("res://scripts/ui/title_api_settings.gd")
 const LOCALHOST := "127.0.0.1"
 const CASE_TIMEOUT_MS := 5000
@@ -26,13 +27,34 @@ func _initialize() -> void:
 	run.call_deferred()
 
 func run() -> void:
+	if "--offline" not in OS.get_cmdline_user_args():
+		await _verify_transport()
+	_verify_endpoint_paths()
+	await _verify_report_panel()
+	_verify_model_routes()
+	_verify_assistant_retry()
+	_verify_context_budget()
+	_verify_dialogue_request_matrix()
+	_verify_tool_context_budget()
+	_verify_registered_tools()
+	var client := Client.new()
+	root.add_child(client)
+	_verify_blank_player_profile(client)
+	client.free()
+	_verify_teleport_lifecycle()
+	if not Transport.connection_error("http://127.0.0.1:8080", "").is_empty() \
+			or not Transport.connection_error("https://fixture.invalid", "bad\nkey").contains("密钥") \
+			or not Transport.connection_error("http://fixture.invalid", "").contains("地址"):
+		_fail("connection settings", "validation failed to distinguish URL and key")
+	print("LLM_VERIFY failures=", _failures)
+	quit(0 if _failures == 0 else 1)
+
+func _verify_transport() -> void:
 	var server := TCPServer.new()
 	var bind_error := server.listen(0, LOCALHOST)
 	if bind_error != OK:
-		printerr("Cannot listen on loopback: ", error_string(bind_error))
-		quit(1)
+		_fail("loopback", "Cannot listen: " + error_string(bind_error))
 		return
-	_verify_endpoint_paths()
 	await _verify_title_model_list(server)
 	var client := Client.new()
 	root.add_child(client)
@@ -84,9 +106,9 @@ func run() -> void:
 	for fixture: Dictionary in cases:
 		await _run_case(server, client, fixture)
 	var assistant_tool_reads := []
-	client.world_status = func():
+	_register_world_tools(client, func():
 		assistant_tool_reads.append(true)
-		return {}
+		return {})
 	var assistant_cases := [
 		{"name": "assistant text", "body": '{"choices":[{"message":{"content":"OK"}}]}', "text": "OK", "status": ""},
 		{"name": "assistant JSON without MIME", "body": '{"choices":[{"message":{"content":"OK"}}]}', "mime": "", "text": "OK", "status": ""},
@@ -103,22 +125,9 @@ func run() -> void:
 		await _run_case(server, client, fixture)
 	if not assistant_tool_reads.is_empty():
 		_fail("assistant HTTP", "invalid replies executed a game tool")
-	await _verify_report_panel()
-	_verify_model_routes()
-	_verify_assistant_retry()
-	_verify_context_budget()
-	_verify_dialogue_request_matrix()
-	_verify_tool_context_budget()
-	_verify_blank_player_profile(client)
-	_verify_teleport_lifecycle()
-	if not Transport.connection_error("http://127.0.0.1:8080", "").is_empty() \
-			or not Transport.connection_error("https://fixture.invalid", "bad\nkey").contains("密钥") \
-			or not Transport.connection_error("http://fixture.invalid", "").contains("地址"):
-		_fail("connection settings", "validation failed to distinguish URL and key")
 	client.free()
 	server.stop()
-	print("LLM_STREAM cases=", cases.size(), " assistant_http=", assistant_cases.size(), " report_panel=1 model_routes=1 context_budget=1 dialogue_matrix=1 tool_context=1 player_profile=1 teleport_lifecycle=1 title_model_list=1 failures=", _failures)
-	quit(0 if _failures == 0 else 1)
+	print("LLM_STREAM cases=", cases.size(), " assistant_http=", assistant_cases.size())
 
 func _verify_endpoint_paths() -> void:
 	var fixtures := {
@@ -233,9 +242,9 @@ func _verify_model_routes() -> void:
 	client.profiles[Client.ASSISTANT] = {"url": "https://assistant.invalid", "model": "flash-fixture", "key": "assistant-fixture"}
 	client.profiles[Client.DIALOGUE] = {"url": "https://dialogue.invalid", "model": "argon-fixture", "key": "dialogue-fixture"}
 	var reads: Array[bool] = []
-	client.world_status = func():
+	_register_world_tools(client, func():
 		reads.append(true)
-		return {"location": "world fixture"}
+		return {"location": "world fixture"})
 	var tool_message := {"tool_calls": [{"id": "route-test", "function": {"name": "get_world_status", "arguments": "{}"}}]}
 
 	client.open(Client.ASSISTANT, "same-scope", {})
@@ -288,7 +297,7 @@ func _verify_assistant_retry() -> void:
 	root.add_child(client)
 	client.profiles[Client.ASSISTANT] = {"url": "https://fixture.invalid", "model": "flash-fixture", "key": ""}
 	client.profiles[Client.DIALOGUE] = {"url": "https://fixture.invalid", "model": "dialogue-fixture", "key": ""}
-	client.world_status = func(): return {}
+	_register_world_tools(client, func(): return {})
 	var temporary_failure := {"retryable": true, "retry_after_seconds": 3}
 	client.open(Client.ASSISTANT, "retry", {})
 	client.send("assistant question")
@@ -516,14 +525,15 @@ func _verify_tool_context_budget() -> void:
 	client._transport = capture
 	root.add_child(client)
 	client.profiles[Client.ASSISTANT] = {"url": "https://fixture.invalid", "model": "fixture", "key": ""}
-	client.world_status = func(): return {"location": "地".repeat(180)}
+	var state := {"location": "地".repeat(180)}
+	_register_world_tools(client, func(): return state)
 	client.open(Client.ASSISTANT, "tool context", {})
 	client.send("older " + "字".repeat(240))
 	capture.finished.emit({"content": "old answer"}, "")
 	client.send("newer")
 	capture.finished.emit({"content": "new answer"}, "")
 	client.send("current query")
-	var budget := Client.OUTPUT_TOKEN_RESERVE + Client._text_tokens(JSON.stringify(Client.TOOLS))
+	var budget := Client.OUTPUT_TOKEN_RESERVE + Client._text_tokens(JSON.stringify(capture.request.tools))
 	for row: Dictionary in capture.request.messages:
 		budget += Client._message_tokens(row)
 	client.stop()
@@ -535,7 +545,7 @@ func _verify_tool_context_budget() -> void:
 			or capture.request.messages.back().role != "tool" or client.omitted_turns != 1:
 		_fail("tool context", "tool output budget split a round or dropped the current query")
 	var sends := capture.sends
-	client.world_status = func(): return {"location": "地".repeat(500)}
+	state.location = "地".repeat(500)
 	capture.finished.emit(tool_message, "")
 	if capture.sends != sends or client.pending or not client.status.contains("上下文预算"):
 		_fail("tool context", "oversize tool output was dispatched")
@@ -555,6 +565,97 @@ func _verify_blank_player_profile(client: Node) -> void:
 			_fail("player profile", "empty player profile blocked dialogue or was included")
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
 
+func _verify_registered_tools() -> void:
+	var directory := "user://assistant_tools_fixture_%d" % Time.get_ticks_usec()
+	if DirAccess.make_dir_recursive_absolute(directory) != OK:
+		_fail("tool registry", "could not create prompt fixture")
+		return
+	var filenames := ["助手职责.md", "工具使用.md"]
+	for filename: String in filenames:
+		var file := FileAccess.open(directory.path_join(filename), FileAccess.WRITE)
+		if file == null:
+			_fail("tool registry", "could not write prompt fixture")
+			return
+		var content := FileAccess.get_file_as_string(Client.AssistantPrompts.DIRECTORY.path_join(filename))
+		if filename == "工具使用.md":
+			content += "\n\n## inspect_fixture\n仅在玩家要求时读取测试值。\n\n## later_fixture\n读取补充测试值。"
+		file.store_string(content)
+		file.close()
+	var client := Client.new()
+	var capture := CaptureTransport.new()
+	client._transport.free()
+	client._transport = capture
+	root.add_child(client)
+	client.assistant_prompt_directory = directory
+	for route: String in client.profiles:
+		client.profiles[route] = {"url": "https://fixture.invalid", "model": "fixture", "key": ""}
+	var seen: Array = []
+	var parameters := {"type": "object", "properties": {"count": {"type": "integer"}}, "required": ["count"]}
+	var handler := func(args: Dictionary, _turn: Dictionary):
+		seen.append(int(args.count))
+		return {"count": args.count}
+	if client.register_tool("inspect_fixture", "Fixture", parameters, handler) != OK \
+			or client.register_tool("inspect_fixture", "Duplicate", parameters, handler) != ERR_ALREADY_EXISTS:
+		_fail("tool registry", "registration or duplicate check failed")
+	client.open(Client.ASSISTANT, "registry", {})
+	if not client.send("inspect"):
+		_fail("tool registry", client.status)
+	else:
+		var initial: String = capture.request.messages[0].content
+		if capture.request.messages[0].role != "system" or capture.request.tools.size() != 1 \
+				or capture.request.tools[0].function.name != "inspect_fixture" or not initial.contains("仅在玩家要求时读取测试值") \
+				or initial.contains("get_world_status") or initial.contains("later_fixture") or initial.contains("tool_guide"):
+			_fail("tool registry", "system prompt did not match the advertised tools")
+		capture.finished.emit({"tool_calls": [
+			_fixture_call("invalid", "inspect_fixture", {"count": 1.5}),
+			_fixture_call("extra", "inspect_fixture", {"count": 3, "extra": true}),
+		]}, "")
+		if not seen.is_empty() or not capture.request.messages.back().content.contains("invalid_arguments"):
+			_fail("tool registry", "invalid arguments reached the handler")
+		if client.register_tool("later_fixture", "Late fixture", parameters, handler) != OK:
+			_fail("tool registry", "late registration failed")
+		capture.finished.emit({"tool_calls": [
+			_fixture_call("valid", "inspect_fixture", {"count": 3}),
+			_fixture_call("not_advertised", "later_fixture", {"count": 99}),
+		]}, "")
+		if seen != [3] or capture.request.tools.size() != 1 or not capture.request.messages.back().content.contains("tool_or_destination_unavailable"):
+			_fail("tool registry", "the turn changed its advertised or executable tools")
+		capture.finished.emit({"tool_calls": [_fixture_call("limit", "inspect_fixture", {"count": 4})]}, "")
+		if seen != [3, 4] or capture.request.has("tools") or capture.request.messages[0].content.contains("inspect_fixture") \
+				or not capture.request.messages[0].content.contains("没有开放工具"):
+			_fail("tool registry", "tool guide remained on the summary request")
+		capture.finished.emit({"content": "done"}, "")
+		if not client.send("next") or capture.request.get("tools", []).size() != 2:
+			_fail("tool registry", "newly registered tool was missing on the next turn")
+		client.stop()
+	client.open(Client.DIALOGUE, "registry boundary", {})
+	if not client.send("Hello") or capture.request.has("tools") or JSON.stringify(capture.request.messages).contains("仅在玩家要求时读取测试值"):
+		_fail("tool registry", "tool guide or schema reached free dialogue")
+	client.stop()
+	var role_path := directory.path_join(filenames[0])
+	var role_text := FileAccess.get_file_as_string(role_path)
+	var role_file := FileAccess.open(role_path, FileAccess.WRITE)
+	if role_file != null:
+		role_file.store_string(role_text.replace('"agent": "assistant"', '"agent": "dialogue"'))
+		role_file.close()
+		client.open(Client.ASSISTANT, "bad header", {})
+		if client.send("Bad header") or not client.status.contains("文件头无效"):
+			_fail("tool registry", "assistant accepted a prompt marked for another agent")
+	else:
+		_fail("tool registry", "could not write malformed header fixture")
+	client.free()
+	for filename: String in filenames:
+		DirAccess.remove_absolute(directory.path_join(filename))
+	DirAccess.remove_absolute(directory)
+
+func _fixture_call(id: String, name: String, args: Dictionary) -> Dictionary:
+	return {"id": id, "function": {"name": name, "arguments": JSON.stringify(args)}}
+
+func _register_world_tools(client: Client, state: Callable, teleport := Callable()) -> void:
+	var provider := WorldTools.new()
+	client.set_meta("fixture_world_tools", provider)
+	provider.register_tools(client, state, teleport)
+
 func _verify_teleport_lifecycle() -> void:
 	var client := Client.new()
 	var capture := CaptureTransport.new()
@@ -562,11 +663,12 @@ func _verify_teleport_lifecycle() -> void:
 	client._transport = capture
 	root.add_child(client)
 	client.profiles[Client.ASSISTANT] = {"url": "https://fixture.invalid", "model": "fixture", "key": ""}
-	client.world_status = func(): return {"destinations": [{"id": "one"}, {"id": "two"}]}
 	var attempts: Array[String] = []
-	client.world_teleport = func(destination: String):
+	var world_state := func(): return {"destinations": [{"id": "one", "name": "One"}, {"id": "two", "name": "Two"}]}
+	var teleport := func(destination: String):
 		attempts.append(destination)
 		return {"ok": attempts.size() > 1, "message": "fixture result"}
+	_register_world_tools(client, world_state, teleport)
 	client.open(Client.ASSISTANT, "offer", {})
 	client.send("propose")
 	capture.finished.emit({"tool_calls": [
@@ -575,22 +677,22 @@ func _verify_teleport_lifecycle() -> void:
 	]}, "")
 	if not capture.request.messages.back().content.contains("one_teleport_proposal_per_turn"):
 		_fail("teleport lifecycle", "a duplicate proposal was accepted")
-	if client.teleport_offer() != "" or not attempts.is_empty():
+	if not client.action_offer().is_empty() or not attempts.is_empty():
 		_fail("teleport lifecycle", "proposal was presented or executed before the tool request ended")
 	capture.finished.emit({}, "follow-up failed")
-	if client.teleport_offer() != "one" or not client.status.contains("传送提议仍可确认"):
+	if client.action_offer().get("id", "") != "propose_teleport/one" or not client.status.contains("传送提议仍可确认"):
 		_fail("teleport lifecycle", "failed follow-up lost the pending proposal")
-	client.confirm_teleport()
-	if attempts != ["one"] or client.teleport_offer() != "one":
+	client.confirm_action()
+	if attempts != ["one"] or client.action_offer().get("id", "") != "propose_teleport/one":
 		_fail("teleport lifecycle", "failed confirmation consumed the offer")
 	client.send("unrelated")
-	client.confirm_teleport()
+	client.confirm_action()
 	capture.finished.emit({"content": "answer"}, "")
-	if attempts != ["one"] or client.teleport_offer() != "one":
+	if attempts != ["one"] or client.action_offer().get("id", "") != "propose_teleport/one":
 		_fail("teleport lifecycle", "new or pending turn invalidated or executed the offer")
-	client.confirm_teleport()
-	client.confirm_teleport()
-	if attempts != ["one", "one"] or not client.teleport_offer().is_empty():
+	client.confirm_action()
+	client.confirm_action()
+	if attempts != ["one", "one"] or not client.action_offer().is_empty():
 		_fail("teleport lifecycle", "success did not consume exactly one offer")
 	client.undo()
 	if client.can_retry():

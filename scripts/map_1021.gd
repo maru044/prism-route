@@ -23,6 +23,8 @@ const WORLD_CONTROL := preload("res://scripts/world/world_control_context.gd")
 const GAME_PROGRESS := preload("res://scripts/progress/game_progress.gd")
 const GAME_SAVE_SESSION := preload("res://scripts/progress/game_save_session.gd")
 const LLM_PANEL := preload("res://scripts/ai/llm_panel.gd")
+const WORLD_ASSISTANT_TOOLS := preload("res://scripts/world/world_assistant_tools.gd")
+var _assistant_tools := WORLD_ASSISTANT_TOOLS.new()
 var game_progress := GAME_PROGRESS.new()
 var llm_panel: CanvasLayer
 const UPPER_RING := preload("res://scenes/world/upper_ring.tscn")
@@ -674,8 +676,7 @@ func _get_llm_panel() -> CanvasLayer:
 	if llm_panel == null:
 		llm_panel = LLM_PANEL.new()
 		llm_panel.name = "GameLLMPanel"
-		llm_panel.client.world_status = _llm_world_status
-		llm_panel.client.world_teleport = _llm_teleport
+		_assistant_tools.register_tools(llm_panel.client, _llm_world_status, _llm_teleport)
 		add_child(llm_panel)
 		if save_session != null:
 			llm_panel.restore_snapshot(save_session.read_section("chat"))
