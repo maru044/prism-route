@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "spawn_id": "sandbar_keqing",
+  "character_id": "keqing",
+  "region": "沙洲度假遗址",
+  "position": [-828.462, 0.100, -129.634],
+  "heading": -128.0,
+  "bound_furniture": [
+    {
+      "id": "desk_01",
+      "type": "desk",
+      "anchor": "Anchor_Desk_Surface"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "motion_profile_id": "keqing_motions",
+  "bindings": {
+    "desk_service": {
+      "interaction_type": "desk",
+      "required_anchors": ["Anchor_Desk_Surface", "Anchor_Front"],
+      "role_a_motion": "res://assets/characters/mmd_selected/animations/mmd_fca4bab1635f_a.tres",
+      "role_b_motion": "res://assets/characters/mmd_selected/animations/mmd_fca4bab1635f_b.tres",
+      "fallback_to_ground": true
+    },
+    "ground_service": {
+      "interaction_type": "ground",
+      "required_anchors": [],
+      "role_a_motion": "res://assets/characters/mmd_selected/animations/mmd_fcc0340f8227_a.tres",
+      "role_b_motion": "res://assets/characters/mmd_selected/animations/mmd_fcc0340f8227_b.tres",
+      "fallback_to_ground": true
+    }
+  }
+}

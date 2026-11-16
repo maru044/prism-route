@@ -52,6 +52,9 @@ func initialize(map: Node3D) -> void:
 func get_furniture_targets(site: Marker3D) -> Array[Dictionary]:
 	return SITES.resolve_furniture(world, site.get_meta("placement_region"), site.get_meta("character_id"))
 
+func get_battle_respawn(site: Marker3D) -> Dictionary:
+	return SITES.resolve_battle_respawn(world, site.get_meta("placement_region"), site.get_meta("character_id"))
+
 
 func add_controls(container: VBoxContainer) -> void:
 	review_menu = MenuButton.new()

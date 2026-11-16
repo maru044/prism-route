@@ -1,6 +1,7 @@
 class_name TurnCombatManager
 extends Node
 ## Turn-based RPG combat state machine for sensual pleasure duals.
+## Decoupled from specific character scripts via CombatStrategy and ReactionResolver.
 
 signal combat_started()
 signal phase_changed(new_phase: int)
@@ -9,7 +10,9 @@ signal mid_battle_dialogue_requested(reason: String)
 signal combat_ended(winner: String, loser: String, reason: String)
 signal koujou_triggered(speaker: String, text: String, emotion: String)
 
-const SparkleDialogueClass := preload("res://scripts/narrative/sparkle_tutorial_dialogue.gd")
+const ReactionResolverClass := preload("res://scripts/combat/reaction_resolver.gd")
+const CombatStrategyClass := preload("res://scripts/combat/combat_strategy.gd")
+const SparkleTutorialStrategyClass := preload("res://scripts/combat/sparkle_tutorial_strategy.gd")
 
 enum Phase {
 	INACTIVE,
@@ -25,10 +28,13 @@ enum Phase {
 
 var player_pleasure: Node
 var npc_pleasure: Node
+var npc_name: String = "花火"
+var reaction_resolver: RefCounted
+var combat_strategy: RefCounted
 
 var current_phase: Phase = Phase.INACTIVE
 var round_count: int = 1
-var is_tutorial_round: bool = true # Round 1 is teaching kill
+var is_tutorial_round: bool = true # Retained for backward compatibility
 
 var round_action_defense: float = 0.0
 var temporary_defense_modifier: float = 0.0 # From mid-battle dialogue (e.g. 咬牙坚持)
@@ -38,6 +44,28 @@ var is_resolved: bool = false
 func setup(player_comp: Node, npc_comp: Node) -> void:
 	player_pleasure = player_comp
 	npc_pleasure = npc_comp
+	if reaction_resolver == null:
+		# Default fallback to Sparkle reactions JSON if present
+		var r_path := "res://assets/npc/reactions/sparkle_temple.json"
+		if FileAccess.file_exists(r_path):
+			var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(r_path))
+			reaction_resolver = ReactionResolverClass.new(data)
+		else:
+			reaction_resolver = ReactionResolverClass.new({"speaker": npc_name})
+	if combat_strategy == null:
+		combat_strategy = SparkleTutorialStrategyClass.new(is_tutorial_round)
+
+func configure_npc(p_npc_name: String, p_reactions: Dictionary = {}, p_strategy: RefCounted = null) -> void:
+	npc_name = p_npc_name
+	if not p_reactions.is_empty():
+		reaction_resolver = ReactionResolverClass.new(p_reactions)
+	elif reaction_resolver == null:
+		reaction_resolver = ReactionResolverClass.new({"speaker": npc_name})
+		
+	if p_strategy != null:
+		combat_strategy = p_strategy
+	elif combat_strategy == null:
+		combat_strategy = CombatStrategyClass.new()
 
 func start_combat(tutorial_mode: bool = true, meta_settings: Dictionary = {}) -> void:
 	is_tutorial_round = tutorial_mode
@@ -47,6 +75,14 @@ func start_combat(tutorial_mode: bool = true, meta_settings: Dictionary = {}) ->
 	has_triggered_mid_edging_talk = false
 	is_resolved = false
 	
+	if combat_strategy == null:
+		if is_tutorial_round:
+			combat_strategy = SparkleTutorialStrategyClass.new(true)
+		else:
+			combat_strategy = CombatStrategyClass.new()
+	elif combat_strategy is SparkleTutorialStrategyClass:
+		combat_strategy.is_tutorial_round = is_tutorial_round
+		
 	player_pleasure.reset()
 	npc_pleasure.reset()
 	
@@ -54,28 +90,27 @@ func start_combat(tutorial_mode: bool = true, meta_settings: Dictionary = {}) ->
 	var cheat_mode: String = meta_settings.get("meta_cheat_mode", "none")
 	if cheat_mode == "distracted":
 		npc_pleasure.damage_taken_multiplier = 2.5
-		log_message_emitted.emit("【识趣生效】花火故意走神了！受到的快感大幅增加！")
+		log_message_emitted.emit("【识趣生效】%s故意走神了！受到的快感大幅增加！" % npc_name)
 	elif cheat_mode == "lock_master_pleasure":
 		player_pleasure.pleasure_locked = true
 		player_pleasure.pleasure_cap = 90.0
-		log_message_emitted.emit("【识趣生效】花火施加了保护！主人的快感被锁定在90%！")
-	elif cheat_mode == "instant_surrender":
-		log_message_emitted.emit("【识趣特权】花火顺从主人的指令，准备直接走流程认输！")
+		log_message_emitted.emit("【识趣生效】锁精结界生效！主人的快感被限制在 90% 以下！")
+	elif cheat_mode == "reduce_damage":
+		player_pleasure.damage_taken_multiplier = 0.4
+		log_message_emitted.emit("【识趣生效】防线强化！主人受到的快感大幅降低！")
+		
+	if meta_settings.get("edging_endure", false):
+		temporary_defense_modifier = 0.6
+		log_message_emitted.emit("【战术增益】心神合一生效，下一轮受到的快感减免 60%！")
 		
 	current_phase = Phase.ROUND_START
-	combat_started.emit()
 	phase_changed.emit(current_phase)
+	combat_started.emit()
 	
-	log_message_emitted.emit("=== 回合制 Battle Fuck 开始！第 %d 回合 ===" % round_count)
-	
-	if cheat_mode == "instant_surrender":
-		npc_pleasure.add_pleasure(100.0)
-		_check_battle_state()
-		return
-		
+	log_message_emitted.emit("【身心对决开始】与%s的身心快感对决正式打响！" % npc_name)
 	_advance_to_player_turn()
 
-func execute_player_action(action: Resource) -> void:
+func execute_player_action(action: Dictionary) -> void:
 	if current_phase != Phase.PLAYER_INPUT or is_resolved:
 		return
 		
@@ -92,15 +127,17 @@ func execute_player_action(action: Resource) -> void:
 			"nipples": zone_desc = "敏感双乳"
 			"anal": zone_desc = "紧致菊部"
 			"clitoris": zone_desc = "私密花核"
+			"thighs": zone_desc = "娇嫩大腿"
 		var extra_badge := "（造成 +%.1f%% 快感 · %s）" % [gained, zone_desc]
-		log_message_emitted.emit("主人施展【%s】，刺激了花火的%s，造成了 +%.1f%% 快感！" % [action.action_name, zone_desc, gained])
-		var koujou: Dictionary = SparkleDialogueClass.get_zone_reaction(action.target_zone, npc_pleasure.current_pleasure)
-		koujou_triggered.emit(koujou.get("speaker", "花火"), koujou.get("text", ""), extra_badge)
+		log_message_emitted.emit("主人施展【%s】，刺激了%s的%s，造成了 +%.1f%% 快感！" % [action.action_name, npc_name, zone_desc, gained])
+		var koujou: Dictionary = reaction_resolver.get_zone_reaction(action.target_zone, npc_pleasure.current_pleasure) if reaction_resolver else {"speaker": npc_name, "text": "哈啊……"}
+		koujou_triggered.emit(koujou.get("speaker", npc_name), koujou.get("text", ""), extra_badge)
 	else:
 		log_message_emitted.emit("主人采取了【%s】姿态，本回合快感减免 50%%！" % action.action_name)
 		koujou_triggered.emit("状态", "采取了防守姿态，本回合受到的快感减免 50%！", "")
 		
-	await get_tree().create_timer(1.8).timeout
+	if is_inside_tree() and get_tree():
+		await get_tree().create_timer(1.8).timeout
 	
 	if _check_battle_state():
 		return
@@ -143,60 +180,46 @@ func _advance_to_npc_turn() -> void:
 		return
 	current_phase = Phase.NPC_ACTION
 	phase_changed.emit(current_phase)
-	log_message_emitted.emit("【花火回合】轮到花火行动了！")
+	log_message_emitted.emit("【%s回合】轮到%s行动了！" % [npc_name, npc_name])
 	
-	await get_tree().create_timer(0.6).timeout
+	if is_inside_tree() and get_tree():
+		await get_tree().create_timer(0.6).timeout
 	
-	# NPC AI Decision
-	if is_tutorial_round and round_count == 1:
-		# Teaching Kill: Overwhelming unblockable blow
-		var attack_koujou: Dictionary = SparkleDialogueClass.get_npc_attack_line("teaching_kill")
-		var raw_dmg := 150.0
-		player_pleasure.add_pleasure(raw_dmg, "mouth")
-		koujou_triggered.emit(attack_koujou.get("speaker", "花火"), attack_koujou.get("text", ""), "（受到极强烈的绝顶侍奉，快感 +100%！）")
-		log_message_emitted.emit("花火娇笑着伏下身，使出了新手导师绝技【神级深喉绝顶侍奉】！")
+	# Execute NPC decision via CombatStrategy
+	if combat_strategy == null:
+		combat_strategy = CombatStrategyClass.new()
+		
+	var decision: Dictionary = combat_strategy.decide_npc_action(round_count, player_pleasure, npc_pleasure)
+	var skill_id: String = decision.get("skill_id", "tongue")
+	var skill_name: String = decision.get("skill_name", "灵巧舌尖缠绕")
+	var raw_dmg: float = decision.get("raw_damage", 16.0)
+	var target_zone: String = decision.get("target_zone", "mouth")
+	var is_teaching: bool = decision.get("is_teaching_kill", false)
+	
+	var attack_koujou: Dictionary = reaction_resolver.get_attack_line(skill_id) if reaction_resolver else {"speaker": npc_name, "text": "看招！"}
+	
+	if is_teaching:
+		player_pleasure.add_pleasure(raw_dmg, target_zone)
+		koujou_triggered.emit(attack_koujou.get("speaker", npc_name), attack_koujou.get("text", ""), "（受到极强烈的绝顶侍奉，快感 +100%！）")
+		var custom_log: String = decision.get("custom_log", "%s使出了绝招！" % npc_name)
+		log_message_emitted.emit(custom_log)
 		log_message_emitted.emit("极致温热的包裹无视防御，让主人受到极度强烈的快感冲击（+100.0%）！")
-		await get_tree().create_timer(2.2).timeout
+		if is_inside_tree() and get_tree():
+			await get_tree().create_timer(2.2).timeout
 	else:
-		# Regular round: Smooth balanced damage (15% to 18%)
-		var choices := ["tongue", "deep_throat", "eye_contact"]
-		var chosen: String = choices[randi() % choices.size()]
-		var raw_dmg := 16.0
-		var skill_name := ""
-		match chosen:
-			"tongue":
-				skill_name = "灵巧舌尖缠绕"
-				raw_dmg = 15.0
-			"deep_throat":
-				skill_name = "柔情深喉吞吐"
-				raw_dmg = 18.0
-			"eye_contact":
-				skill_name = "媚眼凝视与娇吟"
-				raw_dmg = 16.0
-				
 		var total_defense: float = clampf(round_action_defense + temporary_defense_modifier, 0.0, 0.95)
 		var actual_dmg: float = raw_dmg * (1.0 - total_defense)
-		var gained: float = player_pleasure.add_pleasure(actual_dmg)
-		var attack_koujou: Dictionary = SparkleDialogueClass.get_npc_attack_line(chosen)
-		koujou_triggered.emit(attack_koujou.get("speaker", "花火"), attack_koujou.get("text", ""), "（主人受到 +%.1f%% 快感）" % gained)
-		log_message_emitted.emit("花火施展了【%s】，对主人造成了 +%.1f%% 快感！" % [skill_name, gained])
-		await get_tree().create_timer(1.8).timeout
+		var gained: float = player_pleasure.add_pleasure(actual_dmg, target_zone)
+		koujou_triggered.emit(attack_koujou.get("speaker", npc_name), attack_koujou.get("text", ""), "（主人受到 +%.1f%% 快感）" % gained)
+		log_message_emitted.emit("%s施展了【%s】，对主人造成了 +%.1f%% 快感！" % [npc_name, skill_name, gained])
+		if is_inside_tree() and get_tree():
+			await get_tree().create_timer(1.8).timeout
 		
 	# Reset round defense & consume temporary defense
 	round_action_defense = 0.0
 	temporary_defense_modifier = 0.0
 	
-	await get_tree().create_timer(0.5).timeout
-	
 	if _check_battle_state():
-		return
-		
-	# Check for mid-battle edging dialogue (if master >= 90% and not yet defeated)
-	if player_pleasure.current_pleasure >= 90.0 and not has_triggered_mid_edging_talk and not is_tutorial_round:
-		has_triggered_mid_edging_talk = true
-		current_phase = Phase.MID_BATTLE_DIALOGUE
-		phase_changed.emit(current_phase)
-		mid_battle_dialogue_requested.emit("edging_danger")
 		return
 		
 	_advance_to_next_round()
@@ -204,30 +227,41 @@ func _advance_to_npc_turn() -> void:
 func _advance_to_next_round() -> void:
 	if is_resolved:
 		return
-	current_phase = Phase.ROUND_END
 	round_count += 1
+	current_phase = Phase.ROUND_START
 	phase_changed.emit(current_phase)
-	log_message_emitted.emit("--- 第 %d 回合开始 ---" % round_count)
+	log_message_emitted.emit("———————— 第 %d 回合开始 ————————" % round_count)
 	_advance_to_player_turn()
 
 func _check_battle_state() -> bool:
 	if is_resolved:
 		return true
 		
-	if npc_pleasure.has_reached_climax:
-		is_resolved = true
-		current_phase = Phase.VICTORY
-		phase_changed.emit(current_phase)
-		log_message_emitted.emit("【花火绝顶败北】花火娇喘连连，全身痉挛绝顶，主人赢得了回合对战！")
-		combat_ended.emit("Master", "Sparkle", "npc_climax")
-		return true
-		
+	# Check Player Defeat (100% Pleasure)
 	if player_pleasure.has_reached_climax:
 		is_resolved = true
 		current_phase = Phase.DEFEAT
 		phase_changed.emit(current_phase)
-		log_message_emitted.emit("【主人射精败北】主人的忍耐突破极限，败北射精虚脱！")
-		combat_ended.emit("Sparkle", "Master", "player_climax")
+		log_message_emitted.emit("【对决结束】主人承受不住强烈刺激，达到了绝顶高潮！对决落败！")
+		combat_ended.emit(npc_name, "player", "player_climax")
+		return true
+		
+	# Check NPC Defeat (100% Pleasure)
+	if npc_pleasure.has_reached_climax:
+		is_resolved = true
+		current_phase = Phase.VICTORY
+		phase_changed.emit(current_phase)
+		log_message_emitted.emit("【对决结束】%s娇喘连连彻底失守，陷入了剧烈绝顶！主人获得了胜利！" % npc_name)
+		combat_ended.emit("player", npc_name, "npc_climax")
+		return true
+		
+	# Check Edging Threshold Interruption (Only trigger once per battle unless reset)
+	if not has_triggered_mid_edging_talk and player_pleasure.is_edging:
+		has_triggered_mid_edging_talk = true
+		current_phase = Phase.MID_BATTLE_DIALOGUE
+		phase_changed.emit(current_phase)
+		log_message_emitted.emit("【濒危警告】主人的快感已突破 90%% 绝顶临界点！触发紧急战中交涉！")
+		mid_battle_dialogue_requested.emit("player_edging_critical")
 		return true
 		
 	return false

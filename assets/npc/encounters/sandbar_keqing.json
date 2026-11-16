@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "encounter_id": "sandbar_keqing",
+  "character_id": "keqing",
+  "spawn_id": "sandbar_keqing",
+  "flow_behavior_id": "standard_duel",
+  "dialogue_bundle_id": "keqing_sandbar_bundle",
+  "combat_profile_id": "keqing_combat",
+  "reaction_profile_id": "keqing_reactions",
+  "motion_profile_id": "keqing_motions",
+  "supported_entry_points": [
+    "start",
+    "mid_battle_manual",
+    "victory_node",
+    "defeat_node"
+  ]
+}

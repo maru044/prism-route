@@ -1,0 +1,29 @@
+{
+  "bound_furniture": [
+    {
+      "anchor": "Anchor_Seat",
+      "id": "seat_01",
+      "type": "seat"
+    },
+    {
+      "anchor": "Anchor_Bed_Center",
+      "id": "rest_01",
+      "type": "bed"
+    },
+    {
+      "anchor": "Anchor_Desk_Surface",
+      "id": "table_01",
+      "type": "desk"
+    }
+  ],
+  "character_id": "sparkle",
+  "heading": 0.38,
+  "position": [
+    -1015.285,
+    61.05,
+    1255.788
+  ],
+  "region": "初始神殿与洞穴",
+  "schema_version": 1,
+  "spawn_id": "initial_temple_sparkle"
+}

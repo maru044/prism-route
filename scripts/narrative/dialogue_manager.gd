@@ -1,6 +1,7 @@
 class_name DialogueManager
 extends Node
 ## Core manager for multi-choice, branch-rich narrative dialogues and meta-interactions.
+## Supports isolated DialogueSessions, Choice Providers, and Action Handlers.
 
 signal dialogue_started(graph_id: String)
 signal text_updated(speaker: String, text: String, emotion: String)
@@ -31,7 +32,7 @@ const ACTION_SPARE_HONBAN: String = "spare_honban"
 const ACTION_FINISH_SERVICE: String = "finish_service"
 const ACTION_CLOSE: String = "close"
 
-const REGISTERED_ACTIONS: Dictionary = {
+const DEFAULT_REGISTERED_ACTIONS: Dictionary = {
 	ACTION_ENTER_COMBAT: true,
 	ACTION_RESUME_COMBAT: true,
 	ACTION_KILL: true,
@@ -39,23 +40,63 @@ const REGISTERED_ACTIONS: Dictionary = {
 	ACTION_SPARE_VIRGIN: true,
 	ACTION_SPARE_HONBAN: true,
 	ACTION_FINISH_SERVICE: true,
-	ACTION_CLOSE: true
+	ACTION_CLOSE: true,
+	# Domain-prefixed actions
+	"encounter.enter_combat": true,
+	"encounter.resume_combat": true,
+	"encounter.kill": true,
+	"encounter.spare": true,
+	"encounter.spare_virgin": true,
+	"encounter.spare_honban": true,
+	"encounter.finish_service": true,
+	"encounter.close": true,
 }
 
 const ACTION_ALIASES: Dictionary = {
 	"choose_kill": ACTION_KILL,
 	"choose_spare": ACTION_SPARE,
 	"choose_spare_virgin": ACTION_SPARE_VIRGIN,
-	"choose_spare_honban": ACTION_SPARE_HONBAN
+	"choose_spare_honban": ACTION_SPARE_HONBAN,
+	"encounter.enter_combat": ACTION_ENTER_COMBAT,
+	"encounter.resume_combat": ACTION_RESUME_COMBAT,
+	"encounter.kill": ACTION_KILL,
+	"encounter.spare": ACTION_SPARE,
+	"encounter.spare_virgin": ACTION_SPARE_VIRGIN,
+	"encounter.spare_honban": ACTION_SPARE_HONBAN,
+	"encounter.finish_service": ACTION_FINISH_SERVICE,
+	"encounter.close": ACTION_CLOSE,
 }
 
-var current_graph: Dictionary = {}
-var current_node_id: String = ""
-var current_source: DialogueSource = DialogueSource.WORLD_INTERACTION
-var current_resume_policy: ResumePolicy = ResumePolicy.RETURN_TO_WORLD
+const DialogueSessionClass := preload("res://scripts/narrative/dialogue_session.gd")
 
-var session_active: bool = false
+var current_session: RefCounted
+var current_graph: Dictionary:
+	get: return current_session.graph if current_session else {}
+	set(val):
+		if current_session: current_session.graph = val
+var current_node_id: String:
+	get: return current_session.current_node_id if current_session else ""
+	set(val):
+		if current_session: current_session.current_node_id = val
+var current_source: DialogueSource:
+	get: return (current_session.source as DialogueSource) if current_session else DialogueSource.WORLD_INTERACTION
+	set(val):
+		if current_session: current_session.source = val
+var current_resume_policy: ResumePolicy:
+	get: return (current_session.resume_policy as ResumePolicy) if current_session else ResumePolicy.RETURN_TO_WORLD
+	set(val):
+		if current_session: current_session.resume_policy = val
+
+var session_active: bool:
+	get: return current_session.is_active if current_session else false
+	set(val):
+		if current_session: current_session.is_active = val
 var session_id: int = 0
+
+## Extensible registries
+var registered_actions: Dictionary = DEFAULT_REGISTERED_ACTIONS.duplicate()
+var choice_providers: Dictionary = {}
+var action_handlers: Dictionary = {}
 
 var blackboard: Dictionary = {
 	"master_name": "主人",
@@ -65,6 +106,14 @@ var blackboard: Dictionary = {
 	"edging_endure": false,
 	"mercy_choice": "undecided"
 }
+
+func register_action(action_id: String, handler: Callable = Callable()) -> void:
+	registered_actions[action_id] = true
+	if handler.is_valid():
+		action_handlers[action_id] = handler
+
+func register_choice_provider(provider_id: String, provider: Callable) -> void:
+	choice_providers[provider_id] = provider
 
 func consume_battle_cheats() -> Dictionary:
 	var cheats := {
@@ -89,11 +138,10 @@ func start_dialogue(
 	policy: ResumePolicy = ResumePolicy.RETURN_TO_WORLD
 ) -> void:
 	session_id += 1
-	session_active = true
-	current_graph = graph_data
-	current_node_id = start_node
-	current_source = source
-	current_resume_policy = policy
+	current_session = DialogueSessionClass.new(session_id, graph_data, start_node, source, policy)
+	# Link encounter context from blackboard
+	current_session.encounter_context = blackboard
+	
 	dialogue_started.emit(current_graph.get("id", "unnamed_graph"))
 	_process_current_node()
 
@@ -102,7 +150,7 @@ func choose_option(option_index: int) -> void:
 		return
 		
 	var node: Dictionary = current_graph.get("nodes", {}).get(current_node_id, {})
-	var choices: Array = node.get("choices", [])
+	var choices: Array = _get_processed_choices(node)
 	if option_index < 0 or option_index >= choices.size():
 		push_error("Invalid choice index: " + str(option_index))
 		return
@@ -155,7 +203,7 @@ func _finish_with_action(raw_act: String) -> void:
 	session_active = false
 	
 	var act: String = _normalize_action(raw_act)
-	var is_valid: bool = REGISTERED_ACTIONS.has(act)
+	var is_valid: bool = registered_actions.has(act) or registered_actions.has(raw_act)
 	if not is_valid:
 		push_error("Dialogue action not registered: " + raw_act + " (safely falling back to close)")
 		act = ACTION_CLOSE
@@ -165,6 +213,12 @@ func _finish_with_action(raw_act: String) -> void:
 	elif act == ACTION_SPARE or act == ACTION_SPARE_VIRGIN or act == ACTION_SPARE_HONBAN:
 		blackboard["mercy_choice"] = act
 		
+	# Execute custom action handler if registered
+	if action_handlers.has(act):
+		action_handlers[act].call()
+	elif action_handlers.has(raw_act):
+		action_handlers[raw_act].call()
+		
 	var payload := {
 		"action": act,
 		"raw_action": raw_act,
@@ -173,6 +227,16 @@ func _finish_with_action(raw_act: String) -> void:
 		"session_id": session_id
 	}
 	dialogue_ended.emit(payload)
+
+func _get_processed_choices(node: Dictionary) -> Array:
+	var base_choices: Array = node.get("choices", []).duplicate(true)
+	# Check if node has a choice_provider_id
+	var provider_id: String = node.get("choice_provider_id", "")
+	if not provider_id.is_empty() and choice_providers.has(provider_id):
+		var dynamic_choices: Array = choice_providers[provider_id].call(current_session)
+		for c in dynamic_choices:
+			base_choices.append(c)
+	return base_choices
 
 func _process_current_node() -> void:
 	var nodes: Dictionary = current_graph.get("nodes", {})
@@ -186,19 +250,17 @@ func _process_current_node() -> void:
 	var speaker: String = node.get("speaker", "旁白")
 	var raw_text: String = node.get("text", "")
 	var emotion: String = node.get("emotion", "default")
-	var interpolated_text: String = _interpolate_variables(raw_text)
+	var interpolated_text: String = current_session.interpolate(raw_text) if current_session else raw_text
 	
 	if node_type == "text":
 		text_updated.emit(speaker, interpolated_text, emotion)
 	elif node_type == "choice":
 		text_updated.emit(speaker, interpolated_text, emotion)
-		var choices: Array = node.get("choices", [])
+		var choices: Array = _get_processed_choices(node)
 		choices_presented.emit(choices)
-
-func _interpolate_variables(text: String) -> String:
-	var result: String = text
-	for k: String in blackboard:
-		var tag: String = "{" + k + "}"
-		if tag in result:
-			result = result.replace(tag, str(blackboard[k]))
-	return result
+	elif node_type == "command":
+		if node.has("action"):
+			_finish_with_action(node["action"])
+		else:
+			current_node_id = node.get("next", "")
+			_process_current_node()

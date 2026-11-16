@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "EncounterDefinition",
+  "type": "object",
+  "required": ["schema_version", "encounter_id", "character_id", "spawn_id", "dialogue_bundle_id", "supported_entry_points"],
+  "properties": {
+    "schema_version": { "type": "integer", "enum": [1] },
+    "encounter_id": { "type": "string" },
+    "character_id": { "type": "string" },
+    "spawn_id": { "type": "string" },
+    "flow_behavior_id": { "type": "string" },
+    "dialogue_bundle_id": { "type": "string" },
+    "combat_profile_id": { "type": "string" },
+    "reaction_profile_id": { "type": "string" },
+    "motion_profile_id": { "type": "string" },
+    "supported_entry_points": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}

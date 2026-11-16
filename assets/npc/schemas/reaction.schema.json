@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ReactionProfile",
+  "type": "object",
+  "required": ["schema_version", "reaction_profile_id", "speaker", "zones", "attack_lines"],
+  "properties": {
+    "schema_version": { "type": "integer", "enum": [1] },
+    "reaction_profile_id": { "type": "string" },
+    "speaker": { "type": "string" },
+    "zones": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["low", "mid", "high"],
+        "properties": {
+          "low": {
+            "type": "object",
+            "required": ["text"],
+            "properties": {
+              "text": { "type": "string" },
+              "emotion": { "type": "string" }
+            }
+          },
+          "mid": {
+            "type": "object",
+            "required": ["text"],
+            "properties": {
+              "text": { "type": "string" },
+              "emotion": { "type": "string" }
+            }
+          },
+          "high": {
+            "type": "object",
+            "required": ["text"],
+            "properties": {
+              "text": { "type": "string" },
+              "emotion": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "attack_lines": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["text"],
+        "properties": {
+          "text": { "type": "string" },
+          "emotion": { "type": "string" },
+          "name": { "type": "string" },
+          "damage": { "type": "number" }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

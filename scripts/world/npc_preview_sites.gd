@@ -5,6 +5,96 @@ extends RefCounted
 const CAPE_VISITORS := "海岬小镇 · 来访角色"
 const CLIFF_WALKWAY := "异形镂空崖壁 · 底层步道"
 
+## Fixed defeat poses use player origin and heading in radians, as set_spawn expects.
+const INITIAL_TEMPLE_RESPAWN := {
+	"name": "初始神殿 · 门前", "position": Vector3(-1012.685, 61.100, 1262.287), "heading": 0.38,
+}
+const BATTLE_RESPAWN_POSES := {
+	"temple_gate": INITIAL_TEMPLE_RESPAWN,
+	"cape_square_walk": {
+		"name": "海岬小镇 · 环岛外侧步道", "position": Vector3(645.700, 1.420, -1037.500), "heading": 0.0,
+	},
+	"upper_ring_entry": {
+		"name": "上层环庭 · 前门内侧平台", "position": Vector3(-927.000, 70.180, 1072.000), "heading": 0.28,
+	},
+	"cliff_walkway": {
+		"name": "异形镂空崖壁 · 底层干步道", "position": Vector3(-430.000, 0.760, 744.000), "heading": 2.45,
+	},
+	"south_middle_walk": {
+		"name": "南部中层台地 · 道旁步行带", "position": Vector3(-261.000, 35.200, 639.000), "heading": -1.57,
+	},
+}
+
+## A string selects a fixed pose above or an existing world spawn key.
+## A NodePath selects a ruin entrance, facing back into the ruin.
+const AMBER_RUIN_RESPAWN := ^"NPCWaypointRuins/amber/Entrance"
+const EULA_RUIN_RESPAWN := ^"NPCWaypointRuins/eula/Entrance"
+const BATTLE_RESPAWNS := {
+	"浅水庭院": {"default": "water_court"},
+	"孤顶教堂": {"default": "church_ruins"},
+	"海岬小镇与神社": {"default": "cape_square_walk"},
+	CAPE_VISITORS: {"default": "cape_square_walk"},
+	"沙洲度假遗址": {"default": "sandbar_pavilion"},
+	"下沉档案馆": {"default": "sunken_archive"},
+	"东侧覆土庭院": {"default": "earth_pavilion"},
+	"上层环庭": {"default": "upper_ring_entry"},
+	"椭圆中庭": {"default": "oval_atrium", "miyabi": "oval_atrium_floor", "seele": "oval_atrium_floor"},
+	CLIFF_WALKWAY: {"default": "cliff_walkway"},
+	"初始神殿与洞穴": {
+		"sparkle": "temple_gate",
+		"kafka": ^"NPCWaypointRuins/kafka/Entrance",
+		"firefly": "south_waterfront",
+	},
+	"草甸与观景点": {
+		"amber": AMBER_RUIN_RESPAWN,
+		"eula": EULA_RUIN_RESPAWN,
+		"charlotte": ^"NPCWaypointRuins/charlotte/Entrance",
+		"mona": "island_saddle",
+		"sucrose": ^"NPCWaypointRuins/sucrose/Entrance",
+		"lynette": "south_middle_walk",
+		"fischl": "terrace_ruins_a",
+		"shenhe": "terrace_ruins_b",
+		"hutao": ^"NPCWaypointRuins/hutao/Entrance",
+		"lumine": ^"NPCWaypointRuins/lumine/Entrance",
+	},
+	"次要点位": {
+		"barbara": "sandbar_pavilion",
+		"keqing": "earth_pavilion",
+		"ganyu": "earth_pavilion",
+		"yae_miko": "sunken_archive",
+		"march7th": AMBER_RUIN_RESPAWN,
+		"firefly": EULA_RUIN_RESPAWN,
+		"silver_wolf": "oval_atrium",
+	},
+}
+
+static func resolve_battle_respawn(world: Node, region: String, character_id: String) -> Dictionary:
+	var placements: Dictionary = BATTLE_RESPAWNS.get(region, {})
+	var key: Variant = placements.get(character_id, placements.get("default", ""))
+	if key is NodePath:
+		var entrance := world.get_node_or_null(key) as Marker3D
+		if entrance == null:
+			return {}
+		var outward := entrance.global_basis.z
+		return {
+			"id": str(key), "name": "残廊入口", "position": entrance.global_position + Vector3.UP * .1,
+			"heading": atan2(outward.x, outward.z),
+		}
+	if BATTLE_RESPAWN_POSES.has(key):
+		var pose: Dictionary = BATTLE_RESPAWN_POSES[key].duplicate()
+		pose["id"] = key
+		return pose
+	if key == "":
+		return {}
+	for row: Dictionary in world.resolved_spawns:
+		if row.get("key") == key:
+			var direction: Vector3 = world.vec(row.look_direction)
+			return {
+				"id": key, "name": row.name, "position": (row.floor_position as Vector3) + Vector3.UP * .1,
+				"heading": atan2(-direction.x, -direction.z),
+			}
+	return {}
+
 ## Region and character identify a placement, so a visitor can use a different
 ## slot from the same character's main placement.
 ## Each binding names a world-relative furniture instance and its contact anchor.

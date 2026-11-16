@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "graph_id": "keqing_sandbar_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "combat_manual": "mid_battle_manual",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "刻晴",
+      "text": "剑光如我，斩尽芜杂！你就是新来到这座海岛的旅行者吧？我是璃月七星的玉衡星刻晴，目前正在沙洲一带调查遗址与建筑分布。",
+      "emotion": "serious",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "刻晴",
+      "text": "找我有事吗？现在可是宝贵的工作时间，有话就直说吧。",
+      "choices": [
+        {
+          "text": "【关于沙洲】在这片海滩边调查，有什么新发现吗？",
+          "target": "lore_beach"
+        },
+        {
+          "text": "【提出切磋】既然难得相遇，不如与我进行一场身心对决吧！",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【不打扰了】你继续忙吧，我四处看看。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_beach": {
+      "type": "text",
+      "speaker": "刻晴",
+      "text": "这片沙洲度假遗址的现代结构非常精妙，尤其是那几座露天长案桌和观景台，哪怕经历风雨依然保持着极高的几何平整度。稍后我打算将测绘数据汇总整理。",
+      "emotion": "confident",
+      "next": "main_menu_choices"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "刻晴",
+      "text": "战斗中可别分心！集中精神，全力以赴才是对彼此的尊重！",
+      "choices": [
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "刻晴",
+      "text": "哈啊——竟然是我输了！全身酥软得提不起力气，本小姐愿赌服输，你想怎么处置我？",
+      "choices": [
+        {
+          "text": "【长案侍奉】请刻晴小姐俯身扶在桌边，履行败者惩罚。",
+          "action": "finish_service"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "刻晴",
+      "text": "哼，看来你的修行还不够呢！不过能坚持到这一步，已经值得称赞了。调整好状态，欢迎下次再来挑战！",
+      "emotion": "smile",
+      "action": "close"
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "attack_lines": {
+    "deep_throat": {
+      "emotion": "excited",
+      "text": "看你忍得挺辛苦的嘛。乖乖放松，让我好好伺候你一下吧！"
+    },
+    "eye_contact": {
+      "emotion": "wink",
+      "text": "看招！用胸脯给你夹紧，可别这么快就缴械投降了哦！"
+    },
+    "teaching_kill": {
+      "emotion": "climax",
+      "text": "嘻嘻，杂鱼主人，第一局就先让你尝尝考官的绝招吧！神级深喉绝顶侍奉！"
+    },
+    "tongue": {
+      "emotion": "smirk",
+      "text": "轮到我啦！尝尝折扇扫过大腿的感觉吧，呼吸是不是已经乱套了？"
+    }
+  },
+  "reaction_profile_id": "sparkle_temple_reactions",
+  "schema_version": 1,
+  "speaker": "花火",
+  "zones": {
+    "anal": {
+      "high": {
+        "emotion": "flustered",
+        "text": "别碰了……那里真的不行……再摸我真的要被你弄坏了……"
+      },
+      "low": {
+        "emotion": "smirk",
+        "text": "你在摸哪里啊变态！那种地方怎么也算进攻啊，快拿开啦！"
+      },
+      "mid": {
+        "emotion": "blush",
+        "text": "呜……别按在那里画圈……又酸又热的，感觉好奇怪啊……"
+      }
+    },
+    "clitoris": {
+      "high": {
+        "emotion": "climax",
+        "text": "啊啊啊！真的要疯了！不能再碰了，脚趾都蜷起来了……真的要高潮了啊！"
+      },
+      "low": {
+        "emotion": "flustered",
+        "text": "等等！你怎么一眼就冲着下面来啊？作弊吧你！那里碰一下就很敏感的……"
+      },
+      "mid": {
+        "emotion": "blush",
+        "text": "不行……别按那里打转！腿根都在发抖了……你换个地方摸啦，求你了！"
+      }
+    },
+    "mouth": {
+      "high": {
+        "emotion": "flustered",
+        "text": "停、停一下！咽喉要受不了了……唔咽……手指快拿出去啦……"
+      },
+      "low": {
+        "emotion": "smirk",
+        "text": "喂……直接把手指伸进来了？轻一点啦，弄得口水都要流出来了。"
+      },
+      "mid": {
+        "emotion": "blush",
+        "text": "唔……别乱按舌根呀，怪痒的……哈啊，你手劲还挺大。"
+      }
+    },
+    "nipples": {
+      "high": {
+        "emotion": "flustered",
+        "text": "呀！别拉扯呀……衣服都要被你扯掉了，揉得我骨头都要酥了……"
+      },
+      "low": {
+        "emotion": "smirk",
+        "text": "喂，隔着衣服揉算什么本事？有胆量直接摸呀，不过你手心还挺热的……"
+      },
+      "mid": {
+        "emotion": "blush",
+        "text": "等下……别捏尖尖那里！电流窜过来了……啊……胸口好热……"
+      }
+    }
+  }
+}

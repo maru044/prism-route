@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "keqing_reactions",
+  "speaker": "刻晴",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "唔——直接把手指伸过来了？别小看我，这种程度我才不会动摇！",
+        "emotion": "blush"
+      },
+      "mid": {
+        "text": "哈啊——舌尖被你搅得好乱，指尖温热的感觉，太奇怪了！",
+        "emotion": "shy"
+      },
+      "high": {
+        "text": "呜嗯！口水都要忍不住流出来了，快停下，脑子要变空白了！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "隔着衣服揉弄那里，你到底在想什么呀！",
+        "emotion": "flustered"
+      },
+      "mid": {
+        "text": "呀！别用指甲轻轻挑弄，胸口一阵阵发麻，太犯规了！",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！前胸已经完全硬起来了，好强烈的刺激，身体完全不听使唤了！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "碰到了最隐秘的地方！手快拿开，这可不是正经的剑术切磋！",
+        "emotion": "flustered"
+      },
+      "mid": {
+        "text": "唔啊！那里太敏感了，被你用掌心按压打圈，双腿都忍不住夹紧了！",
+        "emotion": "shy"
+      },
+      "high": {
+        "text": "不行了！花核一阵阵剧烈抽搐，要去了，真的要绝顶了啊啊！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "顺着黑丝抚摸大腿内侧，动作好轻佻，本小姐可不会认输！",
+        "emotion": "blush"
+      },
+      "mid": {
+        "text": "呀！大腿根部被你捏住，酸麻的感觉顺着腰部直往上涌，站不稳了！",
+        "emotion": "shy"
+      },
+      "high": {
+        "text": "哈啊！大腿软得像融化了一样，整个人都要倚靠在你怀里了！",
+        "emotion": "climax"
+      }
+    },
+    "anal": {
+      "low": {
+        "text": "指尖碰到后面了！那里绝对不可以，太羞耻了！",
+        "emotion": "angry"
+      },
+      "mid": {
+        "text": "唔！后方紧绷的地方被你隔着布料揉按，异样的感觉让人头皮发麻！",
+        "emotion": "shy"
+      },
+      "high": {
+        "text": "呀啊！全身的力气都被你抽走了，完全失守了啦！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "yunlai_sword": {
+      "name": "云来剑势·灵动突袭",
+      "damage": 15.0,
+      "text": "看招！以迅雷不及掩耳之势贴身进攻，可别眨眼哦！",
+      "emotion": "confident"
+    },
+    "starward_sword": {
+      "name": "天街巡游·柔情攻势",
+      "damage": 18.0,
+      "text": "剑影纷飞！用最细腻温柔的手法抚过你的敏感点，认输吧！",
+      "emotion": "smile"
+    },
+    "sensual_feint": {
+      "name": "假动作·贴面娇吟",
+      "damage": 16.0,
+      "text": "以为我要出剑？这可是贴身佯攻！耳边的娇喘，你能抵挡得住吗？",
+      "emotion": "blush"
+    }
+  }
+}

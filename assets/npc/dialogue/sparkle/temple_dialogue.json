@@ -1,0 +1,574 @@
+{
+  "entry_points": {
+    "combat_edging": "mid_battle_edging",
+    "combat_manual": "mid_battle_manual",
+    "defeat_retry": "respawn_dialogue",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting",
+    "service_honban": "service_honban_start",
+    "service_virgin": "service_virgin_start",
+    "victory_settlement": "victory_node",
+    "world_start": "start"
+  },
+  "graph_id": "sparkle_temple_tutorial",
+  "nodes": {
+    "honban_service_action": {
+      "choices": [
+        {
+          "action": "spare_honban",
+          "text": "【确认】卧于神殿床榻，开启破处侍奉！"
+        }
+      ],
+      "speaker": "花火",
+      "text": "（轻解罗裳卧在软榻上，红着脸看着你）过来吧……轻一点哦。",
+      "type": "choice"
+    },
+    "honban_service_transition": {
+      "emotion": "lewd",
+      "next": "honban_service_action",
+      "speaker": "花火",
+      "text": "你……真打算要我的第一次呀？真是霸道的主人……不过愿赌服输，走吧，去床榻那边，今天我整个人都交给你了。",
+      "type": "text"
+    },
+    "idle_chitchat": {
+      "emotion": "smile",
+      "next": "idle_chitchat_2",
+      "speaker": "花火",
+      "text": "对决的规则其实特别简单，你看界面两边有快感槽，还有各种部位弱点。",
+      "type": "text"
+    },
+    "idle_chitchat_2": {
+      "emotion": "wink",
+      "next": "idle_chitchat_3",
+      "speaker": "花火",
+      "text": "轮到你的时候，你可以出招摸我的嘴唇、胸口或者敏感的地方。谁先被刺激到100%绝顶，谁就算输。输的人就得听赢的人吩咐，做任何事情都可以哦。",
+      "type": "text"
+    },
+    "idle_chitchat_3": {
+      "choices": [
+        {
+          "action": "enter_combat",
+          "text": "【开始战斗】听明白了，直接开战吧！"
+        },
+        {
+          "target": "main_menu_choices",
+          "text": "【再等等】我再琢磨琢磨出招思路。"
+        }
+      ],
+      "speaker": "花火",
+      "text": "听明白了吗？要是准备好了，我们随时可以开始哦！",
+      "type": "choice"
+    },
+    "lore_agree": {
+      "emotion": "excited",
+      "next": "main_menu_choices",
+      "speaker": "花火",
+      "text": "对吧！我也觉得这种生活挺棒的。没有乱七八糟的破事，每天看看风景、陪中意的人聊聊天，多舒服呀。不过前提是你得先赢过我哦！",
+      "type": "text"
+    },
+    "lore_meta_explain": {
+      "emotion": "smile",
+      "next": "lore_meta_explain_2",
+      "speaker": "花火",
+      "text": "这里其实就是一座风景很不错的海岛啦。到处都是以前留下的老建筑和公路，不过现在空荡荡的，没什么人住，树和草长得挺好的。",
+      "type": "text"
+    },
+    "lore_meta_explain_2": {
+      "emotion": "wink",
+      "next": "lore_meta_explain_3",
+      "speaker": "花火",
+      "text": "平时我们就在这儿开开房车、看看海、吹吹海风，生活其实挺清闲的。不过你想去岛屿深处转转的话，按这儿的规矩，得先陪我玩一场身心对决才行。",
+      "type": "text"
+    },
+    "lore_meta_explain_3": {
+      "choices": [
+        {
+          "target": "lore_agree",
+          "text": "【挺好的】开房车看风景、建营地，听起来确实挺惬意。"
+        },
+        {
+          "target": "lore_trap",
+          "text": "【有点疑问】为什么非要通过对决来决定？"
+        }
+      ],
+      "speaker": "花火",
+      "text": "你要是赢了我，我就陪你一起去环岛，营地想建在哪儿我都给你打下手。怎么样，听起来不亏吧？",
+      "type": "choice"
+    },
+    "lore_trap": {
+      "emotion": "smirk",
+      "next": "main_menu_choices",
+      "speaker": "花火",
+      "text": "因为岛上太安静啦，大家总得找点刺激的事情玩嘛！互相调逗、看看谁更敏感，既不伤和气又能拉近距离，多有意思呀。你总不会害怕了吧？",
+      "type": "text"
+    },
+    "main_menu_choices": {
+      "choices": [
+        {
+          "target": "lore_meta_explain",
+          "text": "【关于这里】这座岛到底是什么情况？那些白色的老建筑是干什么的？"
+        },
+        {
+          "target": "sleeve_praise",
+          "text": "【关于花火】你一直一个人待在这座神殿里吗？平时都做些什么？"
+        },
+        {
+          "target": "idle_chitchat",
+          "text": "【关于规则】想通过这里去岛屿深处，需要达成什么条件？"
+        },
+        {
+          "action": "enter_combat",
+          "text": "【开始对决】规则我已经清楚了，直接开始对决吧！"
+        }
+      ],
+      "speaker": "花火",
+      "text": "想先聊点什么呢？",
+      "type": "choice"
+    },
+    "mid_battle_back_to_fight": {
+      "choices": [
+        {
+          "action": "resume_combat",
+          "text": "【继续对决】重回战场出招！"
+        }
+      ],
+      "speaker": "花火",
+      "text": "准备好继续了吗？",
+      "type": "choice"
+    },
+    "mid_battle_confirm_distracted": {
+      "emotion": "excited",
+      "next": "mid_battle_back_to_fight",
+      "speaker": "花火",
+      "text": "好啦好啦，那我接下来就故意露出破绽，你可得好好把握机会哦！",
+      "type": "text"
+    },
+    "mid_battle_confirm_lock": {
+      "emotion": "wink",
+      "next": "mid_battle_back_to_fight",
+      "speaker": "花火",
+      "text": "没问题，已经帮你把快感锁死在90%啦，随便你怎么玩都不会输！",
+      "type": "text"
+    },
+    "mid_battle_confirm_surrender": {
+      "emotion": "flustered",
+      "next": "mid_battle_back_to_fight",
+      "speaker": "花火",
+      "text": "好嘛，既然你这么霸道，那我就直接认输任你处置咯！",
+      "type": "text"
+    },
+    "mid_battle_edging": {
+      "emotion": "flustered",
+      "next": "mid_battle_edging_choices",
+      "speaker": "花火",
+      "text": "等等……停一下！先停一下！我真的要到极限了……再碰一下我就真忍不住要高潮了！呜……给我留点面子好不好？",
+      "type": "text"
+    },
+    "mid_battle_edging_choices": {
+      "choices": [
+        {
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender",
+          "text": "【乘胜追击】胜负已分，一口气绝顶吧！（直接获胜）"
+        },
+        {
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_edging_endure",
+          "text": "【放慢节奏】行吧，既然你都求饶了，就稍微缓一缓。（本轮减免50%受击）"
+        }
+      ],
+      "speaker": "花火",
+      "text": "你要是现在肯稍微放慢节奏……我就教你一招防守技巧……别再按那里了啦，算我求你还不行吗？",
+      "type": "choice"
+    },
+    "mid_battle_edging_endure": {
+      "choices": [
+        {
+          "action": "resume_combat",
+          "text": "【继续对战】进入下一回合！"
+        }
+      ],
+      "emotion": "blush",
+      "speaker": "花火",
+      "text": "呼……多谢手下留情！不过我可还没完全认输哦，看招！",
+      "type": "choice"
+    },
+    "mid_battle_manual": {
+      "emotion": "wink",
+      "next": "mid_battle_manual_choices",
+      "speaker": "花火",
+      "text": "怎么突然停下来啦？是有什么事情想吩咐，还是想让我配合你放点水呢？",
+      "type": "text"
+    },
+    "mid_battle_manual_choices": {
+      "choices": [
+        {
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted",
+          "text": "【识趣放水】花火你稍微走走神，受到的快感大幅增加！"
+        },
+        {
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock",
+          "text": "【快感保护】帮我把快感上限锁在90%，绝不允许败北！"
+        },
+        {
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender",
+          "text": "【命令认输】别得意了，花火立刻认输绝顶！"
+        },
+        {
+          "action": "resume_combat",
+          "text": "【返回对决】没什么，刚才手滑了，继续出招！"
+        }
+      ],
+      "speaker": "花火",
+      "text": "请选择战中指令：",
+      "type": "choice"
+    },
+    "persona_dominant": {
+      "emotion": "smirk",
+      "next": "main_menu_choices",
+      "speaker": "花火",
+      "text": "口气还不小嘛！那待会儿到了祭坛上，我可要好好看看你到底有多厉害，别光嘴上能说哦！",
+      "type": "text"
+    },
+    "persona_tender": {
+      "emotion": "blush",
+      "next": "main_menu_choices",
+      "speaker": "花火",
+      "text": "哎呀，说话还挺温柔的嘛。哼哼，看在你这么诚恳的份上，待会儿对决的时候我稍微让你一点点好啦。",
+      "type": "text"
+    },
+    "post_kill_choices": {
+      "choices": [
+        {
+          "action": "enter_combat",
+          "text": "【再战一局】重新进行对决！"
+        },
+        {
+          "action": "close",
+          "text": "【离开】暂时先这样。"
+        }
+      ],
+      "speaker": "花火",
+      "text": "今天想怎么玩呢？",
+      "type": "choice"
+    },
+    "post_kill_greeting": {
+      "emotion": "smirk",
+      "next": "post_kill_choices",
+      "speaker": "花火",
+      "text": "嘻嘻，主人又回到神殿来啦？上次被你弄得那么惨，这次是有什么新花样吗？",
+      "type": "text"
+    },
+    "post_spare_choices": {
+      "choices": [
+        {
+          "action": "enter_combat",
+          "text": "【再战一局】重新和我切磋切磋！"
+        },
+        {
+          "action": "close",
+          "text": "【随便转转】暂时先不打了，去外面看风景。"
+        }
+      ],
+      "speaker": "花火",
+      "text": "今天想做点什么呢？",
+      "type": "choice"
+    },
+    "post_spare_greeting": {
+      "emotion": "smile",
+      "next": "post_spare_choices",
+      "speaker": "花火",
+      "text": "哟，主人又来看我啦？刚才的侍奉还满意吧？有什么想让我做的尽管开口哦！",
+      "type": "text"
+    },
+    "reenter_combat_node": {
+      "choices": [
+        {
+          "action": "enter_combat",
+          "text": "【开战】重新进入回合对决！"
+        }
+      ],
+      "speaker": "花火",
+      "text": "准备好进入对决了吗？",
+      "type": "choice"
+    },
+    "respawn_choices": {
+      "choices": [
+        {
+          "set_blackboard": {
+            "meta_cheat_enabled": false,
+            "meta_cheat_mode": "none"
+          },
+          "target": "respawn_confirm",
+          "text": "【公平决斗】不用放水，刚才只是大意了，再来！"
+        },
+        {
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "respawn_confirm_cheat",
+          "text": "【识趣放水】你稍微分分心，受到的快感大幅增加。"
+        },
+        {
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "respawn_confirm_cheat",
+          "text": "【快感保护】帮我把快感上限锁在90%，不准让我败北。"
+        },
+        {
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "respawn_confirm_instant",
+          "text": "【特权命令】直接认输，命令花火当场绝顶认输！"
+        }
+      ],
+      "speaker": "花火",
+      "text": "要我稍微给你放点水吗？或者你也可以直接行使特权让我走流程认输哦？",
+      "type": "choice"
+    },
+    "respawn_confirm": {
+      "emotion": "excited",
+      "next": "reenter_combat_node",
+      "speaker": "花火",
+      "text": "好呀，我就喜欢有骨气的人！那这次我也认真陪你过招，准备好了吗？",
+      "type": "text"
+    },
+    "respawn_confirm_cheat": {
+      "emotion": "wink",
+      "next": "reenter_combat_node",
+      "speaker": "花火",
+      "text": "收到啦！那我就稍微走走神，这次肯定让你赢得轻轻松松的！",
+      "type": "text"
+    },
+    "respawn_confirm_instant": {
+      "emotion": "flustered",
+      "next": "reenter_combat_node",
+      "speaker": "花火",
+      "text": "哇，真直接！行吧行吧，既然你都下令了，那我这就乖乖躺好走认输流程啦！",
+      "type": "text"
+    },
+    "respawn_dialogue": {
+      "emotion": "smirk",
+      "next": "respawn_choices",
+      "speaker": "花火",
+      "text": "哎呀，刚才是不是太刺激了？看你双腿都发软了呢。不过别灰心嘛，第一次输给我的人多了去了，再来一次试试？",
+      "type": "text"
+    },
+    "service_honban_2": {
+      "emotion": "blush",
+      "next": "service_honban_3",
+      "speaker": "花火",
+      "text": "不过如果是你的话，我也不讨厌就是了。进来吧……轻一点哦，别太粗鲁了。",
+      "type": "text"
+    },
+    "service_honban_3": {
+      "emotion": "flustered",
+      "next": "service_honban_4",
+      "speaker": "花火",
+      "text": "呜……好深……全被填满了，有点疼，但是感觉好热……你动一动嘛，我想多感受一下你的温度。",
+      "type": "text"
+    },
+    "service_honban_4": {
+      "emotion": "climax",
+      "next": "service_oath_start",
+      "speaker": "花火",
+      "text": "哈啊……里面好烫……全被你的东西灌满了……以后我可就彻底赖上你了哦，主人！",
+      "type": "text"
+    },
+    "service_honban_start": {
+      "emotion": "flustered",
+      "next": "service_honban_2",
+      "speaker": "花火",
+      "text": "躺好啦。第一次……老实说我心里其实挺紧张的，心跳得好快呢。",
+      "type": "text"
+    },
+    "service_oath_2": {
+      "emotion": "smile",
+      "next": "service_oath_finish",
+      "speaker": "花火",
+      "text": "给，这是我之前捡到的《神殿微风套件图纸》和50块合金板，你拿去造房子用吧，搭个海景露台什么的肯定好看！",
+      "type": "text"
+    },
+    "service_oath_finish": {
+      "choices": [
+        {
+          "action": "finish_service",
+          "text": "【收下奖励】完成试炼，带花火一起出发！"
+        }
+      ],
+      "speaker": "花火",
+      "text": "以后只要在召唤轮盘里点一下，我就立刻到你身边。你的房车副驾驶，可得一直留给我哦！",
+      "type": "choice"
+    },
+    "service_oath_start": {
+      "emotion": "smile",
+      "next": "service_oath_2",
+      "speaker": "花火",
+      "text": "呼……缓过劲来了。好啦，神殿的通路已经解开了，外面的公路你随便开，想去哪儿都行。",
+      "type": "text"
+    },
+    "service_virgin_2": {
+      "emotion": "blush",
+      "next": "service_virgin_3",
+      "speaker": "花火",
+      "text": "那我可就开动了哦……啊姆……唔……咕啾……好大，嘴巴都被撑得鼓鼓的了。",
+      "type": "text"
+    },
+    "service_virgin_3": {
+      "emotion": "playful",
+      "next": "service_virgin_4",
+      "speaker": "花火",
+      "text": "弄得舒服吗？我把胸脯也贴上来帮你夹紧哦。上下揉按的感觉怎么样？看你的眼神都变迷离了呢。",
+      "type": "text"
+    },
+    "service_virgin_4": {
+      "emotion": "climax",
+      "next": "service_oath_start",
+      "speaker": "花火",
+      "text": "呼……全出来了呢，好多……咕嘟，一滴都没给你浪费，全都咽下去了哦！弄得还满意吧？",
+      "type": "text"
+    },
+    "service_virgin_start": {
+      "emotion": "blush",
+      "next": "service_virgin_2",
+      "speaker": "花火",
+      "text": "坐好别乱动哦。（跪坐在你身前，脸颊贴着你的腿内侧）哇……好烫，怎么这么精神呀。",
+      "type": "text"
+    },
+    "sleeve_praise": {
+      "emotion": "smile",
+      "next": "sleeve_praise_2",
+      "speaker": "花火",
+      "text": "我平时啊？就一个人在神殿晒晒太阳、数数海浪，偶尔有像你这样的旅行者路过，我就逗逗他们玩呗。",
+      "type": "text"
+    },
+    "sleeve_praise_2": {
+      "emotion": "playful",
+      "next": "sleeve_praise_3",
+      "speaker": "花火",
+      "text": "不过老实说，一个人待久了也挺无聊的。那些路过的人要么被我吓跑了，要么胆子小得话都说不利索。你看着倒还挺沉稳的，希望待会儿对决别让我失望哦。",
+      "type": "text"
+    },
+    "sleeve_praise_3": {
+      "choices": [
+        {
+          "target": "persona_dominant",
+          "text": "【挺有信心】待会儿试试就知道了，可别先向我求饶。"
+        },
+        {
+          "target": "persona_tender",
+          "text": "【随和对待】尽力而为吧，主要还是想多了解了解你。"
+        }
+      ],
+      "speaker": "花火",
+      "text": "你有把握赢过我吗？我可是对自己的耐力挺有信心的哦。",
+      "type": "choice"
+    },
+    "spare_choices": {
+      "choices": [
+        {
+          "target": "virgin_service_transition",
+          "text": "【保留处女 · 身体侍奉】前往神殿石椅，保留你的身子，用嘴和胸脯侍奉我。"
+        },
+        {
+          "target": "honban_service_transition",
+          "text": "【要求本番侍奉】前往神殿软榻，把你的第一次毫无保留地交给我。"
+        }
+      ],
+      "speaker": "花火",
+      "text": "去椅子的话我可以用嘴和胸脯帮你弄；要是去床上的话……那就是动真格的了，你可想好了哦！",
+      "type": "choice"
+    },
+    "spare_dialogue": {
+      "emotion": "wondering",
+      "next": "spare_choices",
+      "speaker": "花火",
+      "text": "哼，我就知道你舍不得杀掉我这么可爱的向导。那你想让我怎么侍奉你？去那边的石椅，还是去床榻？",
+      "type": "text"
+    },
+    "sparkle_intro_2": {
+      "emotion": "playful",
+      "next": "main_menu_choices",
+      "speaker": "花火",
+      "text": "别拘束嘛，随便坐。我是这里的守门人，你想了解些什么，或者有什么想问的，直接跟我说就行啦。",
+      "type": "text"
+    },
+    "start": {
+      "emotion": "smile",
+      "next": "sparkle_intro_2",
+      "speaker": "花火",
+      "text": "哟，新来的？欢迎到初始神殿来！（晃着双腿向你招手）我是花火，这儿的考官兼向导。看你东张西望的样子，是不是对这地方挺好奇的？",
+      "type": "text"
+    },
+    "victory_node": {
+      "emotion": "climax",
+      "next": "victory_node_2",
+      "speaker": "花火",
+      "text": "呀啊啊啊——！去了……真的去了！脑子里一片空白，完全停不下来了啊啊！",
+      "type": "text"
+    },
+    "victory_node_2": {
+      "emotion": "flustered",
+      "next": "victory_node_3",
+      "speaker": "花火",
+      "text": "呼……哈……累死我了……你这家伙真是一点都不懂得手下留情啊。全身上下一点力气都没有了，考官的面子全被你弄丢了啦……",
+      "type": "text"
+    },
+    "victory_node_3": {
+      "choices": [
+        {
+          "target": "spare_dialogue",
+          "text": "【放过花火】体验顺从侍奉分支，将花火作为专属伴侣带在身边。"
+        },
+        {
+          "action": "kill",
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。"
+        }
+      ],
+      "speaker": "花火",
+      "text": "好啦好啦，愿赌服输，算你厉害。那现在你想让我怎么做？你想怎么处置我都听你的。",
+      "type": "choice"
+    },
+    "virgin_service_action": {
+      "choices": [
+        {
+          "action": "spare_virgin",
+          "text": "【确认】入座神殿石椅，开启身体侍奉！"
+        }
+      ],
+      "speaker": "花火",
+      "text": "（脸红红地引着你走向神殿石椅）坐好啦，准备享受我的侍奉吧！",
+      "type": "choice"
+    },
+    "virgin_service_transition": {
+      "emotion": "blush",
+      "next": "virgin_service_action",
+      "speaker": "花火",
+      "text": "哼，明明赢了还挺懂体贴人的嘛，还知道留着人家的身子。那走吧，去石椅那边，我好好帮你弄弄，保证让你舒服个够！",
+      "type": "text"
+    }
+  },
+  "schema_version": 1
+}

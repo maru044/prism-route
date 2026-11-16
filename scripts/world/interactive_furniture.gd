@@ -17,19 +17,17 @@ func has_motion_anchor(anchor_name: String) -> bool:
 		_discover_anchors(self)
 	if motion_anchors.has(anchor_name):
 		return true
-	for k in motion_anchors:
-		if k.to_lower() == anchor_name.to_lower() or k.to_lower().contains(anchor_name.to_lower()):
-			return true
-	return false
+	var alt_name := "Anchor_" + anchor_name if not anchor_name.begins_with("Anchor_") else anchor_name.trim_prefix("Anchor_")
+	return motion_anchors.has(alt_name)
 
 func get_motion_anchor_node(anchor_name: String) -> Node3D:
 	if motion_anchors.is_empty():
 		_discover_anchors(self)
 	if motion_anchors.has(anchor_name):
 		return motion_anchors[anchor_name]
-	for k in motion_anchors:
-		if k.to_lower() == anchor_name.to_lower() or k.to_lower().contains(anchor_name.to_lower()):
-			return motion_anchors[k]
+	var alt_name := "Anchor_" + anchor_name if not anchor_name.begins_with("Anchor_") else anchor_name.trim_prefix("Anchor_")
+	if motion_anchors.has(alt_name):
+		return motion_anchors[alt_name]
 	return null
 
 func get_motion_anchor(anchor_name: String, in_global_space: bool = true) -> Transform3D:

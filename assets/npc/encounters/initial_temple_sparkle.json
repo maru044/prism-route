@@ -1,0 +1,22 @@
+{
+  "character_id": "sparkle",
+  "combat_profile_id": "sparkle_tutorial_combat",
+  "dialogue_bundle_id": "sparkle_temple_bundle",
+  "encounter_id": "initial_temple_sparkle",
+  "flow_behavior_id": "sparkle_temple_flow",
+  "motion_profile_id": "sparkle_temple_motions",
+  "reaction_profile_id": "sparkle_temple_reactions",
+  "schema_version": 1,
+  "spawn_id": "initial_temple_sparkle",
+  "supported_entry_points": [
+    "start",
+    "respawn_dialogue",
+    "post_spare_greeting",
+    "post_kill_greeting",
+    "mid_battle_manual",
+    "mid_battle_edging",
+    "victory_node",
+    "service_virgin_start",
+    "service_honban_start"
+  ]
+}

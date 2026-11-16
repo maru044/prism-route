@@ -80,8 +80,9 @@ const PleasureComponentClass := preload("res://scripts/combat/pleasure_component
 const SparkleTutorialDialogueClass := preload("res://scripts/narrative/sparkle_tutorial_dialogue.gd")
 const CorpseControllerClass := preload("res://scripts/characters/corpse_ragdoll_controller.gd")
 
-const RESPAWN_POINT := Vector3(-1012.685, 61.1, 1262.287)
-const RESPAWN_HEADING := 0.38
+const TEMPLE_RESPAWN := preload("res://scripts/world/npc_preview_sites.gd").INITIAL_TEMPLE_RESPAWN
+const RESPAWN_POINT: Vector3 = TEMPLE_RESPAWN.position
+const RESPAWN_HEADING: float = TEMPLE_RESPAWN.heading
 
 const MOTION_SPARKLE_BLOWJOB := "res://assets/characters/mmd_selected/animations/mmd_781d8c87fd79_a.tres"
 const MOTION_MASTER_RECEIVING := "res://assets/characters/mmd_selected/animations/mmd_781d8c87fd79_b.tres"
@@ -391,6 +392,15 @@ func is_world_input_locked() -> bool:
 		EncounterState.FURNITURE_SERVICE_ACTIVE
 	]
 
+func _get_dialogue_graph() -> Dictionary:
+	var path := "res://assets/npc/dialogue/sparkle/temple_dialogue.json"
+	if FileAccess.file_exists(path):
+		var text := FileAccess.get_file_as_string(path)
+		var json := JSON.new()
+		if json.parse(text) == OK and json.data is Dictionary:
+			return json.data
+	return SparkleTutorialDialogueClass.get_dialogue_graph()
+
 func _capture_world_context() -> void:
 	if world != null:
 		saved_world_context = {
@@ -593,7 +603,7 @@ func start_encounter_dialogue() -> void:
 		char_node.set_control_enabled(false)
 		
 	dialogue_panel.visible = true
-	var graph: Dictionary = SparkleTutorialDialogueClass.get_dialogue_graph()
+	var graph: Dictionary = _get_dialogue_graph()
 	var start_node := "start"
 	
 	# Priority 1: Recent battle defeat retry takes highest priority
@@ -946,8 +956,8 @@ func _on_combat_ended(winner: String, _loser: String, _reason: String) -> void:
 	combat_hud.visible = false
 	_set_combat_visuals(false)
 	
-	var graph: Dictionary = SparkleTutorialDialogueClass.get_dialogue_graph()
-	if winner == "Sparkle":
+	var graph: Dictionary = _get_dialogue_graph()
+	if winner == "Sparkle" or winner == "花火":
 		last_battle_result = "player_defeat"
 		defeat_count += 1
 		dialogue_manager.blackboard["defeat_count"] = defeat_count
@@ -982,7 +992,7 @@ func _on_combat_ended(winner: String, _loser: String, _reason: String) -> void:
 func _on_mid_battle_dialogue_requested(reason: String) -> void:
 	combat_hud.set_chat_open(true)
 	dialogue_panel.visible = true
-	var graph: Dictionary = SparkleTutorialDialogueClass.get_dialogue_graph()
+	var graph: Dictionary = _get_dialogue_graph()
 	var start_node := "mid_battle_manual" if reason == "player_manual_call" else "mid_battle_edging"
 	var source: int = (
 		DialogueManagerClass.DialogueSource.MID_BATTLE_MANUAL
@@ -1361,7 +1371,7 @@ func _begin_furniture_service_staging(service_type: String = "virgin") -> void:
 		dialogue_panel.visible = true
 	if dialogue_manager and is_instance_valid(dialogue_manager):
 		dialogue_manager.start_dialogue(
-			SparkleTutorialDialogueClass.get_dialogue_graph(),
+			_get_dialogue_graph(),
 			start_node,
 			DialogueManagerClass.DialogueSource.POST_BATTLE_RESULT,
 			DialogueManagerClass.ResumePolicy.END_COMBAT
