@@ -585,6 +585,7 @@ func _hud() -> void:
 	settings_panel.closed.connect(_sync_actor_controls)
 	settings_panel.quality_changed.connect(_on_graphics_quality_selected)
 	settings_panel.assistant_requested.connect(_open_llm_assistant)
+	settings_panel.dialogue_requested.connect(_open_llm_dialogue)
 	settings_panel.monitor_changed.connect(set_performance_monitor)
 	settings_panel.detail_changed.connect(set_detailed_timings)
 	if save_session != null:
@@ -755,6 +756,23 @@ func _open_llm_assistant() -> void:
 	dragging = false
 	panel.panel_closed.connect(_sync_actor_controls, CONNECT_ONE_SHOT)
 	panel.open_panel("assistant", "world")
+
+func _open_llm_dialogue() -> void:
+	if not test_ready or switching_actor or not is_world_input_allowed():
+		return
+	var panel := _get_llm_panel()
+	character.set_control_enabled(false)
+	camper.set_physics_process(false)
+	camper.set_process_unhandled_input(false)
+	dragging = false
+	panel.panel_closed.connect(_sync_actor_controls, CONNECT_ONE_SHOT)
+	var world_status := _llm_world_status()
+	var landmark: Dictionary = world_status.get("nearest_landmark", {})
+	var location: String = landmark.get("name", "大世界")
+	panel.open_panel("dialogue", "world_miku", {
+		"npc_name": "初音未来",
+		"dialogue_location": location,
+	})
 
 func show_free_dialogue(panel: Control, speaker: String) -> void:
 	var chat := _get_llm_panel()

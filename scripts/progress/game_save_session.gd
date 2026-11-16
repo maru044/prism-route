@@ -4,6 +4,7 @@ const STORE := preload("res://scripts/progress/game_save_store.gd")
 const PANEL := preload("res://scripts/ui/game_save_panel.gd")
 const LOADING := preload("res://scripts/ui/title_loading.gd")
 const WORLD := "res://scenes/main.tscn"
+const TITLE_SCREEN := "res://scenes/ui/title_screen.tscn"
 
 var world: Node
 var sections: Dictionary
@@ -28,7 +29,7 @@ func _ready() -> void:
 	layer.add_child(panel)
 	panel.selected.connect(_on_selected)
 	panel.closed.connect(_unpause)
-	panel.discard_requested.connect(get_tree().quit)
+	panel.discard_requested.connect(_return_to_title)
 	_autosave = Timer.new()
 	_autosave.one_shot = true
 	_autosave.wait_time = 1.0
@@ -97,12 +98,17 @@ func _on_selected(slot: String) -> void:
 				panel.open("confirm_save")
 		"confirm_save":
 			_save_from_panel(_overwrite_slot)
-		"quit":
+		"quit", "title":
 			var error := save_game(STORE.AUTO)
 			if error == OK:
-				get_tree().quit()
+				_return_to_title()
 			else:
 				panel.report("保存失败 · " + error_string(error))
+
+func _return_to_title() -> void:
+	get_tree().paused = false
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	get_tree().change_scene_to_file(TITLE_SCREEN)
 
 func _save_from_panel(slot: String) -> void:
 	var error := save_game(slot)

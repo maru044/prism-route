@@ -6,6 +6,7 @@ signal audio_changed(key: String, value: Variant)
 signal monitor_changed(enabled: bool)
 signal detail_changed(enabled: bool)
 signal assistant_requested
+signal dialogue_requested
 signal save_menu_requested(kind: String)
 
 const UI := preload("res://scenes/combat/encounter_ui_style.gd")
@@ -25,6 +26,10 @@ var _show_details: Button
 var _status: Label
 var _back: Button
 
+var _tab_buttons: Array[Button] = []
+var _pages: Array[Control] = []
+var _scroll: ScrollContainer
+
 func _ready() -> void:
 	set_anchors_and_offsets_preset(PRESET_FULL_RECT)
 	mouse_filter = MOUSE_FILTER_STOP
@@ -33,44 +38,65 @@ func _ready() -> void:
 	add_child(center)
 	center.set_anchors_and_offsets_preset(PRESET_FULL_RECT)
 	var sheet := Control.new()
-	sheet.custom_minimum_size = Vector2(638, 638 if in_world else 490)
+	sheet.custom_minimum_size = Vector2(638, 638 if in_world else 520)
 	center.add_child(sheet)
-	var content := UI.column(12)
+	var content := UI.column(10)
 	sheet.add_child(content)
 	content.set_anchors_and_offsets_preset(PRESET_FULL_RECT)
-	UI.paper_backing(content, PALETTE, Vector2(30, 28))
-	var title := UI.text_label("设置", 38, PALETTE.text, PALETTE)
+	UI.paper_backing(content, PALETTE, Vector2(30, 26))
+	var title := UI.text_label("设置", 36, PALETTE.text, PALETTE)
 	title.add_theme_font_override("font", UI.command_font())
 	content.add_child(title)
-	var scroll := ScrollContainer.new()
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	scroll.size_flags_vertical = SIZE_EXPAND_FILL
-	scroll.follow_focus = true
-	content.add_child(scroll)
-	var options := UI.column(12)
-	options.size_flags_horizontal = SIZE_EXPAND_FILL
-	scroll.add_child(options)
-	_section(options, "画质")
+
+	var tab_bar := UI.row(8)
+	content.add_child(tab_bar)
+	var tab_group := ButtonGroup.new()
+	var tab_names := ["游戏设置", "存档/读档", "帮助"]
+	for i in tab_names.size():
+		var tab_button := add_button(tab_bar, tab_names[i], _select_tab.bind(i))
+		tab_button.toggle_mode = true
+		tab_button.button_group = tab_group
+		_tab_buttons.append(tab_button)
+
+	_scroll = ScrollContainer.new()
+	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_scroll.size_flags_vertical = SIZE_EXPAND_FILL
+	_scroll.follow_focus = true
+	content.add_child(_scroll)
+
+	var pages_box := UI.column(12)
+	pages_box.size_flags_horizontal = SIZE_EXPAND_FILL
+	_scroll.add_child(pages_box)
+
+	# Page 0: 游戏设置
+	var page_settings := UI.column(12)
+	page_settings.size_flags_horizontal = SIZE_EXPAND_FILL
+	pages_box.add_child(page_settings)
+	_pages.append(page_settings)
+
+	_section(page_settings, "画质")
 	var quality_row := UI.row(8)
-	options.add_child(quality_row)
+	page_settings.add_child(quality_row)
 	var quality_group := ButtonGroup.new()
 	for i in PREFS.QUALITY_NAMES.size():
 		var button := add_button(quality_row, PREFS.QUALITY_NAMES[i], _set_quality.bind(i))
 		button.toggle_mode = true
 		button.button_group = quality_group
 		_quality.append(button)
-	_section(options, "声音")
-	_audio_enabled = add_button(options, "游戏声音", Callable())
+
+	_section(page_settings, "声音")
+	_audio_enabled = add_button(page_settings, "游戏声音", Callable())
 	_audio_enabled.toggle_mode = true
 	_audio_enabled.toggled.connect(_set_audio.bind("enabled"))
-	_add_slider(options, "总音量", "master")
-	_add_slider(options, "环境音量", "ambience")
-	_add_slider(options, "动作音量", "actions")
+	_add_slider(page_settings, "总音量", "master")
+	_add_slider(page_settings, "环境音量", "ambience")
+	_add_slider(page_settings, "动作音量", "actions")
+
 	if in_world:
 		add_to_group("world_input_blockers")
-		_section(options, "性能监视")
+		_section(page_settings, "性能监视")
 		var monitors := UI.row(8)
-		options.add_child(monitors)
+		page_settings.add_child(monitors)
 		_show_monitor = add_button(monitors, "显示性能面板", Callable())
 		_show_monitor.toggle_mode = true
 		_show_monitor.toggled.connect(_set_monitor)
@@ -79,34 +105,99 @@ func _ready() -> void:
 		_show_details.disabled = true
 		_show_details.toggled.connect(func(enabled: bool): detail_changed.emit(enabled))
 		if allow_developer_tools:
-			add_button(options, "开发工具", _toggle_developer_tools.bind(scroll))
+			add_button(page_settings, "开发工具", _toggle_developer_tools.bind(_scroll))
 			developer_options = UI.column(8)
-			options.add_child(developer_options)
+			page_settings.add_child(developer_options)
 			developer_options.hide()
-	_status = UI.text_label("", 18, PALETTE.text, PALETTE)
-	_status.custom_minimum_size.y = 22
-	content.add_child(_status)
-	if show_save_menu:
-		var saves := UI.row(8)
-		content.add_child(saves)
-		add_button(saves, "保存游戏", _open_save_menu.bind("save"))
-		add_button(saves, "读取存档", _open_save_menu.bind("load"))
-		add_button(saves, "退出游戏", _open_save_menu.bind("quit"))
-	var actions := UI.row(8)
-	content.add_child(actions)
+
+	# Page 1: 存档/读档
+	var page_saves := UI.column(12)
+	page_saves.size_flags_horizontal = SIZE_EXPAND_FILL
+	pages_box.add_child(page_saves)
+	_pages.append(page_saves)
+
+	_section(page_saves, "进度管理")
+	var save_hint := UI.text_label("保存或读取当前的探索进度与对话记录。", 18, PALETTE.text, PALETTE)
+	page_saves.add_child(save_hint)
+	var saves_list := UI.column(8)
+	page_saves.add_child(saves_list)
+	add_button(saves_list, "保存游戏", _open_save_menu.bind("save"))
+	add_button(saves_list, "读取存档", _open_save_menu.bind("load"))
+	add_button(saves_list, "返回标题页面", _open_save_menu.bind("quit"))
+
+	# Page 2: 帮助
+	var page_help := UI.column(12)
+	page_help.size_flags_horizontal = SIZE_EXPAND_FILL
+	pages_box.add_child(page_help)
+	_pages.append(page_help)
+
+	_section(page_help, "AI 助手")
+	var ai_row := UI.row(8)
+	page_help.add_child(ai_row)
 	if in_world:
-		add_button(actions, "游戏助手", func():
+		add_button(ai_row, "游戏助手", func():
 			close()
 			assistant_requested.emit()
 		)
+		add_button(ai_row, "自由对话", func():
+			close()
+			dialogue_requested.emit()
+		)
+	else:
+		var ai_offline := UI.text_label("进入游戏世界后可在此与初音未来自由交谈或获取指引。", 18, PALETTE.text, PALETTE)
+		page_help.add_child(ai_offline)
+
+	_section(page_help, "操作指南")
+	var guide_box := UI.column(6)
+	page_help.add_child(guide_box)
+	_add_guide_row(guide_box, "W / A / S / D", "角色移动 / 房车驾驶")
+	_add_guide_row(guide_box, "Shift", "疾跑加速 / 冲刺")
+	_add_guide_row(guide_box, "Space", "跳跃 / 房车刹车")
+	_add_guide_row(guide_box, "E", "场景交互 / 对话")
+	_add_guide_row(guide_box, "C", "切换操控角色")
+	_add_guide_row(guide_box, "F", "房车驾驶 / 步行切换")
+	_add_guide_row(guide_box, "ESC", "设置 / 暂停菜单")
+
+	if not in_world and not show_save_menu:
+		_tab_buttons[1].visible = false
+
+	_status = UI.text_label("", 18, PALETTE.text, PALETTE)
+	_status.custom_minimum_size.y = 22
+	content.add_child(_status)
+
+	var actions := UI.row(8)
+	content.add_child(actions)
 	_back = add_button(actions, "返回游戏" if in_world else "返回标题", close)
+
+	_select_tab(0)
 	hide()
+
+func _add_guide_row(parent: VBoxContainer, key_text: String, desc_text: String) -> void:
+	var row := UI.row(8)
+	parent.add_child(row)
+	var key_label := UI.text_label(key_text, 18, PALETTE.paper_ink, PALETTE)
+	key_label.custom_minimum_size.x = 150
+	row.add_child(key_label)
+	var desc_label := UI.text_label(desc_text, 18, PALETTE.text, PALETTE)
+	desc_label.size_flags_horizontal = SIZE_EXPAND_FILL
+	row.add_child(desc_label)
+
+func _select_tab(index: int) -> void:
+	for i in _pages.size():
+		_pages[i].visible = (i == index)
+	for i in _tab_buttons.size():
+		var active := (i == index)
+		_tab_buttons[i].set_pressed_no_signal(active)
+		_tab_buttons[i].queue_redraw()
+	if is_instance_valid(_scroll):
+		_scroll.scroll_vertical = 0
 
 func _open_save_menu(kind: String) -> void:
 	close()
 	save_menu_requested.emit(kind)
 
-func open() -> void:
+func open(tab_index := 0) -> void:
+	_select_tab(tab_index)
 	_quality[PREFS.quality()].set_pressed_no_signal(true)
 	var audio := PREFS.audio()
 	_audio_enabled.set_pressed_no_signal(audio.enabled)
@@ -117,7 +208,8 @@ func open() -> void:
 		row[1].text = "%d%%" % roundi(audio[key] * 100)
 	_status.text = ""
 	show()
-	_back.grab_focus()
+	if is_inside_tree():
+		_back.grab_focus()
 
 func close() -> void:
 	if not visible:

@@ -34,16 +34,24 @@ func open(kind: String) -> void:
 	for child in _content.get_children():
 		_content.remove_child(child)
 		child.queue_free()
-	var title: String = {"save": "保存游戏", "load": "读取存档", "quit": "退出游戏", "confirm_load": "读取存档", "confirm_save": "覆盖存档"}[mode]
+	var title_map := {
+		"save": "保存游戏",
+		"load": "读取存档",
+		"quit": "返回标题页面",
+		"title": "返回标题页面",
+		"confirm_load": "读取存档",
+		"confirm_save": "覆盖存档"
+	}
+	var title: String = title_map.get(mode, "存档/读档")
 	var heading := UI.text_label(title, 34, PALETTE.text, PALETTE)
 	heading.add_theme_font_override("font", UI.command_font())
 	_content.add_child(heading)
-	if mode == "quit":
-		_content.add_child(UI.text_label("退出前要保存当前进度和对话吗？", 23, PALETTE.text, PALETTE))
+	if mode == "quit" or mode == "title":
+		_content.add_child(UI.text_label("返回标题前要保存当前进度和对话吗？", 23, PALETTE.text, PALETTE))
 		var choices := UI.row(8)
 		_content.add_child(choices)
-		_button(choices, "保存并退出", func(): selected.emit(STORE.AUTO))
-		_button(choices, "不保存退出", func(): discard_requested.emit())
+		_button(choices, "保存并返回", func(): selected.emit(STORE.AUTO))
+		_button(choices, "不保存返回", func(): discard_requested.emit())
 	elif mode == "confirm_load":
 		_content.add_child(UI.text_label("读取存档会替换当前进度，未保存的改动会丢失。", 23, PALETTE.text, PALETTE))
 		_button(_content, "确认读取", func(): selected.emit(""))
@@ -68,7 +76,8 @@ func open(kind: String) -> void:
 	_content.add_child(_status)
 	var cancel := _button(_content, "取消", close)
 	show()
-	cancel.grab_focus()
+	if is_inside_tree():
+		cancel.grab_focus()
 
 func report(message: String) -> void:
 	_status.text = message
