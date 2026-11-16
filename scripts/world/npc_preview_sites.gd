@@ -1,8 +1,66 @@
 extends RefCounted
 ## Stand positions from the world placement plan. Ruin points use live anchors.
+## A fifth value of true marks an individual visitor in a mixed region.
 
 const CAPE_VISITORS := "海岬小镇 · 来访角色"
 const CLIFF_WALKWAY := "异形镂空崖壁 · 底层步道"
+
+## Region and character identify a placement, so a visitor can use a different
+## slot from the same character's main placement.
+## Each binding names a world-relative furniture instance and its contact anchor.
+const FURNITURE_BINDINGS := {
+	"初始神殿与洞穴": {
+		"sparkle": [
+			[^"InitialRuin/FurnitureInteractions/seat_01", &"Anchor_Seat"],
+			[^"InitialRuin/FurnitureInteractions/rest_01", &"Anchor_Bed_Center"],
+			[^"InitialRuin/FurnitureInteractions/table_01", &"Anchor_Desk_Surface"],
+		],
+		"kafka": [[^"NPCWaypointRuins/kafka/Bench", &"Anchor_Seat"]],
+	},
+	"沙洲度假遗址": {
+		"ganyu": [[^"SandbarPavilion/FurnitureInteractions/seat_01", &"Anchor_Seat"]],
+		"keqing": [[^"SandbarPavilion/FurnitureInteractions/desk_01", &"Anchor_Desk_Surface"]],
+		"yelan": [
+			[^"SandbarPavilion/FurnitureInteractions/cafe_seat_01", &"Anchor_Seat"],
+			[^"SandbarPavilion/FurnitureInteractions/cafe_desk", &"Anchor_Desk_Surface"],
+		],
+		"ningguang": [[^"SandbarPavilion/FurnitureInteractions/lounger_01", &"Anchor_Bed_Center"]],
+	},
+	"海岬小镇与神社": {
+		"yae_miko": [[^"CapeTown/FurnitureInteractions/shrine_table", &"Anchor_Desk_Surface"]],
+		"kirara": [[^"CapeTown/FurnitureInteractions/bench_2", &"Anchor_Seat"]],
+	},
+	"草甸与观景点": {
+		"amber": [[^"NPCWaypointRuins/amber/Bench", &"Anchor_Seat"]],
+		"eula": [[^"NPCWaypointRuins/eula/Bench", &"Anchor_Seat"]],
+		"charlotte": [[^"NPCWaypointRuins/charlotte/Bench", &"Anchor_Seat"]],
+		"sucrose": [[^"NPCWaypointRuins/sucrose/Bench", &"Anchor_Seat"]],
+		"hutao": [[^"NPCWaypointRuins/hutao/Bench", &"Anchor_Seat"]],
+		"lumine": [[^"NPCWaypointRuins/lumine/Bench", &"Anchor_Seat"]],
+	},
+	"次要点位": {
+		"barbara": [[^"SandbarPavilion/FurnitureInteractions/cafe_seat_02", &"Anchor_Seat"]],
+		"march7th": [[^"NPCWaypointRuins/amber/Bench", &"Anchor_Seat"]],
+		"firefly": [[^"NPCWaypointRuins/eula/Bench", &"Anchor_Seat"]],
+	},
+}
+
+static func resolve_furniture(world: Node, region: String, character_id: String) -> Array[Dictionary]:
+	var targets: Array[Dictionary] = []
+	for binding: Array in FURNITURE_BINDINGS.get(region, {}).get(character_id, []):
+		var furniture := world.get_node_or_null(binding[0]) as InteractiveFurniture
+		if furniture == null:
+			continue
+		var approach := furniture.get_motion_anchor_node("Anchor_Front")
+		var contact := furniture.get_motion_anchor_node(binding[1])
+		if approach != null and contact != null:
+			targets.append({
+				"instance_id": furniture.get_meta("instance_id", str(binding[0])),
+				"furniture": furniture,
+				"approach": approach,
+				"contact": contact,
+			})
+	return targets
 
 const REGIONS := {
 	"浅水庭院": [
@@ -55,8 +113,12 @@ const REGIONS := {
 		["yukong", "驭空", Vector3(470.000, 69.640, 268.000), 120.0],
 		["yunjin", "云堇", Vector3(450.000, 62.025, 270.000), 180.0],
 	],
-	"椭圆中庭与上层环庭": [
+	"上层环庭": [
 		["jingliu", "镜流", Vector3(-917.000, 68.040, 1110.000), -45.0],
+		["faruzan", "珐露珊 · 中庭水池旁", Vector3(-954.000, 70.080, 1041.000), 90.0, true],
+		["yukong", "驭空 · 后侧弧廊", Vector3(-945.000, 70.080, 999.000), -21.0, true],
+	],
+	"椭圆中庭": [
 		["fu_xuan", "符玄 · 中层上段", Vector3(-415.000, 57.800, 875.500), 119.0],
 		["qingque", "青雀", Vector3(-417.000, 63.000, 910.000), 90.0],
 		["miyabi", "星见雅", Vector3(-391.960, 35.000, 818.383), -135.0],

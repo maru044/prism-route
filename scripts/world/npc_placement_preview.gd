@@ -43,10 +43,14 @@ func initialize(map: Node3D) -> void:
 			popup.id_pressed.connect(_review_site)
 		var secondary := region in ["次要点位", SITES.CAPE_VISITORS, SITES.CLIFF_WALKWAY]
 		for row: Array in SITES.REGIONS[region]:
-			var marker := _make_site(row, secondary)
+			var marker := _make_site(row, secondary or (row.size() > 4 and row[4] == true))
+			marker.set_meta("placement_region", region)
 			if popup != null:
 				popup.add_item(row[1], sites.size())
 			sites.append(marker)
+
+func get_furniture_targets(site: Marker3D) -> Array[Dictionary]:
+	return SITES.resolve_furniture(world, site.get_meta("placement_region"), site.get_meta("character_id"))
 
 
 func add_controls(container: VBoxContainer) -> void:
