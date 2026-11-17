@@ -13,12 +13,14 @@ const FRAMES_PER_SECOND := 7.0
 var _bubbles := AtlasTexture.new()
 var _caption: Label
 var _elapsed := 0.0
+var _target_world: Node = null
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	layer = 100
 	add_to_group("world_input_blockers")
+	tree_exited.connect(_on_tree_exited)
 	var backdrop := ColorRect.new()
 	backdrop.color = Color("#020912")
 	add_child(backdrop)
@@ -99,6 +101,7 @@ func start(world_path: String, snapshot: Dictionary = {}) -> void:
 	if world == null:
 		_fail()
 		return
+	_target_world = world
 	world.set("startup_model", model)
 	world.set("enable_game_saves", true)
 	world.set("startup_save", snapshot.duplicate(true))
@@ -113,7 +116,19 @@ func start(world_path: String, snapshot: Dictionary = {}) -> void:
 	# Render a complete world frame under the overlay before revealing it.
 	await tree.process_frame
 	await tree.process_frame
+	remove_from_group("world_input_blockers")
 	queue_free()
+
+
+func _on_tree_exited() -> void:
+	remove_from_group("world_input_blockers")
+	var target: Node = _target_world
+	if not is_instance_valid(target):
+		var tree := Engine.get_main_loop() as SceneTree
+		if tree != null and is_instance_valid(tree.current_scene):
+			target = tree.current_scene
+	if is_instance_valid(target) and target.has_method("_sync_actor_controls"):
+		target.call_deferred("_sync_actor_controls")
 
 
 func _load_packed(path: String) -> PackedScene:
