@@ -290,7 +290,9 @@ func _build_subsystems() -> void:
 	interact_prompt.anchor_bottom = 0.76
 	interact_prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	interact_prompt.add_theme_font_size_override("font_size", 18)
-	interact_prompt.add_theme_color_override("font_color", Color(1.0, 0.9, 0.5))
+	interact_prompt.add_theme_color_override("font_color", Color(0.4, 0.75, 1.0))
+	interact_prompt.add_theme_color_override("font_outline_color", Color(0.06, 0.08, 0.16, 0.85))
+	interact_prompt.add_theme_constant_override("outline_size", 4)
 	interact_prompt.visible = false
 	canvas.add_child(interact_prompt)
 	

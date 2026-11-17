@@ -7,10 +7,18 @@ const MTOON := preload("res://scripts/characters/mtoon_materials.gd")
 const CorpseControllerClass := preload("res://scripts/characters/corpse_ragdoll_controller.gd")
 const CorpseInteractionHandlerClass := preload("res://scripts/world/corpse_interaction_handler.gd")
 
+const NPC_SOLID_LAYER := 64
+const COMBAT_MOTION_KEQING := "res://assets/characters/mmd_selected/animations/mmd_fcc0340f8227_a.tres"
+const COMBAT_MOTION_MASTER := "res://assets/characters/mmd_selected/animations/mmd_fcc0340f8227_b.tres"
+
 const MASTER_CONFIGS: Dictionary = {
 	"lumine": {
 		"model": "res://assets/characters/roster/lumine/lumine.vrm",
 		"mtoon": "lumine"
+	},
+	"aether": {
+		"model": "res://assets/characters/roster/aether/aether.vrm",
+		"mtoon": "aether"
 	},
 	"ganyu": {
 		"model": "res://assets/characters/ganyu/ganyu.vrm",
@@ -22,6 +30,7 @@ var runtime: Runtime
 var world: Node3D
 var anchor: Marker3D
 var actor: Node3D
+var npc_body: StaticBody3D
 var panel: DialoguePanel
 var hud: TurnCombatHUD
 var prompt: Label
@@ -32,12 +41,13 @@ var npc_paired_actor: Node3D
 var master_paired_actor: Node3D
 var service_camera: Camera3D
 
+var is_combat_active: bool = false
 var is_service_active: bool = false
 var is_ragdoll_active: bool = false
 var corpse_actor: Node3D
 var corpse_handler: CorpseInteractionHandlerClass
 var saved_player_collision_layer: int = 2
-var saved_player_collision_mask: int = 1
+var saved_player_collision_mask: int = 96
 var last_service_approach_pos: Vector3 = Vector3.ZERO
 var last_service_approach_basis: Basis = Basis.IDENTITY
 
@@ -55,10 +65,25 @@ func initialize(host: Node3D, p_world: Node3D, p_runtime: Runtime) -> void:
 	actor = runtime.create_idle_actor(anchor, "IdleActor", 33)
 	add_to_group(WorldControl.GROUP_INPUT_BLOCKERS)
 
+	npc_body = StaticBody3D.new()
+	npc_body.name = "NPCBody"
+	npc_body.collision_layer = NPC_SOLID_LAYER
+	npc_body.collision_mask = 0
+	anchor.add_child(npc_body)
+	var col_shape := CollisionShape3D.new()
+	var capsule := CapsuleShape3D.new()
+	capsule.radius = 0.24
+	capsule.height = 1.45
+	col_shape.position.y = 0.725
+	col_shape.shape = capsule
+	npc_body.add_child(col_shape)
+
 	combat_actors_root = Node3D.new()
 	combat_actors_root.name = "CombatDualActors"
 	combat_actors_root.visible = false
 	host.add_child(combat_actors_root)
+
+	add_to_group(WorldControl.GROUP_INPUT_BLOCKERS)
 
 	service_camera = Camera3D.new()
 	service_camera.name = "ServiceCamera"
@@ -94,11 +119,15 @@ func initialize(host: Node3D, p_world: Node3D, p_runtime: Runtime) -> void:
 
 	prompt = Label.new()
 	prompt.text = "【E】与%s交涉" % runtime.character_name
-	prompt.set_anchor_and_offset(SIDE_LEFT, 0.0, 0.0)
-	prompt.set_anchor_and_offset(SIDE_RIGHT, 1.0, 0.0)
-	prompt.set_anchor_and_offset(SIDE_TOP, 0.72, 0.0)
+	prompt.anchor_left = 0.4
+	prompt.anchor_right = 0.6
+	prompt.anchor_top = 0.72
+	prompt.anchor_bottom = 0.76
 	prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	prompt.add_theme_font_size_override("font_size", 18)
+	prompt.add_theme_color_override("font_color", Color(0.4, 0.75, 1.0))
+	prompt.add_theme_color_override("font_outline_color", Color(0.06, 0.08, 0.16, 0.85))
+	prompt.add_theme_constant_override("outline_size", 4)
 	prompt.hide()
 	canvas.add_child(prompt)
 
@@ -128,6 +157,7 @@ func initialize(host: Node3D, p_world: Node3D, p_runtime: Runtime) -> void:
 	combat.log_message_emitted.connect(hud.append_log)
 	combat.koujou_triggered.connect(hud.display_koujou)
 	combat.phase_changed.connect(_on_phase_changed)
+	combat.combat_ended.connect(_on_combat_ended)
 	hud.action_chosen.connect(combat.execute_player_action)
 	hud.meta_dialogue_requested.connect(combat.request_in_battle_negotiation)
 	runtime.player_pleasure.pleasure_changed.connect(hud.update_player_pleasure)
@@ -136,7 +166,7 @@ func initialize(host: Node3D, p_world: Node3D, p_runtime: Runtime) -> void:
 	runtime.encounter_state_changed.connect(_on_encounter_state_changed)
 
 func is_world_input_locked() -> bool:
-	return is_service_active or (runtime != null and runtime.current_state in [
+	return is_service_active or is_combat_active or (runtime != null and runtime.current_state in [
 		Runtime.EncounterState.INTRO_DIALOGUE,
 		Runtime.EncounterState.COMBAT,
 		Runtime.EncounterState.RESULT_DIALOGUE,
@@ -144,19 +174,46 @@ func is_world_input_locked() -> bool:
 	])
 
 func is_service_staging_active() -> bool:
-	return is_service_active
+	return is_service_active or is_combat_active
 
 func get_active_custom_camera() -> Camera3D:
-	if is_service_active and is_instance_valid(service_camera):
+	if (is_service_active or is_combat_active) and is_instance_valid(service_camera):
 		return service_camera
 	return null
 
 func _can_interact() -> bool:
-	if is_ragdoll_active:
+	if is_ragdoll_active or is_service_active or is_combat_active:
 		return false
-	return is_instance_valid(world) and world.test_ready and world.character_mode and not world.free_mode \
-		and not world.has_llm_panel_open() and not world.encounter_ui_active and world.is_world_input_allowed() \
-		and is_instance_valid(actor.character) and world.character.global_position.distance_to(anchor.global_position) < 2.6
+	if not (is_instance_valid(world) and world.test_ready and world.character_mode and not world.free_mode \
+		and not world.has_llm_panel_open() and not world.encounter_ui_active and world.is_world_input_allowed()):
+		return false
+	var char_node: Node = world.character
+	if not is_instance_valid(char_node) or not is_instance_valid(actor) or not is_instance_valid(actor.character):
+		return false
+	var target_pos: Vector3 = anchor.global_position if is_instance_valid(anchor) else actor.global_position
+	var player_pos: Vector3 = char_node.global_position
+	var horiz_dist: float = Vector2(player_pos.x - target_pos.x, player_pos.z - target_pos.z).length()
+	var vert_dist: float = absf(player_pos.y - target_pos.y)
+	if horiz_dist > 2.8 or vert_dist > 1.5:
+		return false
+
+	var world_3d: World3D = world.get_world_3d() if world.has_method("get_world_3d") else null
+	if world_3d and world_3d.direct_space_state:
+		var ray_query := PhysicsRayQueryParameters3D.create(
+			player_pos + Vector3(0.0, 1.0, 0.0),
+			target_pos + Vector3(0.0, 1.0, 0.0)
+		)
+		var exclude: Array[RID] = []
+		if "get_rid" in char_node:
+			exclude.append(char_node.get_rid())
+		if is_instance_valid(npc_body):
+			exclude.append(npc_body.get_rid())
+		ray_query.exclude = exclude
+		ray_query.collision_mask = 1
+		var hit := world_3d.direct_space_state.intersect_ray(ray_query)
+		if not hit.is_empty():
+			return false
+	return true
 
 func _process(delta: float) -> void:
 	if is_ragdoll_active:
@@ -170,7 +227,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		if corpse_handler.handle_input(event):
 			get_viewport().set_input_as_handled()
 			return
-	if is_service_active:
+
+	if is_service_active or is_combat_active:
 		if event is InputEventMouseButton:
 			if event.button_index == MOUSE_BUTTON_RIGHT:
 				is_dragging_cam = event.pressed
@@ -193,16 +251,17 @@ func _unhandled_input(event: InputEvent) -> void:
 			_update_service_camera()
 			get_viewport().set_input_as_handled()
 			return
-		elif event is InputEventKey and event.pressed and not event.echo:
+		elif is_service_active and event is InputEventKey and event.pressed and not event.echo:
 			if event.keycode in [KEY_E, KEY_SPACE, KEY_ENTER, KEY_ESCAPE] or event.physical_keycode in [KEY_E, KEY_SPACE, KEY_ENTER, KEY_ESCAPE]:
 				get_viewport().set_input_as_handled()
 				finish_furniture_service()
 				return
 		return
 
-	if event is InputEventKey and event.pressed and not event.echo and (event.physical_keycode == KEY_E or event.keycode == KEY_E) and _can_interact():
-		get_viewport().set_input_as_handled()
-		runtime.start_intro_dialogue()
+	if not is_world_input_locked() and _can_interact():
+		if event.is_action_pressed("interact") or (event is InputEventKey and event.pressed and not event.echo and (event.physical_keycode == KEY_E or event.keycode == KEY_E)):
+			get_viewport().set_input_as_handled()
+			runtime.start_intro_dialogue()
 
 func _on_phase_changed(phase: int) -> void:
 	var combat := runtime.combat_manager
@@ -212,13 +271,134 @@ func _on_phase_changed(phase: int) -> void:
 
 func _on_encounter_state_changed(_old: int, state: int) -> void:
 	var busy := is_world_input_locked()
-	hud.visible = state == Runtime.EncounterState.COMBAT
+	hud.visible = (state == Runtime.EncounterState.COMBAT)
+	if state == Runtime.EncounterState.COMBAT:
+		_set_combat_visuals(true)
+	elif not is_service_active:
+		if is_combat_active and state != Runtime.EncounterState.RESULT_DIALOGUE:
+			_set_combat_visuals(false)
 	if not busy:
 		panel.hide()
 	world.set_encounter_ui_active(busy)
 	world._sync_actor_controls()
 	if busy and is_instance_valid(world.character) and world.character.has_method("set_control_enabled"):
 		world.character.set_control_enabled(false)
+
+func _setup_combat_actors() -> bool:
+	var npc_model := str(runtime.encounter_bundle.get("avatar", {}).get("model_resource", ""))
+	var master_model := _get_master_model()
+	var role_a_motion := COMBAT_MOTION_KEQING
+	var role_b_motion := COMBAT_MOTION_MASTER
+
+	if npc_model.is_empty() or not ResourceLoader.exists(npc_model):
+		return false
+	if master_model.is_empty() or not ResourceLoader.exists(master_model):
+		return false
+	if role_a_motion.is_empty() or not ResourceLoader.exists(role_a_motion):
+		return false
+	if role_b_motion.is_empty() or not ResourceLoader.exists(role_b_motion):
+		return false
+
+	var ground_tf: Transform3D = anchor.global_transform if is_instance_valid(anchor) else Transform3D.IDENTITY
+	combat_actors_root.global_transform = ground_tf
+
+	if is_instance_valid(npc_paired_actor):
+		npc_paired_actor.queue_free()
+	if is_instance_valid(master_paired_actor):
+		master_paired_actor.queue_free()
+
+	npc_paired_actor = ACTOR.instantiate()
+	npc_paired_actor.name = "KeqingCombatActor"
+	npc_paired_actor.model_resource = npc_model
+	npc_paired_actor.motion_resource = role_a_motion
+	npc_paired_actor.auto_play = true
+	npc_paired_actor.environment_mask = 33
+	npc_paired_actor.initialized.connect(func():
+		if is_instance_valid(npc_paired_actor) and npc_paired_actor.character:
+			MTOON.apply(npc_paired_actor.character, runtime.encounter_bundle["avatar"]["material_id"])
+	)
+	combat_actors_root.add_child(npc_paired_actor)
+	npc_paired_actor.transform = Transform3D.IDENTITY
+
+	master_paired_actor = ACTOR.instantiate()
+	master_paired_actor.name = "MasterCombatActor"
+	master_paired_actor.model_resource = master_model
+	master_paired_actor.motion_resource = role_b_motion
+	master_paired_actor.auto_play = true
+	master_paired_actor.environment_mask = 33
+	master_paired_actor.initialized.connect(func():
+		if is_instance_valid(master_paired_actor) and master_paired_actor.character:
+			MTOON.apply(master_paired_actor.character, _get_master_mtoon())
+	)
+	combat_actors_root.add_child(master_paired_actor)
+	master_paired_actor.transform = Transform3D.IDENTITY
+	return true
+
+func _set_combat_visuals(active: bool) -> void:
+	if is_combat_active == active:
+		return
+	is_combat_active = active
+	var char_node: Node = world.character if is_instance_valid(world) else null
+
+	if active:
+		is_dragging_cam = false
+		if not _setup_combat_actors():
+			is_combat_active = false
+			return
+
+		if is_instance_valid(actor):
+			actor.visible = false
+		if is_instance_valid(npc_body):
+			npc_body.collision_layer = 0
+
+		if is_instance_valid(char_node):
+			char_node.visible = false
+
+		combat_actors_root.visible = true
+		_setup_service_camera(anchor.global_transform if is_instance_valid(anchor) else combat_actors_root.global_transform)
+		service_camera.current = true
+	else:
+		is_dragging_cam = false
+		if is_instance_valid(service_camera):
+			service_camera.current = false
+		if is_instance_valid(combat_actors_root) and not is_service_active:
+			combat_actors_root.visible = false
+			if is_instance_valid(npc_paired_actor):
+				npc_paired_actor.queue_free()
+				npc_paired_actor = null
+			if is_instance_valid(master_paired_actor):
+				master_paired_actor.queue_free()
+				master_paired_actor = null
+
+		if not is_service_active and not is_ragdoll_active:
+			if is_instance_valid(actor):
+				actor.visible = true
+			if is_instance_valid(npc_body):
+				npc_body.collision_layer = NPC_SOLID_LAYER
+			if is_instance_valid(char_node):
+				char_node.visible = true
+				if "camera" in char_node and char_node.camera:
+					char_node.camera.current = true
+
+func _on_combat_ended(winner: String, _loser: String, _reason: String) -> void:
+	if winner == "NPC":
+		_set_combat_visuals(false)
+		_handle_player_defeat()
+
+func _handle_player_defeat() -> void:
+	var SITES := load("res://scripts/world/npc_preview_sites.gd")
+	if is_instance_valid(world):
+		var respawn_data: Dictionary = SITES.resolve_battle_respawn(world, "沙洲度假遗址", "keqing")
+		var target_pos: Vector3 = respawn_data.get("position", Vector3.ZERO)
+		var char_node: Node = world.character
+		if is_instance_valid(char_node) and target_pos != Vector3.ZERO:
+			char_node.global_position = target_pos
+			if "heading" in respawn_data:
+				char_node.global_rotation.y = respawn_data["heading"]
+		world.set_encounter_ui_active(false)
+		world._sync_actor_controls()
+		if is_instance_valid(char_node) and char_node.has_method("set_control_enabled"):
+			char_node.set_control_enabled(true)
 
 func _on_dialogue_ended(payload: Dictionary) -> void:
 	if not runtime.dialogue_manager.session_active:
@@ -227,12 +407,20 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 	if act in ["spare_desk", "desk_service", "spare"]:
 		begin_furniture_service_staging("desk_service")
 	elif act == "kill":
+		_set_combat_visuals(false)
 		_execute_settlement_kill()
 	elif act == "finish_service":
 		if is_service_active:
 			finish_furniture_service()
 		else:
 			begin_furniture_service_staging("desk_service")
+	elif act == "finish":
+		_set_combat_visuals(false)
+		if is_instance_valid(runtime):
+			runtime.finish_dialogue()
+		if is_instance_valid(world):
+			world.set_encounter_ui_active(false)
+			world._sync_actor_controls()
 
 func begin_furniture_service_staging(interaction_type: String = "desk_service") -> void:
 	var char_node: Node = world.character if is_instance_valid(world) else null
@@ -288,6 +476,7 @@ func begin_furniture_service_staging(interaction_type: String = "desk_service") 
 	var role_a_target: Transform3D = resolution.get("role_a_target", furn_tf)
 	var role_b_target: Transform3D = resolution.get("role_b_target", furn_tf)
 
+	is_combat_active = false
 	is_service_active = true
 	panel.hide()
 	hud.hide()
@@ -301,6 +490,8 @@ func begin_furniture_service_staging(interaction_type: String = "desk_service") 
 
 	if is_instance_valid(actor):
 		actor.visible = false
+	if is_instance_valid(npc_body):
+		npc_body.collision_layer = 0
 
 	combat_actors_root.global_transform = furn_tf
 
@@ -389,6 +580,8 @@ func abort_service_staging(reason: String = "") -> void:
 		master_paired_actor = null
 	if is_instance_valid(actor):
 		actor.visible = true
+	if is_instance_valid(npc_body):
+		npc_body.collision_layer = NPC_SOLID_LAYER
 	var char_node: Node = world.character if is_instance_valid(world) else null
 	if is_instance_valid(char_node):
 		char_node.visible = true
@@ -398,6 +591,8 @@ func abort_service_staging(reason: String = "") -> void:
 			char_node.collision_mask = saved_player_collision_mask
 		if char_node.has_method("set_control_enabled"):
 			char_node.set_control_enabled(true)
+		if "camera" in char_node and char_node.camera:
+			char_node.camera.current = true
 	last_service_approach_pos = Vector3.ZERO
 	last_service_approach_basis = Basis.IDENTITY
 	if is_instance_valid(runtime):
@@ -436,10 +631,19 @@ func finish_furniture_service() -> void:
 			char_node.global_position = last_service_approach_pos
 		if char_node.has_method("set_control_enabled"):
 			char_node.set_control_enabled(true)
+		if "camera" in char_node and char_node.camera:
+			char_node.camera.current = true
 	if last_service_approach_pos != Vector3.ZERO and is_instance_valid(actor):
 		var local_side := last_service_approach_basis.x.normalized()
-		actor.global_position = last_service_approach_pos + local_side * 0.7
-		actor.global_rotation.y = last_service_approach_basis.get_euler().y
+		var new_pos := last_service_approach_pos + local_side * 0.7
+		var new_yaw := last_service_approach_basis.get_euler().y
+		if is_instance_valid(anchor):
+			anchor.global_position = new_pos
+			anchor.global_rotation.y = new_yaw
+		actor.global_position = new_pos
+		actor.global_rotation.y = new_yaw
+	if is_instance_valid(npc_body):
+		npc_body.collision_layer = NPC_SOLID_LAYER
 	last_service_approach_pos = Vector3.ZERO
 	last_service_approach_basis = Basis.IDENTITY
 	if is_instance_valid(runtime):
@@ -452,8 +656,12 @@ func _get_active_master_id() -> String:
 	if is_instance_valid(world):
 		var char_node = world.character
 		if char_node != null:
+			if "character_id" in char_node and not String(char_node.character_id).is_empty():
+				return String(char_node.character_id)
 			if "active_character_id" in char_node and not String(char_node.active_character_id).is_empty():
 				return String(char_node.active_character_id)
+			if char_node.has_meta("character_id") and not String(char_node.get_meta("character_id")).is_empty():
+				return String(char_node.get_meta("character_id"))
 			if char_node.has_meta("active_character_id") and not String(char_node.get_meta("active_character_id")).is_empty():
 				return String(char_node.get_meta("active_character_id"))
 		var switch_wheel = world.find_child("CharacterSwitchWheel", true, false)
@@ -481,6 +689,8 @@ func _execute_settlement_kill() -> void:
 
 	if is_instance_valid(actor):
 		actor.visible = false
+	if is_instance_valid(npc_body):
+		npc_body.collision_layer = 0
 
 	var spawn_pos: Vector3 = anchor.global_position if is_instance_valid(anchor) else Vector3.ZERO
 	if corpse_actor:
@@ -520,11 +730,18 @@ func _respawn_keqing_after_kill() -> void:
 			corpse_actor.simulator = null
 			corpse_actor.physical_bones.clear()
 
+	if is_instance_valid(anchor):
+		anchor.global_position = runtime.spawn_position
+		anchor.global_rotation.y = deg_to_rad(runtime.spawn_heading)
+
 	if is_instance_valid(actor):
 		actor.visible = true
 		if is_instance_valid(anchor):
 			actor.global_position = anchor.global_position
 			actor.global_rotation.y = anchor.global_rotation.y
+
+	if is_instance_valid(npc_body):
+		npc_body.collision_layer = NPC_SOLID_LAYER
 
 	if is_instance_valid(runtime):
 		runtime._set_state(Runtime.EncounterState.AVAILABLE)
