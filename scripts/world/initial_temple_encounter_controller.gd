@@ -77,6 +77,8 @@ const SparkleTutorialStrategyClass := preload("res://scripts/combat/sparkle_tuto
 const DialoguePanelClass := preload("res://scenes/narrative/dialogue_panel.gd")
 const TurnCombatHUDClass := preload("res://scenes/combat/turn_combat_hud.gd")
 const EncounterPalette := preload("res://scenes/combat/encounter_ui_palette.gd")
+const NPCRegistryClass := preload("res://scripts/npc/npc_registry.gd")
+const MotionResolverClass := preload("res://scripts/world/motion_resolver.gd")
 
 const PleasureComponentClass := preload("res://scripts/combat/pleasure_component.gd")
 const SparkleTutorialDialogueClass := preload("res://scripts/narrative/sparkle_tutorial_dialogue.gd")
@@ -107,6 +109,8 @@ const MASTER_CONFIGS: Dictionary = {
 }
 
 @export var ui_palette: EncounterPalette = preload("res://scenes/combat/temple_paper_palette.tres")
+@export var encounter_id: String = "initial_temple_sparkle"
+var encounter_bundle: Dictionary = {}
 
 var current_state: EncounterState = EncounterState.AVAILABLE
 var temple_node: Node3D
@@ -394,22 +398,27 @@ func is_world_input_locked() -> bool:
 		EncounterState.FURNITURE_SERVICE_ACTIVE
 	]
 
+func _ensure_encounter_bundle() -> Dictionary:
+	if encounter_bundle.is_empty() or not encounter_bundle.get("valid", false):
+		encounter_bundle = NPCRegistryClass.assemble_encounter(encounter_id)
+	return encounter_bundle
+
 func _get_dialogue_graph() -> Dictionary:
-	var path := "res://assets/npc/dialogue/sparkle/temple_dialogue.json"
-	if FileAccess.file_exists(path):
-		var text := FileAccess.get_file_as_string(path)
-		var json := JSON.new()
-		if json.parse(text) == OK and json.data is Dictionary:
-			return json.data
+	var bundle := _ensure_encounter_bundle()
+	if bundle.get("valid", false) and bundle.has("dialogue"):
+		return bundle["dialogue"]
 	return SparkleTutorialDialogueClass.get_dialogue_graph()
 
 func _get_sparkle_reactions() -> Dictionary:
-	var path := "res://assets/npc/reactions/sparkle_temple.json"
-	if FileAccess.file_exists(path):
-		var text := FileAccess.get_file_as_string(path)
-		var json := JSON.new()
-		if json.parse(text) == OK and json.data is Dictionary:
-			return json.data
+	var bundle := _ensure_encounter_bundle()
+	if bundle.get("valid", false) and bundle.has("reactions"):
+		return bundle["reactions"]
+	return {}
+
+func _get_sparkle_motions() -> Dictionary:
+	var bundle := _ensure_encounter_bundle()
+	if bundle.get("valid", false) and bundle.has("motions"):
+		return bundle["motions"]
 	return {}
 
 func _capture_world_context() -> void:
@@ -1073,6 +1082,47 @@ func _execute_settlement_kill() -> void:
 	settlement_completed.emit("kill")
 	_set_encounter_state(EncounterState.COMPLETED)
 
+func _get_all_furniture_instances() -> Array:
+	var list: Array = []
+	if temple_node and is_instance_valid(temple_node):
+		var furn_dict = temple_node.get("furniture_instances")
+		if furn_dict == null and temple_node.has_meta("furniture_instances"):
+			furn_dict = temple_node.get_meta("furniture_instances")
+		if furn_dict is Dictionary:
+			for k in furn_dict:
+				var f = furn_dict[k]
+				if f and is_instance_valid(f) and not list.has(f):
+					list.append(f)
+		for fid in ["seat_01", "rest_01", "table_01"]:
+			var f_node := _find_furniture_node(fid)
+			if f_node and not list.has(f_node):
+				list.append(f_node)
+
+	if list.is_empty() and allow_test_fixture_fallback:
+		for fid in ["seat_01", "rest_01"]:
+			var mock := Node3D.new()
+			mock.name = fid
+			if fid == "seat_01":
+				var s_node := Marker3D.new()
+				s_node.name = "Anchor_Seat"
+				s_node.transform = _get_test_fixture_anchor("seat_01", "Anchor_Seat")
+				mock.add_child(s_node)
+				var f_node := Marker3D.new()
+				f_node.name = "Anchor_Front"
+				f_node.transform = _get_test_fixture_anchor("seat_01", "Anchor_Front")
+				mock.add_child(f_node)
+			elif fid == "rest_01":
+				var b_node := Marker3D.new()
+				b_node.name = "Anchor_Bed_Center"
+				b_node.transform = _get_test_fixture_anchor("rest_01", "Anchor_Bed_Center")
+				mock.add_child(b_node)
+				var f_node := Marker3D.new()
+				f_node.name = "Anchor_Front"
+				f_node.transform = _get_test_fixture_anchor("rest_01", "Anchor_Front")
+				mock.add_child(f_node)
+			list.append(mock)
+	return list
+
 func _find_furniture_node(furniture_id: String) -> Node3D:
 	if temple_node and is_instance_valid(temple_node):
 		var furn_dict = temple_node.get("furniture_instances")
@@ -1241,19 +1291,26 @@ func _begin_furniture_service_staging(service_type: String = "virgin") -> void:
 		npc_body.collision_layer = 0
 		npc_body.collision_mask = 0
 		
-	var furniture_id := "seat_01" if service_type == "virgin" else "rest_01"
-	var anchor_name := "Anchor_Seat" if service_type == "virgin" else "Anchor_Bed_Center"
-	var sparkle_motion := MOTION_VIRGIN_SPARKLE if service_type == "virgin" else MOTION_HONBAN_SPARKLE
-	var master_motion := MOTION_VIRGIN_MASTER if service_type == "virgin" else MOTION_HONBAN_MASTER
-	var title_text := "【乞命侍奉 · 石椅保留处女胸部侍奉】" if service_type == "virgin" else "【乞命侍奉 · 软榻本番破处深入交合】"
-	
-	var furn_tf := get_furniture_anchor(furniture_id, anchor_name)
-	var approach_tf := get_furniture_anchor(furniture_id, "Anchor_Front")
-	if furn_tf == Transform3D.IDENTITY or approach_tf == Transform3D.IDENTITY:
-		push_error("[InitialTempleEncounterController] Staging aborted: missing required anchor for %s (%s / Anchor_Front)" % [furniture_id, anchor_name])
+	var motion_profile := _get_sparkle_motions()
+	var furn_list := _get_all_furniture_instances()
+	var ground_tf := (npc_avatar.global_transform if npc_avatar and is_instance_valid(npc_avatar) else Transform3D.IDENTITY)
+
+	var resolution := MotionResolverClass.resolve_motion(motion_profile, service_type, furn_list, ground_tf)
+	if not resolution.get("found", false):
+		push_error("[InitialTempleEncounterController] Staging aborted: MotionResolver could not resolve motion for %s! Reason: %s" % [service_type, resolution.get("reason", "unknown")])
 		_restore_world_controls()
 		_set_encounter_state(EncounterState.AVAILABLE)
 		return
+
+	var sparkle_motion: String = resolution.get("role_a_motion", "")
+	var master_motion: String = resolution.get("role_b_motion", "")
+	var furn_tf: Transform3D = resolution.get("target_transform", Transform3D.IDENTITY)
+	var approach_tf: Transform3D = furn_tf
+	if resolution.get("approach_anchor") != null:
+		approach_tf = resolution["approach_anchor"].global_transform
+	elif has_furniture_anchor("seat_01" if service_type == "virgin" else "rest_01", "Anchor_Front"):
+		approach_tf = get_furniture_anchor("seat_01" if service_type == "virgin" else "rest_01", "Anchor_Front")
+	var title_text := "【乞命侍奉 · 石椅保留处女胸部侍奉】" if service_type == "virgin" else "【乞命侍奉 · 软榻本番破处深入交合】"
 		
 	if npc_avatar and is_instance_valid(npc_avatar):
 		saved_npc_service_transform = npc_avatar.global_transform

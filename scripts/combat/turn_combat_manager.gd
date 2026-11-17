@@ -39,6 +39,7 @@ var round_action_defense: float = 0.0
 var temporary_defense_modifier: float = 0.0 # From mid-battle dialogue (e.g. 咬牙坚持)
 var has_triggered_mid_edging_talk: bool = false
 var is_resolved: bool = false
+var animation_delays: bool = true
 
 func setup(player_comp: Node, npc_comp: Node) -> void:
 	player_pleasure = player_comp
@@ -119,14 +120,16 @@ func execute_player_action(action: Dictionary) -> void:
 			"clitoris": zone_desc = "私密花核"
 			"thighs": zone_desc = "娇嫩大腿"
 		var extra_badge := "（造成 +%.1f%% 快感 · %s）" % [gained, zone_desc]
-		log_message_emitted.emit("主人施展【%s】，刺激了%s的%s，造成了 +%.1f%% 快感！" % [action.action_name, npc_name, zone_desc, gained])
+		var act_name: String = action.get("action_name", action.get("name", "未知招式"))
+		log_message_emitted.emit("主人施展【%s】，刺激了%s的%s，造成了 +%.1f%% 快感！" % [act_name, npc_name, zone_desc, gained])
 		var koujou: Dictionary = reaction_resolver.get_zone_reaction(action.target_zone, npc_pleasure.current_pleasure) if reaction_resolver else {"speaker": npc_name, "text": "哈啊……"}
 		koujou_triggered.emit(koujou.get("speaker", npc_name), koujou.get("text", ""), extra_badge)
 	else:
-		log_message_emitted.emit("主人采取了【%s】姿态，本回合快感减免 50%%！" % action.action_name)
+		var act_name: String = action.get("action_name", action.get("name", "未知招式"))
+		log_message_emitted.emit("主人采取了【%s】姿态，本回合快感减免 50%%！" % act_name)
 		koujou_triggered.emit("状态", "采取了防守姿态，本回合受到的快感减免 50%！", "")
 		
-	if is_inside_tree() and get_tree():
+	if animation_delays and is_inside_tree() and get_tree():
 		await get_tree().create_timer(1.8).timeout
 	
 	if _check_battle_state():
@@ -172,7 +175,7 @@ func _advance_to_npc_turn() -> void:
 	phase_changed.emit(current_phase)
 	log_message_emitted.emit("【%s回合】轮到%s行动了！" % [npc_name, npc_name])
 	
-	if is_inside_tree() and get_tree():
+	if animation_delays and is_inside_tree() and get_tree():
 		await get_tree().create_timer(0.6).timeout
 	
 	# Execute NPC decision via CombatStrategy
@@ -194,7 +197,7 @@ func _advance_to_npc_turn() -> void:
 		var custom_log: String = decision.get("custom_log", "%s使出了绝招！" % npc_name)
 		log_message_emitted.emit(custom_log)
 		log_message_emitted.emit("极致温热的包裹无视防御，让主人受到极度强烈的快感冲击（+100.0%）！")
-		if is_inside_tree() and get_tree():
+		if animation_delays and is_inside_tree() and get_tree():
 			await get_tree().create_timer(2.2).timeout
 	else:
 		var total_defense: float = clampf(round_action_defense + temporary_defense_modifier, 0.0, 0.95)
@@ -202,7 +205,7 @@ func _advance_to_npc_turn() -> void:
 		var gained: float = player_pleasure.add_pleasure(actual_dmg, target_zone)
 		koujou_triggered.emit(attack_koujou.get("speaker", npc_name), attack_koujou.get("text", ""), "（主人受到 +%.1f%% 快感）" % gained)
 		log_message_emitted.emit("%s施展了【%s】，对主人造成了 +%.1f%% 快感！" % [npc_name, skill_name, gained])
-		if is_inside_tree() and get_tree():
+		if animation_delays and is_inside_tree() and get_tree():
 			await get_tree().create_timer(1.8).timeout
 		
 	# Reset round defense & consume temporary defense

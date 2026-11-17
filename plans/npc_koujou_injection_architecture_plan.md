@@ -1,17 +1,34 @@
-# 全角色口上注入与交互架构升级计划 (v2.1 深度重构与解耦完善版)
-(Universal NPC Koujou & Interaction Architecture Plan v2.1)
+# 全角色口上注入与交互架构升级计划 (v2.2 核心阻断项清零与运行时闭环版)
+(Universal NPC Koujou & Interaction Architecture Plan v2.2)
 
-> **设计依据**：结合 [GitHub Issue #27 源码审计报告](https://github.com/maru044/prism-route/issues/27)，彻底摒弃“单一大 JSON 承载全部数据”和“通用大控制器堆砌 if/elif 状态机”的伪数据驱动陷阱，建立**分层实体解耦（角色/点位/遭遇）、不可变配置与运行时上下文隔离、可插拔行为策略（Pluggable Behaviors）、精确动作兼容性解析、LLM Persona 动态按需注入**的高扩展性叙事与遭遇战框架。
+> **设计依据**：结合 [GitHub Issue #27 源码审计报告与 2026-11-17 实施后复审意见](https://github.com/maru044/prism-route/issues/27)，彻底消除 5 项核心阻断项（Session 隔离、运行时定义装配、Action 执行边界、MotionResolver 回退修复、Validator 跨引用强校验），实现**分层实体解耦（Character ≠ Spawn ≠ Encounter）、NPCRegistry 动态装配、ActionRegistry 异步生命周期、NPCEncounterRuntime 场景端到端闭环**。
 
 ---
 
-## 一、 核心原则与架构认知纠偏（参照 Issue #27 与运行时审计）
+## 一、 核心原则与架构认知纠偏（参照 Issue #27 与 2026-11-17 复审）
 
-在 v1.0 与 v2.0 初版演进中，系统经过全面实装与审计，进一步消除了以下关键耦合隐患：
-1. **DialogueManager 与 EncounterContext 隔离**：移除全局 blackboard 单例直引，支持独立传入上下文，修复 `graph_id` 信号读取 Bug。
-2. **TurnCombatManager 彻底去角色化**：移除内部残留的花火反应 JSON 回退与策略写死，由外部 Encounter Controller 显式注入。
-3. **LLM Persona 动态隔离装配**：在 `assets/ai/personas/` 物理隔离角色卡，依据当前对象动态装配，杜绝全局 Worldbook 提示词膨胀。
-4. **验证器全面覆盖**：Validator 纳管 characters、dialogues、reactions、encounters、spawns、personas 全要素。
+系统已于 2026-11-17 全面落实并验证了复审要求的 5 大关键运行时边界：
+1. **DialogueSession 作用域与会话绝对隔离 (P0 完成)**：
+   - 确立 4 层变量作用域（Session / Encounter / Character / World）。
+   - 彻底移除 `set_variable` 与 `choose_option` 对全局 Blackboard 的无条件回写。
+   - 经测试证明连续启动不同角色（花火/刻晴）会话互不泄漏，临时状态退出即释放。
+2. **独立 ActionRegistry 与生命周期契约 (P0 完成)**：
+   - 建立独立的 `ActionRegistry` 模块，脱离 DialogueManager 内部静态字典。
+   - 支持独立参数 schema 校验与安全白名单，未知 Action 明确安全拦截并抛错。
+   - 异步 Action 支持 `IDLE / RUNNING / SUCCEEDED / FAILED / CANCELLED` 生命周期，会话保持在等待状态，完成时机与 Action 契约严格一致。
+3. **NPC 统一注册中心 (NPCRegistry) 与通用运行时装配 (P0 完成)**：
+   - 创建 `NPCRegistry`，统一按三层 ID 加载索引 Character、Spawn、Encounter、Dialogue、Reaction、Motion 定义。
+   - 提供 `assemble_encounter(encounter_id)` 动态组合装配。
+   - 消除 `dialogue_bundle_id` 与 `graph_id` 的契约不一致，神殿控制器不再硬编码花火对话路径。
+4. **MotionResolver 逻辑修复与真实家具演出接入 (P1 完成)**：
+   - 修复 `MotionResolver.resolve_motion()` 的回退逻辑 Bug，严格保证声明 `fallback_to_ground: false` 且家具不满足时明确拒绝回退。
+   - 补齐 `sparkle_temple_motions.json`，神殿控制器全面接入 `MotionResolver` 解析演出动作。
+5. **NPC Validator 跨引用完整性强校验与负向测试套件 (P1 完成)**：
+   - 升级 `tools/validate_npc_content.gd`，纳管跨文件引用完整性（Character/Spawn/Encounter/Dialogue/Reaction/Motion/Persona），校验 entry_points 完整性与动画路径物理存在。
+   - 新增 `tests/test_npc_validator_negative.gd` 负向测试套件，断言破损引用必定触发错误并拦截。
+6. **通用 NPCEncounterRuntime 与刻晴端到端真实验收 (P0 完成)**：
+   - 创建通用的 `NPCEncounterRuntime`，驱动 3 层 ID 装配、大世界点位生成、对话分支、决斗切磋、动作演出与结算。
+   - 刻晴端到端真实场景运行测试（`tests/test_keqing_runtime_encounter.gd`）100% 通过验收。
 
 1. **复用运行机制，不强行统一角色行为与剧情流程**：
    - 对话推进、变量管理、动作调度、快感数值判定可以 100% 共享。

@@ -10,7 +10,7 @@
     "victory_settlement": "victory_node",
     "world_start": "start"
   },
-  "graph_id": "sparkle_temple_tutorial",
+  "graph_id": "sparkle_temple_bundle",
   "nodes": {
     "honban_service_action": {
       "choices": [

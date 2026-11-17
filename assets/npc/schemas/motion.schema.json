@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MotionProfile",
+  "type": "object",
+  "required": ["schema_version", "motion_profile_id", "bindings"],
+  "properties": {
+    "schema_version": { "type": "integer", "enum": [1] },
+    "motion_profile_id": { "type": "string" },
+    "bindings": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["interaction_type", "required_anchors", "role_a_motion", "role_b_motion"],
+        "properties": {
+          "interaction_type": { "type": "string" },
+          "required_anchors": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "role_a_motion": { "type": "string" },
+          "role_b_motion": { "type": "string" },
+          "fallback_to_ground": { "type": "boolean" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

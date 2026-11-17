@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "motion_profile_id": "sparkle_temple_motions",
+  "bindings": {
+    "virgin": {
+      "interaction_type": "seat",
+      "required_anchors": ["Anchor_Seat", "Anchor_Front"],
+      "role_a_motion": "res://assets/characters/mmd_selected/animations/mmd_0a3f6ba5f5de_a.tres",
+      "role_b_motion": "res://assets/characters/mmd_selected/animations/mmd_0a3f6ba5f5de_b.tres",
+      "fallback_to_ground": false
+    },
+    "honban": {
+      "interaction_type": "bed",
+      "required_anchors": ["Anchor_Bed_Center", "Anchor_Front"],
+      "role_a_motion": "res://assets/characters/mmd_selected/animations/mmd_87e004f6db53_a.tres",
+      "role_b_motion": "res://assets/characters/mmd_selected/animations/mmd_87e004f6db53_b.tres",
+      "fallback_to_ground": false
+    },
+    "ground_service": {
+      "interaction_type": "ground",
+      "required_anchors": [],
+      "role_a_motion": "res://assets/characters/mmd_selected/animations/mmd_781d8c87fd79_a.tres",
+      "role_b_motion": "res://assets/characters/mmd_selected/animations/mmd_781d8c87fd79_b.tres",
+      "fallback_to_ground": true
+    }
+  }
+}
