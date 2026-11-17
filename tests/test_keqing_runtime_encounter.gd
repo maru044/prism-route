@@ -5,7 +5,7 @@ extends SceneTree
 ## interactive dialogue, duel combat with custom skills/koujou, and motion resolution.
 
 const NPCEncounterRuntimeClass := preload("res://scripts/world/npc_encounter_runtime.gd")
-const NPCRegistryClass := preload("res://scripts/npc/npc_registry.gd")
+const TEST_ACTION := preload("res://assets/combat/actions/action_toy_vibe.tres")
 const InteractiveFurnitureClass := preload("res://scripts/world/interactive_furniture.gd")
 
 func _init() -> void:
@@ -64,13 +64,15 @@ func _run_end_to_end_test() -> void:
 	)
 
 	# Player executes attack
-	runtime.execute_player_action("tease")
+	runtime.combat_manager.execute_player_action(TEST_ACTION)
 	assert(runtime.npc_pleasure.current_pleasure > 0)
 	print("  ✓ Player attack executed, opponent pleasure increased: %.1f" % runtime.npc_pleasure.current_pleasure)
 
 	# Process turn cycle until victory or defeat
-	while not runtime.combat_manager.is_resolved:
-		runtime.execute_player_action("edge")
+	for i in range(16):
+		if runtime.combat_manager.is_resolved:
+			break
+		runtime.combat_manager.execute_player_action(TEST_ACTION)
 
 	assert(runtime.current_state == NPCEncounterRuntimeClass.EncounterState.RESULT_DIALOGUE)
 	assert(runtime.last_battle_winner == "player")

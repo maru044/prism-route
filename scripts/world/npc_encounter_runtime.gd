@@ -22,7 +22,8 @@ enum EncounterState {
 const NPCRegistryClass := preload("res://scripts/npc/npc_registry.gd")
 const DialogueManagerClass := preload("res://scripts/narrative/dialogue_manager.gd")
 const TurnCombatManagerClass := preload("res://scripts/combat/turn_combat_manager.gd")
-const CombatStrategyClass := preload("res://scripts/combat/combat_strategy.gd")
+const ACTOR := preload("res://scenes/characters/shared_humanoid_actor.tscn")
+const MTOON := preload("res://scripts/characters/mtoon_materials.gd")
 const ReactionResolverClass := preload("res://scripts/combat/reaction_resolver.gd")
 const PleasureComponentClass := preload("res://scripts/combat/pleasure_component.gd")
 const MotionResolverClass := preload("res://scripts/world/motion_resolver.gd")
@@ -44,7 +45,9 @@ var character_name: String = ""
 var last_battle_winner: String = ""
 var settlement_outcome: String = ""
 
-func setup_encounter(p_encounter_id: String) -> bool:
+func setup_encounter(p_encounter_id: String, adapter_manages_flow := false) -> bool:
+	if current_state != EncounterState.UNINITIALIZED:
+		return false
 	encounter_id = p_encounter_id
 	encounter_bundle = NPCRegistryClass.assemble_encounter(encounter_id)
 	if not encounter_bundle.get("valid", false):
@@ -64,7 +67,8 @@ func setup_encounter(p_encounter_id: String) -> bool:
 	dialogue_manager.name = "DialogueManager"
 	add_child(dialogue_manager)
 	dialogue_manager.text_updated.connect(_on_text_updated)
-	dialogue_manager.dialogue_ended.connect(_on_dialogue_ended)
+	if not adapter_manages_flow:
+		dialogue_manager.dialogue_ended.connect(_on_dialogue_ended)
 
 	# 2. Pleasure components
 	player_pleasure = PleasureComponentClass.new()
@@ -80,7 +84,10 @@ func setup_encounter(p_encounter_id: String) -> bool:
 	reaction_resolver = ReactionResolverClass.new(reactions_dict)
 	reaction_resolver.speaker_name = character_name
 
-	var combat_strategy := CombatStrategyClass.new()
+	player_pleasure.character_name = "主人"
+	npc_pleasure.character_name = character_name
+	npc_pleasure.max_pleasure = float(encounter_bundle["combat"]["npc_max_pleasure"])
+	var combat_strategy := NPCRegistryClass.create_strategy(encounter_bundle["combat"])
 
 	# 4. Turn Combat Manager
 	combat_manager = TurnCombatManagerClass.new()
@@ -88,25 +95,53 @@ func setup_encounter(p_encounter_id: String) -> bool:
 	add_child(combat_manager)
 	combat_manager.setup(player_pleasure, npc_pleasure)
 	combat_manager.configure_npc(character_name, reactions_dict, combat_strategy)
-	combat_manager.combat_ended.connect(_on_combat_ended)
+	if not adapter_manages_flow:
+		combat_manager.combat_ended.connect(_on_combat_ended)
+		combat_manager.mid_battle_dialogue_requested.connect(_on_negotiation)
 
 	_set_state(EncounterState.AVAILABLE)
 	return true
+
+func create_flow_adapter() -> Node:
+	var adapter_script: Script = load(encounter_bundle["flow_path"])
+	return adapter_script.new() if adapter_script != null else null
+
+func create_anchor(host: Node3D, anchor_name: String) -> Marker3D:
+	var anchor := Marker3D.new()
+	anchor.name = anchor_name
+	host.add_child(anchor)
+	anchor.global_position = spawn_position
+	anchor.global_rotation.y = deg_to_rad(spawn_heading)
+	anchor.set_meta("spawn_id", encounter_bundle["identity"]["spawn_id"])
+	return anchor
+
+func create_idle_actor(anchor: Marker3D, actor_name: String, environment: int) -> Node3D:
+	var avatar: Dictionary = encounter_bundle["avatar"]
+	var actor := ACTOR.instantiate()
+	actor.name = actor_name
+	actor.model_resource = avatar["model_resource"]
+	actor.motion_resource = avatar["idle_motion"]
+	actor.environment_mask = environment
+	actor.auto_play = true
+	actor.initialized.connect(func(): MTOON.apply(actor.character, avatar["material_id"]))
+	anchor.add_child(actor)
+	return actor
+
+func start_dialogue(graph: Dictionary, node: String, source: int, policy: int, context: Dictionary = {}) -> void:
+	dialogue_manager.start_dialogue(graph, node, source, policy, context, {}, {}, encounter_bundle["identity"])
 
 func start_intro_dialogue() -> void:
 	if current_state != EncounterState.AVAILABLE and current_state != EncounterState.COMPLETED:
 		return
 	_set_state(EncounterState.INTRO_DIALOGUE)
 	var diag_graph: Dictionary = encounter_bundle.get("dialogue", {})
-	var start_entry: String = "start"
-	if diag_graph.has("entry_points") and diag_graph["entry_points"].has("world_start"):
-		start_entry = diag_graph["entry_points"]["world_start"]
-	dialogue_manager.start_dialogue(
+	var start_entry: String = diag_graph["entry_points"]["world_start"]
+	start_dialogue(
 		diag_graph,
 		start_entry,
 		DialogueManagerClass.DialogueSource.WORLD_INTERACTION,
 		DialogueManagerClass.ResumePolicy.RETURN_TO_WORLD,
-		{"character_id": character_name, "encounter_id": encounter_id}
+		{}
 	)
 
 func start_combat() -> void:
@@ -114,48 +149,45 @@ func start_combat() -> void:
 	combat_manager.start_combat()
 	combat_started.emit()
 
-func execute_player_action(action_id: String) -> void:
-	var act: Dictionary = {
-		"id": action_id,
-		"action_name": "轻抚爱抚",
-		"base_pleasure": 15.0,
-		"target_zone": "mouth",
-		"self_pleasure_defense": 0.2
-	}
-	if action_id == "edge":
-		act = {
-			"id": "edge",
-			"action_name": "极意快感",
-			"base_pleasure": 55.0,
-			"target_zone": "clitoris",
-			"self_pleasure_defense": 0.4
-		}
-	combat_manager.execute_player_action(act)
-
 func start_result_dialogue(winner: String) -> void:
 	_set_state(EncounterState.RESULT_DIALOGUE)
 	last_battle_winner = winner
 	var diag_graph: Dictionary = encounter_bundle.get("dialogue", {})
 	var entry_key: String = "victory_settlement" if winner == "player" else "defeat_settlement"
-	var start_entry: String = "victory_node"
-	if diag_graph.has("entry_points") and diag_graph["entry_points"].has(entry_key):
-		start_entry = diag_graph["entry_points"][entry_key]
-	elif diag_graph.has("nodes") and diag_graph["nodes"].has(start_entry):
-		pass
-	elif diag_graph.has("entry_points") and diag_graph["entry_points"].has("world_start"):
-		start_entry = diag_graph["entry_points"]["world_start"]
+	var start_entry: String = diag_graph["entry_points"][entry_key]
 
-	dialogue_manager.start_dialogue(
+	start_dialogue(
 		diag_graph,
 		start_entry,
 		DialogueManagerClass.DialogueSource.POST_BATTLE_RESULT,
 		DialogueManagerClass.ResumePolicy.END_COMBAT,
-		{"winner": winner, "encounter_id": encounter_id}
+		{"winner": winner}
 	)
 
-func resolve_service_motion(interaction_type: String, furniture_list: Array = []) -> Dictionary:
+func _on_negotiation(reason: String) -> void:
+	var graph: Dictionary = encounter_bundle["dialogue"]
+	var manual := reason == "player_manual_call"
+	var entry: String = graph["entry_points"].get("combat_manual" if manual else "combat_edging", "")
+	if entry.is_empty():
+		combat_manager.resume_combat_after_dialogue(false, not manual)
+		return
+	var source := DialogueManagerClass.DialogueSource.MID_BATTLE_MANUAL if manual else DialogueManagerClass.DialogueSource.MID_BATTLE_EDGING
+	var policy := DialogueManagerClass.ResumePolicy.SAME_TURN if manual else DialogueManagerClass.ResumePolicy.NEXT_TURN
+	start_dialogue(graph, entry, source, policy)
+
+func resolve_bound_service_motion(interaction_type: String, furniture_by_id: Dictionary, ground_tf: Transform3D) -> Dictionary:
+	var furniture: Array = []
+	for row: Dictionary in encounter_bundle["spawn"].get("bound_furniture", []):
+		var instance: Node3D = furniture_by_id.get(row["id"])
+		if is_instance_valid(instance) and instance.find_child(row["anchor"], true, false) != null:
+			furniture.append(instance)
+	return resolve_service_motion(interaction_type, furniture, ground_tf)
+
+func resolve_service_motion(interaction_type: String, furniture_list: Array = [],
+		ground_tf: Variant = null) -> Dictionary:
 	var motion_profile: Dictionary = encounter_bundle.get("motions", {})
-	var ground_tf := Transform3D(Basis(), spawn_position)
+	if ground_tf == null:
+		ground_tf = Transform3D(Basis(Vector3.UP, deg_to_rad(spawn_heading)), spawn_position)
 	return MotionResolverClass.resolve_motion(motion_profile, interaction_type, furniture_list, ground_tf)
 
 func _set_state(new_state: EncounterState) -> void:
@@ -168,7 +200,10 @@ func _on_text_updated(sp: String, tx: String, em: String) -> void:
 
 func _on_dialogue_ended(payload: Dictionary) -> void:
 	var act: String = payload.get("action", "")
-	if act == "enter_combat":
+	if current_state == EncounterState.COMBAT:
+		var next_turn: bool = payload.get("resume_policy") == DialogueManagerClass.ResumePolicy.NEXT_TURN
+		combat_manager.resume_combat_after_dialogue(act == "surrender", next_turn)
+	elif act == "enter_combat":
 		start_combat()
 	elif act in ["spare", "spare_virgin", "spare_honban", "kill", "finish_service"]:
 		settlement_outcome = act

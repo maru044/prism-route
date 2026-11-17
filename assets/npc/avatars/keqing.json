@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "avatar_profile_id": "keqing",
+  "model_resource": "res://assets/characters/import_tests_local/keqing/keqing_fixed.vrm",
+  "idle_motion": "res://assets/characters/roster/motions/shared_world_A01.tres",
+  "material_id": "keqing"
+}

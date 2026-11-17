@@ -104,6 +104,9 @@ func _run_furniture_service_test() -> void:
 	assert(encounter.service_hud.visible == true, "Service HUD banner must be visible")
 	print("PASS: Virgin armchair service activated with correct paired animations on seat_01")
 
+	# Isolate camera/exit input from the modal dialogue, which consumes those events.
+	encounter.dialogue_manager.cancel_session(false)
+	encounter.dialogue_panel.hide()
 	# Test camera controls during active furniture service
 	print("Step 4: Testing interactive camera controls during furniture service")
 	var initial_yaw: float = encounter.combat_cam_yaw
@@ -174,6 +177,8 @@ func _run_furniture_service_test() -> void:
 	assert(encounter.service_hud.visible == true, "Service HUD banner must be visible")
 	print("PASS: Honban missionary service activated with correct paired animations on rest_01")
 
+	encounter.dialogue_manager.cancel_session(false)
+	encounter.dialogue_panel.hide()
 	# Conclude honban service with KEY_SPACE
 	var ev_key_space := InputEventKey.new()
 	ev_key_space.keycode = KEY_SPACE

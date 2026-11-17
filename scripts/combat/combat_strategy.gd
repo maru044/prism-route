@@ -3,11 +3,18 @@ extends RefCounted
 ## Strategy interface for NPC turn decisions in turn-based sensual combat.
 ## Allows plugging different combat AI routines (standard, teaching kill, berserk, boss phases).
 
+var profile_id := ""
+var skill_ids: Array = []
+
+func configure(profile: Dictionary) -> void:
+	profile_id = profile.get("combat_profile_id", "")
+	skill_ids = profile.get("skill_ids", [])
+
 func decide_npc_action(round_count: int, player_pleasure: Node, npc_pleasure: Node, reaction_resolver: RefCounted = null) -> Dictionary:
-	var available_skills: Array = []
-	if reaction_resolver != null and reaction_resolver.has_method("get_available_attack_skills"):
+	var available_skills: Array = skill_ids
+	if profile_id.is_empty() and reaction_resolver != null:
 		available_skills = reaction_resolver.get_available_attack_skills()
-		available_skills = available_skills.filter(func(s): return s != "teaching_kill")
+	available_skills = available_skills.filter(func(skill): return skill != "teaching_kill")
 		
 	if available_skills.is_empty():
 		available_skills = ["tongue", "deep_throat", "eye_contact"]

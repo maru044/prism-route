@@ -5,6 +5,7 @@ extends RefCounted
 
 var session_id: int = 0
 var character_id: String = ""
+var spawn_id: String = ""
 var encounter_id: String = ""
 var graph: Dictionary = {}
 var current_node_id: String = ""
@@ -33,7 +34,8 @@ func _init(
 	p_encounter_id: String = "",
 	p_encounter_context: Dictionary = {},
 	p_character_context: Dictionary = {},
-	p_world_context: Dictionary = {}
+	p_world_context: Dictionary = {},
+	p_spawn_id: String = ""
 ) -> void:
 	session_id = p_id
 	graph = p_graph
@@ -41,6 +43,7 @@ func _init(
 	source = p_source
 	resume_policy = p_policy
 	character_id = p_character_id
+	spawn_id = p_spawn_id
 	encounter_id = p_encounter_id
 	encounter_context = p_encounter_context.duplicate(true)
 	character_context = p_character_context.duplicate(true)

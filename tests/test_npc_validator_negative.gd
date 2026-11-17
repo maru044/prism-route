@@ -1,107 +1,96 @@
-@tool
 extends SceneTree
-## Negative test suite for NPC Validator.
-## Deliberately injects broken cross-references, missing IDs, unregistered actions,
-## and missing animation files to prove that the Validator strictly catches and rejects them.
 
-const ValidatorScript := preload("res://tools/validate_npc_content.gd")
+const Validator := preload("res://tools/npc_content_validator.gd")
 
-func _init() -> void:
-	_run_negative_tests.call_deferred()
+var fixture: String
+var copied: Array[String] = []
+var directories: Array[String] = []
 
-func _run_negative_tests() -> void:
-	print("==================================================")
-	print("[Test] Starting NPC Validator Negative Tests...")
-	print("==================================================")
+func _initialize() -> void:
+	_run.call_deferred()
 
-	var val = ValidatorScript.new()
-	val.errors.clear()
-	val.warnings.clear()
+func _run() -> void:
+	fixture = OS.get_environment("TEMP").path_join("prism-npc-validator-%d" % OS.get_process_id())
+	for collection: String in Validator.COLLECTIONS:
+		_copy_collection(collection)
+	var validator := Validator.new()
+	if not validator.validate(fixture):
+		printerr("Valid fixture failed: ", validator.errors)
+		_finish(1)
+		return
+	var enc := "encounters/sandbar_keqing.json"
+	var graph := "dialogue/keqing/sandbar_dialogue.json"
+	var cases := [
+		[enc, ["character_id"], "absent", "character_id 'absent'"],
+		[enc, ["spawn_id"], "absent", "spawn_id 'absent'"],
+		[enc, ["spawn_id"], "initial_temple_sparkle", "spawn character_id mismatch"],
+		[graph, ["graph_id"], "renamed_graph", "dialogue_bundle_id 'keqing_sandbar_bundle'"],
+		[graph, ["entry_points", "world_start"], "missing_node", "invalid dialogue entry point 'world_start'"],
+		[graph, ["entry_points", "defeat_settlement"], null, "missing dialogue entry point 'defeat_settlement'"],
+		[enc, ["reaction_profile_id"], "absent", "reaction_profile_id 'absent'"],
+		[enc, ["motion_profile_id"], "keqing_combat", "motion_profile_id 'keqing_combat'"],
+		[enc, ["combat_profile_id"], "absent", "combat_profile_id 'absent'"],
+		[enc, ["flow_behavior_id"], "absent", "unregistered flow_behavior_id 'absent'"],
+		[enc, ["supported_entry_points"], ["missing_entry"], "missing dialogue entry point 'missing_entry'"],
+		[enc, ["combat_profile_id"], null, "missing required field 'combat_profile_id'"],
+		[graph, ["nodes", "start", "next"], "absent", "unknown node target 'absent'"],
+		[graph, ["nodes", "start", "action"], "unregistered_fixture_action", "unregistered_action"],
+		[graph, ["nodes", "start", "text"], [], "text: expected string"],
+		["spawns/sandbar_keqing.json", ["position", 0], "wrong", "position[0]: expected number"],
+		["motions/keqing_motions.json", ["bindings", "desk_service", "role_a_motion"], "res://missing.tres", "missing Animation resource"],
+		["motions/keqing_motions.json", ["bindings", "desk_service", "role_a_motion"], "res://scenes/combat/temple_paper_palette.tres", "must be Animation"],
+		["combat/keqing_combat.json", ["skill_ids"], ["not_a_skill"], "missing from reaction profile"],
+		["combat/keqing_combat.json", ["strategy_id"], "not_a_strategy", "unregistered strategy_id"],
+		["characters/keqing.json", ["avatar_profile_id"], "absent", "avatar_profile_id 'absent'"],
+		["characters/keqing.json", ["presentation_profile_id"], "absent", "presentation_profile_id 'absent'"],
+		["characters/keqing.json", ["persona_id"], "absent", "persona_id 'absent'"],
+	]
+	for test: Array in cases:
+		var path := fixture.path_join(test[0])
+		var original := FileAccess.get_file_as_string(path)
+		var data = JSON.parse_string(original)
+		var cursor = data
+		var keys: Array = test[1]
+		for i in range(keys.size() - 1):
+			cursor = cursor[keys[i]]
+		if test[2] == null:
+			cursor.erase(keys.back())
+		else:
+			cursor[keys.back()] = test[2]
+		_write(path, JSON.stringify(data))
+		var accepted := validator.validate(fixture)
+		var diagnostic := "\n".join(validator.errors)
+		_write(path, original)
+		if accepted or test[3] not in diagnostic:
+			printerr("Negative fixture did not report ", test[3], "\n", diagnostic)
+			_finish(1)
+			return
+	print("NPC_VALIDATOR_NEGATIVE_PASS valid=1 invalid=", cases.size())
+	_finish(0)
 
-	# Populate mock valid baseline data
-	val.loaded_characters["char_valid"] = {"character_id": "char_valid"}
-	val.loaded_spawns["spawn_valid"] = {"spawn_id": "spawn_valid"}
-	val.loaded_dialogues["bundle_valid"] = {
-		"graph_id": "bundle_valid",
-		"nodes": {"start": {"type": "text"}},
-		"entry_points": {"world_start": "start"}
-	}
-	val.loaded_reactions["reaction_valid"] = {"reaction_profile_id": "reaction_valid"}
-	val.loaded_motions["motion_valid"] = {"motion_profile_id": "motion_valid"}
+func _copy_collection(relative: String) -> void:
+	var source := Validator.CONTENT.path_join(relative)
+	var target := fixture.path_join(relative)
+	DirAccess.make_dir_recursive_absolute(target)
+	directories.append(target)
+	for file in DirAccess.get_files_at(source):
+		if file.ends_with(".json"):
+			var output := target.path_join(file)
+			_write(output, FileAccess.get_file_as_string(source.path_join(file)))
+			copied.append(output)
+	for dir in DirAccess.get_directories_at(source):
+		_copy_collection(relative.path_join(dir))
 
-	# Case 1: Broken Character Cross-Reference in Encounter
-	var bad_encounter_char := {
-		"schema_version": 1,
-		"encounter_id": "bad_enc_1",
-		"character_id": "non_existent_character_999",
-		"spawn_id": "spawn_valid",
-		"dialogue_bundle_id": "bundle_valid",
-		"supported_entry_points": ["start"]
-	}
-	val.errors.clear()
-	# Simulate encounter validation check
-	if not val.loaded_characters.has(bad_encounter_char["character_id"]):
-		val.errors.append("Cross-reference error: character_id '%s' does not exist" % bad_encounter_char["character_id"])
-	assert(val.errors.size() == 1, "Expected character cross-ref error")
-	print("  ✓ Negative Case 1 passed: Missing character_id was caught.")
+func _write(path: String, text: String) -> void:
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	if file != null:
+		file.store_string(text)
 
-	# Case 2: Broken Spawn Cross-Reference in Encounter
-	var bad_encounter_spawn := {
-		"schema_version": 1,
-		"encounter_id": "bad_enc_2",
-		"character_id": "char_valid",
-		"spawn_id": "non_existent_spawn_999",
-		"dialogue_bundle_id": "bundle_valid",
-		"supported_entry_points": ["start"]
-	}
-	val.errors.clear()
-	if not val.loaded_spawns.has(bad_encounter_spawn["spawn_id"]):
-		val.errors.append("Cross-reference error: spawn_id '%s' does not exist" % bad_encounter_spawn["spawn_id"])
-	assert(val.errors.size() == 1, "Expected spawn cross-ref error")
-	print("  ✓ Negative Case 2 passed: Missing spawn_id was caught.")
-
-	# Case 3: Broken Dialogue Bundle Cross-Reference in Encounter
-	var bad_encounter_bundle := {
-		"schema_version": 1,
-		"encounter_id": "bad_enc_3",
-		"character_id": "char_valid",
-		"spawn_id": "spawn_valid",
-		"dialogue_bundle_id": "non_existent_bundle_999",
-		"supported_entry_points": ["start"]
-	}
-	val.errors.clear()
-	if not val.loaded_dialogues.has(bad_encounter_bundle["dialogue_bundle_id"]):
-		val.errors.append("Cross-reference error: dialogue_bundle_id '%s' does not exist" % bad_encounter_bundle["dialogue_bundle_id"])
-	assert(val.errors.size() == 1, "Expected dialogue bundle cross-ref error")
-	print("  ✓ Negative Case 3 passed: Missing dialogue_bundle_id was caught.")
-
-	# Case 4: Missing Dialogue Entry Point
-	val.errors.clear()
-	var d_bundle: Dictionary = val.loaded_dialogues["bundle_valid"]
-	var d_entries: Dictionary = d_bundle.get("entry_points", {})
-	var d_nodes: Dictionary = d_bundle.get("nodes", {})
-	var test_entry: String = "unsupported_secret_entry"
-	if not d_entries.has(test_entry) and not d_nodes.has(test_entry) and not d_entries.values().has(test_entry):
-		val.errors.append("Dialogue entry point missing: '%s'" % test_entry)
-	assert(val.errors.size() == 1, "Expected missing entry point error")
-	print("  ✓ Negative Case 4 passed: Missing entry point was caught.")
-
-	# Case 5: Unregistered Dialogue Action in ActionRegistry
-	val.errors.clear()
-	var illegal_action: String = "system.format_hard_drive_c"
-	if not val.action_registry.has_action(illegal_action):
-		val.errors.append("Unregistered action '%s'" % illegal_action)
-	assert(val.errors.size() == 1, "Expected unregistered action error")
-	print("  ✓ Negative Case 5 passed: Unregistered Action was safely blocked.")
-
-	# Case 6: Non-existent Animation Path in Motion Profile
-	val.errors.clear()
-	var fake_motion_path: String = "res://assets/animations/completely_fake_motion.tres"
-	if not FileAccess.file_exists(fake_motion_path):
-		val.errors.append("Animation resource does not exist: %s" % fake_motion_path)
-	assert(val.errors.size() == 1, "Expected missing animation file error")
-	print("  ✓ Negative Case 6 passed: Missing motion resource was caught.")
-
-	print("\n[SUCCESS] All 6 Negative Validator Test Cases Passed 100%!")
-	print("==================================================")
-	quit(0)
+func _finish(code: int) -> void:
+	for file in copied:
+		DirAccess.remove_absolute(file)
+	directories.reverse()
+	for dir in directories:
+		DirAccess.remove_absolute(dir)
+	DirAccess.remove_absolute(fixture)
+	quit(code)

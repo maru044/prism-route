@@ -39,6 +39,7 @@ const SUNKEN_ARCHIVE := preload("res://scripts/world/sunken_archive.gd")
 const ROAD_JUNCTION := preload("res://scripts/world/road_junction.gd")
 const CHURCH_RUINS := preload("res://scripts/world/church_ruins.gd")
 const BEACH_SLOPE := preload("res://scripts/world/beach_slope.gd")
+const NPC_ENCOUNTER := preload("res://scripts/world/npc_encounter_runtime.gd")
 const SANDBAR_PAVILION := preload("res://scripts/world/sandbar_pavilion.gd")
 const LAGOON_RUINS := preload("res://scripts/world/lagoon_ruins.gd")
 const NPC_WAYPOINT_RUINS := preload("res://scripts/world/npc_waypoint_ruins.gd")
@@ -48,6 +49,8 @@ const CONSTRUCTION := preload("res://scripts/construction/construction_world.gd"
 var construction
 var cape_town
 var sandbar_pavilion
+var sandbar_duel_runtime: NPC_ENCOUNTER
+var sandbar_duel: Node
 var lagoon_ruins := LAGOON_RUINS.new()
 var npc_waypoint_ruins := NPC_WAYPOINT_RUINS.new()
 var npc_placement_preview
@@ -358,6 +361,12 @@ func _build_cape_town() -> void:
 
 func _build_sandbar_pavilion() -> void:
 	sandbar_pavilion=SANDBAR_PAVILION.new();add_child(sandbar_pavilion)
+	sandbar_duel_runtime = NPC_ENCOUNTER.new()
+	sandbar_pavilion.add_child(sandbar_duel_runtime)
+	if sandbar_duel_runtime.setup_encounter("sandbar_keqing"):
+		sandbar_duel = sandbar_duel_runtime.create_flow_adapter()
+		sandbar_duel_runtime.add_child(sandbar_duel)
+		sandbar_duel.initialize(sandbar_pavilion, self, sandbar_duel_runtime)
 	metadata.spawns.append({"name":"沙洲度假遗址 · 中央双翼亭","key":"sandbar_pavilion","position":sandbar_pavilion.manifest.spawn,
 		"look_direction":[.6,0,-.8],"required_floor_kind":"Structure",
 		"required_source_id":sandbar_pavilion.manifest.objects[0].id,"maximum_search_distance_m":1.,"character_only":true})

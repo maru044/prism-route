@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "CharacterDefinition",
   "type": "object",
-  "required": ["schema_version", "character_id", "display_name", "avatar_profile_id"],
+  "required": ["schema_version", "character_id", "display_name", "avatar_profile_id", "persona_id", "presentation_profile_id"],
   "properties": {
     "schema_version": { "type": "integer", "enum": [1] },
     "character_id": { "type": "string" },

@@ -3,6 +3,7 @@ extends SceneTree
 ## Verifies DialogueSession absolute scope isolation, ActionRegistry lifecycle contracts,
 ## and MotionResolver strict fallback rules.
 
+const Registry := preload("res://scripts/npc/npc_registry.gd")
 const DialogueManagerClass := preload("res://scripts/narrative/dialogue_manager.gd")
 const ActionRegistryClass := preload("res://scripts/narrative/action_registry.gd")
 const MotionResolverClass := preload("res://scripts/world/motion_resolver.gd")
@@ -15,7 +16,6 @@ func _run_tests() -> void:
 	print("[Test] Starting Session Isolation, Action Lifecycle & MotionResolver Fallback Tests...")
 	print("==================================================")
 
-	var root := Node.new()
 	var mgr := DialogueManagerClass.new()
 	root.add_child(mgr)
 
@@ -187,6 +187,8 @@ func _run_tests() -> void:
 	assert(not mgr.session_active, "Session must be safely closed without throwing uncaught exceptions.")
 	print("  ✓ Unregistered action safely intercepted with error and safe fallback.")
 
+	await _verify_action_ownership(mgr)
+
 	# --- Test 4: MotionResolver fallback_to_ground: false strict enforcement ---
 	print("\n--- Test 4: MotionResolver fallback_to_ground: false Enforcement ---")
 	var motion_profile_strict := {
@@ -227,3 +229,82 @@ func _run_tests() -> void:
 	print("\n[SUCCESS] All Session Isolation, Action Lifecycle & Motion Fallback Tests Passed 100%!")
 	print("==================================================")
 	quit(0)
+
+
+func _verify_action_ownership(mgr: DialogueManagerClass) -> void:
+	var keqing := Registry.assemble_encounter("sandbar_keqing")
+	var sparkle := Registry.assemble_encounter("initial_temple_sparkle")
+	var calls: Array[Dictionary] = []
+	var cancelled: Array[int] = []
+	var ended: Array[Dictionary] = []
+	var failed: Array[Dictionary] = []
+	mgr.dialogue_ended.connect(func(payload: Dictionary): ended.append(payload))
+	mgr.action_failed.connect(func(_id: String, result: Dictionary): failed.append(result))
+	mgr.register_action("test_wait", func(run: Dictionary):
+		calls.append(run)
+		var id: int = run.execution_id
+		run.on_cancel.call(func(): cancelled.append(id)),
+		true, ["destination"], func(_params: Dictionary, context: Dictionary):
+			return context.character_id == "keqing",
+		{"destination": TYPE_STRING, "count": TYPE_INT}, 0.10)
+
+	_begin_wait(mgr, keqing, {"destination": "floor"})
+	var first: Dictionary = calls.back()
+	assert(first.session_id == mgr.current_session.session_id)
+	assert(first.is_running.call())
+	first.complete.call(ActionRegistryClass.ActionStatus.SUCCEEDED, {"mark": 42})
+	first.complete.call(ActionRegistryClass.ActionStatus.FAILED)
+	assert(ended.size() == 1 and ended[0].result.mark == 42 and failed.is_empty())
+	assert(ended[0].result.execution_id == first.execution_id and not first.is_running.call())
+
+	_begin_wait(mgr, keqing, {"destination": "floor"})
+	var second: Dictionary = calls.back()
+	second.complete.call(ActionRegistryClass.ActionStatus.FAILED, {"error": "failed_on_purpose"})
+	assert(failed.size() == 1 and failed[0].error == "failed_on_purpose")
+	assert(second.execution_id != first.execution_id and not mgr.session_active)
+
+	_begin_wait(mgr, keqing, {"destination": "floor"})
+	var third: Dictionary = calls.back()
+	mgr.cancel_session()
+	assert(cancelled == [third.execution_id] and not third.is_running.call() and not mgr.session_active)
+	assert(ended.back().cancelled)
+
+	_begin_wait(mgr, keqing, {"destination": "floor"})
+	var stale: Dictionary = calls.back()
+	assert(mgr.current_session.character_id == "keqing")
+	assert(mgr.current_session.spawn_id == "sandbar_keqing")
+	assert(mgr.current_session.encounter_id == "sandbar_keqing")
+	var graph: Dictionary = sparkle.dialogue
+	mgr.start_dialogue(graph, graph.entry_points.world_start, DialogueManagerClass.DialogueSource.WORLD_INTERACTION,
+		DialogueManagerClass.ResumePolicy.RETURN_TO_WORLD, {}, {}, {}, sparkle.identity)
+	var session_b = mgr.current_session
+	var end_count := ended.size()
+	stale.complete.call(ActionRegistryClass.ActionStatus.SUCCEEDED, {"action": "close"})
+	assert(mgr.session_active and mgr.current_session == session_b and ended.size() == end_count)
+	assert(cancelled == [third.execution_id, stale.execution_id])
+	assert(session_b.character_id == "sparkle" and session_b.spawn_id == "initial_temple_sparkle")
+	assert(session_b.encounter_id == "initial_temple_sparkle")
+
+	var before := calls.size()
+	for item in [
+		[keqing, {}, "missing_required_param"],
+		[keqing, {"destination": "floor", "extra": 1}, "unknown_param"],
+		[keqing, {"destination": 1}, "invalid_param_type"],
+		[sparkle, {"destination": "floor"}, "custom_validation_failed"],
+	]:
+		_begin_wait(mgr, item[0], item[1])
+		assert(calls.size() == before and not mgr.session_active)
+		assert(item[2] in failed.back().error)
+
+	_begin_wait(mgr, keqing, {"destination": "floor", "count": 2.0})
+	var timeout: Dictionary = calls.back()
+	await create_timer(0.16).timeout
+	assert(not mgr.session_active and failed.back().error == "action_timeout")
+	assert(cancelled.back() == timeout.execution_id and not timeout.is_running.call())
+	print("ACTION_OWNERSHIP_PASS success failure duplicate cancellation stale parameters context timeout")
+
+func _begin_wait(mgr: DialogueManagerClass, bundle: Dictionary, params: Dictionary) -> void:
+	var graph := {"nodes": {"start": {"type": "text", "text": "fixture", "action": "test_wait", "action_params": params}}}
+	mgr.start_dialogue(graph, "start", DialogueManagerClass.DialogueSource.WORLD_INTERACTION,
+		DialogueManagerClass.ResumePolicy.RETURN_TO_WORLD, {}, {}, {}, bundle.identity)
+	mgr.advance_text()

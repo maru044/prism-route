@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "keqing_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "yunlai_sword",
+    "starward_sword",
+    "sensual_feint"
+  ]
+}

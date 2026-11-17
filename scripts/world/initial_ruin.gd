@@ -3,12 +3,11 @@ extends Node3D
 ## Encounter and combat lifecycle is cleanly delegated to InitialTempleEncounterController.
 
 const MASK := preload("res://scripts/world/initial_ruin_mask.gd")
-const NPC := preload("res://scenes/characters/shared_humanoid_actor.tscn")
 const FURNITURE := preload("res://scripts/world/interactive_furniture.gd")
-const MTOON := preload("res://scripts/characters/mtoon_materials.gd")
 const GEOMETRY := preload("res://assets/world/initial_ruin_1029/ruin.glb")
 const WALK_COLLISION := preload("res://assets/world/initial_ruin_1029/walk_collision.glb")
 const WALK_MANIFEST := "res://assets/world/initial_ruin_1029/walk_collision.json"
+const ENCOUNTER_RUNTIME := preload("res://scripts/world/npc_encounter_runtime.gd")
 const ENCOUNTER_CONTROLLER := preload("res://scripts/world/initial_temple_encounter_controller.gd")
 
 const ACTOR_SOLID_LAYER := 32
@@ -28,6 +27,7 @@ var npc_ready := false
 var furniture_instances: Dictionary = {}
 
 var encounter: Node
+var encounter_runtime: ENCOUNTER_RUNTIME
 
 # Forwarded compatibility properties
 var interact_prompt: Label:
@@ -82,8 +82,11 @@ func _ready() -> void:
 	_build_geometry()
 	_build_walk_collision()
 	_build_furniture()
-	_build_npc()
-	_build_encounter_controller()
+	encounter_runtime = ENCOUNTER_RUNTIME.new()
+	add_child(encounter_runtime)
+	if encounter_runtime.setup_encounter("initial_temple_sparkle", true):
+		_build_npc()
+		_build_encounter_controller()
 
 func _build_geometry() -> void:
 	geometry = GEOMETRY.instantiate()
@@ -168,22 +171,11 @@ func _build_furniture() -> void:
 
 func _build_npc() -> void:
 	var row: Dictionary = planting_mask.manifest.interactions.npc_idle
-	npc_anchor = Marker3D.new()
-	npc_anchor.name = "NPC_Idle"
-	npc_anchor.transform = _frame(row.position,row.forward)
-	npc_anchor.set_meta("instance_id",row.id)
-	add_child(npc_anchor)
-	avatar = NPC.instantiate()
-	avatar.name = "SparkleIdle"
-	avatar.model_resource = "res://assets/characters/import_tests_local/huahuo/huahuo_fixed.vrm"
-	avatar.motion_resource = "res://assets/characters/roster/motions/shared_world_A01.tres"
-	avatar.environment_mask = 1 | ACTOR_SOLID_LAYER
-	avatar.auto_play = true
-	avatar.initialized.connect(func():
-		MTOON.apply(avatar.character, "huahuo")
-		npc_ready = true
-	)
-	npc_anchor.add_child(avatar)
+	npc_anchor = encounter_runtime.create_anchor(self, "NPC_Idle")
+	npc_anchor.set_meta("instance_id", row.id)
+	avatar = encounter_runtime.create_idle_actor(npc_anchor, "SparkleIdle", 1 | ACTOR_SOLID_LAYER)
+	npc_ready = is_instance_valid(avatar.character)
+	avatar.initialized.connect(func(): npc_ready = true)
 	npc_body = StaticBody3D.new()
 	npc_body.name = "NPCBody"
 	npc_body.collision_layer = NPC_SOLID_LAYER
@@ -198,10 +190,10 @@ func _build_npc() -> void:
 	npc_body.add_child(shape)
 
 func _build_encounter_controller() -> void:
-	encounter = ENCOUNTER_CONTROLLER.new()
+	encounter = encounter_runtime.create_flow_adapter()
 	encounter.name = "InitialTempleEncounterController"
 	add_child(encounter)
-	encounter.initialize(self, world, npc_anchor, avatar, npc_body)
+	encounter.initialize(self, world, npc_anchor, avatar, npc_body, encounter_runtime)
 
 func _process(delta: float) -> void:
 	if encounter:

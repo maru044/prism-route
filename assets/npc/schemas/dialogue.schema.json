@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "DialogueBundleOrGraph",
   "type": "object",
-  "required": ["schema_version", "graph_id", "nodes"],
+  "required": ["schema_version", "graph_id", "nodes", "entry_points"],
   "properties": {
     "schema_version": { "type": "integer", "enum": [1] },
     "graph_id": { "type": "string" },
@@ -23,6 +23,8 @@
           "emotion": { "type": "string" },
           "next": { "type": "string" },
           "action": { "type": "string" },
+          "action_params": { "type": "object" },
+          "set_blackboard": { "type": "object" },
           "action_payload": { "type": "object" },
           "choice_provider_id": { "type": "string" },
           "choices": {
@@ -35,6 +37,8 @@
                 "text": { "type": "string" },
                 "target": { "type": "string" },
                 "action": { "type": "string" },
+                "action_params": { "type": "object" },
+                "set_blackboard": { "type": "object" },
                 "action_payload": { "type": "object" },
                 "condition": { "type": "object" }
               }

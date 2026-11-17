@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "required": [
+    "schema_version",
+    "avatar_profile_id",
+    "model_resource",
+    "idle_motion",
+    "material_id"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "avatar_profile_id": {
+      "type": "string"
+    },
+    "model_resource": {
+      "type": "string"
+    },
+    "idle_motion": {
+      "type": "string"
+    },
+    "material_id": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

@@ -17,6 +17,13 @@ func run() -> void:
 	for name in ["painted_clumps_v1.png","painted_small_canopy_8view_v1.png","painted_broad_canopy_8view_v1.png","painted_upright_canopy_8view_v1.png"]:
 		var path: String="res://assets/vegetation/painted_lod/"+name
 		if ResourceLoader.exists(path):queue.append(path)
+	for group: String in ["avatars", "presentation", "motions"]:
+		var directory := "res://assets/npc/" + group
+		for file in DirAccess.get_files_at(directory):
+			if file.ends_with(".json"):
+				var data = JSON.parse_string(FileAccess.get_file_as_string(directory.path_join(file)))
+				if data is Dictionary:
+					_collect_npc_resources(data, queue)
 	var literals:=RegEx.new();literals.compile("[\"']([^\"'\\r\\n]+)[\"']")
 	var classes: Array=ProjectSettings.get_global_class_list()
 	var visited: Dictionary={}
@@ -86,3 +93,11 @@ func run() -> void:
 	print("EXPORT_DEPENDENCIES ",files.size()," missing=",missing.size())
 	if not missing.is_empty():push_error(str(missing))
 	quit(0 if missing.is_empty() else 1)
+
+
+func _collect_npc_resources(value: Variant, queue: Array[String]) -> void:
+	if value is Dictionary:
+		for member in value.values():
+			_collect_npc_resources(member, queue)
+	elif value is String and value.begins_with("res://"):
+		queue.append(value)

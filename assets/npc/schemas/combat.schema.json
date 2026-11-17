@@ -1,0 +1,36 @@
+{
+  "type": "object",
+  "required": [
+    "schema_version",
+    "combat_profile_id",
+    "strategy_id",
+    "npc_max_pleasure",
+    "skill_ids"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "combat_profile_id": {
+      "type": "string"
+    },
+    "strategy_id": {
+      "type": "string"
+    },
+    "npc_max_pleasure": {
+      "type": "number",
+      "minimum": 1
+    },
+    "skill_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}

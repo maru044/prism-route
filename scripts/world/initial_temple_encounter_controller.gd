@@ -72,16 +72,11 @@ const VALID_TRANSITIONS: Dictionary = {
 	]
 }
 const TurnCombatManagerClass := preload("res://scripts/combat/turn_combat_manager.gd")
-const CombatStrategyClass := preload("res://scripts/combat/combat_strategy.gd")
-const SparkleTutorialStrategyClass := preload("res://scripts/combat/sparkle_tutorial_strategy.gd")
 const DialoguePanelClass := preload("res://scenes/narrative/dialogue_panel.gd")
 const TurnCombatHUDClass := preload("res://scenes/combat/turn_combat_hud.gd")
 const EncounterPalette := preload("res://scenes/combat/encounter_ui_palette.gd")
-const NPCRegistryClass := preload("res://scripts/npc/npc_registry.gd")
-const MotionResolverClass := preload("res://scripts/world/motion_resolver.gd")
+const EncounterRuntimeClass := preload("res://scripts/world/npc_encounter_runtime.gd")
 
-const PleasureComponentClass := preload("res://scripts/combat/pleasure_component.gd")
-const SparkleTutorialDialogueClass := preload("res://scripts/narrative/sparkle_tutorial_dialogue.gd")
 const CorpseControllerClass := preload("res://scripts/characters/corpse_ragdoll_controller.gd")
 
 const TEMPLE_RESPAWN := preload("res://scripts/world/npc_preview_sites.gd").INITIAL_TEMPLE_RESPAWN
@@ -110,6 +105,7 @@ const MASTER_CONFIGS: Dictionary = {
 
 @export var ui_palette: EncounterPalette = preload("res://scenes/combat/temple_paper_palette.tres")
 @export var encounter_id: String = "initial_temple_sparkle"
+var runtime: EncounterRuntimeClass
 var encounter_bundle: Dictionary = {}
 
 var current_state: EncounterState = EncounterState.AVAILABLE
@@ -175,13 +171,22 @@ func initialize(
 	p_world: Node3D,
 	p_anchor: Marker3D,
 	p_avatar: Node3D,
-	p_body: StaticBody3D
+	p_body: StaticBody3D,
+	p_runtime: EncounterRuntimeClass = null
 ) -> void:
 	temple_node = p_temple
 	world = p_world
 	npc_anchor = p_anchor
 	npc_avatar = p_avatar
 	npc_body = p_body
+	runtime = p_runtime
+	if runtime == null:
+		runtime = EncounterRuntimeClass.new()
+		add_child(runtime)
+		if not runtime.setup_encounter(encounter_id, true):
+			return
+	encounter_bundle = runtime.encounter_bundle
+	ui_palette = load(encounter_bundle["presentation"]["ui_palette"])
 	
 	if temple_node != null:
 		temple_node.add_to_group(WorldControlContextClass.GROUP_INPUT_BLOCKERS)
@@ -219,12 +224,12 @@ func _build_subsystems() -> void:
 	
 	sparkle_combat_actor = NPC.instantiate()
 	sparkle_combat_actor.name = "SparkleBlowjob"
-	sparkle_combat_actor.model_resource = "res://assets/characters/import_tests_local/huahuo/huahuo_fixed.vrm"
+	sparkle_combat_actor.model_resource = encounter_bundle["avatar"]["model_resource"]
 	sparkle_combat_actor.motion_resource = MOTION_SPARKLE_BLOWJOB
 	sparkle_combat_actor.auto_play = true
 	sparkle_combat_actor.environment_mask = 33
 	sparkle_combat_actor.initialized.connect(func():
-		MTOON.apply(sparkle_combat_actor.character, "huahuo")
+		MTOON.apply(sparkle_combat_actor.character, encounter_bundle["avatar"]["material_id"])
 	)
 	combat_actors_root.add_child(sparkle_combat_actor)
 	
@@ -258,28 +263,11 @@ func _build_subsystems() -> void:
 	corpse_actor.visible = false
 	temple_node.add_child(corpse_actor)
 	
-	# 2. Pleasure components
-	player_pleasure = PleasureComponentClass.new()
-	player_pleasure.name = "PlayerPleasure"
-	player_pleasure.character_name = "主人"
-	temple_node.add_child(player_pleasure)
-	
-	npc_pleasure = PleasureComponentClass.new()
-	npc_pleasure.name = "NPCPleasure"
-	npc_pleasure.character_name = "花火"
-	temple_node.add_child(npc_pleasure)
-	
-	# 3. Combat manager
-	combat_manager = TurnCombatManagerClass.new()
-	combat_manager.name = "TurnCombatManager"
-	temple_node.add_child(combat_manager)
-	combat_manager.setup(player_pleasure, npc_pleasure)
-	
-	# 4. Dialogue manager
-	dialogue_manager = DialogueManagerClass.new()
-	dialogue_manager.name = "DialogueManager"
-	temple_node.add_child(dialogue_manager)
-	
+	player_pleasure = runtime.player_pleasure
+	npc_pleasure = runtime.npc_pleasure
+	combat_manager = runtime.combat_manager
+	dialogue_manager = runtime.dialogue_manager
+
 	# 5. UI Canvas Layer
 	var canvas := CanvasLayer.new()
 	canvas.name = "TempleCombatCanvas"
@@ -301,14 +289,14 @@ func _build_subsystems() -> void:
 	combat_hud = TurnCombatHUDClass.new()
 	combat_hud.name = "TurnCombatHUD"
 	combat_hud.palette = ui_palette
-	combat_hud.opponent_name = "花火"
+	combat_hud.opponent_name = runtime.character_name
 	combat_hud.visible = false
 	canvas.add_child(combat_hud)
 	
 	dialogue_panel = DialoguePanelClass.new()
 	dialogue_panel.name = "DialoguePanel"
 	dialogue_panel.palette = ui_palette
-	dialogue_panel.opponent_name = "花火"
+	dialogue_panel.opponent_name = runtime.character_name
 	dialogue_panel.enable_free_dialogue = world != null and world.has_method("show_free_dialogue")
 	dialogue_panel.visible = false
 	canvas.add_child(dialogue_panel)
@@ -333,7 +321,7 @@ func _build_subsystems() -> void:
 	dialogue_panel.next_pressed.connect(dialogue_manager.advance_text)
 	dialogue_panel.free_dialogue_requested.connect(func():
 		if dialogue_manager.session_active and is_instance_valid(world):
-			world.show_free_dialogue(dialogue_panel, "花火", "sparkle")
+			world.show_free_dialogue(dialogue_panel, runtime.character_name, encounter_bundle["identity"]["character_id"])
 	)
 	dialogue_manager.dialogue_ended.connect(_on_dialogue_ended)
 	
@@ -398,28 +386,8 @@ func is_world_input_locked() -> bool:
 		EncounterState.FURNITURE_SERVICE_ACTIVE
 	]
 
-func _ensure_encounter_bundle() -> Dictionary:
-	if encounter_bundle.is_empty() or not encounter_bundle.get("valid", false):
-		encounter_bundle = NPCRegistryClass.assemble_encounter(encounter_id)
-	return encounter_bundle
-
 func _get_dialogue_graph() -> Dictionary:
-	var bundle := _ensure_encounter_bundle()
-	if bundle.get("valid", false) and bundle.has("dialogue"):
-		return bundle["dialogue"]
-	return SparkleTutorialDialogueClass.get_dialogue_graph()
-
-func _get_sparkle_reactions() -> Dictionary:
-	var bundle := _ensure_encounter_bundle()
-	if bundle.get("valid", false) and bundle.has("reactions"):
-		return bundle["reactions"]
-	return {}
-
-func _get_sparkle_motions() -> Dictionary:
-	var bundle := _ensure_encounter_bundle()
-	if bundle.get("valid", false) and bundle.has("motions"):
-		return bundle["motions"]
-	return {}
+	return encounter_bundle["dialogue"]
 
 func _capture_world_context() -> void:
 	if world != null:
@@ -647,7 +615,7 @@ func start_encounter_dialogue() -> void:
 		"settlement_outcome": settlement_outcome,
 		"companion_unlocked": companion_unlocked
 	}
-	dialogue_manager.start_dialogue(
+	runtime.start_dialogue(
 		graph,
 		start_node,
 		DialogueManagerClass.DialogueSource.WORLD_INTERACTION,
@@ -776,8 +744,6 @@ func _begin_seamless_combat_staging() -> void:
 	hud_tween.tween_property(combat_hud, "modulate:a", 1.0, 0.25)
 
 	var is_tutorial := (defeat_count == 0)
-	var strategy := SparkleTutorialStrategyClass.new(is_tutorial)
-	combat_manager.configure_npc("花火", _get_sparkle_reactions(), strategy)
 	var cheat_data: Dictionary = dialogue_manager.consume_battle_cheats()
 	var meta_rules := {
 		"meta_cheat_mode": cheat_data.get("meta_cheat_mode", "none")
@@ -986,7 +952,7 @@ func _on_combat_ended(winner: String, _loser: String, _reason: String) -> void:
 	_set_combat_visuals(false)
 	
 	var graph: Dictionary = _get_dialogue_graph()
-	if winner == "Sparkle" or winner == "花火":
+	if winner != "player":
 		last_battle_result = "player_defeat"
 		defeat_count += 1
 		dialogue_manager.blackboard["defeat_count"] = defeat_count
@@ -1011,7 +977,7 @@ func _on_combat_ended(winner: String, _loser: String, _reason: String) -> void:
 		last_battle_result = "player_victory"
 		_set_encounter_state(EncounterState.RESULT_DIALOGUE)
 		dialogue_panel.visible = true
-		dialogue_manager.start_dialogue(
+		runtime.start_dialogue(
 			graph,
 			"victory_node",
 			DialogueManagerClass.DialogueSource.POST_BATTLE_RESULT,
@@ -1039,7 +1005,7 @@ func _on_mid_battle_dialogue_requested(reason: String) -> void:
 		if reason == "player_manual_call"
 		else DialogueManagerClass.ResumePolicy.NEXT_TURN
 	)
-	dialogue_manager.start_dialogue(graph, start_node, source, policy, {
+	runtime.start_dialogue(graph, start_node, source, policy, {
 		"master_name": "主人",
 		"defeat_count": defeat_count
 	})
@@ -1070,7 +1036,7 @@ func _execute_settlement_kill() -> void:
 		corpse_actor.global_position = corpse_spawn_pos
 		corpse_actor.visible = true
 		var ok: bool = corpse_actor.load_character(
-			"res://assets/characters/import_tests_local/huahuo/huahuo_fixed.vrm",
+			encounter_bundle["avatar"]["model_resource"],
 			"huahuo",
 			"花火"
 		)
@@ -1082,23 +1048,9 @@ func _execute_settlement_kill() -> void:
 	settlement_completed.emit("kill")
 	_set_encounter_state(EncounterState.COMPLETED)
 
-func _get_all_furniture_instances() -> Array:
+func _get_fixture_furniture() -> Array:
 	var list: Array = []
-	if temple_node and is_instance_valid(temple_node):
-		var furn_dict = temple_node.get("furniture_instances")
-		if furn_dict == null and temple_node.has_meta("furniture_instances"):
-			furn_dict = temple_node.get_meta("furniture_instances")
-		if furn_dict is Dictionary:
-			for k in furn_dict:
-				var f = furn_dict[k]
-				if f and is_instance_valid(f) and not list.has(f):
-					list.append(f)
-		for fid in ["seat_01", "rest_01", "table_01"]:
-			var f_node := _find_furniture_node(fid)
-			if f_node and not list.has(f_node):
-				list.append(f_node)
-
-	if list.is_empty() and allow_test_fixture_fallback:
+	if allow_test_fixture_fallback and is_instance_valid(temple_node):
 		for fid in ["seat_01", "rest_01"]:
 			var mock := Node3D.new()
 			mock.name = fid
@@ -1120,6 +1072,8 @@ func _get_all_furniture_instances() -> Array:
 				f_node.name = "Anchor_Front"
 				f_node.transform = _get_test_fixture_anchor("rest_01", "Anchor_Front")
 				mock.add_child(f_node)
+			temple_node.add_child(mock)
+			mock.queue_free()
 			list.append(mock)
 	return list
 
@@ -1206,13 +1160,13 @@ func _setup_paired_actors(sparkle_motion: String, master_motion: String, base_tr
 		
 	sparkle_combat_actor = NPC.instantiate()
 	sparkle_combat_actor.name = "SparklePairedActor"
-	sparkle_combat_actor.model_resource = "res://assets/characters/import_tests_local/huahuo/huahuo_fixed.vrm"
+	sparkle_combat_actor.model_resource = encounter_bundle["avatar"]["model_resource"]
 	sparkle_combat_actor.motion_resource = sparkle_motion
 	sparkle_combat_actor.auto_play = true
 	sparkle_combat_actor.environment_mask = 33
 	sparkle_combat_actor.initialized.connect(func():
 		if is_instance_valid(sparkle_combat_actor) and sparkle_combat_actor.character:
-			MTOON.apply(sparkle_combat_actor.character, "huahuo")
+			MTOON.apply(sparkle_combat_actor.character, encounter_bundle["avatar"]["material_id"])
 	)
 	combat_actors_root.add_child(sparkle_combat_actor)
 	
@@ -1255,6 +1209,23 @@ func _calc_walk_pos(start_pos: Vector3, target_pos: Vector3, t: float) -> Vector
 	return Vector3(cur_xz.x, cur_y, cur_xz.y)
 
 func _begin_furniture_service_staging(service_type: String = "virgin") -> void:
+	var ground_tf := npc_avatar.global_transform if is_instance_valid(npc_avatar) else Transform3D.IDENTITY
+	var furniture = temple_node.get("furniture_instances")
+	if furniture == null:
+		furniture = temple_node.get_meta("furniture_instances", {})
+	var resolution := runtime.resolve_bound_service_motion(service_type, furniture, ground_tf)
+	if not resolution.get("found", false) and allow_test_fixture_fallback:
+		resolution = runtime.resolve_service_motion(service_type, _get_fixture_furniture(), ground_tf)
+	if not resolution.get("found", false):
+		combat_hud.hide()
+		dialogue_manager.cancel_session(false)
+		push_warning("[Temple] Staging aborted for %s: %s" % [service_type, resolution.get("reason", "unknown")])
+		_set_combat_visuals(false)
+		if is_instance_valid(dialogue_panel):
+			dialogue_panel.hide()
+		_set_encounter_state(EncounterState.AVAILABLE)
+		_restore_world_controls()
+		return
 	if not _set_encounter_state(EncounterState.FURNITURE_SERVICE_STAGING):
 		return
 	current_op_token += 1
@@ -1291,25 +1262,10 @@ func _begin_furniture_service_staging(service_type: String = "virgin") -> void:
 		npc_body.collision_layer = 0
 		npc_body.collision_mask = 0
 		
-	var motion_profile := _get_sparkle_motions()
-	var furn_list := _get_all_furniture_instances()
-	var ground_tf := (npc_avatar.global_transform if npc_avatar and is_instance_valid(npc_avatar) else Transform3D.IDENTITY)
-
-	var resolution := MotionResolverClass.resolve_motion(motion_profile, service_type, furn_list, ground_tf)
-	if not resolution.get("found", false):
-		push_error("[InitialTempleEncounterController] Staging aborted: MotionResolver could not resolve motion for %s! Reason: %s" % [service_type, resolution.get("reason", "unknown")])
-		_restore_world_controls()
-		_set_encounter_state(EncounterState.AVAILABLE)
-		return
-
-	var sparkle_motion: String = resolution.get("role_a_motion", "")
-	var master_motion: String = resolution.get("role_b_motion", "")
-	var furn_tf: Transform3D = resolution.get("target_transform", Transform3D.IDENTITY)
-	var approach_tf: Transform3D = furn_tf
-	if resolution.get("approach_anchor") != null:
-		approach_tf = resolution["approach_anchor"].global_transform
-	elif has_furniture_anchor("seat_01" if service_type == "virgin" else "rest_01", "Anchor_Front"):
-		approach_tf = get_furniture_anchor("seat_01" if service_type == "virgin" else "rest_01", "Anchor_Front")
+	var sparkle_motion: String = resolution["role_a_motion"]
+	var master_motion: String = resolution["role_b_motion"]
+	var furn_tf: Transform3D = resolution["target_transform"]
+	var approach_tf: Transform3D = resolution["approach_transform"]
 	var title_text := "【乞命侍奉 · 石椅保留处女胸部侍奉】" if service_type == "virgin" else "【乞命侍奉 · 软榻本番破处深入交合】"
 		
 	if npc_avatar and is_instance_valid(npc_avatar):
@@ -1324,30 +1280,21 @@ func _begin_furniture_service_staging(service_type: String = "virgin") -> void:
 	last_service_approach_pos = approach_tf.origin
 	last_service_approach_basis = approach_tf.basis
 	
-	# Determine destination walk points and final facing angles
-	var target_player_pos: Vector3
-	var target_player_yaw: float
-	var target_npc_pos: Vector3
-	var target_npc_yaw: float
-	
-	if service_type == "virgin":
-		# Master sits on armchair; Sparkle walks in front facing Master
-		target_player_pos = furn_tf.origin
-		target_player_yaw = furn_tf.basis.get_euler().y
-		target_npc_pos = furn_tf.origin - furn_tf.basis.z * 0.45
-		target_npc_yaw = furn_tf.basis.get_euler().y + PI
-	else:
-		# Both walk directly onto bed rest_01
-		target_npc_pos = furn_tf.origin
-		target_npc_yaw = furn_tf.basis.get_euler().y
-		target_player_pos = furn_tf.origin + furn_tf.basis.z * 0.22
-		target_player_yaw = furn_tf.basis.get_euler().y
-		
+	var player_target: Transform3D = resolution["role_b_target"]
+	var npc_target: Transform3D = resolution["role_a_target"]
+	var target_player_pos := player_target.origin
+	var target_player_yaw := player_target.basis.get_euler().y
+	var target_npc_pos := npc_target.origin
+	var target_npc_yaw := npc_target.basis.get_euler().y
+
 	var start_player_pos: Vector3 = char_node.global_position if has_character else approach_tf.origin
 	var start_player_yaw: float = char_node.visual.rotation.y if (has_character and "visual" in char_node and char_node.visual) else target_player_yaw
-	var player_delta: Vector3 = target_player_pos - start_player_pos
-	var player_dist: float = Vector2(player_delta.x, player_delta.z).length()
-	var player_move_yaw: float = atan2(player_delta.x, player_delta.z) if player_dist > 0.05 else target_player_yaw
+	var first_leg := Vector2(approach_tf.origin.x - start_player_pos.x, approach_tf.origin.z - start_player_pos.z)
+	var last_leg := Vector2(target_player_pos.x - approach_tf.origin.x, target_player_pos.z - approach_tf.origin.z)
+	var player_dist := first_leg.length() + last_leg.length()
+	var approach_fraction := clampf(first_leg.length() / maxf(0.01, player_dist), 0.1, 0.9)
+	var approach_yaw := atan2(first_leg.x, first_leg.y) if first_leg.length() > 0.05 else start_player_yaw
+	var final_move_yaw := atan2(last_leg.x, last_leg.y) if last_leg.length() > 0.05 else target_player_yaw
 	
 	var npc_start_pos: Vector3 = npc_avatar.global_position if npc_avatar else furn_tf.origin
 	var npc_start_yaw: float = npc_avatar.global_rotation.y if npc_avatar else target_npc_yaw
@@ -1412,9 +1359,13 @@ func _begin_furniture_service_staging(service_type: String = "virgin") -> void:
 	if has_character:
 		tween.tween_method(func(t: float):
 			if is_instance_valid(char_node):
-				char_node.global_position = _calc_walk_pos(start_player_pos, target_player_pos, t)
+				var before_approach := t < approach_fraction
+				var blend := t / approach_fraction if before_approach else (t - approach_fraction) / (1.0 - approach_fraction)
+				var from_pos := start_player_pos if before_approach else approach_tf.origin
+				var to_pos := approach_tf.origin if before_approach else target_player_pos
+				char_node.global_position = _calc_walk_pos(from_pos, to_pos, blend)
 				if "visual" in char_node and is_instance_valid(char_node.visual):
-					char_node.visual.rotation.y = _calc_walk_yaw(start_player_yaw, player_move_yaw, target_player_yaw, t)
+					char_node.visual.rotation.y = _calc_walk_yaw(start_player_yaw, approach_yaw, approach_yaw, blend) if before_approach 						else _calc_walk_yaw(approach_yaw, final_move_yaw, target_player_yaw, blend)
 		, 0.0, 1.0, staging_duration).set_trans(Tween.TRANS_LINEAR)
 		
 	# Natural NPC forward walk with direction-aligned rotation and bed step-up
@@ -1456,7 +1407,7 @@ func _begin_furniture_service_staging(service_type: String = "virgin") -> void:
 	if dialogue_panel and is_instance_valid(dialogue_panel):
 		dialogue_panel.visible = true
 	if dialogue_manager and is_instance_valid(dialogue_manager):
-		dialogue_manager.start_dialogue(
+		runtime.start_dialogue(
 			_get_dialogue_graph(),
 			start_node,
 			DialogueManagerClass.DialogueSource.POST_BATTLE_RESULT,

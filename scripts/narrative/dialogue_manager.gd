@@ -57,7 +57,10 @@ var current_resume_policy: ResumePolicy:
 var session_active: bool:
 	get: return (current_session.is_active if current_session else false)
 	set(val):
-		if current_session: current_session.is_active = val
+		if not val:
+			cancel_session(false)
+		elif current_session:
+			current_session.is_active = val
 var session_id: int = 0
 
 ## Extensible registries
@@ -82,9 +85,11 @@ func register_action(
 	handler: Callable = Callable(),
 	is_async: bool = false,
 	required_params: Array[String] = [],
-	validator: Callable = Callable()
+	validator: Callable = Callable(),
+	param_types: Dictionary = {},
+	timeout_seconds: float = 30.0
 ) -> void:
-	action_registry.register_action(action_id, handler, is_async, required_params, validator)
+	action_registry.register_action(action_id, handler, is_async, required_params, validator, param_types, timeout_seconds)
 
 func register_choice_provider(provider_id: String, provider: Callable) -> void:
 	choice_providers[provider_id] = provider
@@ -141,11 +146,13 @@ func start_dialogue(
 	policy: ResumePolicy = ResumePolicy.RETURN_TO_WORLD,
 	p_encounter_context: Dictionary = {},
 	p_character_context: Dictionary = {},
-	p_world_context: Dictionary = {}
+	p_world_context: Dictionary = {},
+	identity: Dictionary = {}
 ) -> void:
+	cancel_session(false)
 	session_id += 1
-	var char_id: String = graph_data.get("character_id", "")
-	var enc_id: String = graph_data.get("encounter_id", "")
+	var char_id: String = identity.get("character_id", graph_data.get("character_id", ""))
+	var enc_id: String = identity.get("encounter_id", graph_data.get("encounter_id", ""))
 
 	var effective_world: Dictionary = blackboard.duplicate(true)
 	if not p_world_context.is_empty():
@@ -162,12 +169,33 @@ func start_dialogue(
 		enc_id,
 		p_encounter_context,
 		p_character_context,
-		effective_world
+		effective_world,
+		identity.get("spawn_id", graph_data.get("spawn_id", ""))
 	)
 
+	var started := current_session
 	var graph_id: String = current_graph.get("graph_id", current_graph.get("id", "unnamed_graph"))
 	dialogue_started.emit(graph_id)
-	_process_current_node()
+	if current_session == started and session_active:
+		_process_current_node()
+
+func cancel_session(notify := true) -> void:
+	if current_session == null:
+		return
+	var session := current_session
+	var was_active: bool = session.is_active
+	session.is_active = false
+	session.is_waiting_action = false
+	session.session_variables.clear()
+	action_registry.cancel_session(session.session_id)
+	if notify and was_active and current_session == session:
+		dialogue_ended.emit({
+			"action": ACTION_CLOSE, "raw_action": ACTION_CLOSE, "source": session.source,
+			"resume_policy": session.resume_policy, "session_id": session.session_id, "cancelled": true,
+		})
+
+func _exit_tree() -> void:
+	cancel_session(false)
 
 func choose_option(option_index: int) -> void:
 	if not session_active or (current_session and current_session.is_waiting_action):
@@ -223,12 +251,15 @@ func _execute_action(raw_act: String, params: Dictionary = {}) -> void:
 	if not session_active:
 		return
 
-	if current_session:
-		current_session.is_waiting_action = true
+	var owner := current_session
+	owner.is_waiting_action = true
 
 	var act_context := {
 		"manager": self,
 		"session": current_session,
+		"session_id": owner.session_id,
+		"spawn_id": owner.spawn_id,
+		"tree": get_tree() if is_inside_tree() else null,
 		"character_id": current_session.character_id if current_session else "",
 		"encounter_id": current_session.encounter_id if current_session else "",
 		"raw_action": raw_act,
@@ -240,20 +271,22 @@ func _execute_action(raw_act: String, params: Dictionary = {}) -> void:
 		raw_act,
 		params,
 		act_context,
-		_on_action_completed.bind(raw_act)
+		_on_action_completed.bind(raw_act, owner.session_id)
 	)
 
-func _on_action_completed(status: int, result: Dictionary, raw_act: String) -> void:
+func _on_action_completed(status: int, result: Dictionary, raw_act: String, owner_id: int) -> void:
+	if not session_active or current_session.session_id != owner_id or result.get("session_id") != owner_id:
+		return
+	var owner := current_session
+	owner.is_waiting_action = false
+	owner.is_active = false
 	var canonical: String = action_registry.resolve_action_id(raw_act)
 
 	if status == ActionRegistryClass.ActionStatus.SUCCEEDED:
-		if current_session:
-			current_session.is_waiting_action = false
-			current_session.is_active = false
-			if canonical == ACTION_KILL:
-				current_session.set_variable("mercy_choice", "kill", "encounter")
-			elif canonical in [ACTION_SPARE, ACTION_SPARE_VIRGIN, ACTION_SPARE_HONBAN]:
-				current_session.set_variable("mercy_choice", canonical, "encounter")
+		if canonical == ACTION_KILL:
+			owner.set_variable("mercy_choice", "kill", "encounter")
+		elif canonical in [ACTION_SPARE, ACTION_SPARE_VIRGIN, ACTION_SPARE_HONBAN]:
+			owner.set_variable("mercy_choice", canonical, "encounter")
 
 		var payload := {
 			"action": canonical,
@@ -263,15 +296,8 @@ func _on_action_completed(status: int, result: Dictionary, raw_act: String) -> v
 			"session_id": session_id,
 			"result": result
 		}
-		session_active = false
 		dialogue_ended.emit(payload)
 	else:
-		push_error("[DialogueManager] Action '%s' failed or was cancelled! Status: %d, Result: %s" % [raw_act, status, str(result)])
-		if current_session:
-			current_session.is_waiting_action = false
-			current_session.is_active = false
-		action_failed.emit(raw_act, result)
-
 		var payload := {
 			"action": ACTION_CLOSE,
 			"raw_action": raw_act,
@@ -281,8 +307,9 @@ func _on_action_completed(status: int, result: Dictionary, raw_act: String) -> v
 			"failed": true,
 			"error": result.get("error", "action_failed")
 		}
-		session_active = false
-		dialogue_ended.emit(payload)
+		action_failed.emit(raw_act, result)
+		if current_session == owner:
+			dialogue_ended.emit(payload)
 
 func _get_processed_choices(node: Dictionary) -> Array:
 	var base_choices: Array = node.get("choices", []).duplicate(true)

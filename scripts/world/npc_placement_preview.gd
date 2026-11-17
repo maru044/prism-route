@@ -112,6 +112,8 @@ func _process(delta: float) -> void:
 		if site.get_meta("reuse_sparkle"):
 			continue
 		var id: String = site.get_meta("character_id")
+		if is_instance_valid(world.sandbar_duel) and site.get_meta("placement_region") == "沙洲度假遗址" 			and id == world.sandbar_duel_runtime.encounter_bundle["identity"]["character_id"]:
+			continue
 		var distance := camera.global_position.distance_squared_to(site.global_position)
 		var same_as_player: bool = world.character_mode and id == world.character.active_character_id
 		if actors.has(site):

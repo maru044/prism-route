@@ -101,7 +101,19 @@ func start_combat(tutorial_mode: bool = false, meta_settings: Dictionary = {}) -
 	log_message_emitted.emit("【身心对决开始】与%s的身心快感对决正式打响！" % npc_name)
 	_advance_to_player_turn()
 
-func execute_player_action(action: Dictionary) -> void:
+func execute_player_action(command: Variant) -> void:
+	var action: Dictionary
+	if command is TurnActionResource:
+		action = {
+			"action_name": command.action_name,
+			"base_pleasure": command.base_pleasure,
+			"target_zone": command.target_zone,
+			"self_pleasure_defense": command.self_pleasure_defense,
+		}
+	elif command is Dictionary:
+		action = command
+	else:
+		return
 	if current_phase != Phase.PLAYER_INPUT or is_resolved:
 		return
 		

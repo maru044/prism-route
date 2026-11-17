@@ -16,6 +16,8 @@ class ActionDefinition extends RefCounted:
 	var is_async: bool = false
 	var required_params: Array[String] = []
 	var allowed_params: Array[String] = []
+	var param_types: Dictionary = {}
+	var timeout_seconds: float = 30.0
 	var validator: Callable = Callable() # (params: Dictionary, context: Dictionary) -> bool
 	var handler: Callable = Callable() # (execution_context: Dictionary) -> void or ActionStatus
 
@@ -34,6 +36,8 @@ class ActionDefinition extends RefCounted:
 
 var _actions: Dictionary = {} # canonical_id -> ActionDefinition
 var _aliases: Dictionary = {} # alias -> canonical_id
+var _running: Dictionary = {}
+static var _next_execution_id := 0
 
 func _init() -> void:
 	_register_builtins()
@@ -68,9 +72,16 @@ func register_action(
 	handler: Callable = Callable(),
 	is_async: bool = false,
 	required_params: Array[String] = [],
-	validator: Callable = Callable()
+	validator: Callable = Callable(),
+	param_types: Dictionary = {},
+	timeout_seconds: float = 30.0
 ) -> void:
-	_actions[action_id] = ActionDefinition.new(action_id, handler, is_async, required_params, validator)
+	var definition := ActionDefinition.new(action_id, handler, is_async, required_params, validator)
+	definition.param_types = param_types.duplicate()
+	definition.timeout_seconds = maxf(.001, timeout_seconds)
+	for key: String in param_types:
+		definition.allowed_params.append(key)
+	_actions[action_id] = definition
 
 func register_alias(alias: String, canonical_id: String) -> void:
 	_aliases[alias] = canonical_id
@@ -110,6 +121,13 @@ func validate_action(action_id: String, params: Dictionary = {}, context: Dictio
 				"reason": "missing_required_param: " + req,
 				"canonical_id": canonical
 			}
+	for key: Variant in params:
+		if key not in def.required_params and key not in def.allowed_params:
+			return {"valid": false, "reason": "unknown_param: " + str(key), "canonical_id": canonical}
+		if def.param_types.has(key) and typeof(params[key]) != def.param_types[key]:
+			# JSON numbers arrive as floats in Godot, including integer literals.
+			if def.param_types[key] != TYPE_INT or not params[key] is float or not is_finite(params[key]) or floorf(params[key]) != params[key]:
+				return {"valid": false, "reason": "invalid_param_type: " + str(key), "canonical_id": canonical}
 	if def.validator.is_valid():
 		var ok: bool = def.validator.call(params, context)
 		if not ok:
@@ -125,13 +143,16 @@ func validate_action(action_id: String, params: Dictionary = {}, context: Dictio
 	}
 
 ## Execute action with lifecycle management
-## on_complete callback: Callable(status: ActionStatus, result: Dictionary)
+## Synchronous calls return their terminal status. Async dispatch returns RUNNING.
+## on_complete is authoritative and fires once with status, execution_id and session_id.
 func execute_action(action_id: String, params: Dictionary, context: Dictionary, on_complete: Callable) -> int:
+	_next_execution_id += 1
+	var id := _next_execution_id
+	var owner: int = context.get("session_id", 0)
+	_running[id] = {"session_id": owner, "callback": on_complete, "cancel": Callable()}
 	var val_res := validate_action(action_id, params, context)
 	if not val_res.get("valid", false):
-		push_error("[ActionRegistry] Action validation failed: " + str(val_res.get("reason", "unknown")))
-		if on_complete.is_valid():
-			on_complete.call(ActionStatus.FAILED, {"error": val_res.get("reason"), "action": action_id})
+		_finish(id, ActionStatus.FAILED, {"error": val_res.reason, "action": action_id})
 		return ActionStatus.FAILED
 
 	var def: ActionDefinition = val_res["definition"]
@@ -139,19 +160,40 @@ func execute_action(action_id: String, params: Dictionary, context: Dictionary, 
 
 	if not def.handler.is_valid():
 		# Built-in action without custom handler: succeed immediately
-		if on_complete.is_valid():
-			on_complete.call(ActionStatus.SUCCEEDED, {"action": canonical, "params": params})
+		_finish(id, ActionStatus.SUCCEEDED, {"action": canonical, "params": params})
 		return ActionStatus.SUCCEEDED
 
 	if def.is_async:
+		var registry_ref: WeakRef = weakref(self)
 		var execution_context := {
 			"action_id": canonical,
+			"execution_id": id,
+			"session_id": owner,
 			"params": params,
 			"context": context,
 			"complete": func(status: int, result: Dictionary = {}):
-				if on_complete.is_valid():
-					on_complete.call(status, result)
+				var registry = registry_ref.get_ref()
+				if registry != null:
+					registry._finish(id, status, result),
+			"is_running": func() -> bool:
+				var registry = registry_ref.get_ref()
+				return registry != null and registry._running.has(id),
+			"on_cancel": func(cleanup: Callable):
+				var registry = registry_ref.get_ref()
+				if registry != null:
+					registry._set_cleanup(id, cleanup),
 		}
+		var tree: SceneTree = context.get("tree")
+		if tree == null:
+			tree = Engine.get_main_loop() as SceneTree
+		if tree == null:
+			_finish(id, ActionStatus.FAILED, {"error": "missing_scene_tree"})
+			return ActionStatus.FAILED
+		tree.create_timer(def.timeout_seconds).timeout.connect(func():
+			var registry = registry_ref.get_ref()
+			if registry != null:
+				registry._finish(id, ActionStatus.FAILED, {"error": "action_timeout"}, true)
+		, CONNECT_ONE_SHOT)
 		def.handler.call(execution_context)
 		return ActionStatus.RUNNING
 	else:
@@ -159,6 +201,32 @@ func execute_action(action_id: String, params: Dictionary, context: Dictionary, 
 		var status: int = ActionStatus.SUCCEEDED
 		if result is bool and not result:
 			status = ActionStatus.FAILED
-		if on_complete.is_valid():
-			on_complete.call(status, {"result": result, "action": canonical})
+		elif result is int and result in [ActionStatus.SUCCEEDED, ActionStatus.FAILED, ActionStatus.CANCELLED]:
+			status = result
+		_finish(id, status, {"result": result, "action": canonical})
 		return status
+
+func cancel_session(session_id: int) -> void:
+	for id: int in _running.keys():
+		if _running.get(id, {}).get("session_id") == session_id:
+			_finish(id, ActionStatus.CANCELLED, {"error": "session_cancelled"}, true)
+
+func _set_cleanup(id: int, callback: Callable) -> void:
+	if _running.has(id):
+		_running[id]["cancel"] = callback
+
+func _finish(id: int, status: int, result: Dictionary, cleanup := false) -> void:
+	if not _running.has(id) or status not in [ActionStatus.SUCCEEDED, ActionStatus.FAILED, ActionStatus.CANCELLED]:
+		return
+	var execution: Dictionary = _running[id]
+	_running.erase(id)
+	var cancel: Callable = execution.cancel
+	if (cleanup or status == ActionStatus.CANCELLED) and cancel.is_valid():
+		cancel.call()
+	var callback: Callable = execution.callback
+	if callback.is_valid():
+		var payload := result.duplicate()
+		payload["status"] = status
+		payload["execution_id"] = id
+		payload["session_id"] = execution.session_id
+		callback.call(status, payload)

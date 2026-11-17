@@ -7,7 +7,9 @@
       "required_anchors": ["Anchor_Desk_Surface", "Anchor_Front"],
       "role_a_motion": "res://assets/characters/mmd_selected/animations/mmd_fca4bab1635f_a.tres",
       "role_b_motion": "res://assets/characters/mmd_selected/animations/mmd_fca4bab1635f_b.tres",
-      "fallback_to_ground": true
+      "fallback_to_ground": true,
+      "contact_anchor": "Anchor_Desk_Surface",
+      "approach_anchor": "Anchor_Front"
     },
     "ground_service": {
       "interaction_type": "ground",

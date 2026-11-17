@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "EncounterDefinition",
   "type": "object",
-  "required": ["schema_version", "encounter_id", "character_id", "spawn_id", "dialogue_bundle_id", "supported_entry_points"],
+  "required": ["schema_version", "encounter_id", "character_id", "spawn_id", "dialogue_bundle_id", "supported_entry_points", "reaction_profile_id", "motion_profile_id", "combat_profile_id", "flow_behavior_id"],
   "properties": {
     "schema_version": { "type": "integer", "enum": [1] },
     "encounter_id": { "type": "string" },

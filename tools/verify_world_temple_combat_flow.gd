@@ -20,7 +20,10 @@ func _get_capture_dir() -> String:
 	DirAccess.make_dir_recursive_absolute(default_dir)
 	return default_dir
 
-func _save_screenshot(img: Image, file_name: String) -> void:
+func _save_screenshot(file_name: String) -> void:
+	if DisplayServer.get_name() == "headless":
+		return
+	var img := root.get_texture().get_image()
 	if img == null or img.is_empty():
 		return
 	var target_dir := _get_capture_dir()
@@ -38,12 +41,16 @@ func _wait_for_screenshot_draw() -> void:
 		for i in range(2):
 			await process_frame
 	else:
-		await _wait_for_screenshot_draw()
+		await RenderingServer.frame_post_draw
 
 func _run_overworld_flow() -> void:
+	create_timer(120.0).timeout.connect(func():
+		push_error("Temple flow timed out")
+		quit(2))
 	root.size = Vector2i(1920, 1080)
 	var main_scene = load("res://scenes/main.tscn")
 	var world = main_scene.instantiate()
+	world.automation_enabled = true
 	root.add_child(world)
 
 	print("Waiting for world to initialize")
@@ -95,7 +102,7 @@ func _run_overworld_flow() -> void:
 
 	# Capture Overworld dual blowjob battle
 	await _wait_for_screenshot_draw()
-	_save_screenshot(root.get_texture().get_image(), "overworld_temple_dual_blowjob_combat.png")
+	_save_screenshot("overworld_temple_dual_blowjob_combat.png")
 
 	# Step 3: Mid-battle negotiation in Overworld
 	encounter.combat_manager.request_in_battle_negotiation()
@@ -107,7 +114,7 @@ func _run_overworld_flow() -> void:
 
 	# Capture Overworld mid-battle negotiation
 	await _wait_for_screenshot_draw()
-	_save_screenshot(root.get_texture().get_image(), "overworld_temple_mid_battle_negotiation.png")
+	_save_screenshot("overworld_temple_mid_battle_negotiation.png")
 
 	# Advance text -> choices -> choose "【返回对决】" (choice 3)
 	encounter.dialogue_manager.advance_text()
@@ -120,13 +127,20 @@ func _run_overworld_flow() -> void:
 	assert(ruin.combat_hud.visible, "Combat HUD should remain active")
 	print("Mid-battle negotiation smoothly returned to combat!")
 
-	# Step 4: Simulate Master defeat in Round 1 (Teaching Kill)
-	print("Simulating Master defeat in Overworld")
-	encounter.player_pleasure.add_pleasure(100.0)
-	encounter.combat_manager._check_battle_state()
+	# Step 4: Let the tutorial strategy resolve the opening round
+	print("Executing a normal HUD action for the tutorial defeat")
+	encounter.combat_manager.animation_delays = false
+	encounter.combat_hud._open_battle()
+	encounter.combat_hud._show_group("tease")
+	encounter.combat_hud._choose_action(encounter.combat_hud.ACTIONS.caress)
 
 	# Wait for defeat resolution
-	for i in range(80):
+	var defeat_deadline := Time.get_ticks_msec() + 15000
+	while encounter.current_state != encounter.EncounterState.AVAILABLE:
+		if Time.get_ticks_msec() > defeat_deadline:
+			push_error("Temple defeat did not restore control")
+			quit(2)
+			return
 		await process_frame
 
 	print("After defeat, player pos: ", player.global_position)
@@ -139,7 +153,7 @@ func _run_overworld_flow() -> void:
 
 	# Capture doorway respawn perspective where player has full control
 	await _wait_for_screenshot_draw()
-	_save_screenshot(root.get_texture().get_image(), "overworld_temple_respawn_free_movement.png")
+	_save_screenshot("overworld_temple_respawn_free_movement.png")
 
 	# Step 5: Player walks across temple over to Sparkle
 	print("Player physically walking across the temple towards Sparkle")
@@ -161,22 +175,18 @@ func _run_overworld_flow() -> void:
 
 	# Capture second-attempt dialogue in front of Sparkle
 	await _wait_for_screenshot_draw()
-	_save_screenshot(root.get_texture().get_image(), "overworld_temple_second_encounter_dialogue.png")
+	_save_screenshot("overworld_temple_second_encounter_dialogue.png")
 
-	# Step 7: Advance second-encounter choices and select instant surrender to test settlement
+	# Rematch with the existing skills after the tutorial defeat.
 	encounter.dialogue_manager.advance_text()
-	for i in range(5):
-		await process_frame
-	encounter.dialogue_manager.choose_option(3) # 【特权命令】直接认输
+	encounter.dialogue_manager.choose_option(0)
 	encounter.dialogue_manager.advance_text()
-	for i in range(5):
+	encounter.dialogue_manager.choose_option(0)
+	while encounter.current_state != encounter.EncounterState.COMBAT:
 		await process_frame
-	encounter.dialogue_manager.choose_option(0) # 开战
+	await _win_rematch(encounter)
 
-	while encounter.current_state != encounter.EncounterState.RESULT_DIALOGUE:
-		await process_frame
-
-	# Combat ends immediately with Sparkle defeated -> Victory dialogue
+	# The rematch advances into the victory dialogue.
 	assert(encounter.current_state == encounter.EncounterState.RESULT_DIALOGUE, "State should be RESULT_DIALOGUE")
 	encounter.dialogue_manager.advance_text()
 	encounter.dialogue_manager.advance_text()
@@ -185,7 +195,7 @@ func _run_overworld_flow() -> void:
 
 	# Test Kill Branch settlement and physical corpse
 	print("Testing Kill Branch settlement and physical corpse:")
-	encounter.dialogue_manager.choose_option(0) # 【杀掉】
+	encounter.dialogue_manager.choose_option(1) # 【杀掉】
 
 	while encounter.current_state != encounter.EncounterState.COMPLETED:
 		await process_frame
@@ -203,7 +213,7 @@ func _run_overworld_flow() -> void:
 
 	# Capture corpse ragdoll screenshot
 	await _wait_for_screenshot_draw()
-	_save_screenshot(root.get_texture().get_image(), "overworld_temple_sparkle_corpse_ragdoll.png")
+	_save_screenshot("overworld_temple_sparkle_corpse_ragdoll.png")
 
 	# Test respawn when leaving 30m
 	print("Simulating player walking 35m away from corpse:")
@@ -246,25 +256,13 @@ func _run_overworld_flow() -> void:
 	while encounter.current_state != encounter.EncounterState.COMBAT:
 		await process_frame
 
-	# Simulate instant win for spare verification
-	encounter.npc_pleasure.add_pleasure(100.0)
-	encounter.combat_manager._check_battle_state()
-
-	while encounter.current_state != encounter.EncounterState.RESULT_DIALOGUE:
-		await process_frame
-
+	await _win_rematch(encounter)
 	encounter.dialogue_manager.advance_text()
 	encounter.dialogue_manager.advance_text()
-	for i in range(5):
-		await process_frame
-	encounter.dialogue_manager.choose_option(1) # 【放过】
+	encounter.dialogue_manager.choose_option(0) # 【放过】
 	encounter.dialogue_manager.advance_text()
-	for i in range(5):
-		await process_frame
 	encounter.dialogue_manager.choose_option(0)
 	encounter.dialogue_manager.advance_text()
-	for i in range(5):
-		await process_frame
 	encounter.dialogue_manager.choose_option(0)
 
 	while encounter.current_state != encounter.EncounterState.FURNITURE_SERVICE_ACTIVE:
@@ -276,7 +274,7 @@ func _run_overworld_flow() -> void:
 	print("Furniture service active on seat_01! Capturing screenshot")
 
 	await _wait_for_screenshot_draw()
-	_save_screenshot(root.get_texture().get_image(), "overworld_temple_furniture_service.png")
+	_save_screenshot("overworld_temple_furniture_service.png")
 
 	encounter._finish_furniture_service()
 	for i in range(10):
@@ -290,6 +288,23 @@ func _run_overworld_flow() -> void:
 	quit(0)
 
 # Neutral UI + real world geometry regression; does not start narrative/combat.
+
+func _win_rematch(encounter: Node) -> void:
+	encounter.combat_manager.animation_delays = false
+	for i in range(16):
+		if encounter.combat_manager.is_resolved:
+			break
+		if encounter.dialogue_panel.visible:
+			encounter.dialogue_manager.advance_text()
+			encounter.dialogue_manager.choose_option(1)
+			encounter.dialogue_manager.choose_option(0)
+		encounter.combat_hud._open_battle()
+		encounter.combat_hud._show_group("toy")
+		encounter.combat_hud._choose_action(encounter.combat_hud.ACTIONS.toy_vibe)
+		await process_frame
+	while encounter.combat_manager.is_resolved and encounter.current_state == encounter.EncounterState.COMBAT:
+		await process_frame
+
 var input_layout_failures: Array[String] = []
 func _input_layout_expect(ok: bool, message: String) -> void:
 	if not ok:
@@ -369,11 +384,12 @@ func _verify_input_layout() -> void:
 	_input_layout_expect(next_count[0] == 1, "Enter did not advance text exactly once")
 	panel.visible = false
 	encounter.current_state = encounter.EncounterState.AVAILABLE
-	_audit_key(KEY_TAB)
-	_audit_key(KEY_TAB, false)
+	var was_character_mode: bool = world.character_mode
+	_audit_key(KEY_C)
+	_audit_key(KEY_C, false)
 	for frame in 4: await process_frame
-	_input_layout_expect(actor.active_character_id != before_id, "Character shortcut did not resume after dialogue closed")
-	_input_layout_expect(world.spawn_index == before_spawn, "Tab outside dialogue changed map spawn")
+	_input_layout_expect(world.character_mode != was_character_mode, "Character/vehicle shortcut did not resume after dialogue closed")
+	_input_layout_expect(world.spawn_index == before_spawn, "C outside dialogue changed map spawn")
 	actor.set_control_enabled(false)
 	print("TEMPLE_INPUT_CHECK ", JSON.stringify({"choices": chosen, "text_advances": next_count[0], "spawn_unchanged": world.spawn_index == before_spawn, "passed": input_layout_failures.is_empty()}))
 	var seat = ruin.furniture_instances.seat_01
