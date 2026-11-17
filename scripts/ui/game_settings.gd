@@ -18,6 +18,7 @@ var in_world := false
 var show_save_menu := false
 var allow_developer_tools := false
 var developer_options: VBoxContainer
+var teleport_options: VBoxContainer
 var _quality: Array[Button] = []
 var _sliders: Dictionary = {}
 var _audio_enabled: Button
@@ -94,6 +95,10 @@ func _ready() -> void:
 
 	if in_world:
 		add_to_group("world_input_blockers")
+		_section(page_settings, "快捷传送")
+		teleport_options = UI.column(8)
+		page_settings.add_child(teleport_options)
+
 		_section(page_settings, "性能监视")
 		var monitors := UI.row(8)
 		page_settings.add_child(monitors)

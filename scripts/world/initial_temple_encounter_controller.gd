@@ -391,7 +391,8 @@ func is_world_input_locked() -> bool:
 		EncounterState.RESULT_DIALOGUE,
 		EncounterState.SETTLEMENT,
 		EncounterState.FURNITURE_SERVICE_STAGING,
-		EncounterState.FURNITURE_SERVICE_ACTIVE
+		EncounterState.FURNITURE_SERVICE_ACTIVE,
+		EncounterState.RESPAWN
 	]
 
 func is_service_staging_active() -> bool:
@@ -948,7 +949,6 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 		_finish_furniture_service()
 	elif action == DialogueManagerClass.ACTION_CLOSE:
 		dialogue_panel.visible = false
-		_restore_world_controls()
 		_set_encounter_state(EncounterState.AVAILABLE)
 
 func _on_combat_phase_changed(phase: int) -> void:
@@ -994,13 +994,8 @@ func _on_combat_ended(winner: String, _loser: String, _reason: String) -> void:
 		if char_node != null:
 			if char_node.has_method("set_spawn"):
 				char_node.set_spawn(RESPAWN_POINT, RESPAWN_HEADING)
-			if char_node.has_method("set_control_enabled"):
-				char_node.set_control_enabled(true)
-			if "camera" in char_node and char_node.camera:
-				char_node.camera.current = true
-				
+
 		dialogue_panel.visible = false
-		_restore_world_controls()
 		_set_encounter_state(EncounterState.AVAILABLE)
 		print("【大世界】主人败北射精虚脱，已在神殿门前重新站起！请自由走入神殿再次与花火交涉。")
 	else:
@@ -1044,7 +1039,6 @@ func _execute_settlement_kill() -> void:
 	_set_encounter_state(EncounterState.SETTLEMENT)
 	dialogue_panel.visible = false
 	_set_combat_visuals(false)
-	_restore_world_controls()
 	
 	is_ragdoll_active = true
 	tutorial_completed = true
@@ -1077,8 +1071,8 @@ func _execute_settlement_kill() -> void:
 			corpse_interaction_handler.activate(world, corpse_actor, interact_prompt, "花火")
 		
 	print("【大世界结算】主人选择【杀掉】花火！花火化为真实物理尸体倒在神殿地板上，同时永久解锁为可用伙伴，离开30米后将刷新重置！")
-	settlement_completed.emit("kill")
 	_set_encounter_state(EncounterState.COMPLETED)
+	settlement_completed.emit("kill")
 
 func _get_fixture_furniture() -> Array:
 	var list: Array = []
@@ -1256,7 +1250,6 @@ func _begin_furniture_service_staging(service_type: String = "virgin") -> void:
 		if is_instance_valid(dialogue_panel):
 			dialogue_panel.hide()
 		_set_encounter_state(EncounterState.AVAILABLE)
-		_restore_world_controls()
 		return
 	if not _set_encounter_state(EncounterState.FURNITURE_SERVICE_STAGING):
 		return
@@ -1453,6 +1446,8 @@ func _begin_furniture_service_staging(service_type: String = "virgin") -> void:
 		)
 
 func _finish_furniture_service() -> void:
+	if dialogue_manager.session_active:
+		dialogue_manager.cancel_session(false)
 	if service_hud and is_instance_valid(service_hud):
 		service_hud.visible = false
 	if dialogue_panel and is_instance_valid(dialogue_panel):
@@ -1483,7 +1478,6 @@ func _finish_furniture_service() -> void:
 		npc_body.global_position = exit_npc_pos
 		npc_body.global_rotation.y = exit_npc_yaw
 		
-	_restore_world_controls()
 	_set_encounter_state(EncounterState.COMPLETED)
 	tutorial_completed = true
 	companion_unlocked = true
@@ -1542,11 +1536,15 @@ func _set_encounter_state(new_state: EncounterState) -> bool:
 		push_warning("Invalid encounter state transition: %d -> %d" % [current_state, new_state])
 		return false
 	var old_state := current_state
+	var was_input_locked := is_world_input_locked()
 	current_state = new_state
 	if world != null and world.has_method("set_encounter_ui_active"):
 		world.set_encounter_ui_active(new_state in [
 			EncounterState.INTRO_DIALOGUE, EncounterState.STAGING_TRANSITION,
 			EncounterState.COMBAT, EncounterState.RESULT_DIALOGUE,
 		])
+	# The world computes controls from the new state and the remaining input blockers.
+	if was_input_locked and not is_world_input_locked():
+		_restore_world_controls()
 	encounter_state_changed.emit(old_state, new_state)
 	return true

@@ -150,6 +150,19 @@ func _run_overworld_flow() -> void:
 	assert(respawn_dist < 1.0, "Player must be at doorway entrance")
 	assert(not ruin.dialogue_panel.visible, "Dialogue must NOT be forcibly opened at the door!")
 	assert(not ruin.is_in_dialogue_or_combat, "Player must have full freedom of movement!")
+	if not _verify_player_control(world, "tutorial defeat"):
+		return
+	var respawn_position: Vector3 = player.global_position
+	player.test_move = Vector2(0.0, -1.0)
+	for i in range(12):
+		await physics_frame
+	player.test_move = Vector2.ZERO
+	var displacement: Vector3 = player.global_position - respawn_position
+	if Vector2(displacement.x, displacement.z).length() < 0.04:
+		push_error("Player did not move on the temple floor after respawn")
+		quit(1)
+		return
+	print("TEMPLE_WALK_AFTER_RESPAWN_PASS")
 
 	# Capture doorway respawn perspective where player has full control
 	await _wait_for_screenshot_draw()
@@ -209,6 +222,8 @@ func _run_overworld_flow() -> void:
 	assert(encounter.npc_avatar.visible == false, "Living NPC avatar must be hidden")
 	assert(ruin.npc_body.collision_layer == 0, "Standing NPC collision must be disabled")
 	assert(encounter.companion_unlocked == true, "Companion must also be unlocked after kill")
+	if not _verify_player_control(world, "victory settlement"):
+		return
 	print("Kill settlement verified: Corpse spawned at ", encounter.get_corpse_position())
 
 	# Capture corpse ragdoll screenshot
@@ -282,10 +297,24 @@ func _run_overworld_flow() -> void:
 
 	assert(encounter.current_state == encounter.EncounterState.COMPLETED, "State must reach COMPLETED")
 	assert(encounter.companion_unlocked == true, "Companion must be unlocked")
+	if not _verify_player_control(world, "furniture settlement"):
+		return
 	print("Victory and Spare settlement reached COMPLETED state successfully!")
 
 	print("=== ALL OVERWORLD TEMPLE WORKFLOW CHECKS PASSED 100%! ===")
 	quit(0)
+
+func _verify_player_control(world: Node3D, stage: String) -> bool:
+	var player = world.character
+	var ready: bool = world.is_world_input_allowed() and not world.encounter_ui_active \
+		and player.visible and player.can_process() and player.is_control_enabled() \
+		and player.get_viewport().get_camera_3d() == player.camera
+	if not ready:
+		push_error("Temple did not restore the player, input, or camera after " + stage)
+		quit(1)
+		return false
+	print("TEMPLE_CONTROL_RESTORED ", stage)
+	return true
 
 # Neutral UI + real world geometry regression; does not start narrative/combat.
 

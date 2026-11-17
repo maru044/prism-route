@@ -601,6 +601,8 @@ func _hud() -> void:
 	settings_panel.detail_changed.connect(set_detailed_timings)
 	if save_session != null:
 		settings_panel.save_menu_requested.connect(save_session.open)
+	if settings_panel.teleport_options != null:
+		_build_teleport_controls(settings_panel.teleport_options)
 	if developer_tools_enabled:
 		_build_developer_controls(settings_panel.developer_options)
 	world_audio = WORLD_AUDIO.new()
@@ -626,7 +628,22 @@ func _hud() -> void:
 	add_child(_world_notice_timer)
 	set_review_ui_visible(not "--no-ui" in OS.get_cmdline_user_args())
 
-func _build_developer_controls(box: VBoxContainer) -> void:
+func _build_teleport_controls(box: VBoxContainer) -> void:
+	var quick_row := GRAPHICS_UI.row(8)
+	box.add_child(quick_row)
+	settings_panel.add_button(quick_row, "【沙洲 · 刻晴】", func():
+		settings_panel.close()
+		_teleport_to_key("sandbar_pavilion")
+	)
+	settings_panel.add_button(quick_row, "【神殿 · 花火】", func():
+		settings_panel.close()
+		_teleport_to_key("initial_ruin")
+	)
+	settings_panel.add_button(quick_row, "【海岬小镇】", func():
+		settings_panel.close()
+		_teleport_to_key("cape_town")
+	)
+
 	spawn_menu = OptionButton.new()
 	for i in metadata.spawns.size():
 		spawn_menu.add_item("%d  %s" % [i + 1, metadata.spawns[i].name])
@@ -638,6 +655,14 @@ func _build_developer_controls(box: VBoxContainer) -> void:
 	)
 	status = GRAPHICS_UI.text_label("", 18, GAME_SETTINGS.PALETTE.text, GAME_SETTINGS.PALETTE)
 	box.add_child(status)
+
+func _teleport_to_key(target_key: String) -> void:
+	for i in resolved_spawns.size():
+		if resolved_spawns[i].get("key", "") == target_key:
+			select_spawn(i)
+			return
+
+func _build_developer_controls(box: VBoxContainer) -> void:
 	if npc_placement_preview != null:
 		npc_placement_preview.add_controls(box)
 		GAME_SETTINGS.style_dropdown(npc_placement_preview.review_menu)
