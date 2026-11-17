@@ -979,21 +979,36 @@ func active_actor() -> CharacterBody3D:
 	return character if character_mode else camper
 
 func active_camera() -> Camera3D:
+	var custom_cam: Camera3D = WORLD_CONTROL.get_active_custom_camera(get_tree())
+	if custom_cam != null and is_instance_valid(custom_cam):
+		return custom_cam
 	return character.camera if character_mode else chase_camera
 
 func _sync_actor_controls() -> void:
 	var controls_open := is_instance_valid(settings_panel) and settings_panel.visible
-	character.visible=character_mode
-	character.process_mode=Node.PROCESS_MODE_INHERIT if character_mode and not (planting!=null and planting.active) else Node.PROCESS_MODE_DISABLED
-	character.set_control_enabled(character_mode and not free_mode and not controls_open)
-	camper.visible=not character_mode
-	camper.set_physics_process(not character_mode and not free_mode and not controls_open)
-	camper.set_process_unhandled_input(not character_mode and not free_mode and not controls_open)
-	if free_mode:camera.make_current()
-	else:active_camera().make_current()
-	if vegetation!=null:
-		vegetation.target=camera if free_mode else active_actor()
-		vegetation.set_grass_actor(active_actor(),not character_mode)
+	var service_staging := WORLD_CONTROL.is_service_staging_active(get_tree())
+	var input_blocked := not is_world_input_allowed()
+	if service_staging:
+		character.visible = false
+		character.process_mode = Node.PROCESS_MODE_DISABLED
+		character.set_control_enabled(false)
+		camper.visible = false
+		camper.set_physics_process(false)
+		camper.set_process_unhandled_input(false)
+	else:
+		character.visible = character_mode
+		character.process_mode = Node.PROCESS_MODE_INHERIT if character_mode and not (planting != null and planting.active) else Node.PROCESS_MODE_DISABLED
+		character.set_control_enabled(character_mode and not free_mode and not controls_open and not input_blocked)
+		camper.visible = not character_mode
+		camper.set_physics_process(not character_mode and not free_mode and not controls_open and not input_blocked)
+		camper.set_process_unhandled_input(not character_mode and not free_mode and not controls_open and not input_blocked)
+	if free_mode:
+		camera.make_current()
+	else:
+		active_camera().make_current()
+	if vegetation != null:
+		vegetation.target = camera if free_mode else active_actor()
+		vegetation.set_grass_actor(active_actor(), not character_mode)
 
 func _spawn_camper(point: Vector3,heading: float) -> void:
 	camper.restore_pose(Transform3D(Basis(Vector3.UP,heading),point+Vector3.UP*.12))

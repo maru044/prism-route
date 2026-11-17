@@ -348,6 +348,9 @@ func set_control_enabled(enabled: bool) -> void:
 		jump_requested = false
 		_set_animation("idle")
 
+func is_control_enabled() -> bool:
+	return is_physics_processing() and is_processing_unhandled_input()
+
 func set_spawn(point: Vector3, heading: float) -> void:
 	global_position = point
 	rotation = Vector3.ZERO

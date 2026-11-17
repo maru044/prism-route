@@ -110,6 +110,9 @@ func _run() -> void:
 			and runtime.current_state == Runtime.EncounterState.RESULT_DIALOGUE
 			and dialogue.session_active, "Normal HUD actions did not produce a result dialogue"):
 		return
+	var pre_service_player_layer: int = world.character.collision_layer
+	var pre_service_player_mask: int = world.character.collision_mask
+
 	var winner := runtime.last_battle_winner
 	# Result dialogue already uses a choice entry on victory, and text on defeat.
 	if winner == "player":
@@ -122,7 +125,53 @@ func _run() -> void:
 				and duel.master_paired_actor.motion_resource == "res://assets/characters/mmd_selected/animations/mmd_fca4bab1635f_b.tres",
 				"Keqing desk service staging did not activate with paired animations"):
 			return
+
+		# 1. Assert staging runtime invariants
+		if not _expect(not world.character.visible, "Player character was not hidden during service staging"):
+			return
+		if not _expect(not world.character.is_control_enabled(), "Player control was not disabled during service staging"):
+			return
+		if not _expect(world.character.collision_layer == 0 and world.character.collision_mask == 0,
+				"Player collisions were not disabled during service staging"):
+			return
+		if not _expect(duel.service_camera.current,
+				"Service camera was not current during service staging"):
+			return
+		if not _expect(world.encounter_ui_active, "Encounter UI was not active during service staging"):
+			return
+
+		# 2. Assert paired actor targets match Resolver transforms
+		var target_a: Transform3D = result.role_a_target
+		var target_b: Transform3D = result.role_b_target
+		if not _expect(duel.npc_paired_actor.global_transform.origin.is_equal_approx(target_a.origin)
+				and duel.npc_paired_actor.global_basis.is_equal_approx(target_a.basis),
+				"NPC paired actor transform does not match Resolver role_a_target"):
+			return
+		if not _expect(duel.master_paired_actor.global_transform.origin.is_equal_approx(target_b.origin)
+				and duel.master_paired_actor.global_basis.is_equal_approx(target_b.basis),
+				"Master paired actor transform does not match Resolver role_b_target"):
+			return
+		var actor_dist: float = duel.npc_paired_actor.global_position.distance_to(duel.master_paired_actor.global_position)
+		if not _expect(actor_dist < 1.0, "Paired actors are unexpectedly far apart"):
+			return
+
+		# 3. Deliberately trigger world control sync and verify staging invariants are NOT overwritten
+		world._sync_actor_controls()
+		await process_frame
+		if not _expect(not world.character.visible and not world.character.is_control_enabled()
+				and world.character.collision_layer == 0 and world.character.collision_mask == 0
+				and duel.service_camera.current,
+				"world._sync_actor_controls() overwritten active service staging state!"):
+			return
+
+		# 4. Wait for actors initialization and animation time progression
+		for _step in range(10):
+			await process_frame
+		if not _expect(duel.npc_paired_actor.time > 0.0 and duel.master_paired_actor.time > 0.0,
+				"Paired actors animation playback time did not advance"):
+			return
 		print("KEQING_SERVICE_STAGING_OK desk_paired_actors_playing")
+
 		_key(KEY_E)
 		await process_frame
 		await process_frame
@@ -131,10 +180,86 @@ func _run() -> void:
 	await process_frame
 	if not _expect(not duel.panel.visible and not duel.hud.visible and not dialogue.session_active
 			and runtime.current_state == Runtime.EncounterState.COMPLETED and not world.encounter_ui_active
-			and world.is_world_input_allowed() and world.character.is_physics_processing(),
-			"Result action did not end the encounter and return world control"):
+			and world.is_world_input_allowed() and world.character.is_physics_processing()
+			and world.character.visible and world.character.is_control_enabled()
+			and world.character.collision_layer == pre_service_player_layer
+			and world.character.collision_mask == pre_service_player_mask
+			and not duel.service_camera.current
+			and world.character.camera.current,
+			"Result action did not end the encounter and cleanly restore world controls and collisions"):
 		return
 	print("KEQING_WORLD_ENCOUNTER_PASS winner=", winner, " rounds=", combat.round_count)
+
+	# Fault Injection Tests for Keqing Service Staging
+	# Fault 1: Missing furniture / interaction type
+	runtime.current_state = Runtime.EncounterState.SETTLEMENT
+	duel.begin_furniture_service_staging("missing_furniture_type")
+	await process_frame
+	if not _expect(not duel.is_service_active and not world.encounter_ui_active and world.is_world_input_allowed()
+			and world.character.visible and world.character.is_control_enabled()
+			and world.character.collision_layer == pre_service_player_layer
+			and world.character.collision_mask == pre_service_player_mask
+			and not duel.service_camera.current
+			and runtime.current_state != Runtime.EncounterState.SETTLEMENT,
+			"Fault 1: Missing furniture did not cleanly rollback staging"):
+		return
+	print("KEQING_FAULT_MISSING_FURNITURE_PASS")
+
+	# Fault 2: Missing anchor when fallback prohibited
+	var desk_surf: Node3D = desk.get_node("Anchor_Desk_Surface")
+	var desk_front: Node3D = desk.get_node("Anchor_Front")
+	desk_surf.name = "Missing_Anchor_Surface"
+	desk_front.name = "Missing_Anchor_Front"
+	runtime.encounter_bundle.motions.bindings["desk_service"]["fallback_to_ground"] = false
+	runtime.current_state = Runtime.EncounterState.SETTLEMENT
+	duel.begin_furniture_service_staging("desk_service")
+	desk_surf.name = "Anchor_Desk_Surface"
+	desk_front.name = "Anchor_Front"
+	runtime.encounter_bundle.motions.bindings["desk_service"]["fallback_to_ground"] = true
+	await process_frame
+	if not _expect(not duel.is_service_active and not world.encounter_ui_active and world.is_world_input_allowed()
+			and world.character.visible and world.character.is_control_enabled()
+			and world.character.collision_layer == pre_service_player_layer
+			and world.character.collision_mask == pre_service_player_mask
+			and not duel.service_camera.current
+			and runtime.current_state != Runtime.EncounterState.SETTLEMENT,
+			"Fault 2: Missing required anchor did not cleanly rollback staging"):
+		return
+	print("KEQING_FAULT_MISSING_ANCHOR_PASS")
+
+	# Fault 3: Missing motion resource
+	var orig_motion: String = runtime.encounter_bundle.motions.bindings["desk_service"]["role_a_motion"]
+	runtime.encounter_bundle.motions.bindings["desk_service"]["role_a_motion"] = "res://missing_motion.tres"
+	runtime.current_state = Runtime.EncounterState.SETTLEMENT
+	duel.begin_furniture_service_staging("desk_service")
+	runtime.encounter_bundle.motions.bindings["desk_service"]["role_a_motion"] = orig_motion
+	await process_frame
+	if not _expect(not duel.is_service_active and not world.encounter_ui_active and world.is_world_input_allowed()
+			and world.character.visible and world.character.is_control_enabled()
+			and world.character.collision_layer == pre_service_player_layer
+			and world.character.collision_mask == pre_service_player_mask
+			and not duel.service_camera.current
+			and runtime.current_state != Runtime.EncounterState.SETTLEMENT,
+			"Fault 3: Missing motion resource did not cleanly rollback staging"):
+		return
+	print("KEQING_FAULT_MISSING_MOTION_PASS")
+
+	# Fault 4: Missing model resource
+	var orig_model: String = runtime.encounter_bundle["avatar"]["model_resource"]
+	runtime.encounter_bundle["avatar"]["model_resource"] = "res://missing_model.vrm"
+	runtime.current_state = Runtime.EncounterState.SETTLEMENT
+	duel.begin_furniture_service_staging("desk_service")
+	runtime.encounter_bundle["avatar"]["model_resource"] = orig_model
+	await process_frame
+	if not _expect(not duel.is_service_active and not world.encounter_ui_active and world.is_world_input_allowed()
+			and world.character.visible and world.character.is_control_enabled()
+			and world.character.collision_layer == pre_service_player_layer
+			and world.character.collision_mask == pre_service_player_mask
+			and not duel.service_camera.current
+			and runtime.current_state != Runtime.EncounterState.SETTLEMENT,
+			"Fault 4: Missing model resource did not cleanly rollback staging"):
+		return
+	print("KEQING_FAULT_MISSING_MODEL_PASS")
 
 	# Break a real temple furniture approach marker after acquiring the normal dialogue lock.
 	var encounter = temple.encounter

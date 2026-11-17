@@ -394,6 +394,21 @@ func is_world_input_locked() -> bool:
 		EncounterState.FURNITURE_SERVICE_ACTIVE
 	]
 
+func is_service_staging_active() -> bool:
+	return current_state in [
+		EncounterState.FURNITURE_SERVICE_STAGING,
+		EncounterState.FURNITURE_SERVICE_ACTIVE
+	]
+
+func get_active_custom_camera() -> Camera3D:
+	if current_state in [
+		EncounterState.COMBAT,
+		EncounterState.FURNITURE_SERVICE_STAGING,
+		EncounterState.FURNITURE_SERVICE_ACTIVE
+	] and is_instance_valid(combat_camera):
+		return combat_camera
+	return null
+
 func _get_dialogue_graph() -> Dictionary:
 	return encounter_bundle["dialogue"]
 

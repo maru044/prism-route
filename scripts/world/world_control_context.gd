@@ -21,3 +21,22 @@ static func is_world_input_blocked(tree: SceneTree) -> bool:
 				return true
 				
 	return false
+
+static func is_service_staging_active(tree: SceneTree) -> bool:
+	if tree == null:
+		return false
+	for node in tree.get_nodes_in_group(GROUP_INPUT_BLOCKERS):
+		if node != null and is_instance_valid(node) and node.has_method("is_service_staging_active"):
+			if node.is_service_staging_active():
+				return true
+	return false
+
+static func get_active_custom_camera(tree: SceneTree) -> Camera3D:
+	if tree == null:
+		return null
+	for node in tree.get_nodes_in_group(GROUP_INPUT_BLOCKERS):
+		if node != null and is_instance_valid(node) and node.has_method("get_active_custom_camera"):
+			var cam = node.get_active_custom_camera()
+			if cam != null and is_instance_valid(cam):
+				return cam
+	return null

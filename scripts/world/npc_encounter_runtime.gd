@@ -228,6 +228,11 @@ func finish_service() -> void:
 	if current_state == EncounterState.SETTLEMENT:
 		_set_state(EncounterState.COMPLETED)
 
+func abort_service(reason: String = "") -> void:
+	settlement_outcome = "aborted" if reason.is_empty() else "aborted_" + reason
+	if current_state in [EncounterState.SETTLEMENT, EncounterState.RESULT_DIALOGUE]:
+		_set_state(EncounterState.COMPLETED)
+
 func _on_combat_ended(winner: String, _loser: String = "", _reason: String = "") -> void:
 	combat_ended.emit(winner)
 	start_result_dialogue(winner)

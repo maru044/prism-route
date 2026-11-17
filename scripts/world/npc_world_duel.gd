@@ -143,6 +143,14 @@ func is_world_input_locked() -> bool:
 		Runtime.EncounterState.SETTLEMENT,
 	])
 
+func is_service_staging_active() -> bool:
+	return is_service_active
+
+func get_active_custom_camera() -> Camera3D:
+	if is_service_active and is_instance_valid(service_camera):
+		return service_camera
+	return null
+
 func _can_interact() -> bool:
 	if is_ragdoll_active:
 		return false
@@ -227,41 +235,72 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 			begin_furniture_service_staging("desk_service")
 
 func begin_furniture_service_staging(interaction_type: String = "desk_service") -> void:
+	var char_node: Node = world.character if is_instance_valid(world) else null
+	if is_instance_valid(char_node):
+		if "collision_layer" in char_node and char_node.collision_layer != 0:
+			saved_player_collision_layer = char_node.collision_layer
+		if "collision_mask" in char_node and char_node.collision_mask != 0:
+			saved_player_collision_mask = char_node.collision_mask
+
 	var furniture_dict: Dictionary = {}
 	if is_instance_valid(world) and world.sandbar_pavilion:
 		furniture_dict = world.sandbar_pavilion.furniture_instances
-	var resolution := runtime.resolve_bound_service_motion(interaction_type, furniture_dict, anchor.global_transform)
+	var ground_tf: Transform3D = anchor.global_transform if is_instance_valid(anchor) else Transform3D.IDENTITY
+	var resolution := runtime.resolve_bound_service_motion(interaction_type, furniture_dict, ground_tf)
 	if not resolution.get("found", false):
-		resolution = runtime.resolve_service_motion(interaction_type, [], anchor.global_transform)
+		resolution = runtime.resolve_service_motion(interaction_type, [], ground_tf)
 	if not resolution.get("found", false):
-		push_warning("[Duel] Service staging aborted for %s: %s" % [interaction_type, resolution.get("reason", "unknown")])
-		finish_furniture_service()
+		var reason := str(resolution.get("reason", "unknown"))
+		push_warning("[Duel] Service staging aborted for %s: %s" % [interaction_type, reason])
+		abort_service_staging(reason)
 		return
+
+	var npc_model := str(runtime.encounter_bundle.get("avatar", {}).get("model_resource", ""))
+	var master_model := _get_master_model()
+	var role_a_motion := str(resolution.get("role_a_motion", ""))
+	var role_b_motion := str(resolution.get("role_b_motion", ""))
+
+	if npc_model.is_empty() or not ResourceLoader.exists(npc_model):
+		push_warning("[Duel] Service staging aborted: NPC model resource missing: %s" % npc_model)
+		abort_service_staging("missing_npc_model")
+		return
+
+	if master_model.is_empty() or not ResourceLoader.exists(master_model):
+		push_warning("[Duel] Service staging aborted: Master model resource missing: %s" % master_model)
+		abort_service_staging("missing_master_model")
+		return
+
+	if role_a_motion.is_empty() or not ResourceLoader.exists(role_a_motion):
+		push_warning("[Duel] Service staging aborted: role_a motion resource missing: %s" % role_a_motion)
+		abort_service_staging("missing_role_a_motion")
+		return
+
+	if role_b_motion.is_empty() or not ResourceLoader.exists(role_b_motion):
+		push_warning("[Duel] Service staging aborted: role_b motion resource missing: %s" % role_b_motion)
+		abort_service_staging("missing_role_b_motion")
+		return
+
+	var furn_tf: Transform3D = resolution.get("target_transform", ground_tf)
+	var approach_tf: Transform3D = resolution.get("approach_transform", furn_tf)
+	last_service_approach_pos = approach_tf.origin
+	last_service_approach_basis = approach_tf.basis
+
+	var role_a_target: Transform3D = resolution.get("role_a_target", furn_tf)
+	var role_b_target: Transform3D = resolution.get("role_b_target", furn_tf)
 
 	is_service_active = true
 	panel.hide()
 	hud.hide()
 	prompt.hide()
 
-	var char_node: Node = world.character if is_instance_valid(world) else null
 	if is_instance_valid(char_node):
 		if "collision_layer" in char_node:
-			saved_player_collision_layer = char_node.collision_layer
 			char_node.collision_layer = 0
 		if "collision_mask" in char_node:
-			saved_player_collision_mask = char_node.collision_mask
 			char_node.collision_mask = 0
-		if char_node.has_method("set_control_enabled"):
-			char_node.set_control_enabled(false)
-		char_node.visible = false
 
 	if is_instance_valid(actor):
 		actor.visible = false
-
-	var furn_tf: Transform3D = resolution["target_transform"]
-	var approach_tf: Transform3D = resolution.get("approach_transform", furn_tf)
-	last_service_approach_pos = approach_tf.origin
-	last_service_approach_basis = approach_tf.basis
 
 	combat_actors_root.global_transform = furn_tf
 
@@ -272,8 +311,8 @@ func begin_furniture_service_staging(interaction_type: String = "desk_service") 
 
 	npc_paired_actor = ACTOR.instantiate()
 	npc_paired_actor.name = "KeqingPairedActor"
-	npc_paired_actor.model_resource = runtime.encounter_bundle["avatar"]["model_resource"]
-	npc_paired_actor.motion_resource = resolution["role_a_motion"]
+	npc_paired_actor.model_resource = npc_model
+	npc_paired_actor.motion_resource = role_a_motion
 	npc_paired_actor.auto_play = true
 	npc_paired_actor.environment_mask = 33
 	npc_paired_actor.initialized.connect(func():
@@ -281,11 +320,13 @@ func begin_furniture_service_staging(interaction_type: String = "desk_service") 
 			MTOON.apply(npc_paired_actor.character, runtime.encounter_bundle["avatar"]["material_id"])
 	)
 	combat_actors_root.add_child(npc_paired_actor)
+	npc_paired_actor.transform = combat_actors_root.global_transform.affine_inverse() * role_a_target
+	npc_paired_actor.global_transform = role_a_target
 
 	master_paired_actor = ACTOR.instantiate()
 	master_paired_actor.name = "MasterPairedActor"
-	master_paired_actor.model_resource = _get_master_model()
-	master_paired_actor.motion_resource = resolution["role_b_motion"]
+	master_paired_actor.model_resource = master_model
+	master_paired_actor.motion_resource = role_b_motion
 	master_paired_actor.auto_play = true
 	master_paired_actor.environment_mask = 33
 	master_paired_actor.initialized.connect(func():
@@ -293,6 +334,8 @@ func begin_furniture_service_staging(interaction_type: String = "desk_service") 
 			MTOON.apply(master_paired_actor.character, _get_master_mtoon())
 	)
 	combat_actors_root.add_child(master_paired_actor)
+	master_paired_actor.transform = combat_actors_root.global_transform.affine_inverse() * role_b_target
+	master_paired_actor.global_transform = role_b_target
 
 	combat_actors_root.visible = true
 
@@ -329,6 +372,40 @@ func _update_service_camera() -> void:
 	service_camera.global_position = cam_focal_point + offset
 	service_camera.look_at(cam_focal_point, Vector3.UP)
 
+func abort_service_staging(reason: String = "") -> void:
+	is_service_active = false
+	is_dragging_cam = false
+	if is_instance_valid(service_hud):
+		service_hud.visible = false
+	if is_instance_valid(service_camera):
+		service_camera.current = false
+	if is_instance_valid(combat_actors_root):
+		combat_actors_root.visible = false
+	if is_instance_valid(npc_paired_actor):
+		npc_paired_actor.queue_free()
+		npc_paired_actor = null
+	if is_instance_valid(master_paired_actor):
+		master_paired_actor.queue_free()
+		master_paired_actor = null
+	if is_instance_valid(actor):
+		actor.visible = true
+	var char_node: Node = world.character if is_instance_valid(world) else null
+	if is_instance_valid(char_node):
+		char_node.visible = true
+		if "collision_layer" in char_node and saved_player_collision_layer != 0:
+			char_node.collision_layer = saved_player_collision_layer
+		if "collision_mask" in char_node and saved_player_collision_mask != 0:
+			char_node.collision_mask = saved_player_collision_mask
+		if char_node.has_method("set_control_enabled"):
+			char_node.set_control_enabled(true)
+	last_service_approach_pos = Vector3.ZERO
+	last_service_approach_basis = Basis.IDENTITY
+	if is_instance_valid(runtime):
+		runtime.abort_service(reason)
+	if is_instance_valid(world):
+		world.set_encounter_ui_active(false)
+		world._sync_actor_controls()
+
 func finish_furniture_service() -> void:
 	if not is_service_active:
 		return
@@ -351,9 +428,9 @@ func finish_furniture_service() -> void:
 	var char_node: Node = world.character if is_instance_valid(world) else null
 	if is_instance_valid(char_node):
 		char_node.visible = true
-		if "collision_layer" in char_node:
+		if "collision_layer" in char_node and saved_player_collision_layer != 0:
 			char_node.collision_layer = saved_player_collision_layer
-		if "collision_mask" in char_node:
+		if "collision_mask" in char_node and saved_player_collision_mask != 0:
 			char_node.collision_mask = saved_player_collision_mask
 		if last_service_approach_pos != Vector3.ZERO:
 			char_node.global_position = last_service_approach_pos
@@ -363,6 +440,8 @@ func finish_furniture_service() -> void:
 		var local_side := last_service_approach_basis.x.normalized()
 		actor.global_position = last_service_approach_pos + local_side * 0.7
 		actor.global_rotation.y = last_service_approach_basis.get_euler().y
+	last_service_approach_pos = Vector3.ZERO
+	last_service_approach_basis = Basis.IDENTITY
 	if is_instance_valid(runtime):
 		runtime.finish_service()
 	if is_instance_valid(world):
