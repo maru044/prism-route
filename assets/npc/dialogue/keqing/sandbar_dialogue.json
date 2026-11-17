@@ -5,7 +5,8 @@
     "world_start": "start",
     "combat_manual": "mid_battle_manual",
     "victory_settlement": "victory_node",
-    "defeat_settlement": "defeat_node"
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting"
   },
   "nodes": {
     "start": {
@@ -62,10 +63,21 @@
           "action": "spare_desk"
         },
         {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
           "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
           "action": "close"
         }
       ]
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "刻晴",
+      "text": "是你啊！刚才切磋后竟然对我做出那种过分的事情，不过我已经重新调整好状态了，这次我可不会再大意了！",
+      "emotion": "serious",
+      "next": "main_menu_choices"
     },
     "defeat_node": {
       "type": "text",

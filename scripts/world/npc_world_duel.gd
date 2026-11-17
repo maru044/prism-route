@@ -4,6 +4,8 @@ const Runtime := preload("res://scripts/world/npc_encounter_runtime.gd")
 const WorldControl := preload("res://scripts/world/world_control_context.gd")
 const ACTOR := preload("res://scenes/characters/shared_humanoid_actor.tscn")
 const MTOON := preload("res://scripts/characters/mtoon_materials.gd")
+const CorpseControllerClass := preload("res://scripts/characters/corpse_ragdoll_controller.gd")
+const CorpseInteractionHandlerClass := preload("res://scripts/world/corpse_interaction_handler.gd")
 
 const MASTER_CONFIGS: Dictionary = {
 	"lumine": {
@@ -31,6 +33,9 @@ var master_paired_actor: Node3D
 var service_camera: Camera3D
 
 var is_service_active: bool = false
+var is_ragdoll_active: bool = false
+var corpse_actor: Node3D
+var corpse_handler: CorpseInteractionHandlerClass
 var saved_player_collision_layer: int = 2
 var saved_player_collision_mask: int = 1
 var last_service_approach_pos: Vector3 = Vector3.ZERO
@@ -59,6 +64,18 @@ func initialize(host: Node3D, p_world: Node3D, p_runtime: Runtime) -> void:
 	service_camera.name = "ServiceCamera"
 	service_camera.current = false
 	host.add_child(service_camera)
+
+	corpse_actor = CorpseControllerClass.new()
+	corpse_actor.name = "KeqingCorpse"
+	corpse_actor.character_scene = null
+	corpse_actor.auto_start_ragdoll = false
+	corpse_actor.visible = false
+	host.add_child(corpse_actor)
+
+	corpse_handler = CorpseInteractionHandlerClass.new()
+	corpse_handler.player_left_corpse.connect(func(_dist: float):
+		_respawn_keqing_after_kill()
+	)
 
 	var canvas := CanvasLayer.new()
 	canvas.layer = 12
@@ -127,14 +144,24 @@ func is_world_input_locked() -> bool:
 	])
 
 func _can_interact() -> bool:
+	if is_ragdoll_active:
+		return false
 	return is_instance_valid(world) and world.test_ready and world.character_mode and not world.free_mode \
 		and not world.has_llm_panel_open() and not world.encounter_ui_active and world.is_world_input_allowed() \
 		and is_instance_valid(actor.character) and world.character.global_position.distance_to(anchor.global_position) < 2.6
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	if is_ragdoll_active:
+		if corpse_handler:
+			corpse_handler.tick(delta)
+		return
 	prompt.visible = _can_interact()
 
 func _unhandled_input(event: InputEvent) -> void:
+	if is_ragdoll_active and corpse_handler:
+		if corpse_handler.handle_input(event):
+			get_viewport().set_input_as_handled()
+			return
 	if is_service_active:
 		if event is InputEventMouseButton:
 			if event.button_index == MOUSE_BUTTON_RIGHT:
@@ -191,6 +218,8 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 	var act: String = payload.get("action", "")
 	if act in ["spare_desk", "desk_service", "spare"]:
 		begin_furniture_service_staging("desk_service")
+	elif act == "kill":
+		_execute_settlement_kill()
 	elif act == "finish_service":
 		if is_service_active:
 			finish_furniture_service()
@@ -362,3 +391,63 @@ func _get_master_mtoon() -> String:
 	var master_id := _get_active_master_id()
 	var cfg: Dictionary = MASTER_CONFIGS.get(master_id, MASTER_CONFIGS["lumine"])
 	return cfg.get("mtoon", "lumine")
+
+func _execute_settlement_kill() -> void:
+	if is_ragdoll_active:
+		return
+	is_ragdoll_active = true
+	panel.hide()
+	hud.hide()
+	prompt.hide()
+
+	if is_instance_valid(actor):
+		actor.visible = false
+
+	var spawn_pos: Vector3 = anchor.global_position if is_instance_valid(anchor) else Vector3.ZERO
+	if corpse_actor:
+		corpse_actor.global_position = spawn_pos
+		corpse_actor.visible = true
+		var ok: bool = corpse_actor.load_character(
+			runtime.encounter_bundle["avatar"]["model_resource"],
+			"keqing",
+			"刻晴"
+		)
+		if ok and corpse_actor.character_instance:
+			MTOON.apply(corpse_actor.character_instance, runtime.encounter_bundle["avatar"].get("material_id", "keqing"))
+		corpse_actor.start_ragdoll()
+		if corpse_handler:
+			corpse_handler.activate(world, corpse_actor, prompt, "刻晴")
+
+	if is_instance_valid(world):
+		world.set_encounter_ui_active(false)
+		world._sync_actor_controls()
+		var char_node: Node = world.character
+		if is_instance_valid(char_node) and char_node.has_method("set_control_enabled"):
+			char_node.set_control_enabled(true)
+
+	print("【大世界结算】主人选择【杀掉】刻晴！刻晴化为真实物理尸体倒在沙洲木地板上，离开30米后将刷新重置！")
+
+func _respawn_keqing_after_kill() -> void:
+	is_ragdoll_active = false
+	if corpse_handler:
+		corpse_handler.deactivate()
+	if corpse_actor:
+		corpse_actor.stop_ragdoll()
+		corpse_actor.visible = false
+		if corpse_actor.character_instance and is_instance_valid(corpse_actor.character_instance):
+			corpse_actor.character_instance.queue_free()
+			corpse_actor.character_instance = null
+			corpse_actor.skeleton = null
+			corpse_actor.simulator = null
+			corpse_actor.physical_bones.clear()
+
+	if is_instance_valid(actor):
+		actor.visible = true
+		if is_instance_valid(anchor):
+			actor.global_position = anchor.global_position
+			actor.global_rotation.y = anchor.global_rotation.y
+
+	if is_instance_valid(runtime):
+		runtime._set_state(Runtime.EncounterState.AVAILABLE)
+
+	print("【大世界刷新】主人离开沙洲超出30米范围，刻晴已重新刷新就位！")

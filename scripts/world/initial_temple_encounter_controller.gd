@@ -28,7 +28,8 @@ const VALID_TRANSITIONS: Dictionary = {
 	EncounterState.AVAILABLE: [
 		EncounterState.INTRO_DIALOGUE,
 		EncounterState.STAGING_TRANSITION,
-		EncounterState.FURNITURE_SERVICE_STAGING
+		EncounterState.FURNITURE_SERVICE_STAGING,
+		EncounterState.SETTLEMENT
 	],
 	EncounterState.INTRO_DIALOGUE: [
 		EncounterState.AVAILABLE,
@@ -78,6 +79,7 @@ const EncounterPalette := preload("res://scenes/combat/encounter_ui_palette.gd")
 const EncounterRuntimeClass := preload("res://scripts/world/npc_encounter_runtime.gd")
 
 const CorpseControllerClass := preload("res://scripts/characters/corpse_ragdoll_controller.gd")
+const CorpseInteractionHandlerClass := preload("res://scripts/world/corpse_interaction_handler.gd")
 
 const TEMPLE_RESPAWN := preload("res://scripts/world/npc_preview_sites.gd").INITIAL_TEMPLE_RESPAWN
 const RESPAWN_POINT: Vector3 = TEMPLE_RESPAWN.position
@@ -128,6 +130,7 @@ var sparkle_combat_actor: Node3D
 var master_combat_actor: Node3D
 var combat_camera: Camera3D
 var corpse_actor: Node3D
+var corpse_interaction_handler: CorpseInteractionHandlerClass
 
 var default_combat_cam_yaw: float = 0.0
 var default_combat_cam_pitch: float = 0.0
@@ -262,6 +265,11 @@ func _build_subsystems() -> void:
 	corpse_actor.auto_start_ragdoll = false
 	corpse_actor.visible = false
 	temple_node.add_child(corpse_actor)
+	
+	corpse_interaction_handler = CorpseInteractionHandlerClass.new()
+	corpse_interaction_handler.player_left_corpse.connect(func(_dist: float):
+		_respawn_sparkle_after_kill()
+	)
 	
 	player_pleasure = runtime.player_pleasure
 	npc_pleasure = runtime.npc_pleasure
@@ -510,14 +518,17 @@ func tick(delta: float) -> void:
 		
 	var player_pos: Vector3 = char_node.global_position
 	
-	# Handle ragdoll respawn when player leaves temple (> 30m)
+	# Handle ragdoll interaction and respawn when player leaves corpse (> 30m)
 	if is_ragdoll_active:
-		var corpse_pos: Vector3 = get_corpse_position()
-		var dist_to_corpse: float = player_pos.distance_to(corpse_pos)
-		if dist_to_corpse > 30.0:
-			_respawn_sparkle_after_kill()
-		if interact_prompt and interact_prompt.visible:
-			interact_prompt.visible = false
+		if corpse_interaction_handler:
+			corpse_interaction_handler.tick(delta)
+		else:
+			var corpse_pos: Vector3 = get_corpse_position()
+			var dist_to_corpse: float = player_pos.distance_to(corpse_pos)
+			if dist_to_corpse > 30.0:
+				_respawn_sparkle_after_kill()
+			if interact_prompt and interact_prompt.visible:
+				interact_prompt.visible = false
 		return
 		
 	var npc_pos: Vector3 = get_npc_interaction_position()
@@ -821,6 +832,10 @@ func _process_combat_camera_keys(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if is_instance_valid(world) and world.has_method("has_llm_panel_open") and world.has_llm_panel_open():
 		return
+	if is_ragdoll_active and corpse_interaction_handler:
+		if corpse_interaction_handler.handle_input(event):
+			get_viewport().set_input_as_handled()
+			return
 	if current_state != EncounterState.COMBAT and current_state != EncounterState.FURNITURE_SERVICE_ACTIVE:
 		return
 	if dialogue_panel and is_instance_valid(dialogue_panel) and dialogue_panel.visible:
@@ -1043,6 +1058,8 @@ func _execute_settlement_kill() -> void:
 		if ok and corpse_actor.character_instance:
 			MTOON.apply(corpse_actor.character_instance, "huahuo")
 		corpse_actor.start_ragdoll()
+		if corpse_interaction_handler:
+			corpse_interaction_handler.activate(world, corpse_actor, interact_prompt, "花火")
 		
 	print("【大世界结算】主人选择【杀掉】花火！花火化为真实物理尸体倒在神殿地板上，同时永久解锁为可用伙伴，离开30米后将刷新重置！")
 	settlement_completed.emit("kill")
@@ -1471,6 +1488,8 @@ func _execute_settlement_spare(service_type: String = "virgin") -> void:
 
 func _respawn_sparkle_after_kill() -> void:
 	is_ragdoll_active = false
+	if corpse_interaction_handler:
+		corpse_interaction_handler.deactivate()
 	if corpse_actor:
 		corpse_actor.stop_ragdoll()
 		corpse_actor.visible = false

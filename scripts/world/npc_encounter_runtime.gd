@@ -136,6 +136,10 @@ func start_intro_dialogue() -> void:
 	_set_state(EncounterState.INTRO_DIALOGUE)
 	var diag_graph: Dictionary = encounter_bundle.get("dialogue", {})
 	var start_entry: String = diag_graph["entry_points"]["world_start"]
+	if settlement_outcome == "kill" and diag_graph["entry_points"].has("post_kill"):
+		start_entry = diag_graph["entry_points"]["post_kill"]
+	elif settlement_outcome.begins_with("spare") and diag_graph["entry_points"].has("post_spare"):
+		start_entry = diag_graph["entry_points"]["post_spare"]
 	start_dialogue(
 		diag_graph,
 		start_entry,
