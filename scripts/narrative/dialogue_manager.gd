@@ -30,6 +30,7 @@ const ACTION_KILL: String = "kill"
 const ACTION_SPARE: String = "spare"
 const ACTION_SPARE_VIRGIN: String = "spare_virgin"
 const ACTION_SPARE_HONBAN: String = "spare_honban"
+const ACTION_SPARE_DESK: String = "spare_desk"
 const ACTION_FINISH_SERVICE: String = "finish_service"
 const ACTION_CLOSE: String = "close"
 
@@ -285,7 +286,7 @@ func _on_action_completed(status: int, result: Dictionary, raw_act: String, owne
 	if status == ActionRegistryClass.ActionStatus.SUCCEEDED:
 		if canonical == ACTION_KILL:
 			owner.set_variable("mercy_choice", "kill", "encounter")
-		elif canonical in [ACTION_SPARE, ACTION_SPARE_VIRGIN, ACTION_SPARE_HONBAN]:
+		elif canonical in [ACTION_SPARE, ACTION_SPARE_VIRGIN, ACTION_SPARE_HONBAN, ACTION_SPARE_DESK]:
 			owner.set_variable("mercy_choice", canonical, "encounter")
 
 		var payload := {

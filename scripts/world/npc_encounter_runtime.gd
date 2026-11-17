@@ -205,6 +205,10 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 		combat_manager.resume_combat_after_dialogue(act == "surrender", next_turn)
 	elif act == "enter_combat":
 		start_combat()
+	elif act in ["spare_desk", "desk_service"]:
+		settlement_outcome = act
+		_set_state(EncounterState.SETTLEMENT)
+		settlement_finished.emit(act)
 	elif act in ["spare", "spare_virgin", "spare_honban", "kill", "finish_service"]:
 		settlement_outcome = act
 		_set_state(EncounterState.SETTLEMENT)
@@ -215,6 +219,10 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 			_set_state(EncounterState.AVAILABLE)
 		elif current_state == EncounterState.RESULT_DIALOGUE:
 			_set_state(EncounterState.COMPLETED)
+
+func finish_service() -> void:
+	if current_state == EncounterState.SETTLEMENT:
+		_set_state(EncounterState.COMPLETED)
 
 func _on_combat_ended(winner: String, _loser: String = "", _reason: String = "") -> void:
 	combat_ended.emit(winner)

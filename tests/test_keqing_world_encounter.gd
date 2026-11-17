@@ -113,7 +113,19 @@ func _run() -> void:
 	var winner := runtime.last_battle_winner
 	# Result dialogue already uses a choice entry on victory, and text on defeat.
 	if winner == "player":
-		_key(KEY_2)
+		_key(KEY_1)
+		await process_frame
+		await process_frame
+		if not _expect(duel.is_service_active and duel.combat_actors_root.visible
+				and is_instance_valid(duel.npc_paired_actor) and is_instance_valid(duel.master_paired_actor)
+				and duel.npc_paired_actor.motion_resource == "res://assets/characters/mmd_selected/animations/mmd_fca4bab1635f_a.tres"
+				and duel.master_paired_actor.motion_resource == "res://assets/characters/mmd_selected/animations/mmd_fca4bab1635f_b.tres",
+				"Keqing desk service staging did not activate with paired animations"):
+			return
+		print("KEQING_SERVICE_STAGING_OK desk_paired_actors_playing")
+		_key(KEY_E)
+		await process_frame
+		await process_frame
 	else:
 		_key(KEY_ENTER)
 	await process_frame

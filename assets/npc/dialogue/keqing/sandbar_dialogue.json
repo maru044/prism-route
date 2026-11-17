@@ -59,7 +59,7 @@
       "choices": [
         {
           "text": "【长案侍奉】请刻晴小姐俯身扶在桌边，履行败者惩罚。",
-          "action": "finish_service"
+          "action": "spare_desk"
         },
         {
           "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
