@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "ganyu_reactions",
+  "speaker": "甘雨",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "唔，手指轻轻探进来了吗？Master，在工作时间这样，稍微有点难为情呢。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "哈啊，舌头被轻轻拨弄着，温热的气息混在一起，有些喘不过气了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中的津液都要溢出来了，脑海一片朦胧，请对我温柔一点呀！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "隔着紧身衣揉弄前胸，这道触感，也是Master给甘雨的考验吗？",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！指尖隔着薄薄的布料挑弄顶端，胸口一阵阵发软，仙兽的血脉好像在发烫。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸前已经完全挺立起来了，好强烈的酥麻感，甘雨快要支撑不住了！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "碰到了那里，Master，最隐秘的地方被触碰，心跳变得好剧烈！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！那里太敏感了，被掌心按压打圈，连双腿都忍不住悄悄夹紧了呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！仙兽的身体彻底融化了，好剧烈的情潮，甘雨要绝顶了啊啊！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "顺着连体黑丝抚摸大腿内侧，指尖的温度好清晰，甘雨会好好配合您的。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根被轻轻捏弄，酸软的感觉蔓延到腰际，站都有些站不稳了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全没有力气了，只能软软地倚靠在Master怀里，任由您摆弄了。",
+        "emotion": "climax"
+      }
+    },
+    "anal": {
+      "low": {
+        "text": "后面短绒尾塞的位置被碰到了！Master，那里好害羞，请轻一点。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔！尾塞被轻轻转动按压，异样的充实感顺着脊椎直往上窜，呼吸都乱了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呀啊！后庭完全失守了，身体深处的甜美颤动根本停不下来啦！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "frostflake_arrow": {
+      "name": "霜华矢·清心冰凌",
+      "damage": 16.0,
+      "text": "如琉璃般清澈！以冰霜之力轻拂过您的身心，请接招吧！",
+      "emotion": "shy"
+    },
+    "trail_of_qilin": {
+      "name": "山泽麟迹·仙兽诱惑",
+      "damage": 18.0,
+      "text": "留下一缕冰莲幽香！在轻盈后撤时展现出柔美身姿，Master能追得上吗？",
+      "emotion": "smile"
+    },
+    "celestial_shower": {
+      "name": "降众天华·甘霖情潮",
+      "damage": 15.0,
+      "text": "甘霖普降！冰晶碎裂成点点温润快感，甘雨将全心全意侍奉于您！",
+      "emotion": "blush"
+    }
+  }
+}

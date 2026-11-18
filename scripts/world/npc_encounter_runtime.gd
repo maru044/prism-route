@@ -299,7 +299,7 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 		combat_manager.resume_combat_after_dialogue(instant, next_turn)
 	elif act == "enter_combat":
 		start_combat()
-	elif act in ["spare_desk", "desk_service"]:
+	elif act in ["spare_desk", "desk_service", "spare_seat", "seat_service"]:
 		settlement_outcome = act
 		_set_state(EncounterState.SETTLEMENT)
 		settlement_finished.emit(act)

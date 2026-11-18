@@ -66,9 +66,12 @@ func _set_actor_visible(is_vis: bool) -> void:
 		if actor.has_method("set_playback_active"):
 			actor.set_playback_active(is_vis)
 
+func _unlock_companion() -> void:
+	if game_progress and game_progress.has_method("unlock_companion") and runtime != null:
+		game_progress.unlock_companion(runtime.character_id)
+
 func _unlock_keqing() -> void:
-	if game_progress and game_progress.has_method("unlock_companion"):
-		game_progress.unlock_companion("keqing")
+	_unlock_companion()
 
 func initialize(host: Node3D, p_world: Node3D, p_runtime: Runtime) -> void:
 	world = p_world
@@ -113,7 +116,7 @@ func initialize(host: Node3D, p_world: Node3D, p_runtime: Runtime) -> void:
 	host.add_child(service_camera)
 
 	corpse_actor = CorpseControllerClass.new()
-	corpse_actor.name = "KeqingCorpse"
+	corpse_actor.name = "%sCorpse" % runtime.character_id.capitalize()
 	corpse_actor.character_scene = null
 	corpse_actor.auto_start_ragdoll = false
 	corpse_actor.visible = false
@@ -121,7 +124,7 @@ func initialize(host: Node3D, p_world: Node3D, p_runtime: Runtime) -> void:
 
 	corpse_handler = CorpseInteractionHandlerClass.new()
 	corpse_handler.player_left_corpse.connect(func(_dist: float):
-		_respawn_keqing_after_kill()
+		_respawn_npc_after_kill()
 	)
 
 	var canvas := CanvasLayer.new()
@@ -308,8 +311,9 @@ func _on_encounter_state_changed(_old: int, state: int) -> void:
 func _setup_combat_actors() -> bool:
 	var npc_model := str(runtime.encounter_bundle.get("avatar", {}).get("model_resource", ""))
 	var master_model := _get_master_model()
-	var role_a_motion := COMBAT_MOTION_KEQING
-	var role_b_motion := COMBAT_MOTION_MASTER
+	var combat_binding: Dictionary = runtime.encounter_bundle.get("motions", {}).get("bindings", {}).get("ground_service", {})
+	var role_a_motion := str(combat_binding.get("role_a_motion", COMBAT_MOTION_KEQING))
+	var role_b_motion := str(combat_binding.get("role_b_motion", COMBAT_MOTION_MASTER))
 
 	if npc_model.is_empty() or not ResourceLoader.exists(npc_model):
 		return false
@@ -329,7 +333,7 @@ func _setup_combat_actors() -> bool:
 		master_paired_actor.queue_free()
 
 	npc_paired_actor = ACTOR.instantiate()
-	npc_paired_actor.name = "KeqingCombatActor"
+	npc_paired_actor.name = "%sCombatActor" % runtime.character_id.capitalize()
 	npc_paired_actor.model_resource = npc_model
 	npc_paired_actor.motion_resource = role_a_motion
 	npc_paired_actor.auto_play = true
@@ -418,14 +422,24 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 		runtime.last_battle_winner = ""
 		if payload.get("cancelled", false) or payload.get("failed", false):
 			return
-		if winner == "player" and act in ["spare_desk", "desk_service", "spare", "kill", "close"]:
-			_unlock_keqing()
+		if winner == "player" and (act.begins_with("spare") or act.ends_with("_service") or act in ["kill", "close"]):
+			_unlock_companion()
 		elif not winner.is_empty() and winner != "player" and act == "close":
 			_handle_player_defeat()
 			return
 
-	if act in ["spare_desk", "desk_service", "spare"]:
+	if act in ["spare_desk", "desk_service"]:
 		begin_furniture_service_staging("desk_service")
+	elif act in ["spare_seat", "seat_service"]:
+		begin_furniture_service_staging("seat_service")
+	elif act == "spare":
+		var chosen_service := "desk_service"
+		var bindings: Dictionary = runtime.encounter_bundle.get("motions", {}).get("bindings", {})
+		for k in bindings:
+			if k != "ground_service":
+				chosen_service = k
+				break
+		begin_furniture_service_staging(chosen_service)
 	elif act == "kill":
 		_set_combat_visuals(false)
 		_execute_settlement_kill()
@@ -433,7 +447,13 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 		if is_service_active:
 			finish_furniture_service()
 		else:
-			begin_furniture_service_staging("desk_service")
+			var default_serv := "desk_service"
+			var bindings: Dictionary = runtime.encounter_bundle.get("motions", {}).get("bindings", {})
+			for k in bindings:
+				if k != "ground_service":
+					default_serv = k
+					break
+			begin_furniture_service_staging(default_serv)
 	elif act == "finish":
 		_set_combat_visuals(false)
 		if is_instance_valid(runtime):
@@ -520,7 +540,7 @@ func begin_furniture_service_staging(interaction_type: String = "desk_service") 
 		master_paired_actor.queue_free()
 
 	npc_paired_actor = ACTOR.instantiate()
-	npc_paired_actor.name = "KeqingPairedActor"
+	npc_paired_actor.name = "%sPairedActor" % runtime.character_id.capitalize()
 	npc_paired_actor.model_resource = npc_model
 	npc_paired_actor.motion_resource = role_a_motion
 	npc_paired_actor.forearm_contact_lift_m = float(resolution["binding"].get("role_a_forearm_contact_lift_m", 0.0))
@@ -715,14 +735,14 @@ func _execute_settlement_kill() -> void:
 		corpse_actor.visible = true
 		var ok: bool = corpse_actor.load_character(
 			runtime.encounter_bundle["avatar"]["model_resource"],
-			"keqing",
-			"刻晴"
+			runtime.character_id,
+			runtime.character_name
 		)
 		if ok and corpse_actor.character_instance:
-			MTOON.apply(corpse_actor.character_instance, runtime.encounter_bundle["avatar"].get("material_id", "keqing"))
+			MTOON.apply(corpse_actor.character_instance, runtime.encounter_bundle["avatar"].get("material_id", runtime.character_id))
 		corpse_actor.start_ragdoll()
 		if corpse_handler:
-			corpse_handler.activate(world, corpse_actor, prompt, "刻晴")
+			corpse_handler.activate(world, corpse_actor, prompt, runtime.character_name)
 
 	if is_instance_valid(world):
 		world.set_encounter_ui_active(false)
@@ -731,9 +751,9 @@ func _execute_settlement_kill() -> void:
 		if is_instance_valid(char_node) and char_node.has_method("set_control_enabled"):
 			char_node.set_control_enabled(true)
 
-	print("【大世界结算】主人选择【杀掉】刻晴！刻晴化为真实物理尸体倒在沙洲木地板上，离开30米后将刷新重置！")
+	print("【大世界结算】主人选择【杀掉】%s！%s化为真实物理尸体倒在地面上，离开30米后将刷新重置！" % [runtime.character_name, runtime.character_name])
 
-func _respawn_keqing_after_kill() -> void:
+func _respawn_npc_after_kill() -> void:
 	is_ragdoll_active = false
 	if corpse_handler:
 		corpse_handler.deactivate()
@@ -762,4 +782,7 @@ func _respawn_keqing_after_kill() -> void:
 	if is_instance_valid(runtime):
 		runtime._set_state(Runtime.EncounterState.AVAILABLE)
 
-	print("【大世界刷新】主人离开沙洲超出30米范围，刻晴已重新刷新就位！")
+	print("【大世界刷新】主人离开超出30米范围，%s已重新刷新就位！" % runtime.character_name)
+
+func _respawn_keqing_after_kill() -> void:
+	_respawn_npc_after_kill()

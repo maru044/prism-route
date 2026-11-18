@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "avatar_profile_id": "ganyu",
+  "model_resource": "res://assets/characters/ganyu/ganyu.vrm",
+  "idle_motion": "res://assets/characters/roster/motions/koikatsu_idle.tres",
+  "material_id": "ganyu"
+}

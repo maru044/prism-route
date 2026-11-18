@@ -26,8 +26,11 @@ static func resolve_motion(
 	for furniture in furniture_list:
 		if not is_instance_valid(furniture) or required.is_empty():
 			continue
-		if furniture.has_meta("interaction_type") and furniture.get_meta("interaction_type") != required_type:
-			continue
+		if furniture.has_meta("interaction_type"):
+			var furn_type := str(furniture.get_meta("interaction_type"))
+			var matches_type := (furn_type == required_type) or (required_type in ["seat", "chair"] and furn_type in ["seat", "chair"])
+			if not matches_type:
+				continue
 		var anchors := {}
 		for anchor_name: String in required:
 			var matches: Array[Node] = furniture.find_children(anchor_name, "Node3D", true, false)

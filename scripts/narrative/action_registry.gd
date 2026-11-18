@@ -52,7 +52,9 @@ func _register_builtins() -> void:
 	register_action("spare_virgin")
 	register_action("spare_honban")
 	register_action("spare_desk")
+	register_action("spare_seat")
 	register_action("desk_service")
+	register_action("seat_service")
 	register_action("finish_service")
 
 	# Aliases
@@ -61,6 +63,7 @@ func _register_builtins() -> void:
 	register_alias("choose_spare_virgin", "spare_virgin")
 	register_alias("choose_spare_honban", "spare_honban")
 	register_alias("choose_spare_desk", "spare_desk")
+	register_alias("choose_spare_seat", "spare_seat")
 	register_alias("encounter.enter_combat", "enter_combat")
 	register_alias("encounter.resume_combat", "resume_combat")
 	register_alias("encounter.kill", "kill")
@@ -68,8 +71,11 @@ func _register_builtins() -> void:
 	register_alias("encounter.spare_virgin", "spare_virgin")
 	register_alias("encounter.spare_honban", "spare_honban")
 	register_alias("encounter.spare_desk", "spare_desk")
+	register_alias("encounter.spare_seat", "spare_seat")
 	register_alias("encounter.desk_service", "desk_service")
+	register_alias("encounter.seat_service", "seat_service")
 	register_alias("desk_service", "spare_desk")
+	register_alias("seat_service", "spare_seat")
 	register_alias("encounter.finish_service", "finish_service")
 	register_alias("encounter.close", "close")
 

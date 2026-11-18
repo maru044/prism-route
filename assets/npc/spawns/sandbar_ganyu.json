@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "spawn_id": "sandbar_ganyu",
+  "character_id": "ganyu",
+  "region": "沙洲度假遗址",
+  "position": [-833.190, 0.100, -130.330],
+  "heading": 143.0,
+  "bound_furniture": [
+    {
+      "id": "seat_01",
+      "type": "seat",
+      "anchor": "Anchor_Seat"
+    }
+  ]
+}

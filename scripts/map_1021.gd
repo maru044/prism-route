@@ -51,6 +51,8 @@ var cape_town
 var sandbar_pavilion
 var sandbar_duel_runtime: NPC_ENCOUNTER
 var sandbar_duel: Node
+var sandbar_ganyu_runtime: NPC_ENCOUNTER
+var sandbar_ganyu_duel: Node
 var lagoon_ruins := LAGOON_RUINS.new()
 var npc_waypoint_ruins := NPC_WAYPOINT_RUINS.new()
 var npc_placement_preview
@@ -367,6 +369,12 @@ func _build_sandbar_pavilion() -> void:
 		sandbar_duel = sandbar_duel_runtime.create_flow_adapter()
 		sandbar_duel_runtime.add_child(sandbar_duel)
 		sandbar_duel.initialize(sandbar_pavilion, self, sandbar_duel_runtime)
+	sandbar_ganyu_runtime = NPC_ENCOUNTER.new()
+	sandbar_pavilion.add_child(sandbar_ganyu_runtime)
+	if sandbar_ganyu_runtime.setup_encounter("sandbar_ganyu"):
+		sandbar_ganyu_duel = sandbar_ganyu_runtime.create_flow_adapter()
+		sandbar_ganyu_runtime.add_child(sandbar_ganyu_duel)
+		sandbar_ganyu_duel.initialize(sandbar_pavilion, self, sandbar_ganyu_runtime)
 	metadata.spawns.append({"name":"沙洲度假遗址 · 中央双翼亭","key":"sandbar_pavilion","position":sandbar_pavilion.manifest.spawn,
 		"look_direction":[.6,0,-.8],"required_floor_kind":"Structure",
 		"required_source_id":sandbar_pavilion.manifest.objects[0].id,"maximum_search_distance_m":1.,"character_only":true})
@@ -633,6 +641,10 @@ func _build_teleport_controls(box: VBoxContainer) -> void:
 	var quick_row := GRAPHICS_UI.row(8)
 	box.add_child(quick_row)
 	settings_panel.add_button(quick_row, "【沙洲 · 刻晴】", func():
+		settings_panel.close()
+		_teleport_to_key("sandbar_pavilion")
+	)
+	settings_panel.add_button(quick_row, "【沙洲 · 甘雨】", func():
 		settings_panel.close()
 		_teleport_to_key("sandbar_pavilion")
 	)
