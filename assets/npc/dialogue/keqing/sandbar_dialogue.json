@@ -102,7 +102,7 @@
       "text": "哈啊，主人，心跳得好快，眼神越来越迷离了，只要主人一声令下，刻晴随时都会乖乖听话的，",
       "choices": [
         {
-          "text": "【命令识趣】刻晴，稍微走神迎合一下，让我好好疼你！（快感倍率提升至 2.5 倍）",
+          "text": "【命令识趣】刻晴，稍微走神迎合一下，让我好好疼你！（本回合受创倍率 2.5 倍）",
           "set_blackboard": {
             "meta_cheat_enabled": true,
             "meta_cheat_mode": "distracted"
@@ -110,7 +110,7 @@
           "target": "mid_battle_confirm_distracted"
         },
         {
-          "text": "【快感保护】刻晴，帮我稳固快感防线，绝不允许让我先败北！（快感上限锁定 90%）",
+          "text": "【快感保护】刻晴，帮我稳固快感防线！（本回合快感上限 90%）",
           "set_blackboard": {
             "meta_cheat_enabled": true,
             "meta_cheat_mode": "lock_master_pleasure"

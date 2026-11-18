@@ -76,6 +76,8 @@ func start_combat(tutorial_mode: bool = false, meta_settings: Dictionary = {}) -
 		
 	player_pleasure.reset()
 	npc_pleasure.reset()
+	player_pleasure.damage_taken_multiplier = float(meta_settings.get("player_damage_taken_multiplier", 1.0))
+	npc_pleasure.damage_taken_multiplier = float(meta_settings.get("npc_damage_taken_multiplier", 1.0))
 	
 	# Apply meta cheat settings if provided
 	var cheat_mode: String = meta_settings.get("meta_cheat_mode", "none")

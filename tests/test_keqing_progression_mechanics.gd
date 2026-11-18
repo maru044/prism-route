@@ -20,6 +20,7 @@ func _run_tests() -> void:
 	print("--- Running test_keqing_progression_mechanics ---")
 	
 	var runtime := RuntimeClass.new()
+	root.add_child(runtime)
 	var progress := GameProgressClass.new()
 	
 	var ok := runtime.setup_encounter("sandbar_keqing", false)
@@ -27,6 +28,7 @@ func _run_tests() -> void:
 		return
 	
 	runtime.game_progress = progress
+	runtime.combat_manager.animation_delays = false
 	if not _expect(runtime.character_id == "keqing", "Runtime should identify character_id as keqing"):
 		return
 		
@@ -83,6 +85,11 @@ func _run_tests() -> void:
 	runtime._set_state(RuntimeClass.EncounterState.AVAILABLE)
 	
 	# Start combat in unlocked state
+	var first_input: Array[Vector2] = []
+	runtime.combat_manager.phase_changed.connect(func(phase: int) -> void:
+		if phase == TurnCombatManagerClass.Phase.PLAYER_INPUT:
+			first_input.append(Vector2(runtime.npc_pleasure.damage_taken_multiplier,
+				runtime.player_pleasure.damage_taken_multiplier)))
 	runtime.start_combat()
 	if not _expect(runtime.current_state == RuntimeClass.EncounterState.COMBAT, "Runtime should be in COMBAT"):
 		return
@@ -90,12 +97,23 @@ func _run_tests() -> void:
 		return
 	if not _expect(is_equal_approx(runtime.player_pleasure.damage_taken_multiplier, 0.7), "Unlocked Player pleasure mult should be 0.7 (softened damage)"):
 		return
+	if not _expect(first_input[0].is_equal_approx(Vector2(1.8, 0.7)), "Rematch base must be set before the first input phase"):
+		return
 		
 	# Test in-battle negotiation routing when unlocked
 	runtime.combat_manager.request_in_battle_negotiation()
 	var unlocked_mid_node: String = runtime.dialogue_manager.current_session.current_node_id
 	if not _expect(unlocked_mid_node == "mid_battle_manual_unlocked", "Unlocked in-battle negotiation should route to 'mid_battle_manual_unlocked', got: " + unlocked_mid_node):
 		return
+	if not _expect(_surrender_choice(runtime) < 0, "Round 1 at zero meter must not offer surrender"):
+		return
+	runtime.dialogue_manager.choose_option(0)
+	runtime.dialogue_manager.cancel_session()
+	if not _expect(is_equal_approx(runtime.npc_pleasure.damage_taken_multiplier, 1.8)
+			and runtime.combat_manager.current_phase == TurnCombatManagerClass.Phase.PLAYER_INPUT,
+			"Cancelled negotiation must resume without applying the pending effect"):
+		return
+	runtime.combat_manager.request_in_battle_negotiation()
 	print("  ✓ Unlocked tamed companion dialogue and weakened combat multipliers verified")
 	
 	# ----------------------------------------------------
@@ -114,6 +132,11 @@ func _run_tests() -> void:
 	if not _expect(is_equal_approx(runtime.combat_manager.npc_pleasure.damage_taken_multiplier, 2.5), "Distracted cheat should increase NPC pleasure multiplier to 2.5, got: " + str(runtime.combat_manager.npc_pleasure.damage_taken_multiplier)):
 		return
 	print("  ✓ Distracted cheat correctly applied 2.5x pleasure multiplier")
+	_endure(runtime)
+	if not _expect(runtime.combat_manager.round_count == 2
+			and is_equal_approx(runtime.npc_pleasure.damage_taken_multiplier, 1.8),
+			"Distracted must expire after one round and restore the rematch base"):
+		return
 	
 	# Choice 2: Lock Master Pleasure
 	runtime.combat_manager.request_in_battle_negotiation()
@@ -125,15 +148,41 @@ func _run_tests() -> void:
 	if not _expect(is_equal_approx(runtime.combat_manager.player_pleasure.pleasure_cap, 90.0), "Lock cheat should cap pleasure at 90.0"):
 		return
 	print("  ✓ Lock master pleasure cheat correctly locked player cap at 90%")
+	_endure(runtime)
+	if not _expect(runtime.combat_manager.round_count == 3 and not runtime.player_pleasure.pleasure_locked
+			and is_equal_approx(runtime.player_pleasure.pleasure_cap, 100.0),
+			"Protection must expire at the next round"):
+		return
 	
-	# Choice 3: Instant Surrender
+	# The round gate opens with a low meter; end the battle with another active buff.
 	runtime.combat_manager.request_in_battle_negotiation()
-	runtime.dialogue_manager.choose_option(2)
+	if not _expect(_surrender_choice(runtime) >= 0, "Round 3 must offer surrender with a low meter"):
+		return
+	runtime.dialogue_manager.choose_option(1)
+	runtime.dialogue_manager.advance_text()
+	runtime.dialogue_manager.choose_option(0)
+	runtime.combat_manager.request_in_battle_negotiation()
+	runtime.dialogue_manager.choose_option(_surrender_choice(runtime))
 	runtime.dialogue_manager.advance_text()
 	runtime.dialogue_manager.choose_option(0)
 	if not _expect(runtime.combat_manager.is_resolved and runtime.last_battle_winner == "player" and runtime.current_state == RuntimeClass.EncounterState.RESULT_DIALOGUE, "Instant surrender cheat should resolve combat with player victory"):
 		return
+	if not _expect(not runtime.player_pleasure.pleasure_locked and runtime.player_pleasure.pleasure_cap == 100.0
+			and runtime.npc_pleasure.damage_taken_multiplier == 1.0 and runtime.player_pleasure.damage_taken_multiplier == 1.0,
+			"Combat end must clear the active protection and both battle multipliers"):
+		return
 	print("  ✓ Instant surrender cheat correctly resolved combat with player victory")
+	runtime.dialogue_manager.cancel_session()
+	runtime.start_combat()
+	runtime.npc_pleasure.add_pleasure(59.0 / 1.8)
+	runtime.combat_manager.request_in_battle_negotiation()
+	if not _expect(_surrender_choice(runtime) < 0, "Round 1 just below 60 percent must hide surrender"):
+		return
+	runtime.dialogue_manager.cancel_session()
+	runtime.npc_pleasure.add_pleasure(2.0 / 1.8)
+	runtime.combat_manager.request_in_battle_negotiation()
+	if not _expect(_surrender_choice(runtime) >= 0, "Round 1 above 60 percent must offer surrender"):
+		return
 	runtime.dialogue_manager.cancel_session()
 	
 	# ----------------------------------------------------
@@ -157,8 +206,44 @@ func _run_tests() -> void:
 	if not _expect(kill_node == "post_kill_greeting", "Post kill should start at 'post_kill_greeting', got: " + kill_node):
 		return
 	runtime.dialogue_manager.cancel_session()
+	runtime.start_result_dialogue("player")
+	runtime.dialogue_manager.cancel_session()
+	if not _expect(runtime.settlement_outcome == "kill", "Cancelled result must preserve the last confirmed settlement"):
+		return
+	runtime.start_result_dialogue("player")
+	runtime.dialogue_manager.choose_option(2)
+	runtime.start_intro_dialogue()
+	if not _expect(runtime.settlement_outcome == "close" and runtime.dialogue_manager.current_node_id == "start_unlocked",
+			"Closing a victory settlement must replace an old kill greeting with the standard unlocked greeting"):
+		return
+	runtime.dialogue_manager.cancel_session()
+	runtime.start_result_dialogue("player")
+	runtime.dialogue_manager.choose_option(0)
+	runtime.finish_service()
+	runtime.start_result_dialogue("player")
+	runtime.dialogue_manager.choose_option(2)
+	runtime.start_intro_dialogue()
+	if not _expect(runtime.dialogue_manager.current_node_id == "start_unlocked",
+			"The standard unlocked greeting must also replace the old desk greeting"):
+		return
+	runtime.dialogue_manager.cancel_session()
 	print("  ✓ Post-settlement greeting routes verified")
 	
 	print("\n--- ALL KEQING PROGRESSION TESTS PASSED ---")
 	runtime.queue_free()
+	await process_frame
 	quit(0)
+
+func _surrender_choice(runtime: RuntimeClass) -> int:
+	var dm := runtime.dialogue_manager
+	var choices: Array = dm.current_graph["nodes"][dm.current_node_id]["choices"]
+	return choices.find_custom(func(choice: Dictionary) -> bool:
+		return choice.get("set_blackboard", {}).get("meta_cheat_mode") == "instant_surrender")
+
+func _endure(runtime: RuntimeClass) -> void:
+	runtime.combat_manager.execute_player_action({
+		"action_name": "忍耐",
+		"base_pleasure": 0.0,
+		"target_zone": "",
+		"self_pleasure_defense": 0.5,
+	})

@@ -27,6 +27,8 @@ const MTOON := preload("res://scripts/characters/mtoon_materials.gd")
 const ReactionResolverClass := preload("res://scripts/combat/reaction_resolver.gd")
 const PleasureComponentClass := preload("res://scripts/combat/pleasure_component.gd")
 const MotionResolverClass := preload("res://scripts/world/motion_resolver.gd")
+const SURRENDER_MIN_ROUND := 3
+const SURRENDER_METER_FRACTION := 0.6
 
 @export var encounter_id: String = ""
 
@@ -46,6 +48,9 @@ var character_name: String = ""
 var last_battle_winner: String = ""
 var settlement_outcome: String = ""
 var game_progress: RefCounted = null
+var _unlocked_at_combat_start := false
+var _base_npc_damage_taken := 1.0
+var _base_player_damage_taken := 1.0
 
 func setup_encounter(p_encounter_id: String, adapter_manages_flow := false) -> bool:
 	if current_state != EncounterState.UNINITIALIZED:
@@ -101,6 +106,7 @@ func setup_encounter(p_encounter_id: String, adapter_manages_flow := false) -> b
 	if not adapter_manages_flow:
 		combat_manager.combat_ended.connect(_on_combat_ended)
 		combat_manager.mid_battle_dialogue_requested.connect(_on_negotiation)
+		combat_manager.phase_changed.connect(_on_combat_phase_changed)
 
 	_set_state(EncounterState.AVAILABLE)
 	return true
@@ -140,13 +146,10 @@ func start_intro_dialogue() -> void:
 	var diag_graph: Dictionary = encounter_bundle.get("dialogue", {})
 	var start_entry: String = diag_graph["entry_points"]["world_start"]
 	
-	var is_unlocked := false
-	if game_progress != null and game_progress.has_method("is_companion_unlocked") and not character_id.is_empty():
-		is_unlocked = game_progress.is_companion_unlocked(character_id)
-		
-	if settlement_outcome == "kill" and diag_graph["entry_points"].has("post_kill"):
+	var is_unlocked := _is_companion_unlocked()
+	if is_unlocked and settlement_outcome == "kill" and diag_graph["entry_points"].has("post_kill"):
 		start_entry = diag_graph["entry_points"]["post_kill"]
-	elif settlement_outcome.begins_with("spare") and diag_graph["entry_points"].has("post_spare"):
+	elif is_unlocked and settlement_outcome.begins_with("spare") and diag_graph["entry_points"].has("post_spare"):
 		start_entry = diag_graph["entry_points"]["post_spare"]
 	elif is_unlocked and diag_graph["entry_points"].has("unlocked_start"):
 		start_entry = diag_graph["entry_points"]["unlocked_start"]
@@ -158,28 +161,38 @@ func start_intro_dialogue() -> void:
 		{}
 	)
 
+func _is_companion_unlocked() -> bool:
+	return game_progress != null and game_progress.has_method("is_companion_unlocked") \
+		and not character_id.is_empty() and game_progress.is_companion_unlocked(character_id)
+
 func start_combat() -> void:
+	_unlocked_at_combat_start = _is_companion_unlocked()
+	_base_npc_damage_taken = 1.8 if _unlocked_at_combat_start else 1.0
+	_base_player_damage_taken = 0.7 if _unlocked_at_combat_start else 1.0
+	dialogue_manager.reset_battle_cheats()
 	_set_state(EncounterState.COMBAT)
-	var is_unlocked := false
-	if game_progress != null and game_progress.has_method("is_companion_unlocked") and not character_id.is_empty():
-		is_unlocked = game_progress.is_companion_unlocked(character_id)
-		
-	var cheat_data: Dictionary = dialogue_manager.consume_battle_cheats() if dialogue_manager else {}
-	var meta_rules := {
-		"meta_cheat_mode": cheat_data.get("meta_cheat_mode", "none"),
-		"is_unlocked": is_unlocked
-	}
-	combat_manager.start_combat(false, meta_rules)
-	
-	if is_unlocked:
-		npc_pleasure.damage_taken_multiplier = 1.8
-		player_pleasure.damage_taken_multiplier = 0.7
+	combat_manager.start_combat(false, {
+		"npc_damage_taken_multiplier": _base_npc_damage_taken,
+		"player_damage_taken_multiplier": _base_player_damage_taken,
+	})
+	if _unlocked_at_combat_start:
 		combat_manager.log_message_emitted.emit("【识趣玩伴】%s深知自己的玩伴身份，身体对主人的抚弄格外敏感！" % character_name)
-	else:
-		npc_pleasure.damage_taken_multiplier = 1.0
-		player_pleasure.damage_taken_multiplier = 1.0
-		
 	combat_started.emit()
+
+func _clear_round_effects() -> void:
+	npc_pleasure.damage_taken_multiplier = _base_npc_damage_taken
+	player_pleasure.damage_taken_multiplier = _base_player_damage_taken
+	player_pleasure.pleasure_locked = false
+	player_pleasure.pleasure_cap = 100.0
+	combat_manager.temporary_defense_modifier = 0.0
+
+func _on_combat_phase_changed(phase: int) -> void:
+	if phase == TurnCombatManagerClass.Phase.ROUND_START:
+		_clear_round_effects()
+
+func _can_offer_surrender() -> bool:
+	return _unlocked_at_combat_start and (combat_manager.round_count >= SURRENDER_MIN_ROUND \
+		or npc_pleasure.current_pleasure >= npc_pleasure.max_pleasure * SURRENDER_METER_FRACTION)
 
 func start_result_dialogue(winner: String) -> void:
 	_set_state(EncounterState.RESULT_DIALOGUE)
@@ -200,18 +213,25 @@ func _on_negotiation(reason: String) -> void:
 	var graph: Dictionary = encounter_bundle["dialogue"]
 	var manual := reason == "player_manual_call"
 	
-	var is_unlocked := false
-	if game_progress != null and game_progress.has_method("is_companion_unlocked") and not character_id.is_empty():
-		is_unlocked = game_progress.is_companion_unlocked(character_id)
-		
 	var entry_key := "combat_manual" if manual else "combat_edging"
-	if is_unlocked and manual and graph["entry_points"].has("combat_manual_unlocked"):
+	if _unlocked_at_combat_start and manual and graph["entry_points"].has("combat_manual_unlocked"):
 		entry_key = "combat_manual_unlocked"
 		
 	var entry: String = graph["entry_points"].get(entry_key, "")
 	if entry.is_empty():
 		combat_manager.resume_combat_after_dialogue(false, not manual)
 		return
+	if entry_key == "combat_manual_unlocked" and not _can_offer_surrender():
+		# Filter the authored option for this session only; the registry graph is shared.
+		graph = graph.duplicate()
+		var nodes: Dictionary = graph["nodes"].duplicate()
+		var node: Dictionary = nodes[entry].duplicate()
+		var choices: Array = node.get("choices", [])
+		node["choices"] = choices.filter(func(choice: Dictionary) -> bool:
+			return choice.get("set_blackboard", {}).get("meta_cheat_mode") != "instant_surrender" \
+				and choice.get("action") != "surrender")
+		nodes[entry] = node
+		graph["nodes"] = nodes
 	var source := DialogueManagerClass.DialogueSource.MID_BATTLE_MANUAL if manual else DialogueManagerClass.DialogueSource.MID_BATTLE_EDGING
 	var policy := DialogueManagerClass.ResumePolicy.SAME_TURN if manual else DialogueManagerClass.ResumePolicy.NEXT_TURN
 	start_dialogue(graph, entry, source, policy)
@@ -233,6 +253,13 @@ func resolve_service_motion(interaction_type: String, furniture_list: Array = []
 
 func _set_state(new_state: EncounterState) -> void:
 	var old_state := current_state
+	if old_state == EncounterState.COMBAT and new_state != EncounterState.COMBAT:
+		_unlocked_at_combat_start = false
+		_base_npc_damage_taken = 1.0
+		_base_player_damage_taken = 1.0
+		_clear_round_effects()
+		combat_manager.round_action_defense = 0.0
+		dialogue_manager.reset_battle_cheats()
 	current_state = new_state
 	encounter_state_changed.emit(old_state, new_state)
 
@@ -241,9 +268,16 @@ func _on_text_updated(sp: String, tx: String, em: String) -> void:
 
 func _on_dialogue_ended(payload: Dictionary) -> void:
 	var act: String = payload.get("action", "")
+	var source: int = payload.get("source", DialogueManagerClass.DialogueSource.WORLD_INTERACTION)
+	var confirmed: bool = not payload.get("cancelled", false) and not payload.get("failed", false)
 	if current_state == EncounterState.COMBAT:
-		var cheat_data: Dictionary = dialogue_manager.consume_battle_cheats() if dialogue_manager else {}
-		var cheat_mode: String = cheat_data.get("meta_cheat_mode", "none")
+		var manual := source == DialogueManagerClass.DialogueSource.MID_BATTLE_MANUAL
+		var edging := source == DialogueManagerClass.DialogueSource.MID_BATTLE_EDGING
+		if not (manual or edging):
+			return
+		var cheat_data := dialogue_manager.consume_battle_cheats()
+		var cheat_mode: String = cheat_data.get("meta_cheat_mode", "none") \
+			if confirmed and manual and _unlocked_at_combat_start and cheat_data.get("meta_cheat_enabled", false) else "none"
 		if cheat_mode == "distracted":
 			combat_manager.npc_pleasure.damage_taken_multiplier = 2.5
 			combat_manager.log_message_emitted.emit("【战中识趣】%s故意走神了！受到的快感倍率提升至 2.5 倍！" % character_name)
@@ -255,11 +289,12 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 			combat_manager.player_pleasure.damage_taken_multiplier = 0.4
 			combat_manager.log_message_emitted.emit("【战中识趣】防线强化！主人受到的快感大幅降低！")
 			
-		if cheat_data.get("edging_endure", false):
+		if confirmed and cheat_data.get("edging_endure", false):
 			combat_manager.temporary_defense_modifier = 0.5
 			combat_manager.log_message_emitted.emit("【咬牙忍耐】主人集中精神咬牙忍耐，本轮快感减免 50%！")
 			
-		var instant: bool = (cheat_mode == "instant_surrender" or act == "surrender")
+		var instant := confirmed and manual and _can_offer_surrender() \
+			and (cheat_mode == "instant_surrender" or act == "surrender")
 		var next_turn: bool = payload.get("resume_policy") == DialogueManagerClass.ResumePolicy.NEXT_TURN
 		combat_manager.resume_combat_after_dialogue(instant, next_turn)
 	elif act == "enter_combat":
@@ -277,6 +312,8 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 		if current_state == EncounterState.INTRO_DIALOGUE:
 			_set_state(EncounterState.AVAILABLE)
 		elif current_state == EncounterState.RESULT_DIALOGUE:
+			if confirmed and source == DialogueManagerClass.DialogueSource.POST_BATTLE_RESULT and last_battle_winner == "player":
+				settlement_outcome = "close"
 			_set_state(EncounterState.COMPLETED)
 
 func finish_service() -> void:
