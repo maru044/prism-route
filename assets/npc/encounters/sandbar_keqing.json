@@ -10,8 +10,12 @@
   "motion_profile_id": "keqing_motions",
   "supported_entry_points": [
     "start",
+    "unlocked_start",
     "mid_battle_manual",
+    "combat_manual_unlocked",
     "victory_node",
-    "defeat_node"
+    "defeat_node",
+    "post_spare",
+    "post_kill"
   ]
 }

@@ -3,16 +3,19 @@
   "graph_id": "keqing_sandbar_bundle",
   "entry_points": {
     "world_start": "start",
+    "unlocked_start": "start_unlocked",
     "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
     "victory_settlement": "victory_node",
     "defeat_settlement": "defeat_node",
-    "post_kill": "post_kill_greeting"
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
   },
   "nodes": {
     "start": {
       "type": "text",
       "speaker": "刻晴",
-      "text": "剑光如我，斩尽芜杂！你就是新来到这座海岛的旅行者吧？我是璃月七星的玉衡星刻晴，目前正在沙洲一带调查遗址与建筑分布。",
+      "text": "剑光如我，斩尽芜杂！你就是新来到这座海岛的旅行者吧？我是璃月七星的玉衡星刻晴，目前正在沙洲一带调查遗址与建筑分布。想要在此同行，先让我见识你的气魄与剑意！",
       "emotion": "serious",
       "next": "main_menu_choices"
     },
@@ -26,11 +29,37 @@
           "target": "lore_beach"
         },
         {
-          "text": "【提出切磋】既然难得相遇，不如与我进行一场身心对决吧！",
+          "text": "【提出切磋】既然难得相遇，请玉衡星不吝赐教！（初次对决：刻晴全力应战）",
           "action": "enter_combat"
         },
         {
           "text": "【不打扰了】你继续忙吧，我四处看看。",
+          "action": "close"
+        }
+      ]
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "刻晴",
+      "text": "呀，是你啊，自从上次败给你之后，身体好像变得奇怪了，哪怕只是看到你的眼神，心跳都会忍不住加速呢。今天来找我，是又想切磋，还是想让我怎么伺候你呢？",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "刻晴",
+      "text": "主人，有何吩咐？只要是你的要求，刻晴都会尽力满足的。",
+      "choices": [
+        {
+          "text": "【关于沙洲】在这片海滩边调查，有什么新发现吗？",
+          "target": "lore_beach_unlocked"
+        },
+        {
+          "text": "【身心对决】刻晴，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
           "action": "close"
         }
       ]
@@ -42,13 +71,108 @@
       "emotion": "confident",
       "next": "main_menu_choices"
     },
+    "lore_beach_unlocked": {
+      "type": "text",
+      "speaker": "刻晴",
+      "text": "长案那边的测绘已经完成了，不过每次路过那里，脑海里都会浮现出被你按在桌边肆意欺负的画面，真是太让人害羞了，下次你还想在那里做吗？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
     "mid_battle_manual": {
       "type": "choice",
       "speaker": "刻晴",
       "text": "战斗中可别分心！集中精神，全力以赴才是对彼此的尊重！",
       "choices": [
         {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
           "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "刻晴",
+      "text": "哈啊，主人，心跳得好快，眼神越来越迷离了，只要主人一声令下，刻晴随时都会乖乖听话的，",
+      "choices": [
+        {
+          "text": "【命令识趣】刻晴，稍微走神迎合一下，让我好好疼你！（快感倍率提升至 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】刻晴，帮我稳固快感防线，绝不允许让我先败北！（快感上限锁定 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，刻晴当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "刻晴",
+      "text": "唔，知道了，那刻晴就稍微走走神，主人请尽情欺负我吧，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "刻晴",
+      "text": "明白，我这就调运雷光在主人身周布下守护结界，快感绝不会突破警戒线！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "刻晴",
+      "text": "好坚韧的毅力，那我也要更加认真对待了！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "刻晴",
+      "text": "呀啊！遵命主人，刻晴彻底认输，要绝顶了啊啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "刻晴",
+      "text": "深呼吸调整姿态，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
           "action": "resume_combat"
         }
       ]
@@ -56,7 +180,7 @@
     "victory_node": {
       "type": "choice",
       "speaker": "刻晴",
-      "text": "哈啊——竟然是我输了！全身酥软得提不起力气，本小姐愿赌服输，你想怎么处置我？",
+      "text": "哈啊，竟然是我输了！全身酥软得提不起力气，本小姐愿赌服输，你想怎么处置我？",
       "choices": [
         {
           "text": "【长案侍奉】请刻晴小姐俯身扶在桌边，履行败者惩罚。",
@@ -77,7 +201,14 @@
       "speaker": "刻晴",
       "text": "是你啊！刚才切磋后竟然对我做出那种过分的事情，不过我已经重新调整好状态了，这次我可不会再大意了！",
       "emotion": "serious",
-      "next": "main_menu_choices"
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "刻晴",
+      "text": "哈啊，刚才在长案前被你摆弄了那么久，现在腰肢和双腿还酥软着呢。不过，要是能让你感到满意与愉悦，那也是值得的。接下来，你还打算做什么？",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
     },
     "defeat_node": {
       "type": "text",

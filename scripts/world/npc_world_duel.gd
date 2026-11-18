@@ -81,6 +81,8 @@ func initialize(host: Node3D, p_world: Node3D, p_runtime: Runtime) -> void:
 			game_progress = world.get("progress")
 	if game_progress == null:
 		game_progress = load("res://scripts/progress/game_progress.gd").new()
+	if runtime != null and "game_progress" in runtime:
+		runtime.game_progress = game_progress
 	anchor = runtime.create_anchor(host, "DuelNPC")
 	actor = runtime.create_idle_actor(anchor, "IdleActor", 33)
 	add_to_group(WorldControl.GROUP_INPUT_BLOCKERS)
