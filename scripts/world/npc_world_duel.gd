@@ -57,10 +57,29 @@ var cam_yaw: float = 0.0
 var cam_pitch: float = 0.2
 var cam_focal_point: Vector3 = Vector3.ZERO
 var is_dragging_cam: bool = false
+var game_progress: RefCounted = null
+
+func _set_actor_visible(is_vis: bool) -> void:
+	if is_instance_valid(actor):
+		actor.visible = is_vis
+		if actor.has_method("set_playback_active"):
+			actor.set_playback_active(is_vis)
+
+func _unlock_keqing() -> void:
+	if game_progress and game_progress.has_method("unlock_companion"):
+		game_progress.unlock_companion("keqing")
 
 func initialize(host: Node3D, p_world: Node3D, p_runtime: Runtime) -> void:
 	world = p_world
 	runtime = p_runtime
+
+	if world != null:
+		if "game_progress" in world and world.get("game_progress") != null:
+			game_progress = world.get("game_progress")
+		elif "progress" in world and world.get("progress") != null:
+			game_progress = world.get("progress")
+	if game_progress == null:
+		game_progress = load("res://scripts/progress/game_progress.gd").new()
 	anchor = runtime.create_anchor(host, "DuelNPC")
 	actor = runtime.create_idle_actor(anchor, "IdleActor", 33)
 	add_to_group(WorldControl.GROUP_INPUT_BLOCKERS)
@@ -270,13 +289,13 @@ func _on_phase_changed(phase: int) -> void:
 	hud.set_input_enabled(phase == TurnCombatManager.Phase.PLAYER_INPUT)
 
 func _on_encounter_state_changed(_old: int, state: int) -> void:
-	var busy := is_world_input_locked()
 	hud.visible = (state == Runtime.EncounterState.COMBAT)
 	if state == Runtime.EncounterState.COMBAT:
 		_set_combat_visuals(true)
 	elif not is_service_active:
 		if is_combat_active and state != Runtime.EncounterState.RESULT_DIALOGUE:
 			_set_combat_visuals(false)
+	var busy := is_world_input_locked()
 	if not busy:
 		panel.hide()
 	world.set_encounter_ui_active(busy)
@@ -346,8 +365,7 @@ func _set_combat_visuals(active: bool) -> void:
 			is_combat_active = false
 			return
 
-		if is_instance_valid(actor):
-			actor.visible = false
+		_set_actor_visible(false)
 		if is_instance_valid(npc_body):
 			npc_body.collision_layer = 0
 
@@ -371,8 +389,7 @@ func _set_combat_visuals(active: bool) -> void:
 				master_paired_actor = null
 
 		if not is_service_active and not is_ragdoll_active:
-			if is_instance_valid(actor):
-				actor.visible = true
+			_set_actor_visible(true)
 			if is_instance_valid(npc_body):
 				npc_body.collision_layer = NPC_SOLID_LAYER
 			if is_instance_valid(char_node):
@@ -380,12 +397,11 @@ func _set_combat_visuals(active: bool) -> void:
 				if "camera" in char_node and char_node.camera:
 					char_node.camera.current = true
 
-func _on_combat_ended(winner: String, _loser: String, _reason: String) -> void:
-	if winner == "NPC":
-		_set_combat_visuals(false)
-		_handle_player_defeat()
+func _on_combat_ended(_winner: String, _loser: String, _reason: String) -> void:
+	pass
 
 func _handle_player_defeat() -> void:
+	_set_combat_visuals(false)
 	var SITES := load("res://scripts/world/npc_preview_sites.gd")
 	if is_instance_valid(world):
 		var respawn_data: Dictionary = SITES.resolve_battle_respawn(world, "沙洲度假遗址", "keqing")
@@ -395,15 +411,27 @@ func _handle_player_defeat() -> void:
 			char_node.global_position = target_pos
 			if "heading" in respawn_data:
 				char_node.global_rotation.y = respawn_data["heading"]
+			if "camera" in char_node and char_node.camera:
+				char_node.camera.current = true
 		world.set_encounter_ui_active(false)
 		world._sync_actor_controls()
 		if is_instance_valid(char_node) and char_node.has_method("set_control_enabled"):
 			char_node.set_control_enabled(true)
+	if is_instance_valid(runtime):
+		runtime.last_battle_winner = ""
+		runtime._set_state(Runtime.EncounterState.AVAILABLE)
 
 func _on_dialogue_ended(payload: Dictionary) -> void:
 	if not runtime.dialogue_manager.session_active:
 		panel.hide()
 	var act: String = payload.get("action", "")
+	var is_player_victory := (runtime != null and runtime.last_battle_winner == "player")
+	var is_player_defeat := (runtime != null and not runtime.last_battle_winner.is_empty() and runtime.last_battle_winner != "player")
+
+	# Three victory branches all permanently unlock Keqing
+	if is_player_victory and act in ["spare_desk", "desk_service", "spare", "kill", "close"]:
+		_unlock_keqing()
+
 	if act in ["spare_desk", "desk_service", "spare"]:
 		begin_furniture_service_staging("desk_service")
 	elif act == "kill":
@@ -414,6 +442,22 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 			finish_furniture_service()
 		else:
 			begin_furniture_service_staging("desk_service")
+	elif act == "close":
+		_set_combat_visuals(false)
+		if is_player_defeat:
+			_handle_player_defeat()
+		else:
+			if is_instance_valid(world):
+				world.set_encounter_ui_active(false)
+				world._sync_actor_controls()
+			var char_node: Node = world.character if is_instance_valid(world) else null
+			if is_instance_valid(char_node):
+				if char_node.has_method("set_control_enabled"):
+					char_node.set_control_enabled(true)
+				if "camera" in char_node and char_node.camera:
+					char_node.camera.current = true
+			if is_instance_valid(runtime):
+				runtime.last_battle_winner = ""
 	elif act == "finish":
 		_set_combat_visuals(false)
 		if is_instance_valid(runtime):
@@ -488,8 +532,7 @@ func begin_furniture_service_staging(interaction_type: String = "desk_service") 
 		if "collision_mask" in char_node:
 			char_node.collision_mask = 0
 
-	if is_instance_valid(actor):
-		actor.visible = false
+	_set_actor_visible(false)
 	if is_instance_valid(npc_body):
 		npc_body.collision_layer = 0
 
@@ -578,8 +621,7 @@ func abort_service_staging(reason: String = "") -> void:
 	if is_instance_valid(master_paired_actor):
 		master_paired_actor.queue_free()
 		master_paired_actor = null
-	if is_instance_valid(actor):
-		actor.visible = true
+	_set_actor_visible(true)
 	if is_instance_valid(npc_body):
 		npc_body.collision_layer = NPC_SOLID_LAYER
 	var char_node: Node = world.character if is_instance_valid(world) else null
@@ -618,8 +660,7 @@ func finish_furniture_service() -> void:
 	if is_instance_valid(master_paired_actor):
 		master_paired_actor.queue_free()
 		master_paired_actor = null
-	if is_instance_valid(actor):
-		actor.visible = true
+	_set_actor_visible(true)
 	var char_node: Node = world.character if is_instance_valid(world) else null
 	if is_instance_valid(char_node):
 		char_node.visible = true
@@ -687,8 +728,7 @@ func _execute_settlement_kill() -> void:
 	hud.hide()
 	prompt.hide()
 
-	if is_instance_valid(actor):
-		actor.visible = false
+	_set_actor_visible(false)
 	if is_instance_valid(npc_body):
 		npc_body.collision_layer = 0
 
@@ -734,11 +774,10 @@ func _respawn_keqing_after_kill() -> void:
 		anchor.global_position = runtime.spawn_position
 		anchor.global_rotation.y = deg_to_rad(runtime.spawn_heading)
 
-	if is_instance_valid(actor):
-		actor.visible = true
-		if is_instance_valid(anchor):
-			actor.global_position = anchor.global_position
-			actor.global_rotation.y = anchor.global_rotation.y
+	_set_actor_visible(true)
+	if is_instance_valid(anchor):
+		actor.global_position = anchor.global_position
+		actor.global_rotation.y = anchor.global_rotation.y
 
 	if is_instance_valid(npc_body):
 		npc_body.collision_layer = NPC_SOLID_LAYER

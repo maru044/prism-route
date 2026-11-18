@@ -190,6 +190,79 @@ func _run() -> void:
 		return
 	print("KEQING_WORLD_ENCOUNTER_PASS winner=", winner, " rounds=", combat.round_count)
 
+	if not _expect(world.game_progress.is_companion_unlocked("keqing"), "Keqing should be unlocked after victory settlement"):
+		return
+	print("KEQING_UNLOCK_PASS")
+
+	# Test Victory Branch: "点到为止" (close action)
+	# Trigger second encounter dialogue -> combat -> victory -> pick choice 3 (close)
+	world.character.global_position = duel.anchor.global_position + Vector3(0.5, 0.0, 1.2)
+	await process_frame
+	await process_frame
+	if not _expect(duel.prompt.visible, "Keqing interaction prompt was not shown for second encounter"):
+		return
+	_key(KEY_E)
+	await process_frame
+	_key(KEY_ENTER)
+	_key(KEY_2) # Enter combat
+	await process_frame
+	combat.animation_delays = false
+	for i in range(16):
+		if combat.is_resolved:
+			break
+		duel.hud._open_battle()
+		duel.hud._show_group("toy")
+		duel.hud._choose_action(duel.hud.ACTIONS.toy_vibe)
+		await process_frame
+	if not _expect(combat.is_resolved and duel.panel.visible and runtime.current_state == Runtime.EncounterState.RESULT_DIALOGUE,
+			"Combat did not resolve to victory result dialogue"):
+		return
+	_key(KEY_3) # Pick choice 3: "点到为止" (close)
+	await process_frame
+	await process_frame
+	if not _expect(not duel.panel.visible and not duel.hud.visible and not dialogue.session_active
+			and runtime.current_state == Runtime.EncounterState.COMPLETED and not world.encounter_ui_active
+			and world.is_world_input_allowed() and world.character.is_physics_processing()
+			and world.character.visible and world.character.is_control_enabled()
+			and not duel.service_camera.current
+			and world.character.camera.current,
+			"Victory '点到为止' did not cleanly restore world controls"):
+		return
+	print("KEQING_VICTORY_CLOSE_PASS")
+
+	# Test Defeat Branch: Player defeated in combat -> confirm result dialogue -> respawn at sandbar pavilion
+	world.character.global_position = duel.anchor.global_position + Vector3(0.5, 0.0, 1.2)
+	await process_frame
+	await process_frame
+	_key(KEY_E)
+	await process_frame
+	_key(KEY_ENTER)
+	_key(KEY_2) # Enter combat
+	await process_frame
+	combat.animation_delays = false
+	# Simulate player defeat
+	combat.combat_ended.emit("刻晴", "player", "player_climax")
+	await process_frame
+	if not _expect(duel.panel.visible and runtime.current_state == Runtime.EncounterState.RESULT_DIALOGUE,
+			"Defeat did not show defeat result dialogue"):
+		return
+	_key(KEY_ENTER) # Confirm defeat dialogue (close action)
+	await process_frame
+	await process_frame
+	var expected_sandbar_spawn: Vector3 = Vector3(-831.140, 0.200, -128.480)
+	var spawn_dist: float = world.character.global_position.distance_to(expected_sandbar_spawn)
+	if not _expect(spawn_dist < 1.0, "Player was not teleported to sandbar pavilion respawn point (dist=%f)" % spawn_dist):
+		return
+	if not _expect(not duel.panel.visible and not duel.hud.visible and not dialogue.session_active
+			and runtime.current_state == Runtime.EncounterState.AVAILABLE and not world.encounter_ui_active
+			and world.is_world_input_allowed() and world.character.is_physics_processing()
+			and world.character.visible and world.character.is_control_enabled()
+			and not duel.service_camera.current
+			and world.character.camera.current,
+			"Defeat respawn did not cleanly restore world controls"):
+		return
+	print("KEQING_DEFEAT_RESPAWN_PASS dist_to_spawn=", spawn_dist)
+
 	# Fault Injection Tests for Keqing Service Staging
 	# Fault 1: Missing furniture / interaction type
 	runtime.current_state = Runtime.EncounterState.SETTLEMENT
