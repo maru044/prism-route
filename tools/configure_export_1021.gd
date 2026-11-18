@@ -1,5 +1,6 @@
 extends SceneTree
 ## Resolve resource dependencies directly; headless filesystem caches can omit them.
+const ROSTER := preload("res://scripts/characters/character_roster_database.gd")
 const ROOTS := [
 	"res://scenes/ui/title_screen.tscn",
 	"res://scenes/main.tscn",
@@ -12,6 +13,9 @@ func run() -> void:
 	var config:=ConfigFile.new()
 	assert(config.load("res://export_presets.cfg")==OK)
 	var queue: Array[String]=[];queue.assign(ROOTS)
+	# The gallery loads textures by character ID, so dependency scanning cannot discover them.
+	for entry: Dictionary in ROSTER.get_all_entries():
+		queue.append(ROSTER.PORTRAIT_DIR.path_join(entry.file))
 	for clip in ["A01","A05","A06","A18","A19","A20","A25"]:
 		queue.append("res://assets/characters/motion_review/"+clip+".tres")
 	for name in ["painted_clumps_v1.png","painted_small_canopy_8view_v1.png","painted_broad_canopy_8view_v1.png","painted_upright_canopy_8view_v1.png"]:

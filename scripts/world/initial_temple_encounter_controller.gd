@@ -206,7 +206,7 @@ func initialize(
 	defeat_count = game_progress.initial_temple_defeat_count
 	if not game_progress.settlement_outcome.is_empty():
 		settlement_outcome = game_progress.settlement_outcome
-	companion_unlocked = game_progress.is_companion_unlocked("sparkle") or settlement_outcome == "kill"
+	companion_unlocked = game_progress.is_companion_unlocked("sparkle")
 		
 	if temple_node != null:
 		var f_instances = temple_node.get("furniture_instances")
@@ -1043,14 +1043,6 @@ func _execute_settlement_kill() -> void:
 	_set_combat_visuals(false)
 	
 	is_ragdoll_active = true
-	tutorial_completed = true
-	companion_unlocked = true
-	settlement_outcome = "kill"
-	if game_progress:
-		if game_progress.has_method("mark_tutorial_completed"):
-			game_progress.mark_tutorial_completed()
-		if game_progress.has_method("set_settlement_outcome"):
-			game_progress.set_settlement_outcome("kill")
 	
 	if npc_avatar:
 		npc_avatar.visible = false
@@ -1073,8 +1065,7 @@ func _execute_settlement_kill() -> void:
 			corpse_interaction_handler.activate(world, corpse_actor, interact_prompt, "花火")
 		
 	print("【大世界结算】主人选择【杀掉】花火！花火化为真实物理尸体倒在神殿地板上，同时永久解锁为可用伙伴，离开30米后将刷新重置！")
-	_set_encounter_state(EncounterState.COMPLETED)
-	settlement_completed.emit("kill")
+	_complete_settlement("kill")
 
 func _get_fixture_furniture() -> Array:
 	var list: Array = []
@@ -1422,8 +1413,6 @@ func _begin_furniture_service_staging(service_type: String = "virgin") -> void:
 		master_combat_actor.seek(0.0)
 	_set_combat_visuals(true)
 	_set_encounter_state(EncounterState.FURNITURE_SERVICE_ACTIVE)
-	companion_unlocked = true
-	tutorial_completed = true
 	
 	if service_hud:
 		service_hud.text = title_text + "\n右键环绕视角 | 滚轮缩放视距 | 中键复位视角 | WASD微调对焦 | 按【E】直接完成侍奉"
@@ -1480,19 +1469,19 @@ func _finish_furniture_service() -> void:
 		npc_body.global_position = exit_npc_pos
 		npc_body.global_rotation.y = exit_npc_yaw
 		
-	_set_encounter_state(EncounterState.COMPLETED)
+	_complete_settlement(settlement_outcome)
+	print("[InitialTempleEncounterController] Finished furniture service, restored control and local positioning.")
+
+func _complete_settlement(outcome: String) -> void:
+	settlement_outcome = outcome
 	tutorial_completed = true
 	companion_unlocked = true
 	if game_progress:
-		if game_progress.has_method("mark_tutorial_completed"):
-			game_progress.mark_tutorial_completed()
-		if game_progress.has_method("unlock_companion"):
-			game_progress.unlock_companion("sparkle")
-		if game_progress.has_method("set_settlement_outcome"):
-			game_progress.set_settlement_outcome(settlement_outcome)
-			
-	settlement_completed.emit(settlement_outcome)
-	print("[InitialTempleEncounterController] Finished furniture service, restored control and local positioning.")
+		game_progress.mark_tutorial_completed()
+		game_progress.set_settlement_outcome(outcome)
+		game_progress.unlock_companion("sparkle")
+	_set_encounter_state(EncounterState.COMPLETED)
+	settlement_completed.emit(outcome)
 
 func _execute_settlement_spare(service_type: String = "virgin") -> void:
 	_begin_furniture_service_staging(service_type)

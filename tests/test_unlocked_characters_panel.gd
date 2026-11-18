@@ -10,6 +10,7 @@ func _init() -> void:
 	print("--- Running test_unlocked_characters_panel ---")
 	test_roster_database()
 	test_unlocked_characters_panel_standalone()
+	test_legacy_sparkle_save()
 	test_settings_menu_integration()
 	print("--- ALL UNLOCKED CHARACTERS TESTS PASSED ---")
 	quit(0)
@@ -123,6 +124,24 @@ func test_unlocked_characters_panel_standalone() -> void:
 
 	panel.queue_free()
 	print("  ✓ UnlockedCharactersPanel standalone verified successfully")
+
+func test_legacy_sparkle_save() -> void:
+	var legacy := GAME_PROGRESS.new()
+	legacy.from_dict({"initial_temple_defeat_count": 1, "companion_unlocks": ["keqing"]})
+	assert(not legacy.is_companion_unlocked("sparkle"), "A tutorial defeat alone must not unlock Sparkle")
+	legacy.from_dict({"tutorial_completed": true, "settlement_outcome": "kill", "companion_unlocks": ["keqing"]})
+	assert(legacy.companion_unlocks == ["keqing", "sparkle"], "Legacy settlement must backfill Sparkle only")
+	legacy.from_dict(legacy.to_dict())
+	assert(legacy.companion_unlocks == ["keqing", "sparkle"], "Reload must not duplicate the backfilled ID")
+	var panel := UNLOCKED_PANEL.new()
+	root.add_child(panel)
+	panel.open(legacy)
+	var sparkle_button: Button = panel._char_buttons["sparkle"]
+	sparkle_button.pressed.emit()
+	assert(panel._name_label.text == "花火" and panel._portrait_rect.texture != null,
+		"The unlocked-only list must show the migrated Sparkle entry and portrait")
+	panel.queue_free()
+	print("  ✓ Legacy Sparkle settlement restored in the showcase")
 
 func test_settings_menu_integration() -> void:
 	print("[Test] Verifying Settings Menu integration...")

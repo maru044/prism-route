@@ -222,6 +222,8 @@ func _run_overworld_flow() -> void:
 	assert(encounter.npc_avatar.visible == false, "Living NPC avatar must be hidden")
 	assert(ruin.npc_body.collision_layer == 0, "Standing NPC collision must be disabled")
 	assert(encounter.companion_unlocked == true, "Companion must also be unlocked after kill")
+	if not _verify_sparkle_showcase(world, "kill"):
+		return
 	if not _verify_player_control(world, "victory settlement"):
 		return
 	print("Kill settlement verified: Corpse spawned at ", encounter.get_corpse_position())
@@ -261,6 +263,7 @@ func _run_overworld_flow() -> void:
 	print("Interact prompt dynamically follows moved NPC!")
 
 	# Trigger dialogue with moved NPC, enter combat, and test Spare branch
+	world.game_progress.companion_unlocks.erase("sparkle")
 	encounter.start_encounter_dialogue()
 	for i in range(5):
 		await process_frame
@@ -297,12 +300,41 @@ func _run_overworld_flow() -> void:
 
 	assert(encounter.current_state == encounter.EncounterState.COMPLETED, "State must reach COMPLETED")
 	assert(encounter.companion_unlocked == true, "Companion must be unlocked")
+	if not _verify_sparkle_showcase(world, "spare_virgin"):
+		return
 	if not _verify_player_control(world, "furniture settlement"):
 		return
 	print("Victory and Spare settlement reached COMPLETED state successfully!")
 
 	print("=== ALL OVERWORLD TEMPLE WORKFLOW CHECKS PASSED 100%! ===")
 	quit(0)
+
+func _verify_sparkle_showcase(world: Node3D, outcome: String) -> bool:
+	var saved := GameProgress.new()
+	saved.from_dict(world.game_progress.to_dict())
+	if not world.game_progress.is_companion_unlocked("sparkle") or not saved.is_companion_unlocked("sparkle"):
+		push_error("Sparkle missing from shared or saved progress after " + outcome)
+		quit(1)
+		return false
+	var settings = world.settings_panel
+	settings.open(1)
+	var saves_list: VBoxContainer = settings._pages[1].get_child(2)
+	var gallery_button: Button = saves_list.get_child(3)
+	gallery_button.pressed.emit()
+	var gallery = settings._unlocked_panel
+	var shown: bool = gallery.visible and gallery._char_buttons.has("sparkle")
+	if shown:
+		var character_button: Button = gallery._char_buttons["sparkle"]
+		character_button.pressed.emit()
+		shown = gallery._name_label.text == "花火" and gallery._portrait_rect.texture != null \
+			and "假面愚者" in gallery._persona_text.text
+	settings.close()
+	if not shown:
+		push_error("Settings gallery did not show Sparkle portrait and profile after " + outcome)
+		quit(1)
+		return false
+	print("TEMPLE_SPARKLE_SHOWCASE_PASS ", outcome)
+	return true
 
 func _verify_player_control(world: Node3D, stage: String) -> bool:
 	var player = world.character

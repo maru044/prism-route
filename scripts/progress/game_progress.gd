@@ -55,6 +55,9 @@ func from_dict(data: Dictionary) -> void:
 	initial_temple_defeat_count = maxi(0, int(defeats)) if (defeats is float or defeats is int) and is_finite(defeats) else 0
 	settlement_outcome = str(data.get("settlement_outcome", ""))
 	companion_unlocks = _saved_ids(data.get("companion_unlocks"))
+	# Legacy temple kills saved the completed outcome without the companion ID.
+	if tutorial_completed and settlement_outcome == "kill" and not companion_unlocks.has("sparkle"):
+		companion_unlocks.append("sparkle")
 	world_unlocks = _saved_ids(data.get("world_unlocks"))
 
 func _saved_ids(values: Variant) -> Array[String]:
