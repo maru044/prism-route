@@ -25,6 +25,9 @@
     },
     "material_id": {
       "type": "string"
+    },
+    "environment_collision_enabled": {
+      "type": "boolean"
     }
   },
   "additionalProperties": false

@@ -8,6 +8,10 @@ signal initialized
 @export var auto_play := false
 @export_enum("height_scaled", "shared_world") var translation_policy := "height_scaled"
 @export_flags_3d_physics var environment_mask: int = 1
+@export var environment_collision_enabled: bool = true:
+	set(val):
+		environment_collision_enabled = val
+		_update_spring_environment_collision()
 var character: Node3D
 var skeleton: Skeleton3D
 var player: AnimationPlayer
@@ -42,6 +46,33 @@ var _skeleton_in_actor := Transform3D.IDENTITY
 var preview_model: PackedScene
 var preview_pose_only := false
 var forearm_contact_lift_m := 0.0
+
+func _is_spring_radius_valid(spring: Resource) -> bool:
+	if not ("hit_radius_scale" in spring and "hit_radius" in spring):
+		return false
+	if spring.hit_radius_scale <= 0.0001:
+		return false
+	if spring.hit_radius.is_empty():
+		return false
+	for r in spring.hit_radius:
+		if r <= 0.0001:
+			return false
+	return true
+
+func _update_spring_environment_collision() -> void:
+	for spring in all_springs:
+		var has_valid_radius := _is_spring_radius_valid(spring)
+		spring.enable_environment_collision = environment_collision_enabled and (environment_mask != 0) and has_valid_radius
+		spring.environment_collision_mask = environment_mask
+	if simulation and ready_for_review:
+		var has_any_env := false
+		if environment_collision_enabled and environment_mask != 0:
+			for spring in _active_springs:
+				if spring.enable_environment_collision:
+					has_any_env = true
+					break
+		simulation.set_environment_collision_enabled(has_any_env)
+		simulation.set_environment_collision_mask(environment_mask)
 
 func _ready() -> void:
 	motion = load(motion_resource) as Animation
@@ -103,7 +134,8 @@ func _ready() -> void:
 		collider_groups = controller.collider_groups
 		for spring in controller.spring_bones:
 			var copy: Resource = spring.duplicate(false)
-			copy.enable_environment_collision = true
+			var has_valid_radius := _is_spring_radius_valid(copy)
+			copy.enable_environment_collision = environment_collision_enabled and (environment_mask != 0) and has_valid_radius
 			copy.environment_collision_mask = environment_mask
 			all_springs.append(copy)
 			for bone_name in copy.joint_nodes:
@@ -192,7 +224,13 @@ func seek(value: float) -> void:
 		simulation_reset_count += 1
 		simulation.setup(_active_springs, collider_groups)
 		simulation.set_enable_body_collisions(true)
-		simulation.set_environment_collision_enabled(true)
+		var has_any_env := false
+		if environment_collision_enabled and environment_mask != 0:
+			for spring in _active_springs:
+				if spring.enable_environment_collision:
+					has_any_env = true
+					break
+		simulation.set_environment_collision_enabled(has_any_env)
 		simulation.set_environment_collision_mask(environment_mask)
 		simulation.active = not _active_springs.is_empty()
 

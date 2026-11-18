@@ -1120,6 +1120,22 @@ func is_world_input_allowed() -> bool:
 		return false
 	return true
 
+func get_focused_interactive_npc() -> Node:
+	var peers := get_tree().get_nodes_in_group("world_interactive_npcs")
+	var best_node: Node = null
+	var best_dist: float = INF
+	for peer in peers:
+		if is_instance_valid(peer) and peer.has_method("get_interaction_distance"):
+			var dist: float = peer.get_interaction_distance()
+			if is_finite(dist):
+				if dist < best_dist - 0.0001:
+					best_dist = dist
+					best_node = peer
+				elif absf(dist - best_dist) <= 0.0001 and (best_node == null or peer.get_instance_id() < best_node.get_instance_id()):
+					best_dist = dist
+					best_node = peer
+	return best_node
+
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_world_input_allowed():
 		return

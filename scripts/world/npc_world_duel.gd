@@ -89,6 +89,7 @@ func initialize(host: Node3D, p_world: Node3D, p_runtime: Runtime) -> void:
 	anchor = runtime.create_anchor(host, "DuelNPC")
 	actor = runtime.create_idle_actor(anchor, "IdleActor", 33)
 	add_to_group(WorldControl.GROUP_INPUT_BLOCKERS)
+	add_to_group("world_interactive_npcs")
 
 	npc_body = StaticBody3D.new()
 	npc_body.name = "NPCBody"
@@ -205,21 +206,21 @@ func get_active_custom_camera() -> Camera3D:
 		return service_camera
 	return null
 
-func _can_interact() -> bool:
+func get_interaction_distance() -> float:
 	if is_ragdoll_active or is_service_active or is_combat_active:
-		return false
+		return INF
 	if not (is_instance_valid(world) and world.test_ready and world.character_mode and not world.free_mode \
 		and not world.has_llm_panel_open() and not world.encounter_ui_active and world.is_world_input_allowed()):
-		return false
+		return INF
 	var char_node: Node = world.character
 	if not is_instance_valid(char_node) or not is_instance_valid(actor) or not is_instance_valid(actor.character):
-		return false
+		return INF
 	var target_pos: Vector3 = anchor.global_position if is_instance_valid(anchor) else actor.global_position
 	var player_pos: Vector3 = char_node.global_position
 	var horiz_dist: float = Vector2(player_pos.x - target_pos.x, player_pos.z - target_pos.z).length()
 	var vert_dist: float = absf(player_pos.y - target_pos.y)
 	if horiz_dist > 2.8 or vert_dist > 1.5:
-		return false
+		return INF
 
 	var world_3d: World3D = world.get_world_3d() if world.has_method("get_world_3d") else null
 	if world_3d and world_3d.direct_space_state:
@@ -236,8 +237,30 @@ func _can_interact() -> bool:
 		ray_query.collision_mask = 1
 		var hit := world_3d.direct_space_state.intersect_ray(ray_query)
 		if not hit.is_empty():
-			return false
+			return INF
+	return horiz_dist
+
+func _is_best_interaction_target() -> bool:
+	var my_dist := get_interaction_distance()
+	if not is_finite(my_dist):
+		return false
+	if is_instance_valid(world) and world.has_method("get_focused_interactive_npc"):
+		return world.get_focused_interactive_npc() == self
+	var peers := get_tree().get_nodes_in_group("world_interactive_npcs")
+	for peer in peers:
+		if peer == self or not is_instance_valid(peer):
+			continue
+		if peer.has_method("get_interaction_distance"):
+			var peer_dist: float = peer.get_interaction_distance()
+			if is_finite(peer_dist):
+				if peer_dist < my_dist - 0.0001:
+					return false
+				elif absf(peer_dist - my_dist) <= 0.0001 and peer.get_instance_id() < get_instance_id():
+					return false
 	return true
+
+func _can_interact() -> bool:
+	return _is_best_interaction_target()
 
 func _process(delta: float) -> void:
 	if is_ragdoll_active:
@@ -546,6 +569,7 @@ func begin_furniture_service_staging(interaction_type: String = "desk_service") 
 	npc_paired_actor.forearm_contact_lift_m = float(resolution["binding"].get("role_a_forearm_contact_lift_m", 0.0))
 	npc_paired_actor.auto_play = true
 	npc_paired_actor.environment_mask = 33
+	npc_paired_actor.environment_collision_enabled = bool(runtime.encounter_bundle.get("avatar", {}).get("environment_collision_enabled", true))
 	npc_paired_actor.initialized.connect(func():
 		if is_instance_valid(npc_paired_actor) and npc_paired_actor.character:
 			MTOON.apply(npc_paired_actor.character, runtime.encounter_bundle["avatar"]["material_id"])

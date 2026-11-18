@@ -11,8 +11,12 @@
       "contact_anchor": "Anchor_Seat",
       "approach_anchor": "Anchor_Front",
       "role_a_placement": {
-        "offset": [0.0, 0.0, -0.45],
+        "offset": [0.0, -0.42, -0.45],
         "yaw_degrees": 180.0
+      },
+      "role_b_placement": {
+        "offset": [0.0, -0.42, 0.0],
+        "yaw_degrees": 0.0
       }
     },
     "ground_service": {

@@ -131,6 +131,7 @@ func create_idle_actor(anchor: Marker3D, actor_name: String, environment: int) -
 	actor.model_resource = avatar["model_resource"]
 	actor.motion_resource = avatar["idle_motion"]
 	actor.environment_mask = environment
+	actor.environment_collision_enabled = bool(avatar.get("environment_collision_enabled", true))
 	actor.auto_play = true
 	actor.initialized.connect(func(): MTOON.apply(actor.character, avatar["material_id"]))
 	anchor.add_child(actor)
