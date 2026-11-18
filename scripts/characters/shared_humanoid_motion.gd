@@ -41,6 +41,7 @@ var _model_origin := Vector3.ZERO
 var _skeleton_in_actor := Transform3D.IDENTITY
 var preview_model: PackedScene
 var preview_pose_only := false
+var forearm_contact_lift_m := 0.0
 
 func _ready() -> void:
 	motion = load(motion_resource) as Animation
@@ -156,7 +157,34 @@ func sample_time(value: float) -> void:
 	var desired_pelvis := rest_world[pelvis].origin + displacement
 	root_displacement = desired_pelvis - current[pelvis].origin
 	character.position = _model_origin + _skeleton_in_actor.basis * root_displacement
+	if forearm_contact_lift_m > 0.0:
+		_lift_wrists(forearm_contact_lift_m)
 	skeleton.force_update_all_bone_transforms()
+
+func _lift_wrists(distance_m: float) -> void:
+	# A furniture clip can lift its wrist contact without sliding the feet or stretching the arm.
+	var lift := skeleton.global_basis.inverse() * (Vector3.UP * distance_m)
+	var up := lift.normalized()
+	for side in ["Left", "Right"]:
+		var forearm: int = semantic_bones[side + "LowerArm"]
+		var hand: int = semantic_bones[side + "Hand"]
+		var arm_pose := skeleton.get_bone_global_pose(forearm)
+		var hand_pose := skeleton.get_bone_global_pose(hand)
+		var segment := hand_pose.origin - arm_pose.origin
+		var length_sq := segment.length_squared()
+		var horizontal := segment.slide(up)
+		if length_sq < 0.000001 or horizontal.length_squared() < 0.000001:
+			continue
+		var height := minf(segment.dot(up) + lift.length(), sqrt(length_sq) * 0.999)
+		var target := horizontal.normalized() * sqrt(length_sq - height * height) + up * height
+		var turn := Quaternion(segment.normalized(), target.normalized())
+		var parent_pose := skeleton.get_bone_global_pose(parents[forearm])
+		skeleton.set_bone_pose_rotation(forearm, parent_pose.basis.get_rotation_quaternion().inverse()
+			* turn * arm_pose.basis.get_rotation_quaternion())
+		# The hand keeps its authored orientation when the forearm turns.
+		var hand_parent_pose := skeleton.get_bone_global_pose(parents[hand])
+		skeleton.set_bone_pose_rotation(hand, hand_parent_pose.basis.get_rotation_quaternion().inverse()
+			* hand_pose.basis.get_rotation_quaternion())
 
 func seek(value: float) -> void:
 	sample_time(value)

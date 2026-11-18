@@ -2,6 +2,7 @@ extends Node
 
 const Runtime := preload("res://scripts/world/npc_encounter_runtime.gd")
 const WorldControl := preload("res://scripts/world/world_control_context.gd")
+const NPCSites := preload("res://scripts/world/npc_preview_sites.gd")
 const ACTOR := preload("res://scenes/characters/shared_humanoid_actor.tscn")
 const MTOON := preload("res://scripts/characters/mtoon_materials.gd")
 const CorpseControllerClass := preload("res://scripts/characters/corpse_ragdoll_controller.gd")
@@ -176,7 +177,6 @@ func initialize(host: Node3D, p_world: Node3D, p_runtime: Runtime) -> void:
 	combat.log_message_emitted.connect(hud.append_log)
 	combat.koujou_triggered.connect(hud.display_koujou)
 	combat.phase_changed.connect(_on_phase_changed)
-	combat.combat_ended.connect(_on_combat_ended)
 	hud.action_chosen.connect(combat.execute_player_action)
 	hud.meta_dialogue_requested.connect(combat.request_in_battle_negotiation)
 	runtime.player_pleasure.pleasure_changed.connect(hud.update_player_pleasure)
@@ -397,40 +397,30 @@ func _set_combat_visuals(active: bool) -> void:
 				if "camera" in char_node and char_node.camera:
 					char_node.camera.current = true
 
-func _on_combat_ended(_winner: String, _loser: String, _reason: String) -> void:
-	pass
-
 func _handle_player_defeat() -> void:
-	_set_combat_visuals(false)
-	var SITES := load("res://scripts/world/npc_preview_sites.gd")
 	if is_instance_valid(world):
-		var respawn_data: Dictionary = SITES.resolve_battle_respawn(world, "沙洲度假遗址", "keqing")
-		var target_pos: Vector3 = respawn_data.get("position", Vector3.ZERO)
-		var char_node: Node = world.character
-		if is_instance_valid(char_node) and target_pos != Vector3.ZERO:
-			char_node.global_position = target_pos
-			if "heading" in respawn_data:
-				char_node.global_rotation.y = respawn_data["heading"]
-			if "camera" in char_node and char_node.camera:
-				char_node.camera.current = true
-		world.set_encounter_ui_active(false)
-		world._sync_actor_controls()
-		if is_instance_valid(char_node) and char_node.has_method("set_control_enabled"):
-			char_node.set_control_enabled(true)
-	if is_instance_valid(runtime):
-		runtime.last_battle_winner = ""
-		runtime._set_state(Runtime.EncounterState.AVAILABLE)
+		var spawn: Dictionary = runtime.encounter_bundle["spawn"]
+		var point := NPCSites.resolve_battle_respawn(world, spawn["region"], spawn["character_id"])
+		if not point.is_empty() and is_instance_valid(world.character):
+			world.character.set_spawn(point["position"], point["heading"])
+	runtime._set_state(Runtime.EncounterState.AVAILABLE)
 
 func _on_dialogue_ended(payload: Dictionary) -> void:
 	if not runtime.dialogue_manager.session_active:
 		panel.hide()
 	var act: String = payload.get("action", "")
-	var is_player_victory := (runtime != null and runtime.last_battle_winner == "player")
-	var is_player_defeat := (runtime != null and not runtime.last_battle_winner.is_empty() and runtime.last_battle_winner != "player")
-
-	# Three victory branches all permanently unlock Keqing
-	if is_player_victory and act in ["spare_desk", "desk_service", "spare", "kill", "close"]:
-		_unlock_keqing()
+	if payload.get("source") == Runtime.DialogueManagerClass.DialogueSource.POST_BATTLE_RESULT:
+		# The runtime has already handled the state transition. Consume this result
+		# once; cancelled and failed actions also carry 'close' for cleanup.
+		var winner := runtime.last_battle_winner
+		runtime.last_battle_winner = ""
+		if payload.get("cancelled", false) or payload.get("failed", false):
+			return
+		if winner == "player" and act in ["spare_desk", "desk_service", "spare", "kill", "close"]:
+			_unlock_keqing()
+		elif not winner.is_empty() and winner != "player" and act == "close":
+			_handle_player_defeat()
+			return
 
 	if act in ["spare_desk", "desk_service", "spare"]:
 		begin_furniture_service_staging("desk_service")
@@ -442,22 +432,6 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 			finish_furniture_service()
 		else:
 			begin_furniture_service_staging("desk_service")
-	elif act == "close":
-		_set_combat_visuals(false)
-		if is_player_defeat:
-			_handle_player_defeat()
-		else:
-			if is_instance_valid(world):
-				world.set_encounter_ui_active(false)
-				world._sync_actor_controls()
-			var char_node: Node = world.character if is_instance_valid(world) else null
-			if is_instance_valid(char_node):
-				if char_node.has_method("set_control_enabled"):
-					char_node.set_control_enabled(true)
-				if "camera" in char_node and char_node.camera:
-					char_node.camera.current = true
-			if is_instance_valid(runtime):
-				runtime.last_battle_winner = ""
 	elif act == "finish":
 		_set_combat_visuals(false)
 		if is_instance_valid(runtime):
@@ -547,6 +521,7 @@ func begin_furniture_service_staging(interaction_type: String = "desk_service") 
 	npc_paired_actor.name = "KeqingPairedActor"
 	npc_paired_actor.model_resource = npc_model
 	npc_paired_actor.motion_resource = role_a_motion
+	npc_paired_actor.forearm_contact_lift_m = float(resolution["binding"].get("role_a_forearm_contact_lift_m", 0.0))
 	npc_paired_actor.auto_play = true
 	npc_paired_actor.environment_mask = 33
 	npc_paired_actor.initialized.connect(func():

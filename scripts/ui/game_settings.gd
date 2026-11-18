@@ -17,6 +17,8 @@ const PREFS := preload("res://scripts/ui/game_preferences.gd")
 var in_world := false
 var show_save_menu := false
 var allow_developer_tools := false
+var game_progress: RefCounted = null
+var _unlocked_panel: Control = null
 var developer_options: VBoxContainer
 var teleport_options: VBoxContainer
 var _quality: Array[Button] = []
@@ -129,6 +131,7 @@ func _ready() -> void:
 	add_button(saves_list, "保存游戏", _open_save_menu.bind("save"))
 	add_button(saves_list, "读取存档", _open_save_menu.bind("load"))
 	add_button(saves_list, "返回标题页面", _open_save_menu.bind("quit"))
+	add_button(saves_list, "【已解锁角色】", _open_unlocked_characters_panel)
 
 	# Page 2: 帮助
 	var page_help := UI.column(12)
@@ -216,13 +219,33 @@ func open(tab_index := 0) -> void:
 		_back.grab_focus()
 
 func close() -> void:
+	if _unlocked_panel != null and _unlocked_panel.visible:
+		_unlocked_panel.close()
 	if not visible:
 		return
 	hide()
 	closed.emit()
 
 func is_world_input_locked() -> bool:
-	return visible
+	return visible or (_unlocked_panel != null and _unlocked_panel.visible)
+
+func _open_unlocked_characters_panel() -> void:
+	if _unlocked_panel == null:
+		var panel_script := load("res://scripts/ui/unlocked_characters_panel.gd")
+		_unlocked_panel = panel_script.new()
+		add_child(_unlocked_panel)
+		_unlocked_panel.closed.connect(func():
+			_unlocked_panel.hide()
+		)
+	var progress: Variant = game_progress
+	if progress == null:
+		var tree := get_tree()
+		if tree != null and tree.current_scene != null:
+			if "game_progress" in tree.current_scene:
+				progress = tree.current_scene.game_progress
+			elif "progress" in tree.current_scene:
+				progress = tree.current_scene.progress
+	_unlocked_panel.open(progress)
 
 func _input(event: InputEvent) -> void:
 	if visible and event.is_action_pressed("ui_cancel") and not event.is_echo():

@@ -10,12 +10,13 @@
       "fallback_to_ground": true,
       "contact_anchor": "Anchor_Desk_Surface",
       "approach_anchor": "Anchor_Front",
+      "role_a_forearm_contact_lift_m": 0.040,
       "role_a_placement": {
         "offset": [0.0, -0.838, 0.0],
         "yaw_degrees": 0.0
       },
       "role_b_placement": {
-        "offset": [0.0, -0.838, 0.0],
+        "offset": [0.0, -0.822, 0.0],
         "yaw_degrees": 0.0
       }
     },

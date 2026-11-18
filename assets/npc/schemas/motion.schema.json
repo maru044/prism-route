@@ -52,6 +52,11 @@
           "approach_anchor": {
             "type": "string"
           },
+          "role_a_forearm_contact_lift_m": {
+            "description": "Optional wrist lift for furniture contact, in metres, with forearm length and hand orientation preserved.",
+            "type": "number",
+            "minimum": 0
+          },
           "role_a_placement": {
             "type": "object",
             "required": [

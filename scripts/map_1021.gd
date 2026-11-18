@@ -592,6 +592,7 @@ func _hud() -> void:
 	settings_panel.in_world = true
 	settings_panel.show_save_menu = save_session != null
 	settings_panel.allow_developer_tools = developer_tools_enabled
+	settings_panel.game_progress = game_progress
 	layer.add_child(settings_panel)
 	settings_panel.closed.connect(_sync_actor_controls)
 	settings_panel.quality_changed.connect(_on_graphics_quality_selected)

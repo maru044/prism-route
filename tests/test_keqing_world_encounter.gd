@@ -5,6 +5,7 @@ extends SceneTree
 const Runtime := preload("res://scripts/world/npc_encounter_runtime.gd")
 const Combat := preload("res://scripts/combat/turn_combat_manager.gd")
 const Motion := preload("res://scripts/world/motion_resolver.gd")
+const NPCSites := preload("res://scripts/world/npc_preview_sites.gd")
 
 func _initialize() -> void:
 	_run.call_deferred()
@@ -196,6 +197,7 @@ func _run() -> void:
 
 	# Test Victory Branch: "点到为止" (close action)
 	# Trigger second encounter dialogue -> combat -> victory -> pick choice 3 (close)
+	world.game_progress.companion_unlocks.erase("keqing")
 	world.character.global_position = duel.anchor.global_position + Vector3(0.5, 0.0, 1.2)
 	await process_frame
 	await process_frame
@@ -224,14 +226,28 @@ func _run() -> void:
 			and runtime.current_state == Runtime.EncounterState.COMPLETED and not world.encounter_ui_active
 			and world.is_world_input_allowed() and world.character.is_physics_processing()
 			and world.character.visible and world.character.is_control_enabled()
+			and world.game_progress.is_companion_unlocked("keqing")
 			and not duel.service_camera.current
 			and world.character.camera.current,
 			"Victory '点到为止' did not cleanly restore world controls"):
 		return
 	print("KEQING_VICTORY_CLOSE_PASS")
 
+	# Cancelling the result emits a synthetic close; it must never count as a choice.
+	world.game_progress.companion_unlocks.erase("keqing")
+	runtime.start_result_dialogue("player")
+	await process_frame
+	dialogue.cancel_session()
+	await process_frame
+	if not _expect(not world.game_progress.is_companion_unlocked("keqing")
+			and runtime.last_battle_winner.is_empty() and not dialogue.session_active
+			and world.is_world_input_allowed() and world.character.is_control_enabled(),
+			"Cancelling a victory result granted an unlock or failed to release controls"):
+		return
+	print("KEQING_CANCEL_RESULT_PASS")
+
 	# Test Defeat Branch: Player defeated in combat -> confirm result dialogue -> respawn at sandbar pavilion
-	world.character.global_position = duel.anchor.global_position + Vector3(0.5, 0.0, 1.2)
+	world.character.set_spawn(duel.anchor.global_position + Vector3(0.5, 0.0, 1.2), 0.0)
 	await process_frame
 	await process_frame
 	_key(KEY_E)
@@ -249,9 +265,15 @@ func _run() -> void:
 	_key(KEY_ENTER) # Confirm defeat dialogue (close action)
 	await process_frame
 	await process_frame
-	var expected_sandbar_spawn: Vector3 = Vector3(-831.140, 0.200, -128.480)
-	var spawn_dist: float = world.character.global_position.distance_to(expected_sandbar_spawn)
-	if not _expect(spawn_dist < 1.0, "Player was not teleported to sandbar pavilion respawn point (dist=%f)" % spawn_dist):
+	var point := NPCSites.resolve_battle_respawn(world, "沙洲度假遗址", "keqing")
+	if not _expect(point.get("id") == "sandbar_pavilion", "Sandbar respawn point did not resolve"):
+		return
+	var spawn_dist: float = world.character.global_position.distance_to(point.position)
+	if not _expect(spawn_dist < 0.2 and world.character.respawn_transform.origin.is_equal_approx(point.position)
+			and is_equal_approx(world.character.camera_pivot.rotation.y, point.heading)
+			and is_equal_approx(world.character.respawn_transform.basis.get_euler().y, point.heading)
+			and not world.game_progress.is_companion_unlocked("keqing"),
+			"Defeat did not restore the sandbar spawn position, view heading and reset point without unlocking Keqing"):
 		return
 	if not _expect(not duel.panel.visible and not duel.hud.visible and not dialogue.session_active
 			and runtime.current_state == Runtime.EncounterState.AVAILABLE and not world.encounter_ui_active
