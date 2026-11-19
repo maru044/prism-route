@@ -175,14 +175,23 @@ func _run() -> void:
 
 	var floor_y: float = seat.global_position.y
 	var seat_anchor: Node3D = seat.get_node("Anchor_Seat")
+	var seat_front := seat_anchor.global_basis.z.normalized()
 
 	for fraction in [0.0, 0.25, 0.5, 0.75, 0.999]:
 		duel.npc_paired_actor.sample_time(duel.npc_paired_actor.duration * fraction)
 		duel.master_paired_actor.sample_time(duel.master_paired_actor.duration * fraction)
 		rig_ganyu.force_update_all_bone_transforms()
 
-		var l_knee_y: float = (rig_ganyu.global_transform * rig_ganyu.get_bone_global_pose(left_knee_id)).origin.y
-		var r_knee_y: float = (rig_ganyu.global_transform * rig_ganyu.get_bone_global_pose(right_knee_id)).origin.y
+		var left_knee := rig_ganyu.global_transform * rig_ganyu.get_bone_global_pose(left_knee_id).origin
+		var right_knee := rig_ganyu.global_transform * rig_ganyu.get_bone_global_pose(right_knee_id).origin
+		var hips := rig_ganyu.global_transform * rig_ganyu.get_bone_global_pose(duel.npc_paired_actor.semantic_bones.Hips).origin
+		var knees := (left_knee + right_knee) * 0.5
+		if not _expect((hips - seat_anchor.global_position).dot(seat_front) > 0.2
+				and (knees - hips).dot(seat_front) < 0.0,
+				"Ganyu must be in front of the chair and face the seated player"):
+			return
+		var l_knee_y := left_knee.y
+		var r_knee_y := right_knee.y
 
 		# Ganyu's knees must be grounded near floor (floor_y=0.10, knee bone joint center within 0.12 - 0.22)
 		if not _expect(l_knee_y >= floor_y and l_knee_y <= floor_y + 0.15,
