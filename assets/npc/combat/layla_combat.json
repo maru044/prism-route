@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "layla_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "nights_formal_focus",
+    "sleeping_stars_barrage",
+    "sleepy_rub_eyes"
+  ]
+}

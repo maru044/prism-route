@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "yukong_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "bow_of_heavenly_flight",
+    "skysplitter_command",
+    "mature_fox_allure"
+  ]
+}

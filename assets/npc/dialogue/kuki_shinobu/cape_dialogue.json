@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "kuki_shinobu_cape_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "久岐忍",
+      "text": "您好，Master。我是荒泷派的副手久岐忍。在这间侧室里刚好清静，适合核对账册与整理文书。若您需要我的协助，请先与我切磋一番，证明您有指挥我的手腕。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "久岐忍",
+      "text": "Master，有什么需要荒泷派副手为您代劳的？请讲。",
+      "choices": [
+        {
+          "text": "【关于小镇二层侧室】避开热闹的街道，一个人在这里待着习惯吗？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请阿忍副手赐教！（初次对决：智囊全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "久岐忍",
+      "text": "这里隔音不错，推开侧窗能吹到海风，比处理帮派那群笨蛋惹出来的乱子清静多了。在这里梳理思路，办事效率会高不少。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "久岐忍",
+      "text": "Master，您来了。上次输给您后，我的敏锐感官全被您打上了烙印。只要被您触碰腰侧，指关节都会发软。今天是要切磋身手，还是想要我为您提供贴身的细致服侍？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "久岐忍",
+      "text": "主人，久岐忍随时为您效劳，无论公事还是私事。",
+      "choices": [
+        {
+          "text": "【关于面罩之下】在只属于我们的安静时刻，阿忍愿意摘下面罩吗？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】阿忍，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "久岐忍",
+      "text": "既然是Master的要求，那我就把面罩摘下来。面对您的时候，我本来就没打算保留任何防备。看着我的眼睛，您满意了吗？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "久岐忍",
+      "text": "Master，雷草之轮还在流转，保持警惕，可别被麻痹波纹打乱节奏！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "久岐忍",
+      "text": "哈啊，Master，雷电麻痹已经蔓延到全身了，您只要下令，阿忍绝不反抗，",
+      "choices": [
+        {
+          "text": "【命令识趣】阿忍，露出破绽，让我彻底降伏你！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】阿忍，启动越祓结界稳住快感！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，阿忍当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "久岐忍",
+      "text": "呼，既然是主人的命令，那我收敛雷电防线，请您随意处置，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "久岐忍",
+      "text": "明白，越祓结界运转中，主人的快感防线由我全力护持！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "久岐忍",
+      "text": "沉稳果断的判断，那我也要更加专注了！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "久岐忍",
+      "text": "呀啊！遵命主人，阿忍认输，身子要被高潮雷电击穿了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "久岐忍",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "久岐忍",
+      "text": "哈啊，呼吸全乱了，刀柄都快握不住，阿忍彻底败给Master了。作为副手，今后全听您的差遣，您想怎么处置我？",
+      "choices": [
+        {
+          "text": "【隐秘服侍】请阿忍在室内侧间地板上，为我提供专业顺从的近身侍奉。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "久岐忍",
+      "text": "承让了，Master。您的攻势很凌厉，但在破绽捕捉上我略胜一筹。先擦擦汗，稍事休息再来吧。",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "久岐忍",
+      "text": "Master，刚才虽然化作玩偶任您任意摆弄，但重塑身躯后的阿忍依然清楚记得您的支配感。请继续信任并差遣我吧！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "久岐忍",
+      "text": "哈啊，刚才在侧间地板上为您服侍了那么久，腰肢都酸软得快直不起来了。能让Master满意，是身为部下最大的光荣。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

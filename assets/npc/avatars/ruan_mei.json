@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "avatar_profile_id": "ruan_mei",
+  "model_resource": "res://assets/characters/roster/ruan_mei/ruan_mei.vrm",
+  "idle_motion": "res://assets/characters/roster/motions/koikatsu_idle.tres",
+  "material_id": "ruan_mei",
+  "environment_collision_enabled": false
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "encounter_id": "archive_faruzan",
+  "character_id": "faruzan",
+  "spawn_id": "archive_faruzan",
+  "flow_behavior_id": "standard_duel",
+  "dialogue_bundle_id": "faruzan_archive_bundle",
+  "combat_profile_id": "faruzan_combat",
+  "reaction_profile_id": "faruzan_reactions",
+  "motion_profile_id": "faruzan_motions",
+  "supported_entry_points": [
+    "start",
+    "unlocked_start",
+    "mid_battle_manual",
+    "combat_manual_unlocked",
+    "victory_node",
+    "defeat_node",
+    "post_spare",
+    "post_kill"
+  ]
+}

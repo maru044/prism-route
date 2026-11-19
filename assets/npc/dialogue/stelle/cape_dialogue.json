@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "stelle_cape_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "星",
+      "text": "你好，Master。我是星穹列车的开拓者星。在这个商铺门内正好能避风，顺便看看陈列架上有没有奇奇怪怪的宝藏。若您想带我一起去开拓未知，先跟我切磋一场，让我见识您的本领吧！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "星",
+      "text": "Master，今天有什么新的开拓路线？我棒球棍随时准备着。",
+      "choices": [
+        {
+          "text": "【关于商铺门内侧】站在这里等人，是在等列车的伙伴吗？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请星赐教！（初次对决：开拓者全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "星",
+      "text": "嗯，三月七和丹恒可能还在附近闲逛。门内视野开阔，既能看街景，又方便看守店里的稀奇物件，挺安稳的。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "星",
+      "text": "Master！你来找我了。上次在切磋里败给你之后，我的身体完全记住了你的气息。只要你一靠近，球棒都快拿不稳了。今天是要切磋身手，还是想要我乖乖为你服务？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "星",
+      "text": "主人，星听候您的差遣，不管多奇怪的要求我都听。",
+      "choices": [
+        {
+          "text": "【关于心中的归属】对星来说，最想停留的地方在哪里？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】星，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "星",
+      "text": "虽然列车一直在星海航行，但只要在Master身边，我就觉得找到了真正的港湾。被您从背后抱住的时候，心里特别踏实。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "星",
+      "text": "Master，我的棒球棍可还没收回呢，集中精神，认真点接招！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "星",
+      "text": "哈啊，Master，身子被你碰得软绵绵的，只要你一句话，我全部顺从，",
+      "choices": [
+        {
+          "text": "【命令识趣】星，故意露出破绽，让我好好教导你！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】星，用存护之志守护我的防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，星当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "星",
+      "text": "唔，既然是主人的命令，那我就收起球棒稍微走神，请温柔对待我，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "星",
+      "text": "存护之盾展开！主人的快感防线由我牢牢守住！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "星",
+      "text": "眼神很有毅力嘛，那我可要全力挥棒了！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "星",
+      "text": "呀啊！遵命主人，星认输了，身体彻底向高潮投降了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "星",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "星",
+      "text": "哈啊，棒球棍脱手了，双腿软得只能坐倒在地上，我彻底败给Master了。作为专属开拓者，我听凭您的处置，你想怎么做？",
+      "choices": [
+        {
+          "text": "【开拓侍奉】请星在商铺门内地面上，为我提供率直听话的开拓者近侍服侍。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "星",
+      "text": "呼，击球命中！看来今天的胜负是我拿下啦！Master别灰心，喝口水歇会儿，我们待会儿再切磋！",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "星",
+      "text": "Master，刚才虽然化作玩偶任您任意摆弄，但重新站起来的星依然是您忠诚的开拓同伴。请继续支配并带领我吧！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "星",
+      "text": "哈啊，刚才在商铺门内地板上为您侍奉了那么久，衣服都揉得皱巴巴的了。只要能让Master舒畅，星愿意随时奉献自己。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

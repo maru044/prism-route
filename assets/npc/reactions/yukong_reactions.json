@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "yukong_reactions",
+  "speaker": "驭空",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指腹抚过端庄红唇？Master，成熟妇人的朱唇今天只为你留存。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，温热的舌尖被你探入深吻，喉间不由自主溢出成熟甜腻的喘息。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！津液完全失守溢出，成熟知性的矜持彻底瓦解，好充实的快意！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "掌心覆在饱满丰腴的酥胸上，Master，力道好沉稳厚重。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！指尖直接捻动丰满双峰的熟透尖端，剧烈酸麻感直冲脑髓。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！成熟的胸脯剧烈起伏挺立，好强烈的征服快感，驭空要融化了！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "触及狐人最敏感的深处花蒂，身子猛然绷直了，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在熟透的花核上盘旋揉按，浓郁的花蜜早已浸湿了裙裾。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽热的体液狂澜般喷泄，如此可怕的高潮冲击，驭空要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "摩挲开衩旗袍下丰满匀称的大腿内侧，触感温热而饱满。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根被轻轻拿捏，尾椎骨泛起酥麻，狐尾不由自主卷住您的腰间。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全失了力气，只能软软大敞任凭Master任意驰骋索取！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "bow_of_heavenly_flight": {
+      "name": "天舶流光·贯空鸣镝",
+      "damage": 17.0,
+      "text": "鸣镝离弦，箭如贯日！Master，领略一下天舶司主舵的破空战意吧！",
+      "emotion": "confident"
+    },
+    "skysplitter_command": {
+      "name": "鸣弦号令·统帅威严",
+      "damage": 19.0,
+      "text": "千军列阵，号令如山！以狐人飞行士的荣耀，接下这重破空强击！",
+      "emotion": "serious"
+    },
+    "mature_fox_allure": {
+      "name": "孤怀抚慰·狐尾微卷",
+      "damage": 15.0,
+      "text": "看你这般执着，倒真让我想起曾经并肩的岁月了，小心别被狐尾晃了神哦。",
+      "emotion": "smile"
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "presentation_profile_id": "ruan_mei_default",
+  "ui_palette": "res://scenes/combat/temple_paper_palette.tres"
+}

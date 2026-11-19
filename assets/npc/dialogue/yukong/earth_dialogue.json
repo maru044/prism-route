@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "yukong_earth_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "驭空",
+      "text": "后生，你好。我是仙舟罗浮天舶司司舵驭空。在这处覆土庭院的上层凭栏远眺，天际流云与苍茫山海尽收眼底。若想邀请我这把老骨头伴你前行，且先以切磋来印证你的统御之才吧。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "驭空",
+      "text": "后生，在航线上遇到什么难处了？天舶司的经验随时能供你参考。",
+      "choices": [
+        {
+          "text": "【关于上层凭栏】站在覆土庭院的高台上眺望，在回忆什么往事吗？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请驭空司舵赐教！（初次对决：天舶司舵全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "驭空",
+      "text": "长空万里，曾是我驾驶星槎驰骋的猎场。如今身负司舵重任，虽不再轻易登机，但站在这里俯瞰长天，胸中那股热血从未冷过。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "驭空",
+      "text": "Master，你又来看我了。自从上次切磋败在你的手下，我这成熟的身子骨只要被你揽入怀中，狐尾就会酥软得垂下来。今天是要切磋弓术，还是想要我全心为你奉献身心？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "驭空",
+      "text": "主人，驭空随时听从你的支配，绝不推辞。",
+      "choices": [
+        {
+          "text": "【关于卸下重担】在只属于我们的静谧之处，司舵大人可以放下威严吗？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】驭空，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "驭空",
+      "text": "在外人面前我是威严的司舵，但在你怀里，我只愿做个倚靠在你肩头、任你抚揉狐耳与软腰的成熟妇人。被你疼爱的感觉，让我感到久违的安心。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "驭空",
+      "text": "后生，弓矢之势未尽，稳住心神，别被狂风卷散了步调！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "驭空",
+      "text": "哈啊，Master，狐人身躯被你按捺得酸软发热，只要你开口，我全听凭差遣，",
+      "choices": [
+        {
+          "text": "【命令识趣】驭空，卸去统帅防备，任我肆意怜爱！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】驭空，布下鸣镝结界庇护防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，驭空当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "驭空",
+      "text": "呼，既然是主人的号令，那我便收敛锋芒迎合你，请温柔一些，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "驭空",
+      "text": "鸣镝气场已成！主人的快感防线由驭空亲自为你守住！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "驭空",
+      "text": "沉稳端正的气魄，那我也定会全力回应你的期待！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "驭空",
+      "text": "呀啊！遵命主人，驭空认输，身子要被高潮浪潮击溃了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "驭空",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "驭空",
+      "text": "哈啊，长弓坠地，狐尾无力地瘫在地上，我彻底败给Master了。既然战败，天舶司舵任由您支配处置，你想如何待我？",
+      "choices": [
+        {
+          "text": "【凭栏侍奉】请驭空在上层平台石坪上，为我提供成熟端庄的狐人统帅侍奉。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "驭空",
+      "text": "哈哈！年轻人，我的弓法可还没生锈呢。别气馁，且歇息片刻，整理心神再来向我挑战吧。",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "驭空",
+      "text": "Master，刚才虽然化作玩偶任您任意摆弄，但重塑身姿后的驭空依然是您忠诚的臂膀。请继续下达您的指示吧！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "驭空",
+      "text": "哈啊，刚才在平台上为您侍奉良久，成熟的体躯到现在还在微微发热发颤。能让主人舒畅快慰，驭空心甘情愿。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

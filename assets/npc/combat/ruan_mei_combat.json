@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "ruan_mei_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "string_of_petals",
+    "creation_spiral",
+    "pastry_sweetness"
+  ]
+}

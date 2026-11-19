@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "ruan_mei_archive_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "阮·梅",
+      "text": "你好，Master。我是天才俱乐部 #81 阮·梅。这里的地下展廊环境封闭而洁净，正适合调配培养液与观察微观样本。若想让我协助你探索世界，先通过一场切磋，让我记录下你的生命体征与神经反应吧。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "阮·梅",
+      "text": "Master，今天想了解哪项生命造物？或是尝尝刚蒸好的点心？",
+      "choices": [
+        {
+          "text": "【关于标本观察台】在这里潜心研究生命科学，有什么新发现吗？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请阮·梅赐教！（初次对决：生命学者全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "阮·梅",
+      "text": "这里的静谧有利于细胞培养与基因序列解码。每一滴生命反应溶液在试管中泛起微澜时，都是生命在向我们低诉奥秘。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "阮·梅",
+      "text": "Master，你来了。上次切磋输给你后，我的神经末梢似乎对你的气息产生了永久性印记。只要你稍加触碰，指尖与腰腹就会泛起甜美的战栗。今天是要切磋学术，还是让我这具身体全心为你奉献？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "阮·梅",
+      "text": "主人，阮·梅愿意成为只属于您的专属研究对象与侍奉者。",
+      "choices": [
+        {
+          "text": "【关于学者的温度】在理性与数据之外，阮·梅的心跳会为谁而加速？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】阮·梅，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "阮·梅",
+      "text": "以前我只专注于生命科学的终极命题，但自从遇见你，我的心率与激素分泌总会出现不可测的剧烈波动。被你拥在怀里时，我只想沉沦在这份温度里。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "阮·梅",
+      "text": "Master，琴弦声尚未歇止，集中精神，不要被花香扰乱了感官反应。",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "阮·梅",
+      "text": "哈啊，Master，体温上升得难以自控了，只要您提出要求，我都全心依从，",
+      "choices": [
+        {
+          "text": "【命令识趣】阮·梅，故意露出破绽，让我彻底占有你！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】阮·梅，注入活性调谐剂稳定防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，阮·梅当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "阮·梅",
+      "text": "呼，既然是主人的意愿，那我就抑制神经抗拒，请对我进行深入的探索，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "阮·梅",
+      "text": "生命调谐屏障已部署！主人的快感防线由我牢牢稳定在安全上限！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "阮·梅",
+      "text": "如此坚韧的神经毅力，值得我用最精准的数据予以回应！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "阮·梅",
+      "text": "呀啊！遵命主人，阮·梅认输，生命的意识要在狂暴高潮中崩解了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "阮·梅",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "阮·梅",
+      "text": "哈啊，琴拨落在了地上，身子软得倚靠不住试验台，我彻底败给Master了。作为败者，这具充满秘密的身体听凭您的支配，你想怎么做？",
+      "choices": [
+        {
+          "text": "【生命服侍】请阮·梅在培养台旁平整地面上，为我提供温婉知性的学者近侍服侍。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "阮·梅",
+      "text": "看来这一次，是我的生命调谐算法略占上风呢。Master，不必气馁，且尝一块温热的梅花酥，稍作调养再来吧。",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "阮·梅",
+      "text": "Master，刚才虽然化作玩偶任您任意摆弄，但细胞重塑后的阮·梅依然铭记着对您的绝对臣服。请继续下达您的指令吧！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "阮·梅",
+      "text": "哈啊，刚才在展廊地面上为您服侍良久，典雅的旗袍都被汗水浸透贴在雪肌上了。能让Master满意快慰，是阮·梅最大的幸事。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

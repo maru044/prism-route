@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "avatar_profile_id": "march7th",
+  "model_resource": "res://assets/characters/roster/march7th/march7th.vrm",
+  "idle_motion": "res://assets/characters/roster/motions/koikatsu_idle.tres",
+  "material_id": "march7th",
+  "environment_collision_enabled": false
+}

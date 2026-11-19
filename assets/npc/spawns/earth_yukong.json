@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "earth_yukong",
+  "character_id": "yukong",
+  "region": "东侧覆土庭院",
+  "position": [
+    470.0,
+    69.64,
+    268.0
+  ],
+  "heading": 120.0,
+  "bound_furniture": []
+}

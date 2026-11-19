@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "avatar_profile_id": "kuki_shinobu",
+  "model_resource": "res://assets/characters/roster/kuki_shinobu/kuki_shinobu.vrm",
+  "idle_motion": "res://assets/characters/roster/motions/koikatsu_idle.tres",
+  "material_id": "kuki_shinobu",
+  "environment_collision_enabled": false
+}

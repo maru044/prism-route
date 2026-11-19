@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "archive_layla",
+  "character_id": "layla",
+  "region": "下沉式档案馆",
+  "position": [
+    -1362.0,
+    11.5,
+    -9.0
+  ],
+  "heading": 135.0,
+  "bound_furniture": []
+}

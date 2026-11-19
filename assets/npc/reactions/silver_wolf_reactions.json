@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "silver_wolf_reactions",
+  "speaker": "银狼",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖戳弄脸颊和唇瓣？Master，咬爆的泡泡糖甜味都被你偷吃了。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，小巧的舌尖被你卷住吮吸，呼吸不由自主变得软绵绵的。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口水都流下来了，大脑CPU严重过载，好舒服的感觉呀！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "手掌隔着紧身外套按在胸口，Master，心跳跳频被你监测到了啦。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接揉捏双峰小巧尖端，像被强电流窜过脊椎一样酸酥。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经彻底充血挺立了，这种强烈的刺激感，银狼要不行了！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "碰到了最隐秘的敏感点，身体忍不住抖了一下，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在敏感核打圈按压，爱液把短裤内衬都浸得透湿了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽热的体液瞬间决堤，好强烈的高潮宕机感，银狼要绝顶啦！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "抚摸过膝长袜上方的大腿雪白软肉，触感又滑又软。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿内侧被轻轻揉捏，酸软感蔓延全身，连脚趾都蜷缩起来了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全使不上力气，只能软软任由Master随意摆布索取了！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "allow_changes": {
+      "name": "是否允许更改·数据入侵",
+      "damage": 17.0,
+      "text": "修改你的防御属性！Master，可别小看了超级黑客的代码篡改攻击哦！",
+      "emotion": "confident"
+    },
+    "user_banned": {
+      "name": "账号已封禁·以太强袭",
+      "damage": 19.0,
+      "text": "强制执行封禁程序！接招吧，这可是游戏通关玩家的终极连击！",
+      "emotion": "smile"
+    },
+    "gamer_taunt": {
+      "name": "极客挑衅·泡泡糖轻咬",
+      "damage": 15.0,
+      "text": "就这种操作水平也想通关我？Master，再加把劲才行哦！",
+      "emotion": "smile"
+    }
+  }
+}

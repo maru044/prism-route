@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "layla_reactions",
+  "speaker": "莱依拉",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖按在娇软的唇边？Master，莱依拉的嘴唇平时可不给别人碰呢。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软怯弱的舌尖被您轻轻含弄，喉间溢出困倦甜腻的轻吟，呼吸全乱了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中的津液忍不住流淌，脑海里一片星光迷离的眩晕，好舒服！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "手掌隔着睡袍般的法裙贴在胸前，Master，心跳跳得太快了啦。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接揉弄双峰娇怯的尖端，酸麻感顺着后颈直冲脑髓呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经完全挺立充血了，这种强烈的快感，莱依拉快受不了啦！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "碰到了最羞耻的小核敏感点，身子忍不住缩成一团，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在花蒂打圈按压，甜热的泉水把安全裤都彻底打湿了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽烈的爱液喷涌决堤，如此剧烈的高潮冲击，莱依拉要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "摩挲开衩裙下白皙纤细的大腿内侧，触感幼嫩滑润。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根部被轻轻揉按，双腿发软不由自主顺从地向两侧分开。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全没有力气了，只能软软任由Master随意摆布索取了！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "nights_formal_focus": {
+      "name": "垂裳之夜·安眠星轨",
+      "damage": 16.0,
+      "text": "星光护佑，飞星降临！Master，不要趁我犯困就欺负我哦，接招吧！",
+      "emotion": "shy"
+    },
+    "sleeping_stars_barrage": {
+      "name": "星光流转·梦境飞弹",
+      "damage": 18.0,
+      "text": "飞星如织，梦境璀璨！虽然眼睛快睁不开了，但我也会全力保护自己！",
+      "emotion": "confident"
+    },
+    "sleepy_rub_eyes": {
+      "name": "揉眼呵欠·楚楚可怜",
+      "damage": 15.0,
+      "text": "呼啊，论文还没写完，脑袋好沉呀，Master能借我靠一下肩膀吗？",
+      "emotion": "smile"
+    }
+  }
+}

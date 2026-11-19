@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "march7th_reactions",
+  "speaker": "三月七",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖轻轻刮弄下巴和唇角？Master，我的脸颊都被你摸得红透啦。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软的舌尖被您轻轻含弄，发出可爱的娇吟声，呼吸都乱了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中的津液忍不住流淌，脑海里一片粉红色的眩晕，好幸福！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "手掌隔着无袖上衣贴在胸口，Master，心跳跳得太快了啦。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接隔着薄布揉捏双峰尖端，酸麻感顺着后颈直往上冲呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经完全挺立充血了，这种强烈的快感，三月七受不了啦！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "碰到了最羞耻的小秘密花核，Master，身体都缩起来了！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在敏感核打圈按压，甜热的泉水把安全裤都打湿了呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽烈的爱液喷薄而出，好强烈的高潮浪潮，三月七要绝顶啦！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "抚摸雪白大腿内侧娇嫩的软肉，触感细腻弹滑。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根部被轻轻揉按，双腿忍不住轻轻磨蹭并向外打开。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全使不上力气，只能软软靠在Master怀里任您摆布索取了！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "freeze_arrow": {
+      "name": "极寒之箭·冰弓连射",
+      "damage": 16.0,
+      "text": "看招看招！这可是本姑娘特制六相冰六连射，Master小心被冻成冰雕哦！",
+      "emotion": "smile"
+    },
+    "photo_snapshot": {
+      "name": "定格瞬间·心动快门",
+      "damage": 18.0,
+      "text": "咔嚓！把Master最帅气的瞬间拍下来啦！这一发直击心底，接好咯！",
+      "emotion": "confident"
+    },
+    "cute_wink": {
+      "name": "元气眨眼·少女撒娇",
+      "damage": 15.0,
+      "text": "嘻嘻，Master，三月七这么可爱，你舍得认真还击吗？",
+      "emotion": "smile"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "archive_faruzan",
+  "character_id": "faruzan",
+  "region": "下沉式档案馆",
+  "position": [
+    -1358.0,
+    11.5,
+    15.0
+  ],
+  "heading": 45.0,
+  "bound_furniture": []
+}

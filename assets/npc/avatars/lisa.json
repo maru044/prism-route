@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "avatar_profile_id": "lisa",
+  "model_resource": "res://assets/characters/roster/lisa/lisa.vrm",
+  "idle_motion": "res://assets/characters/roster/motions/koikatsu_idle.tres",
+  "material_id": "lisa",
+  "environment_collision_enabled": false
+}

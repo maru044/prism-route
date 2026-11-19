@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "avatar_profile_id": "black_swan",
+  "model_resource": "res://assets/characters/roster/black_swan/black_swan.vrm",
+  "idle_motion": "res://assets/characters/roster/motions/koikatsu_idle.tres",
+  "material_id": "black_swan",
+  "environment_collision_enabled": false
+}

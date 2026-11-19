@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "yoimiya_reactions",
+  "speaker": "宵宫",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖抚摸唇瓣？Master，宵宫嘴唇上的橘子糖甜味都被您尝到了啦。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软的舌尖被您轻轻含住，呼吸间全成了您的热度了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中的津液完全失控溢出，脑海像炸开漫天火花一样恍惚呢！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "手掌隔着绷带揉捏胸口，Master的掌心好烫呀。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！指尖直接拨弄双峰尖端，像被火花跳跃轻灼一样酸麻呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经彻底挺立发涨了，好强烈的快感，身子都要融化了！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "碰到了最羞耻的小核，Master，胸口跳得好厉害！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在花蒂打圈按压，甜热的花蜜顺着大腿都要淌下来了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽热的爱液狂乱喷涌，好强烈的高潮浪潮，宵宫要绝顶啦！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "摩挲大腿内侧的白皙软肉，触感好细腻清晰。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根被轻轻揉按，酸软的感觉蔓延到脚趾，整个人都在发飘。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全使不上力气，只能软软任凭Master揉捏索取了！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "niwabi_fire_dance": {
+      "name": "焰硝庭火舞·炽烈射击",
+      "damage": 17.0,
+      "text": "接好咯！这可是长野原特制炽烈金鱼花火，Master可别被烫到心窝哦！",
+      "emotion": "smile"
+    },
+    "ryuukin_saxifrage": {
+      "name": "琉金云间草·热烈盛开",
+      "damage": 19.0,
+      "text": "烟火上天，心花怒放！Master，看好了这一发最灿烂的连击！",
+      "emotion": "confident"
+    },
+    "summer_festival_cheer": {
+      "name": "祭典欢呼·少女甜笑",
+      "damage": 15.0,
+      "text": "只要跟Master在一起，哪怕最普通的夜晚也会变得像祭典一样热闹！",
+      "emotion": "smile"
+    }
+  }
+}

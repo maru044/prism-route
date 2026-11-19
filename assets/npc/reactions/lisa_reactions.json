@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "lisa_reactions",
+  "speaker": "丽莎",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指腹抚摸成熟温润的红唇？小可爱，姐姐的甜吻随时随地任你索取。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软成熟的舌尖被你探入深吻，喉间不由自主溢出娇媚酥麻的喘息。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！津液完全失守溢出，成熟知性的矜持彻底崩解，好销魂的快意！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "掌心覆在开襟法袍包裹的丰腴雪峰上，Master的掌温好炽热。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接隔着薄纱捻弄双峰成熟尖端，酸麻的电流感直冲腰眼呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经完全充血挺立了，这种强烈的支配快感，姐姐要融化了！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "触及魔女最深处敏感的雷电要穴，身子猛然一颤，小可爱！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在敏感核打圈按压，浓郁的花蜜早已将黑丝底裤完全浸透。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽热的体液决堤狂涌，如此剧烈的高潮冲击，丽莎要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "摩挲开衩长袍下丰满白皙的大腿内侧，触感温热滑嫩。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根部被轻轻揉按，双腿发软不由自主顺从地向两侧分开迎合。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全失了力气，只能软软大敞任凭Master任意驰骋索取！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "lightning_touch": {
+      "name": "苍雷酥麻·触电之吻",
+      "damage": 17.0,
+      "text": "小可爱，要乖乖听话哦，这记带着蔷薇清香的雷电，可是很让人酥麻难耐的呢。",
+      "emotion": "smile"
+    },
+    "rose_lightning": {
+      "name": "蔷薇雷光·盛大绽放",
+      "damage": 19.0,
+      "text": "引雷成阵，幽幽绽放。可别小看图书管理员的实力，接好这一击吧。",
+      "emotion": "confident"
+    },
+    "afternoon_tea_tease": {
+      "name": "红茶微温·成熟挑逗",
+      "damage": 15.0,
+      "text": "小可爱这么努力的样子真让人心动，要不要姐姐给你一点特别的奖励呢？",
+      "emotion": "smile"
+    }
+  }
+}

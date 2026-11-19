@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "lisa_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "lightning_touch",
+    "rose_lightning",
+    "afternoon_tea_tease"
+  ]
+}

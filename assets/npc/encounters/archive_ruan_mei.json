@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "encounter_id": "archive_ruan_mei",
+  "character_id": "ruan_mei",
+  "spawn_id": "archive_ruan_mei",
+  "flow_behavior_id": "standard_duel",
+  "dialogue_bundle_id": "ruan_mei_archive_bundle",
+  "combat_profile_id": "ruan_mei_combat",
+  "reaction_profile_id": "ruan_mei_reactions",
+  "motion_profile_id": "ruan_mei_motions",
+  "supported_entry_points": [
+    "start",
+    "unlocked_start",
+    "mid_battle_manual",
+    "combat_manual_unlocked",
+    "victory_node",
+    "defeat_node",
+    "post_spare",
+    "post_kill"
+  ]
+}

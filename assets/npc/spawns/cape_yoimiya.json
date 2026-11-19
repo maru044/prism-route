@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "cape_yoimiya",
+  "character_id": "yoimiya",
+  "region": "海岬小镇与神社",
+  "position": [
+    611.399,
+    1.44,
+    -1037.523
+  ],
+  "heading": 26.0,
+  "bound_furniture": []
+}

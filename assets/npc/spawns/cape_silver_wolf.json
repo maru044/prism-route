@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "cape_silver_wolf",
+  "character_id": "silver_wolf",
+  "region": "海岬小镇与神社",
+  "position": [
+    614.407,
+    8.24,
+    -1087.357
+  ],
+  "heading": -174.0,
+  "bound_furniture": []
+}

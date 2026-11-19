@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "stelle_reactions",
+  "speaker": "星",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖按在唇边？Master，星的嘴唇平时可不常对别人开放呢。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软的舌尖被您轻轻吮吻，呼吸变得又热又急促了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中津液溢出，胸口剧烈起伏，脑海一片空白，好甜美！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "手掌覆在风衣包裹的双峰上，Master的掌温隔着布料传递过来了。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接隔着衬衫揉弄双峰尖端，酸麻感像电流一样直击后背呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经彻底充血挺立了，好强烈的刺激，星快站不稳了！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "碰到了最羞涩的地方，身体下意识震颤了一下，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指尖在花核周围打圈按揉，温热的泉水已经湿透了短裙内衬。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽热的爱液狂乱涌出，好可怕的高潮浪潮，星要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "摩挲长腿内侧结实弹韧的软肉，触感格外细腻。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根部被轻轻揉按，整条腿都酸软得无力支撑了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全没有力气了，只能软软顺从地倚在Master怀里任您索取！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "baseball_bludgeon": {
+      "name": "再见安眠·球棒挥击",
+      "damage": 17.0,
+      "text": "规则，就是用来打破的！Master，接好这一记势大力沉的全垒打挥击！",
+      "emotion": "confident"
+    },
+    "lance_of_preservation": {
+      "name": "存护之炎·誓死坚守",
+      "damage": 18.0,
+      "text": "炎枪冲锋！为了守护同伴的执念，Master可不要轻易认输哦！",
+      "emotion": "serious"
+    },
+    "trashcan_investigation": {
+      "name": "翻箱倒柜·突击拥抱",
+      "damage": 15.0,
+      "text": "发现了宝藏的痕迹！Master，抓到你就不放手了哦！",
+      "emotion": "smile"
+    }
+  }
+}

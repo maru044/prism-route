@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "faruzan_archive_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "珐露珊",
+      "text": "哼，后辈！我是知论派正统学者、你的前辈珐露珊！在这座下沉档案馆的角落里，刚好堆放着许多古代机械残件，正适合我推导机关构型。想让我指点你前行？先在切磋里让前辈看看你手头上的真本事吧！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "珐露珊",
+      "text": "后辈，在机关解析上遇到什么难题了？快来请教珐露珊前辈！",
+      "choices": [
+        {
+          "text": "【关于古代机械角落】在这里推导古代机关模型，有什么新突破吗？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请珐露珊前辈赐教！（初次对决：百年前辈全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "珐露珊",
+      "text": "百年前的机械构造比起现在的繁复花样反而更具几何美感。只要看清核心榫卯与能量流转回路，再复杂的古代机件也不在话下！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "珐露珊",
+      "text": "Master！你又来找前辈了。上次切磋输给你后，我的身子只要被你触碰，就会像解体的多面体一样发软散架。今天是要切磋机关术，还是要前辈乖乖听你吩咐服侍你呢？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "珐露珊",
+      "text": "主人，虽然嘴上喊着前辈，但我整个人都是你的，请尽情使唤！",
+      "choices": [
+        {
+          "text": "【关于前辈的娇羞】在独处的时候，前辈也能依靠在后辈怀里吗？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】珐露珊，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "珐露珊",
+      "text": "唔，平时我总是摆着前辈架子，但被你从身后紧紧抱住的时候，胸口就忍不住发烫。偶尔做个被你宠爱的后辈，感觉倒也不坏呢。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "珐露珊",
+      "text": "后辈，风穴多面体还在旋转呢，集中精力，别被风力牵引打乱脚步！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "珐露珊",
+      "text": "哈啊，Master，前辈身子都要被你揉化了，只要你开口，我全都听你的，",
+      "choices": [
+        {
+          "text": "【命令识趣】珐露珊，解除风力机关，任由我细细调教！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】珐露珊，构筑风球结界稳住防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，珐露珊当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "珐露珊",
+      "text": "呜，真是不尊长辈的坏后辈，那我就解除防御，请对我温柔一点呀，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "珐露珊",
+      "text": "多面体风盾构筑完成！主人的快感防线由前辈全力为你护持！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "珐露珊",
+      "text": "意志力很坚定嘛，那前辈也要拿出真本事来考较你了！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "珐露珊",
+      "text": "呀啊！遵命主人，前辈彻底认输了，身子要在高潮风暴里绝顶了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "珐露珊",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "珐露珊",
+      "text": "哈啊，机关弓弩都掉在地上了，双腿软得只能跌坐着，前辈竟然完全输给你了！既然战败，本百岁前辈听凭你的处置，你想对我做什么？",
+      "choices": [
+        {
+          "text": "【前辈侍奉】请珐露珊在机关拼装案旁地面上，为我提供傲娇长辈的百岁少女侍奉。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "珐露珊",
+      "text": "哈哈！我就说后辈还要多练几年吧！别泄气，先跟前辈好好复盘，待会儿再来请教！",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "珐露珊",
+      "text": "Master，刚才虽然化作毫无防备的玩偶任您任意摆弄，但重塑后的珐露珊依然对您百依百顺。请继续向我下令吧！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "珐露珊",
+      "text": "哈啊，刚才在机械案旁地面上为你侍奉良久，双马尾和长裙都被香汗弄得乱糟糟的。能让Master满意快慰，前辈也很欣慰呢。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

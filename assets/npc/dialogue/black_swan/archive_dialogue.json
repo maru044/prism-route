@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "black_swan_archive_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "黑天鹅",
+      "text": "初次见面，亲爱的Master。我是流光忆庭的忆者黑天鹅。在这处下沉庭院的静谧露台上，空气中回荡着古老知识与记忆的微鸣。若想让我收录你专属的记忆篇章，不妨先与我切磋一番，看看你能不能看穿我的塔罗牌局？",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "黑天鹅",
+      "text": "亲爱的Master，今天想倾听哪一段命运的水晶预言呢？",
+      "choices": [
+        {
+          "text": "【关于下沉档案馆】在这座避风的天井露台旁占卜，感觉如何？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请黑天鹅赐教！（初次对决：忆者神秘迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "黑天鹅",
+      "text": "这里光线柔和，远离喧嚣的风暴与尘嚣，最适合整理思绪、沉淀回忆。哪怕是一片落叶的旋转，在这里都能折射出迷人的记忆折痕。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "黑天鹅",
+      "text": "Master，你果然被记忆的引力带回到我身边了。上次在切磋中被你攻破心防后，我的身心都在渴望着你的再次触碰。今天是要翻动塔罗牌，还是想让我用这具柔躯，为你提供全心服从的侍奉？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "黑天鹅",
+      "text": "主人，黑天鹅随时愿意为您敞开记忆之门，任凭您谱写篇章。",
+      "choices": [
+        {
+          "text": "【关于最珍贵的记忆】在你的水晶镜面里，最想留存什么画面？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】黑天鹅，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "黑天鹅",
+      "text": "当然是Master凝视我时那炽热又迷乱的眼神，以及你在我耳畔低语、将我彻底占有的时刻。那是任何时光都不会褪色的纯粹宝石。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "黑天鹅",
+      "text": "亲爱的，塔罗牌还在指间飞舞呢，不要沉醉在我的低语里哦。",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "黑天鹅",
+      "text": "哈啊，Master，思维已经被您的气息完全侵占了，您要我怎么迎合，我都依您，",
+      "choices": [
+        {
+          "text": "【命令识趣】黑天鹅，卸除心灵幻术，让我尽情占有你！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】黑天鹅，展开记忆结界稳固防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，黑天鹅当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "黑天鹅",
+      "text": "呵呵，既然主人想要看我沉沦的模样，那我就撤去心防，请温柔地铭刻我，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "黑天鹅",
+      "text": "镜面光幕展开，主人的快感防线由我为您牢牢定格在安全梦境之中！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "黑天鹅",
+      "text": "如此深邃坚毅的灵魂，那我也会更加专注地回应你的心声！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "黑天鹅",
+      "text": "呀啊！遵命主人，黑天鹅认输了，灵魂要在剧烈的高潮中融化成水了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "黑天鹅",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "黑天鹅",
+      "text": "哈啊，塔罗牌散落了一地，身子软得倚靠不住石柱，黑天鹅彻底败给Master了。作为您的专属忆者，我的全部秘密都归属于您，您想怎么处置我？",
+      "choices": [
+        {
+          "text": "【记忆侍奉】请黑天鹅在露台平整地面上，为我提供优雅神秘的忆者近侍服侍。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "黑天鹅",
+      "text": "呵呵，看来命运的卡牌指向了我的胜利呢。亲爱的Master，不必懊恼，先在露台品一杯红茶，待会儿我再陪你对弈。",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "黑天鹅",
+      "text": "Master，刚才虽然化作玩偶任您任意摆弄，但记忆深处重新醒来的黑天鹅依然深爱着您的支配。请继续享受调教我的时光吧！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "黑天鹅",
+      "text": "哈啊，刚才在露台平整地面上为您服侍良久，薄纱礼服都被热气浸湿贴在身上了。能为Master带来极致欢愉，就是忆者最大的荣耀。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "yoimiya_cape_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "宵宫",
+      "text": "嗨！Master！我是长野原烟花店的宵宫！今天海岬小镇的天气真棒，正适合看风景和聊烟花呢！若是想带宵宫一起去冒险，先跟我切磋一场，看看您能不能接住我的热烈火花吧！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "宵宫",
+      "text": "Master，想看哪种样式的烟花呢？宵宫随时都能为您燃放哦！",
+      "choices": [
+        {
+          "text": "【关于小镇商铺】在临街商铺窗边看街景，感觉怎么样？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请宵宫赐教！（初次对决：烟花店长全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "宵宫",
+      "text": "这里微风吹过来带着淡淡的海盐味，木窗敞开着正好看见来往的行人与街角的花草。等天色暗下来，在这里点起一支线香烟花，整个街道都会亮起来呢！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "宵宫",
+      "text": "Master！您来找宵宫啦！上次对决输给您之后，我的身子到现在只要被您一搂，就会像受热的焰硝一样发烫发酥呢。今天是要切磋火花，还是想让宵宫好好为您揉肩暖身？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "宵宫",
+      "text": "主人，宵宫整个人都听您的差遣，请尽情吩咐吧！",
+      "choices": [
+        {
+          "text": "【关于心意】宵宫的心情似乎比烟花还要明亮呢？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】宵宫，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "宵宫",
+      "text": "那当然是因为有Master在身边呀！每次看见您，胸口就扑通扑通跳得比炮仗还快。只要您愿意，宵宫随时都能为您点燃独一无二的专属浪漫哦！",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "宵宫",
+      "text": "Master，金鱼花火还在空中盘旋呢，集中精神，不然要被烟花打中咯！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "宵宫",
+      "text": "哈啊，Master，宵宫浑身都在发烫，只要您开口，我立刻乖乖迎合您，",
+      "choices": [
+        {
+          "text": "【命令识趣】宵宫，故意漏出破绽，让我尽情疼爱！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】宵宫，帮我挡住快感浪潮！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，宵宫当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "宵宫",
+      "text": "呜哇，既然主人这么说了，宵宫就稍微走神给您看，动作要轻一点呀，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "宵宫",
+      "text": "没问题！如同烟花护盾一样，宵宫会全力守护好主人的防线！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "宵宫",
+      "text": "眼神好坚定呀，那宵宫也要加把劲让火花更绚烂了！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "宵宫",
+      "text": "呀啊！遵命主人，宵宫认输了，身子彻底化作一滩热熔的焰硝啦！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "宵宫",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "宵宫",
+      "text": "哈啊，双腿都在打颤，弓弦都握不住了，宵宫完全输给Master了。作为您的专属烟花娘，今晚全部听您的安排，您打算怎么处置我？",
+      "choices": [
+        {
+          "text": "【烟花之约】请宵宫在窗侧木地板上，为我提供热情灿烂的夏祭服侍。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "宵宫",
+      "text": "哇哈哈！这回是宵宫的火花略胜一筹呢！Master别灰心，喝杯甜甜的团子清汤，一会儿我们再战！",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "宵宫",
+      "text": "Master，刚才虽然化作玩偶任您任意摆弄，但重新站起来的宵宫心里还是暖烘烘的。不管发生什么，宵宫都永远只属于您一人！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "宵宫",
+      "text": "哈啊，刚才在商铺窗侧为您服侍了那么久，胸前的裹布都被汗水浸透了呢。只要Master觉得舒服开心，宵宫就满足啦！",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

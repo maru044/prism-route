@@ -369,6 +369,11 @@ func _build_cape_town() -> void:
 	spawn_world_encounter("cape_raiden_shogun", cape_town)
 	spawn_world_encounter("cape_kirara", cape_town)
 	spawn_world_encounter("cape_ayaka", cape_town)
+	spawn_world_encounter("cape_yoimiya", cape_town)
+	spawn_world_encounter("cape_kuki_shinobu", cape_town)
+	spawn_world_encounter("cape_silver_wolf", cape_town)
+	spawn_world_encounter("cape_stelle", cape_town)
+	spawn_world_encounter("cape_march7th", cape_town)
 	var support:=""
 	for row: Dictionary in cape_town.manifest.objects:
 		if row.name=="street/approach":support=row.id;break
@@ -402,6 +407,12 @@ func _build_church_ruins() -> void:
 
 func _build_sunken_archive() -> void:
 	sunken_archive=SUNKEN_ARCHIVE.new();sunken_archive.world=self;add_child(sunken_archive)
+	spawn_world_encounter("archive_black_swan", sunken_archive)
+	spawn_world_encounter("archive_ruan_mei", sunken_archive)
+	spawn_world_encounter("archive_herta", sunken_archive)
+	spawn_world_encounter("archive_faruzan", sunken_archive)
+	spawn_world_encounter("archive_lisa", sunken_archive)
+	spawn_world_encounter("archive_layla", sunken_archive)
 	metadata.spawns.append({"name":"下沉环庭 · 地下展廊","key":"sunken_archive","position":sunken_archive.manifest.spawn,
 		"look_direction":sunken_archive.manifest.look_direction,"required_floor_kind":"Structure",
 		"required_source_id":sunken_archive.manifest.spawn_source_id,"maximum_search_distance_m":1.,"character_only":true})
@@ -411,6 +422,7 @@ func _build_earth_pavilion() -> void:
 	spawn_world_encounter("earth_tingyun", earth_pavilion)
 	spawn_world_encounter("earth_huohuo", earth_pavilion)
 	spawn_world_encounter("earth_yunjin", earth_pavilion)
+	spawn_world_encounter("earth_yukong", earth_pavilion)
 	metadata.spawns.append({"name":"东侧覆土庭院 · 入口与中庭","key":"earth_pavilion","position":earth_pavilion.manifest.spawn,
 		"look_direction":earth_pavilion.manifest.look_direction,"required_floor_kind":"Structure",
 		"required_source_id":earth_pavilion.manifest.spawn_source_id,"maximum_search_distance_m":1.,"character_only":true})

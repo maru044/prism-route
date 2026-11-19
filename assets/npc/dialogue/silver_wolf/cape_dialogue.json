@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "silver_wolf_cape_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "银狼",
+      "text": "哟，Master。我是银狼。这里三层视野很好，网速也不卡，正适合我打游戏刷副本。要是想让我陪你一起探索，先来一场身心切磋，看看你的技术能不能击败我这个全成就通关玩家吧！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "银狼",
+      "text": "Master，今天想刷哪个副本？不管是黑客改写还是打怪，我都能搞定。",
+      "choices": [
+        {
+          "text": "【关于商铺三层窗边】一边吹海风一边打掌机，很惬意吧？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请银狼赐教！（初次对决：超级黑客全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "银狼",
+      "text": "没有卡芙卡和刃在耳边念叨，光线和信号又刚好合适，简直是神仙打机点。吹着风刷通宵都不会觉得闷。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "银狼",
+      "text": "Master！你又来打扰我打游戏了。自从上次在切磋里被你彻底攻破防火墙，我只要一被你碰触，敏感度就会暴增十倍。今天是想切磋代码，还是想让我乖乖听你摆弄？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "银狼",
+      "text": "主人，银狼的全部权限都已经对你完全开放了，请指示吧。",
+      "choices": [
+        {
+          "text": "【关于超级玩家】对你来说，这场游戏最重要的奖励是什么？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】银狼，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "银狼",
+      "text": "哼，全成就通关我早拿腻了。现在的独家限定奖励，不就是躺在Master怀里，任由你一边摸我的头一边看我玩游戏吗？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "银狼",
+      "text": "Master，我的以太入侵还在继续运行呢，集中注意力，小心被直接踢下线！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "银狼",
+      "text": "哈啊，Master，防火墙已经被你全改写了，只要你输入指令，我立刻服从，",
+      "choices": [
+        {
+          "text": "【命令识趣】银狼，关闭主动防御，让我尽情攻占你！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】银狼，注入数据补丁加固防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，银狼当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "银狼",
+      "text": "呜，真拿你没办法，那我就把防御参数调成零，轻一点呀，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "银狼",
+      "text": "正在载入防溢出安全补丁，主人的快感防线由我锁定在安全阈值！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "银狼",
+      "text": "挺能抗的嘛，那我可要把难度拉满咯！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "银狼",
+      "text": "呀啊！遵命主人，银狼彻底认输，系统要被高潮数据冲宕机了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "银狼",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "银狼",
+      "text": "哈啊，掌机都掉地上了，手指酸软得点不动按键，我彻底败给Master了。作为败者，所有权限随你处置，你想对我做什么？",
+      "choices": [
+        {
+          "text": "【极客侍奉】请银狼在三层窗边地面上，为我提供慵懒顺从的黑客少女侍奉。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "银狼",
+      "text": "Game Over！看来这场对局是我拿下了MVP呢。Master，回去好好研究一下攻略，待会儿再来挑战我吧！",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "银狼",
+      "text": "Master，刚才虽然化作玩偶任您任意摆弄，但重启系统后的银狼还是老老实实认你为主。快点陪我玩下一关吧！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "银狼",
+      "text": "哈啊，刚才在三层窗边为您服侍了那么久，连掌机屏幕都被水汽弄模糊了呢。只要Master玩得开心，这种通关奖励我也认了。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

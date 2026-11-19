@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "motion_profile_id": "stelle_motions",
+  "bindings": {
+    "ground_service": {
+      "interaction_type": "ground",
+      "required_anchors": [],
+      "role_a_motion": "res://assets/characters/mmd_selected/animations/mmd_fcc0340f8227_a.tres",
+      "role_b_motion": "res://assets/characters/mmd_selected/animations/mmd_fcc0340f8227_b.tres",
+      "fallback_to_ground": true
+    }
+  }
+}

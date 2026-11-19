@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "kuki_shinobu_reactions",
+  "speaker": "久岐忍",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖按在唇边？Master，摘下面罩后的我，唇齿都任您探索。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，舌尖被您轻轻含弄，呼吸不由自主变得急促而沉重了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！津液顺着下颌滑落，连严谨的思绪都彻底混乱了，好舒服！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "指腹压住锁骨下方的雪白肌肤，Master的力道好明确。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接揉弄双峰顶端，酥麻的雷电感沿着神经直冲大脑呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经完全敏感充血了，这种强烈的支配感，阿忍快撑不住了！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "碰到了最隐秘的花核，身体一瞬间绷紧了，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在花蒂打圈刺激，温热的爱液已经浸湿了贴身内衬。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽烈的花蜜疯狂喷涌，好可怕的高潮震颤，阿忍要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "抚摸忍者护腿上方的大腿内侧，触感紧致而细腻。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根被轻轻捏弄，酸软感让双腿不由自主向外分开。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全没有力气了，只能软软顺从地倚在Master怀里任您摆布。",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "sanctifying_ring": {
+      "name": "越祓雷草之轮·结界束缚",
+      "damage": 16.0,
+      "text": "以雷鸣结界束缚周遭，Master，小心别被雷草之轮的麻痹波纹侵蚀哦！",
+      "emotion": "confident"
+    },
+    "gyoei_narukami_kariyama": {
+      "name": "御咏鸣神刈山祭·裂空斩",
+      "damage": 18.0,
+      "text": "拔刀出鞘，退治百邪！请接下荒泷派副手最精准的一击！",
+      "emotion": "serious"
+    },
+    "tactical_assessment": {
+      "name": "智囊剖析·要害掌握",
+      "damage": 15.0,
+      "text": "您的动作破绽我已经看清了，切磋过招，我可不会轻易放水。",
+      "emotion": "smile"
+    }
+  }
+}

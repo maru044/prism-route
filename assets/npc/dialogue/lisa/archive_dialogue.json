@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "lisa_archive_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "丽莎",
+      "text": "哎呀，小可爱。我是西风骑士团图书管理员丽莎。在这处下沉庭院的天井阳光下看书喝茶，真是不可多得的慵懒时光呢。想带姐姐一起出去走走？先陪姐姐切磋一场，让我看看你长进了多少吧。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "丽莎",
+      "text": "小可爱，想借阅哪本书呢？或者，只是想靠在姐姐腿上休息？",
+      "choices": [
+        {
+          "text": "【关于天井软榻区】在阳光洒落的书架旁看书，很惬意吧？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请丽莎姐姐赐教！（初次对决：蔷薇魔女全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "丽莎",
+      "text": "阳光刚好穿透天井洒在书页上，泡一杯加了适量蜂蜜的红茶，静静翻阅古籍，世上可没有比这更放松的事了。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "丽莎",
+      "text": "小可爱，你又来找姐姐了。自从上次切磋输给你后，姐姐身上那点雷电魔力只要被你一碰，就会顺从地化为酥麻的快意。今天是要切磋雷法，还是要姐姐在软榻边好好疼你？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "丽莎",
+      "text": "主人，丽莎整个人都听凭您的吩咐，尽情索取吧。",
+      "choices": [
+        {
+          "text": "【关于魔女的芳心】在丽莎姐姐眼里，谁才是最特别的存在？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】丽莎，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "丽莎",
+      "text": "呵呵，除了我的小可爱Master，还能有谁呢？只要一靠近你，姐姐身上的慵懒全化作了甜软的热度。真想整天被你抱在怀里细细品尝呢。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "丽莎",
+      "text": "小可爱，蔷薇雷阵还在流转呢，集中精神，不要被雷光麻痹了神经哦。",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "丽莎",
+      "text": "哈啊，Master，身子被你揉得化作一滩春水了，你想要怎样，姐姐都依你，",
+      "choices": [
+        {
+          "text": "【命令识趣】丽莎，收回雷电威压，任由我尽情采撷！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】丽莎，展开蔷薇雷盾守护防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，丽莎当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "丽莎",
+      "text": "呵呵，既然主人想要姐姐顺从，那我就乖乖撤去防御，请尽情疼爱我，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "丽莎",
+      "text": "温柔的雷光护壁展开，主人的快感防线由姐姐亲自为你护持！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "丽莎",
+      "text": "眼神很有男子气概呢，那姐姐也要更卖力展现雷电的魅力了！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "丽莎",
+      "text": "呀啊！遵命主人，姐姐认输了，身子要在狂暴的高潮雷电里融化了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "丽莎",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "丽莎",
+      "text": "哈啊，法器都落在一边了，身子软得只能侧卧在地面上，姐姐彻底输给你了呢。作为败者，熟透的魔女任凭小可爱处置，你想怎么做？",
+      "choices": [
+        {
+          "text": "【慵懒侍奉】请丽莎在天井软榻区地面上，为我提供优雅成熟的蔷薇魔女侍奉。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "丽莎",
+      "text": "呵呵，看来这一次还是姐姐略占上风呢。小可爱先喝口红茶歇一歇，待会儿姐姐再好好疼你。",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "丽莎",
+      "text": "Master，刚才虽然化作玩偶任您任意摆弄，但重新站起来的丽莎依然最喜欢依赖着小可爱了。请继续支配并享受我吧！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "丽莎",
+      "text": "哈啊，刚才在天井地面上为您服侍良久，典雅的法袍都被汗水浸透贴在丰腴的身躯上了。能让主人舒畅尽兴，姐姐心满意足。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

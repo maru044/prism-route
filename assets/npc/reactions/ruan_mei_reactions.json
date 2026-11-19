@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "ruan_mei_reactions",
+  "speaker": "阮·梅",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖按在清冷淡雅的唇边？Master，知性学者的朱唇今天任您采撷。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软清甜的舌尖被你探入深吻，心跳频率与体温迅速飙升了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！津液完全失守溢出，理性的防线彻底坍塌，脑中满是甜蜜的空白！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "掌心覆在素雅旗袍包裹的丰挺胸前，Master，掌温让血液流速变快了。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接隔着薄绸捻揉双峰尖端，神经末梢泛起阵阵强烈的麻痒酸楚。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经完全挺立充血了，这种强烈的支配快感，阮·梅快站不住了！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "触及身体最隐秘的生命禁区，呼吸瞬间屏住了，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在敏感核打圈按压，温热充沛的花蜜把底裤彻底湿透了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽烈的蜜液喷涌决堤，如此猛烈的高潮冲击，阮·梅要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "摩挲开衩旗袍下温润白皙的大腿内侧，触感如凝脂般滑腻。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根部被轻轻揉按，双腿发软不由自主顺从地向两侧分开。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全没有力气了，只能软软任由Master随意摆布探索索取！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "string_of_petals": {
+      "name": "花针慢挑·一枝浓艳",
+      "damage": 17.0,
+      "text": "轻拨阮琴，花枝曼舞。Master，领略一下生命律动中最敏锐的微观刺激吧。",
+      "emotion": "smile"
+    },
+    "creation_spiral": {
+      "name": "基因螺旋·生命回响",
+      "damage": 19.0,
+      "text": "生命进化的螺旋，从不曾停歇。请接下我最新培育的活性化能量波动。",
+      "emotion": "confident"
+    },
+    "pastry_sweetness": {
+      "name": "点心幽香·清雅诱惑",
+      "damage": 15.0,
+      "text": "尝一块我特制的梅花酥点吧，不仅甜润心脾，连感官都会变得格外通透呢。",
+      "emotion": "smile"
+    }
+  }
+}

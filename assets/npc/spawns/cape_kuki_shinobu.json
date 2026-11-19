@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "cape_kuki_shinobu",
+  "character_id": "kuki_shinobu",
+  "region": "海岬小镇与神社",
+  "position": [
+    681.092,
+    4.84,
+    -1082.469
+  ],
+  "heading": -149.0,
+  "bound_furniture": []
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "black_swan_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "card_of_epiphany",
+    "memory_cradle",
+    "gentle_whisper"
+  ]
+}

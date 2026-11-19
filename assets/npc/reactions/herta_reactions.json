@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "herta_reactions",
+  "speaker": "黑塔",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖戳弄傲娇的小嘴唇？Master，就算是人偶的嘴唇，触感也跟真人一样温软哦。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，小巧的舌尖被你含住品弄，传感中枢里涌出一波波异样的麻乱感。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中津液溢出，脑海核心传感器警报狂响，好强烈好舒服的感觉！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "手掌覆在洛丽塔洋装的双峰上，Master的掌心好烫啊。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接揉弄人偶双峰前端的敏感凸起，强烈的酸麻感顺着线路蔓延全躯。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经完全挺立发胀了，这种强烈的快感，人偶要超频宕机了！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "触碰到最精密的深处感应核，身子猛然绷紧了，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在敏感核打圈揉弄，大量润滑爱液把蕾丝底裤完全浸透了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽热的体液疯狂喷涌，可怕的高潮过载，黑塔要绝顶啦！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "摩挲球形关节上方的雪白大腿内侧，触感如丝绸般滑顺。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根部被轻轻揉按，关节锁扣发软，双腿不由自主向外大大分开。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全失了力气，只能软软任凭Master任意摆布索取了！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "spinning_hammer": {
+      "name": "转圈圈大锤·大回旋",
+      "damage": 17.0,
+      "text": "转圈圈，转圈圈！别挡道，让我看看你的抗击打能力到底怎么样！",
+      "emotion": "smile"
+    },
+    "puppet_overdrive": {
+      "name": "人偶超频·关节冲击",
+      "damage": 19.0,
+      "text": "真是麻烦死了，那就加点算力！接好这一锤，可别直接被打趴下了！",
+      "emotion": "confident"
+    },
+    "genius_mockery": {
+      "name": "天才嘲弄·人偶眨眼",
+      "damage": 15.0,
+      "text": "这就受不了了？就你这点水平，连让我多用一台人偶的资格都没有哦。",
+      "emotion": "smile"
+    }
+  }
+}

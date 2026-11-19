@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "cape_stelle",
+  "character_id": "stelle",
+  "region": "海岬小镇与神社",
+  "position": [
+    608.796,
+    1.44,
+    -1077.87
+  ],
+  "heading": -19.0,
+  "bound_furniture": []
+}

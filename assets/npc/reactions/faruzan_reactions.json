@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "faruzan_reactions",
+  "speaker": "珐露珊",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖摩挲娇巧双唇？Master，就算是百年前辈，嘴唇也一样娇嫩甜润哦。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软的舌尖被你含住细细品弄，喉间溢出可爱的轻吟，呼吸全乱了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中津液完全失守溢出，长辈的威严彻底瓦解，好充盈的甜意！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "手掌覆在典雅学者长裙包裹的胸前，Master，心跳跳得太快了啦。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接隔着薄绸揉弄双峰尖端，酸麻感顺着后颈直冲头顶百会呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经彻底挺立充血了，这种强烈的征服快感，前辈快受不了啦！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "触及身体最娇羞的机关要害，浑身猛然抖了一下，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在敏感核打圈按压，温热充沛的花蜜把底裤都完全湿透了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽烈的爱液喷涌决堤，如此剧烈的高潮冲击，前辈要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "摩挲开衩短裙下白皙纤细的大腿内侧，触感幼嫩滑润。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根部被轻轻揉按，双腿发软不由自主顺从地向两侧分开。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全没有力气了，只能软软任由Master随意摆布索取了！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "wind_polyhedron": {
+      "name": "多面体光球·风穴吸卷",
+      "damage": 17.0,
+      "text": "赫耀多面体，起动！后辈，见识一下百年前须弥最正统的机关术威能吧！",
+      "emotion": "confident"
+    },
+    "senior_guidance": {
+      "name": "前辈训示·破绽指引",
+      "damage": 19.0,
+      "text": "你的动作全被我看破了！接好这一记风刃，好好向前辈请教才是正道！",
+      "emotion": "smile"
+    },
+    "century_scolding": {
+      "name": "傲娇敲头·长辈威严",
+      "damage": 15.0,
+      "text": "叫前辈！不认真喊一声珐露珊前辈，我可不会轻易放你过关哦！",
+      "emotion": "smile"
+    }
+  }
+}

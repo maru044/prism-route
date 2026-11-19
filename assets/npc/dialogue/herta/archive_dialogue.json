@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "herta_archive_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "黑塔",
+      "text": "喂，Master。我是黑塔，天才俱乐部 #83。虽然这只是我成百上千具精致人偶中的一具，不过打发时间足够了。想要我为你提供研究支持？先陪我打一场切磋，让我测测你的实战数据！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "黑塔",
+      "text": "有什么事快说，我可没那么多闲工夫陪你闲扯。",
+      "choices": [
+        {
+          "text": "【关于终端分析台】在这间地下档案馆里操控人偶，不觉得无聊吗？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请黑塔赐教！（初次对决：人偶主人全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "黑塔",
+      "text": "无聊？这里数据流挺顺畅的，而且没有赞达尔那种烦人的家伙指手画脚。只要有足够有趣的课题，待在什么地方对我来说都一样。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "黑塔",
+      "text": "Master！你又跑来找我了。上次切磋输给你后，这具人偶的触觉感知器全被你弄得敏感度过载了。只要你一碰我，我就忍不住浑身发抖。今天是要切磋大锤，还是要我乖乖听你摆布？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "黑塔",
+      "text": "主人，黑塔人偶听候您的命令，想要怎么折腾都随你啦！",
+      "choices": [
+        {
+          "text": "【关于最在意的人偶】这具人偶对黑塔来说，有什么特别的吗？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】黑塔，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "黑塔",
+      "text": "哼，原本只是普通量产机，但既然被你抱过揉过那么多次，关节和传动轴都染上了你的味道，那它自然就是我最宝贝的一具了！不许再让别人碰，听见没有？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "黑塔",
+      "text": "喂！我的大锤还没收手呢，集中注意力，别分心！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "黑塔",
+      "text": "哈啊，Master，人偶核心都在发烫了，只要你开口命令，我什么都依你，",
+      "choices": [
+        {
+          "text": "【命令识趣】黑塔，关掉力矩反馈，让我尽情支配你！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】黑塔，展开人偶护盾护住防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，黑塔当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "黑塔",
+      "text": "切，真是会使唤人，那我就把出力调到最低，轻一点啊，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "黑塔",
+      "text": "笨蛋，快感防线由我替你锁死在阈值下了，安心战斗吧！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "黑塔",
+      "text": "还挺能抗打的嘛，那我可要继续加速转圈圈了！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "黑塔",
+      "text": "呀啊！遵命主人，黑塔认输了，人偶核心要被高潮快感烧短路了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "黑塔",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "黑塔",
+      "text": "哈啊，大锤都甩飞了，人偶关节软得站不稳，我竟然彻底输给你了！既然打输了，这具身体随便你怎么处置，你想对我做什么？",
+      "choices": [
+        {
+          "text": "【人偶服侍】请黑塔在分析台旁地面上，为我提供傲娇听话的精致人偶侍奉。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "黑塔",
+      "text": "哈哈！我就说你还差得远呢！先回空间站多练练，待会儿再来找我挨锤吧！",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "黑塔",
+      "text": "Master，刚才虽然变成毫无反抗力的玩偶任您任意摆弄，但重启连接后的黑塔依然只能听你的话。快点带我去好玩的地方！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "黑塔",
+      "text": "哈啊，刚才在展廊地面上为你服侍了那么久，人偶关节的润滑液都被热气蒸干了呢。只要能让你尽兴，本天才就勉强原谅你啦。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

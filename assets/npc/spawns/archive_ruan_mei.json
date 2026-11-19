@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "archive_ruan_mei",
+  "character_id": "ruan_mei",
+  "region": "下沉式档案馆",
+  "position": [
+    -1348.0,
+    11.5,
+    5.0
+  ],
+  "heading": 90.0,
+  "bound_furniture": []
+}

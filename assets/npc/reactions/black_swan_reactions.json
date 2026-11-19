@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "black_swan_reactions",
+  "speaker": "黑天鹅",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖摩挲神秘的面纱与双唇？Master，神秘的红唇只为你低吟浅唱。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软香甜的舌尖被你卷入口中，灵魂深处泛起层层迷离的甜意。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！津液失禁般滑落，优雅的矜持完全瓦解，身心都陷入无尽快感！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "手掌覆在半透礼服包裹的傲人双峰上，Master的触碰好深情。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！指尖直接捻揉成熟敏感的峰尖，酥麻的心灵震颤直击脑海深处。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经彻底充血挺立，好强烈的占有快感，黑天鹅快融化了！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "碰到了最隐秘的花核圣所，灵魂都忍不住发出一声轻颤，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在花蒂打圈按抚，浓郁温热的爱露早已将底裤完全浸透。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽热的爱泉疯狂涌现，如此剧烈的高潮幻梦，黑天鹅要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "轻抚蕾丝吊带袜上方雪白丰盈的大腿内侧，触感温润若脂。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根部被轻轻揉按，双腿不由自主向外舒展迎合您的指尖。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全没有力气了，只能软软大敞任凭Master尽情探索索取！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "card_of_epiphany": {
+      "name": "命运启示·塔罗预言",
+      "damage": 17.0,
+      "text": "翻开这张卡牌，你的心事已被我看透。Master，请接下命运编织的曼妙低语。",
+      "emotion": "smile"
+    },
+    "memory_cradle": {
+      "name": "摇篮迷梦·记忆交叠",
+      "damage": 19.0,
+      "text": "陷入甜美的回忆摇篮吧。在虚实交错的幻象中，感受灵魂层面的剧烈震颤。",
+      "emotion": "confident"
+    },
+    "gentle_whisper": {
+      "name": "耳畔私语·神秘占卜",
+      "damage": 15.0,
+      "text": "呵呵，不要移开视线哦，今夜你的记忆水晶，正在向我展现最羞赧的波澜。",
+      "emotion": "smile"
+    }
+  }
+}

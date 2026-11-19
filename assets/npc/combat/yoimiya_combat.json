@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "yoimiya_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "niwabi_fire_dance",
+    "ryuukin_saxifrage",
+    "summer_festival_cheer"
+  ]
+}
