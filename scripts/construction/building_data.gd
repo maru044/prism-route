@@ -222,39 +222,48 @@ func analyze() -> void:
 				elif row.definition=="desk" and room.function=="generic":room.function="work"
 	rooms=next
 
-func example() -> void:
-	pieces.clear();rooms.clear();serial=0;room_serial=0
+func example() -> bool:
+	var layout: Array[Array] = []
 	for s in range(2):
 		for x in range(20,34,2):
 			for z in range(20,30,2):
 				if s==1 and x==30 and z in [22,24,26]:continue
-				assert(place("floor",s,x,z,0,false).ok)
+				layout.append(["floor",s,x,z,0])
 	for x in range(20,34,2):
-		assert(place("window" if x%4==0 else "wall",0,x,20,0,false).ok)
-		assert(place("door" if x==26 else "wall",0,x,30,0,false).ok)
+		layout.append(["window" if x%4==0 else "wall",0,x,20,0])
+		layout.append(["door" if x==26 else "wall",0,x,30,0])
 	for z in range(20,30,2):
-		for x in [20,34]:assert(place("window" if z%4==0 else "wall",0,x,z,1,false).ok)
+		for x in [20,34]:layout.append(["window" if z%4==0 else "wall",0,x,z,1])
 	for z in range(20,28,2):
-		for x in [26,28]:assert(place("door" if z==24 else "wall",0,x,z,3 if x==28 and z==24 else 1,false).ok)
-	for x in [20,22,24,28,30,32]:assert(place("arch" if x==30 else "wall",0,x,28,0,false).ok)
+		for x in [26,28]:layout.append(["door" if z==24 else "wall",0,x,z,3 if x==28 and z==24 else 1])
+	for x in [20,22,24,28,30,32]:layout.append(["arch" if x==30 else "wall",0,x,28,0])
 	for x in range(20,28,2):
-		for z in [20,28]:assert(place("window" if z==20 else "wall",1,x,z,0,false).ok)
+		for z in [20,28]:layout.append(["window" if z==20 else "wall",1,x,z,0])
 	for z in range(20,28,2):
-		for x in [20,28]:assert(place("door" if x==28 and z==26 else "wall",1,x,z,1,false).ok)
+		for x in [20,28]:layout.append(["door" if x==28 and z==26 else "wall",1,x,z,1])
 	for x in range(20,28,2):
-		for z in range(20,28,2):assert(place("roof",1,x,z,0,false).ok)
-	for x in range(20,34,2):assert(place("railing",1,x,30,0,false).ok)
-	for z in range(20,30,2):assert(place("railing",1,34,z,1,false).ok)
-	for x in [28,30,32]:assert(place("railing",1,x,20,0,false).ok)
+		for z in range(20,28,2):layout.append(["roof",1,x,z,0])
+	for x in range(20,34,2):layout.append(["railing",1,x,30,0])
+	for z in range(20,30,2):layout.append(["railing",1,34,z,1])
+	for x in [28,30,32]:layout.append(["railing",1,x,20,0])
 	for z in [22,24,26]:
-		for x in [30,32]:assert(place("railing",1,x,z,1,false).ok)
-	assert(place("railing",1,30,28,0,false).ok)
-	assert(place("stairs",0,30,22,0,false).ok)
-	assert(place("entry_ramp",0,26,30,0,false).ok)
-	assert(place("bed",0,23,23,0,false).ok)
-	assert(place("desk",1,24,24,2,false).ok)
-	assert(place("chair",1,24,22,0,false).ok)
+		for x in [30,32]:layout.append(["railing",1,x,z,1])
+	layout.append(["railing",1,30,28,0])
+	layout.append(["stairs",0,30,22,0])
+	layout.append(["entry_ramp",0,26,30,0])
+	layout.append(["bed",0,23,23,0])
+	layout.append(["desk",1,24,24,2])
+	layout.append(["chair",1,24,22,0])
+	var previous := snapshot()
+	pieces.clear();rooms.clear();serial=0;room_serial=0
+	for row: Array in layout:
+		var result := place(row[0], row[1], row[2], row[3], row[4], false)
+		if not result.ok:
+			push_error("Coastal example placement failed for %s: %s" % [row, result.error])
+			restore(previous)
+			return false
 	undo_stack.clear();redo_stack.clear();analyze()
+	return true
 
 func lowland_example(remember := false) -> bool:
 	if not pieces.is_empty():

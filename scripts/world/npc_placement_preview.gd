@@ -14,6 +14,7 @@ const ORIGINAL_MODELS := {
 }
 const LOAD_DISTANCE := 96.0
 const RELEASE_DISTANCE := 125.0
+const MATCH_DISTANCE := 0.4
 
 var world
 var sites: Array[Marker3D] = []
@@ -31,6 +32,12 @@ func initialize(map: Node3D) -> void:
 	var catalog: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(CATALOG))
 	for profile: Dictionary in catalog.profiles:
 		models[profile.id] = profile.model
+	var encounter_positions := {}
+	for duel in get_tree().get_nodes_in_group("world_interactive_npcs"):
+		var id: String = duel.runtime.character_id
+		if not encounter_positions.has(id):
+			encounter_positions[id] = []
+		encounter_positions[id].append(duel.anchor.global_position)
 
 	var menu := review_menu.get_popup() if is_instance_valid(review_menu) else null
 	for region: String in SITES.REGIONS:
@@ -45,6 +52,10 @@ func initialize(map: Node3D) -> void:
 		for row: Array in SITES.REGIONS[region]:
 			var marker := _make_site(row, secondary or (row.size() > 4 and row[4] == true))
 			marker.set_meta("placement_region", region)
+			var positions: Array = encounter_positions.get(row[0], [])
+			var has_actor := positions.any(func(point: Vector3) -> bool:
+				return marker.global_position.distance_squared_to(point) <= MATCH_DISTANCE * MATCH_DISTANCE)
+			marker.set_meta("has_world_actor", has_actor or marker.get_meta("reuse_sparkle"))
 			if popup != null:
 				popup.add_item(row[1], sites.size())
 			sites.append(marker)
@@ -109,11 +120,9 @@ func _process(delta: float) -> void:
 	var nearest: Marker3D
 	var nearest_distance := LOAD_DISTANCE * LOAD_DISTANCE
 	for site: Marker3D in sites:
-		if site.get_meta("reuse_sparkle"):
+		if site.get_meta("has_world_actor"):
 			continue
 		var id: String = site.get_meta("character_id")
-		if is_instance_valid(world.sandbar_duel) and site.get_meta("placement_region") == "沙洲度假遗址" 			and id == world.sandbar_duel_runtime.encounter_bundle["identity"]["character_id"]:
-			continue
 		var distance := camera.global_position.distance_squared_to(site.global_position)
 		var same_as_player: bool = world.character_mode and id == world.character.active_character_id
 		if actors.has(site):

@@ -1,5 +1,6 @@
 extends "res://scripts/world/sandbar_pavilion.gd"
 ## Native fixed town; markers are independent of merged render batches.
+const SOURCE_GEOMETRY := preload("res://scripts/world/grass_source_geometry.gd")
 const TOWN_GEOMETRY := preload("res://assets/world/cape_town_1110/town.glb")
 const TOWN_MANIFEST := "res://assets/world/cape_town_1110/manifest.json"
 const GRASS_BAKE := "res://assets/world/cape_town_1110/grass_bake.json"
@@ -90,7 +91,7 @@ func install_grass_cells(stream: Node) -> void:
 	var baked: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(GRASS_BAKE))
 	if not baked.get("complete",false) or baked.signature!=STORE.signature(world):return
 	if baked.source_sha!=FileAccess.get_sha256(TOWN_MANIFEST):return
-	if baked.geometry_sha!=FileAccess.get_sha256("res://assets/world/cape_town_1110/town.glb"):return
+	if not SOURCE_GEOMETRY.matches("res://assets/world/cape_town_1110/town.glb", baked.geometry_sha):return
 	if baked.mask_sha!=FileAccess.get_sha256("res://assets/world/cape_town_1110/ground_field.rgba"):return
 	if baked.get("sampler_sha","")!=FileAccess.get_sha256("res://scripts/tree_planting/world_vegetation.gd"):return
 	if baked.get("runtime_sha","")!=FileAccess.get_sha256("res://scripts/world/cape_town.gd"):return

@@ -148,7 +148,9 @@ func _ready() -> void:
 	camper.automation_enabled=automation_enabled;camper.set_physics_process(false);camper.set_process_unhandled_input(false);camper.visible=false
 	camper.calibrate_wheels()
 	camper.respawn_resolver=_resolve_camper_respawn
-	_load_mask()
+	if not _load_mask():
+		get_tree().quit(1)
+		return
 	_environment()
 	await _build_model()
 	add_child(ROAD_JUNCTION.new())
@@ -312,11 +314,12 @@ func _ready() -> void:
 		var verifier: Node=load("res://tools/check_world_audio_1030.gd").new();verifier.world=self;add_child(verifier);verifier.call_deferred("run")
 	if "--verify-export" in OS.get_cmdline_user_args():
 		if ResourceLoader.exists("res://tools/verify_export_1021.gd"):
-			get_tree().root.call_deferred("add_child",load("res://tools/verify_export_1021.gd").new())
-		elif ResourceLoader.exists("res://tools/configure_export_1021.gd"):
-			get_tree().root.call_deferred("add_child",load("res://tools/configure_export_1021.gd").new())
+			var verifier: Node = load("res://tools/verify_export_1021.gd").new()
+			verifier.world = self
+			get_tree().root.call_deferred("add_child", verifier)
 		else:
-			push_warning("[Map1021] --verify-export verification script not found")
+			push_error("[Map1021] --verify-export verification script not found")
+			get_tree().quit(1)
 
 func _initialize_water() -> void:
 	water_manager=WATER_MANAGER.new()
@@ -522,22 +525,33 @@ func _sync_meadow_color() -> void:
 	terrain_repairs.sync_shoulder_palette()
 	cape_town.sync_ground_palette()
 
-func _load_mask() -> void:
+func _load_mask() -> bool:
 	var path:=ASSETS+"landscape_mask.res"
-	if ResourceLoader.exists(path) and not "--rebuild-mask" in OS.get_cmdline_user_args():
-		mask_texture=load(path);mask_image=mask_texture.get_image()
-	else:
+	if OS.has_feature("editor") and ("--rebuild-mask" in OS.get_cmdline_user_args() or not ResourceLoader.exists(path)):
 		var raw:=FileAccess.get_file_as_bytes("res://.current_map_build/landscape_mask.rg16f")
-		var size:=int(metadata.resolution);assert(raw.size()==size*size*4)
+		var size:=int(metadata.resolution)
+		if raw.size()!=size*size*4:
+			push_error("Cannot rebuild terrain mask, missing or invalid landscape_mask.rg16f")
+			return false
 		mask_image=Image.create_from_data(size,size,false,Image.FORMAT_RGH,raw)
 		var image:=mask_image.duplicate();image.generate_mipmaps()
 		mask_texture=ImageTexture.create_from_image(image)
-		assert(ResourceSaver.save(mask_texture,path,ResourceSaver.FLAG_COMPRESS)==OK)
+		var save_error := ResourceSaver.save(mask_texture, path, ResourceSaver.FLAG_COMPRESS)
+		if save_error != OK:
+			push_error("Could not save terrain mask %s: %s" % [path, error_string(save_error)])
+			return false
+	else:
+		mask_texture = load(path) as Texture2D
+		if mask_texture == null:
+			push_error("Could not load terrain mask: " + path)
+			return false
+		mask_image = mask_texture.get_image()
 	terrain_material=ShaderMaterial.new()
 	terrain_material.shader=load(ASSETS+"landscape.gdshader")
 	terrain_material.set_shader_parameter("landscape_mask",mask_texture)
 	terrain_material.set_shader_parameter("mask_origin_xz",Vector2(metadata.origin_xz[0],metadata.origin_xz[1]))
 	terrain_material.set_shader_parameter("mask_extent_xz",Vector2(metadata.extent_xz[0],metadata.extent_xz[1]))
+	return true
 
 func architectural_band(p: Vector3,margin:=0.0) -> bool:
 	if npc_waypoint_ruins.blocks_grass(p):return true
@@ -1152,6 +1166,21 @@ func _find_actor_floor(base: Vector3,heading: float,use_character: bool) -> Dict
 				if ground.is_empty() or absf(ground.position.y-p.y)>.65:supported=false;break
 		if supported:return hit
 	return {}
+
+func resolve_character_standing_position(point: Vector3) -> Variant:
+	var space := get_world_3d().direct_space_state
+	var ray := PhysicsRayQueryParameters3D.create(point + Vector3.UP * 0.55, point - Vector3.UP * 0.55, ACTOR_SOLID_LAYER)
+	var floor := space.intersect_ray(ray)
+	if floor.is_empty() or (floor.normal as Vector3).y < 0.72:
+		return null
+	var position: Vector3 = floor.position + Vector3.UP * 0.025
+	var shape: CollisionShape3D = character.collision_shape
+	var capsule := PhysicsShapeQueryParameters3D.new()
+	capsule.shape = shape.shape
+	capsule.transform = Transform3D(Basis.IDENTITY, position) * shape.transform
+	capsule.collision_mask = ACTOR_SOLID_LAYER | NPC_SOLID_LAYER
+	capsule.exclude = [character.get_rid()]
+	return position if space.intersect_shape(capsule, 1).is_empty() else null
 
 func set_character_mode(enabled: bool) -> void:
 	if switching_actor or enabled==character_mode:return

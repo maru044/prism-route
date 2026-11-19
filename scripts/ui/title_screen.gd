@@ -62,6 +62,8 @@ func _ready() -> void:
 	_setup_menu()
 	_setup_audio()
 	_plant_meadow(coast.find_child("TitleMeadow", true, false) as MeshInstance3D, vegetation)
+	if "--verify-export" in OS.get_cmdline_user_args():
+		_start_button.pressed.emit.call_deferred()
 
 
 func _setup_lumine(coast: Node3D, camera: Camera3D) -> void:

@@ -1,6 +1,26 @@
 extends SceneTree
 
 const Runtime := preload("res://scripts/world/npc_encounter_runtime.gd")
+const NPCSites := preload("res://scripts/world/npc_preview_sites.gd")
+const DEFEAT_CASES := {
+	"kafka": "NPCWaypointRuins/kafka/Entrance",
+	"firefly": "south_waterfront",
+	"mona": "island_saddle",
+	"lynette": "south_middle_walk",
+	"fischl": "terrace_ruins_a",
+	"shenhe": "terrace_ruins_b",
+	"amber": "NPCWaypointRuins/amber/Entrance",
+	"eula": "NPCWaypointRuins/eula/Entrance",
+	"charlotte": "NPCWaypointRuins/charlotte/Entrance",
+	"sucrose": "NPCWaypointRuins/sucrose/Entrance",
+	"lumine": "NPCWaypointRuins/lumine/Entrance",
+	"black_swan": "sunken_archive",
+	"ruan_mei": "sunken_archive",
+	"herta": "sunken_archive",
+	"faruzan": "sunken_archive",
+	"lisa": "sunken_archive",
+	"layla": "sunken_archive",
+}
 
 func _initialize() -> void:
 	_run.call_deferred()
@@ -66,6 +86,33 @@ func _run() -> void:
 		if not _expect(npcs_by_char.has(cid), "Batch 4 NPC '%s' was not mounted in world" % cid):
 			return
 	print("  ✓ All 17 Batch 4 NPCs mounted successfully in open world (Total: %d)" % interactive_npcs.size())
+
+	for character_id: String in npcs_by_char:
+		var duel = npcs_by_char[character_id]
+		var spawn: Dictionary = duel.runtime.encounter_bundle.spawn
+		var respawn := NPCSites.resolve_battle_respawn(world, spawn.region, character_id)
+		if not _expect(not respawn.is_empty(), "%s NPC is missing a defeat checkpoint" % character_id):
+			return
+		if not DEFEAT_CASES.has(character_id):
+			continue
+		if not _expect(respawn.id == DEFEAT_CASES[character_id], "%s has the wrong defeat checkpoint" % character_id):
+			return
+		var runtime: Runtime = duel.runtime
+		runtime.start_result_dialogue("npc")
+		await process_frame
+		_key(KEY_ENTER)
+		await process_frame
+		var checkpoint: Transform3D = world.character.respawn_transform
+		if not _expect(runtime.current_state == Runtime.EncounterState.AVAILABLE
+				and checkpoint.origin.is_equal_approx(respawn.position)
+				and is_zero_approx(angle_difference(checkpoint.basis.get_euler().y, respawn.heading))
+				and is_zero_approx(angle_difference(world.character.camera_pivot.rotation.y, respawn.heading))
+				and world.character.global_position.distance_to(respawn.position) < 0.2
+				and world.character.is_control_enabled()
+				and not world.game_progress.is_companion_unlocked(character_id),
+				"%s defeat did not return the player to the configured checkpoint" % character_id):
+			return
+		print("  ✓ ", character_id, " defeat checkpoint verified: ", respawn.id)
 
 	# 2. Verify physics collision, avatar profiles, and zero-radius Jolt guards
 	for cid: String in batch_4_ids:
@@ -135,6 +182,7 @@ func _run() -> void:
 		var duel = npcs_by_char[character_id]
 		var runtime: Runtime = duel.runtime
 		var action := "spare_ground"
+		var original: Transform3D = duel.anchor.global_transform
 		var player_layer: int = world.character.collision_layer
 		var player_mask: int = world.character.collision_mask
 		runtime.start_result_dialogue("player")
@@ -148,6 +196,7 @@ func _run() -> void:
 		await process_frame
 		if not _expect(runtime.current_state == Runtime.EncounterState.SETTLEMENT
 				and runtime.settlement_outcome == action and duel.is_service_active
+				and duel.service_hud.text.begins_with("【地面演出】")
 				and is_instance_valid(duel.master_paired_actor) and not world.is_world_input_allowed()
 				and world.game_progress.is_companion_unlocked(character_id),
 				"%s victory option did not enter and lock staging" % character_id):
@@ -156,6 +205,7 @@ func _run() -> void:
 		await process_frame
 		if not _expect(runtime.current_state == Runtime.EncounterState.COMPLETED
 				and not dialogue.session_active and not duel.is_service_active and duel.actor.visible
+				and duel.anchor.global_transform.is_equal_approx(original)
 				and world.is_world_input_allowed() and world.character.is_control_enabled()
 				and world.character.visible and world.character.camera.current
 				and world.character.collision_layer == player_layer and world.character.collision_mask == player_mask,

@@ -11,6 +11,12 @@ const CorpseInteractionHandlerClass := preload("res://scripts/world/corpse_inter
 const NPC_SOLID_LAYER := 64
 const COMBAT_MOTION_KEQING := "res://assets/characters/mmd_selected/animations/mmd_fcc0340f8227_a.tres"
 const COMBAT_MOTION_MASTER := "res://assets/characters/mmd_selected/animations/mmd_fcc0340f8227_b.tres"
+const SERVICE_TITLES := {
+	"ground_service": "地面演出",
+	"seat_service": "座椅演出",
+	"bed_service": "躺椅演出",
+	"desk_service": "长案演出",
+}
 
 const MASTER_CONFIGS: Dictionary = {
 	"lumine": {
@@ -49,8 +55,7 @@ var corpse_actor: Node3D
 var corpse_handler: CorpseInteractionHandlerClass
 var saved_player_collision_layer: int = 2
 var saved_player_collision_mask: int = 96
-var last_service_approach_pos: Vector3 = Vector3.ZERO
-var last_service_approach_basis: Basis = Basis.IDENTITY
+var service_exit_position := Vector3.ZERO
 
 var default_cam_distance: float = 2.2
 var cam_distance: float = 2.2
@@ -539,9 +544,13 @@ func begin_furniture_service_staging(interaction_type: String = "desk_service") 
 		return
 
 	var furn_tf: Transform3D = resolution.get("target_transform", ground_tf)
-	var approach_tf: Transform3D = resolution.get("approach_transform", furn_tf)
-	last_service_approach_pos = approach_tf.origin
-	last_service_approach_basis = approach_tf.basis
+	var entrance: Node3D = resolution.get("approach_anchor")
+	if is_instance_valid(char_node):
+		var exit: Variant = _resolve_service_exit(char_node.global_position, entrance)
+		if exit == null:
+			abort_service_staging("no_standing_space")
+			return
+		service_exit_position = exit
 
 	var role_a_target: Transform3D = resolution.get("role_a_target", furn_tf)
 	var role_b_target: Transform3D = resolution.get("role_b_target", furn_tf)
@@ -608,11 +617,28 @@ func begin_furniture_service_staging(interaction_type: String = "desk_service") 
 	_setup_service_camera(furn_tf)
 
 	if is_instance_valid(service_hud):
-		service_hud.text = "【长案侍奉 · 办公长案俯身侍奉】\n右键环绕视角 | 滚轮缩放视距 | 中键复位视角 | 按【E】完成侍奉"
+		var title: String = SERVICE_TITLES.get(resolution["binding_key"], "演出")
+		service_hud.text = "【%s】\n右键环绕视角 | 滚轮缩放视距 | 中键复位视角 | 按【E】结束" % title
 		service_hud.visible = true
 
 	world.set_encounter_ui_active(true)
 	world._sync_actor_controls()
+
+func _resolve_service_exit(player_position: Vector3, entrance: Node3D) -> Variant:
+	if is_instance_valid(entrance):
+		var at_entrance: Variant = world.resolve_character_standing_position(entrance.global_position)
+		if at_entrance != null:
+			return at_entrance
+	var at_player: Variant = world.resolve_character_standing_position(player_position)
+	if at_player != null:
+		return at_player
+	for distance: float in [0.75, 1.5]:
+		for direction: int in range(8):
+			var offset := Vector3.FORWARD.rotated(Vector3.UP, direction * TAU / 8.0) * distance
+			var nearby: Variant = world.resolve_character_standing_position(player_position + offset)
+			if nearby != null:
+				return nearby
+	return null
 
 func _apply_service_skirt_support(paired_actor: Node, binding: Dictionary, role: String, surface: Transform3D) -> void:
 	var support: Dictionary = binding.get(role + "_seated_skirt_support", {})
@@ -678,8 +704,6 @@ func abort_service_staging(reason: String = "") -> void:
 			char_node.set_control_enabled(true)
 		if "camera" in char_node and char_node.camera:
 			char_node.camera.current = true
-	last_service_approach_pos = Vector3.ZERO
-	last_service_approach_basis = Basis.IDENTITY
 	if is_instance_valid(runtime):
 		runtime.abort_service(reason)
 	if is_instance_valid(world):
@@ -711,25 +735,13 @@ func finish_furniture_service() -> void:
 			char_node.collision_layer = saved_player_collision_layer
 		if "collision_mask" in char_node and saved_player_collision_mask != 0:
 			char_node.collision_mask = saved_player_collision_mask
-		if last_service_approach_pos != Vector3.ZERO:
-			char_node.global_position = last_service_approach_pos
+		char_node.global_position = service_exit_position
 		if char_node.has_method("set_control_enabled"):
 			char_node.set_control_enabled(true)
 		if "camera" in char_node and char_node.camera:
 			char_node.camera.current = true
-	if last_service_approach_pos != Vector3.ZERO and is_instance_valid(actor):
-		var local_side := last_service_approach_basis.x.normalized()
-		var new_pos := last_service_approach_pos + local_side * 0.7
-		var new_yaw := last_service_approach_basis.get_euler().y
-		if is_instance_valid(anchor):
-			anchor.global_position = new_pos
-			anchor.global_rotation.y = new_yaw
-		actor.global_position = new_pos
-		actor.global_rotation.y = new_yaw
 	if is_instance_valid(npc_body):
 		npc_body.collision_layer = NPC_SOLID_LAYER
-	last_service_approach_pos = Vector3.ZERO
-	last_service_approach_basis = Basis.IDENTITY
 	if is_instance_valid(runtime):
 		runtime.finish_service()
 	if is_instance_valid(world):

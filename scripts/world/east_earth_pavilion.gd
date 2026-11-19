@@ -1,5 +1,6 @@
 extends Node3D
 ## Reviewed earth-enclosed pavilion; original planting and root caches stay reusable.
+const SOURCE_GEOMETRY := preload("res://scripts/world/grass_source_geometry.gd")
 const GEOMETRY=preload("res://assets/world/east_earth_pavilion_1102/pavilion.glb")
 const MANIFEST="res://assets/world/east_earth_pavilion_1102/manifest.json"
 const REPLACED_IDS=["920c8a45-b23e-4260-9aab-86333f61b992"]
@@ -90,7 +91,7 @@ func install_grass_cells(stream: Node) -> void:
 	var baked: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(GRASS_BAKE))
 	if not baked.get("complete",false) or baked.get("signature","")!=GRASS_STORE.signature(world):return
 	if baked.get("ground_config_sha256","")!=FileAccess.get_sha256(GRASS_CONFIG):return
-	if baked.get("source_geometry_sha256","")!=FileAccess.get_sha256("res://assets/world/east_earth_pavilion_1102/pavilion.glb"):return
+	if not SOURCE_GEOMETRY.matches("res://assets/world/east_earth_pavilion_1102/pavilion.glb", baked.get("source_geometry_sha256","")):return
 	if baked.get("support_sha256","")!=FileAccess.get_sha256("res://assets/world/east_earth_pavilion_1102/grass_support.rgf"):return
 	for id: String in baked.cells:
 		stream.store.manifest.cells[id]=baked.cells[id]

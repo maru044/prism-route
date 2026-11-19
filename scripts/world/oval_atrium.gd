@@ -1,5 +1,6 @@
 extends Node3D
 ## Reviewed CAD replacement; trees remain user-authored, grass uses the world bake.
+const SOURCE_GEOMETRY := preload("res://scripts/world/grass_source_geometry.gd")
 const GEOMETRY=preload("res://assets/world/oval_atrium_1031/atrium.glb")
 const MANIFEST="res://assets/world/oval_atrium_1031/manifest.json"
 const REPLACED_IDS=["78d43939-e418-428e-aad5-d51b08c73985","ce36cdce-398b-44f5-b0b4-fe7f258106cf","de67bdb9-1d24-4d78-b864-a5f6bbd48ce6"]
@@ -77,7 +78,7 @@ func install_grass_cells(stream: Node) -> void:
 	var baked: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(GRASS_BAKE))
 	if baked.get("signature","")!=GRASS_STORE.signature(world):return
 	if baked.get("ground_config_sha256","")!=FileAccess.get_sha256(GRASS_CONFIG):return
-	if baked.get("source_geometry_sha256","")!=FileAccess.get_sha256("res://assets/world/oval_atrium_1031/atrium.glb"):return
+	if not SOURCE_GEOMETRY.matches("res://assets/world/oval_atrium_1031/atrium.glb", baked.get("source_geometry_sha256","")):return
 	for id: String in baked.cells:
 		stream.store.manifest.cells[id]=baked.cells[id]
 		var parts:=id.split("_");var cell:=Vector3i(int(parts[0]),int(parts[1]),int(parts[2]))

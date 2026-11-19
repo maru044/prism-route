@@ -40,10 +40,12 @@ func _ready() -> void:
 	for spec: Dictionary in kit.catalog.plots:
 		var node:=Node3D.new();node.name=spec.id;node.transform=Transform3D(Basis(KIT.v(spec.axis_x),Vector3.UP,KIT.v(spec.axis_z)),KIT.v(spec.origin));add_child(node)
 		var data=DATA.new();data.initialize(spec.id,kit.catalog.definitions)
-		if spec.id=="coastal":data.example()
+		if spec.id == "coastal":
+			data.example()
 		if spec.id == "lowland":
 			_lowland_example_placed = data.lowland_example()
-			assert(_lowland_example_placed)
+			if not _lowland_example_placed:
+				push_error("Lowland example placement failed")
 		var image:=Image.create(MASK_SIZE,MASK_SIZE,false,Image.FORMAT_R8);image.fill(Color.BLACK)
 		plots[spec.id]={"spec":spec,"root":node,"data":data,"nodes":{},"image":image,"texture":ImageTexture.create_from_image(image)}
 	# Verification never touches a real player's save.

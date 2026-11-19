@@ -1,5 +1,6 @@
 extends Node3D
 ## Three reviewed native repairs; local root buffers override the immutable bake.
+const SOURCE_GEOMETRY := preload("res://scripts/world/grass_source_geometry.gd")
 const GEOMETRY=preload("res://assets/world/terrain_repairs_1103/terrain.glb")
 const MANIFEST="res://assets/world/terrain_repairs_1103/manifest.json"
 const REPLACED_IDS=["e7a0e133-f284-4cd4-8796-349bb8638efc"]
@@ -38,8 +39,8 @@ func _configure_road_shoulder() -> void:
 	if not manifest.has("road_shoulder"):return
 	var config: Dictionary=manifest.road_shoulder
 	var path: String="res://assets/world/terrain_repairs_1103/"+str(config.mask_path)
-	if FileAccess.get_sha256(path)!=config.mask_sha256 or FileAccess.get_sha256(world.ASSETS+"current_region.glb")!=config.source_mesh_sha256:
-		push_warning("Road shoulder mask is stale; regenerate it before baking")
+	if FileAccess.get_sha256(path)!=config.mask_sha256 or not SOURCE_GEOMETRY.matches(world.ASSETS+"current_region.glb", config.source_mesh_sha256):
+		push_warning("Road shoulder mask or its source geometry failed verification")
 		return
 	shoulder_image=Image.create_from_data(config.size[0],config.size[1],false,Image.FORMAT_RGH,FileAccess.get_file_as_bytes(path))
 	shoulder_material=world.terrain_material.duplicate() as ShaderMaterial
@@ -98,7 +99,7 @@ func install_grass_cells(stream: Node) -> void:
 	var baked: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(GRASS_BAKE))
 	if not baked.get("complete",false) or baked.get("signature","")!=STORE.signature(world):return
 	if baked.get("ground_config_sha256","")!=FileAccess.get_sha256(GRASS_CONFIG):return
-	if baked.get("source_geometry_sha256","")!=FileAccess.get_sha256("res://assets/world/terrain_repairs_1103/terrain.glb"):return
+	if not SOURCE_GEOMETRY.matches("res://assets/world/terrain_repairs_1103/terrain.glb", baked.get("source_geometry_sha256","")):return
 	var shoulder_keys: Dictionary={}
 	var shoulder_valid: bool=shoulder_image!=null and baked.get("road_shoulder_manifest_sha256","")==FileAccess.get_sha256(MANIFEST)
 	if manifest.has("road_shoulder"):

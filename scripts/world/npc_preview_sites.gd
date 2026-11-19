@@ -29,6 +29,13 @@ const BATTLE_RESPAWN_POSES := {
 ## A NodePath selects a ruin entrance, facing back into the ruin.
 const AMBER_RUIN_RESPAWN := ^"NPCWaypointRuins/amber/Entrance"
 const EULA_RUIN_RESPAWN := ^"NPCWaypointRuins/eula/Entrance"
+const ENCOUNTER_SITE_REGIONS := {
+	"下沉式档案馆": "下沉档案馆",
+	"初始神殿与幽径": "初始神殿与洞穴",
+	"开阔草甸": "草甸与观景点",
+	"岛顶曲面遗址": "草甸与观景点",
+	"台地遗址": "草甸与观景点",
+}
 const BATTLE_RESPAWNS := {
 	"浅水庭院": {"default": "water_court"},
 	"孤顶教堂": {"default": "church_ruins"},
@@ -69,7 +76,8 @@ const BATTLE_RESPAWNS := {
 }
 
 static func resolve_battle_respawn(world: Node, region: String, character_id: String) -> Dictionary:
-	var placements: Dictionary = BATTLE_RESPAWNS.get(region, {})
+	var site_region: String = ENCOUNTER_SITE_REGIONS.get(region, region)
+	var placements: Dictionary = BATTLE_RESPAWNS.get(site_region, {})
 	var key: Variant = placements.get(character_id, placements.get("default", ""))
 	if key is NodePath:
 		var entrance := world.get_node_or_null(key) as Marker3D
@@ -137,7 +145,8 @@ const FURNITURE_BINDINGS := {
 
 static func resolve_furniture(world: Node, region: String, character_id: String) -> Array[Dictionary]:
 	var targets: Array[Dictionary] = []
-	for binding: Array in FURNITURE_BINDINGS.get(region, {}).get(character_id, []):
+	var site_region: String = ENCOUNTER_SITE_REGIONS.get(region, region)
+	for binding: Array in FURNITURE_BINDINGS.get(site_region, {}).get(character_id, []):
 		var furniture := world.get_node_or_null(binding[0]) as InteractiveFurniture
 		if furniture == null:
 			continue

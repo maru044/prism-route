@@ -1,6 +1,14 @@
 extends SceneTree
 ## Resolve resource dependencies directly; headless filesystem caches can omit them.
 const ROSTER := preload("res://scripts/characters/character_roster_database.gd")
+const GRASS_SOURCE := preload("res://scripts/world/grass_source_geometry.gd")
+const GRASS_INPUTS := {
+	"assets/world/current_map_validation/current_region.glb": ["assets/world/terrain_repairs_1103/manifest.json", "road_shoulder", "source_mesh_sha256"],
+	"assets/world/terrain_repairs_1103/terrain.glb": ["assets/world/terrain_repairs_1103/grass_bake/manifest.json", "source_geometry_sha256"],
+	"assets/world/oval_atrium_1031/atrium.glb": ["assets/world/oval_atrium_1031/grass_bake/manifest.json", "source_geometry_sha256"],
+	"assets/world/east_earth_pavilion_1102/pavilion.glb": ["assets/world/east_earth_pavilion_1102/grass_bake/manifest.json", "source_geometry_sha256"],
+	"assets/world/cape_town_1110/town.glb": ["assets/world/cape_town_1110/grass_bake.json", "geometry_sha"],
+}
 const ROOTS := [
 	"res://scenes/ui/title_screen.tscn",
 	"res://scenes/main.tscn",
@@ -12,7 +20,14 @@ func _initialize() -> void: call_deferred("run")
 func run() -> void:
 	var config:=ConfigFile.new()
 	assert(config.load("res://export_presets.cfg")==OK)
+	if not _prepare_grass_geometry():
+		quit(1)
+		return
 	var queue: Array[String]=[];queue.assign(ROOTS)
+	var foliage_entry: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(
+		"res://assets/world/architecture_details_1029/preview_entry.json"))
+	for source: Dictionary in foliage_entry.sources:
+		queue.append(source.texture)
 	# The gallery loads textures by character ID, so dependency scanning cannot discover them.
 	for entry: Dictionary in ROSTER.get_all_entries():
 		queue.append(ROSTER.PORTRAIT_DIR.path_join(entry.file))
@@ -34,6 +49,7 @@ func run() -> void:
 	var missing: Array[String]=[]
 	while not queue.is_empty():
 		var path: String=queue.pop_back()
+		if path.begins_with("res://.current_map_build/"):continue
 		if visited.has(path):continue
 		if not ResourceLoader.exists(path):missing.append(path);continue
 		visited[path]=true
@@ -66,7 +82,13 @@ func run() -> void:
 			queue.append(resolved)
 	var files:=PackedStringArray(visited.keys());files.sort()
 	config.set_value("preset.0","export_files",files)
+	config.set_value("preset.0","export_path","../builds/PrismRoute1021.exe")
+	config.set_value("preset.0.options","binary_format/embed_pck",true)
+	config.set_value("preset.0.options","debug/export_console_wrapper",2)
 	var includes: String=config.get_value("preset.0","include_filter","")
+	var grass_export_manifest := GRASS_SOURCE.EXPORT_MANIFEST.trim_prefix("res://")
+	if not grass_export_manifest in includes.split(","):
+		includes += "," + grass_export_manifest
 	for feature_manifest: String in ["assets/world/initial_ruin_1029/manifest.json","assets/world/initial_ruin_1029/walk_collision.json","assets/world/architecture_details_1029/trial_settings.json","assets/audio/world_1030/settings.json","assets/audio/world_1030/manifest.json","assets/audio/world_1030/CREDITS.txt","assets/world/upper_ring_1030/manifest.json","assets/world/upper_ring_1030/height_field.json","assets/world/upper_ring_1030/materials.json","assets/world/tree_planting/world_edits.json","assets/world/island_saddle_1031/manifest.json"]:
 		if not feature_manifest in includes.split(","):includes+=("," if not includes.is_empty() else "")+feature_manifest
 	for feature_file: String in ["assets/world/terrain_repairs_1103/manifest.json","assets/world/terrain_repairs_1103/ground_grass.json","assets/world/terrain_repairs_1103/support_*.rf","assets/world/terrain_repairs_1103/road_shoulder_mask.rgh","assets/world/terrain_repairs_1103/grass_bake/manifest.json","assets/world/terrain_repairs_1103/grass_bake/*.grass"]:
@@ -85,6 +107,7 @@ func run() -> void:
 	if not "assets/npc/**/*.json" in includes.split(","):includes+=",assets/npc/**/*.json"
 	config.set_value("preset.0","include_filter",includes)
 	var exclusions: PackedStringArray=["docs/*","screenshots/*","archive/*","experiments/*","assets/ai/reference/*","assets/water/review/*","assets/world/current_map_validation/review/*","assets/world/current_map_validation/grass_bake/manifest_part_*.json","*.3dm","*.3dmbak","*.blend","*.blend1","*.TMP"]
+	exclusions.append(".current_map_build/*")
 	var bake_root: String="res://assets/world/current_map_validation/grass_bake/"
 	var bake: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(bake_root+"manifest.json"))
 	for name in DirAccess.get_files_at(bake_root):
@@ -103,5 +126,42 @@ func _collect_npc_resources(value: Variant, queue: Array[String]) -> void:
 	if value is Dictionary:
 		for member in value.values():
 			_collect_npc_resources(member, queue)
+	elif value is Array:
+		for member in value:
+			_collect_npc_resources(member, queue)
 	elif value is String and value.begins_with("res://"):
 		queue.append(value)
+
+
+func _prepare_grass_geometry() -> bool:
+	var fingerprints := {}
+	for file: String in GRASS_INPUTS:
+		var path := "res://" + file
+		var bake_keys: Array = GRASS_INPUTS[file]
+		var expected: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://" + bake_keys[0]))
+		for key: String in bake_keys.slice(1):
+			expected = expected.get(key) if expected is Dictionary else null
+		var source_sha256 := FileAccess.get_sha256(path)
+		if source_sha256.is_empty() or source_sha256 != expected:
+			push_error("Grass bake source is missing or stale: " + path)
+			return false
+		var remap := ConfigFile.new()
+		if remap.load(path + ".import") != OK:
+			push_error("Grass bake source is not imported: " + path)
+			return false
+		var target: String = remap.get_value("remap", "path", "")
+		var cache := FileAccess.get_file_as_string(target.get_basename() + ".md5")
+		var source_md5 := FileAccess.get_md5(path)
+		var target_md5 := FileAccess.get_md5(target)
+		if source_md5.is_empty() or target_md5.is_empty() \
+				or not cache.contains('source_md5="%s"' % source_md5) \
+				or not cache.contains('dest_md5="%s"' % target_md5):
+			push_error("Grass bake geometry import needs to be refreshed: " + path)
+			return false
+		fingerprints[path] = {"source_sha256": source_sha256, "imported": target, "imported_md5": target_md5}
+	var output := FileAccess.open(GRASS_SOURCE.EXPORT_MANIFEST, FileAccess.WRITE)
+	if output == null:
+		push_error("Could not write grass geometry manifest: " + GRASS_SOURCE.EXPORT_MANIFEST)
+		return false
+	output.store_string(JSON.stringify(fingerprints, "\t"))
+	return output.get_error() == OK
