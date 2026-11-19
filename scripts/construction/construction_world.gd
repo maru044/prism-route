@@ -462,7 +462,7 @@ func _input(event: InputEvent) -> void:
 			toggle()
 		return
 	if not active:
-		if key == KEY_E and world.character_mode and not world.free_mode and world.is_world_input_allowed():
+		if key == KEY_F and world.character_mode and not world.free_mode and world.is_world_input_allowed():
 			_open_nearest_door()
 		return
 	match key:
@@ -475,7 +475,7 @@ func _input(event: InputEvent) -> void:
 		KEY_DELETE:
 			if not hud.panel.get_global_rect().has_point(get_viewport().get_mouse_position()):
 				_remove_target(get_viewport().get_mouse_position())
-		KEY_E:
+		KEY_F:
 			if not hud.panel.get_global_rect().has_point(get_viewport().get_mouse_position()):
 				var target := _pointed_piece(get_viewport().get_mouse_position())
 				if not target.is_empty(): toggle_door(selected_plot, target.id)
@@ -486,10 +486,15 @@ func _open_nearest_door() -> void:
 	var nearest := {}
 	var distance := 2.7
 	for id: String in plots:
+		if not plots[id].has("data") or not plots[id].has("nodes"):
+			continue
 		for row: Dictionary in plots[id].data.pieces.values():
-			if row.definition != "door":
+			if row.definition != "door" or not plots[id].nodes.has(row.id):
 				continue
-			var center: Vector3 = plots[id].nodes[row.id].to_global(Vector3(1, 0, 0))
+			var node: Node3D = plots[id].nodes[row.id] as Node3D
+			if not is_instance_valid(node):
+				continue
+			var center: Vector3 = node.to_global(Vector3(1, 0, 0))
 			var meters: float = center.distance_to(world.character.global_position)
 			if meters < distance:
 				distance = meters
@@ -558,7 +563,8 @@ func _navigation() -> void:
 	var visible_now: bool = world.test_ready and world.review_ui_visible and not world.encounter_ui_active \
 			and world.is_world_input_allowed()
 	if not visible_now:
-		hud.set_navigation(false, Vector3.ZERO, Vector3.ZERO, _home_markers, "")
+		if is_instance_valid(hud):
+			hud.set_navigation(false, Vector3.ZERO, Vector3.ZERO, _home_markers, "")
 		return
 	if _home_markers.is_empty():
 		for row: Dictionary in world.resolved_spawns:
@@ -570,7 +576,7 @@ func _navigation() -> void:
 	if label.is_empty() and not plot_id.is_empty():
 		label = "home"
 	var camera: Camera3D = world.get_viewport().get_camera_3d()
-	if camera:
+	if camera and is_instance_valid(hud):
 		hud.set_navigation(true, -camera.global_basis.z, world.active_actor().global_position, _home_markers, label)
 
 func _process(delta: float) -> void:

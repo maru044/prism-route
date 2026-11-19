@@ -162,6 +162,8 @@ func _ready() -> void:
 	_add_guide_row(guide_box, "Shift", "疾跑加速 / 冲刺")
 	_add_guide_row(guide_box, "Space", "跳跃 / 车辆刹车")
 	_add_guide_row(guide_box, "E", "场景交互 / 对话")
+	_add_guide_row(guide_box, "F", "家园开门 / 门交互")
+	_add_guide_row(guide_box, "F5", "家园建造模式")
 	_add_guide_row(guide_box, "C", "切换角色与车辆")
 	_add_guide_row(guide_box, "ESC", "设置 / 暂停菜单")
 
