@@ -129,8 +129,12 @@ func create_anchor(host: Node3D, anchor_name: String) -> Marker3D:
 	var anchor := Marker3D.new()
 	anchor.name = anchor_name
 	host.add_child(anchor)
-	anchor.global_position = spawn_position
-	anchor.global_rotation.y = deg_to_rad(spawn_heading)
+	if anchor.is_inside_tree():
+		anchor.global_position = spawn_position
+		anchor.global_rotation.y = deg_to_rad(spawn_heading)
+	else:
+		anchor.position = spawn_position
+		anchor.rotation.y = deg_to_rad(spawn_heading)
 	anchor.set_meta("spawn_id", encounter_bundle["identity"]["spawn_id"])
 	return anchor
 
