@@ -11,16 +11,21 @@ const Card := preload("res://scenes/combat/encounter_card.gd")
 
 @export var palette: UI.Palette = UI.DEFAULT_PALETTE
 @export var opponent_name := "对手"
-var enable_free_dialogue := false
+var enable_free_dialogue := false:
+	set(val):
+		enable_free_dialogue = val
+		_update_free_dialogue_button()
 
 var speaker_label: Label
 var text_label: RichTextLabel
 var choices_container: GridContainer
 var prompt_label: Button
+var free_dialogue_button: Card = null
 
 var _dock: VBoxContainer
 var _choices_scroll: ScrollContainer
 var _scrim: TextureRect
+var _actions_box: HBoxContainer = null
 
 func _ready() -> void:
 	add_to_group(INPUT_GROUP)
@@ -79,12 +84,8 @@ func _build_ui() -> void:
 	var actions := HBoxContainer.new()
 	actions.alignment = BoxContainer.ALIGNMENT_END
 	_dock.add_child(actions)
-	if enable_free_dialogue:
-		var free_dialogue := Card.new()
-		free_dialogue.configure("自由对话", palette, Card.Kind.CONTINUE)
-		free_dialogue.custom_minimum_size = Vector2(144, 44)
-		free_dialogue.pressed.connect(func(): free_dialogue_requested.emit())
-		actions.add_child(free_dialogue)
+	_actions_box = actions
+
 	var prompt := Card.new()
 	prompt.configure("空格  ·  继续  ›", palette, Card.Kind.CONTINUE)
 	prompt_label = prompt
@@ -92,6 +93,25 @@ func _build_ui() -> void:
 	prompt_label.size_flags_horizontal = Control.SIZE_SHRINK_END
 	prompt_label.pressed.connect(func(): next_pressed.emit())
 	actions.add_child(prompt_label)
+	_update_free_dialogue_button()
+
+func _update_free_dialogue_button() -> void:
+	if not is_instance_valid(_actions_box):
+		return
+	if enable_free_dialogue:
+		if free_dialogue_button == null or not is_instance_valid(free_dialogue_button):
+			free_dialogue_button = Card.new()
+			free_dialogue_button.name = "FreeDialogueButton"
+			free_dialogue_button.configure("自由对话", palette, Card.Kind.CONTINUE)
+			free_dialogue_button.custom_minimum_size = Vector2(144, 44)
+			free_dialogue_button.pressed.connect(func(): free_dialogue_requested.emit())
+			_actions_box.add_child(free_dialogue_button)
+			if is_instance_valid(prompt_label):
+				_actions_box.move_child(free_dialogue_button, prompt_label.get_index())
+		free_dialogue_button.visible = true
+	else:
+		if is_instance_valid(free_dialogue_button):
+			free_dialogue_button.visible = false
 
 func display_text(speaker: String, content: String, _emotion: String = "") -> void:
 	speaker_label.text = speaker

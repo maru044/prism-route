@@ -331,7 +331,19 @@ func _build_subsystems() -> void:
 	dialogue_panel.next_pressed.connect(dialogue_manager.advance_text)
 	dialogue_panel.free_dialogue_requested.connect(func():
 		if dialogue_manager.session_active and is_instance_valid(world):
-			world.show_free_dialogue(dialogue_panel, runtime.character_name, encounter_bundle["identity"]["character_id"])
+			var extra_context: Dictionary = {
+				"dialogue_manager": dialogue_manager,
+				"character_id": "sparkle",
+				"npc_name": runtime.character_name,
+				"character_title": "假面愚者",
+				"dialogue_location": "初始神殿",
+				"companion_status": "已缔结契约" if companion_unlocked else "初始相遇",
+				"current_interaction_state": "神殿初遇对话",
+				"bound_furniture_info": "神殿御座 / 石座",
+				"pleasure_npc": "%.1f%%" % (npc_pleasure.current_pleasure if npc_pleasure else 0.0),
+				"pleasure_player": "%.1f%%" % (player_pleasure.current_pleasure if player_pleasure else 0.0),
+			}
+			world.show_free_dialogue(dialogue_panel, runtime.character_name, encounter_bundle["identity"]["character_id"], extra_context)
 	)
 	dialogue_manager.dialogue_ended.connect(_on_dialogue_ended)
 	

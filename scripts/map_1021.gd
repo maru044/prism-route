@@ -906,14 +906,16 @@ func _open_llm_dialogue() -> void:
 		"dialogue_location": location,
 	})
 
-func show_free_dialogue(panel: Control, speaker: String, character_id: String = "") -> void:
+func show_free_dialogue(panel: Control, speaker: String, character_id: String = "", custom_context: Dictionary = {}) -> void:
 	var chat := _get_llm_panel()
 	if chat.visible:
 		return
 	panel.set_process_input(false)
 	panel.hide()
-	var manager = initial_ruin.encounter.dialogue_manager
-	var session_id: int = manager.session_id
+	var manager = custom_context.get("dialogue_manager", null)
+	if manager == null and is_instance_valid(initial_ruin) and is_instance_valid(initial_ruin.encounter):
+		manager = initial_ruin.encounter.dialogue_manager
+	var session_id: int = manager.session_id if is_instance_valid(manager) else 0
 	chat.panel_closed.connect(func():
 		if is_instance_valid(panel):
 			panel.set_process_input(true)
@@ -922,22 +924,44 @@ func show_free_dialogue(panel: Control, speaker: String, character_id: String = 
 	
 	var resolved_id: String = character_id
 	if resolved_id.is_empty():
-		match speaker:
-			"花火": resolved_id = "sparkle"
-			"刻晴": resolved_id = "keqing"
-			"甘雨": resolved_id = "ganyu"
-			"胡桃": resolved_id = "hutao"
-			_: resolved_id = speaker.to_lower()
+		var entry := CharacterRosterDatabase.get_entry_by_name(speaker)
+		if not entry.is_empty():
+			resolved_id = entry.get("id", "")
+		else:
+			match speaker:
+				"花火": resolved_id = "sparkle"
+				"刻晴": resolved_id = "keqing"
+				"甘雨": resolved_id = "ganyu"
+				"胡桃": resolved_id = "hutao"
+				_: resolved_id = speaker.to_lower()
 			
 	var loc: String = "初始神殿" if resolved_id == "sparkle" else "大世界"
 	if resolved_id == "keqing":
 		loc = "沙洲度假遗址"
+	elif custom_context.has("dialogue_location"):
+		loc = str(custom_context.get("dialogue_location"))
 		
-	chat.open_panel("dialogue", "npc_" + resolved_id, {
+	var title: String = "大世界伙伴"
+	var entry := CharacterRosterDatabase.get_entry(resolved_id)
+	if entry.is_empty():
+		entry = CharacterRosterDatabase.get_entry_by_name(speaker)
+	if not entry.is_empty():
+		title = entry.get("title", title)
+
+	var merged_context: Dictionary = {
 		"npc_name": speaker,
 		"character_id": resolved_id,
+		"character_title": title,
 		"dialogue_location": loc,
-	})
+		"companion_status": "未指定",
+		"current_interaction_state": "大世界对话",
+		"bound_furniture_info": "地面",
+		"pleasure_npc": "0.0%",
+		"pleasure_player": "0.0%",
+	}
+	merged_context.merge(custom_context, true)
+		
+	chat.open_panel("dialogue", "npc_" + resolved_id, merged_context)
 
 func has_llm_panel_open() -> bool:
 	return is_instance_valid(llm_panel) and llm_panel.visible

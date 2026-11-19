@@ -171,6 +171,7 @@ func initialize(host: Node3D, p_world: Node3D, p_runtime: Runtime) -> void:
 	panel = DialoguePanel.new()
 	panel.palette = palette
 	panel.opponent_name = runtime.character_name
+	panel.enable_free_dialogue = world != null and world.has_method("show_free_dialogue")
 	panel.hide()
 	canvas.add_child(panel)
 
@@ -208,6 +209,7 @@ func initialize(host: Node3D, p_world: Node3D, p_runtime: Runtime) -> void:
 	dialogue.dialogue_ended.connect(_on_dialogue_ended)
 	panel.next_pressed.connect(dialogue.advance_text)
 	panel.option_selected.connect(dialogue.choose_option)
+	panel.free_dialogue_requested.connect(_on_free_dialogue_requested)
 
 	var combat := runtime.combat_manager
 	combat.combat_started.connect(hud.reset_battle)
@@ -242,10 +244,17 @@ func get_interaction_distance() -> float:
 		return INF
 	if not is_npc_active:
 		return INF
-	if not (is_instance_valid(world) and world.test_ready and world.character_mode and not world.free_mode \
-		and not world.has_llm_panel_open() and not world.encounter_ui_active and world.is_world_input_allowed()):
+	if not is_instance_valid(world) or not ("test_ready" in world) or not world.test_ready:
 		return INF
-	var char_node: Node = world.character
+	if not ("character_mode" in world) or not world.character_mode or ("free_mode" in world and world.free_mode):
+		return INF
+	if world.has_method("has_llm_panel_open") and world.has_llm_panel_open():
+		return INF
+	if "encounter_ui_active" in world and world.encounter_ui_active:
+		return INF
+	if world.has_method("is_world_input_allowed") and not world.is_world_input_allowed():
+		return INF
+	var char_node: Node = world.character if "character" in world else null
 	if not is_instance_valid(char_node) or not is_instance_valid(actor) or not is_instance_valid(actor.character):
 		return INF
 	var target_pos: Vector3 = anchor.global_position if is_instance_valid(anchor) else actor.global_position
@@ -300,7 +309,8 @@ func _process(delta: float) -> void:
 		if corpse_handler:
 			corpse_handler.tick(delta)
 		return
-	prompt.visible = _can_interact()
+	if is_instance_valid(prompt):
+		prompt.visible = _can_interact()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if is_ragdoll_active and corpse_handler:
@@ -361,10 +371,13 @@ func _on_encounter_state_changed(_old: int, state: int) -> void:
 	var busy := is_world_input_locked()
 	if not busy:
 		panel.hide()
-	world.set_encounter_ui_active(busy)
-	world._sync_actor_controls()
-	if busy and is_instance_valid(world.character) and world.character.has_method("set_control_enabled"):
-		world.character.set_control_enabled(false)
+	if is_instance_valid(world):
+		if world.has_method("set_encounter_ui_active"):
+			world.set_encounter_ui_active(busy)
+		if world.has_method("_sync_actor_controls"):
+			world._sync_actor_controls()
+		if busy and "character" in world and is_instance_valid(world.character) and world.character.has_method("set_control_enabled"):
+			world.character.set_control_enabled(false)
 
 func _setup_combat_actors() -> bool:
 	var npc_model := str(runtime.encounter_bundle.get("avatar", {}).get("model_resource", ""))
@@ -469,7 +482,70 @@ func _handle_player_defeat() -> void:
 			world.character.set_spawn(point["position"], point["heading"])
 	runtime._set_state(Runtime.EncounterState.AVAILABLE)
 
+func _on_free_dialogue_requested() -> void:
+	if not is_instance_valid(runtime) or not runtime.dialogue_manager.session_active:
+		return
+	if not is_instance_valid(world) or not world.has_method("show_free_dialogue"):
+		return
+
+	var char_id: String = runtime.character_id
+	var char_name: String = runtime.character_name
+	var entry := CharacterRosterDatabase.get_entry(char_id)
+	if entry.is_empty():
+		entry = CharacterRosterDatabase.get_entry_by_name(char_name)
+	var title: String = entry.get("title", "大世界伙伴")
+
+	var is_unlocked: bool = runtime._is_companion_unlocked() if runtime.has_method("_is_companion_unlocked") else false
+	var companion_status_str: String = "已缔结契约（识趣玩伴，完全顺从Master的一切安排与要求）" if is_unlocked else "初次相遇 / 尚未收服为玩伴"
+
+	var stage_str: String = "日常闲聊 / 探索交涉"
+	match runtime.current_state:
+		Runtime.EncounterState.INTRO_DIALOGUE:
+			stage_str = "日常闲聊 / 初步试探"
+		Runtime.EncounterState.COMBAT:
+			stage_str = "对决对峙中"
+		Runtime.EncounterState.RESULT_DIALOGUE:
+			stage_str = "战后交涉结算中"
+		Runtime.EncounterState.SETTLEMENT:
+			stage_str = "玩弄侍奉安置阶段"
+		Runtime.EncounterState.COMPLETED:
+			stage_str = "已安置就绪"
+
+	var spawn_region: String = str(runtime.encounter_bundle.get("spawn", {}).get("region", ""))
+	var loc_name: String = spawn_region if not spawn_region.is_empty() else "大世界"
+	if is_instance_valid(world) and world.has_method("_llm_world_status"):
+		var world_status: Dictionary = world._llm_world_status()
+		var landmark: Dictionary = world_status.get("nearest_landmark", {})
+		if not landmark.is_empty() and not str(landmark.get("name", "")).is_empty():
+			loc_name = str(landmark.get("name", loc_name))
+
+	var bindings: Dictionary = runtime.encounter_bundle.get("motions", {}).get("bindings", {})
+	var furniture_desc_list: Array[String] = []
+	for s_type in bindings:
+		furniture_desc_list.append("%s: %s" % [s_type, bindings[s_type]])
+	var bound_furniture_str: String = "、".join(furniture_desc_list) if not furniture_desc_list.is_empty() else "地面（默认无固定家具）"
+
+	var pleasure_npc_val: float = runtime.npc_pleasure.current_pleasure if runtime.npc_pleasure else 0.0
+	var pleasure_player_val: float = runtime.player_pleasure.current_pleasure if runtime.player_pleasure else 0.0
+
+	var extra_context: Dictionary = {
+		"dialogue_manager": runtime.dialogue_manager,
+		"character_id": char_id,
+		"npc_name": char_name,
+		"character_title": title,
+		"dialogue_location": loc_name,
+		"companion_status": companion_status_str,
+		"current_interaction_state": stage_str,
+		"bound_furniture_info": bound_furniture_str,
+		"pleasure_npc": "%.1f%%" % pleasure_npc_val,
+		"pleasure_player": "%.1f%%" % pleasure_player_val,
+	}
+
+	world.show_free_dialogue(panel, char_name, char_id, extra_context)
+
 func _on_dialogue_ended(payload: Dictionary) -> void:
+	if is_instance_valid(world) and world.has_method("close_free_dialogue"):
+		world.close_free_dialogue()
 	if not runtime.dialogue_manager.session_active:
 		panel.hide()
 	var act: String = payload.get("action", "")

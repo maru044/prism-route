@@ -28,7 +28,7 @@ const CONTINUE_MESSAGE := {"role": "user", "content": "接着上一条回复继�
 const CONTEXT_OVERFLOW := "当前请求超过约 100 万 token 的上下文预算。请缩短输入或提示词。"
 
 static var _dialogue_tag := RegEx.create_from_string(r"(?i)<(/?)(game|report_nya~?|think_nya~?)>")
-static var _prompt_token := RegEx.create_from_string(r"\{\{//|\{\{(?:roll 1d100|npc_name|dialogue_location)\}\}|\{\{|\}\}")
+static var _prompt_token := RegEx.create_from_string(r"\{\{//|\{\{(?:roll 1d100|[a-zA-Z0-9_]+)\}\}|\{\{|\}\}")
 static var _dialogue_role_marker := RegEx.create_from_string(r"(?m)^\|(用户|小猫之神)\|")
 static var _dialogue_tag_prefixes := [
 	"<game>", "</game>", "<report_nya>", "</report_nya>", "<think_nya>", "</think_nya>",
@@ -426,12 +426,23 @@ func _resolve_character_id() -> String:
 	var c_id: String = str(context.get("character_id", ""))
 	if c_id.is_empty():
 		var npc_name: String = str(context.get("npc_name", ""))
-		c_id = CHARACTER_NAME_TO_ID.get(npc_name, "")
+		var entry := CharacterRosterDatabase.get_entry_by_name(npc_name)
+		if not entry.is_empty():
+			c_id = entry.get("id", "")
+		elif CHARACTER_NAME_TO_ID.has(npc_name):
+			c_id = CHARACTER_NAME_TO_ID.get(npc_name, "")
 	return c_id
 
 func _load_persona_entry(char_id: String) -> Dictionary:
 	var path := PERSONAS_DIR.path_join(char_id + ".md")
 	if not FileAccess.file_exists(path):
+		var persona_data := CharacterRosterDatabase.load_persona_data(char_id)
+		if not persona_data.is_empty() and not str(persona_data.get("content", "")).is_empty():
+			return {
+				"depth": 850,
+				"name": "角色设定 · " + str(persona_data.get("name", char_id)),
+				"content": str(persona_data.get("content", ""))
+			}
 		return {}
 	var raw := FileAccess.get_file_as_string(path).trim_prefix("\ufeff").replace("\r\n", "\n")
 	var separator := raw.find("\n---")

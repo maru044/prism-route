@@ -59,11 +59,13 @@ const ROSTER_ENTRIES: Array[Dictionary] = [
 ]
 
 static var _entries_by_id: Dictionary = {}
+static var _entries_by_name: Dictionary = {}
 
 static func _ensure_cache() -> void:
 	if _entries_by_id.is_empty():
 		for entry: Dictionary in ROSTER_ENTRIES:
 			_entries_by_id[entry.id] = entry
+			_entries_by_name[entry.name] = entry
 
 static func get_all_entries() -> Array[Dictionary]:
 	return ROSTER_ENTRIES
@@ -71,6 +73,14 @@ static func get_all_entries() -> Array[Dictionary]:
 static func get_entry(char_id: String) -> Dictionary:
 	_ensure_cache()
 	return _entries_by_id.get(char_id, {})
+
+static func get_entry_by_name(char_name: String) -> Dictionary:
+	_ensure_cache()
+	if _entries_by_name.has(char_name):
+		return _entries_by_name[char_name]
+	if _entries_by_id.has(char_name):
+		return _entries_by_id[char_name]
+	return {}
 
 static func get_portrait_path(char_id: String) -> String:
 	var entry := get_entry(char_id)
