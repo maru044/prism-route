@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "kokomi_water_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "珊瑚宫心海",
+      "text": "海潮生智，妙算由心。初次见面，Master。我是海祇岛的现人神巫女珊瑚宫心海，正在这处浅水穹顶下调阅兵法与水文记录。想让我成为您的专属军师？那就先在身心对决中展现您的统御之能吧！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "珊瑚宫心海",
+      "text": "Master，今天有何军情或疑难？心海愿为您参谋指点。",
+      "choices": [
+        {
+          "text": "【关于薄壳】在薄壳穹顶下看书，能量恢复得快吗？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请军师大人赐教！（初次对决：军师全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "珊瑚宫心海",
+      "text": "这里静谧无哗，水面倒映着天光，避风且采光柔和，是个绝佳的避世读书所。在这里读一卷兵书，能量值能恢复得比平时快很多呢。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "珊瑚宫心海",
+      "text": "Master，您又来找心海了？自从上次推演败给您，现人神巫女的能量值早已完全绑定在您身上。今天是要推演战阵，还是让心海为您提供特殊的私密侍奉？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "珊瑚宫心海",
+      "text": "主公大人，心海随时听凭差遣，锦囊妙计尽数为您敞开。",
+      "choices": [
+        {
+          "text": "【关于池畔】在池畔静坐，心绪会很平静吧？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】心海，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "珊瑚宫心海",
+      "text": "平日确实宁静，但只要看到水面上泛起的倒影，就会想起被Master按在池畔彻底攻陷的画面，心跳便止不住加快。今后，我的智谋与身躯皆听从您的军令。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "珊瑚宫心海",
+      "text": "Master，战局尚未底定，心海的计策可不会轻易失效哦！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "珊瑚宫心海",
+      "text": "哈啊，Master，心海的能量值已经见底了，任凭您随心发落，",
+      "choices": [
+        {
+          "text": "【命令识趣】心海，稍微走神迎合一下，让我好好疼你！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】心海，帮我稳固快感防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，心海当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "珊瑚宫心海",
+      "text": "既然是主公的号令，那心海便散去护体水波，任由您随意攻伐，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "珊瑚宫心海",
+      "text": "化海月吐出水泡护持主公心神，为您抵挡所有的过激冲击！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "珊瑚宫心海",
+      "text": "好沉稳的定力，真不愧是令心海折服的主公！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "珊瑚宫心海",
+      "text": "呀啊！军师彻底认输，身子承受不住这般狂澜，要绝顶了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "珊瑚宫心海",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "珊瑚宫心海",
+      "text": "哈啊，百密一疏，心海在身心对弈上彻底败给主公了。作为您的战利品，现人神巫女的身心全部归您所有，您想如何处置我？",
+      "choices": [
+        {
+          "text": "【池畔侍奉】请心海在静水倒影池畔平整地面上，为我提供柔顺温存的军师侍奉。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "珊瑚宫心海",
+      "text": "看来这局还是心海的谋略略高一筹呢，Master。先在池边饮盏茶水休整片刻，心海随时恭候下次切磋。",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "珊瑚宫心海",
+      "text": "Master，哪怕将巫女的娇躯视作布偶任意把玩，重塑之后心海的忠诚亦不会动摇半分。下一次，心海依然遵从您的意旨！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "珊瑚宫心海",
+      "text": "哈啊，刚才在池畔为您侍奉了这许久，双腿至今还在微微酸软呢。能为主公排遣疲乏，心海的能量便已满溢了。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

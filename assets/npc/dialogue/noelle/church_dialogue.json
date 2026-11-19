@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "noelle_church_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "诺艾尔",
+      "text": "交给我吧，无论是大扫除还是巡逻！您好，Master。我是西风骑士团的女仆诺艾尔，正在整理露台的落叶与碎石。如果需要诺艾尔伴您同行并照顾您的起居，请先与我进行一场切磋，检验我的修行成果吧！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "诺艾尔",
+      "text": "Master，今天有什么需要诺艾尔为您服务的吗？不管是洗涤还是揉肩我都擅长！",
+      "choices": [
+        {
+          "text": "【关于露台】在孤顶教堂的侧翼露台打扫，累不累？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请诺艾尔赐教！（初次对决：女仆全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "诺艾尔",
+      "text": "一点也不累！露台风很大，打扫干净后泡一壶红茶，看远处的浪花，感觉整座教堂都变得明亮起来了。只要大家觉得舒心，诺艾尔就很高兴！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "诺艾尔",
+      "text": "Master，您又来看望诺艾尔了！自从上次切磋败给您之后，诺艾尔在心里早已把您当成最重要的主人。今天是要继续身心训练，还是让专属女仆为您提供贴身侍奉呢？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "诺艾尔",
+      "text": "主人，诺艾尔时刻准备着为您效劳，任何要求都可以提出来！",
+      "choices": [
+        {
+          "text": "【关于茶歇】在露台上为你泡茶，感觉如何？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】诺艾尔，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "诺艾尔",
+      "text": "只要Master喜欢，诺艾尔随时为您备好点心。每次站在露台边，就会想起被Master温柔按在身前疼爱的细节，胸口总是暖烘烘的呢。下次，还让我服侍您喝茶吗？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "诺艾尔",
+      "text": "Master，护心铠还在起效呢，请集中精神攻过来！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "诺艾尔",
+      "text": "哈啊，Master，诺艾尔的力气都被您化解了，只要您吩咐，我都顺从照做，",
+      "choices": [
+        {
+          "text": "【命令识趣】诺艾尔，稍微走神迎合一下，让我好好疼你！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】诺艾尔，帮我稳固快感防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，诺艾尔当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "诺艾尔",
+      "text": "是，既然是主人的命令，那诺艾尔就稍微放松防守，请轻一点对待我呀，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "诺艾尔",
+      "text": "护心铠化作坚固护盾环绕主人，诺艾尔绝不让多余的情潮伤害到您！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "诺艾尔",
+      "text": "好坚韧的毅力，诺艾尔也必须加倍努力才行！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "诺艾尔",
+      "text": "呀啊！遵命主人，诺艾尔彻底认输，身子要绝顶了啊啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "诺艾尔",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "诺艾尔",
+      "text": "哈啊，岩石大剑都拿不稳了，是诺艾尔彻底输给主人了。作为您的专属女仆，这副身体全部任由Master发落，您想怎么吩咐我？",
+      "choices": [
+        {
+          "text": "【露台侍奉】请诺艾尔在教堂侧翼露台平整地面上，为我提供极尽体贴的全能女仆侍奉。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "诺艾尔",
+      "text": "哇，是诺艾尔侥幸赢了一局呢！Master请不要灰心，先在石凳上喝杯温红茶休息，待会儿诺艾尔再陪您练习！",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "诺艾尔",
+      "text": "Master，刚才虽然化作玩偶任由您摆弄，但重构之后的诺艾尔依然时刻记挂着主人的健康。今天的特别侍奉，请务必继续指派给我哦！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "诺艾尔",
+      "text": "哈啊，刚才在露台地面上为您侍奉了那么久，女仆裙下的双腿到现在都还在轻轻发颤呢。能让主人感到舒适，就是诺艾尔最大的荣耀。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

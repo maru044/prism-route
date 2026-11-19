@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "encounter_id": "church_noelle",
+  "character_id": "noelle",
+  "spawn_id": "church_noelle",
+  "flow_behavior_id": "standard_duel",
+  "dialogue_bundle_id": "noelle_church_bundle",
+  "combat_profile_id": "noelle_combat",
+  "reaction_profile_id": "noelle_reactions",
+  "motion_profile_id": "noelle_motions",
+  "supported_entry_points": [
+    "start",
+    "unlocked_start",
+    "mid_battle_manual",
+    "combat_manual_unlocked",
+    "victory_node",
+    "defeat_node",
+    "post_spare",
+    "post_kill"
+  ]
+}

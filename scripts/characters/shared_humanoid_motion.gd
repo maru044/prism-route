@@ -49,6 +49,7 @@ var forearm_contact_lift_m := 0.0
 var seated_foot_offset := Vector3.ZERO
 var seated_skirt_bone_prefix := ""
 var seated_skirt_half_extents := Vector2.ZERO
+var seated_skirt_bone_clearance := 0.056
 var seated_skirt_support_transform := Transform3D.IDENTITY
 var _seated_skirt_bones: Array[int] = []
 
@@ -215,7 +216,7 @@ func _support_seated_skirt() -> void:
 		var edge := maxf(absf(p.x) - seated_skirt_half_extents.x, absf(p.z) - seated_skirt_half_extents.y)
 		# Support the fabric over the top, and let it drape beyond the seat edge.
 		var weight := 1.0 - smoothstep(0.075, 0.18, edge)
-		p.y += maxf(0.056 - p.y, 0.0) * weight
+		p.y += maxf(seated_skirt_bone_clearance - p.y, 0.0) * weight
 		targets.append(to_skeleton * p)
 	for i in _seated_skirt_bones.size():
 		var index := _seated_skirt_bones[i]

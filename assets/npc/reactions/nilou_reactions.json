@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "nilou_reactions",
+  "speaker": "妮露",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖按在唇边？Master，舞娘的红唇今天只为您绽放哦。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软的舌尖被您轻轻含弄，呼吸间全是您的气息了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中的津液都要溢出来了，脑海一片朦胧，好幸福呀！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "隔着轻薄舞裙揉抚胸前，Master的手心好温暖。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！指尖直接拨弄双峰尖端，酸麻感顺着脊椎直往上窜。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经完全挺立胀麻了，好强烈的快感，妮露快站不住了！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "碰到了最害羞的花核，Master，心跳变得好剧烈！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在花蒂打圈按压，连水珠顺着大腿滑落都顾不上了呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！温热的花蜜完全涌出，好剧烈的高潮情浪，妮露要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "抚摸赤足上方的雪白大腿内侧，触感好细腻清晰。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根被轻轻拿捏，酸软的感觉蔓延到腰肢，脚趾都蜷起来了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全没有力气了，只能软软地倚靠在Master怀里任您索取。",
+        "emotion": "climax"
+      }
+    },
+    "anal": {
+      "low": {
+        "text": "身后轻巧的水晶尾塞被碰到了，Master，那里好难为情呀。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔！尾塞被缓缓转动推入深处，异样的充实感让舞娘的腰肢战栗不止。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呀啊！后庭完全失守了，身体深处的甜美痉挛根本停不下来啦！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "dance_of_haftkarsvar": {
+      "name": "七域舞步·水旋翩跹",
+      "damage": 16.0,
+      "text": "旋舞起落，水波盈盈！请看大巴扎剧场的特约舞步，Master可别看呆了哦！",
+      "emotion": "smile"
+    },
+    "dance_of_abzendegi": {
+      "name": "浮莲雀跃·水波荡漾",
+      "damage": 18.0,
+      "text": "宛若水莲盛放！以清澈水流轻抚身心，请接下妮露最诚挚的心意！",
+      "emotion": "confident"
+    },
+    "bazaar_charm": {
+      "name": "纯真献舞·动人心弦",
+      "damage": 15.0,
+      "text": "只要能让Master展露笑颜，妮露无论跳多少支舞都乐意！",
+      "emotion": "shy"
+    }
+  }
+}

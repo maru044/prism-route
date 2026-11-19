@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "rosaria_reactions",
+  "speaker": "罗莎莉亚",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖碰到嘴边了，小心我一口咬断你的手指。",
+        "emotion": "confident"
+      },
+      "mid": {
+        "text": "唔，居然敢强硬地吻过来，温热的纠缠让人呼吸发乱。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中的喘息完全压不住，冷酷的伪装全被你击碎了！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "隔着黑色修女服抚弄胸前，你的胆子还真是不小。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接掐按挺立的双峰顶端，冰冷的刺客也禁不住发烫。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口胀麻得要命，好强烈的电击感，快要站不住了！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "直接伸向网袜深处的私处，你还真是不客气。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！隔着薄网狠狠揉按花核，双腿忍不住紧紧夹住了你的手臂。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！温热的花露完全漫出，好凶猛的高潮，我要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "抚摸裹在渔网袜下的结实大腿，手心倒是挺热的。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根被狠狠掐揉，原本敏捷的肌肉竟然完全酸软了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿彻底瘫软无力，只能顺从地缠在你腰间任你采摘。",
+        "emotion": "climax"
+      }
+    },
+    "anal": {
+      "low": {
+        "text": "摸到身后冰晶特制尖锥尾塞了，哼，真会挑刁钻的位置。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔！尾塞在紧致的深处旋转顶弄，刺客从未体会过的充实感席卷全身。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呀啊！后庭完全失守了，狂暴的快感冲击让我脑子里一片空白！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "ravaging_confession": {
+      "name": "噬罪的告解·幽冷匕影",
+      "damage": 17.0,
+      "text": "无处可逃！极速闪现至身后，以冰冷的锋芒检验Master的神经反应！",
+      "emotion": "confident"
+    },
+    "rites_of_termination": {
+      "name": "临终的圣礼·极寒冰枪",
+      "damage": 19.0,
+      "text": "审判降临！冰枪破空坠地，释放极致的严霜情潮！",
+      "emotion": "confident"
+    },
+    "shadow_strike": {
+      "name": "暗夜戒律·刺客迷魂",
+      "damage": 15.0,
+      "text": "白天的教堂规矩我没兴趣，但在黑夜里，我说了算。",
+      "emotion": "shy"
+    }
+  }
+}

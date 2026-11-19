@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "huohuo_reactions",
+  "speaker": "藿藿",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖碰到嘴唇了？Master，藿藿的胆子很小，请轻一点哦。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，小巧的舌头被您轻轻含弄，呼吸间全乱了节奏。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中的清亮甜津溢出来，脑海一片混沌，好羞耻呀！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "隔着判官小棉袄抚摸前胸，主人的手心好暖和。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！指尖直接揉弄娇小软嫩的双峰，尾巴都吓得竖起来了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸前挺立得发酸，好强烈的酥麻感，藿藿快站不住了！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "碰到了最隐秘的花蕾，Master，心跳快得要跳出来了！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！隔着短衬按压花蒂，双腿忍不住死死绞紧了您的手臂。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！温热的花露汩汩涌出，好强烈的高潮浪潮，藿藿要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "抚摸软乎乎的小腿与大腿内侧，手心的触感好清晰呀。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根被轻轻揉捏，酸软的感觉蔓延全身，整个人都化开了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全使不上力，只能软软地倚在Master怀里任您摆布。",
+        "emotion": "climax"
+      }
+    },
+    "anal": {
+      "low": {
+        "text": "摸到身后青绿色火焰小塞子了，呜，尾巴大爷都在抗议了。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔！尾塞在紧致的深处被缓缓旋动，从未体验过的酸胀快美让狐耳直颤。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呀啊！后庭完全失守了，身体深处的甜美剧烈抽搐停不下来啦！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "talisman_protection": {
+      "name": "灵符保命·怯怯祈安",
+      "damage": 14.0,
+      "text": "急急如律令！灵符保佑，Master您可千万不要吓唬藿藿呀！",
+      "emotion": "shy"
+    },
+    "tail_exorcism": {
+      "name": "尾巴发威·摄魂镇祟",
+      "damage": 17.0,
+      "text": "尾巴大爷发威啦！鬼火化作汹涌情浪，请承受来自尾巴的怒火吧！",
+      "emotion": "confident"
+    },
+    "ghostly_flutter": {
+      "name": "胆小依偎·楚楚可怜",
+      "damage": 15.0,
+      "text": "呜，身子在发抖，如果Master能温柔抱抱藿藿就好了。",
+      "emotion": "shy"
+    }
+  }
+}

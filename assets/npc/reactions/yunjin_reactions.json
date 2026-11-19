@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "yunjin_reactions",
+  "speaker": "云堇",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖拂过唇瓣，Master的举动真教名角芳心微乱。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，清唱的花旦之口被您衔住，呼吸间全化作了低回的喘息。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口津连绵，戏腔变作了求饶的娇啼，好生羞人呀！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "隔着华美戏服轻抚胸前，主人的动作好生温存。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！纤指隔着丝缎揉按双峰尖端，酸麻感蔓延至全身骨骼。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸前完全挺立发胀，梨园当家的仪态彻底在您掌心融化了！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "探入戏裙深处最隐秘的花心，Master的行径当真大胆。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在花蒂轻拢慢捻，惹得双腿都忍不住悄悄并拢了呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！温软的花泉汩汩涌出，好强烈的绝顶浪潮，云堇要高潮了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "顺着丝滑的大腿轻轻抚摸，主人的掌心温度好清晰。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根被细细揉捏，平日练功扎实的腿脚竟然完全酸软了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿软得一丝力气也无，只能任由主人按在身前肆意采撷。",
+        "emotion": "climax"
+      }
+    },
+    "anal": {
+      "low": {
+        "text": "摸到身后红绒璎珞下方的特制玛瑙小塞子，Master，那里好害羞。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔！尾塞在紧致的深处缓缓转动推挤，从未体会过的深邃快美直透心扉。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呀啊！后庭完全失守了，狂暴甜美的震颤让当家名角的理智彻底空白！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "opening_flourish": {
+      "name": "旋云开相·飞云流转",
+      "damage": 16.0,
+      "text": "枪势如云，身段如柳！请看云翰社当家名角的开相身法！",
+      "emotion": "smile"
+    },
+    "cliffbreakers_banner": {
+      "name": "破嶂见旌仪·红毹长歌",
+      "damage": 18.0,
+      "text": "旌旗列阵，红毹铺展！长歌动九霄，请接下云堇全力的一击！",
+      "emotion": "confident"
+    },
+    "dramatic_aria": {
+      "name": "梨园唱腔·花旦心弦",
+      "damage": 15.0,
+      "text": "一曲诉尽千般意，不知Master能否听懂云堇曲中的柔情呢？",
+      "emotion": "shy"
+    }
+  }
+}

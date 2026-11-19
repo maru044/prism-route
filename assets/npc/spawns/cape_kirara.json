@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "spawn_id": "cape_kirara",
+  "character_id": "kirara",
+  "region": "海岬小镇与神社",
+  "position": [
+    669.745,
+    1.32,
+    -1073.395
+  ],
+  "heading": -34.0,
+  "bound_furniture": [
+    {
+      "id": "bench_2",
+      "type": "chair",
+      "anchor": "Anchor_Seat"
+    }
+  ]
+}

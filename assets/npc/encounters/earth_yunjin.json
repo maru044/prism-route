@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "encounter_id": "earth_yunjin",
+  "character_id": "yunjin",
+  "spawn_id": "earth_yunjin",
+  "flow_behavior_id": "standard_duel",
+  "dialogue_bundle_id": "yunjin_earth_bundle",
+  "combat_profile_id": "yunjin_combat",
+  "reaction_profile_id": "yunjin_reactions",
+  "motion_profile_id": "yunjin_motions",
+  "supported_entry_points": [
+    "start",
+    "unlocked_start",
+    "mid_battle_manual",
+    "combat_manual_unlocked",
+    "victory_node",
+    "defeat_node",
+    "post_spare",
+    "post_kill"
+  ]
+}

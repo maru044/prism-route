@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "huohuo_earth_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "藿藿",
+      "text": "呀！有鬼，不对，是Master！您好，我是罗浮仙舟十王司见习判官藿藿。这、这里阴凉避风，我正在回廊边检查镇魔符箓。如果Master想带藿藿一起走，请先与我切磋一下，看看尾巴大爷答不答应吧！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "藿藿",
+      "text": "Master，找藿藿有什么事吗？尾巴大爷今天好像挺安静的。",
+      "choices": [
+        {
+          "text": "【关于回廊】覆土庭院的回廊，看起来很幽静呢。",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请藿藿判官赐教！（初次对决：判官全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "藿藿",
+      "text": "这里的绿植屋顶挡住了强光，微风从天井吹进来，回廊里凉丝丝的，很适合躲起来看符书。不过偶尔有风声掠过，还是会把藿藿吓一跳呢。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "藿藿",
+      "text": "呜，Master，您又来找藿藿了！上次切磋输给您之后，尾巴大爷都承认您是真正的主人了。今天是要进行身心较量，还是需要藿藿为您提供专属的贴身服侍呢？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "藿藿",
+      "text": "主人，藿藿听您的吩咐，请不要突然吓唬我哦。",
+      "choices": [
+        {
+          "text": "【关于回廊】在回廊里小憩，不会害怕了吧？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】藿藿，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "藿藿",
+      "text": "只要有Master陪在身边，藿藿就一点也不怕了。每次走过回廊，就会想起被您揽在怀里轻揉尾巴的滋味，尾巴尖尖都会害羞得打卷。下、下次，还能抱抱我吗？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "藿藿",
+      "text": "Master，尾巴大爷还在撑着呢，请集中精神攻过来！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "藿藿",
+      "text": "哈啊，Master，藿藿的膝盖都跪软了，只要您吩咐，藿藿都听话，",
+      "choices": [
+        {
+          "text": "【命令识趣】藿藿，稍微走神迎合一下，让我好好疼你！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】藿藿，帮我稳固快感防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，藿藿当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "藿藿",
+      "text": "呜，既然是主人的命令，那藿藿就稍微走神一下，请不要弄疼我呀，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "藿藿",
+      "text": "十王司护身灵符升起，藿藿会为您守住快感防线！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "藿藿",
+      "text": "好厉害的定力，藿藿也要鼓起勇气面对了！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "藿藿",
+      "text": "呀啊！遵命主人，藿藿彻底认输，身子要绝顶了啊啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "藿藿",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "藿藿",
+      "text": "呜哇，旗幡掉在地上了，藿藿彻底输给主人了。作为手下败将，藿藿任凭Master处置，您想怎么吩咐我？",
+      "choices": [
+        {
+          "text": "【回廊侍奉】请藿藿在覆土庭院回廊平整地面上，为我提供胆怯娇柔的狐人侍奉。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "藿藿",
+      "text": "呼，多亏了尾巴大爷帮忙，藿藿居然赢了！Master请不要生气，先在回廊木凳上休息，喝杯热茶，一会儿藿藿再陪您切磋！",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "藿藿",
+      "text": "Master，刚才虽然化作玩偶任您任意摆弄，但重塑之后的藿藿依然紧紧抓着主人的衣角。今天的特别侍奉，请务必继续指派给我哦！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "藿藿",
+      "text": "哈啊，刚才在回廊地面上为您侍奉了那么久，毛茸茸的尾巴到现在都还在发烫呢。能让主人开心，藿藿就安心了。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

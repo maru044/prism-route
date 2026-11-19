@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "water_kokomi",
+  "character_id": "kokomi",
+  "region": "浅水庭院",
+  "position": [
+    -895.0,
+    0.28,
+    622.0
+  ],
+  "heading": -90.0,
+  "bound_furniture": []
+}

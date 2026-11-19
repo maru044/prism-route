@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "huohuo_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "talisman_protection",
+    "tail_exorcism",
+    "ghostly_flutter"
+  ]
+}

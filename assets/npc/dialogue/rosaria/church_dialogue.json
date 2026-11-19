@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "rosaria_church_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "罗莎莉亚",
+      "text": "啧，又来了一个多管闲事的。我是西风教会的修女罗莎莉亚。别用那种看圣职者的眼光看我，我可不唱赞美诗。想让我替你办事？那就拿出真本事在身心对决里赢过我，否则少来打扰我抽烟吹风。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "罗莎莉亚",
+      "text": "有话快说，我的耐心向来很有限。",
+      "choices": [
+        {
+          "text": "【关于教堂】独自靠在露天石柱后面，不会觉得冷吗？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请修女赐教！（初次对决：刺客全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "罗莎莉亚",
+      "text": "比起在闷热的室内听人祈祷，这里的风让人清醒得多。石柱后是个观察死角，任何潜入者都逃不过我的眼睛。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "罗莎莉亚",
+      "text": "哼，Master，你又来了。既然上次输在你的手里，我就认赌服输。今天是要继续身心较量，还是让我换一身打扮给你提供专属服务？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "罗莎莉亚",
+      "text": "既然你是胜者，想怎么吩咐我都行，随你便。",
+      "choices": [
+        {
+          "text": "【关于夜风】海岛的夜风，很合你的胃口吧？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】罗莎莉亚，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "罗莎莉亚",
+      "text": "风确实不错，但每次靠在这根石柱上，就会想起被你强行按住惩罚的滋味，连冰冷的指尖都忍不住发烫。今后，我的人归你管了。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "罗莎莉亚",
+      "text": "别走神，我的匕首可不是吃素的，全力攻过来！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "罗莎莉亚",
+      "text": "哈啊，Master，我握匕首的手都使不上劲了，任由你随心处置，",
+      "choices": [
+        {
+          "text": "【命令识趣】罗莎莉亚，稍微走神迎合一下，让我好好疼你！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】罗莎莉亚，帮我稳固快感防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，罗莎莉亚当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "罗莎莉亚",
+      "text": "切，既然是胜者的要求，那我就收起刺刃，任你放肆好了，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "罗莎莉亚",
+      "text": "极寒冰晶冻结多余的感官冲击，你的防线我来替你守住！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "罗莎莉亚",
+      "text": "有点骨气嘛，那就让我看看你能撑到什么时候！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "罗莎莉亚",
+      "text": "呀啊！可恶，身子完全承受不住这股浪潮，要绝顶了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "罗莎莉亚",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "罗莎莉亚",
+      "text": "哈啊，冰枪碎裂，这局是我彻底输了。按照规矩，败者就是赢家的猎物，你想怎么摆弄我这副身子？",
+      "choices": [
+        {
+          "text": "【石柱侍奉】请罗莎莉亚在教堂石柱旁平整地面上，为我提供冷艳顺从的刺客侍奉。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "罗莎莉亚",
+      "text": "看来你的本事还差点火候呢，Master。先去台阶上坐着歇会儿吧，等有了底气再来找我。",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "罗莎莉亚",
+      "text": "Master，把冷酷的修女当成战利品随意摆弄，你的癖好还真是不容小觑。复活之后，我依然会顺着你的心意行事！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "罗莎莉亚",
+      "text": "哈啊，刚才靠在石柱边侍奉了这么久，黑丝网袜下的双腿都还在发抖呢。只要你满意，我奉陪到底。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

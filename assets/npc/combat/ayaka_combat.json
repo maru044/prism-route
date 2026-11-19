@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "ayaka_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "kamisato_art_hyouka",
+    "kamisato_art_soumetsu",
+    "senho_elegance"
+  ]
+}

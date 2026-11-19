@@ -29,6 +29,16 @@ const PleasureComponentClass := preload("res://scripts/combat/pleasure_component
 const MotionResolverClass := preload("res://scripts/world/motion_resolver.gd")
 const SURRENDER_MIN_ROUND := 3
 const SURRENDER_METER_FRACTION := 0.6
+const STAGED_SETTLEMENTS := {
+	"spare_desk": "desk_service",
+	"desk_service": "desk_service",
+	"spare_seat": "seat_service",
+	"seat_service": "seat_service",
+	"spare_bed": "bed_service",
+	"bed_service": "bed_service",
+	"spare_ground": "ground_service",
+	"ground_service": "ground_service",
+}
 
 @export var encounter_id: String = ""
 
@@ -300,7 +310,7 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 		combat_manager.resume_combat_after_dialogue(instant, next_turn)
 	elif act == "enter_combat":
 		start_combat()
-	elif act in ["spare_desk", "desk_service", "spare_seat", "seat_service"]:
+	elif STAGED_SETTLEMENTS.has(act):
 		settlement_outcome = act
 		_set_state(EncounterState.SETTLEMENT)
 		settlement_finished.emit(act)

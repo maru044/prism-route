@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "encounter_id": "water_kokomi",
+  "character_id": "kokomi",
+  "spawn_id": "water_kokomi",
+  "flow_behavior_id": "standard_duel",
+  "dialogue_bundle_id": "kokomi_water_bundle",
+  "combat_profile_id": "kokomi_combat",
+  "reaction_profile_id": "kokomi_reactions",
+  "motion_profile_id": "kokomi_motions",
+  "supported_entry_points": [
+    "start",
+    "unlocked_start",
+    "mid_battle_manual",
+    "combat_manual_unlocked",
+    "victory_node",
+    "defeat_node",
+    "post_spare",
+    "post_kill"
+  ]
+}

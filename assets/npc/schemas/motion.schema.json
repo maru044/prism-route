@@ -64,13 +64,25 @@
             "maxItems": 3,
             "items": {"type": "number"}
           },
+          "role_a_seated_skirt_support": {
+            "description": "Optional furniture support for named cloth bones. Half extents and bone clearance above the surface are in metres.",
+            "type": "object",
+            "required": ["bone_prefix", "half_extents"],
+            "properties": {
+              "bone_prefix": {"type": "string"},
+              "half_extents": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "number", "minimum": 0}},
+              "bone_clearance_m": {"type": "number", "minimum": 0}
+            },
+            "additionalProperties": false
+          },
           "role_b_seated_skirt_support": {
             "description": "Optional seat support for named cloth bones; half_extents are in anchor-local X and Z metres.",
             "type": "object",
             "required": ["bone_prefix", "half_extents"],
             "properties": {
               "bone_prefix": {"type": "string"},
-              "half_extents": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "number", "minimum": 0}}
+              "half_extents": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "number", "minimum": 0}},
+              "bone_clearance_m": {"type": "number", "minimum": 0}
             },
             "additionalProperties": false
           },

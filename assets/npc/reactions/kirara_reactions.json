@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "kirara_reactions",
+  "speaker": "绮良良",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖碰到嘴唇了？小心猫猫轻轻咬您一口哦，喵呜。",
+        "emotion": "smile"
+      },
+      "mid": {
+        "text": "唔，柔软的猫舌头被您抓住品尝，连呼吸都变得断断续续的。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中的甜津止不住，两只猫耳朵羞耻得贴紧了头发！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "隔着活泼的快递短褂揉抚胸前，Master的手法好熟练。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接隔着薄布揉弄挺立的顶端，酥麻感让尾巴毛都要炸开了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸前完全挺立发烫，猫猫的野性在您的掌心下彻底化作春水了！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "探向短裙深处最隐秘的私密，Master，那里好害羞呀！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在敏感的花蒂打圈揉按，两条尾巴忍不住死死缠住了您的手臂。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！温热的花露把短裤完全浸透，好强烈的高潮，绮良良要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "抚摸有着肉垫触感的小腿与大腿内侧，手心的温度好舒服。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根被轻轻捏弄，擅长飞檐走壁的双腿竟然完全软掉了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿软绵绵地任由Master搬弄，完全变成属于您的专属猫娘了。",
+        "emotion": "climax"
+      }
+    },
+    "anal": {
+      "low": {
+        "text": "摸到双尾分叉处特制的毛绒小塞子了，呜，那里太刺激了。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔！尾塞在紧致的深处被缓缓旋动，异样的充实感让猫猫忍不住娇声啼叫。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呀啊！后庭完全失守了，狂暴甜美的浪潮让绮良良彻底失去理智啦！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "meowteor_kick": {
+      "name": "呜喵急件·猫箱飞扑",
+      "damage": 16.0,
+      "text": "安全准时，使命必达！看绮良良化作猫猫快递箱飞扑过来啦！",
+      "emotion": "smile"
+    },
+    "secret_art_surprise": {
+      "name": "秘技·惊喜猫猫盒",
+      "damage": 18.0,
+      "text": "特快专递，惊喜开箱！猫爪弹出的甜美攻势，Master接得住吗？",
+      "emotion": "confident"
+    },
+    "cat_nap_stretch": {
+      "name": "猫猫伸懒腰·软萌呼噜",
+      "damage": 15.0,
+      "text": "呼噜噜，要是被Master顺顺毛，猫猫就会舒服得打滚呢。",
+      "emotion": "shy"
+    }
+  }
+}

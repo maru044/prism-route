@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "nilou_water_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "妮露",
+      "text": "乐声响起，花瓣飘落！您好，Master。我是大巴扎剧场的舞娘妮露，正在这处浅水展廊边练习踩水舞步。若您想邀请妮露伴您同行，请先与我进行一场切磋，检验彼此的灵犀吧！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "妮露",
+      "text": "Master，今天有什么需要妮露帮忙的吗？我很乐意为您起舞！",
+      "choices": [
+        {
+          "text": "【关于水庭】在浅水薄壳展廊边赤足跳舞，感觉如何？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请妮露姑娘赐教！（初次对决：舞娘全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "妮露",
+      "text": "这里的浅水刚好漫过脚踝，水波倒映着穹顶，每走一步都有清脆的水声，简直像置身于水之舞台！微风拂过水面，身心都会觉得轻盈欢快呢。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "妮露",
+      "text": "Master，您又来看妮露了！自从上次在对决中败给您，妮露的身体只要一被您碰触，就会软绵绵地化开。今天是要切磋舞艺，还是让妮露为您提供专属的温软侍奉呢？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "妮露",
+      "text": "主人，妮露是只属于您的舞娘，随时听凭您的吩咐！",
+      "choices": [
+        {
+          "text": "【关于临水】在水边休息，心情会很放松吧？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】妮露，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "妮露",
+      "text": "只要Master在身边，水花都会变得特别甜。每次踩进水里，就会想起被您揽在怀里轻揉腰肢的感受，耳根都忍不住悄悄发烫呢。下次，还要在水边看我为您独舞吗？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "妮露",
+      "text": "Master，舞步还没停歇呢，要集中精神，接下妮露的旋舞攻势哦！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "妮露",
+      "text": "哈啊，Master，妮露浑身都在发软，只要您的一句指令，妮露什么都听您的，",
+      "choices": [
+        {
+          "text": "【命令识趣】妮露，稍微走神迎合一下，让我好好疼你！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】妮露，帮我稳固快感防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，妮露当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "妮露",
+      "text": "呜，既然是主人的命令，那妮露就稍微走神一下，请温柔一点呀，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "妮露",
+      "text": "纯澈的水环绕在主人身周，妮露会为您守护好快感防线！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "妮露",
+      "text": "好专注的眼神，那妮露也要更加认真地起舞了！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "妮露",
+      "text": "呀啊！遵命主人，妮露彻底认输，身子要绝顶了啊啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "妮露",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "妮露",
+      "text": "哈啊，双足完全站不稳了，妮露彻底败给了Master。作为专属舞娘，妮露愿意为您奉献一切，您想怎么处置我？",
+      "choices": [
+        {
+          "text": "【临水侍奉】请妮露在水池边平整地面上，为我提供柔美纯真的舞娘侍奉。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "妮露",
+      "text": "呼，看来今天的旋律由妮露占了先机呢！Master不必沮丧，先坐在展廊石沿上歇歇脚，待会儿妮露再陪您跳舞！",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "妮露",
+      "text": "Master，刚才虽然化作玩偶任您任意摆弄，但重塑身姿后的妮露依然记得您的温度。今天的特别侍奉，请务必继续指派给我哦！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "妮露",
+      "text": "哈啊，刚才在临水地面上为您侍奉了那么久，薄纱舞裙到现在都还湿漉漉的呢。能让Master尽兴，就是妮露最大的幸福。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

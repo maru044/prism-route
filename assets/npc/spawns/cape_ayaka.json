@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "cape_ayaka",
+  "character_id": "ayaka",
+  "region": "海岬小镇与神社",
+  "position": [
+    648.411,
+    4.84,
+    -1147.24
+  ],
+  "heading": 131.0,
+  "bound_furniture": []
+}

@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "yunjin_earth_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "云堇",
+      "text": "台前演悲欢，幕后品清茗。小女子云堇，这厢有礼了。我是璃月云翰社的当家戏骨，正在这处覆土石坪练习云手身段。想邀云堇同游全岛？那就先在身心对招中，让小女子领教Master的风采吧！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "云堇",
+      "text": "Master，今日寻小女子有何关照？愿为您清唱一曲解乏。",
+      "choices": [
+        {
+          "text": "【关于石坪】在覆土庭院中央石坪练功，感觉如何？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请云堇大家赐教！（初次对决：名角全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "云堇",
+      "text": "这里的石坪平整开阔，四周岩壁环绕，回声清越圆润，最宜演练唱腔与武戏身段。练功累了便就地品盏香茗，当真是一大快事。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "云堇",
+      "text": "Master，您又来看望云堇了。自从在台上切磋输给了您，小女子的心念便全系在您一人身上。今天是要推敲身段，还是让云堇为您提供独门的闺阁侍奉？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "云堇",
+      "text": "主人，云堇随时任凭差遣，台前幕后皆听凭吩咐。",
+      "choices": [
+        {
+          "text": "【关于练功】常在此处练功，不会觉得劳累吗？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】云堇，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "云堇",
+      "text": "只要Master肯在一旁赏光，云堇便不知疲倦。只是每次站在石坪上，就会想起被您揽入怀中轻解戏服的场景，红晕总要蔓延到双颊。下次，还听我唱新戏吗？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "云堇",
+      "text": "Master，戏未终局，云堇的枪势可还没收招呢！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "云堇",
+      "text": "哈啊，Master，戏服下的身子都发软了，您说什么云堇都顺从，",
+      "choices": [
+        {
+          "text": "【命令识趣】云堇，稍微走神迎合一下，让我好好疼你！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】云堇，帮我稳固快感防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，云堇当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "云堇",
+      "text": "谨遵主人吩咐，那云堇便故意漏个破绽，任由主人尽情怜惜，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "云堇",
+      "text": "旌旗云幕升起，云堇会为主公稳稳守住快感防线！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "云堇",
+      "text": "好生沉稳坚毅的定力，真教小女子由衷敬佩！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "云堇",
+      "text": "呀啊！主公太强了，云堇彻底认输，身子要绝顶了啊啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "云堇",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "云堇",
+      "text": "哈啊，花枪落地，是云堇彻底败给主人了。戏曲落幕，云堇整个人全部听凭Master发落，您想怎么处置小女子？",
+      "choices": [
+        {
+          "text": "【石坪侍奉】请云堇在练功石坪平整地面上，为我提供戏苑当家的端庄柔顺侍奉。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "云堇",
+      "text": "哎呀，承让了Master。先在石坪条凳上稍事歇息，饮盏清润菊花茶，待会儿云堇再陪您对招！",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "云堇",
+      "text": "Master，刚才虽然将小女子化作软绵绵的战利品任意摆弄，复苏之后的云堇依然对您倾心相随。下一回，云堇依然遵从您的调遣！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "云堇",
+      "text": "哈啊，刚才在石坪上为您侍奉了这许久，锦缎戏服下的双腿至今还在微微酸软呢。能让主人舒畅愉悦，便是云堇最大的慰藉。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

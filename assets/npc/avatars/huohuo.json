@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "avatar_profile_id": "huohuo",
+  "model_resource": "res://assets/characters/roster/huohuo/huohuo.vrm",
+  "idle_motion": "res://assets/characters/roster/motions/koikatsu_idle.tres",
+  "material_id": "huohuo",
+  "environment_collision_enabled": false
+}

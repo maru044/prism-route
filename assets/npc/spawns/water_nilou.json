@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "water_nilou",
+  "character_id": "nilou",
+  "region": "浅水庭院",
+  "position": [
+    -915.0,
+    0.28,
+    633.0
+  ],
+  "heading": 45.0,
+  "bound_furniture": []
+}

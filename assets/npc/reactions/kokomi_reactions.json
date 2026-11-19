@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "kokomi_reactions",
+  "speaker": "珊瑚宫心海",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖触碰唇珠，Master的举动可真让人心湖微漾。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，温软的舌尖被您牵引，军师的理智好像开始模糊了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口津连缀，喘息难平，现人神巫女的威严彻底融化了！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "隔着巫女羽衣轻揉前胸，主公的手法当真细腻。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！指尖隔着丝缎揉按双峰尖端，体内的水元素好像在沸腾。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸前完全硬挺挺立，好强烈的酸麻，心海要支撑不住了！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "探向羽衣下摆最隐秘的花心，Master的兵锋当真长驱直入。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在花蒂按压打圈，连双腿都忍不住羞耻地悄悄夹紧了呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！温热的花露汩汩溢出，极致的高潮绝顶，心海要沦陷了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "顺着白皙的大腿轻抚内侧，手心的温度好滚烫。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根处被轻轻拿捏，酸软的感觉蔓延至腰肢，完全使不上力。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿虚软得无法合拢，只能任由主公按在身前肆意采撷。",
+        "emotion": "climax"
+      }
+    },
+    "anal": {
+      "low": {
+        "text": "摸到身后贝壳造型的温润尾塞，Master，那里好害羞呀。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔！尾塞在紧致的深处缓缓旋动，从未体验过的深邃快美直冲脑海。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呀啊！后庭完全失守，甜美的狂乱让军师大人的思考彻底断线啦！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "kurage_oath": {
+      "name": "海月之誓·化海月涌",
+      "damage": 15.0,
+      "text": "海月召唤，水润四方！以水母的柔波拂拭Master的每一寸防线！",
+      "emotion": "smile"
+    },
+    "kaijin_ceremony": {
+      "name": "海人化羽·水色微澜",
+      "damage": 18.0,
+      "text": "羽衣飞扬，波澜不惊！请见识海祇岛现人神巫女的真正身姿！",
+      "emotion": "confident"
+    },
+    "tactical_guidance": {
+      "name": "锦囊妙策·攻心柔术",
+      "damage": 16.0,
+      "text": "兵法云：攻心为上。不知Master的心神是否已被我彻底看破了呢？",
+      "emotion": "shy"
+    }
+  }
+}

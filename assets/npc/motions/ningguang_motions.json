@@ -16,7 +16,7 @@
       "role_a_placement": {
         "offset": [
           0.0,
-          0.0,
+          -0.02,
           0.0
         ],
         "yaw_degrees": 0.0
@@ -28,6 +28,15 @@
           0.22
         ],
         "yaw_degrees": 0.0
+      },
+      "role_a_seated_skirt_support": {
+        "bone_prefix": "hq_",
+        "half_extents": [0.325, 0.55],
+        "bone_clearance_m": 0.085
+      },
+      "role_b_seated_skirt_support": {
+        "bone_prefix": "Q_",
+        "half_extents": [0.325, 0.55]
       }
     },
     "ground_service": {

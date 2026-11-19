@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "avatar_profile_id": "rosaria",
+  "model_resource": "res://assets/characters/roster/rosaria/rosaria.vrm",
+  "idle_motion": "res://assets/characters/roster/motions/koikatsu_idle.tres",
+  "material_id": "rosaria",
+  "environment_collision_enabled": false
+}

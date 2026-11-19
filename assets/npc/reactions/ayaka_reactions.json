@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "ayaka_reactions",
+  "speaker": "神里绫华",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖拂过唇瓣，Master的举动教绫华心跳加速。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，白鹭公主的娇唇被您温柔撬开，舌尖纠缠时的甘美让人难以自持。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中的清润甜津溢出，高贵的仪态彻底化作了顺从的娇啼！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "隔着华美和服轻抚胸前，主人的手心好滚烫。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！解开前襟直接捻弄挺拔的尖端，体内的冰霜仿佛瞬间融化。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸前挺立得发酸发胀，好强烈的快感，绫华快支撑不住了！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "探向和服下摆深处最娇嫩的花蕾，Master的动作好大胆。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在花蒂轻柔打圈按压，连双腿都忍不住羞怯地紧紧并拢了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！温热的花露将衬衣完全浸湿，好强烈的绝顶情浪，绫华要高潮了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "抚摸纯白高筒丝袜包裹的修长双腿，触感好生细腻。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根被轻轻捏弄，习练剑道的双腿竟然完全酸软化开了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿虚软无力，只能软软地倚靠在Master怀里任您索取。",
+        "emotion": "climax"
+      }
+    },
+    "anal": {
+      "low": {
+        "text": "摸到身后白鹭羽翼造型的温润小塞子，Master，那里好害羞呀。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔！尾塞在紧致的深处被缓缓旋动，从未体验过的深邃快美直冲心神。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呀啊！后庭完全失守了，狂暴甜美的震颤让白鹭公主的意识彻底空白啦！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "kamisato_art_hyouka": {
+      "name": "神里流·冰华落雪",
+      "damage": 16.0,
+      "text": "若知所爱，风定花残！以神里流纯正剑艺，检验Master的防守沉稳！",
+      "emotion": "smile"
+    },
+    "kamisato_art_soumetsu": {
+      "name": "神里流·霜灭龙卷",
+      "damage": 20.0,
+      "text": "吹雪连翩，霜刃破晓！请接下绫华倾注全心的霜灭奥义！",
+      "emotion": "confident"
+    },
+    "senho_elegance": {
+      "name": "雪步翩跹·折扇含羞",
+      "damage": 15.0,
+      "text": "折扇掩面，眼波微凝，绫华只愿与心仪之人共享此时此刻。",
+      "emotion": "shy"
+    }
+  }
+}

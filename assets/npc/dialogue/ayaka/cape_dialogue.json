@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "cape_ayaka_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "神里绫华",
+      "text": "白鹭拂霜，心曲难诉。您好，Master。我是稻妻社奉行神里绫华。正在这座小镇二层的雅居内小憩赏景。若您需要神里家的支持与绫华的陪伴，请先与我进行一场切磋，检验彼此的信赖与默契吧！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "神里绫华",
+      "text": "Master，今天寻绫华有何雅兴？无论茶道还是对弈，绫华皆乐意奉陪。",
+      "choices": [
+        {
+          "text": "【关于雅居】在海岬小镇的二层室内歇息，感觉如何？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请白鹭公主赐教！（初次对决：公主全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "神里绫华",
+      "text": "这里居高临下，推开窗户便能望见海岬神社的鸟居与碧蓝浪涛。没有繁杂公文的打扰，能静下心来品茶看海，对绫华而言是难能可贵的心境。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "神里绫华",
+      "text": "Master，您又来探望绫华了。自从上次在切磋中败于您手，绫华的芳心早已系在您的身上。今天是要切磋剑艺，还是让白鹭公主为您提供闺阁侍奉？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "神里绫华",
+      "text": "主人，绫华是只属于您的白鹭，随时听凭您的吩咐。",
+      "choices": [
+        {
+          "text": "【关于窗侧】靠在窗边看海，神情很温柔呢。",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】绫华，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "神里绫华",
+      "text": "只要Master在身旁，海风都会变得格外温润。每次走到窗前，就会想起被您揽入怀中轻解发带的场景，心跳便无法抑制。今后，绫华的身心皆任凭您支配。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "神里绫华",
+      "text": "Master，神里流剑意尚未穷尽，请集中精神攻过来！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "神里绫华",
+      "text": "哈啊，Master，绫华的手脚都已酸软无力，只要您开口，绫华皆顺从于您，",
+      "choices": [
+        {
+          "text": "【命令识趣】绫华，稍微走神迎合一下，让我好好疼你！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】绫华，帮我稳固快感防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，绫华当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "神里绫华",
+      "text": "既然是主人的吩咐，那绫华便散去护体冰霜，任由主人尽情怜爱，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "神里绫华",
+      "text": "冰华结界轻柔护佑在主人身侧，绫华会为您守住快感防线！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "神里绫华",
+      "text": "好沉稳端庄的定力，真不愧是绫华所敬慕的主人！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "神里绫华",
+      "text": "呀啊！遵命主人，绫华彻底认输，身子要绝顶了啊啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "神里绫华",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "神里绫华",
+      "text": "哈啊，折扇滑落，是绫华彻底败给主人了。按照约定，神里绫华整个人任凭Master发落，您想怎么处置我？",
+      "choices": [
+        {
+          "text": "【室内侍奉】请绫华在住宅二层平整木地板上，为我提供白鹭公主的柔顺闺阁侍奉。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "神里绫华",
+      "text": "看来今天的切磋是绫华侥幸占了上风呢，Master。先在榻榻米上稍事休整，品盏清茶，待会儿绫华再陪您练习！",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "神里绫华",
+      "text": "Master，刚才虽然将绫华当成战利品任意摆弄，但重塑身形之后，绫华的心意依然坚贞不渝。下一次，绫华依然会全身心服从于您！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "神里绫华",
+      "text": "哈啊，刚才在地板上为您侍奉了那么久，和服下的双腿至今还在微微发烫呢。能让主人感到舒畅愉悦，便是绫华最大的幸福。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

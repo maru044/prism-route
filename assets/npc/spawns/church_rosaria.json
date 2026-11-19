@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "church_rosaria",
+  "character_id": "rosaria",
+  "region": "孤顶教堂",
+  "position": [
+    -1345.0,
+    43.4,
+    113.0
+  ],
+  "heading": -45.0,
+  "bound_furniture": []
+}

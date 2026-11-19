@@ -451,14 +451,8 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 			_handle_player_defeat()
 			return
 
-	if act in ["spare_desk", "desk_service"]:
-		begin_furniture_service_staging("desk_service")
-	elif act in ["spare_seat", "seat_service"]:
-		begin_furniture_service_staging("seat_service")
-	elif act in ["spare_bed", "bed_service"]:
-		begin_furniture_service_staging("bed_service")
-	elif act in ["spare_ground", "ground_service"]:
-		begin_furniture_service_staging("ground_service")
+	if Runtime.STAGED_SETTLEMENTS.has(act):
+		begin_furniture_service_staging(Runtime.STAGED_SETTLEMENTS[act])
 	elif act == "spare":
 		var chosen_service := "ground_service"
 		var bindings: Dictionary = runtime.encounter_bundle.get("motions", {}).get("bindings", {})
@@ -583,6 +577,7 @@ func begin_furniture_service_staging(interaction_type: String = "desk_service") 
 	npc_paired_actor.auto_play = true
 	npc_paired_actor.environment_mask = 33
 	npc_paired_actor.environment_collision_enabled = bool(runtime.encounter_bundle.get("avatar", {}).get("environment_collision_enabled", true))
+	_apply_service_skirt_support(npc_paired_actor, resolution["binding"], "role_a", furn_tf)
 	npc_paired_actor.initialized.connect(func():
 		if is_instance_valid(npc_paired_actor) and npc_paired_actor.character:
 			MTOON.apply(npc_paired_actor.character, runtime.encounter_bundle["avatar"]["material_id"])
@@ -597,12 +592,7 @@ func begin_furniture_service_staging(interaction_type: String = "desk_service") 
 	master_paired_actor.motion_resource = role_b_motion
 	var foot_offset: Array = resolution["binding"].get("role_b_seated_foot_offset", [0.0, 0.0, 0.0])
 	master_paired_actor.seated_foot_offset = Vector3(foot_offset[0], foot_offset[1], foot_offset[2])
-	var skirt_support: Dictionary = resolution["binding"].get("role_b_seated_skirt_support", {})
-	if not skirt_support.is_empty():
-		var half_extents: Array = skirt_support["half_extents"]
-		master_paired_actor.seated_skirt_bone_prefix = skirt_support["bone_prefix"]
-		master_paired_actor.seated_skirt_half_extents = Vector2(half_extents[0], half_extents[1])
-		master_paired_actor.seated_skirt_support_transform = furn_tf
+	_apply_service_skirt_support(master_paired_actor, resolution["binding"], "role_b", furn_tf)
 	master_paired_actor.auto_play = true
 	master_paired_actor.environment_mask = 33
 	master_paired_actor.initialized.connect(func():
@@ -623,6 +613,17 @@ func begin_furniture_service_staging(interaction_type: String = "desk_service") 
 
 	world.set_encounter_ui_active(true)
 	world._sync_actor_controls()
+
+func _apply_service_skirt_support(paired_actor: Node, binding: Dictionary, role: String, surface: Transform3D) -> void:
+	var support: Dictionary = binding.get(role + "_seated_skirt_support", {})
+	if support.is_empty():
+		return
+	var half_extents: Array = support["half_extents"]
+	paired_actor.seated_skirt_bone_prefix = support["bone_prefix"]
+	paired_actor.seated_skirt_half_extents = Vector2(half_extents[0], half_extents[1])
+	if support.has("bone_clearance_m"):
+		paired_actor.seated_skirt_bone_clearance = float(support["bone_clearance_m"])
+	paired_actor.seated_skirt_support_transform = surface
 
 func _setup_service_camera(furn_tf: Transform3D) -> void:
 	cam_focal_point = furn_tf.origin + Vector3(0.0, 0.45, 0.0)

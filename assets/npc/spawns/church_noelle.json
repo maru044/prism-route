@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "church_noelle",
+  "character_id": "noelle",
+  "region": "孤顶教堂",
+  "position": [
+    -1336.0,
+    43.4,
+    116.0
+  ],
+  "heading": -90.0,
+  "bound_furniture": []
+}

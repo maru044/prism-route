@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "avatar_profile_id": "yunjin",
+  "model_resource": "res://assets/characters/roster/yunjin/yunjin.vrm",
+  "idle_motion": "res://assets/characters/roster/motions/koikatsu_idle.tres",
+  "material_id": "yunjin",
+  "environment_collision_enabled": false
+}

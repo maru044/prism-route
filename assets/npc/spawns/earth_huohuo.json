@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "earth_huohuo",
+  "character_id": "huohuo",
+  "region": "东侧覆土庭院",
+  "position": [
+    432.291,
+    62.02,
+    271.0
+  ],
+  "heading": 0.0,
+  "bound_furniture": []
+}

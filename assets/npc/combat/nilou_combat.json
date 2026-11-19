@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "nilou_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "dance_of_haftkarsvar",
+    "dance_of_abzendegi",
+    "bazaar_charm"
+  ]
+}

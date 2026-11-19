@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "cape_kirara_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "绮良良",
+      "text": "喵呜！狛荷屋金牌快递员绮良良，准时送达！您好呀Master，我正在海岬长椅边清点今天派送的包裹。想让我当您的专属送货猫猫？那就先在身心切磋中陪我玩耍一场，让我看看您的身手吧！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "绮良良",
+      "text": "Master，今天有需要派送的急件吗？绮良良随时可以出发！",
+      "choices": [
+        {
+          "text": "【关于长椅】坐在小镇街角长椅上休息，感觉怎么样？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请绮良良赐教！（初次对决：猫又全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "绮良良",
+      "text": "这里的木长椅晒得暖洋洋的，正对着环岛车道，既方便看路，又能趴着小憩。晒晒太阳伸个懒腰，两条尾巴都会舒服得直晃悠呢！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "绮良良",
+      "text": "喵呜，Master，您又来找绮良良玩啦！自从上次对决输给您，绮良良的身心全都被您摸得软乎乎的。今天是要继续玩闹切磋，还是让猫娘为您提供特别的贴身服侍呢？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "绮良良",
+      "text": "主人，绮良良是您的专属猫猫，爪子和尾巴都任您揉捏哦！",
+      "choices": [
+        {
+          "text": "【关于长椅】趴在长椅上打盹，很舒服吧？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】绮良良，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "绮良良",
+      "text": "长椅晒太阳是很舒服啦，但每次趴在这里，就会想起被Master按在长椅上挠痒痒的画面，猫耳朵都会羞耻得耷拉下来。下次，还要在这里给猫猫顺毛吗？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "绮良良",
+      "text": "喵呜，猫猫还没认输呢，Master集中精神，接招啦！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "绮良良",
+      "text": "哈啊，Master，绮良良的猫爪都使不上劲了，只要您下令，猫猫都听话，",
+      "choices": [
+        {
+          "text": "【命令识趣】绮良良，稍微走神迎合一下，让我好好疼你！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】绮良良，帮我稳固快感防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，绮良良当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "绮良良",
+      "text": "喵呜，既然是主人的吩咐，那绮良良就乖乖趴好，任由主人随便欺负啦，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "绮良良",
+      "text": "安全包裹结界升起，绮良良会保护好主人的快感防线！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "绮良良",
+      "text": "好厉害的定力，那绮良良也要拿出真本事飞扑了！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "绮良良",
+      "text": "呀啊！喵呜！绮良良彻底认输，身子受不住要绝顶了啊啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "绮良良",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "绮良良",
+      "text": "喵呜，爪子完全软掉了，绮良良彻底输给主人了。作为您的战利品包裹，猫娘整个人都任凭Master签收发落，您想怎么处置我？",
+      "choices": [
+        {
+          "text": "【长椅侍奉】请绮良良在街角长椅上，为我提供活泼顺从的猫娘侍奉。",
+          "action": "spare_seat"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "绮良良",
+      "text": "呼呼，猫猫大获全胜！Master不要灰心，先在长椅上坐着吹吹风，待会儿绮良良再陪您过招！",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "绮良良",
+      "text": "Master，刚才虽然把猫猫当成布偶玩具任意揉捏，重构之后绮良良依然记得您的温柔抚摸。今天的特别派送，请务必继续指派给我哦！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "绮良良",
+      "text": "哈啊，刚才在长椅上为您侍奉了那么久，两条猫尾巴到现在都还软软的发烫呢。能让主人感到开心，就是金牌快递员最大的成就。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

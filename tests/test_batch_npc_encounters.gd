@@ -1,9 +1,6 @@
 extends SceneTree
 
 const Runtime := preload("res://scripts/world/npc_encounter_runtime.gd")
-const Combat := preload("res://scripts/combat/turn_combat_manager.gd")
-const Motion := preload("res://scripts/world/motion_resolver.gd")
-const NPCSites := preload("res://scripts/world/npc_preview_sites.gd")
 
 func _initialize() -> void:
 	_run.call_deferred()
@@ -146,40 +143,55 @@ func _run() -> void:
 		return
 	print("  ✓ Dialogue start and cancel verified")
 
-	# 5. Service staging activation and finish for Yelan (Seat)
-	yelan_duel.begin_furniture_service_staging("seat_service")
-	if not _expect(yelan_duel.is_service_active and is_instance_valid(yelan_duel.master_paired_actor),
-			"Yelan seat service staging failed to activate"):
-		return
-	yelan_duel.finish_furniture_service()
-	if not _expect(not yelan_duel.is_service_active and yelan_duel.actor.visible,
-			"Yelan seat service failed to finish"):
-		return
-	print("  ✓ Yelan seat_service staging and finish verified")
+	# 5. Start at the victory dialogue and select the actual staged outcome.
+	for character_id: String in expected_ids.slice(2):
+		var duel = npcs_by_char[character_id]
+		var runtime: Runtime = duel.runtime
+		var action := "spare_ground"
+		if character_id == "yelan":
+			action = "spare_seat"
+		elif character_id == "ningguang":
+			action = "spare_bed"
+		var player_layer: int = world.character.collision_layer
+		var player_mask: int = world.character.collision_mask
+		runtime.start_result_dialogue("player")
+		await process_frame
+		var dialogue := runtime.dialogue_manager
+		var choices: Array = dialogue.current_graph.nodes[dialogue.current_node_id].choices
+		var index := choices.find_custom(func(choice: Dictionary) -> bool: return choice.get("action") == action)
+		if not _expect(index >= 0 and duel.panel.visible, "%s victory option is unavailable" % character_id):
+			return
+		_key(KEY_1 + index)
+		await process_frame
+		if not _expect(runtime.current_state == Runtime.EncounterState.SETTLEMENT
+				and runtime.settlement_outcome == action and duel.is_service_active
+				and is_instance_valid(duel.master_paired_actor) and not world.is_world_input_allowed()
+				and world.game_progress.is_companion_unlocked(character_id),
+				"%s victory option did not enter and lock staging" % character_id):
+			return
+		if character_id == "yelan":
+			if not _expect(duel.master_paired_actor.seated_foot_offset != Vector3.ZERO
+					and duel.master_paired_actor.seated_skirt_half_extents.is_equal_approx(Vector2(0.30, 0.225)),
+					"Yelan's seat calibration did not reach the paired actor"):
+				return
+		elif character_id == "ningguang":
+			if not _expect(duel.npc_paired_actor.seated_skirt_bone_prefix == "hq_"
+					and is_equal_approx(duel.npc_paired_actor.seated_skirt_bone_clearance, 0.085)
+					and duel.master_paired_actor.seated_skirt_bone_prefix == "Q_",
+					"Ningguang's lounger calibration did not reach both paired actors"):
+				return
+		_key(KEY_E)
+		await process_frame
+		if not _expect(runtime.current_state == Runtime.EncounterState.COMPLETED
+				and not dialogue.session_active and not duel.is_service_active and duel.actor.visible
+				and world.is_world_input_allowed() and world.character.is_control_enabled()
+				and world.character.visible and world.character.camera.current
+				and world.character.collision_layer == player_layer and world.character.collision_mask == player_mask,
+				"%s stage exit did not restore exploration" % character_id):
+			return
+		print("  ✓ ", character_id, " victory and exit verified: ", action)
 
-	# 6. Service staging activation and finish for Ningguang (Bed)
-	ningguang_duel.begin_furniture_service_staging("bed_service")
-	if not _expect(ningguang_duel.is_service_active and is_instance_valid(ningguang_duel.master_paired_actor),
-			"Ningguang bed service staging failed to activate"):
-		return
-	ningguang_duel.finish_furniture_service()
-	if not _expect(not ningguang_duel.is_service_active and ningguang_duel.actor.visible,
-			"Ningguang bed service failed to finish"):
-		return
-	print("  ✓ Ningguang bed_service staging and finish verified")
-
-	# 7. Service staging activation and finish for Furina (Ground)
-	furina_duel.begin_furniture_service_staging("ground_service")
-	if not _expect(furina_duel.is_service_active and is_instance_valid(furina_duel.master_paired_actor),
-			"Furina ground service staging failed to activate"):
-		return
-	furina_duel.finish_furniture_service()
-	if not _expect(not furina_duel.is_service_active and furina_duel.actor.visible,
-			"Furina ground service failed to finish"):
-		return
-	print("  ✓ Furina ground_service staging and finish verified")
-
-	# 8. Settlement kill ragdoll and 30m respawn on Yelan
+	# 6. Settlement kill ragdoll and 30m respawn on Yelan
 	yelan_duel._execute_settlement_kill()
 	if not _expect(yelan_duel.is_ragdoll_active and is_instance_valid(yelan_duel.corpse_actor),
 			"Yelan ragdoll failed to activate on settlement kill"):
@@ -192,7 +204,7 @@ func _run() -> void:
 		return
 	print("  ✓ Settlement kill ragdoll and 30m respawn verified")
 
-	# 9. Two-stage progression & Cheats in Dialogue
+	# 7. Two-stage progression & Cheats in Dialogue
 	var graph: Dictionary = yelan_duel.runtime.encounter_bundle.dialogue
 	var nodes: Dictionary = graph.nodes
 	if not _expect(nodes.has("start") and nodes.has("start_unlocked"), "Missing start or start_unlocked node"):

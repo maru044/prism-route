@@ -367,6 +367,8 @@ func _build_cape_town() -> void:
 	cape_town=CAPE_TOWN.new();cape_town.world=self;add_child(cape_town)
 	spawn_world_encounter("cape_yae_miko", cape_town)
 	spawn_world_encounter("cape_raiden_shogun", cape_town)
+	spawn_world_encounter("cape_kirara", cape_town)
+	spawn_world_encounter("cape_ayaka", cape_town)
 	var support:=""
 	for row: Dictionary in cape_town.manifest.objects:
 		if row.name=="street/approach":support=row.id;break
@@ -392,6 +394,8 @@ func _build_church_ruins() -> void:
 	church_ruins=CHURCH_RUINS.new();church_ruins.world=self;add_child(church_ruins)
 	spawn_world_encounter("church_barbara", church_ruins)
 	spawn_world_encounter("church_jean", church_ruins)
+	spawn_world_encounter("church_rosaria", church_ruins)
+	spawn_world_encounter("church_noelle", church_ruins)
 	metadata.spawns.append({"name":"西双子山 · 孤顶教堂遗址","key":"church_ruins","position":church_ruins.manifest.spawn_godot,
 		"look_direction":church_ruins.manifest.spawn_look_direction_godot,"required_floor_kind":"Structure",
 		"required_source_id":church_ruins.manifest.spawn_source_id,"maximum_search_distance_m":2.,"character_only":true})
@@ -405,6 +409,8 @@ func _build_sunken_archive() -> void:
 func _build_earth_pavilion() -> void:
 	earth_pavilion=EARTH_PAVILION.new();earth_pavilion.world=self;add_child(earth_pavilion)
 	spawn_world_encounter("earth_tingyun", earth_pavilion)
+	spawn_world_encounter("earth_huohuo", earth_pavilion)
+	spawn_world_encounter("earth_yunjin", earth_pavilion)
 	metadata.spawns.append({"name":"东侧覆土庭院 · 入口与中庭","key":"earth_pavilion","position":earth_pavilion.manifest.spawn,
 		"look_direction":earth_pavilion.manifest.look_direction,"required_floor_kind":"Structure",
 		"required_source_id":earth_pavilion.manifest.spawn_source_id,"maximum_search_distance_m":1.,"character_only":true})
@@ -412,6 +418,8 @@ func _build_earth_pavilion() -> void:
 func _build_water_court() -> void:
 	water_court=WATER_COURT.new();add_child(water_court)
 	spawn_world_encounter("water_furina", water_court)
+	spawn_world_encounter("water_nilou", water_court)
+	spawn_world_encounter("water_kokomi", water_court)
 	metadata.spawns.append({"name":"浅水庭院 · 弧形展廊","key":"water_court","position":water_court.manifest.spawn,
 		"look_direction":water_court.manifest.look_direction,"required_floor_kind":"Structure",
 		"required_source_id":water_court.manifest.spawn_source_id,"maximum_search_distance_m":1.,"character_only":true})
