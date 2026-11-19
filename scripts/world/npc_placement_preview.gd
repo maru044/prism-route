@@ -15,6 +15,7 @@ const ORIGINAL_MODELS := {
 const LOAD_DISTANCE := 96.0
 const RELEASE_DISTANCE := 125.0
 const MATCH_DISTANCE := 0.4
+const HIDE_SECONDARY_MODELS := true
 
 var world
 var sites: Array[Marker3D] = []
@@ -33,11 +34,13 @@ func initialize(map: Node3D) -> void:
 	for profile: Dictionary in catalog.profiles:
 		models[profile.id] = profile.model
 	var encounter_positions := {}
-	for duel in get_tree().get_nodes_in_group("world_interactive_npcs"):
-		var id: String = duel.runtime.character_id
-		if not encounter_positions.has(id):
-			encounter_positions[id] = []
-		encounter_positions[id].append(duel.anchor.global_position)
+	var tree: SceneTree = get_tree() if is_inside_tree() else (world.get_tree() if is_instance_valid(world) and world.is_inside_tree() else null)
+	if tree != null:
+		for duel in tree.get_nodes_in_group("world_interactive_npcs"):
+			var id: String = duel.runtime.character_id
+			if not encounter_positions.has(id):
+				encounter_positions[id] = []
+			encounter_positions[id].append(duel.anchor.global_position)
 
 	var menu := review_menu.get_popup() if is_instance_valid(review_menu) else null
 	for region: String in SITES.REGIONS:
@@ -50,12 +53,15 @@ func initialize(map: Node3D) -> void:
 			popup.id_pressed.connect(_review_site)
 		var secondary := region in ["次要点位", SITES.CAPE_VISITORS, SITES.CLIFF_WALKWAY]
 		for row: Array in SITES.REGIONS[region]:
-			var marker := _make_site(row, secondary or (row.size() > 4 and row[4] == true))
+			var is_sec: bool = secondary or (row.size() > 4 and row[4] == true)
+			var marker := _make_site(row, is_sec)
 			marker.set_meta("placement_region", region)
+			marker.set_meta("is_secondary", is_sec)
 			var positions: Array = encounter_positions.get(row[0], [])
 			var has_actor := positions.any(func(point: Vector3) -> bool:
 				return marker.global_position.distance_squared_to(point) <= MATCH_DISTANCE * MATCH_DISTANCE)
 			marker.set_meta("has_world_actor", has_actor or marker.get_meta("reuse_sparkle"))
+			marker.set_meta("hide_model", is_sec and HIDE_SECONDARY_MODELS)
 			if popup != null:
 				popup.add_item(row[1], sites.size())
 			sites.append(marker)
@@ -90,10 +96,12 @@ func _make_site(row: Array, secondary: bool) -> Marker3D:
 	marker.name = id + ("_secondary" if secondary else "")
 	var reuse_sparkle := id == "sparkle" and not secondary
 	if reuse_sparkle:
-		marker.transform = world.initial_ruin.npc_anchor.global_transform
+		if is_instance_valid(world.initial_ruin) and "npc_anchor" in world.initial_ruin and is_instance_valid(world.initial_ruin.npc_anchor):
+			marker.transform = world.initial_ruin.npc_anchor.global_transform if world.initial_ruin.npc_anchor.is_inside_tree() else world.initial_ruin.npc_anchor.transform
 	elif row[2] is NodePath:
-		var anchor: Marker3D = world.npc_waypoint_ruins.get_node(row[2])
-		marker.transform = anchor.global_transform
+		var anchor: Marker3D = world.npc_waypoint_ruins.get_node_or_null(row[2]) if is_instance_valid(world.npc_waypoint_ruins) else null
+		if is_instance_valid(anchor):
+			marker.transform = anchor.global_transform if anchor.is_inside_tree() else anchor.transform
 	else:
 		marker.position = row[2]
 		marker.rotation.y = deg_to_rad(row[3])
@@ -117,13 +125,19 @@ func _process(delta: float) -> void:
 		camera = world.camera
 	if not is_instance_valid(camera):
 		return
+	var cam_pos: Vector3 = camera.global_position if camera.is_inside_tree() else camera.position
 	var nearest: Marker3D
 	var nearest_distance := LOAD_DISTANCE * LOAD_DISTANCE
 	for site: Marker3D in sites:
-		if site.get_meta("has_world_actor"):
+		if site.get_meta("has_world_actor") or site.get_meta("hide_model", false):
+			if actors.has(site):
+				var actor: Node3D = actors[site]
+				actors.erase(site)
+				actor.queue_free()
 			continue
 		var id: String = site.get_meta("character_id")
-		var distance := camera.global_position.distance_squared_to(site.global_position)
+		var site_pos: Vector3 = site.global_position if site.is_inside_tree() else site.position
+		var distance := cam_pos.distance_squared_to(site_pos)
 		var same_as_player: bool = world.character_mode and id == world.character.active_character_id
 		if actors.has(site):
 			if same_as_player or distance > RELEASE_DISTANCE * RELEASE_DISTANCE:
@@ -142,13 +156,16 @@ func _process(delta: float) -> void:
 			return
 		var site: Marker3D = pending.site
 		pending.clear()
+		if site.get_meta("hide_model", false):
+			return
 		if result != ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
 			var packed := ResourceLoader.load_threaded_get(path) as PackedScene
 			var id: String = site.get_meta("character_id")
+			var site_pos: Vector3 = site.global_position if site.is_inside_tree() else site.position
 			if packed == null:
 				failed[path] = true
 				push_warning("Could not load NPC preview " + path)
-			elif camera.global_position.distance_to(site.global_position) < LOAD_DISTANCE and not (world.character_mode and id == world.character.active_character_id):
+			elif cam_pos.distance_to(site_pos) < LOAD_DISTANCE and not (world.character_mode and id == world.character.active_character_id):
 				_instance_actor(site, packed)
 		else:
 			failed[path] = true
