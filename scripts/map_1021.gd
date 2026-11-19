@@ -120,6 +120,13 @@ var detailed_timings_requested := false
 var _world_notice: Label
 var _world_notice_timer: Timer
 
+var npc_lod_enabled: bool = true
+var npc_load_radius: float = 75.0
+var npc_unload_radius: float = 90.0
+var _last_lod_observer_pos: Vector3 = Vector3(INF, INF, INF)
+var _npc_lod_timer: float = 0.0
+const NPC_LOD_CHECK_INTERVAL: float = 0.25
+
 func vec(value: Array) -> Vector3:
 	return Vector3(value[0],value[1],value[2])
 
@@ -278,6 +285,7 @@ func _ready() -> void:
 	test_ready=true
 	planting.finish()
 	if start_planting_editor or "--planting-editor" in OS.get_cmdline_user_args():planting.call_deferred("enter")
+	update_npc_lod(true)
 	print("CURRENT_MAP_READY objects=%d triangles=%d spawns=%d trees=%d" % [metadata.objects,metadata.triangles,resolved_spawns.size(),vegetation.tree_instance_count])
 	if "--island-saddle-preview" in OS.get_cmdline_user_args():
 		set_free(true)
@@ -1238,7 +1246,55 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and free_mode and dragging:
 		camera.rotation.y-=event.relative.x*.003;camera.rotation.x=clampf(camera.rotation.x-event.relative.y*.003,-1.5,1.5)
 
+func get_lod_observer_position() -> Vector3:
+	if character_mode and is_instance_valid(character):
+		return character.global_position
+	elif is_instance_valid(camera) and camera.current:
+		return camera.global_position
+	elif is_instance_valid(camper):
+		return camper.global_position
+	return camera.global_position if is_instance_valid(camera) else Vector3.ZERO
+
+func update_npc_lod(force: bool = false) -> void:
+	if not npc_lod_enabled:
+		return
+	var observer_pos := get_lod_observer_position()
+	if not force and observer_pos.distance_squared_to(_last_lod_observer_pos) < 2.25:
+		return
+	_last_lod_observer_pos = observer_pos
+
+	var peers := get_tree().get_nodes_in_group("world_interactive_npcs")
+	for peer in peers:
+		if not is_instance_valid(peer):
+			continue
+		var anchor: Node3D = peer.get("anchor")
+		var target_pos: Vector3 = anchor.global_position if is_instance_valid(anchor) else (peer.global_position if "global_position" in peer else Vector3.ZERO)
+		var dist := observer_pos.distance_to(target_pos)
+		if peer.has_method("set_npc_active"):
+			var is_active: bool = peer.get("is_npc_active") if "is_npc_active" in peer else true
+			if is_active:
+				if dist > npc_unload_radius:
+					peer.set_npc_active(false)
+			else:
+				if dist <= npc_load_radius:
+					peer.set_npc_active(true)
+
+func set_npc_lod_enabled(enabled: bool) -> void:
+	npc_lod_enabled = enabled
+	var peers := get_tree().get_nodes_in_group("world_interactive_npcs")
+	for peer in peers:
+		if is_instance_valid(peer) and peer.has_method("set_npc_active"):
+			peer.set_npc_active(true)
+	if enabled:
+		update_npc_lod(true)
+
 func _process(delta: float) -> void:
+	if npc_lod_enabled:
+		_npc_lod_timer += delta
+		var cur_obs_pos := get_lod_observer_position()
+		if _npc_lod_timer >= NPC_LOD_CHECK_INTERVAL or cur_obs_pos.distance_squared_to(_last_lod_observer_pos) > 4.0:
+			_npc_lod_timer = 0.0
+			update_npc_lod()
 	if has_llm_panel_open() or (is_instance_valid(settings_panel) and settings_panel.visible):return
 	if construction!=null and construction.active:return
 	if planting!=null and planting.active:return

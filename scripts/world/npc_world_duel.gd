@@ -64,6 +64,32 @@ var cam_pitch: float = 0.2
 var cam_focal_point: Vector3 = Vector3.ZERO
 var is_dragging_cam: bool = false
 var game_progress: RefCounted = null
+var is_npc_active: bool = true
+
+func set_npc_active(p_active: bool) -> void:
+	if not p_active:
+		if is_service_active or is_combat_active or is_ragdoll_active:
+			return
+		if runtime != null and runtime.current_state in [
+			Runtime.EncounterState.INTRO_DIALOGUE,
+			Runtime.EncounterState.COMBAT,
+			Runtime.EncounterState.RESULT_DIALOGUE,
+			Runtime.EncounterState.SETTLEMENT,
+		]:
+			return
+	if is_npc_active == p_active:
+		return
+	is_npc_active = p_active
+	if is_instance_valid(actor):
+		actor.visible = p_active
+		if actor.has_method("set_playback_active"):
+			actor.set_playback_active(p_active)
+	if is_instance_valid(npc_body):
+		npc_body.process_mode = Node.PROCESS_MODE_INHERIT if p_active else Node.PROCESS_MODE_DISABLED
+	if not p_active:
+		if is_instance_valid(prompt):
+			prompt.visible = false
+	set_process(p_active)
 
 func _set_actor_visible(is_vis: bool) -> void:
 	if is_instance_valid(actor):
@@ -214,6 +240,8 @@ func get_active_custom_camera() -> Camera3D:
 func get_interaction_distance() -> float:
 	if is_ragdoll_active or is_service_active or is_combat_active:
 		return INF
+	if not is_npc_active:
+		return INF
 	if not (is_instance_valid(world) and world.test_ready and world.character_mode and not world.free_mode \
 		and not world.has_llm_panel_open() and not world.encounter_ui_active and world.is_world_input_allowed()):
 		return INF
@@ -322,6 +350,8 @@ func _on_phase_changed(phase: int) -> void:
 	hud.set_input_enabled(phase == TurnCombatManager.Phase.PLAYER_INPUT)
 
 func _on_encounter_state_changed(_old: int, state: int) -> void:
+	if state != Runtime.EncounterState.AVAILABLE:
+		set_npc_active(true)
 	hud.visible = (state == Runtime.EncounterState.COMBAT)
 	if state == Runtime.EncounterState.COMBAT:
 		_set_combat_visuals(true)
@@ -489,6 +519,7 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 			world._sync_actor_controls()
 
 func begin_furniture_service_staging(interaction_type: String = "desk_service") -> void:
+	set_npc_active(true)
 	var char_node: Node = world.character if is_instance_valid(world) else null
 	if is_instance_valid(char_node):
 		if "collision_layer" in char_node and char_node.collision_layer != 0:
@@ -830,12 +861,15 @@ func _respawn_npc_after_kill() -> void:
 		anchor.global_rotation.y = deg_to_rad(runtime.spawn_heading)
 
 	_set_actor_visible(true)
+	is_npc_active = true
+	set_process(true)
 	if is_instance_valid(anchor):
 		actor.global_position = anchor.global_position
 		actor.global_rotation.y = anchor.global_rotation.y
 
 	if is_instance_valid(npc_body):
 		npc_body.collision_layer = NPC_SOLID_LAYER
+		npc_body.process_mode = Node.PROCESS_MODE_INHERIT
 
 	if is_instance_valid(runtime):
 		runtime._set_state(Runtime.EncounterState.AVAILABLE)
