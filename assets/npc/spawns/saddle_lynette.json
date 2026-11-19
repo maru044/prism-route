@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "saddle_lynette",
+  "character_id": "lynette",
+  "region": "岛顶曲面遗址",
+  "position": [
+    -258.0,
+    35.1,
+    639.0
+  ],
+  "heading": 105.0,
+  "bound_furniture": []
+}

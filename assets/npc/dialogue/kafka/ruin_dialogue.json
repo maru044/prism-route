@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "kafka_ruin_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "卡芙卡",
+      "text": "好久不见，亲爱的Master。我是星核猎手卡芙卡。在这处道路外侧的草台残廊上，拉一首小提琴，看着海风拂过草尖，格外从容。想让我陪你走完接下来的旅程？先来切磋一场，让我看看你能不能挣脱我的言灵支配吧。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "卡芙卡",
+      "text": "亲爱的Master，今天想听哪一首小提琴曲呢？或者，只是想靠在我身边？",
+      "choices": [
+        {
+          "text": "【关于道路外侧草台残廊】独自坐在这里调小提琴，是在等待谁吗？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请卡芙卡赐教！（初次对决：星核猎手全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "卡芙卡",
+      "text": "等待命运，等待剧本的落幕，或者说，只是在等待你的脚步声。只要能听见你走近的声音，这片荒草地也会变得如同歌剧院般迷人。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "卡芙卡",
+      "text": "亲爱的，你又回到我身边了。自从上次在切磋中败给你，我的言灵丝线全变成了缠绕在两人之间的情网。今天是要切磋枪术，还是想让我用这具成熟的身体，全心为你服侍呢？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "卡芙卡",
+      "text": "主人，卡芙卡随时随地听凭您的支配，任由您随意调弄。",
+      "choices": [
+        {
+          "text": "【关于不知恐惧的心】对你来说，真正的牵挂是什么？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】卡芙卡，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "卡芙卡",
+      "text": "我曾经感受不到恐惧，但现在，如果剧本里没有你的身影，我真的会感到一丝慌乱呢。被你紧紧拥在怀里时，我只想做个全心依赖着你的成熟女人。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "卡芙卡",
+      "text": "亲爱的，言灵的旋律还在耳边萦绕呢，集中精神，不要被丝线缠住四肢哦。",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "卡芙卡",
+      "text": "哈啊，Master，身子被你揉弄得全化作了春泥，只要你一声令下，我全听你的，",
+      "choices": [
+        {
+          "text": "【命令识趣】卡芙卡，解除言灵支配，让我尽情占有你！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】卡芙卡，交织言灵光幕守护防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，卡芙卡当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "卡芙卡",
+      "text": "呵呵，既然主人想要我顺从沉沦，那我就撤去心防，请温柔地铭刻我，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "卡芙卡",
+      "text": "温柔的蛛丝光幕展开，主人的快感防线由我亲自为你稳稳守住！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "卡芙卡",
+      "text": "如此沉稳执着的眼神，那我也定会全心全力回应你的期待！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "卡芙卡",
+      "text": "呀啊！遵命主人，卡芙卡认输了，灵魂要在剧烈的高潮中融化成水了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "卡芙卡",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "卡芙卡",
+      "text": "哈啊，琴弓落在了地上，身子软得倚靠不住石凳，卡芙卡彻底败给Master了。作为败者，猎手任由你支配处置，你想怎么对待我？",
+      "choices": [
+        {
+          "text": "【言灵侍奉】请卡芙卡在道路外侧草台地面上，为我提供优雅从容的猎手近侍服侍。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "卡芙卡",
+      "text": "呵呵，看来这一次还是我的言灵略占上风呢。亲爱的Master先喝口红酒歇歇，稍后我再陪你对弈。",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "卡芙卡",
+      "text": "Master，刚才虽然化作玩偶任您任意摆弄，但重塑醒来的卡芙卡依然深爱着您的支配。请继续享受调教我的时光吧！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "卡芙卡",
+      "text": "哈啊，刚才在草台地面上为您服侍良久，丝质风衣都被汗水浸湿贴在身上了。能为Master带来极致快慰，就是我最大的欢愉。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

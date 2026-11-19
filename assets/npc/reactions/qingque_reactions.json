@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "qingque_reactions",
+  "speaker": "青雀",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖戳弄脸颊和唇角？Master，青雀嘴里的桂花糖都被你偷尝到了啦。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软香甜的小舌被你含弄，喉间溢出慵懒甜腻的娇吟，呼吸都软了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中的津液忍不住流淌，脑海里一片空白，好强烈好舒服的感觉！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "手掌覆在俏皮短衫包裹的双峰前，Master，心跳跳得太快了啦。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接隔着薄布揉捏双峰尖端，酸麻感顺着后腰直冲尾椎骨呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经完全挺立充血了，这种强烈的快感，青雀受不了啦！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "触及身体最娇羞的敏感核，浑身忍不住打了个寒战，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在花蒂打圈按抚，甜热的泉水把安全裤都彻底打湿了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽烈的爱液喷涌决堤，如此剧烈的高潮冲击，青雀要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "摩挲百褶裙下白皙纤细的大腿内侧，触感细腻弹滑。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根部被轻轻揉按，双腿发软不由自主顺从地向两侧分开。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全没有力气了，只能软软任由Master随意摆布索取了！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "cherry_on_top": {
+      "name": "海底捞月·清一色自摸",
+      "damage": 17.0,
+      "text": "杠！自摸清一色！Master，接好本雀雀特制超大号琼玉牌暴击！",
+      "emotion": "smile"
+    },
+    "four_of_a_kind": {
+      "name": "暗杠大顺·牌浪滚滚",
+      "damage": 19.0,
+      "text": "别打扰我摸鱼，赶紧结束打完收工！接好这一波连环牌阵吧！",
+      "emotion": "confident"
+    },
+    "lazy_slacker_yawn": {
+      "name": "偷懒呵欠·娇懒撒娇",
+      "damage": 15.0,
+      "text": "呼啊，加班是绝对不可能加班的，Master能陪我打一把牌再走吗？",
+      "emotion": "smile"
+    }
+  }
+}

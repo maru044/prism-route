@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "miyabi_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "iaido_flash",
+    "fox_blade_storm",
+    "disciplined_stance"
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "firefly_reactions",
+  "speaker": "流萤",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖摩挲娇嫩唇瓣？Master，流萤嘴唇上的蛋糕奶油都被你尝到了啦。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软香甜的小舌被你轻轻含弄，喉间溢出青涩动人的轻吟，呼吸都软了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中的津液忍不住流淌，脑海里一片空白，好强烈好舒服的感觉！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "手掌覆在素雅连衣裙包裹的双峰前，Master，心跳跳得太快了啦。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接隔着薄布揉捏双峰尖端，酸麻感顺着后颈直冲脑髓呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经完全挺立充血了，这种强烈的快感，流萤受不了啦！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "触及身体最娇羞的敏感核，浑身忍不住剧烈抖了一下，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在敏感核打圈按抚，甜热的泉水把安全裤都彻底打湿了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽烈的爱液喷涌决堤，如此剧烈的高潮冲击，流萤要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "摩挲短裙下白皙纤细的大腿内侧，触感细腻弹滑。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根部被轻轻揉按，双腿发软不由自主顺从地向两侧分开。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全没有力气了，只能软软任由Master随意摆布索取了！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "firefly_flame": {
+      "name": "格拉默烈焰·萤火之誓",
+      "damage": 17.0,
+      "text": "愿流萤点燃希望之火！Master，接好这一招凝聚我全部心意的一击！",
+      "emotion": "confident"
+    },
+    "sam_thrust": {
+      "name": "熔火突进·炽烈冲锋",
+      "damage": 19.0,
+      "text": "燃尽一切阻碍！哪怕身患失熵症，我也要为你战斗到最后一刻！",
+      "emotion": "serious"
+    },
+    "oak_cake_sharing": {
+      "name": "橡木蛋糕卷·少女甜笑",
+      "damage": 15.0,
+      "text": "Master，尝尝我分给你的橡木蛋糕卷吧，甜甜的，吃完就会充满力量哦！",
+      "emotion": "smile"
+    }
+  }
+}

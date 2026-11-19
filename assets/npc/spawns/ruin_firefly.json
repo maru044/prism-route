@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "ruin_firefly",
+  "character_id": "firefly",
+  "region": "初始神殿与幽径",
+  "position": [
+    -175.0,
+    1.6,
+    894.0
+  ],
+  "heading": 0.0,
+  "bound_furniture": []
+}

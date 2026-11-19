@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "avatar_profile_id": "eula",
+  "model_resource": "res://assets/characters/roster/eula/eula.vrm",
+  "idle_motion": "res://assets/characters/roster/motions/koikatsu_idle.tres",
+  "material_id": "eula",
+  "environment_collision_enabled": false
+}

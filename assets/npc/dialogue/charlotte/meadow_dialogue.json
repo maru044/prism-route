@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "charlotte_meadow_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "夏洛蒂",
+      "text": "你好！Master！我是枫丹蒸汽鸟报社特约记者夏洛蒂！在这处下行道路附近的低地残廊边，正适合蹲点抓拍路过的冒险家、整理采访速记！想和我一起追寻全岛最具爆炸性的头条新闻？先来一场身心切磋，让我检验你的敏锐度吧！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "夏洛蒂",
+      "text": "Master，今天有什么重磅新闻线索？夏洛蒂随时准备按动快门！",
+      "choices": [
+        {
+          "text": "【关于下行道路低地残廊】蹲在这里抓拍路过行人，采访顺利吗？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请夏洛蒂记者赐教！（初次对决：报社记者全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "夏洛蒂",
+      "text": "这里是从中庭通往草甸的主干道交汇点，来往的各种奇异角色特别多！温克尔先生已经记录下了上百张精彩的独家照片，这期的头版绝对大卖！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "夏洛蒂",
+      "text": "Master！你来找我啦！上次在切磋中被你拍下失败的特写后，我的身子只要被你碰到，就会像过曝的底片一样发烫发软。今天是要切磋身手，还是要夏洛蒂乖乖为你提供贴身侍奉呢？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "夏洛蒂",
+      "text": "主人，夏洛蒂随时听凭您的差遣，独家头条全由您说了算！",
+      "choices": [
+        {
+          "text": "【关于最想报道的特写】在夏洛蒂的镜头里，最想独占的头条是什么？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】夏洛蒂，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "夏洛蒂",
+      "text": "当然是Master凝视我时那深情炽热的特写啦！只要在您的怀里，连相机都可以放在一边，只想全心全意做您最乖巧温顺的小记者！",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "夏洛蒂",
+      "text": "Master，温克尔先生还在对焦呢，注意走位，小心被闪光灯晃晕！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "夏洛蒂",
+      "text": "哈啊，Master，身子被你揉得化成了水，只要你一句话，我全部顺从，",
+      "choices": [
+        {
+          "text": "【命令识趣】夏洛蒂，放下相机镜头，任由我尽情采撷！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】夏洛蒂，启动特写闪光稳住防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，夏洛蒂当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "夏洛蒂",
+      "text": "唔，既然是主人的命令，那我就收起留影机走神一下，请对我温柔点呀，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "夏洛蒂",
+      "text": "特写闪光护盾展开！主人的快感防线由夏洛蒂为你牢牢稳固在安全阈值！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "夏洛蒂",
+      "text": "眼神很有记者敏锐度嘛，那我可要把全部闪光冲击都拿出来了！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "夏洛蒂",
+      "text": "呀啊！遵命主人，夏洛蒂认输了，头条要在高潮热浪里彻底融化绝顶了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "夏洛蒂",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "夏洛蒂",
+      "text": "呜，留影机脱手，速记本散落一地，双腿软得只能跌坐在草地上，夏洛蒂彻底输给Master啦。作为败者任由你处置，你想怎么对待我？",
+      "choices": [
+        {
+          "text": "【头条侍奉】请夏洛蒂在低地残廊地面上，为我提供敏锐可爱的报社记者近侍服侍。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "夏洛蒂",
+      "text": "哇哈哈！这期头条由夏洛蒂成功拿下！Master别灰心，喝口甜水歇歇，稍后我们再切磋！",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "夏洛蒂",
+      "text": "Master，刚才虽然化作玩偶任您任意摆弄，但重塑后的夏洛蒂依然最喜欢追随在您身后了。请继续宠溺我吧！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "夏洛蒂",
+      "text": "哈啊，刚才在残廊地面上为您侍奉良久，可爱的记者短裙都被汗水浸透了呢。能让Master开心快慰，夏洛蒂心里甜滋滋的。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "bronya_reactions",
+  "speaker": "布洛妮娅",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖摩挲端庄红唇？Master，大守护者的唇今天只属于你一人。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软香甜的舌尖被你探入深吻，喉间溢出端庄难耐的娇吟，呼吸紊乱了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！津液完全失守溢出，大守护者的仪态彻底瓦解，好充盈的甜意！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "手掌覆在典雅军礼服包裹的丰挺胸前，Master，心跳跳得太快了。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接隔着薄衬衣捻揉双峰成熟顶端，酸麻感顺着脊椎直冲脑海呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经完全挺立充血了，这种强烈的征服快感，布洛妮娅受不了啦！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "触及守护者最羞涩的私密圣所，身体猛然绷直了，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在敏感核打圈按压，温热充沛的花蜜把安全裤都完全湿透了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽热的爱液狂乱涌出，如此剧烈的高潮冲击，布洛妮娅要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "摩挲军礼长裙下白皙丰腴的大腿内侧，触感温润柔滑。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根部被轻轻揉按，双腿发软不由自主顺从地向两侧分开。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全没有力气了，只能软软任由Master随意摆布索取了！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "wind_of_belobog": {
+      "name": "贝洛伯格之潮·统帅重击",
+      "damage": 17.0,
+      "text": "风暴列队，前进！Master，感受贝洛伯格筑城者的坚定信念吧！",
+      "emotion": "confident"
+    },
+    "march_of_the_guard": {
+      "name": "银鬃进军·穿甲火炮",
+      "damage": 19.0,
+      "text": "以大守护者之名，全力开火！接好这记穿透风雪的炽烈重击！",
+      "emotion": "serious"
+    },
+    "guardian_resolve": {
+      "name": "守护誓约·优雅号令",
+      "damage": 15.0,
+      "text": "我的意志不会动摇，切磋较量，请展现你真正的实力！",
+      "emotion": "smile"
+    }
+  }
+}

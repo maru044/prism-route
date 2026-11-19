@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "atrium_miyabi",
+  "character_id": "miyabi",
+  "region": "椭圆中庭",
+  "position": [
+    -391.96,
+    35.0,
+    818.383
+  ],
+  "heading": -135.0,
+  "bound_furniture": []
+}

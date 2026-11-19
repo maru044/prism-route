@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "jingliu_reactions",
+  "speaker": "镜流",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖摩挲清冷如冰的唇角？Master，前代剑首的朱唇今天任由你采撷。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软甘甜的舌尖被你探入深吻，喉间溢出清冷动人的轻吟，呼吸全乱了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！津液完全失守溢出，剑首孤高的矜持彻底瓦解，好销魂的快意！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "掌心覆在开襟长裙包裹的雪白酥胸上，Master，掌温让寒冰都融化了。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接隔着薄绸捻揉双峰顶端，酸麻的电流感顺着脊椎直冲脑髓深处。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经完全挺立充血了，这种强烈的支配快感，镜流受不了啦！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "触及剑首最隐秘的私密冰莲，娇躯猛然剧烈战栗，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在敏感核打圈按压，浓郁温热的花蜜早已将丝织衬裙完全浸透。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽热的体液决堤喷涌，如此可怕的高潮冲击，镜流要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "摩挲开衩长裙下雪白修长的大腿内侧，触感温润微凉。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根部被轻轻揉按，双腿发软不由自主顺从地向两侧分开迎合。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全没有力气了，只能软软大敞任凭Master任意驰骋索取！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "transcendent_flash": {
+      "name": "昙华生灭·月读无间",
+      "damage": 17.0,
+      "text": "月光如炼，冰封千山！Master，见识一下罗浮前代剑首超越极限的一剑吧！",
+      "emotion": "serious"
+    },
+    "crescent_frost": {
+      "name": "朔月凝霜·万刃断绝",
+      "damage": 19.0,
+      "text": "剑锋所指，万物归寂。接下这记冰裂神魂的极寒冲击！",
+      "emotion": "confident"
+    },
+    "blindfolded_serenity": {
+      "name": "覆目冥思·寒梅微香",
+      "damage": 15.0,
+      "text": "即便双目蒙纱，世间剑意与你的心跳，我亦感知得一清二楚。",
+      "emotion": "serious"
+    }
+  }
+}

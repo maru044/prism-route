@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "atrium_seele",
+  "character_id": "seele",
+  "region": "椭圆中庭",
+  "position": [
+    -380.0,
+    35.0,
+    813.0
+  ],
+  "heading": -60.0,
+  "bound_furniture": []
+}

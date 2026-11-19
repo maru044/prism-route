@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "firefly_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "firefly_flame",
+    "sam_thrust",
+    "oak_cake_sharing"
+  ]
+}

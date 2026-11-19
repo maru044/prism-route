@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "encounter_id": "ring_jingliu",
+  "character_id": "jingliu",
+  "spawn_id": "ring_jingliu",
+  "flow_behavior_id": "standard_duel",
+  "dialogue_bundle_id": "jingliu_ring_bundle",
+  "combat_profile_id": "jingliu_combat",
+  "reaction_profile_id": "jingliu_reactions",
+  "motion_profile_id": "jingliu_motions",
+  "supported_entry_points": [
+    "start",
+    "unlocked_start",
+    "mid_battle_manual",
+    "combat_manual_unlocked",
+    "victory_node",
+    "defeat_node",
+    "post_spare",
+    "post_kill"
+  ]
+}

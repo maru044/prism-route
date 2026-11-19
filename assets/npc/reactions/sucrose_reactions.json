@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "sucrose_reactions",
+  "speaker": "砂糖",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖按在娇羞唇瓣上？Master，砂糖的嘴唇平时可不给别人碰呢。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软香甜的小舌被您轻轻含弄，喉间溢出急促难耐的娇吟，呼吸全乱了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中的津液忍不住流淌，兽耳少女的矜持彻底瓦解，好销魂的快意！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "手掌覆在学者法袍包裹的双峰前，Master，心跳跳得太激烈了啦。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接隔着薄布揉捏双峰尖端，酸麻感顺着后颈直窜兽耳尖端呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经完全挺立充血了，这种强烈的快感，砂糖受不了啦！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "触及身体最娇羞的敏感核，浑身忍不住剧烈抖了一下，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在敏感核打圈按抚，甜热的泉水把安全裤都彻底打湿了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽热的爱液喷涌决堤，如此剧烈的高潮冲击，砂糖要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "摩挲开衩短裙下白皙纤细的大腿内侧，触感细腻弹滑。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根部被轻轻揉按，双腿发软不由自主顺从地向两侧分开。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全没有力气了，只能软软任由Master随意摆布索取了！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "anemo_hypostasis_small": {
+      "name": "风灵创生·六三零八",
+      "damage": 17.0,
+      "text": "小形风灵，起动！Master，小心不要被风灵聚合的微型气流卷起来哦！",
+      "emotion": "shy"
+    },
+    "isoma_sweet_flower": {
+      "name": "七五同构·甜甜花爆发",
+      "damage": 19.0,
+      "text": "这是改良四倍体甜甜花的能量结晶！请接好这一记炼金冲击！",
+      "emotion": "confident"
+    },
+    "shy_ear_flutter": {
+      "name": "兽耳微颤·怯生低头",
+      "damage": 15.0,
+      "text": "不要一直盯着我的耳朵看啦，我只是个普通的生物炼金学者而已。",
+      "emotion": "shy"
+    }
+  }
+}

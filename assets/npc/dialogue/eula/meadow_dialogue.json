@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "eula_meadow_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "优菈",
+      "text": "我是西风骑士团游击小队队长、浪花骑士优菈·劳伦斯。在这处北部泻湖草岸边，湖面微澜，正适合擦拭双手剑与练习祭礼之舞。若想让我伴你远征，先在切磋中证明你能承受住劳伦斯血脉的剑舞吧！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "优菈",
+      "text": "有什么需要我出手的？先说好，要是敢违背约定，这个仇我可是要记一辈子的！",
+      "choices": [
+        {
+          "text": "【关于北部泻湖草岸残廊】坐在这里享受湖畔微风，心情很平静吧？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请浪花骑士赐教！（初次对决：浪花骑士全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "优菈",
+      "text": "没有蒙德城里那些偏见与防备的目光，只有清澈的湖水与微风拂过水草的沙沙声。在这里起舞，心神便如坚冰般纯粹。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "优菈",
+      "text": "Master！你又跑来招惹我了！上次在对决中败给你，我的身体只要被你抱住，坚冰剑意就会化作羞耻的热气。今天是要切磋剑技，还是要优菈端庄顺从地在湖畔为你侍奉？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "优菈",
+      "text": "主人，优菈任由您支配调弄，但这个甜美的仇，我一定会牢牢记住！",
+      "choices": [
+        {
+          "text": "【关于劳伦斯的傲娇与柔情】优菈心里真正想要记下的仇是什么？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】优菈，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "优菈",
+      "text": "笨蛋！所谓的记仇，不过是我用来掩饰害羞的借口罢了。每一次被你拥在怀里轻揉腰肢，我都想把这份心跳的仇永远记在心底，一辈子都不放手！",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "优菈",
+      "text": "Master，双手剑势尚未尽展，集中精神，接招吧！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "优菈",
+      "text": "哈啊，Master，身子被你揉弄得全化作了软泥，只要你一句话，我全部顺从，",
+      "choices": [
+        {
+          "text": "【命令识趣】优菈，收回寒冰剑意，任由我肆意征服！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】优菈，展开坚冰光环庇护防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，优菈当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "优菈",
+      "text": "呜，真是不讲理的坏家伙，那我就撤去冰霜守备，请动作温柔一点，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "优菈",
+      "text": "坚冰之印庇护！主人的快感防线由优菈亲自为你牢牢锁定在安全界限！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "优菈",
+      "text": "端正坚毅的眼神，那我也定会全心全力回应你的锋芒！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "优菈",
+      "text": "呀啊！遵命主人，优菈彻底认输了，身体要在高潮热浪里融化绝顶了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "优菈",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "优菈",
+      "text": "哈啊，重剑脱手，双腿软绵绵地跌跪在草滩上，优菈彻底输给Master了。作为败者，浪花骑士随你处置，你想怎么惩罚我？",
+      "choices": [
+        {
+          "text": "【浪花侍奉】请优菈在泻湖草岸地面上，为我提供傲娇端庄的浪花骑士近侍服侍。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "优菈",
+      "text": "哼！看来这一局是我劳伦斯之剑赢下了！Master别沮丧，喝口冰镇麦茶，稍后再来向我复仇吧！",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "优菈",
+      "text": "Master，刚才虽然变成软绵绵的玩偶任您任意摆弄，但重塑后的优菈依然只属于您一人。请继续惩处我吧！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "优菈",
+      "text": "哈啊，刚才在湖畔草滩上为您侍奉良久，单薄的骑士紧身衣都被汗水浸透了呢。能让Master满意舒畅，优菈心甘情愿。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

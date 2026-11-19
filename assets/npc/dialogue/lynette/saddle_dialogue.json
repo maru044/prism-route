@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "lynette_saddle_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "琳妮特",
+      "text": "我是琳妮特，枫丹魔术助手。在这条步行带边喝红茶吃饼干，周围很安静，进入低功耗待机模式。若想让我协助你，请在切磋中证明你能跟上猫咪的灵动脚步。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "琳妮特",
+      "text": "Master，有什么需要协助的？只要功耗允许，我都会执行。",
+      "choices": [
+        {
+          "text": "【关于南部台地步行带】坐在这里安静喝红茶，感觉舒适吗？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请琳妮特赐教！（初次对决：魔术助手全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "琳妮特",
+      "text": "没有林尼的大嗓门魔术介绍，也没有嘈杂的掌声，只有风吹过草叶的声音。在这里喝一杯温热的红茶，身心都能完全放松。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "琳妮特",
+      "text": "Master，你来了。上次切磋输给你后，我的猫娘感官全被你激活了。只要你稍微捏一下我的尾巴尖，我就会无力地倒在地上。今天是要切磋身手，还是想要我乖乖听命服侍？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "琳妮特",
+      "text": "主人，琳妮特进入全顺从侍奉模式，请下达指令。",
+      "choices": [
+        {
+          "text": "【关于猫耳与猫尾的反应】在被抱住的时候，猫尾巴会诚实地说话吗？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】琳妮特，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "琳妮特",
+      "text": "尾巴轻轻卷在你的手腕上，代表功耗过热与心跳加速。虽然嘴上不说，但被你抱在怀里抚摸猫耳，是全天下最舒服的事情。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "琳妮特",
+      "text": "Master，魔术障眼法尚未结束，请集中精神。",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "琳妮特",
+      "text": "哈啊，Master，功耗过热无法自控了，只要你吩咐，我什么都依你，",
+      "choices": [
+        {
+          "text": "【命令识趣】琳妮特，切换至待机模式，任由我尽情采撷！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】琳妮特，展开惊奇魔术盾护住防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，琳妮特当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "琳妮特",
+      "text": "呼，收到主人指令，防御力降为最低，请动作温柔一些，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "琳妮特",
+      "text": "魔术防御箱展开，主人的快感防线由我为您牢牢稳固！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "琳妮特",
+      "text": "专注的神情，那我也会全力展现魔术剑术。",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "琳妮特",
+      "text": "呀啊！遵命主人，琳妮特认输了，系统要在高潮浪潮里宕机绝顶了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "琳妮特",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "琳妮特",
+      "text": "哈啊，细剑落在一旁，猫尾巴软软瘫在草地上，我彻底败给Master了。作为败者任凭处置，你想对我做什么？",
+      "choices": [
+        {
+          "text": "【猫影侍奉】请琳妮特在台地步行带地面上，为我提供无口低功耗的猫娘近侍服侍。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "琳妮特",
+      "text": "魔术成功揭幕，这局是我赢了。Master请喝口红茶，稍后我们再切磋。",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "琳妮特",
+      "text": "Master，刚才虽然变成无声的玩偶任您任意摆弄，但重塑后的琳妮特依然是您专属的猫娘。请继续宠溺我吧！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "琳妮特",
+      "text": "哈啊，刚才在步行带地面上为您侍奉良久，单薄的魔术礼服都被汗水湿透了呢。能让Master满意，琳妮特很幸福。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

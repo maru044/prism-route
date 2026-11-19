@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "meadow_lumine",
+  "character_id": "lumine",
+  "region": "开阔草甸",
+  "position": [
+    -100.36,
+    7.98,
+    351.08
+  ],
+  "heading": -90.0,
+  "bound_furniture": []
+}

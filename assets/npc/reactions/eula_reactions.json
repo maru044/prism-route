@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "eula_reactions",
+  "speaker": "优菈",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖摩挲端庄高傲的红唇？Master，浪花骑士的朱唇今天任由你探索。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软香甜的小舌被你探入深吻，喉间溢出傲娇外壳崩解后的甜美娇喘。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中的津液完全失守溢出，浪花骑士的矜持彻底瓦解，好销魂的快意！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "手掌覆在紧身骑士服包裹的饱满双峰前，Master，心跳跳得太激烈了啦。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接隔着薄布捻揉双峰顶端，酸麻感顺着后背直窜头顶百会呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经完全挺立充血了，这种强烈的快感，优菈受不了啦！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "触及坚冰骑士最羞耻的敏感核，浑身忍不住剧烈抖了一下，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在花蒂打圈按抚，甜热的泉水把连体紧身衣内衬都彻底打湿了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽热的爱液喷涌决堤，如此剧烈的高潮冲击，优菈要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "摩挲开衩紧身衣下雪白修长的大腿内侧，触感紧致温润。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根部被轻轻揉按，双腿发软不由自主顺从地向两侧分开。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全没有力气了，只能软软任由Master随意摆布索取了！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "vortex_tidecaller": {
+      "name": "潮卷冰削·残心重剑",
+      "damage": 17.0,
+      "text": "以冰霜为印，起舞吧！Master，可别被这柄沉重的双手剑压垮了脊梁！",
+      "emotion": "confident"
+    },
+    "glacial_illumination": {
+      "name": "凝浪之光·坚冰降临",
+      "damage": 19.0,
+      "text": "剑舞既成，坚冰裂空！这个仇，就用这一记终极冰剑来清算！",
+      "emotion": "serious"
+    },
+    "vengeance_pout": {
+      "name": "记仇轻哼·傲娇白眼",
+      "damage": 15.0,
+      "text": "哼，胆敢这样直视本骑士，这个仇我记下了！切磋时我可绝不会放水！",
+      "emotion": "shy"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "avatar_profile_id": "fu_xuan",
+  "model_resource": "res://assets/characters/roster/fu_xuan/fu_xuan.vrm",
+  "idle_motion": "res://assets/characters/roster/motions/koikatsu_idle.tres",
+  "material_id": "fu_xuan",
+  "environment_collision_enabled": false
+}

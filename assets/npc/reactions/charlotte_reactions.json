@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "charlotte_reactions",
+  "speaker": "夏洛蒂",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖按在娇俏唇瓣上？Master，记者的朱唇今天任由你探索采访。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软香甜的小舌被你轻轻含弄，喉间溢出急促难耐的娇吟，呼吸全乱了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中的津液忍不住流淌，记者的自尊彻底瓦解，好销魂的快意！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "手掌覆在记者制服包裹的双峰前，Master，心跳跳得太激烈了啦。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接隔着薄布揉捏双峰尖端，酸麻感顺着后背直窜头顶百会呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经完全挺立充血了，这种强烈的快感，夏洛蒂受不了啦！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "触及身体最娇羞的敏感核，浑身忍不住剧烈抖了一下，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在敏感核打圈按抚，甜热的泉水把安全裤都彻底打湿了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽热的爱液喷涌决堤，如此剧烈的高潮冲击，夏洛蒂要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "摩挲短裙下白皙纤细的大腿内侧，触感细腻弹滑。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根部被轻轻揉按，双腿发软不由自主顺从地向两侧分开。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全没有力气了，只能软软任由Master随意摆布索取了！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "mr_verite_snapshot": {
+      "name": "温克尔先生·特写快门",
+      "damage": 17.0,
+      "text": "头条独家照片，定格！Master，在蒸汽鸟报社的头版镜头前露出最帅气的笑容吧！",
+      "emotion": "smile"
+    },
+    "front_page_scoop": {
+      "name": "冰霜闪光·轰动报道",
+      "damage": 19.0,
+      "text": "闪光灯连闪，爆料连发！接下这记直击热点的冰霜闪光重炮！",
+      "emotion": "confident"
+    },
+    "journalist_curiosity": {
+      "name": "记者追问·好奇心动",
+      "damage": 15.0,
+      "text": "请问Master，面对如此可爱认真的专属记者，你的心跳有加速吗？",
+      "emotion": "smile"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "avatar_profile_id": "lynette",
+  "model_resource": "res://assets/characters/roster/lynette/lynette.vrm",
+  "idle_motion": "res://assets/characters/roster/motions/koikatsu_idle.tres",
+  "material_id": "lynette",
+  "environment_collision_enabled": false
+}

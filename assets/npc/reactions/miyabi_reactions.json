@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "miyabi_reactions",
+  "speaker": "星见雅",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖抚过紧抿的唇角？Master，女剑士的唇今天只为您绽放。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软端庄的舌尖被你探入深吻，喉间不由自主溢出娇弱动情的喘息。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！津液完全失守溢出，武道课长的威严彻底瓦解，好销魂的快感！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "掌心覆在武士皮甲包裹的饱满双峰上，Master，掌温好炽热。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接隔着薄内衬捻弄双峰顶端，酸麻感顺着脊椎直冲狐耳尖端呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经完全挺立充血了，这种强烈的支配快感，星见雅受不了啦！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "触及剑士最私密的深处花核，身体猛然绷紧了，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在敏感核打圈按压，浓郁温热的花蜜早已将皮裤内衬完全浸透。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽热的体液狂澜般喷泄，如此可怕的高潮冲击，星见雅要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "摩挲长筒靴上方结实紧绷的雪白大腿内侧，触感温热而饱满。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根被轻轻拿捏，尾椎骨泛起酥麻，狐尾不由自主缠绕在您的腰间。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全失了力气，只能软软大敞任凭Master任意驰骋索取！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "iaido_flash": {
+      "name": "虚空一文字·居合拔刀斩",
+      "damage": 17.0,
+      "text": "刀鸣如霜，断绝一切杂念！Master，请接下对空六课课长倾注全力的一刀！",
+      "emotion": "serious"
+    },
+    "fox_blade_storm": {
+      "name": "狐火风暴·千刃纷飞",
+      "damage": 19.0,
+      "text": "刀光化作漫天烈风！在居合的极境中，感受破空碎裂的压迫感吧！",
+      "emotion": "confident"
+    },
+    "disciplined_stance": {
+      "name": "武道正心·狐耳微动",
+      "damage": 15.0,
+      "text": "哪怕只是切磋，我也定会以最端正的剑道之心全力应对，请指教！",
+      "emotion": "serious"
+    }
+  }
+}

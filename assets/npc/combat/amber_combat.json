@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "amber_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "baron_bunny_dance",
+    "fiery_rain",
+    "gliding_champion_cheer"
+  ]
+}

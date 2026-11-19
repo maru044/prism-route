@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "fischl_terrace_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "菲谢尔",
+      "text": "哼哼，狂妄的旅人！吾乃幽夜净土的主宰、断罪之皇女菲谢尔！在这处九十五米的高台之巅俯瞰山川，正好吻合吾之至高神圣！若想得蒙吾之恩赐伴吾同行，先在断罪的试炼中证明你的灵魂器量吧！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "菲谢尔",
+      "text": "凡人Master，有何烦忧欲呈递于本皇女御前？",
+      "choices": [
+        {
+          "text": "【关于高台观景平台】站在这里俯瞰全岛山川，很有皇女的气势呢！",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请断罪皇女赐教！（初次对决：皇女全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "菲谢尔",
+      "text": "那是自然！天穹之雷霆、幽夜之极境，皆在此处与吾之左眼产生共鸣！在此处向远方宣告命运，乃是至高无上的圣仪！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "菲谢尔",
+      "text": "Master！你又来打扰本皇女布道了！上次在审判决斗中败给你之后，本皇女的圣躯只要被你触碰，就会像融化的焦糖一样发软。今天是要切磋雷法，还是要本皇女端正顺从地侍奉你呢？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "菲谢尔",
+      "text": "主人，菲谢尔身心皆臣服于您，请降下您的旨意！",
+      "choices": [
+        {
+          "text": "【关于皇女的面纱之下】在没有旁人的时候，小艾咪愿意卸下伪装吗？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】菲谢尔，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "菲谢尔",
+      "text": "呀！不准喊那个名字啦！唔，不过既然是Master，那我就偷偷告诉你，被你温柔抱在怀里揉抚双肩的时候，我比做皇女还要幸福一千倍！",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "菲谢尔",
+      "text": "凡人Master，断罪之雷霆尚未歇止，集中精神，接招吧！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "菲谢尔",
+      "text": "哈啊，Master，雷电全变成身子里的酥麻热浪了，只要你开口，我全都听你的，",
+      "choices": [
+        {
+          "text": "【命令识趣】菲谢尔，收敛雷光威严，任由我尽情调教！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】菲谢尔，布下幽夜庇护稳住防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，菲谢尔当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "菲谢尔",
+      "text": "呜，既然是主人的敕令，那本皇女就收回神罚结界，请对我温柔一些呀，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "菲谢尔",
+      "text": "幽夜圣盾展开！主人的快感防线由本皇女亲自为你守死！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "菲谢尔",
+      "text": "眼神很有英雄气概嘛，那本皇女也要拿出全部幽夜威能了！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "菲谢尔",
+      "text": "呀啊！遵命主人，菲谢尔彻底认输，皇女要在狂暴高潮里绝顶融化了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "菲谢尔",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "菲谢尔",
+      "text": "呜，弓弩脱手，眼罩也歪了，双腿软得只能跌坐着，本皇女竟然完全输给你了！既然打输了，吾之身躯听凭您的处置，你想对我做什么？",
+      "choices": [
+        {
+          "text": "【皇女侍奉】请菲谢尔在观景平台侧地面上，为我提供华丽傲娇的断罪皇女近侍服侍。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "菲谢尔",
+      "text": "哈哈！断罪之羽翼宣告了吾之全胜！凡人Master莫要气馁，喝口幽夜红茶，稍后再来朝觐本皇女吧！",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "菲谢尔",
+      "text": "Master，刚才虽然变成毫无反抗力的玩偶任您任意摆弄，但重塑后的菲谢尔依然全心认你为主。请继续宠溺我吧！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "菲谢尔",
+      "text": "哈啊，刚才在平台上为您侍奉良久，哥特蕾丝礼服都被汗水浸透了呢。能让Master满意，菲谢尔很开心啦。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

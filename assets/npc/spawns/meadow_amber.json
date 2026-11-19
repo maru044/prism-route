@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "meadow_amber",
+  "character_id": "amber",
+  "region": "开阔草甸",
+  "position": [
+    248.36,
+    16.26,
+    -31.08
+  ],
+  "heading": 90.0,
+  "bound_furniture": []
+}

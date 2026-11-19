@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "meadow_charlotte",
+  "character_id": "charlotte",
+  "region": "开阔草甸",
+  "position": [
+    -321.491,
+    8.09,
+    440.018
+  ],
+  "heading": -45.0,
+  "bound_furniture": []
+}

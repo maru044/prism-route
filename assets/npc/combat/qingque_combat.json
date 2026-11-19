@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "qingque_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "cherry_on_top",
+    "four_of_a_kind",
+    "lazy_slacker_yawn"
+  ]
+}

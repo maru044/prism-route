@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "ruin_kafka",
+  "character_id": "kafka",
+  "region": "初始神殿与幽径",
+  "position": [
+    -895.509,
+    35.06,
+    1149.982
+  ],
+  "heading": 135.0,
+  "bound_furniture": []
+}

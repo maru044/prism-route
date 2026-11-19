@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "shenhe_reactions",
+  "speaker": "申鹤",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖摩挲出尘如雪的薄唇？Master，申鹤的朱唇今天任由你采撷。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软清冽的小舌被你探入深吻，喉间溢出仙家弟子动情的娇喘，呼吸全乱了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！津液完全失守溢出，清冷出尘的威严彻底瓦解，好销魂的快意！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "掌心覆在仙家紧身衣包裹的饱满酥胸上，Master，掌温好炽热。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接隔着薄布捻揉双峰顶端，酸麻的电流感直冲尾椎骨呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经完全挺立充血了，这种强烈的支配快感，申鹤受不了啦！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "触及红绳深处最私密的要害禁区，娇躯猛然剧烈战栗，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在花蒂打圈按抚，浓郁温热的花蜜早已将紧身连体衣完全浸透。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽热的体液决堤喷涌，如此可怕的高潮冲击，申鹤要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "摩挲开衩紧身衣下雪白修长的大腿内侧，触感温润微凉如玉。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根部被轻轻揉按，双腿发软不由自主顺从地向两侧分开迎合。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全没有力气了，只能软软大敞任凭Master任意驰骋索取！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "spring_spirit_summoning": {
+      "name": "仰灵昭向·箓符凝霜",
+      "damage": 17.0,
+      "text": "借箓符之力，化冰灵之影！Master，请接下仙家弟子倾注全力的一击！",
+      "emotion": "serious"
+    },
+    "divine_maiden_deliverance": {
+      "name": "神女劈观·寒霜破空",
+      "damage": 19.0,
+      "text": "红绳难系心中热意，霜刃出岫，破尽邪障！接招吧！",
+      "emotion": "confident"
+    },
+    "red_string_bond": {
+      "name": "红绳系心·出尘对视",
+      "damage": 15.0,
+      "text": "师父说我红绳锁心难以动情，但面对你时，心底总会泛起阵阵微澜。",
+      "emotion": "shy"
+    }
+  }
+}

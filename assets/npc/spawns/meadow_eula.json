@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "meadow_eula",
+  "character_id": "eula",
+  "region": "开阔草甸",
+  "position": [
+    -46.92,
+    1.37,
+    -549.64
+  ],
+  "heading": 0.0,
+  "bound_furniture": []
+}

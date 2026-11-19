@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "atrium_qingque",
+  "character_id": "qingque",
+  "region": "椭圆中庭",
+  "position": [
+    -417.0,
+    63.0,
+    910.0
+  ],
+  "heading": 90.0,
+  "bound_furniture": []
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "ring_jingliu",
+  "character_id": "jingliu",
+  "region": "上层环庭",
+  "position": [
+    -917.0,
+    68.04,
+    1110.0
+  ],
+  "heading": -45.0,
+  "bound_furniture": []
+}

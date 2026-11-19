@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "atrium_bronya",
+  "character_id": "bronya",
+  "region": "椭圆中庭",
+  "position": [
+    -301.0,
+    45.8,
+    848.5
+  ],
+  "heading": -91.0,
+  "bound_furniture": []
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "fischl_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "nightrider_summon",
+    "midnight_phantasmagoria",
+    "chuunibyou_pose"
+  ]
+}

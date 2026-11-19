@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "kafka_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "twilight_trill",
+    "midnight_caress",
+    "violin_tune"
+  ]
+}

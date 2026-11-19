@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "lumine_meadow_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "荧",
+      "text": "你好，Master！我是旅行者荧。在这处中央低地坡岸残廊边，正适合驻足查阅全岛路线、分享彼此见闻。想与我一同开拓前路？先在切磋中让我看看你跨越万界的勇气与实力吧！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "荧",
+      "text": "Master，今天想去哪个方向探索？荧随时准备好拔剑同行了！",
+      "choices": [
+        {
+          "text": "【关于中央低地坡岸残廊】站在这里查阅全岛路线，有什么规划吗？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请荧赐教！（初次对决：异界旅行者全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "荧",
+      "text": "这里处于整座岛屿的咽喉枢纽，向北可通泻湖，向南可达海湾，向东能登临中庭。看着地图上的每一个标记点，都让人对未知的冒险满怀期待！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "荧",
+      "text": "Master！你来找荧了！上次在对决中败给你之后，只要你一触碰我的腰身，无属性元素力就会化作甜软的温热。今天是要切磋剑技，还是要荧乖乖为你提供贴身服侍呢？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "荧",
+      "text": "主人，荧随时听候您的支配，愿做您专属的忠诚伴侣！",
+      "choices": [
+        {
+          "text": "【关于漫长旅途的终点】在无数个星海世界之后，荧最想停留的港湾在哪里？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】荧，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "荧",
+      "text": "以前我总在追寻血亲的身影，但只要停留在Master身边，被你紧紧牵住手、温柔抱在怀中，我就觉得找到了真正的心灵归宿。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "荧",
+      "text": "Master，荒星与风刃还在流转，集中精神，认真点接招！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "荧",
+      "text": "哈啊，Master，身子被你揉得软绵绵的，只要你一句话，我全部顺从，",
+      "choices": [
+        {
+          "text": "【命令识趣】荧，收起元素武装，任由我尽情征服！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】荧，展开岩风光幕稳住防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，荧当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "荧",
+      "text": "唔，既然是主人的命令，那我就收起单手剑走神一下，请对我温柔点呀，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "荧",
+      "text": "双元素护盾展开！主人的快感防线由荧为你牢牢稳固在安全阈值！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "荧",
+      "text": "眼神很有冒险家毅力嘛，那我可要把全部元素力量都展现出来了！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "荧",
+      "text": "呀啊！遵命主人，荧认输了，身体要在高潮热浪里彻底融化绝顶了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "荧",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "荧",
+      "text": "呜，单手剑脱手，双腿软得只能跌坐在草地上，荧彻底输给Master了。作为专属伴侣全部听你的，你想怎么对待我？",
+      "choices": [
+        {
+          "text": "【旅者侍奉】请荧在中央低地坡岸地面上，为我提供温柔可靠的异界旅行者近侍服侍。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "荧",
+      "text": "嘻嘻！看来这一局是旅行者的元素剑技略胜一筹呢！Master别灰心，喝口水歇歇，稍后我们再战！",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "荧",
+      "text": "Master，刚才虽然变成软绵绵的玩偶任您任意摆弄，但重塑后的荧依然最喜欢陪伴在您身边了。请继续宠溺我吧！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "荧",
+      "text": "哈啊，刚才在残廊地面上为您侍奉良久，单薄的白色旅行裙都被汗水浸透了呢。能让Master开心快慰，荧觉得格外幸福。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

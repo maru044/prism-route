@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "saddle_mona",
+  "character_id": "mona",
+  "region": "岛顶曲面遗址",
+  "position": [
+    -262.535,
+    64.94,
+    631.25
+  ],
+  "heading": -112.0,
+  "bound_furniture": []
+}

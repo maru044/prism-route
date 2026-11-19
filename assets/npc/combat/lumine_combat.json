@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "lumine_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "starfell_sword",
+    "wind_blade_vortex",
+    "gentle_adventurer_smile"
+  ]
+}

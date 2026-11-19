@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "eula_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "vortex_tidecaller",
+    "glacial_illumination",
+    "vengeance_pout"
+  ]
+}

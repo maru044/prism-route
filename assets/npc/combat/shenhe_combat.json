@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "shenhe_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "spring_spirit_summoning",
+    "divine_maiden_deliverance",
+    "red_string_bond"
+  ]
+}

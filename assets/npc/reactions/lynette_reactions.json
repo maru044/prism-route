@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "lynette_reactions",
+  "speaker": "琳妮特",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖抚弄安静无口的小嘴唇？Master，猫娘的红唇今天任你采撷。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软香甜的小舌被你轻轻探入深吻，喉间溢出微弱动人的轻吟。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中津液溢出，无口的表情彻底瓦解，脑海一片甜蜜过热！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "手掌覆在魔术小礼服包裹的娇嫩双峰前，Master，体温上升了。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接隔着薄布捻揉双峰尖端，酸麻感顺着后颈直窜猫耳尖端呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经完全挺立充血了，这种强烈的支配快感，琳妮特受不了啦！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "触及猫娘最私密的深处花核，尾巴猛然竖直绷紧，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在敏感核打圈按压，温热充沛的花蜜把安全裤都彻底打湿了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽热的体液喷薄决堤，如此剧烈的高潮冲击，琳妮特要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "摩挲过膝长袜上方白皙娇嫩的大腿内侧，触感如丝绸般细腻。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根部被轻轻揉按，双腿发软不由自主顺从地向两侧分开。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全没有力气了，只能软软任由Master随意摆布索取了！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "enigmatic_feint": {
+      "name": "谜影障眼·飞身急袭",
+      "damage": 17.0,
+      "text": "进入低功耗突袭模式。Master，猫咪的爪子挥过来时，可是很准的。",
+      "emotion": "serious"
+    },
+    "bogglecat_box": {
+      "name": "流光惊奇·魔术箱影",
+      "damage": 19.0,
+      "text": "魔术演出开始。接下这份来自枫丹魔术助手的风刃冲击吧。",
+      "emotion": "confident"
+    },
+    "standby_teatime": {
+      "name": "待机吃茶·猫尾轻摆",
+      "damage": 15.0,
+      "text": "功耗已降至最低。红茶和小饼干还有剩余，Master要尝一块吗？",
+      "emotion": "smile"
+    }
+  }
+}

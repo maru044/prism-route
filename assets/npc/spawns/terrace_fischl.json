@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "terrace_fischl",
+  "character_id": "fischl",
+  "region": "台地遗址",
+  "position": [
+    395.5,
+    95.18,
+    990.0
+  ],
+  "heading": 90.0,
+  "bound_furniture": []
+}

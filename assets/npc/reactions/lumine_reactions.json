@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "lumine_reactions",
+  "speaker": "荧",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖按在娇软唇瓣上？Master，异界旅者的朱唇今天任由你探索采撷。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软香甜的小舌被你轻轻含弄，喉间溢出急促难耐的娇吟，呼吸全乱了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中的津液忍不住流淌，旅行者的自尊彻底瓦解，好销魂的快意！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "手掌覆在素雅白色战裙包裹的双峰前，Master，心跳跳得太激烈了啦。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接隔着薄布揉捏双峰尖端，酸麻感顺着后背直窜头顶百会呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经完全挺立充血了，这种强烈的快感，荧受不了啦！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "触及身体最娇羞的敏感核，浑身忍不住剧烈抖了一下，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在敏感核打圈按抚，甜热的泉水把安全裤都彻底打湿了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽热的爱液喷涌决堤，如此剧烈的高潮冲击，荧要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "摩挲短裙下白皙纤细的大腿内侧，触感细腻弹滑。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根部被轻轻揉按，双腿发软不由自主顺从地向两侧分开。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全没有力气了，只能软软任由Master随意摆布索取了！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "starfell_sword": {
+      "name": "星陨之剑·元素荒星",
+      "damage": 17.0,
+      "text": "岩元素共鸣，降临吧！Master，小心被从天而降的荒星砸中站位哦！",
+      "emotion": "confident"
+    },
+    "wind_blade_vortex": {
+      "name": "风涡剑·元素爆破",
+      "damage": 19.0,
+      "text": "汇聚星海风暴之力！接好异界旅行者最熟练的一记元素崩裂冲击！",
+      "emotion": "serious"
+    },
+    "gentle_adventurer_smile": {
+      "name": "温柔对视·同伴牵手",
+      "damage": 15.0,
+      "text": "走过了那么多世界，只要能与Master并肩前行，旅途就会充满意义！",
+      "emotion": "smile"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "encounter_id": "saddle_mona",
+  "character_id": "mona",
+  "spawn_id": "saddle_mona",
+  "flow_behavior_id": "standard_duel",
+  "dialogue_bundle_id": "mona_saddle_bundle",
+  "combat_profile_id": "mona_combat",
+  "reaction_profile_id": "mona_reactions",
+  "motion_profile_id": "mona_motions",
+  "supported_entry_points": [
+    "start",
+    "unlocked_start",
+    "mid_battle_manual",
+    "combat_manual_unlocked",
+    "victory_node",
+    "defeat_node",
+    "post_spare",
+    "post_kill"
+  ]
+}

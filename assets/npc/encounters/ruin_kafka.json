@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "encounter_id": "ruin_kafka",
+  "character_id": "kafka",
+  "spawn_id": "ruin_kafka",
+  "flow_behavior_id": "standard_duel",
+  "dialogue_bundle_id": "kafka_ruin_bundle",
+  "combat_profile_id": "kafka_combat",
+  "reaction_profile_id": "kafka_reactions",
+  "motion_profile_id": "kafka_motions",
+  "supported_entry_points": [
+    "start",
+    "unlocked_start",
+    "mid_battle_manual",
+    "combat_manual_unlocked",
+    "victory_node",
+    "defeat_node",
+    "post_spare",
+    "post_kill"
+  ]
+}

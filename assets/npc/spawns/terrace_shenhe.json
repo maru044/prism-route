@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "terrace_shenhe",
+  "character_id": "shenhe",
+  "region": "台地遗址",
+  "position": [
+    414.1,
+    92.32,
+    917.0
+  ],
+  "heading": 90.0,
+  "bound_furniture": []
+}

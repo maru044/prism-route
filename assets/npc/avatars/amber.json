@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "avatar_profile_id": "amber",
+  "model_resource": "res://assets/characters/roster/amber/amber.vrm",
+  "idle_motion": "res://assets/characters/roster/motions/koikatsu_idle.tres",
+  "material_id": "amber",
+  "environment_collision_enabled": false
+}

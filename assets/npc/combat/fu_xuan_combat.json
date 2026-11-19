@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "fu_xuan_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "matrix_of_prescience",
+    "star_transposition",
+    "tsundere_diviner"
+  ]
+}

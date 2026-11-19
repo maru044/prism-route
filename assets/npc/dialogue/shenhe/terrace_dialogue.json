@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "shenhe_terrace_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "申鹤",
+      "text": "我是留云借风真君门下弟子申鹤。在这处高台绝壁之上吐纳清气，山风凛冽，正适宜克制命格中的煞气。若你愿引我步入红尘，先在身心切磋中让我印证你的器量吧。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "申鹤",
+      "text": "Master，有什么世俗杂念困扰着你吗？我愿为你斩灭。",
+      "choices": [
+        {
+          "text": "【关于绝壁打坐石台】坐在这里盘膝清修，感觉心境平静吗？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请申鹤赐教！（初次对决：仙家弟子全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "申鹤",
+      "text": "绝壁之下云海翻卷，远离人世纷扰。嚼一株清心，咽一口朝露，红绳系住的杀气便不会轻易泛起波澜。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "申鹤",
+      "text": "Master，你又来看我了。自从上次切磋败给你，我那出尘的身躯只要被你触碰，红绳便会寸寸发烫。今天是要切磋枪术，还是要我全心全意在石台上为你侍奉？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "申鹤",
+      "text": "主人，申鹤随时听候您的差遣，一切听凭支配。",
+      "choices": [
+        {
+          "text": "【关于红绳之外的情愫】如果解下红绳，申鹤心中最想拥抱的人是谁？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】申鹤，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "申鹤",
+      "text": "以前我只知杀戮与清修，但遇见你之后，我只想将这份炽烈的情感全倾注在你身上。被你紧紧拥在怀中时，红绳解与不解，我都只属于你一人。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "申鹤",
+      "text": "Master，寒霜箓符尚未收势，集中精神，不要被霜气阻滞了步调！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "申鹤",
+      "text": "哈啊，Master，体内的煞气全化作了对您的渴望，只要您开口，我什么都依你，",
+      "choices": [
+        {
+          "text": "【命令识趣】申鹤，放松红绳克制，任由我尽情征服！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】申鹤，凝练仙家玄冰护住防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，申鹤当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "申鹤",
+      "text": "呼，既然是主人的意愿，那我便卸去护体冰霜，请温柔疼爱我，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "申鹤",
+      "text": "玄冰清气环绕！主人的快感防线由申鹤亲自为你稳固在安全阈值！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "申鹤",
+      "text": "沉稳端正的气度，那申鹤定会全力以赴回应你的期许！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "申鹤",
+      "text": "呀啊！遵命主人，申鹤认输了，身子要在狂暴高潮中融化绝顶了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "申鹤",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "申鹤",
+      "text": "哈啊，长枪脱手，身子软得跌坐在石台上，申鹤彻底输给Master了。既然战败，出尘之躯任由您支配处置，你想怎么做？",
+      "choices": [
+        {
+          "text": "【仙家侍奉】请申鹤在绝壁石台地面上，为我提供出尘清冷的仙家弟子近侍服侍。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "申鹤",
+      "text": "承让了，Master。您的枪法凌厉，但仙家枪术略胜半筹。且先饮一口清泉歇息，稍后我们再战！",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "申鹤",
+      "text": "Master，刚才虽然化作毫无防备的玩偶任您任意摆弄，但重塑后的申鹤依然对您绝对忠诚。请继续引领我吧！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "申鹤",
+      "text": "哈啊，刚才在绝壁地面上为您侍奉良久，单薄的仙家紧身袍都被汗水浸透了呢。能让Master满意，申鹤无怨无悔。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

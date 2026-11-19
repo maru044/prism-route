@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "charlotte_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "mr_verite_snapshot",
+    "front_page_scoop",
+    "journalist_curiosity"
+  ]
+}

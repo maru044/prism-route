@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "bronya_atrium_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "布洛妮娅",
+      "text": "你好，Master。我是贝洛伯格第十九任大守护者布洛妮娅·兰德。在这处中庭走廊上可以统览下行通道与各处平台。若想让我成为你的助力，先在切磋中展现你的统帅力吧！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "布洛妮娅",
+      "text": "Master，有什么城市规划或防务安排需要讨论？我随时听候。",
+      "choices": [
+        {
+          "text": "【关于中层下段沿墙走廊】站在这里查看通道，在制定防务策略吗？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请大守护者赐教！（初次对决：大守护者全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "布洛妮娅",
+      "text": "这里连接着上下螺旋坡道与中心开阔区，是调配防守与疏导人流的关键节点。居高临下观察全局，是身为统帅的基本素养。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "布洛妮娅",
+      "text": "Master，你又来看我了。自从上次在切磋中败给你，我的身体完全习惯了向你臣服。只要被你揽入怀中，双腿就会发软。今天是要切磋火炮，还是要我端庄顺从地为你提供专属侍奉？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "布洛妮娅",
+      "text": "主人，布洛妮娅听从您的调遣，一切如您所愿。",
+      "choices": [
+        {
+          "text": "【关于卸下统帅身份】在只有我们两人的静室里，布洛妮娅渴望什么？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】布洛妮娅，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "布洛妮娅",
+      "text": "在外我是背负整座城市的守护者，但回到你怀中，我只想卸去沉重的肩章与佩剑，任由你拥紧我、抚摸我的长发。被你守护的感觉，是我最珍惜的宁静。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "布洛妮娅",
+      "text": "Master，银鬃火炮尚未收势，稳住心神，接招吧！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "布洛妮娅",
+      "text": "哈啊，Master，身子被你揉得化成了水，只要你下达指示，我全心顺从，",
+      "choices": [
+        {
+          "text": "【命令识趣】布洛妮娅，卸除护盾防御，任由我尽情支配！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】布洛妮娅，构筑筑城屏障庇护防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，布洛妮娅当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "布洛妮娅",
+      "text": "呼，既然是主人的命令，那我收敛守备，请温柔对待我，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "布洛妮娅",
+      "text": "存护之盾展开！主人的快感防线由我亲自守护在安全范围！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "布洛妮娅",
+      "text": "端正坚毅的眼神，那我也定会全力回应你的器量！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "布洛妮娅",
+      "text": "呀啊！遵命主人，布洛妮娅认输，守护者的意志要在高潮浪潮里融化了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "布洛妮娅",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "布洛妮娅",
+      "text": "哈啊，佩剑脱手，身子软得倚靠不住栏杆，我彻底败给Master了。作为败者，大守护者任由您支配处置，你想怎么对待我？",
+      "choices": [
+        {
+          "text": "【守护侍奉】请布洛妮娅在中层走廊地面上，为我提供端庄威严的守护者近侍服侍。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "布洛妮娅",
+      "text": "承让了，Master。您的攻势很凌厉，但在战术定力上我略胜一筹。先擦擦汗休整片刻，稍后我们再战！",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "布洛妮娅",
+      "text": "Master，刚才虽然化作毫无防备的玩偶任您任意摆弄，但重塑身姿后的布洛妮娅依然只效忠于您一人。请继续引领我吧！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "布洛妮娅",
+      "text": "哈啊，刚才在走廊地面上为您侍奉良久，优雅的礼服都被汗水湿透了呢。能让Master满意，布洛妮娅心甘情愿。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

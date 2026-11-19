@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "kafka_reactions",
+  "speaker": "卡芙卡",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖按在成熟魅惑的双唇上？Master，卡芙卡的红唇随时任你索取。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软香甜的舌尖被你探入深吻，喉间不由自主溢出娇媚动人的喘息。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！津液完全失守溢出，成熟知性的从容彻底瓦解，好销魂的快意！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "掌心覆在紧身蕾丝衬衫包裹的丰腴雪峰上，Master的掌温好炽热。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接隔着薄纱捻弄双峰成熟顶端，酸麻的电流感直冲后腰呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经完全挺立充血了，这种强烈的支配快感，卡芙卡受不了啦！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "触及猎手最深处敏感的蛛丝要穴，身子猛然一颤，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在花蒂打圈按压，浓郁的花蜜早已将黑丝底裤完全浸透。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽热的体液决堤狂涌，如此剧烈的高潮冲击，卡芙卡要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "摩挲皮短裤下丰满白皙的大腿内侧，触感温热滑嫩。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根部被轻轻揉按，双腿发软不由自主顺从地向两侧分开迎合。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全失了力气，只能软软大敞任凭Master任意驰骋索取！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "twilight_trill": {
+      "name": "颤丽之音·言灵丝线",
+      "damage": 17.0,
+      "text": "听我的声音，亲爱的。这缠绕心头的言灵蛛丝，可是会让人沉沦难醒的哦。",
+      "emotion": "smile"
+    },
+    "midnight_caress": {
+      "name": "月下抚弄·蛛网电击",
+      "damage": 19.0,
+      "text": "红酒与雷光，哪一种更合你的胃口？接好这一记浸透甘甜的连击吧。",
+      "emotion": "confident"
+    },
+    "violin_tune": {
+      "name": "调弦微语·成熟魅惑",
+      "damage": 15.0,
+      "text": "呵呵，看着你的眼神，我就知道艾利欧的剧本正在迎来最美妙的偏差。",
+      "emotion": "smile"
+    }
+  }
+}

@@ -394,6 +394,11 @@ func _build_sandbar_pavilion() -> void:
 
 func _build_terrain_repairs() -> void:
 	terrain_repairs=TERRAIN_REPAIRS.new();terrain_repairs.world=self;add_child(terrain_repairs)
+	spawn_world_encounter("meadow_amber", terrain_repairs)
+	spawn_world_encounter("meadow_eula", terrain_repairs)
+	spawn_world_encounter("meadow_charlotte", terrain_repairs)
+	spawn_world_encounter("meadow_sucrose", terrain_repairs)
+	spawn_world_encounter("meadow_lumine", terrain_repairs)
 
 func _build_church_ruins() -> void:
 	church_ruins=CHURCH_RUINS.new();church_ruins.world=self;add_child(church_ruins)
@@ -443,12 +448,19 @@ func _build_landmark_ring() -> void:
 
 func _build_terrace_ruins() -> void:
 	terrace_ruins=TERRACE_RUINS.new();add_child(terrace_ruins)
+	spawn_world_encounter("terrace_fischl", terrace_ruins)
+	spawn_world_encounter("terrace_shenhe", terrace_ruins)
 	for row: Dictionary in terrace_ruins.manifest.spawns:
 		metadata.spawns.append({"name":row.name,"key":row.key,"position":row.position,"look_direction":row.look_direction,
 			"required_floor_kind":"Structure","required_source_id":row.source_id,"maximum_search_distance_m":1.,"character_only":true})
 
 func _build_oval_atrium() -> void:
 	oval_atrium=OVAL_ATRIUM.new();oval_atrium.world=self;add_child(oval_atrium)
+	spawn_world_encounter("atrium_fu_xuan", oval_atrium)
+	spawn_world_encounter("atrium_qingque", oval_atrium)
+	spawn_world_encounter("atrium_miyabi", oval_atrium)
+	spawn_world_encounter("atrium_bronya", oval_atrium)
+	spawn_world_encounter("atrium_seele", oval_atrium)
 	metadata.spawns.append({"name":"椭圆中庭 · 屋顶入口","key":"oval_atrium","position":oval_atrium.manifest.entry_spawn,
 		"look_direction":oval_atrium.manifest.look_direction,"required_floor_kind":"Structure",
 		"required_source_id":oval_atrium.manifest.entry_source_id,"maximum_search_distance_m":1.,"character_only":true})
@@ -458,17 +470,22 @@ func _build_oval_atrium() -> void:
 
 func _build_island_saddle() -> void:
 	island_saddle=ISLAND_SADDLE.instantiate();add_child(island_saddle)
+	spawn_world_encounter("saddle_mona", island_saddle)
+	spawn_world_encounter("saddle_lynette", island_saddle)
 	metadata.spawns.append({"name":"岛顶曲面遗址 · 曲面通路","key":"island_saddle","position":island_saddle.manifest.spawn,
 		"look_direction":island_saddle.manifest.look_direction,"required_floor_kind":"Structure",
 		"required_source_id":island_saddle.manifest.walking_surface_id,"maximum_search_distance_m":1.,"character_only":true})
 
 func _build_upper_ring() -> void:
 	upper_ring=UPPER_RING.instantiate();upper_ring.world=self;add_child(upper_ring)
+	spawn_world_encounter("ring_jingliu", upper_ring)
 	var front: Array=upper_ring.manifest.front
 	metadata.spawns.append({"name":"上层环庭 · 中庭入口","key":"upper_ring","position":upper_ring.manifest.spawn,"look_direction":[-front[0],0,-front[2]],"required_floor_kind":"Terrain","maximum_search_distance_m":6.})
 
 func _build_initial_ruin() -> void:
 	initial_ruin=INITIAL_RUIN.instantiate();initial_ruin.world=self;add_child(initial_ruin)
+	spawn_world_encounter("ruin_kafka", initial_ruin)
+	spawn_world_encounter("ruin_firefly", initial_ruin)
 	var row: Dictionary=initial_ruin.planting_mask.manifest
 	metadata.spawns.append({"name":"初始神殿 · NPC庭廊","key":"initial_ruin","position":row.spawn,"look_direction":row.forward,"required_floor_kind":"Structure","maximum_search_distance_m":2.,"character_only":true})
 

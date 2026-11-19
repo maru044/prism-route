@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "meadow_sucrose",
+  "character_id": "sucrose",
+  "region": "开阔草甸",
+  "position": [
+    104.982,
+    18.91,
+    160.509
+  ],
+  "heading": -135.0,
+  "bound_furniture": []
+}

@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "mona_reactions",
+  "speaker": "莫娜",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖按在娇软双唇上？Master，伟大占星术士的嘴唇今天任由你探索。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软香甜的小舌被你轻轻含吮，喉间溢出羞怯难耐的轻吟，呼吸全乱了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中的津液完全失守溢出，占星术士的自尊彻底瓦解，好销魂的快意！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "手掌覆在紧身连体法袍包裹的双峰前，Master，掌温好烫啊。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接隔着薄皮革捻弄双峰顶端，酸麻感顺着后颈直冲脑髓深处呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经完全挺立充血了，这种强烈的快感，莫娜受不了啦！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "触及身体最娇羞的水星禁区，浑身猛然剧烈战栗，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在敏感核打圈按抚，浓郁温热的花蜜把紧身衣内衬彻底打湿了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽热的水元素体液疯狂喷涌，如此剧烈的高潮冲击，莫娜要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "摩挲开衩紧身裤下雪白丰腴的大腿内侧，触感紧致温润。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根部被轻轻揉按，双腿发软不由自主顺从地向两侧分开。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全没有力气了，只能软软任由Master随意摆布索取了！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "astral_illusions": {
+      "name": "水中幻愿·虚妄重影",
+      "damage": 17.0,
+      "text": "命运已然揭示！Master，看清这水占盘折射的星命虚影吧！",
+      "emotion": "confident"
+    },
+    "stellaris_phantasm": {
+      "name": "星命定轨·泡影破裂",
+      "damage": 19.0,
+      "text": "泡影破碎，星芒如注！接下伟大占星术士莫娜最正统的水星冲击！",
+      "emotion": "serious"
+    },
+    "empty_wallet_stomach": {
+      "name": "肚饿轻鸣·自尊逞强",
+      "damage": 15.0,
+      "text": "咕，这只是在进行严谨的星轨推导！才不是因为吃不起沙拉肚子在叫呢！",
+      "emotion": "shy"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "encounter_id": "meadow_lumine",
+  "character_id": "lumine",
+  "spawn_id": "meadow_lumine",
+  "flow_behavior_id": "standard_duel",
+  "dialogue_bundle_id": "lumine_meadow_bundle",
+  "combat_profile_id": "lumine_combat",
+  "reaction_profile_id": "lumine_reactions",
+  "motion_profile_id": "lumine_motions",
+  "supported_entry_points": [
+    "start",
+    "unlocked_start",
+    "mid_battle_manual",
+    "combat_manual_unlocked",
+    "victory_node",
+    "defeat_node",
+    "post_spare",
+    "post_kill"
+  ]
+}

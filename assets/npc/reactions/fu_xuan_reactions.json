@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "fu_xuan_reactions",
+  "speaker": "符玄",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖按在娇小双唇上？Master，太卜的朱唇今天任由你探索采撷。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，柔软香甜的小舌被你轻轻含吮，喉间溢出娇羞难耐的喘息。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！津液完全失控溢出，太卜的傲娇威严彻底瓦解，好销魂的甜美！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "手掌覆在娇俏玲珑的双峰前，Master，心跳跳频被法眼监测到了啦。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接隔着薄绸捻揉双峰尖端，酸麻感顺着后颈直冲头顶百会呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口已经完全挺立充血了，这种强烈的支配快感，符玄受不了啦！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "触及身体最娇羞的隐秘禁区，浑身猛然颤了一下，Master！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在敏感花核打圈按揉，温热充沛的花蜜把安全裤都完全湿透了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！炽热的爱液狂乱喷涌，可怕的高潮浪潮，符玄要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "摩挲开衩长裙下雪白娇嫩的大腿内侧，触感幼嫩滑润。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根部被轻轻揉按，双腿发软不由自主顺从地向两侧分开。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全没有力气了，只能软软任由Master随意摆布索取了！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "matrix_of_prescience": {
+      "name": "穷观阵·知命卜算",
+      "damage": 17.0,
+      "text": "大衍之数，法眼通玄！Master，你的每一处动作都在本座法眼之中！",
+      "emotion": "confident"
+    },
+    "star_transposition": {
+      "name": "星斗逆位·天脉轰击",
+      "damage": 19.0,
+      "text": "问卜天纲，敕命雷发！接下太卜司最高规格的推衍冲击吧！",
+      "emotion": "serious"
+    },
+    "tsundere_diviner": {
+      "name": "法眼灼热·娇嗔跺脚",
+      "damage": 15.0,
+      "text": "不准盯着本座的脸看！就算算出你会赢，本座也绝不会轻易低头！",
+      "emotion": "shy"
+    }
+  }
+}

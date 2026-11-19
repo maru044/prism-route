@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "sucrose_meadow_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "砂糖",
+      "text": "您、您好，Master。我是西风骑士团阿贝多先生的助手砂糖。在这处中部草甸残廊周围，生长着许多奇特的草种与变异甜甜花，正适合采集样本。想邀请我与您同行？先在身心切磋中让我记录一下您的生物炼金反应吧。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "砂糖",
+      "text": "Master，有什么关于生物炼金的疑问吗？我会认真为您解答的。",
+      "choices": [
+        {
+          "text": "【关于中部草甸残廊】蹲在这里记录草种变异，有什么新发现吗？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请砂糖赐教！（初次对决：炼金术士全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "砂糖",
+      "text": "这里的土壤和风力培育出的植物，细胞活性比蒙德本土高出许多！如果能培育出六倍体积的花朵，一定能给阿贝多先生带来惊喜！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "砂糖",
+      "text": "Master！您又来找我了！上次切磋输给您之后，我的耳朵和尾椎只要被您轻轻触碰，浑身神经就会剧烈战栗。今天是要切磋炼金术，还是要砂糖乖乖听话为您提供贴身服侍？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "砂糖",
+      "text": "主人，砂糖听候您的吩咐，请对我稍微温柔一点呀。",
+      "choices": [
+        {
+          "text": "【关于绿兽耳的小秘密】在只有我们两人的时候，耳朵可以让我摸一下吗？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】砂糖，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "砂糖",
+      "text": "呀！那、那是身体最敏感的地方啦！唔，不过既然是Master的话，稍微摸一下下也是可以的，被您揉着耳尖，浑身都会变得好酸软。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "砂糖",
+      "text": "Master，小型风灵还在旋转呢，集中注意力，小心被吹偏脚步！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "砂糖",
+      "text": "哈啊，Master，身子被您揉弄得酸软无力了，只要您一句话，我什么都依您，",
+      "choices": [
+        {
+          "text": "【命令识趣】砂糖，收回风灵防御，任由我尽情怜爱！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】砂糖，调配生物屏障稳住防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，砂糖当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "砂糖",
+      "text": "唔，既然是主人的命令，那我就收起风灵结界走神一下，请轻一点呀，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "砂糖",
+      "text": "同构气压护罩展开！主人的快感防线由砂糖为您牢牢稳固在安全阈值！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "砂糖",
+      "text": "专注的神情，那砂糖也会更卖力展现炼金反应！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "砂糖",
+      "text": "呀啊！遵命主人，砂糖认输了，身体要在高潮热浪里彻底融化绝顶了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "砂糖",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "砂糖",
+      "text": "呜，炼金烧瓶掉在一边，兽耳无力地耷拉着，双腿软得只能跌坐在草地上，砂糖彻底输给Master了。作为败者任由您处置，您想对我做什么？",
+      "choices": [
+        {
+          "text": "【炼金侍奉】请砂糖在中部草甸残廊地面上，为我提供害羞内向的兽耳学者近侍服侍。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "砂糖",
+      "text": "哇！风灵聚合好像不小心占据上风了！Master别灰心，喝口甜甜花清露歇歇，稍后我们再切磋！",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "砂糖",
+      "text": "Master，刚才虽然变成毫无反抗力的玩偶任您任意摆弄，但重塑后的砂糖依然最依赖您了。请继续宠溺我吧！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "砂糖",
+      "text": "哈啊，刚才在草甸地面上为您侍奉良久，单薄的炼金学者袍都被汗水浸透了呢。能让Master满意舒畅，砂糖心里暖融融的。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "avatar_profile_id": "jingliu",
+  "model_resource": "res://assets/characters/roster/jingliu/jingliu.vrm",
+  "idle_motion": "res://assets/characters/roster/motions/koikatsu_idle.tres",
+  "material_id": "jingliu",
+  "environment_collision_enabled": false
+}
