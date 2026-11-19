@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "church_jean",
+  "character_id": "jean",
+  "region": "孤顶教堂",
+  "position": [
+    -1341.0,
+    43.4,
+    117.0
+  ],
+  "heading": 25.0,
+  "bound_furniture": []
+}

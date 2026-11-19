@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "yae_miko_reactions",
+  "speaker": "八重神子",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "哎呀，指尖探到本宫司嘴边了？小心狐狸一口咬住你哦。",
+        "emotion": "smile"
+      },
+      "mid": {
+        "text": "唔，狡黠的舌头被你抓住了，这般亲吻真是一点也不客气呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口齿间尽是Master的气息，甜得连狐仙都要迷醉了！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "隔着巫女服探向胸前，小家伙的胆子真是越来越大了。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接抚弄挺秀的红樱，狐狸的身子也是会发烫发颤的呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口好强烈的麻痒感，本宫司的端庄仪态要彻底垮掉啦！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "掀开巫女白褶裙下摆，触碰最娇嫩的花核，真是个心急的坏家伙。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在花蒂打圈揉按，尾巴根部都忍不住羞耻地绷直了呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！花蜜涌得止不住，天狐的身心彻底沦陷，要绝顶了啊！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "顺着白皙的大腿轻抚内侧，狐狸的毛孔都在悄悄呼吸呢。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！指尖在大腿根掐弄，酸软的力道让本宫司连坐姿都要维持不住了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿软绵绵地任由Master搬弄，真是彻底被你拿捏住了。",
+        "emotion": "climax"
+      }
+    },
+    "anal": {
+      "low": {
+        "text": "摸到身后那根粉嫩狐尾下面的特制塞子了？呼呼，真会挑地方。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔！尾塞被轻轻转动推挤，异样的酥麻直贯脊髓，耳朵都耷拉下来了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呀啊！后庭完全失守，甜美的狂澜让八重宫司彻底失去理智了！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "sesshou_sakura": {
+      "name": "野干役咒·杀生樱落",
+      "damage": 16.0,
+      "text": "狐狸的恶作剧，可要接稳了哦！让杀生樱的雷光轻抚您的敏感神经吧！",
+      "emotion": "smile"
+    },
+    "tenko_kenshin": {
+      "name": "大密法·天狐显真",
+      "damage": 18.0,
+      "text": "天狐显现，雷霆降世！小家伙，可别在神明威光下当场缴械投降哦？",
+      "emotion": "confident"
+    },
+    "kitsune_teasing": {
+      "name": "狐仙戏谑·轻小说魅惑",
+      "damage": 15.0,
+      "text": "八重堂最新取材的绝妙桥段，不知在Master身上演练起来会是何等模样？",
+      "emotion": "shy"
+    }
+  }
+}

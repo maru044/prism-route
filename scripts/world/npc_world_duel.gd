@@ -455,11 +455,15 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 		begin_furniture_service_staging("desk_service")
 	elif act in ["spare_seat", "seat_service"]:
 		begin_furniture_service_staging("seat_service")
+	elif act in ["spare_bed", "bed_service"]:
+		begin_furniture_service_staging("bed_service")
+	elif act in ["spare_ground", "ground_service"]:
+		begin_furniture_service_staging("ground_service")
 	elif act == "spare":
-		var chosen_service := "desk_service"
+		var chosen_service := "ground_service"
 		var bindings: Dictionary = runtime.encounter_bundle.get("motions", {}).get("bindings", {})
-		for k in bindings:
-			if k != "ground_service":
+		for k in ["desk_service", "seat_service", "bed_service", "ground_service"]:
+			if bindings.has(k):
 				chosen_service = k
 				break
 		begin_furniture_service_staging(chosen_service)
@@ -470,10 +474,10 @@ func _on_dialogue_ended(payload: Dictionary) -> void:
 		if is_service_active:
 			finish_furniture_service()
 		else:
-			var default_serv := "desk_service"
+			var default_serv := "ground_service"
 			var bindings: Dictionary = runtime.encounter_bundle.get("motions", {}).get("bindings", {})
-			for k in bindings:
-				if k != "ground_service":
+			for k in ["desk_service", "seat_service", "bed_service", "ground_service"]:
+				if bindings.has(k):
 					default_serv = k
 					break
 			begin_furniture_service_staging(default_serv)
@@ -494,8 +498,17 @@ func begin_furniture_service_staging(interaction_type: String = "desk_service") 
 			saved_player_collision_mask = char_node.collision_mask
 
 	var furniture_dict: Dictionary = {}
-	if is_instance_valid(world) and world.sandbar_pavilion:
-		furniture_dict = world.sandbar_pavilion.furniture_instances
+	if is_instance_valid(world):
+		if "sandbar_pavilion" in world and world.sandbar_pavilion and "furniture_instances" in world.sandbar_pavilion:
+			furniture_dict.merge(world.sandbar_pavilion.furniture_instances)
+		if "cape_town" in world and world.cape_town and "furniture_instances" in world.cape_town:
+			furniture_dict.merge(world.cape_town.furniture_instances)
+		if "water_court" in world and world.water_court and "furniture_instances" in world.water_court:
+			furniture_dict.merge(world.water_court.furniture_instances)
+		if "earth_pavilion" in world and world.earth_pavilion and "furniture_instances" in world.earth_pavilion:
+			furniture_dict.merge(world.earth_pavilion.furniture_instances)
+		if "church_ruins" in world and world.church_ruins and "furniture_instances" in world.church_ruins:
+			furniture_dict.merge(world.church_ruins.furniture_instances)
 	var ground_tf: Transform3D = anchor.global_transform if is_instance_valid(anchor) else Transform3D.IDENTITY
 	var resolution := runtime.resolve_bound_service_motion(interaction_type, furniture_dict, ground_tf)
 	if not resolution.get("found", false):
@@ -582,6 +595,14 @@ func begin_furniture_service_staging(interaction_type: String = "desk_service") 
 	master_paired_actor.name = "MasterPairedActor"
 	master_paired_actor.model_resource = master_model
 	master_paired_actor.motion_resource = role_b_motion
+	var foot_offset: Array = resolution["binding"].get("role_b_seated_foot_offset", [0.0, 0.0, 0.0])
+	master_paired_actor.seated_foot_offset = Vector3(foot_offset[0], foot_offset[1], foot_offset[2])
+	var skirt_support: Dictionary = resolution["binding"].get("role_b_seated_skirt_support", {})
+	if not skirt_support.is_empty():
+		var half_extents: Array = skirt_support["half_extents"]
+		master_paired_actor.seated_skirt_bone_prefix = skirt_support["bone_prefix"]
+		master_paired_actor.seated_skirt_half_extents = Vector2(half_extents[0], half_extents[1])
+		master_paired_actor.seated_skirt_support_transform = furn_tf
 	master_paired_actor.auto_play = true
 	master_paired_actor.environment_mask = 33
 	master_paired_actor.initialized.connect(func():

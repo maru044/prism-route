@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "jean_reactions",
+  "speaker": "琴",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖探上唇角，Master，这在骑士团条令中可是越矩的行为呢。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，严谨的团长被强硬地索吻，温热的舌尖纠缠让呼吸都急促了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中的喘息完全压抑不住，身为骑士的威仪彻底融化了！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "隔着白色紧身马甲抚摸胸口，主人的手劲好沉稳。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！指尖隔着衬衫直接捻弄双峰顶端，强烈的酸麻感直冲脑海。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸前挺立得发硬，团长的坚毅铠甲在您掌心下尽数溃散！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "探向紧身白裤深处的隐秘要害，Master的侵略性太强了。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！隔着薄布按压核心要害，双腿紧绷得连剑都要握不稳了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！温热的花露把皮裤内衬完全浸湿，好强烈的绝顶情浪！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "抚摸长靴上方紧绷健美的骑士大腿，手心的触感好滚烫。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根处被轻轻拿捏揉弄，平日训练有素的肌肉竟然完全软化了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿虚软得无法站立，只能顺从地靠在Master怀里任您索取。",
+        "emotion": "climax"
+      }
+    },
+    "anal": {
+      "low": {
+        "text": "摸到紧身白裤后方那枚短马尾造型的特制塞子，Master，那里好害羞。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔！尾塞被缓缓旋动推入，骑士从未体会过的深邃充实感席卷全身。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呀啊！后庭完全失守，甜美的狂乱让代理团长彻底放弃抵抗了！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "gale_blade": {
+      "name": "风压剑·轻抚旋风",
+      "damage": 16.0,
+      "text": "风啊，回应我吧！以骑士团的严谨剑法，检验Master的防守气度！",
+      "emotion": "confident"
+    },
+    "dandelion_breeze": {
+      "name": "蒲公英之风·圣洁守卫",
+      "damage": 17.0,
+      "text": "蒲公英的领域，守护此地！在微风轻拂中感受蒲公英骑士的决心！",
+      "emotion": "smile"
+    },
+    "knightly_duty": {
+      "name": "骑士誓约·严谨遵从",
+      "damage": 15.0,
+      "text": "身为代理团长，履行誓约与职责是我的本分，请全力攻过来吧！",
+      "emotion": "shy"
+    }
+  }
+}

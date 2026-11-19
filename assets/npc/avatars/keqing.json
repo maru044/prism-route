@@ -3,5 +3,6 @@
   "avatar_profile_id": "keqing",
   "model_resource": "res://assets/characters/mmd_validation/keqing_physics.vrm",
   "idle_motion": "res://assets/characters/roster/motions/koikatsu_idle.tres",
-  "material_id": "keqing"
+  "material_id": "keqing",
+  "environment_collision_enabled": false
 }

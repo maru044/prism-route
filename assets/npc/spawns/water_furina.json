@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "water_furina",
+  "character_id": "furina",
+  "region": "浅水庭院",
+  "position": [
+    -904.0,
+    0.28,
+    624.0
+  ],
+  "heading": 0.0,
+  "bound_furniture": []
+}

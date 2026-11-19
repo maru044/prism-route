@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "jean_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "gale_blade",
+    "dandelion_breeze",
+    "knightly_duty"
+  ]
+}

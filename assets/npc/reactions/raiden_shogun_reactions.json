@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "raiden_shogun_reactions",
+  "speaker": "雷电将军",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖按压神明唇间，汝的胆魄当真超乎常人。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，雷霆之口被汝占据，灼热的气息让神明亦感晕眩。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！津液融汇，威严尽散，此身再难维持冷肃之貌！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "隔着华服轻抚前胸，此等试探亦在容许之内。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！拔刀之处的雪峰被直接揉弄，体内雷核剧烈震荡起来了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸前双峰敏感挺拔，梦想之心的威严彻底化作春潮！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "触及幽闭私密之所，Master当真无所忌惮。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在花蕊按压抚揉，强如雷神亦无法遏制双腿的轻颤。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！神躯彻底化作春泥，极致的情潮爆发，将军要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "抚弄包裹在丝袜下的修长双腿，触感清晰可辨。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿内侧被温柔掐揉，酸麻之感直抵腰间，步履维艰。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿虚软无力，只能完全依傍在Master怀中任由采撷。",
+        "emotion": "climax"
+      }
+    },
+    "anal": {
+      "low": {
+        "text": "身后特制雷痕尾塞被握入掌心，此物亦是汝之威权体现么？",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔！尾塞在体内轻轻转动，酥麻电光顺着脊椎直窜而上，难以自制。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呀啊！后庭防线荡然无存，无匹的甜美震颤让神明的意识彻底空白！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "transcendence_baleful_omen": {
+      "name": "神变·恶曜开眼",
+      "damage": 17.0,
+      "text": "恶曜所照，雷罚降临！以雷霆之眼洞悉万物，接招吧！",
+      "emotion": "confident"
+    },
+    "secret_art_musou_shinsetsu": {
+      "name": "奥义·梦想真说",
+      "damage": 20.0,
+      "text": "此即，此世无双之一刀！于寂灭之雷光中体会极致的威严！",
+      "emotion": "confident"
+    },
+    "euthymia_submission": {
+      "name": "净土威仪·永恒臣服",
+      "damage": 15.0,
+      "text": "在永恒的净土面前，任何抗拒都终将化作顺从的叹息。",
+      "emotion": "shy"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "avatar_profile_id": "raiden_shogun",
+  "model_resource": "res://assets/characters/roster/raiden_shogun/raiden_shogun.vrm",
+  "idle_motion": "res://assets/characters/roster/motions/koikatsu_idle.tres",
+  "material_id": "raiden_shogun",
+  "environment_collision_enabled": false
+}

@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "avatar_profile_id": "yae_miko",
+  "model_resource": "res://assets/characters/roster/yae_miko/yae_miko.vrm",
+  "idle_motion": "res://assets/characters/roster/motions/koikatsu_idle.tres",
+  "material_id": "yae_miko",
+  "environment_collision_enabled": false
+}

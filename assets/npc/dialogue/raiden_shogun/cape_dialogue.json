@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "raiden_shogun_cape_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "雷电将军",
+      "text": "浮世微茫，唯此身恒常。汝便是降临此地的Master？我是鸣神大社大御所雷电将军。此身虽驻足海岬，却不容许轻慢。若汝欲与我结伴同行，便在此雷光之下，展现汝之气量吧！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "雷电将军",
+      "text": "Master，召我何事？此身言出必行。",
+      "choices": [
+        {
+          "text": "【关于海岬】将军大人站在这座神社门前，是在注视着什么？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请将军大人全力以赴！（初次对决：神明全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "雷电将军",
+      "text": "海浪拍岸，潮起潮落，皆为须臾浮泡。唯有心念纯一，方可得见恒常。此处的微风与雷霆共鸣，倒是个凝神静思之所。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "雷电将军",
+      "text": "Master，汝又前来了。自那次对决落败，此身已将汝奉为至高掌控者。无论作为御前侍奉，亦或是身心修行，雷电将军皆会顺从汝之意志。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "雷电将军",
+      "text": "主人，将军听凭宣令，绝无二心。",
+      "choices": [
+        {
+          "text": "【关于站位】站在海风中守望，身子会感到冷吗？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】将军，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "雷电将军",
+      "text": "有Master的体温长留心间，海风并不觉得凛冽。只是每当回想起被您压制跪服的时刻，体内的雷元素便会紊乱悸动。往后，神明亦任您支配。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "雷电将军",
+      "text": "雷鸣未歇，胜负未分，Master，竭尽全力攻过来吧！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "雷电将军",
+      "text": "哈啊，Master，神明的防线已被汝彻底打破，任由汝恣意裁决，",
+      "choices": [
+        {
+          "text": "【命令识趣】将军，稍微走神迎合一下，让我好好疼你！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】将军，帮我稳固快感防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，将军当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "雷电将军",
+      "text": "谨遵法旨，此身散去周身护体雷威，任由Master尽情施为，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "雷电将军",
+      "text": "恶曜之眼化作不破结界，护佑Master心神不被浪潮淹没！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "雷电将军",
+      "text": "好沉稳的意志，真不愧是征服神明的执掌者！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "雷电将军",
+      "text": "呀啊！大御所彻底认输，神明躯壳承受不住这般快美，要绝顶了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "雷电将军",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "雷电将军",
+      "text": "哈啊，梦想一刀亦无法撼动汝之威严，雷电将军彻底臣服于Master。作为战利品，此身任由汝支配发落，汝欲如何对待我？",
+      "choices": [
+        {
+          "text": "【席地侍奉】请雷电将军在海岬门前平整地面上，为我提供庄重柔顺的侍奉。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "雷电将军",
+      "text": "此身武艺尚称过关，Master不必颓丧。且先在铺装侧稍事休整，雷电随时恭候汝之下次挑战。",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "雷电将军",
+      "text": "Master，哪怕将神明的躯壳击溃当成战利品摆弄，重铸神体后将军的心意依然恒常不变。下次对决，此身依然顺从于汝！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "雷电将军",
+      "text": "哈啊，刚才席地为您提供侍奉，体内的雷光至今还在阵阵酥麻地回荡。能让Master满意，便是将军最大的使命。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

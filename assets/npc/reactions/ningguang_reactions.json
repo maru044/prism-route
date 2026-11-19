@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "ningguang_reactions",
+  "speaker": "凝光",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖触碰唇瓣，Master的行事风格果然这般直接。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，玉齿被轻轻撬开，舌尖纠缠时的甘美让人难以自持。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！贵气的红唇尽是喘息，这般亲昵真是令人心旌摇曳！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "隔着华美旗袍揉弄胸前，这道触感当真不同凡响。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！纤指隔着丝缎揉按双峰顶端，高贵的心神也泛起阵阵涟漪。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！前胸完全挺立胀麻，天权星的骄傲都要在您怀中化作春水了！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "探向旗袍下摆深处的花核，Master的贪恋真是毫无遮掩。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在花核轻旋慢磨，连脚趾都忍不住紧紧蜷缩起来了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！温热的花蜜完全浸透了底衣，好剧烈的情浪，凝光要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "沿着旗袍开叉抚摸丰腴白皙的大腿，掌心温热如火。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根处被轻轻拿捏，酸软的感觉蔓延至腰肢，险些站立不稳。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿再无力气合拢，只能任由Master依偎在侧，肆意掌控。",
+        "emotion": "climax"
+      }
+    },
+    "anal": {
+      "low": {
+        "text": "后方纯金镶玉的特制尾塞被轻轻碰触，Master的品味倒是极其奢华。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔！金玉尾塞在紧致的后穴中缓缓旋转，尊贵的防线寸寸瓦解。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呀啊！后庭传来的强烈快感直冲脑海，天权大人的理智完全融化啦！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "starshatter": {
+      "name": "天权崩玉·群星碎玉",
+      "damage": 18.0,
+      "text": "万千星辉，尽化珠玉！接下天权星的华贵一击吧！",
+      "emotion": "confident"
+    },
+    "jade_screen": {
+      "name": "璇玑屏·琉璃玉界",
+      "damage": 15.0,
+      "text": "璇玑玉衡，罗列成障！在琉璃光屏前，任何攻势都会被折射化解。",
+      "emotion": "smile"
+    },
+    "golden_seduction": {
+      "name": "千金一掷·商道惑心",
+      "damage": 16.0,
+      "text": "摩拉与身心的双重诱惑，不知Master能拿出多少筹码来抵挡呢？",
+      "emotion": "shy"
+    }
+  }
+}

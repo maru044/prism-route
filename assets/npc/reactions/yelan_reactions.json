@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "yelan_reactions",
+  "speaker": "夜兰",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "手指轻按双唇？Master，审讯嫌疑人可没有这种规矩呢。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，温热的舌尖纠缠在一起，呼吸节奏全被您打乱了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口津顺着嘴角滑落，连思考的余裕都被您夺走了！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "指尖隔着紧身皮衣抚摩心形胸口，真是大胆的举动。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！直接揉按敏感的顶端，酥麻感顺着神经传开，身子发软了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸前挺立得生疼，特工的矜持要彻底融化在您的掌心了！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "触碰到最隐秘的私处，Master的手法比我想象中还要熟练。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！隔着轻薄丝袜按压核芯，双腿控制不住地想要合拢呢。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！水露完全浸湿了衣物，好强烈的高潮情潮，要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "抚摸皮质腿环与大腿内侧，手心的温度好明显。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！指尖在大腿根轻掐慢揉，酸胀的感觉让人连站立都很艰难。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全使不上力，只能顺从地缠在Master腰间任您索取了。",
+        "emotion": "climax"
+      }
+    },
+    "anal": {
+      "low": {
+        "text": "后方水滴造型的宝石尾塞被碰到了，Master喜欢这种刺激的玩法吗？",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔！尾塞被轻轻转动推挤，深处传来的异样充实感让腰肢忍不住战栗。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呀啊！后庭被彻底玩弄到底，甜美的快感冲击让特工的理智彻底崩溃了！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "lingering_lifeline": {
+      "name": "萦络纵命·水丝缠缚",
+      "damage": 16.0,
+      "text": "幽客罗网，悄然收紧！让水络丝线轻抚您的周身要害，可要忍耐住了！",
+      "emotion": "confident"
+    },
+    "depth_clarion_dice": {
+      "name": "渊图玲珑骰·玄掷惊澜",
+      "damage": 18.0,
+      "text": "玄掷定局！水色骰子旋转落地，猜猜这次开出的是痛楚还是极致愉悦呢？",
+      "emotion": "smile"
+    },
+    "stealth_interrogation": {
+      "name": "幽客审讯·博弈心机",
+      "damage": 15.0,
+      "text": "在我的审讯节奏下，您心中的秘密与克制防线，还能坚守多久？",
+      "emotion": "shy"
+    }
+  }
+}

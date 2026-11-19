@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "avatar_profile_id": "furina",
+  "model_resource": "res://assets/characters/roster/furina/furina.vrm",
+  "idle_motion": "res://assets/characters/roster/motions/koikatsu_idle.tres",
+  "material_id": "furina",
+  "environment_collision_enabled": false
+}

@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "barbara_church_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "芭芭拉",
+      "text": "啦啦啦，芭芭拉的歌声能为大家带来治愈！您好，Master。我是西风教会的祈礼牧师芭芭拉，正站在这座孤顶教堂的祭坛前练习发声与祈祷。如果想要芭芭拉为您做专属应援，请先与我进行一场身心切磋，看看我的应援力量吧！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "芭芭拉",
+      "text": "Master，今天有什么需要芭芭拉帮忙的吗？我很乐意为您服务！",
+      "choices": [
+        {
+          "text": "【关于教堂】在孤峰顶上的露天教堂唱歌，感觉怎么样？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请芭芭拉全力以赴！（初次对决：偶像全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "芭芭拉",
+      "text": "这里的风很清爽，站在圣坛前远眺，整座海岛都在眼前呢。在这里练习赞美诗，感觉歌声能传到很远很远的地方，心情也会特别开朗！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "芭芭拉",
+      "text": "Master，您又来看芭芭拉了！自从上次切磋败给您之后，芭芭拉的心跳只要一靠近您就扑通扑通跳个不停。今天是要继续切磋，还是让专属偶像为您提供特别的侍奉呢？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "芭芭拉",
+      "text": "主人，芭芭拉是属于您的专属偶像，随时听候您的吩咐！",
+      "choices": [
+        {
+          "text": "【关于圣坛】在圣坛前练习唱诗，不会觉得孤单吗？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】芭芭拉，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "芭芭拉",
+      "text": "只要Master在身边，芭芭拉就一点也不觉得孤单。而且一看到圣坛前的石阶，就会想起被您温柔抚弄的细节，脸颊总是烫烫的呢。下次，还要在这里听我唱歌吗？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "芭芭拉",
+      "text": "Master，芭芭拉还没认输呢，要集中精神，接下我的应援歌声哦！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "芭芭拉",
+      "text": "哈啊，Master，芭芭拉浑身都酥软了，只要您的一句指令，芭芭拉都会顺从的，",
+      "choices": [
+        {
+          "text": "【命令识趣】芭芭拉，稍微走神迎合一下，让我好好疼你！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】芭芭拉，帮我稳固快感防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，芭芭拉当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "芭芭拉",
+      "text": "呜，既然是Master的命令，那芭芭拉就稍微走神一下，请对我温柔一点呀，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "芭芭拉",
+      "text": "水环轻柔地环绕Master，芭芭拉会为您守护住快感防线！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "芭芭拉",
+      "text": "好棒的毅力，那芭芭拉也要更加大声地歌唱应援了！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "芭芭拉",
+      "text": "呀啊！遵命Master，芭芭拉完全认输，身子要绝顶了啊啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "芭芭拉",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "芭芭拉",
+      "text": "哈啊，芭芭拉完全没有力气了，彻底败给了Master。作为专属偶像，芭芭拉愿意为您提供任何侍奉，您想怎么处置我？",
+      "choices": [
+        {
+          "text": "【圣坛侍奉】请芭芭拉在圣坛前平整地面上，为我提供纯洁柔顺的侍奉。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "芭芭拉",
+      "text": "哇，看来今天的胜利属于芭芭拉呢！Master不要难过，先坐在圣坛台阶上休息，喝口水，待会儿再来找我切磋吧！",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "芭芭拉",
+      "text": "Master，刚才虽然化作布娃娃任由您摆弄，但芭芭拉被治愈重构后依然记得您的怀抱温度。今天的特别应援，请务必继续指派给我哦！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "芭芭拉",
+      "text": "哈啊，刚才在圣坛前为您侍奉了那么久，双腿现在都还软软的发烫呢。能让Master感到治愈与舒畅，就是芭芭拉最大的幸福。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

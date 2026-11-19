@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "church_barbara",
+  "character_id": "barbara",
+  "region": "孤顶教堂",
+  "position": [
+    -1326.0,
+    42.5,
+    88.0
+  ],
+  "heading": -10.0,
+  "bound_furniture": []
+}

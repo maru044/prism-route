@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "ningguang_sandbar_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "凝光",
+      "text": "富贵浮云，皆在掌中。初次见面，Master。我是璃月七星之天权凝光，正在这处遮阳伞下享受片刻的海风与日光。想与我谈一桩双赢的大买卖？那就先在身心对决中证明您的气度与实力吧！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "凝光",
+      "text": "贵客临门，凝光愿闻其详。不知Master今日所为何事？",
+      "choices": [
+        {
+          "text": "【关于沙滩】天权星大人不在群玉阁，怎么会来沙洲度假？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请凝光大人不吝赐教！（初次对决：天权全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "凝光",
+      "text": "再忙碌的商人也需要调节心境。这片浅海沙洲水清沙幼，遮阳伞下的卧榻尤为惬意，听听潮鸣，倒能让我构思出不少新的商略。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "凝光",
+      "text": "Master，您又来看望凝光了？自从在那场对弈中见识了您的威严，天权星的身心早已被您完全俘获。今天想谈些什么，亦或是继续享受凝光的柔情侍奉？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "凝光",
+      "text": "我的大赢家，在您面前，凝光随时愿将一切和盘托出。",
+      "choices": [
+        {
+          "text": "【关于躺椅】遮阳伞下的躺椅很舒适吧？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】凝光，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "凝光",
+      "text": "卧榻确实舒坦，但只要一躺下，脑海中全是上次被Master压在身下肆意疼爱的画面，心跳便止不住加快呢。下回，我们继续在此处共度良宵如何？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "凝光",
+      "text": "商道争锋，落子无悔。Master，凝光的攻势可不会轻易停下！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "凝光",
+      "text": "哈啊，Master，天权星的防线在您面前早已漏洞百出，任凭您随心决断。",
+      "choices": [
+        {
+          "text": "【命令识趣】凝光，稍微走神迎合一下，让我好好疼你！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】凝光，帮我稳固快感防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，凝光当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "凝光",
+      "text": "既然是赢家的敕令，那凝光就散去护体玉光，由着您随意放肆吧，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "凝光",
+      "text": "璇玑屏化为温润暖玉护持Master心神，为您抚平过激的波澜！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "凝光",
+      "text": "好从容的定力，真不愧是我凝光看中的贵客！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "凝光",
+      "text": "呀啊！天权星彻底臣服，身子承受不住这般狂澜，要绝顶了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "凝光",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "凝光",
+      "text": "哈啊，商场无往不利的凝光，今日在身心博弈上彻底输给您了。作为赢家的战利品，凝光整个人都归您支配，您想如何处置我？",
+      "choices": [
+        {
+          "text": "【躺椅侍奉】请凝光侧卧在沙滩躺椅上，为我提供尊贵柔顺的侍奉。",
+          "action": "spare_bed"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "凝光",
+      "text": "看来这局筹码还是凝光占了先机呢，Master。胜败乃常事，且在沙滩歇息片刻，待会儿凝光再陪您过招。",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "凝光",
+      "text": "Master，哪怕刚才以毫无防备之姿任您随意把玩，复苏之后凝光依然牢记您的温度。下一回，天权星依旧为您敞开怀抱！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "凝光",
+      "text": "哈啊，在沙滩躺椅上侍奉了这许久，双腿至今还在微微轻颤呢。只要赢家尽兴，凝光付出任何代价都是值得的。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "earth_tingyun",
+  "character_id": "tingyun",
+  "region": "东侧覆土庭院",
+  "position": [
+    455.29,
+    62.025,
+    269.0
+  ],
+  "heading": -90.0,
+  "bound_furniture": []
+}

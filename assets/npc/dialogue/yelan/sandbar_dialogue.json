@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "yelan_sandbar_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "夜兰",
+      "text": "幽客暗影，玄网藏心。初次见面，Master。我是岩上茶室的主事人夜兰，正在这片沙洲露台清点近期的线索与海图。想让我这位特工听凭差遣？那就先在身心博弈里展现您的本事吧！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "夜兰",
+      "text": "Master，找我有什么事？我的时间可是明码标价的。",
+      "choices": [
+        {
+          "text": "【关于沙洲】在这处海边露台吹风，能打听到什么特别的情报？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请夜兰小姐赐教！（初次对决：特工全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "夜兰",
+      "text": "沙洲这片露天咖啡座视野开阔，往来船只与海滩水流一览无余，是个观察目标绝佳的暗哨。闲暇时坐着喝杯清茶，倒也别有一番情趣。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "夜兰",
+      "text": "Master，您又来找我了？自从在赌局对决中输给您，我的弱点与底细都已被您彻底看穿。今天是要来一场轻松的切磋，还是让特工为您提供特殊的私人汇报？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "夜兰",
+      "text": "我的大贵人，随时听候您的差遣。无论下达什么指令，我都乐意配合。",
+      "choices": [
+        {
+          "text": "【关于露台】坐在这里吹海风，是不是很舒服？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】夜兰，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "夜兰",
+      "text": "只要坐在那张木椅上，就会想起被Master按在腿上惩戒的滋味，连海风拂过脊背都觉得酥麻。下次需要我汇报情报，就在那张木椅旁面对面慢慢聊吧。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "夜兰",
+      "text": "Master，博弈还在进行，手头的骰子可还没落地呢！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "夜兰",
+      "text": "哈啊，Master，我的步调已经被您彻底打乱了，接下来想怎么摆弄我呢？",
+      "choices": [
+        {
+          "text": "【命令识趣】夜兰，稍微走神迎合一下，让我好好疼你！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】夜兰，帮我稳固快感防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，夜兰当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "夜兰",
+      "text": "既然是贵人的吩咐，那我就故意露出破绽，任由您尽情欺负吧，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "夜兰",
+      "text": "幽客水丝交织成防护网，为您阻隔多余的冲击，请放心进攻！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "夜兰",
+      "text": "冷静的眼神，果然是难缠的对手，那我也要动点真格的了！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "夜兰",
+      "text": "呀啊！这局是我彻底认输了，身体完全受不住，要绝顶了啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "夜兰",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "夜兰",
+      "text": "哈啊，骰子落定，是我彻底输了呢。作为败者，这副身子就任由Master发落，您想怎么处置我？",
+      "choices": [
+        {
+          "text": "【长椅侍奉】请夜兰坐在咖啡露台木椅上，为我提供柔顺舒缓的侍奉。",
+          "action": "spare_seat"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "夜兰",
+      "text": "看来这一局是我的情报更胜一筹呢，Master。先去露台喝杯冰饮休息片刻，随时欢迎您再来挑战。",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "夜兰",
+      "text": "Master，虽然刚才倒地被您任意摆弄，但特工的柔韧身体已恢复如初。下次对决，我依然会顺从您的心意！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "夜兰",
+      "text": "哈啊，刚才在木椅上被您那样欺负，腰肢到现在都还发软无力呢。能让Master满意，这场汇报就很有价值。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

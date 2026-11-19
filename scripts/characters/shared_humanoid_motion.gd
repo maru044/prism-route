@@ -46,6 +46,11 @@ var _skeleton_in_actor := Transform3D.IDENTITY
 var preview_model: PackedScene
 var preview_pose_only := false
 var forearm_contact_lift_m := 0.0
+var seated_foot_offset := Vector3.ZERO
+var seated_skirt_bone_prefix := ""
+var seated_skirt_half_extents := Vector2.ZERO
+var seated_skirt_support_transform := Transform3D.IDENTITY
+var _seated_skirt_bones: Array[int] = []
 
 func _is_spring_radius_valid(spring: Resource) -> bool:
 	if not ("hit_radius_scale" in spring and "hit_radius" in spring):
@@ -94,6 +99,10 @@ func _ready() -> void:
 		rest_local.append(skeleton.get_bone_rest(i))
 		rest_world.append(skeleton.get_bone_global_rest(i))
 	for i in skeleton.get_parentless_bones(): _append_order(i)
+	if not seated_skirt_bone_prefix.is_empty():
+		for index in bone_order:
+			if str(skeleton.get_bone_name(index)).begins_with(seated_skirt_bone_prefix):
+				_seated_skirt_bones.append(index)
 	var rig := HUMANOID_RIG.new()
 	if not rig.setup(skeleton):
 		push_error("Invalid humanoid rig")
@@ -191,7 +200,71 @@ func sample_time(value: float) -> void:
 	character.position = _model_origin + _skeleton_in_actor.basis * root_displacement
 	if forearm_contact_lift_m > 0.0:
 		_lift_wrists(forearm_contact_lift_m)
+	if seated_foot_offset != Vector3.ZERO:
+		_place_seated_feet()
+	if not _seated_skirt_bones.is_empty():
+		_support_seated_skirt()
 	skeleton.force_update_all_bone_transforms()
+
+func _support_seated_skirt() -> void:
+	var to_seat := seated_skirt_support_transform.affine_inverse() * skeleton.global_transform
+	var to_skeleton := to_seat.affine_inverse()
+	var targets: Array[Vector3] = []
+	for index in _seated_skirt_bones:
+		var p := to_seat * skeleton.get_bone_global_pose(index).origin
+		var edge := maxf(absf(p.x) - seated_skirt_half_extents.x, absf(p.z) - seated_skirt_half_extents.y)
+		# Support the fabric over the top, and let it drape beyond the seat edge.
+		var weight := 1.0 - smoothstep(0.075, 0.18, edge)
+		p.y += maxf(0.056 - p.y, 0.0) * weight
+		targets.append(to_skeleton * p)
+	for i in _seated_skirt_bones.size():
+		var index := _seated_skirt_bones[i]
+		var parent := skeleton.get_bone_global_pose(parents[index])
+		skeleton.set_bone_pose_position(index, parent.affine_inverse() * targets[i])
+
+func _place_seated_feet() -> void:
+	var actor_to_skeleton := skeleton.global_basis.inverse() * global_basis
+	var offset := actor_to_skeleton * seated_foot_offset
+	var down := (actor_to_skeleton * Vector3.DOWN).normalized()
+	for side in ["Left", "Right"]:
+		var thigh: int = semantic_bones[side + "UpperLeg"]
+		var shin: int = semantic_bones[side + "LowerLeg"]
+		var foot: int = semantic_bones[side + "Foot"]
+		var hip := skeleton.get_bone_global_pose(thigh).origin
+		var knee := skeleton.get_bone_global_pose(shin).origin
+		var ankle_pose := skeleton.get_bone_global_pose(foot)
+		var upper_length := hip.distance_to(knee)
+		var lower_length := knee.distance_to(ankle_pose.origin)
+		var reach := upper_length + lower_length - 0.001
+		if minf(upper_length, lower_length) <= 0.001:
+			continue
+		var delta := ankle_pose.origin + offset - hip
+		# Bring the foot in slightly rather than forcing a straight leg or raising
+		# the foot off the floor when the authored point is out of reach.
+		var vertical := clampf(delta.dot(down), -reach, reach)
+		var horizontal := delta.slide(down).limit_length(sqrt(maxf(0.0, reach * reach - vertical * vertical)))
+		delta = horizontal + down * vertical
+		var distance := delta.length()
+		if distance <= absf(upper_length - lower_length) + 0.001:
+			continue
+		var axis := delta / distance
+		var bend := (knee - hip).slide(axis)
+		if bend.length_squared() <= 0.000001:
+			continue
+		var along := (upper_length * upper_length - lower_length * lower_length + distance * distance) / (2.0 * distance)
+		var knee_target := hip + axis * along + bend.normalized() * sqrt(maxf(0.0, upper_length * upper_length - along * along))
+		_aim_bone_at(thigh, knee, knee_target)
+		_aim_bone_at(shin, skeleton.get_bone_global_pose(foot).origin, hip + delta)
+		_set_skeleton_rotation(foot, ankle_pose.basis.get_rotation_quaternion())
+
+func _aim_bone_at(index: int, current_end: Vector3, target_end: Vector3) -> void:
+	var pose := skeleton.get_bone_global_pose(index)
+	var turn := Quaternion((current_end - pose.origin).normalized(), (target_end - pose.origin).normalized())
+	_set_skeleton_rotation(index, turn * pose.basis.get_rotation_quaternion())
+
+func _set_skeleton_rotation(index: int, turn: Quaternion) -> void:
+	var parent := skeleton.get_bone_global_pose(parents[index])
+	skeleton.set_bone_pose_rotation(index, (parent.basis.get_rotation_quaternion().inverse() * turn).normalized())
 
 func _lift_wrists(distance_m: float) -> void:
 	# A furniture clip can lift its wrist contact without sliding the feet or stretching the arm.
@@ -238,6 +311,9 @@ var _active_springs: Array = []
 func set_physics_enabled(hair: bool, clothes: bool) -> void:
 	_active_springs.clear()
 	for spring in all_springs:
+		if not _seated_skirt_bones.is_empty() and not spring.joint_nodes.is_empty() \
+				and str(spring.joint_nodes[0]).begins_with(seated_skirt_bone_prefix):
+			continue
 		var is_hair: bool = spring.group.to_lower().contains("hair") or spring.comment.begins_with("Hair") or spring.comment.begins_with("SideHair")
 		if (is_hair and hair) or (not is_hair and clothes): _active_springs.append(spring)
 	if ready_for_review: seek(time)

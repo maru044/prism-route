@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "yae_miko_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "sesshou_sakura",
+    "tenko_kenshin",
+    "kitsune_teasing"
+  ]
+}

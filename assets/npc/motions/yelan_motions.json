@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "motion_profile_id": "yelan_motions",
+  "bindings": {
+    "seat_service": {
+      "interaction_type": "seat",
+      "required_anchors": [
+        "Anchor_Seat",
+        "Anchor_Front"
+      ],
+      "role_a_motion": "res://assets/characters/mmd_selected/animations/mmd_0a3f6ba5f5de_a.tres",
+      "role_b_motion": "res://assets/characters/mmd_selected/animations/mmd_0a3f6ba5f5de_b.tres",
+      "fallback_to_ground": false,
+      "contact_anchor": "Anchor_Seat",
+      "approach_anchor": "Anchor_Front",
+      "role_a_placement": {
+        "offset": [
+          0.0,
+          -0.42,
+          -0.45
+        ],
+        "yaw_degrees": 180.0
+      },
+      "role_b_placement": {
+        "offset": [
+          0.0,
+          -0.335,
+          0.0
+        ],
+        "yaw_degrees": 0.0
+      }
+    },
+    "ground_service": {
+      "interaction_type": "ground",
+      "required_anchors": [],
+      "role_a_motion": "res://assets/characters/mmd_selected/animations/mmd_fcc0340f8227_a.tres",
+      "role_b_motion": "res://assets/characters/mmd_selected/animations/mmd_fcc0340f8227_b.tres",
+      "fallback_to_ground": true
+    }
+  }
+}

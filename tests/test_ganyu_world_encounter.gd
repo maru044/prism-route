@@ -167,30 +167,22 @@ func _run() -> void:
 		return
 
 	var rig_ganyu: Skeleton3D = duel.npc_paired_actor.skeleton
-	var rig_master: Skeleton3D = duel.master_paired_actor.skeleton
 	var left_knee_id: int = duel.npc_paired_actor.semantic_bones.get("LeftLowerLeg", -1)
 	var right_knee_id: int = duel.npc_paired_actor.semantic_bones.get("RightLowerLeg", -1)
-	var master_hip_id: int = duel.master_paired_actor.semantic_bones.get("Hips", -1)
-	var master_thigh_id: int = duel.master_paired_actor.semantic_bones.get("LeftUpperLeg", -1)
 
 	if not _expect(left_knee_id >= 0 and right_knee_id >= 0, "LowerLeg bones not mapped for Ganyu"):
 		return
-	if not _expect(master_hip_id >= 0 and master_thigh_id >= 0, "Hips/UpperLeg bones not mapped for Master"):
-		return
 
 	var floor_y: float = seat.global_position.y
-	var seat_y: float = seat.get_node("Anchor_Seat").global_position.y
+	var seat_anchor: Node3D = seat.get_node("Anchor_Seat")
 
 	for fraction in [0.0, 0.25, 0.5, 0.75, 0.999]:
 		duel.npc_paired_actor.sample_time(duel.npc_paired_actor.duration * fraction)
 		duel.master_paired_actor.sample_time(duel.master_paired_actor.duration * fraction)
 		rig_ganyu.force_update_all_bone_transforms()
-		rig_master.force_update_all_bone_transforms()
 
 		var l_knee_y: float = (rig_ganyu.global_transform * rig_ganyu.get_bone_global_pose(left_knee_id)).origin.y
 		var r_knee_y: float = (rig_ganyu.global_transform * rig_ganyu.get_bone_global_pose(right_knee_id)).origin.y
-		var m_hip_y: float = (rig_master.global_transform * rig_master.get_bone_global_pose(master_hip_id)).origin.y
-		var m_thigh_y: float = (rig_master.global_transform * rig_master.get_bone_global_pose(master_thigh_id)).origin.y
 
 		# Ganyu's knees must be grounded near floor (floor_y=0.10, knee bone joint center within 0.12 - 0.22)
 		if not _expect(l_knee_y >= floor_y and l_knee_y <= floor_y + 0.15,
@@ -200,11 +192,9 @@ func _run() -> void:
 				"Ganyu right knee floating or clipping: Y=%.3f, floor=%.3f" % [r_knee_y, floor_y]):
 			return
 
-		# Master must be calibrated to seat surface (seat_y=0.52, thigh joint center ~0.50 - 0.62)
-		if not _expect(m_thigh_y >= seat_y - 0.05 and m_thigh_y <= seat_y + 0.15,
-				"Master thigh floating above seat: Y=%.3f, seat=%.3f" % [m_thigh_y, seat_y]):
+		if not _check_seated_mesh(duel.master_paired_actor, seat_anchor, floor_y, fraction):
 			return
-	print("  ✓ Contact calibration verified across 5 frames: Ganyu knees grounded on floor, Master seated on stone seat")
+	print("  ✓ Contact verified across 5 frames: Ganyu's knee height and Lumine's skinned feet/seat clearance")
 
 	duel.finish_furniture_service()
 	if not _expect(not duel.is_service_active and duel.actor.visible,
@@ -228,3 +218,69 @@ func _run() -> void:
 
 	print("\nALL GANYU WORLD ENCOUNTER TESTS PASSED!")
 	quit(0)
+
+func _check_seated_mesh(actor: Node3D, seat_anchor: Node3D, floor_y: float, fraction: float) -> bool:
+	var contact_gap := INF
+	var feet := Vector2(INF, INF)
+	var seat_y := seat_anchor.global_position.y
+	var space := actor.get_world_3d().direct_space_state
+	var skeleton: Skeleton3D = actor.skeleton
+	var seat_bones := [actor.semantic_bones.Hips, actor.semantic_bones.LeftUpperLeg, actor.semantic_bones.RightUpperLeg]
+	var foot_bones := [actor.semantic_bones.LeftFoot, actor.semantic_bones.RightFoot]
+	for node in actor.character.find_children("*", "MeshInstance3D", true, false):
+		var mesh_instance := node as MeshInstance3D
+		if mesh_instance.skin == null:
+			continue
+		# Skin on the CPU because headless rendering doesn't register GPU skin poses.
+		var skin_matrices: Array[Transform3D] = []
+		var skin_bones: Array[int] = []
+		for i in mesh_instance.skin.get_bind_count():
+			var bone := mesh_instance.skin.get_bind_bone(i)
+			var bone_name := mesh_instance.skin.get_bind_name(i)
+			if not bone_name.is_empty():
+				bone = skeleton.find_bone(bone_name)
+			skin_bones.append(bone)
+			skin_matrices.append(skeleton.get_bone_global_pose(bone) * mesh_instance.skin.get_bind_pose(i)
+				if bone >= 0 else Transform3D.IDENTITY)
+		for surface in mesh_instance.mesh.get_surface_count():
+			var arrays := mesh_instance.mesh.surface_get_arrays(surface)
+			if not arrays[Mesh.ARRAY_BONES] or not arrays[Mesh.ARRAY_WEIGHTS]:
+				continue
+			var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+			var bones: PackedInt32Array = arrays[Mesh.ARRAY_BONES]
+			var weights: PackedFloat32Array = arrays[Mesh.ARRAY_WEIGHTS]
+			var count := bones.size() / vertices.size()
+			for i in vertices.size():
+				var skinned := Vector3.ZERO
+				var dominant_bone := -1
+				var dominant_weight := 0.0
+				for j in count:
+					var index := i * count + j
+					var weight := weights[index]
+					if weight <= 0.0:
+						continue
+					var bind := bones[index]
+					skinned += (skin_matrices[bind] * vertices[i]) * weight
+					if weight > dominant_weight:
+						dominant_weight = weight
+						dominant_bone = skin_bones[bind]
+				while dominant_bone >= 0 and dominant_bone not in seat_bones and dominant_bone not in foot_bones:
+					dominant_bone = skeleton.get_bone_parent(dominant_bone)
+				if dominant_bone < 0:
+					continue
+				var p := skeleton.global_transform * skinned
+				if dominant_bone in foot_bones:
+					var foot := foot_bones.find(dominant_bone)
+					feet[foot] = minf(feet[foot], p.y)
+					continue
+				var local := seat_anchor.to_local(p)
+				if absf(local.x) > 0.45 or absf(local.z) > 0.225 or local.y > 0.03:
+					continue
+				var top := Vector3(p.x, seat_y + 0.04, p.z)
+				var ray := PhysicsRayQueryParameters3D.create(top, top - Vector3.UP * 0.075, 32)
+				var hit := space.intersect_ray(ray)
+				if not hit.is_empty() and absf(hit.position.y - seat_y) < 0.01:
+					contact_gap = minf(contact_gap, p.y - hit.position.y)
+	return _expect(absf(feet.x - floor_y) < 0.010 and absf(feet.y - floor_y) < 0.010
+		and contact_gap >= -0.008 and contact_gap < 0.02,
+		"Lumine contact at %.2f: feet=%s floor=%.3f, seat gap=%.3f" % [fraction, feet, floor_y, contact_gap])

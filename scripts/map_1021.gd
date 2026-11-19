@@ -353,8 +353,20 @@ func _initialize_water() -> void:
 	lagoon_ruins.register_reflections(water_manager)
 	cape_town.register_reflections(water_manager)
 
+func spawn_world_encounter(encounter_id: String, host_node: Node) -> Node:
+	var runtime := NPC_ENCOUNTER.new()
+	host_node.add_child(runtime)
+	if runtime.setup_encounter(encounter_id):
+		var adapter := runtime.create_flow_adapter()
+		runtime.add_child(adapter)
+		adapter.initialize(host_node, self, runtime)
+		return adapter
+	return null
+
 func _build_cape_town() -> void:
 	cape_town=CAPE_TOWN.new();cape_town.world=self;add_child(cape_town)
+	spawn_world_encounter("cape_yae_miko", cape_town)
+	spawn_world_encounter("cape_raiden_shogun", cape_town)
 	var support:=""
 	for row: Dictionary in cape_town.manifest.objects:
 		if row.name=="street/approach":support=row.id;break
@@ -363,18 +375,12 @@ func _build_cape_town() -> void:
 
 func _build_sandbar_pavilion() -> void:
 	sandbar_pavilion=SANDBAR_PAVILION.new();add_child(sandbar_pavilion)
-	sandbar_duel_runtime = NPC_ENCOUNTER.new()
-	sandbar_pavilion.add_child(sandbar_duel_runtime)
-	if sandbar_duel_runtime.setup_encounter("sandbar_keqing"):
-		sandbar_duel = sandbar_duel_runtime.create_flow_adapter()
-		sandbar_duel_runtime.add_child(sandbar_duel)
-		sandbar_duel.initialize(sandbar_pavilion, self, sandbar_duel_runtime)
-	sandbar_ganyu_runtime = NPC_ENCOUNTER.new()
-	sandbar_pavilion.add_child(sandbar_ganyu_runtime)
-	if sandbar_ganyu_runtime.setup_encounter("sandbar_ganyu"):
-		sandbar_ganyu_duel = sandbar_ganyu_runtime.create_flow_adapter()
-		sandbar_ganyu_runtime.add_child(sandbar_ganyu_duel)
-		sandbar_ganyu_duel.initialize(sandbar_pavilion, self, sandbar_ganyu_runtime)
+	sandbar_duel = spawn_world_encounter("sandbar_keqing", sandbar_pavilion)
+	sandbar_duel_runtime = sandbar_duel.runtime if sandbar_duel else null
+	sandbar_ganyu_duel = spawn_world_encounter("sandbar_ganyu", sandbar_pavilion)
+	sandbar_ganyu_runtime = sandbar_ganyu_duel.runtime if sandbar_ganyu_duel else null
+	spawn_world_encounter("sandbar_yelan", sandbar_pavilion)
+	spawn_world_encounter("sandbar_ningguang", sandbar_pavilion)
 	metadata.spawns.append({"name":"沙洲度假遗址 · 中央双翼亭","key":"sandbar_pavilion","position":sandbar_pavilion.manifest.spawn,
 		"look_direction":[.6,0,-.8],"required_floor_kind":"Structure",
 		"required_source_id":sandbar_pavilion.manifest.objects[0].id,"maximum_search_distance_m":1.,"character_only":true})
@@ -384,6 +390,8 @@ func _build_terrain_repairs() -> void:
 
 func _build_church_ruins() -> void:
 	church_ruins=CHURCH_RUINS.new();church_ruins.world=self;add_child(church_ruins)
+	spawn_world_encounter("church_barbara", church_ruins)
+	spawn_world_encounter("church_jean", church_ruins)
 	metadata.spawns.append({"name":"西双子山 · 孤顶教堂遗址","key":"church_ruins","position":church_ruins.manifest.spawn_godot,
 		"look_direction":church_ruins.manifest.spawn_look_direction_godot,"required_floor_kind":"Structure",
 		"required_source_id":church_ruins.manifest.spawn_source_id,"maximum_search_distance_m":2.,"character_only":true})
@@ -396,12 +404,14 @@ func _build_sunken_archive() -> void:
 
 func _build_earth_pavilion() -> void:
 	earth_pavilion=EARTH_PAVILION.new();earth_pavilion.world=self;add_child(earth_pavilion)
+	spawn_world_encounter("earth_tingyun", earth_pavilion)
 	metadata.spawns.append({"name":"东侧覆土庭院 · 入口与中庭","key":"earth_pavilion","position":earth_pavilion.manifest.spawn,
 		"look_direction":earth_pavilion.manifest.look_direction,"required_floor_kind":"Structure",
 		"required_source_id":earth_pavilion.manifest.spawn_source_id,"maximum_search_distance_m":1.,"character_only":true})
 
 func _build_water_court() -> void:
 	water_court=WATER_COURT.new();add_child(water_court)
+	spawn_world_encounter("water_furina", water_court)
 	metadata.spawns.append({"name":"浅水庭院 · 弧形展廊","key":"water_court","position":water_court.manifest.spawn,
 		"look_direction":water_court.manifest.look_direction,"required_floor_kind":"Structure",
 		"required_source_id":water_court.manifest.spawn_source_id,"maximum_search_distance_m":1.,"character_only":true})
@@ -655,6 +665,20 @@ func _build_teleport_controls(box: VBoxContainer) -> void:
 	settings_panel.add_button(quick_row, "【海岬小镇】", func():
 		settings_panel.close()
 		_teleport_to_key("cape_town")
+	)
+	var quick_row_2 := GRAPHICS_UI.row(8)
+	box.add_child(quick_row_2)
+	settings_panel.add_button(quick_row_2, "【孤顶教堂】", func():
+		settings_panel.close()
+		_teleport_to_key("church_ruins")
+	)
+	settings_panel.add_button(quick_row_2, "【浅水庭院】", func():
+		settings_panel.close()
+		_teleport_to_key("water_court")
+	)
+	settings_panel.add_button(quick_row_2, "【覆土庭院】", func():
+		settings_panel.close()
+		_teleport_to_key("earth_pavilion")
 	)
 
 	spawn_menu = OptionButton.new()

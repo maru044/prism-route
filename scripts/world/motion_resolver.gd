@@ -28,7 +28,9 @@ static func resolve_motion(
 			continue
 		if furniture.has_meta("interaction_type"):
 			var furn_type := str(furniture.get_meta("interaction_type"))
-			var matches_type := (furn_type == required_type) or (required_type in ["seat", "chair"] and furn_type in ["seat", "chair"])
+			var matches_type := (furn_type == required_type) \
+				or (required_type in ["seat", "chair"] and furn_type in ["seat", "chair"]) \
+				or (required_type in ["bed", "lounger"] and furn_type in ["bed", "lounger"])
 			if not matches_type:
 				continue
 		var anchors := {}

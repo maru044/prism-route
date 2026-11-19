@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "spawn_id": "sandbar_ningguang",
+  "character_id": "ningguang",
+  "region": "沙洲度假遗址",
+  "position": [
+    -881.39,
+    0.0,
+    -91.48
+  ],
+  "heading": 143.0,
+  "bound_furniture": [
+    {
+      "id": "lounger_01",
+      "type": "bed",
+      "anchor": "Anchor_Bed_Center"
+    }
+  ]
+}

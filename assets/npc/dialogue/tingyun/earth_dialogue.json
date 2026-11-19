@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "graph_id": "tingyun_earth_bundle",
+  "entry_points": {
+    "world_start": "start",
+    "unlocked_start": "start_unlocked",
+    "combat_manual": "mid_battle_manual",
+    "combat_manual_unlocked": "mid_battle_manual_unlocked",
+    "victory_settlement": "victory_node",
+    "defeat_settlement": "defeat_node",
+    "post_kill": "post_kill_greeting",
+    "post_spare": "post_spare_greeting"
+  },
+  "nodes": {
+    "start": {
+      "type": "text",
+      "speaker": "停云",
+      "text": "哎呀，恩公远道而来，小女子停云这厢有礼了。我是罗浮天舶司的接渡使，正在这处覆土庭院的石坪茶歇小憩。想与小女子谈成这笔稳赚不赔的结伴买卖？那就先在身心过招中，让停云瞧瞧恩公的底气吧！",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "main_menu_choices": {
+      "type": "choice",
+      "speaker": "停云",
+      "text": "恩公，今日寻小女子有何关照？只要您开金口，停云定当好生奉陪。",
+      "choices": [
+        {
+          "text": "【关于庭院】在东侧这处覆土庭院饮茶，感觉如何？",
+          "target": "lore_regional"
+        },
+        {
+          "text": "【提出切磋】既然有幸相遇，请停云姑娘赐教！（初次对决：狐商全力迎战）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【稍后再聊】你先忙吧，我四处走走。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional": {
+      "type": "text",
+      "speaker": "停云",
+      "text": "这覆土庭院依山而建，绿荫遮蔽，冬暖夏凉，下层采光极佳，最适合摆上一张矮几沏茶迎客。在此吹风赏景，真是连骨头都要酥软三分呢。",
+      "emotion": "smile",
+      "next": "main_menu_choices"
+    },
+    "start_unlocked": {
+      "type": "text",
+      "speaker": "停云",
+      "text": "哎呀，恩公，您又来看望小女子了？自从上次败在恩公手下，停云的身心早已认定了您这位大贵人。今天是要来一场快意切磋，还是让小狐狸为您提供独门侍奉？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "main_menu_choices_unlocked": {
+      "type": "choice",
+      "speaker": "停云",
+      "text": "恩公大人，小女子停云随时由您吩咐差遣，绝不推辞半分。",
+      "choices": [
+        {
+          "text": "【关于石坪】在采光石坪上歇脚，很是舒适吧？",
+          "target": "lore_regional_unlocked"
+        },
+        {
+          "text": "【身心对决】停云，再来陪我进行一场身心对决吧！（识趣削弱：受创倍增/战中作弊）",
+          "action": "enter_combat"
+        },
+        {
+          "text": "【随意漫步】我只是来看看你，一会儿再来找你。",
+          "action": "close"
+        }
+      ]
+    },
+    "lore_regional_unlocked": {
+      "type": "text",
+      "speaker": "停云",
+      "text": "石坪温润如玉，但每次站在此处，就会想起被恩公按在怀中肆意怜爱的场景，狐狸尾巴尖都会羞耻得发烫呢。下次，恩公还想看小女子娇声迎合吗？",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    },
+    "mid_battle_manual": {
+      "type": "choice",
+      "speaker": "停云",
+      "text": "恩公，招数还没使完呢，小女子的折扇可还掩着后招呢！",
+      "choices": [
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续对决】好，那我可要全力以赴了！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_manual_unlocked": {
+      "type": "choice",
+      "speaker": "停云",
+      "text": "哈啊，恩公，小女子的骨头都快被您揉散了，您说什么便是什么，",
+      "choices": [
+        {
+          "text": "【命令识趣】停云，稍微走神迎合一下，让我好好疼你！（本回合受创倍率 2.5 倍）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "distracted"
+          },
+          "target": "mid_battle_confirm_distracted"
+        },
+        {
+          "text": "【快感保护】停云，帮我稳固快感防线！（本回合快感上限 90%）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "lock_master_pleasure"
+          },
+          "target": "mid_battle_confirm_lock"
+        },
+        {
+          "text": "【命令认输】别强撑了，停云当场绝顶认输吧！（直接获胜）",
+          "set_blackboard": {
+            "meta_cheat_enabled": true,
+            "meta_cheat_mode": "instant_surrender"
+          },
+          "target": "mid_battle_confirm_surrender"
+        },
+        {
+          "text": "【咬牙忍耐】集中精神调整呼吸，本轮承受快感减免 50%！",
+          "set_blackboard": {
+            "edging_endure": true
+          },
+          "target": "mid_battle_confirm_endure"
+        },
+        {
+          "text": "【继续切磋】很好，我们继续享受这场愉悦的博弈！",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "mid_battle_confirm_distracted": {
+      "type": "text",
+      "speaker": "停云",
+      "text": "既然是恩公的指令，那小女子就乖乖收拢心神，任由恩公尽情享用了，",
+      "emotion": "blush",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_lock": {
+      "type": "text",
+      "speaker": "停云",
+      "text": "庆云祥音化作清心暖意护持恩公，必不让情浪伤损您的根本！",
+      "emotion": "shy",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_endure": {
+      "type": "text",
+      "speaker": "停云",
+      "text": "好生威严刚健的定力，真真让小女子好生敬慕！",
+      "emotion": "confident",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_confirm_surrender": {
+      "type": "text",
+      "speaker": "停云",
+      "text": "呀啊！恩公太厉害了，小女子彻底认输，身子要绝顶了啊啊！",
+      "emotion": "climax",
+      "next": "mid_battle_resume"
+    },
+    "mid_battle_resume": {
+      "type": "choice",
+      "speaker": "停云",
+      "text": "调整呼吸，对决继续！",
+      "choices": [
+        {
+          "text": "【重返战场】继续对决",
+          "action": "resume_combat"
+        }
+      ]
+    },
+    "victory_node": {
+      "type": "choice",
+      "speaker": "停云",
+      "text": "哈啊，停云这回是彻彻底底被恩公拿下了。商道博弈小女子甘拜下风，这副身段就全由恩公任意发落，您想怎么处置小女子？",
+      "choices": [
+        {
+          "text": "【石坪侍奉】请停云在覆土庭院平整石坪上，为我提供极尽娇媚顺从的茶道侍奉。",
+          "action": "spare_ground"
+        },
+        {
+          "text": "【击杀处置】体验物理布娃娃玩弄分支（同样永久解锁角色）。",
+          "action": "kill"
+        },
+        {
+          "text": "【点到为止】刚才的切磋很精彩，我们握手言和吧。",
+          "action": "close"
+        }
+      ]
+    },
+    "defeat_node": {
+      "type": "text",
+      "speaker": "停云",
+      "text": "哎呀呀，恩公承让了。出门在外切莫心急，先在茶席上喝盏仙茗润润嗓子，待会儿停云再好生伺候您过招。",
+      "emotion": "smile",
+      "action": "close"
+    },
+    "post_kill_greeting": {
+      "type": "text",
+      "speaker": "停云",
+      "text": "恩公，哪怕刚才将小女子化作软绵绵的玩物随意捏弄，重获身姿后停云依然对您芳心暗许。下一回，小女子依然由着您摆布！",
+      "emotion": "shy",
+      "next": "main_menu_choices_unlocked"
+    },
+    "post_spare_greeting": {
+      "type": "text",
+      "speaker": "停云",
+      "text": "哈啊，刚才在石坪上为您侍奉了这许久，狐耳和尾巴根到现在都还软软的发烫呢。只要恩公身心舒畅，停云便心满意足了。",
+      "emotion": "blush",
+      "next": "main_menu_choices_unlocked"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "encounter_id": "earth_tingyun",
+  "character_id": "tingyun",
+  "spawn_id": "earth_tingyun",
+  "flow_behavior_id": "standard_duel",
+  "dialogue_bundle_id": "tingyun_earth_bundle",
+  "combat_profile_id": "tingyun_combat",
+  "reaction_profile_id": "tingyun_reactions",
+  "motion_profile_id": "tingyun_motions",
+  "supported_entry_points": [
+    "start",
+    "unlocked_start",
+    "mid_battle_manual",
+    "combat_manual_unlocked",
+    "victory_node",
+    "defeat_node",
+    "post_spare",
+    "post_kill"
+  ]
+}

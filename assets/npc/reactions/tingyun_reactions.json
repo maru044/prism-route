@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "tingyun_reactions",
+  "speaker": "停云",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖按上红唇，恩公的手法可真教小女子面红心跳呢。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，折扇后头的丁香小舌被您衔住，呼吸间尽是恩公的气息。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口舌纠缠得难舍难分，骨子里的媚意全教恩公勾出来了！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "隔着轻纱旗袍轻抚胸前，恩公的动作好生温柔。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！纤指直接揉按胸前娇嫩的果儿，狐人的身子一阵阵发酥发软。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸口胀麻挺立，小女子的娇羞在恩公掌心下全化作了春泥！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "探向旗袍开叉深处最隐秘的私密，恩公当真不跟小女子客气呢。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！指腹在花蒂打圈轻拢慢捻，惹得浑身骨头都要化开了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！温软的花泉涌得衣衫尽湿，极致的狂浪爆发，停云要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "顺着丝滑的大腿轻轻抚摸，恩公的指尖温度直透肌肤。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿内侧被细细揉捏，酸麻的力道让小女子连跪坐都要不稳了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿软得一丝力气也无，只能任由恩公按在身下肆意索取。",
+        "emotion": "climax"
+      }
+    },
+    "anal": {
+      "low": {
+        "text": "摸到身后蓬松大尾巴根部的特制珠塞了，恩公的心思当真俏皮得紧。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔！珠塞在温软后庭轻轻转动推挤，异样的快美让狐耳都抖个不住。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呀啊！后庭完全被恩公掌控了，甜美狂暴的浪潮让小女子魂魄都要飞啦！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "soothing_melody": {
+      "name": "祥音和韵·柔情奉茶",
+      "damage": 15.0,
+      "text": "恩公舟车劳顿，且饮下小女子这盏香茗，感受绵密甘甜的心意吧！",
+      "emotion": "smile"
+    },
+    "amidst_the_rejoicing_clouds": {
+      "name": "庆云光霁·抚扇撩心",
+      "damage": 17.0,
+      "text": "折扇掩面，眼波流转！小女子的温柔攻势，恩公可莫要招架不住哦？",
+      "emotion": "confident"
+    },
+    "fox_charm": {
+      "name": "狐魅逢迎·天舶商道",
+      "damage": 16.0,
+      "text": "天舶司的买卖向来讲究两厢情愿，不知恩公肯为小女子付出多少呢？",
+      "emotion": "shy"
+    }
+  }
+}

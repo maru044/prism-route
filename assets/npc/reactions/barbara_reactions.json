@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "barbara_reactions",
+  "speaker": "芭芭拉",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "指尖探到嘴边了？Master，要轻一点碰触芭芭拉的唇瓣哦。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，温软的舌尖被轻轻含住，小偶像的呼吸都要跟不上了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中的清润津液溢出来了，脑海一片空白，好害羞呀！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "隔着牧师修女服抚摸前胸，这也是Master特殊的应援方式吗？",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！指尖隔着薄布揉捏挺立的顶端，胸口一阵阵发软，好羞耻。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！胸前已经完全硬挺起来了，好强烈的酥麻感，芭芭拉快站不住了！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "碰到了最隐秘的地方，Master，纯洁的心跳变得好剧烈！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！那里太敏感了，被掌心按压打圈，连脚趾都悄悄蜷缩起来了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！花蜜完全浸湿了白丝袜，好剧烈的甜美情潮，芭芭拉要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "抚摸纯白高筒袜包裹的大腿内侧，手心的温度好清晰呀。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根被轻轻捏弄，酸软的感觉蔓延开来，芭芭拉快站立不稳了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿完全没有力气了，只能软软地靠在Master怀里任您摆弄。",
+        "emotion": "climax"
+      }
+    },
+    "anal": {
+      "low": {
+        "text": "身后小熊造型的可爱尾塞被碰到了，Master，那里好难为情。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔！尾塞被转动推入深处，异样的充实感顺着脊椎直往上窜，呼吸全乱了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呀啊！后庭完全失守了，身体深处的甜美颤抖根本停不下来啦！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "let_the_show_begin": {
+      "name": "演唱开始·跃动水环",
+      "damage": 14.0,
+      "text": "芭芭拉，闪亮登场！清凉的水珠环绕身边，要给Master带来治愈与活力！",
+      "emotion": "smile"
+    },
+    "shining_miracle": {
+      "name": "闪耀奇迹·心之治愈",
+      "damage": 16.0,
+      "text": "大家的心愿，化作奇迹的光芒吧！请感受芭芭拉最诚挚的歌声攻势！",
+      "emotion": "confident"
+    },
+    "idol_devotion": {
+      "name": "偶像应援·纯情祈愿",
+      "damage": 15.0,
+      "text": "无论是舞台还是身心切磋，芭芭拉都会全力以赴回应您的期待！",
+      "emotion": "shy"
+    }
+  }
+}

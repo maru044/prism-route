@@ -15,8 +15,13 @@
         "yaw_degrees": 180.0
       },
       "role_b_placement": {
-        "offset": [0.0, -0.42, 0.0],
+        "offset": [0.0, -0.335, 0.0],
         "yaw_degrees": 0.0
+      },
+      "role_b_seated_foot_offset": [0.0, -0.105, -0.13],
+      "role_b_seated_skirt_support": {
+        "bone_prefix": "Q_",
+        "half_extents": [0.45, 0.225]
       }
     },
     "ground_service": {

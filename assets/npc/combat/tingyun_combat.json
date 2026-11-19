@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "tingyun_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "soothing_melody",
+    "amidst_the_rejoicing_clouds",
+    "fox_charm"
+  ]
+}

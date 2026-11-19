@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "encounter_id": "sandbar_yelan",
+  "character_id": "yelan",
+  "spawn_id": "sandbar_yelan",
+  "flow_behavior_id": "standard_duel",
+  "dialogue_bundle_id": "yelan_sandbar_bundle",
+  "combat_profile_id": "yelan_combat",
+  "reaction_profile_id": "yelan_reactions",
+  "motion_profile_id": "yelan_motions",
+  "supported_entry_points": [
+    "start",
+    "unlocked_start",
+    "mid_battle_manual",
+    "combat_manual_unlocked",
+    "victory_node",
+    "defeat_node",
+    "post_spare",
+    "post_kill"
+  ]
+}

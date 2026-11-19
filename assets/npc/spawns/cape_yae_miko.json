@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "cape_yae_miko",
+  "character_id": "yae_miko",
+  "region": "海岬小镇与神社",
+  "position": [
+    657.112,
+    1.77,
+    -1223.655
+  ],
+  "heading": -34.0,
+  "bound_furniture": []
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "raiden_shogun_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "transcendence_baleful_omen",
+    "secret_art_musou_shinsetsu",
+    "euthymia_submission"
+  ]
+}

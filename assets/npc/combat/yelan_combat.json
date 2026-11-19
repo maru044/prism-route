@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "yelan_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "lingering_lifeline",
+    "depth_clarion_dice",
+    "stealth_interrogation"
+  ]
+}

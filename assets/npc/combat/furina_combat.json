@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "combat_profile_id": "furina_combat",
+  "strategy_id": "standard",
+  "npc_max_pleasure": 100,
+  "skill_ids": [
+    "salon_solitaire",
+    "let_the_people_rejoice",
+    "dramatic_performance"
+  ]
+}

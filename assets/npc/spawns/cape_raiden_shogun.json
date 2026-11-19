@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "spawn_id": "cape_raiden_shogun",
+  "character_id": "raiden_shogun",
+  "region": "海岬小镇与神社",
+  "position": [
+    660.0,
+    1.32,
+    -1229.0
+  ],
+  "heading": 145.0,
+  "bound_furniture": []
+}

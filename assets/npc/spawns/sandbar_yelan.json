@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "spawn_id": "sandbar_yelan",
+  "character_id": "yelan",
+  "region": "沙洲度假遗址",
+  "position": [
+    -891.41,
+    0.1,
+    -113.12
+  ],
+  "heading": 143.0,
+  "bound_furniture": [
+    {
+      "id": "cafe_seat_01",
+      "type": "seat",
+      "anchor": "Anchor_Seat"
+    }
+  ]
+}

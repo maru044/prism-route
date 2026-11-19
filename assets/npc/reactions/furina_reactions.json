@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "reaction_profile_id": "furina_reactions",
+  "speaker": "芙宁娜",
+  "zones": {
+    "mouth": {
+      "low": {
+        "text": "手指碰到了唇边？Master，大明星的亲吻可是很昂贵的哦。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔，小巧的舌头被你捉住了，温热的纠缠让人连台词都念不出了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呜嗯！口中的甜津溢出嘴角，娇矜的姿态彻底化成了求饶的呜咽！",
+        "emotion": "climax"
+      }
+    },
+    "nipples": {
+      "low": {
+        "text": "隔着华丽礼服轻抚胸前，Master的手法真是太大胆了。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！指尖直接掐揉娇小挺立的红果，胸口一阵阵发软，好酥麻。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！前胸已经完全硬挺起来了，剧烈的快感让大明星快哭出来了！",
+        "emotion": "climax"
+      }
+    },
+    "clitoris": {
+      "low": {
+        "text": "触碰到礼服裙下最害羞的花蕾，心跳快得要跳出胸口了！",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔啊！隔着薄薄的蕾丝短裤按压花蒂，双腿忍不住紧紧夹住了您的手臂。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "不行了！纯净的花露涌了一手，好强烈的高潮浪潮，芙宁娜要绝顶了！",
+        "emotion": "climax"
+      }
+    },
+    "thighs": {
+      "low": {
+        "text": "抚摸异色高筒袜包裹的大腿内侧，掌心的温度好明显呀。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "呀！大腿根被轻轻捏弄，酸软的感觉蔓延到全身，站都站不稳了。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "哈啊！双腿软绵绵地任由Master搬弄，完全沦为您的专属玩偶了。",
+        "emotion": "climax"
+      }
+    },
+    "anal": {
+      "low": {
+        "text": "摸到身后燕尾服下摆藏着的猫尾造型小塞子了，呜，好难为情。",
+        "emotion": "shy"
+      },
+      "mid": {
+        "text": "唔！尾塞在紧致的后穴里轻轻旋转，从未体会过的充实感直冲头顶。",
+        "emotion": "blush"
+      },
+      "high": {
+        "text": "呀啊！后庭完全被征服了，甜美的剧烈抽搐停不下来，要崩溃啦！",
+        "emotion": "climax"
+      }
+    }
+  },
+  "attack_lines": {
+    "salon_solitaire": {
+      "name": "孤心沙龙·欢庆礼赞",
+      "damage": 16.0,
+      "text": "沙龙成员们，欢唱时刻到了！以华丽的水之礼赞招待我们尊贵的Master！",
+      "emotion": "smile"
+    },
+    "let_the_people_rejoice": {
+      "name": "万众狂欢·潮涌心潮",
+      "damage": 18.0,
+      "text": "让掌声与潮水一同涌动！在最高潮的戏剧序幕里体会极致的快感吧！",
+      "emotion": "confident"
+    },
+    "dramatic_performance": {
+      "name": "舞台独白·娇矜献礼",
+      "damage": 15.0,
+      "text": "哼哼，能欣赏到大明星芙宁娜的专属表演，可是你至高无上的荣幸哦！",
+      "emotion": "shy"
+    }
+  }
+}
