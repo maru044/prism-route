@@ -3,6 +3,10 @@ const DATA:=preload("res://scripts/construction/building_data.gd")
 const KIT:=preload("res://scripts/construction/basic_kit.gd")
 const CONTROL:=preload("res://scripts/world/world_control_context.gd")
 const HUD := preload("res://scripts/construction/home_hud.gd")
+const RESIDENT_MANAGER := preload("res://scripts/construction/home_resident_manager.gd")
+const RESIDENT_ACTOR_SCENE := preload("res://scripts/construction/home_resident_actor.gd")
+const ROOM_ASSIGNMENT_PANEL := preload("res://scripts/ui/home_room_assignment_panel.gd")
+const HOME_INTERACTION_PANEL := preload("res://scripts/narrative/home_interaction_panel.gd")
 const MASK_SIZE:=256
 const SAVE_PATH:="user://construction/home_v1.json"
 const WALKABLE_MASK := 32
@@ -33,10 +37,23 @@ const GAME_SAVES := preload("res://scripts/progress/game_save_store.gd")
 var _dirty := false
 var _lowland_example_placed := false
 var _home_markers: Array[Dictionary] = []
+var resident_manager: HomeResidentManager
+var room_assignment_panel: HomeRoomAssignmentPanel
+var home_interaction_panel: HomeInteractionPanel
+var resident_actors: Dictionary = {}
 
 func _ready() -> void:
 	name="ConstructionSandbox";kit.initialize()
 	add_to_group(CONTROL.GROUP_INPUT_BLOCKERS)
+	resident_manager = RESIDENT_MANAGER.new()
+	room_assignment_panel = ROOM_ASSIGNMENT_PANEL.new()
+	room_assignment_panel.home = self
+	room_assignment_panel.resident_manager = resident_manager
+	room_assignment_panel.game_progress = world.get("game_progress") if (world != null and "game_progress" in world) else null
+	add_child(room_assignment_panel)
+	home_interaction_panel = HOME_INTERACTION_PANEL.new()
+	home_interaction_panel.intimacy_requested.connect(_on_home_intimacy_requested)
+	add_child(home_interaction_panel)
 	for spec: Dictionary in kit.catalog.plots:
 		var node:=Node3D.new();node.name=spec.id;node.transform=Transform3D(Basis(KIT.v(spec.axis_x),Vector3.UP,KIT.v(spec.axis_z)),KIT.v(spec.origin));add_child(node)
 		var data=DATA.new();data.initialize(spec.id,kit.catalog.definitions)
@@ -58,9 +75,14 @@ func _ready() -> void:
 	for id: String in plots:refresh(id)
 	_setup_editor()
 	initialized=true
+	refresh_residents()
 	for id: String in plots:
 		var p: Node3D=plots[id].root
-		world.metadata.spawns.append({"name":"建造地块 · "+str(plots[id].spec.name),"key":"home_"+id,"position":_array(p.to_global(ENTRY)),"look_direction":_array(p.basis*Vector3.FORWARD),"required_floor_kind":"Terrain","maximum_search_distance_m":4.,"character_only":true})
+		var entry_pos: Vector3 = p.to_global(ENTRY) if p.is_inside_tree() else (p.transform * ENTRY)
+		if world != null and "metadata" in world and world.metadata is Dictionary:
+			if not world.metadata.has("spawns") or not (world.metadata.spawns is Array):
+				world.metadata["spawns"] = []
+			world.metadata.spawns.append({"name":"建造地块 · "+str(plots[id].spec.name),"key":"home_"+id,"position":_array(entry_pos),"look_direction":_array(p.basis*Vector3.FORWARD),"required_floor_kind":"Terrain","maximum_search_distance_m":4.,"character_only":true})
 	print("CONSTRUCTION_KIT_READY definitions=",kit.catalog.definitions.size()," coastal_pieces=",plots.coastal.data.pieces.size())
 
 func _array(p: Vector3) -> Array:return [p.x,p.y,p.z]
@@ -89,6 +111,7 @@ func refresh(id: String) -> void:
 	if active and selected_plot == id:
 		_update_floor_visibility()
 		_update_editor_state()
+	refresh_residents()
 
 func _rebuild_mask(id: String) -> void:
 	var plot: Dictionary=plots[id];var image: Image=plot.image;image.fill(Color.BLACK)
@@ -120,7 +143,8 @@ func bind_grass(material: ShaderMaterial) -> void:
 func save_snapshot() -> Dictionary:
 	var states: Dictionary={}
 	for id: String in plots:states[id]=plots[id].data.snapshot()
-	return {"version":1,"catalog_sha":FileAccess.get_sha256("res://assets/construction/basic_kit/catalog.json"),"plots":states,"lowland_example_placed":_lowland_example_placed}
+	var housing_data := resident_manager.to_dict() if resident_manager != null else {"version": 1, "assignments": {}}
+	return {"version":1,"catalog_sha":FileAccess.get_sha256("res://assets/construction/basic_kit/catalog.json"),"plots":states,"lowland_example_placed":_lowland_example_placed,"housing":housing_data}
 
 func save_file(path: String) -> Error:
 	if not load_error.is_empty():return ERR_INVALID_DATA
@@ -164,6 +188,12 @@ func restore_snapshot(parsed: Variant, update_scene:=true) -> bool:
 		plots[id].data.restore(pending[id]);plots[id].data.undo_stack.clear();plots[id].data.redo_stack.clear()
 		if update_scene:refresh(id)
 	_lowland_example_placed = parsed.get("lowland_example_placed", false) == true or not plots.lowland.data.pieces.is_empty()
+	if parsed is Dictionary and parsed.has("housing") and parsed["housing"] is Dictionary and resident_manager != null:
+		resident_manager.from_dict(parsed["housing"])
+	elif resident_manager != null:
+		resident_manager.clear_all()
+	if update_scene:
+		refresh_residents()
 	load_error = ""
 	if active:
 		_update_editor_state()
@@ -173,7 +203,7 @@ func _number(value: Variant) -> bool:
 	return (value is int or value is float) and is_finite(value)
 
 func is_world_input_locked() -> bool:
-	return active
+	return active or (is_instance_valid(room_assignment_panel) and room_assignment_panel.visible) or (is_instance_valid(home_interaction_panel) and home_interaction_panel.visible)
 
 func eligible_plot() -> String:
 	if not initialized or not world.test_ready or not world.character_mode or world.free_mode \
@@ -464,8 +494,13 @@ func _input(event: InputEvent) -> void:
 			toggle()
 		return
 	if not active:
-		if key == KEY_F and world.character_mode and not world.free_mode and world.is_world_input_allowed():
-			_open_nearest_door()
+		if world.character_mode and not world.free_mode and world.is_world_input_allowed():
+			if key == KEY_F:
+				_open_nearest_door()
+			elif key == KEY_G:
+				_handle_room_management_input()
+			elif key == KEY_E:
+				_handle_resident_interaction_input()
 		return
 	match key:
 		KEY_ESCAPE: toggle()
@@ -571,6 +606,7 @@ func _navigation() -> void:
 	if not visible_now:
 		if is_instance_valid(hud):
 			hud.set_navigation(false, Vector3.ZERO, Vector3.ZERO, _home_markers, "")
+			hud.set_room_prompt("")
 		return
 	if _home_markers.is_empty():
 		for row: Dictionary in world.resolved_spawns:
@@ -584,6 +620,14 @@ func _navigation() -> void:
 	var camera: Camera3D = world.get_viewport().get_camera_3d()
 	if camera and is_instance_valid(hud):
 		hud.set_navigation(true, -camera.global_basis.z, world.active_actor().global_position, _home_markers, label)
+		var nearest_actor := _find_nearest_resident(2.5)
+		var cur_room := get_current_room()
+		if is_instance_valid(nearest_actor):
+			hud.set_room_prompt("【E】与 %s 互动 · 【G】管理房间住客" % nearest_actor.get_display_name())
+		elif not cur_room.is_empty():
+			hud.set_room_prompt("【G】管理本房间住客")
+		else:
+			hud.set_room_prompt("")
 
 func _process(delta: float) -> void:
 	if not active:
@@ -617,3 +661,197 @@ func _process(delta: float) -> void:
 	ghost.global_transform = plot.root.global_transform * Transform3D(
 			Basis(Vector3.UP, DATA.yaw(row, definition.kind)), DATA.local_position(row))
 	ghost.show()
+
+func get_current_room() -> Dictionary:
+	if not is_instance_valid(world) or not is_instance_valid(world.character):
+		return {}
+	var char_pos: Vector3 = world.character.global_position
+	for id: String in plots:
+		var plot: Dictionary = plots[id]
+		var local: Vector3 = plot.root.to_local(char_pos)
+		var plot_size := float(plot.spec.size)
+		if local.x < -0.5 or local.x > plot_size + 0.5 or local.z < -0.5 or local.z > plot_size + 0.5:
+			continue
+		var story := clampi(roundi((local.y - 0.2) / DATA.STORY), 0, DATA.MAX_STORIES - 1)
+		if absf(local.y - (0.2 + story * DATA.STORY)) > 2.8:
+			continue
+		var cell_x := floori(local.x / 2.0)
+		var cell_z := floori(local.z / 2.0)
+		var target_key := DATA.cell_key(story, cell_x, cell_z)
+		for room: Dictionary in plot.data.rooms:
+			if target_key in room.get("cells", []):
+				var res := room.duplicate(true)
+				res["plot_id"] = id
+				return res
+	return {}
+
+func _find_nearest_resident(max_dist: float = 2.5) -> HomeResidentActor:
+	if not is_instance_valid(world) or not is_instance_valid(world.character):
+		return null
+	var player_pos: Vector3 = world.character.global_position
+	var nearest: HomeResidentActor = null
+	var min_d := max_dist
+	for r_id: String in resident_actors:
+		var actor: HomeResidentActor = resident_actors[r_id] as HomeResidentActor
+		if is_instance_valid(actor):
+			var d := actor.global_position.distance_to(player_pos)
+			if d < min_d:
+				min_d = d
+				nearest = actor
+	return nearest
+
+func open_room_assignment_panel(plot_id: String, room: Dictionary) -> void:
+	if is_instance_valid(room_assignment_panel):
+		room_assignment_panel.open(plot_id, room)
+
+func _handle_room_management_input() -> void:
+	var cur_room := get_current_room()
+	if cur_room.is_empty():
+		hud.show_notice("请先进入已建成的房间内，再按【G】管理住客")
+		return
+	var plot_id: String = str(cur_room.get("plot_id", ""))
+	open_room_assignment_panel(plot_id, cur_room)
+	get_viewport().set_input_as_handled()
+
+func _handle_resident_interaction_input() -> void:
+	var actor := _find_nearest_resident(2.5)
+	if is_instance_valid(actor):
+		_on_resident_interacted(actor)
+		get_viewport().set_input_as_handled()
+
+func _on_resident_interacted(actor: HomeResidentActor) -> void:
+	if is_instance_valid(actor) and is_instance_valid(home_interaction_panel):
+		actor.state = HomeResidentActor.State.INTERACTING
+		home_interaction_panel.open(actor)
+
+func _on_home_intimacy_requested(tier: String, resident_actor: HomeResidentActor) -> void:
+	if not is_instance_valid(resident_actor):
+		return
+	var tier_name := "日常侍奉" if tier == "service" else "深度温存"
+	var motion_category := "ground_service"
+	var chosen_piece_desc := "地席"
+
+	var has_bed := false
+	var has_chair := false
+	var has_desk := false
+	if plots.has(resident_actor.plot_id):
+		var p_data = plots[resident_actor.plot_id].data
+		for f_id in resident_actor.room_data.get("furniture", []):
+			if p_data.pieces.has(f_id):
+				var def: String = str(p_data.pieces[f_id].definition)
+				if def == "bed":
+					has_bed = true
+				elif def in ["chair", "bench"]:
+					has_chair = true
+				elif def == "desk":
+					has_desk = true
+
+	if tier == "service":
+		if has_bed:
+			motion_category = "bed_service"
+			chosen_piece_desc = "床榻"
+		elif has_chair:
+			motion_category = "seat_service"
+			chosen_piece_desc = "座椅"
+		elif has_desk:
+			motion_category = "desk_service"
+			chosen_piece_desc = "长案"
+		else:
+			motion_category = "ground_service"
+			chosen_piece_desc = "地席"
+	else:
+		if has_bed:
+			motion_category = "honban"
+			chosen_piece_desc = "床榻本番"
+		elif has_chair:
+			motion_category = "seat_service"
+			chosen_piece_desc = "座椅深度温存"
+		elif has_desk:
+			motion_category = "desk_service"
+			chosen_piece_desc = "长案深度温存"
+		else:
+			motion_category = "ground_service"
+			chosen_piece_desc = "地席深度温存"
+
+	if is_instance_valid(hud):
+		hud.show_notice("【家园亲密互动 · %s】与 %s 在 %s 进行互动（动作套组：%s）" % [tier_name, resident_actor.get_display_name(), chosen_piece_desc, motion_category])
+
+func _get_room_spawn_position(plot_id: String, room: Dictionary) -> Vector3:
+	if not plots.has(plot_id):
+		return Vector3.ZERO
+	var plot: Dictionary = plots[plot_id]
+	var cells: Array = room.get("cells", [])
+	if cells.is_empty():
+		return plot.root.to_global(ENTRY)
+
+	var target_cell_str: String = str(cells[cells.size() / 2])
+	var parts: PackedStringArray = target_cell_str.split(":")
+	var story: int = int(room.get("story", 0))
+	var cx: int = 15
+	var cz: int = 15
+	if parts.size() == 3:
+		story = parts[0].to_int()
+		cx = parts[1].to_int()
+		cz = parts[2].to_int()
+
+	var local_pos := Vector3(cx * 2.0 + 1.0, 0.2 + story * DATA.STORY, cz * 2.0 + 1.0)
+	var global_pos: Vector3 = plot.root.to_global(local_pos)
+	var w3d := get_world_3d()
+	if w3d != null and w3d.direct_space_state != null:
+		var space := w3d.direct_space_state
+		var ray := PhysicsRayQueryParameters3D.create(global_pos + Vector3.UP * 0.8, global_pos - Vector3.UP * 1.5, WALKABLE_MASK)
+		var hit := space.intersect_ray(ray)
+		if not hit.is_empty():
+			return hit.position + Vector3.UP * 0.02
+	return global_pos
+
+func refresh_residents() -> void:
+	if not initialized or resident_manager == null:
+		return
+
+	var valid_room_ids: Dictionary = {}
+	for id: String in plots:
+		var plot: Dictionary = plots[id]
+		for room: Dictionary in plot.data.rooms:
+			var r_id: String = str(room.get("id", ""))
+			if not r_id.is_empty():
+				valid_room_ids[r_id] = {"plot_id": id, "room": room}
+
+	var assignments: Dictionary = resident_manager.get_all_assignments()
+	for r_id: String in assignments.keys():
+		if not valid_room_ids.has(r_id):
+			resident_manager.unassign_room(r_id)
+
+	var current_assigned_rooms: Dictionary = resident_manager.get_all_assignments()
+
+	for r_id: String in resident_actors.keys():
+		var actor = resident_actors.get(r_id)
+		var expected_char: String = str(current_assigned_rooms.get(r_id, ""))
+		if expected_char.is_empty() or not is_instance_valid(actor) or actor.character_id != expected_char:
+			if is_instance_valid(actor):
+				actor.queue_free()
+			resident_actors.erase(r_id)
+
+	for r_id: String in current_assigned_rooms:
+		var char_id: String = str(current_assigned_rooms[r_id])
+		if char_id.is_empty() or not valid_room_ids.has(r_id):
+			continue
+		if resident_actors.has(r_id) and is_instance_valid(resident_actors[r_id]):
+			continue
+
+		var room_info: Dictionary = valid_room_ids[r_id]
+		var plot_id: String = str(room_info.plot_id)
+		var room: Dictionary = room_info.room
+
+		var actor_node: HomeResidentActor = RESIDENT_ACTOR_SCENE.new()
+		actor_node.character_id = char_id
+		actor_node.plot_id = plot_id
+		actor_node.room_id = r_id
+		actor_node.room_data = room
+		actor_node.home = self
+		actor_node.interaction_requested.connect(_on_resident_interacted)
+
+		var spawn_pos: Vector3 = _get_room_spawn_position(plot_id, room)
+		actor_node.position = spawn_pos
+		add_child(actor_node)
+		resident_actors[r_id] = actor_node

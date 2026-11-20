@@ -24,6 +24,7 @@ var _title: Label
 var _hint: Label
 var _status: Label
 var _notice: Label
+var _room_prompt: Label
 var _catalog: GridContainer
 var _category_buttons: ButtonGroup
 var _story_buttons: ButtonGroup
@@ -78,6 +79,15 @@ func _ready() -> void:
 	_notice.offset_right = 456
 	_notice.offset_top = -59
 	_notice.offset_bottom = -28
+	_room_prompt = UI.text_label("", 19, Color("#ffe899"), UI.DEFAULT_PALETTE)
+	_room_prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_screen.add_child(_room_prompt)
+	_room_prompt.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
+	_room_prompt.offset_left = -380
+	_room_prompt.offset_right = 380
+	_room_prompt.offset_top = -155
+	_room_prompt.offset_bottom = -118
+	_room_prompt.hide()
 	_make_builder()
 	_prompt.hide()
 	_compass.hide()
@@ -283,6 +293,7 @@ func set_editing(editing: bool, plot_name := "", story := 0) -> void:
 	if editing:
 		_compass.hide()
 		_prompt.hide()
+		_room_prompt.hide()
 		set_selection(home.selected_definition, home.erase_mode)
 
 
@@ -311,6 +322,15 @@ func show_status(note: String) -> void:
 func show_notice(note: String) -> void:
 	_notice.text = note
 	_notice_left = 5.0
+
+
+func set_room_prompt(prompt_text: String) -> void:
+	if is_instance_valid(_room_prompt):
+		if prompt_text.is_empty():
+			_room_prompt.hide()
+		else:
+			_room_prompt.text = prompt_text
+			_room_prompt.show()
 
 
 func set_navigation(enabled: bool, forward: Vector3, origin: Vector3, homes: Array[Dictionary], eligible: String) -> void:
