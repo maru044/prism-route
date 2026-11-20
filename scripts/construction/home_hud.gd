@@ -13,6 +13,8 @@ const CATEGORIES := {
 	"家具": ["bed", "chair", "desk"],
 }
 const COMPASS_SPAN := 62.0
+const MAX_STORIES := 5
+const STORY_NAMES: Array[String] = ["一层", "二层", "三层", "四层", "五层"]
 
 var home
 var _screen := Control.new()
@@ -25,6 +27,10 @@ var _notice: Label
 var _catalog: GridContainer
 var _category_buttons: ButtonGroup
 var _story_buttons: ButtonGroup
+var _current_story := 0
+var _prev_story_btn: Button
+var _next_story_btn: Button
+var _story_label: Label
 var _cards := {}
 var _tools := {}
 var _example: Button
@@ -97,14 +103,33 @@ func _make_builder() -> void:
 	_title.add_theme_font_override("font", UI.command_font())
 	column.add_child(_title)
 
-	var stories := UI.row(6)
-	column.add_child(stories)
+	# Floor pagination switcher (可翻页楼层控制器)
+	var story_pager := UI.row(6)
+	column.add_child(story_pager)
+
+	_prev_story_btn = _button(story_pager, "◀ 降层", _on_prev_story_pressed)
+	_prev_story_btn.custom_minimum_size = Vector2(76, 36)
+
+	_story_label = UI.text_label("", 18, PAPER.text, PAPER)
+	_story_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_story_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_story_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_story_label.custom_minimum_size.y = 36
+	story_pager.add_child(_story_label)
+
+	_next_story_btn = _button(story_pager, "升层 ▶", _on_next_story_pressed)
+	_next_story_btn.custom_minimum_size = Vector2(76, 36)
+
+	var page_tabs := UI.row(4)
+	column.add_child(page_tabs)
 	_story_buttons = ButtonGroup.new()
-	for story: int in range(2):
-		var button := _button(stories, "一层" if story == 0 else "二层", home.select_story.bind(story))
+	for story in range(MAX_STORIES):
+		var button := _button(page_tabs, STORY_NAMES[story], _select_story.bind(story))
 		button.toggle_mode = true
 		button.button_group = _story_buttons
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		button.custom_minimum_size.y = 30
+		button.tooltip_text = "切换至%s" % STORY_NAMES[story]
 		button.set_pressed_no_signal(story == 0)
 
 	_category_buttons = ButtonGroup.new()
@@ -123,7 +148,7 @@ func _make_builder() -> void:
 	var scroll := ScrollContainer.new()
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	scroll.custom_minimum_size.y = 278
+	scroll.custom_minimum_size.y = 236
 	column.add_child(scroll)
 	_catalog = GridContainer.new()
 	_catalog.columns = 2
@@ -218,13 +243,43 @@ func _offer_example() -> void:
 	home.place_lowland_example()
 
 
+func _select_story(story: int) -> void:
+	if home != null and home.has_method("select_story"):
+		home.select_story(story)
+	update_story(story)
+
+
+func _on_prev_story_pressed() -> void:
+	if _current_story > 0:
+		_select_story(_current_story - 1)
+
+
+func _on_next_story_pressed() -> void:
+	if _current_story < MAX_STORIES - 1:
+		_select_story(_current_story + 1)
+
+
+func update_story(story: int) -> void:
+	_current_story = clampi(story, 0, MAX_STORIES - 1)
+	if is_instance_valid(_story_label):
+		var name_str: String = STORY_NAMES[_current_story] if _current_story < STORY_NAMES.size() else ("%d层" % (_current_story + 1))
+		_story_label.text = "第 %d 层 (共 %d 层) · %s" % [_current_story + 1, MAX_STORIES, name_str]
+	if is_instance_valid(_prev_story_btn):
+		_prev_story_btn.disabled = (_current_story <= 0)
+	if is_instance_valid(_next_story_btn):
+		_next_story_btn.disabled = (_current_story >= MAX_STORIES - 1)
+	if _story_buttons != null:
+		var buttons := _story_buttons.get_buttons()
+		if _current_story < buttons.size():
+			buttons[_current_story].set_pressed_no_signal(true)
+
+
 func set_editing(editing: bool, plot_name := "", story := 0) -> void:
 	panel.visible = editing
 	_confirm_example = false
 	_example.text = "放置示例屋"
 	_title.text = plot_name
-	for index in range(_story_buttons.get_buttons().size()):
-		_story_buttons.get_buttons()[index].set_pressed_no_signal(index == story)
+	update_story(story)
 	if editing:
 		_compass.hide()
 		_prompt.hide()

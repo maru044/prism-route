@@ -157,7 +157,7 @@ func restore_snapshot(parsed: Variant, update_scene:=true) -> bool:
 				load_error="建造存档组件损坏";return false
 			for field in ["x","z","story","rotation"]:
 				if not _number(row.get(field)):load_error="建造存档坐标损坏";return false
-			if row.x<0 or row.x>60 or row.z<0 or row.z>60 or row.story<0 or row.story>1:
+			if row.x<0 or row.x>60 or row.z<0 or row.z>60 or row.story<0 or row.story>=DATA.MAX_STORIES:
 				load_error="建造存档超出范围";return false
 		pending[id]=state
 	for id: String in pending:
@@ -187,7 +187,7 @@ func eligible_plot() -> String:
 		var local: Vector3 = plot.root.to_local(actor.global_position)
 		var plot_size := float(plot.spec.size)
 		var outside := Vector2(local.x - clampf(local.x, 0, plot_size), local.z - clampf(local.z, 0, plot_size))
-		if outside.length() > APPROACH_MARGIN or local.y < -.65 or local.y > DATA.STORY + .85:
+		if outside.length() > APPROACH_MARGIN or local.y < -.65 or local.y > DATA.STORY * DATA.MAX_STORIES + .85:
 			continue
 		var hit := _floor_at(actor.global_position, .24, .45)
 		if hit.is_empty():
@@ -214,7 +214,7 @@ func toggle() -> void:
 	selected_plot = site
 	var plot: Dictionary = plots[site]
 	var actor = world.character
-	selected_story = clampi(roundi((plot.root.to_local(actor.global_position).y - .2) / DATA.STORY), 0, 1)
+	selected_story = clampi(roundi((plot.root.to_local(actor.global_position).y - .2) / DATA.STORY), 0, DATA.MAX_STORIES - 1)
 	active = true
 	erase_mode = false
 	previous_camera = world.camera.global_transform
@@ -347,9 +347,11 @@ func set_erase(enabled: bool) -> void:
 	hud.show_hint("点击构件拆除" if erase_mode else "")
 
 func select_story(story: int) -> void:
-	selected_story = story
+	selected_story = clampi(story, 0, DATA.MAX_STORIES - 1)
 	_place_grid()
 	_update_floor_visibility()
+	if is_instance_valid(hud):
+		hud.update_story(selected_story)
 
 func _update_floor_visibility() -> void:
 	var plot: Dictionary = plots[selected_plot]
@@ -479,6 +481,10 @@ func _input(event: InputEvent) -> void:
 			if not hud.panel.get_global_rect().has_point(get_viewport().get_mouse_position()):
 				var target := _pointed_piece(get_viewport().get_mouse_position())
 				if not target.is_empty(): toggle_door(selected_plot, target.id)
+		KEY_PAGEUP:
+			select_story(selected_story + 1)
+		KEY_PAGEDOWN:
+			select_story(selected_story - 1)
 		_: return
 	get_viewport().set_input_as_handled()
 

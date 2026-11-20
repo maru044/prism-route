@@ -2,6 +2,7 @@ extends RefCounted
 ## Authoritative local-metre records; derived rooms never own construction state.
 const CELL:=2.0
 const STORY:=3.6
+const MAX_STORIES:=5
 var plot_id:=""
 var definitions: Dictionary
 var pieces: Dictionary={}
@@ -69,7 +70,7 @@ func wall_crosses(row: Dictionary,polygon: PackedVector2Array) -> bool:
 
 func validate(row: Dictionary) -> String:
 	if not definitions.has(row.definition):return "未知组件"
-	if int(row.story)<0 or int(row.story)>1:return "家园可建一层或二层"
+	if int(row.story)<0 or int(row.story)>=MAX_STORIES:return "家园最多可建五层"
 	var d: Dictionary=definitions[row.definition];var kind: String=d.kind
 	if kind=="internal":return "内部零件不能单独放置"
 	var floors:=floor_map(int(row.story))
@@ -102,12 +103,12 @@ func validate(row: Dictionary) -> String:
 	elif kind=="ramp":
 		if int(row.story)!=0:return "入口坡道仅用于地面"
 	elif kind=="connector":
-		if int(row.story)!=0:return "楼梯从一层通往二层"
+		if int(row.story)<0 or int(row.story)>=MAX_STORIES-1:return "顶层无法再向上建造楼梯"
 		for c: Vector2i in cells:
 			if not floors.has(c):return "楼梯需要完整底层支撑"
-			if floor_map(1).has(c):return "先移除楼梯上方楼板"
+			if floor_map(int(row.story)+1).has(c):return "先移除楼梯上方楼板"
 		var top:=Basis(Vector3.UP,yaw(row,kind))*Vector3(1,0,-1)+Vector3(row.x,0,row.z)
-		if not floor_map(1).has(Vector2i(floori(top.x/2.),floori(top.z/2.))):return "楼梯上端需要二层落脚楼板"
+		if not floor_map(int(row.story)+1).has(Vector2i(floori(top.x/2.),floori(top.z/2.))):return "楼梯上端需要落脚楼板"
 	else:
 		for c: Vector2i in cells:
 			if not floors.has(c):return "家具需要完整楼板支撑"
@@ -163,7 +164,7 @@ func redo() -> bool:
 
 func analyze() -> void:
 	var old:=rooms.duplicate(true);var next: Array[Dictionary]=[]
-	for story in range(2):
+	for story in range(MAX_STORIES):
 		var floors:=floor_map(story);var boundary:=edges(story);var seen: Dictionary={}
 		var upper:=floor_map(story+1);var roofs: Dictionary={}
 		for row: Dictionary in pieces.values():
