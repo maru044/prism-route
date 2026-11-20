@@ -21,6 +21,7 @@ func _run() -> void:
 	test_intimacy_catalog()
 	test_resident_manager()
 	test_resident_actor_state_management()
+	test_resident_navigation_and_corner_avoidance()
 	test_housing_panel_ui()
 	test_interaction_panel_and_tiers()
 	await test_construction_world_housing_integration()
@@ -198,6 +199,63 @@ func test_resident_actor_state_management() -> void:
 	actor.queue_free()
 	root_node.queue_free()
 	print("  [Pass] Resident actor state preservation, follow toggling and room data updates verified")
+
+func test_resident_navigation_and_corner_avoidance() -> void:
+	print("--- Test 1.6: HomeResidentActor Pathfinding & Corner Avoidance ---")
+	var root_node := Node3D.new()
+	root.add_child(root_node)
+
+	var actor := RESIDENT_ACTOR.new()
+	actor.character_id = "ganyu"
+	actor.plot_id = "coastal"
+	actor.room_id = "coastal_room_0001"
+	actor.room_data = {"id": "coastal_room_0001", "story": 0, "cells": ["0:10:10"]}
+	root_node.add_child(actor)
+
+	# 1. Test Line of sight helper
+	assert(actor._has_line_of_sight(Vector3.ZERO, Vector3(5, 0, 5), null), "Without space, line of sight should be true")
+
+	# 2. Test Whisker steering calculation
+	var steer_straight: Vector3 = actor._calculate_steer_direction(Vector3(0, 0, 10), null)
+	assert(steer_straight.is_equal_approx(Vector3(0, 0, 1)), "Steering without obstacles should point towards target")
+
+	# 3. Test breadcrumb trail accumulation during follow mode
+	var mock_player := Node3D.new()
+	root_node.add_child(mock_player)
+	mock_player.global_position = Vector3(0, 0, 0)
+	actor.global_position = Vector3(0, 0, -3)
+
+	actor.set_following(true)
+	assert(actor.state == RESIDENT_ACTOR.State.FOLLOWING, "Actor must be in FOLLOWING state")
+	assert(actor._player_trail.is_empty(), "Trail starts empty")
+
+	# Simulate player moving to multiple waypoints around a corner
+	# Point 1: Move forward 1.0m
+	mock_player.global_position = Vector3(0, 0, 1.0)
+	actor._process_following(0.016, mock_player, actor.global_position.distance_to(mock_player.global_position))
+	assert(actor._player_trail.size() == 1, "First player breadcrumb must be recorded")
+	assert(actor._player_trail[0].is_equal_approx(Vector3(0, 0, 1.0)), "Waypoint must match player position")
+
+	# Point 2: Move further forward (corner turn point)
+	mock_player.global_position = Vector3(0, 0, 3.0)
+	actor._process_following(0.016, mock_player, actor.global_position.distance_to(mock_player.global_position))
+
+	# Point 3: Turn 90 degrees right around corner
+	mock_player.global_position = Vector3(3.0, 0, 3.0)
+	actor._process_following(0.016, mock_player, actor.global_position.distance_to(mock_player.global_position))
+	assert(actor._player_trail.size() >= 2, "Trail must accumulate corner waypoints")
+
+	# 4. Test teleport catch up when far away
+	mock_player.global_position = Vector3(100.0, 0, 100.0)
+	actor.global_position = Vector3(0, 0, 0)
+	actor._process_following(0.016, mock_player, 141.4)
+	assert(actor.global_position.distance_to(mock_player.global_position) < 3.0, "Actor must teleport catch up when far away")
+	assert(actor._player_trail.is_empty(), "Trail must reset after catch up")
+
+	mock_player.queue_free()
+	actor.queue_free()
+	root_node.queue_free()
+	print("  [Pass] Resident actor breadcrumb pathfinding, whisker steering and corner catch-up verified")
 
 func test_housing_panel_ui() -> void:
 	print("--- Test 2: HomeRoomAssignmentPanel UI & Actions ---")
