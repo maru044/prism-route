@@ -13,6 +13,7 @@ var _routes := {}
 var _url := LineEdit.new()
 var _model := LineEdit.new()
 var _key := LineEdit.new()
+var _stream_usage := CheckBox.new()
 var _model_transport := Client.Transport.new()
 var _model_menu := PopupMenu.new()
 var _fetch_button: Button
@@ -81,6 +82,12 @@ func _ready() -> void:
 	_fetch_button = _button(model_row, "获取模型", _fetch_models)
 	_add_field(content, "API 密钥", _key)
 	_key.secret = true
+	_stream_usage.text = "请求流式用量统计"
+	_stream_usage.tooltip_text = "用于区分推理和正文的 token 用量。仅在服务支持流式用量统计时开启。"
+	_stream_usage.add_theme_font_override("font", UI.interface_font())
+	_stream_usage.add_theme_font_size_override("font_size", 20)
+	_stream_usage.add_theme_color_override("font_color", PALETTE.text)
+	content.add_child(_stream_usage)
 	_url.text_changed.connect(_connection_edited)
 	_key.text_changed.connect(_connection_edited)
 	_status = UI.text_label("", 20, PALETTE.accent, PALETTE)
@@ -149,6 +156,8 @@ func _load_route(channel: String) -> void:
 	_url.text = profile.url
 	_model.text = profile.model
 	_key.text = profile.key
+	_stream_usage.visible = channel == Client.DIALOGUE
+	_stream_usage.set_pressed_no_signal(profile.get("include_stream_usage", false))
 
 
 func _connection_edited(_text := "") -> void:
@@ -164,15 +173,19 @@ func _fetch_models() -> void:
 	var error := _model_transport.fetch_models(_url.text.strip_edges(), _key.text.strip_edges())
 	if not error.is_empty():
 		_status.text = error
+		print("[LLM 报错-获取模型] %sZ · %s" % [Time.get_datetime_string_from_system(true), error])
+		push_error("[LLM 报错-获取模型] %sZ · %s" % [Time.get_datetime_string_from_system(true), error])
 		return
 	_fetch_button.disabled = true
-	_status.text = "正在获取模型…"
+	_status.text = "正在获取模型"
 
 
 func _models_received(result: Dictionary, error: String) -> void:
 	_fetch_button.disabled = false
 	if not error.is_empty():
 		_status.text = error
+		print("[LLM 报错-获取模型] %sZ · %s" % [Time.get_datetime_string_from_system(true), error])
+		push_error("[LLM 报错-获取模型] %sZ · %s" % [Time.get_datetime_string_from_system(true), error])
 		return
 	var ids: PackedStringArray = result.models
 	for id: String in ids:
@@ -189,7 +202,7 @@ func _choose_model(index: int) -> void:
 
 func _save() -> void:
 	_connection_edited()
-	var result := _client.save_profile(_channel, _url.text, _model.text, _key.text)
+	var result := _client.save_profile(_channel, _url.text, _model.text, _key.text, _stream_usage.button_pressed)
 	_status.text = "已保存当前连接到本机。" if result.is_empty() else result
 
 

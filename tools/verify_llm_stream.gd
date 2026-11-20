@@ -76,7 +76,23 @@ func _verify_transport() -> void:
 		{"name": "truncated stream", "body": text + "data: {", "text": "你好", "error": "中断"},
 		{"name": "server event error", "body": text + _sse({"error": {"message": "fixture"}}), "text": "你好", "error": "错误事件"},
 		{"name": "invalid choices after text", "body": text + _sse({"choices": {}}), "text": "你好", "error": "无效的流式选项"},
-		{"name": "output token limit", "body": text + _sse({"choices": [{"finish_reason": "length"}]}), "text": "你好", "error": "输出上限"},
+		{"name": "output token limit", "body": text + _sse({"choices": [{"finish_reason": "length"}]}), "text": "你好", "error": "输出上限",
+			"diagnostic": ["max_tokens=8000", "结束原因 · length", "收到 content · 1 个事件，正文 2 字符", "首个 content", "未返回可用统计"]},
+		{"name": "output limit with final usage", "request_usage": true, "text": "你好", "error": "输出上限",
+			"body": text + _sse({"choices": [{"finish_reason": "length"}]})
+				+ _sse({"choices": [{"finish_reason": "", "delta": {}}]})
+				+ _sse({"choices": [], "usage": {"prompt_tokens": 16653, "completion_tokens": 8000, "total_tokens": 24653,
+					"completion_tokens_details": {"reasoning_tokens": 7900}, "untrusted": "usage-fixture-content"}})
+				+ "data: [DONE]\n\n",
+			"diagnostic": ["流式用量 · 已请求", "结束原因 · length", "prompt_tokens=16653", "completion_tokens=8000", "reasoning_tokens=7900"],
+			"diagnostic_excludes": ["usage-fixture-content", "未返回可用统计"]},
+		{"name": "output limit with provider usage metadata", "text": "", "error": "输出上限",
+			"body": _sse({"choices": [{"delta": {"reasoning_content": "reasoning-fixture-content"}}]})
+				+ _sse({"choices": [{"finish_reason": "length"}], "usageMetadata": {"promptTokenCount": "usage-fixture-content",
+					"candidatesTokenCount": 0, "thoughtsTokenCount": 8000, "totalTokenCount": -1}})
+				+ "data: [DONE]\n\n",
+			"diagnostic": ["流式用量 · 未请求", "收到 content · 0 个事件，正文 0 字符", "candidatesTokenCount=0", "thoughtsTokenCount=8000"],
+			"diagnostic_excludes": ["promptTokenCount=", "totalTokenCount=", "usage-fixture-content", "reasoning-fixture-content", "首个 content"]},
 		{"name": "unexpected tool turn", "body": _sse({"choices": [{"finish_reason": "tool_calls"}]}), "text": "", "error": "只接收文本"},
 		{"name": "unexpected tool delta", "body": text + _sse({"choices": [{"delta": {"tool_calls": [{"index": 0}]}}]}), "text": "你好", "error": "只接收文本"},
 		{"name": "JSON instead of SSE", "body": "{}", "mime": "application/json", "text": "", "error": "普通 JSON"},
@@ -837,6 +853,8 @@ func _verify_report_panel() -> void:
 func _run_case(server: TCPServer, client: Node, fixture: Dictionary) -> void:
 	var title: String = fixture.name
 	var route: String = fixture.get("route", Client.DIALOGUE)
+	var request_usage: bool = fixture.get("request_usage", false)
+	client.profiles[Client.DIALOGUE]["include_stream_usage"] = request_usage
 	client.open(route, title, {"npc_name": "FixtureNPC", "dialogue_location": "FixtureLocation"})
 	if not client.send("stream fixture"):
 		_fail(title, "could not send request")
@@ -865,6 +883,9 @@ func _run_case(server: TCPServer, client: Node, fixture: Dictionary) -> void:
 		client.stop()
 		return
 	var messages: Array = payload.messages
+	if request_usage and payload.get("stream_options") != {"include_usage": true} \
+			or not request_usage and payload.has("stream_options"):
+		_fail(title, "request did not respect the stream usage setting")
 	if payload.has("temperature") or payload.has("top_p"):
 		_fail(title, "request still sends obsolete sampling parameters")
 	var before: String = messages.front().content
@@ -943,6 +964,9 @@ func _run_case(server: TCPServer, client: Node, fixture: Dictionary) -> void:
 		for expected: String in fixture.get("diagnostic", []):
 			if not client.diagnostic.contains(expected):
 				_fail(title, "missing diagnostic field: " + expected)
+		for unexpected: String in fixture.get("diagnostic_excludes", []):
+			if client.diagnostic.contains(unexpected):
+				_fail(title, "unexpected diagnostic field: " + unexpected)
 	elif client.status != fixture.status:
 		_fail(title, "unexpected status: " + client.status)
 

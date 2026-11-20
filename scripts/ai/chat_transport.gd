@@ -10,7 +10,13 @@ const MAX_RESPONSE_BYTES := 4 * 1024 * 1024
 const MAX_ERROR_BYTES := 8192
 const RESPONSE_PROBE_BYTES := 256
 const ERROR_BODY_TIMEOUT_MS := 2000
+const OUTPUT_LIMIT_ERROR := "回复达到模型的输出上限。"
 const RETRYABLE_HTTP_CODES := [408, 429, 500, 502, 503, 504]
+const STREAM_FINISH_REASONS := ["stop", "length", "content_filter", "safety", "tool_calls", "function_call"]
+const STREAM_USAGE_FIELDS := {
+	"usage": ["prompt_tokens", "completion_tokens", "total_tokens"],
+	"usageMetadata": ["promptTokenCount", "candidatesTokenCount", "thoughtsTokenCount", "totalTokenCount"],
+}
 static var _sensitive_error := RegEx.create_from_string(
 	r"""(?i)\b(?:authorization|api[-_ ]?key|access[-_ ]?token|proxy[-_ ]?password|password|secret)["']?[ \t]*[:=][ \t]*(?:bearer[ \t]+)?(?:"[^"]*"|'[^']*'|[^,\s;]+)|\bbearer[ \t]+[^,\s;]+|\b(?:sk-|AIza)[A-Za-z0-9_-]{8,}"""
 )
@@ -35,7 +41,11 @@ var _buffer := PackedByteArray()
 var _data := PackedStringArray()
 var _after_cr := false
 var _stream_finish := ""
-var _has_stream_text := false
+var _request_sent_ms := -1
+var _first_content_ms := -1
+var _last_content_ms := -1
+var _content_events := 0
+var _stream_usage := {}
 var _response_key := ""
 var _request_id := ""
 var _retry_after := ""
@@ -80,6 +90,7 @@ func _start_request(url: String, key: String, payload: Dictionary, fetching_mode
 	var validation := connection_error(url, key)
 	if not validation.is_empty():
 		failure_details.summary = validation
+		failure_details.detail = validation
 		return validation
 	_fetching_models = fetching_models
 	_target = endpoint(url, "/models" if _fetching_models else "/chat/completions")
@@ -101,6 +112,7 @@ func _start_request(url: String, key: String, payload: Dictionary, fetching_mode
 		cancel()
 		failure_details.retryable = error in [ERR_CANT_CONNECT, ERR_CONNECTION_ERROR, ERR_TIMEOUT]
 		failure_details.summary = "连接失败 · " + error_string(error)
+		failure_details.detail = failure_details.summary
 		return failure_details.summary
 	_deadline = Time.get_ticks_msec() + CONNECT_TIMEOUT_MS
 	set_process(true)
@@ -121,7 +133,11 @@ func cancel() -> void:
 	_received_bytes = 0
 	_after_cr = false
 	_stream_finish = ""
-	_has_stream_text = false
+	_request_sent_ms = -1
+	_first_content_ms = -1
+	_last_content_ms = -1
+	_content_events = 0
+	_stream_usage = {}
 	_response_key = ""
 	_request_id = ""
 	_retry_after = ""
@@ -153,7 +169,8 @@ func _process(_delta: float) -> void:
 	var state := _client.get_status()
 	if state == HTTPClient.STATUS_CONNECTED and not _sent:
 		_sent = true
-		_deadline = Time.get_ticks_msec() + RESPONSE_TIMEOUT_MS
+		_request_sent_ms = Time.get_ticks_msec()
+		_deadline = _request_sent_ms + RESPONSE_TIMEOUT_MS
 		var method := HTTPClient.METHOD_GET if _fetching_models else HTTPClient.METHOD_POST
 		var error := _client.request(method, _target.path, _headers, _request_body)
 		_headers.clear()
@@ -232,7 +249,7 @@ func _timeout_error() -> String:
 		return "请求已发送，等待 HTTP 响应超时。"
 	if not _stream:
 		return "读取模型列表超时。" if _fetching_models else "等待完整的 JSON 回复超时。"
-	return "流式回复中途长时间没有新增文本。" if _has_stream_text else "接口已响应，但等待第一段流式文本超时。"
+	return "流式回复中途长时间没有新增文本。" if _content_events > 0 else "接口已响应，但等待第一段流式文本超时。"
 
 func _response_format_error(headers: Dictionary) -> String:
 	for key: String in headers:
@@ -305,6 +322,7 @@ func _read_stream(chunk: PackedByteArray) -> void:
 				if event.has("error"):
 					_finish_stream_error(chunk_text, _append_error_detail("接口在流式回复中返回了错误事件。", event))
 					return
+				_capture_stream_usage(event)
 				var choices: Variant = event.get("choices", [])
 				if not choices is Array:
 					_finish_stream_error(chunk_text, "模型返回了无效的流式选项。")
@@ -315,10 +333,9 @@ func _read_stream(chunk: PackedByteArray) -> void:
 					_finish_stream_error(chunk_text, "模型返回了无效的流式选项。")
 					return
 				var choice: Dictionary = choices[0]
-				if choice.get("finish_reason") is String:
+				if choice.get("finish_reason") is String and not choice.finish_reason.is_empty():
 					_stream_finish = choice.finish_reason
-					if not _stream_finish.is_empty():
-						_deadline = Time.get_ticks_msec() + STREAM_END_GRACE_MS
+					_deadline = Time.get_ticks_msec() + STREAM_END_GRACE_MS
 				var delta: Dictionary = choice.get("delta", {})
 				var content: Variant = delta.get("content")
 				if content != null and not content is String:
@@ -329,9 +346,12 @@ func _read_stream(chunk: PackedByteArray) -> void:
 					return
 				if content is String and not content.is_empty():
 					chunk_text += content
-					_has_stream_text = true
+					_last_content_ms = Time.get_ticks_msec()
+					if _content_events == 0:
+						_first_content_ms = _last_content_ms
+					_content_events += 1
 					if _stream_finish.is_empty():
-						_deadline = Time.get_ticks_msec() + RESPONSE_TIMEOUT_MS
+						_deadline = _last_content_ms + RESPONSE_TIMEOUT_MS
 				if delta.get("tool_calls") or delta.get("function_call"):
 					_finish_stream_error(chunk_text, "自由对话入口只接收文本回复。")
 					return
@@ -347,6 +367,24 @@ func _read_stream(chunk: PackedByteArray) -> void:
 			return
 	if not chunk_text.is_empty():
 		delta_received.emit(chunk_text)
+
+func _capture_stream_usage(event: Dictionary) -> void:
+	for field: String in STREAM_USAGE_FIELDS:
+		var usage: Variant = event.get(field)
+		if not usage is Dictionary:
+			continue
+		var counts: Dictionary = _stream_usage.get(field, {})
+		for name: String in STREAM_USAGE_FIELDS[field]:
+			_capture_token_count(counts, name, usage.get(name))
+		var details: Variant = usage.get("completion_tokens_details") if field == "usage" else null
+		if details is Dictionary:
+			_capture_token_count(counts, "reasoning_tokens", details.get("reasoning_tokens"))
+		if not counts.is_empty():
+			_stream_usage[field] = counts
+
+static func _capture_token_count(counts: Dictionary, name: String, value: Variant) -> void:
+	if (value is int or value is float) and value >= 0 and value <= 2147483647 and value == int(value):
+		counts[name] = int(value)
 
 func _finish_stream_error(visible_text: String, error: String, stage := "解析流式事件") -> void:
 	if not visible_text.is_empty():
@@ -388,7 +426,7 @@ func _read_json() -> void:
 		_finish({}, "模型声明了工具调用，但未返回调用内容。", false, "检查回复结构")
 		return
 	if choice.get("finish_reason") == "length":
-		_finish(message, "回复达到模型的输出上限。")
+		_finish(message, OUTPUT_LIMIT_ERROR)
 		return
 	_finish(message, "")
 
@@ -435,7 +473,7 @@ func _finish_stream(done := false) -> void:
 		"stop":
 			_finish({}, "")
 		"length":
-			_finish({}, "回复达到模型的输出上限。")
+			_finish({}, OUTPUT_LIMIT_ERROR)
 		"content_filter", "safety":
 			_finish({}, "模型未继续生成。")
 		"tool_calls", "function_call":
@@ -450,7 +488,7 @@ func _finish(message: Dictionary, error: String, network_failure := false, stage
 	if _is_http_error():
 		stage = "接口拒绝请求"
 	elif _stream and _code >= 0:
-		stage = "读取流式正文" if _has_stream_text else "等待流式正文"
+		stage = "读取流式正文" if _content_events > 0 else "等待流式正文"
 	if not stage_override.is_empty():
 		stage = stage_override
 	failure_details = {
@@ -458,7 +496,18 @@ func _finish(message: Dictionary, error: String, network_failure := false, stage
 		"retry_after_seconds": _retry_after_seconds,
 		"retryable": network_failure or (_code in RETRYABLE_HTTP_CODES and not _quota_exhausted),
 		"summary": error if _error_summary.is_empty() else _error_summary,
+		"detail": error,
 	}
+	if _stream and _request_sent_ms >= 0:
+		var finish_reason := _stream_finish if _stream_finish in STREAM_FINISH_REASONS else (
+			"未收到" if _stream_finish.is_empty() else "其他")
+		failure_details["stream"] = {
+			"finish_reason": finish_reason, "usage": _stream_usage,
+			"content_events": _content_events,
+			"elapsed_ms": Time.get_ticks_msec() - _request_sent_ms,
+			"first_content_ms": _first_content_ms - _request_sent_ms,
+			"last_content_ms": _last_content_ms - _request_sent_ms,
+		}
 	cancel()
 	finished.emit(message, error)
 
@@ -489,7 +538,15 @@ func _finish_http_error() -> void:
 	var raw := _buffer.get_string_from_utf8()
 	var payload: Variant = _parse_json(raw) if not raw.is_empty() else null
 	var fields: Dictionary = payload if payload is Dictionary else {}
-	_finish({}, _append_error_detail(_status_hint(fields, raw if fields.is_empty() else ""), fields))
+	var hint := _status_hint(fields, raw if fields.is_empty() else "")
+	var full_error := _append_error_detail(hint, fields)
+	if fields.is_empty() and not raw.strip_edges().is_empty() and full_error == hint:
+		var snippet := raw.strip_edges().replace("\r", " ").replace("\n", " ").replace("\t", " ")
+		snippet = _sensitive_error.sub(snippet, "[已隐藏]", true)
+		snippet = _url_in_error.sub(snippet, "[已隐藏]", true).strip_edges().left(200)
+		if not snippet.is_empty():
+			full_error = hint + " " + snippet
+	_finish({}, full_error)
 
 static func _parse_json(text: String) -> Variant:
 	var parser := JSON.new()

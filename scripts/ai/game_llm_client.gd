@@ -89,6 +89,7 @@ func _ready() -> void:
 		for channel: String in profiles:
 			for field in ["url", "model", "key"]:
 				profiles[channel][field] = str(config.get_value(channel, field, profiles[channel][field]))
+		profiles[DIALOGUE]["include_stream_usage"] = config.get_value(DIALOGUE, "include_stream_usage", false) == true
 
 func _load_dialogue_markdown(local_profile_path := LOCAL_PLAYER_PROFILE) -> String:
 	_dialogue_entries.clear()
@@ -133,7 +134,7 @@ func _load_dialogue_markdown(local_profile_path := LOCAL_PLAYER_PROFILE) -> Stri
 static func _is_nonnegative_integer(value: Variant) -> bool:
 	return (value is int or value is float) and value >= 0 and value <= 2147483647 and value == int(value)
 
-func save_profile(channel: String, url: String, model: String, key: String) -> String:
+func save_profile(channel: String, url: String, model: String, key: String, include_stream_usage := false) -> String:
 	if not profiles.has(channel):
 		return "未知的模型入口。"
 	var connection_error := Transport.connection_error(url, key)
@@ -146,9 +147,13 @@ func save_profile(channel: String, url: String, model: String, key: String) -> S
 	config.set_value(channel, "url", url.strip_edges())
 	config.set_value(channel, "model", model.strip_edges())
 	config.set_value(channel, "key", key.strip_edges())
+	if channel == DIALOGUE:
+		config.set_value(channel, "include_stream_usage", include_stream_usage)
 	if config.save(SETTINGS_PATH) != OK:
 		return "无法写入本机连接设置。"
 	profiles[channel] = {"url": url.strip_edges(), "model": model.strip_edges(), "key": key.strip_edges()}
+	if channel == DIALOGUE:
+		profiles[channel]["include_stream_usage"] = include_stream_usage
 	return ""
 
 func open(channel: String, scope: String, speaker_context: Dictionary) -> void:
@@ -289,6 +294,8 @@ func _can_start() -> bool:
 		status = "请先配置这个入口的模型。"
 	elif route == DIALOGUE and not _dialogue_config_error.is_empty():
 		status = _dialogue_config_error
+		print("[LLM 配置报错] %sZ · 入口 · 自由对话 · %s" % [Time.get_datetime_string_from_system(true), _dialogue_config_error])
+		push_error("[LLM 配置报错] %sZ · %s" % [Time.get_datetime_string_from_system(true), _dialogue_config_error])
 	else:
 		return true
 	changed.emit()
@@ -312,6 +319,8 @@ func _start(operation: String, turn: Dictionary) -> bool:
 			_request_tools.clear()
 			status = prompt_error
 			diagnostic = ""
+			print("[LLM 配置报错] %sZ · 入口 · 游戏助手 · %s" % [Time.get_datetime_string_from_system(true), prompt_error])
+			push_error("[LLM 配置报错] %sZ · %s" % [Time.get_datetime_string_from_system(true), prompt_error])
 			changed.emit()
 			return false
 		_request_tool_specs = ToolRegistry.specifications(_request_tools)
@@ -332,6 +341,8 @@ func _start(operation: String, turn: Dictionary) -> bool:
 	var messages := _build_request_history(operation, turn, _context_limit_tokens - OUTPUT_TOKEN_RESERVE - fixed)
 	if messages.is_empty():
 		status = CONTEXT_OVERFLOW
+		print("[LLM 报错] %sZ · 入口 · %s · %s" % [Time.get_datetime_string_from_system(true), "自由对话" if route == DIALOGUE else "游戏助手", CONTEXT_OVERFLOW])
+		push_error("[LLM 报错] %sZ · %s · %s" % [Time.get_datetime_string_from_system(true), "自由对话" if route == DIALOGUE else "游戏助手", CONTEXT_OVERFLOW])
 		changed.emit()
 		return false
 	if operation == "send":
@@ -738,6 +749,8 @@ func payload() -> Dictionary:
 	var body := {"model": _request_profile.get("model", ""), "messages": _request_messages, "stream": route == DIALOGUE}
 	if route == DIALOGUE:
 		body["max_tokens"] = OUTPUT_TOKEN_RESERVE
+		if _request_profile.get("include_stream_usage", false):
+			body["stream_options"] = {"include_usage": true}
 	elif _allows_tools():
 		body["tools"] = _request_tool_specs
 	return body
@@ -762,6 +775,12 @@ func _schedule_assistant_retry(error: String) -> bool:
 	_assistant_retries += 1
 	status = "%s %d 秒后重试（%d/%d）。" % [error, wait_seconds, _assistant_retries, MAX_ASSISTANT_RETRIES]
 	_assistant_retry_timer.start(wait_seconds)
+	print("[LLM 报错-自动重试] %sZ · 入口 · 游戏助手 · %s · 等待 %d 秒后重试 (%d/%d)" % [
+		Time.get_datetime_string_from_system(true), error, wait_seconds, _assistant_retries, MAX_ASSISTANT_RETRIES
+	])
+	push_warning("[LLM 报错-自动重试] %sZ · %s · 等待 %d 秒后重试 (%d/%d)" % [
+		Time.get_datetime_string_from_system(true), error, wait_seconds, _assistant_retries, MAX_ASSISTANT_RETRIES
+	])
 	changed.emit()
 	return true
 
@@ -967,21 +986,30 @@ func _complete(error: String) -> void:
 		var stage := "整理上下文" if final_error == CONTEXT_OVERFLOW else str(details.get("stage", "处理回复"))
 		var lines := PackedStringArray(["入口 · " + ("自由对话" if route == DIALOGUE else "游戏助手"),
 			"阶段 · " + stage])
-		var model := Transport.safe_diagnostic_model(_request_profile.model, _request_profile.key)
+		var model := Transport.safe_diagnostic_model(str(_request_profile.get("model", "")), str(_request_profile.get("key", "")))
 		if not model.is_empty():
 			lines.append("模型 · " + model)
 		# Use the client-generated summary only. Provider details can echo request data.
 		var summary := str(details.get("summary", ""))
 		if final_error == CONTEXT_OVERFLOW:
 			summary = final_error
+		elif summary.is_empty():
+			summary = final_error
 		lines.append("错误 · " + (summary if not summary.is_empty() else "模型回复未能完成。"))
 		if details.get("http_code", 0) > 0:
 			lines.append("HTTP %d" % details.http_code)
 		if not str(details.get("request_id", "")).is_empty():
-			lines.append("请求 ID · " + details.request_id)
+			lines.append("请求 ID · " + str(details.request_id))
 		if not str(details.get("retry_after", "")).is_empty():
-			lines.append("建议等待 · " + details.retry_after)
+			lines.append("建议等待 · " + str(details.retry_after))
+		if route == DIALOGUE:
+			_append_stream_diagnostic(lines, details.get("stream", {}), body.length())
 		diagnostic = "\n".join(lines)
+		if final_error == Transport.OUTPUT_LIMIT_ERROR:
+			print("[LLM 输出上限] %sZ\n%s" % [Time.get_datetime_string_from_system(true), diagnostic])
+		else:
+			print("[LLM 报错] %sZ\n%s" % [Time.get_datetime_string_from_system(true), diagnostic])
+			push_error("[LLM 报错] %sZ · %s" % [Time.get_datetime_string_from_system(true), summary if not summary.is_empty() else final_error])
 	turn.result = {
 		"status": status, "diagnostic": diagnostic, "notice": notice, "incomplete": not final_error.is_empty(),
 		"omitted_turns": omitted_turns, "incomplete_turns": incomplete_turns,
@@ -994,3 +1022,23 @@ func _complete(error: String) -> void:
 	_request_tools.clear()
 	_request_tool_specs.clear()
 	changed.emit()
+
+func _append_stream_diagnostic(lines: PackedStringArray, stream: Dictionary, visible_chars: int) -> void:
+	lines.append("请求输出上限 · max_tokens=%d" % OUTPUT_TOKEN_RESERVE)
+	var usage_requested := "已请求" if _request_profile.get("include_stream_usage", false) else "未请求"
+	lines.append("流式用量 · " + usage_requested)
+	if stream.is_empty():
+		return
+	lines.append("结束原因 · " + str(stream.finish_reason))
+	lines.append("收到 content · %d 个事件，正文 %d 字符" % [stream.content_events, visible_chars])
+	var timing := "结束 %d ms" % stream.elapsed_ms
+	if stream.content_events > 0:
+		timing = "首个 content %d ms，最后一个 %d ms，%s" % [stream.first_content_ms, stream.last_content_ms, timing]
+	lines.append("请求发出后 · " + timing)
+	if stream.usage.is_empty():
+		lines.append("服务端用量 · 未返回可用统计")
+	for source: String in stream.usage:
+		var entries := PackedStringArray()
+		for field: String in stream.usage[source]:
+			entries.append("%s=%d" % [field, stream.usage[source][field]])
+		lines.append("服务端 %s · %s" % [source, "，".join(entries)])
