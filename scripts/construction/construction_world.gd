@@ -7,6 +7,8 @@ const RESIDENT_MANAGER := preload("res://scripts/construction/home_resident_mana
 const RESIDENT_ACTOR_SCENE := preload("res://scripts/construction/home_resident_actor.gd")
 const ROOM_ASSIGNMENT_PANEL := preload("res://scripts/ui/home_room_assignment_panel.gd")
 const HOME_INTERACTION_PANEL := preload("res://scripts/narrative/home_interaction_panel.gd")
+const CATALOG := preload("res://scripts/construction/home_intimacy_catalog.gd")
+const SHARED_HUMANOID_ACTOR := preload("res://scenes/characters/shared_humanoid_actor.tscn")
 const MASK_SIZE:=256
 const SAVE_PATH:="user://construction/home_v1.json"
 const WALKABLE_MASK := 32
@@ -41,6 +43,17 @@ var resident_manager: HomeResidentManager
 var room_assignment_panel: HomeRoomAssignmentPanel
 var home_interaction_panel: HomeInteractionPanel
 var resident_actors: Dictionary = {}
+var is_intimacy_active := false
+var current_intimacy_actor: HomeResidentActor = null
+var intimacy_staging_root: Node3D = null
+var intimacy_npc_actor: Node3D = null
+var intimacy_master_actor: Node3D = null
+var intimacy_camera: Camera3D = null
+var intimacy_focal_point := Vector3.ZERO
+var intimacy_cam_dist := 2.4
+var intimacy_cam_yaw := 0.0
+var intimacy_cam_pitch := 0.25
+var intimacy_dragging := false
 
 func _ready() -> void:
 	name="ConstructionSandbox";kit.initialize()
@@ -53,6 +66,7 @@ func _ready() -> void:
 	add_child(room_assignment_panel)
 	home_interaction_panel = HOME_INTERACTION_PANEL.new()
 	home_interaction_panel.intimacy_requested.connect(_on_home_intimacy_requested)
+	home_interaction_panel.intimacy_motion_selected.connect(_on_home_intimacy_motion_selected)
 	add_child(home_interaction_panel)
 	for spec: Dictionary in kit.catalog.plots:
 		var node:=Node3D.new();node.name=spec.id;node.transform=Transform3D(Basis(KIT.v(spec.axis_x),Vector3.UP,KIT.v(spec.axis_z)),KIT.v(spec.origin));add_child(node)
@@ -203,7 +217,7 @@ func _number(value: Variant) -> bool:
 	return (value is int or value is float) and is_finite(value)
 
 func is_world_input_locked() -> bool:
-	return active or (is_instance_valid(room_assignment_panel) and room_assignment_panel.visible) or (is_instance_valid(home_interaction_panel) and home_interaction_panel.visible)
+	return active or is_intimacy_active or (is_instance_valid(room_assignment_panel) and room_assignment_panel.visible) or (is_instance_valid(home_interaction_panel) and home_interaction_panel.visible)
 
 func eligible_plot() -> String:
 	if not initialized or not world.test_ready or not world.character_mode or world.free_mode \
@@ -482,6 +496,40 @@ func _remove_target(mouse: Vector2) -> void:
 
 func _input(event: InputEvent) -> void:
 	if not initialized or not world.test_ready:
+		return
+	if is_intimacy_active:
+		if event is InputEventMouseButton:
+			if event.button_index == MOUSE_BUTTON_RIGHT:
+				intimacy_dragging = event.pressed
+				get_viewport().set_input_as_handled()
+				return
+			elif event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
+				intimacy_cam_dist = clampf(intimacy_cam_dist - 0.25, 0.8, 5.0)
+				_update_intimacy_camera()
+				get_viewport().set_input_as_handled()
+				return
+			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
+				intimacy_cam_dist = clampf(intimacy_cam_dist + 0.25, 0.8, 5.0)
+				_update_intimacy_camera()
+				get_viewport().set_input_as_handled()
+				return
+			elif event.button_index == MOUSE_BUTTON_MIDDLE and event.pressed:
+				intimacy_cam_dist = 2.4
+				_update_intimacy_camera()
+				get_viewport().set_input_as_handled()
+				return
+		elif event is InputEventMouseMotion and intimacy_dragging:
+			intimacy_cam_yaw -= event.relative.x * 0.008
+			intimacy_cam_pitch = clampf(intimacy_cam_pitch + event.relative.y * 0.008, -0.6, 1.2)
+			_update_intimacy_camera()
+			get_viewport().set_input_as_handled()
+			return
+		elif event is InputEventKey and event.pressed and not event.echo:
+			var intimacy_key: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
+			if intimacy_key in [KEY_E, KEY_ESCAPE, KEY_SPACE]:
+				finish_intimacy_staging()
+				get_viewport().set_input_as_handled()
+				return
 		return
 	if active and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and not event.pressed:
 		look_drag = false
@@ -775,6 +823,154 @@ func _on_home_intimacy_requested(tier: String, resident_actor: HomeResidentActor
 
 	if is_instance_valid(hud):
 		hud.show_notice("【家园亲密互动 · %s】与 %s 在 %s 进行互动（动作套组：%s）" % [tier_name, resident_actor.get_display_name(), chosen_piece_desc, motion_category])
+
+func _on_home_intimacy_motion_selected(motion: Dictionary, resident_actor: HomeResidentActor) -> void:
+	if not is_instance_valid(resident_actor):
+		return
+	_start_intimacy_staging(motion, resident_actor)
+
+func _start_intimacy_staging(motion: Dictionary, resident_actor: HomeResidentActor) -> void:
+	if is_intimacy_active:
+		finish_intimacy_staging()
+
+	is_intimacy_active = true
+	current_intimacy_actor = resident_actor
+
+	var npc_id := resident_actor.character_id
+	var npc_model := "res://assets/characters/roster/" + npc_id + "/" + npc_id + ".vrm"
+	var avatar_file := "res://assets/npc/avatars/" + npc_id + ".json"
+	if FileAccess.file_exists(avatar_file):
+		var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(avatar_file))
+		if raw is Dictionary and raw.has("model_resource"):
+			npc_model = str(raw["model_resource"])
+	if not FileAccess.file_exists(npc_model):
+		if FileAccess.file_exists("res://assets/characters/roster/ganyu/ganyu.vrm"):
+			npc_model = "res://assets/characters/roster/ganyu/ganyu.vrm"
+		else:
+			npc_model = "res://assets/characters/roster/lumine/lumine.vrm"
+
+	var master_model := "res://assets/characters/roster/lumine/lumine.vrm"
+	if world != null and "character" in world and is_instance_valid(world.character):
+		var active_id: String = str(world.character.get("active_character_id"))
+		if not active_id.is_empty() and active_id != "lumine":
+			var custom_model := "res://assets/characters/roster/" + active_id + "/" + active_id + ".vrm"
+			if FileAccess.file_exists(custom_model):
+				master_model = custom_model
+
+	var target_transform := resident_actor.global_transform
+	var req_furn := str(motion.get("furniture", "ground"))
+	var anchor_name := str(motion.get("anchor", ""))
+
+	if req_furn != "ground" and plots.has(resident_actor.plot_id):
+		var p_data = plots[resident_actor.plot_id].data
+		var p_nodes: Dictionary = plots[resident_actor.plot_id].nodes
+		var f_ids: Array = resident_actor.room_data.get("furniture", [])
+		for f_id in f_ids:
+			if p_data.pieces.has(f_id):
+				var def: String = str(p_data.pieces[f_id].definition)
+				var match_found := false
+				if req_furn == "bed" and def == "bed":
+					match_found = true
+				elif req_furn == "chair" and def in ["chair", "bench"]:
+					match_found = true
+				elif req_furn == "desk" and def == "desk":
+					match_found = true
+
+				if match_found and p_nodes.has(f_id) and is_instance_valid(p_nodes[f_id]):
+					var furn_node: Node3D = p_nodes[f_id] as Node3D
+					var anchor_node: Node3D = furn_node.find_child(anchor_name, true, false) as Node3D if not anchor_name.is_empty() else null
+					if is_instance_valid(anchor_node):
+						target_transform = anchor_node.global_transform
+					else:
+						target_transform = furn_node.global_transform
+					break
+
+	target_transform = target_transform.orthonormalized()
+
+	if world != null and "character" in world and is_instance_valid(world.character):
+		world.character.visible = false
+	if is_instance_valid(resident_actor):
+		resident_actor.visible = false
+
+	intimacy_staging_root = Node3D.new()
+	intimacy_staging_root.name = "HomeIntimacyStaging"
+	add_child(intimacy_staging_root)
+
+	intimacy_npc_actor = SHARED_HUMANOID_ACTOR.instantiate()
+	intimacy_npc_actor.name = "RoleA_Resident"
+	intimacy_npc_actor.model_resource = npc_model
+	intimacy_npc_actor.motion_resource = str(motion.get("role_a_motion", ""))
+	intimacy_npc_actor.auto_play = true
+	intimacy_npc_actor.translation_policy = "height_scaled"
+	intimacy_npc_actor.environment_collision_enabled = false
+	intimacy_staging_root.add_child(intimacy_npc_actor)
+	intimacy_npc_actor.global_transform = target_transform
+
+	intimacy_master_actor = SHARED_HUMANOID_ACTOR.instantiate()
+	intimacy_master_actor.name = "RoleB_Master"
+	intimacy_master_actor.model_resource = master_model
+	intimacy_master_actor.motion_resource = str(motion.get("role_b_motion", ""))
+	intimacy_master_actor.auto_play = true
+	intimacy_master_actor.translation_policy = "height_scaled"
+	intimacy_master_actor.environment_collision_enabled = false
+	intimacy_staging_root.add_child(intimacy_master_actor)
+	intimacy_master_actor.global_transform = target_transform
+
+	intimacy_camera = Camera3D.new()
+	intimacy_camera.name = "IntimacyStagingCamera"
+	intimacy_camera.fov = 50.0
+	add_child(intimacy_camera)
+
+	intimacy_focal_point = target_transform.origin + Vector3(0.0, 0.75, 0.0)
+	intimacy_cam_dist = 2.4
+	intimacy_cam_yaw = target_transform.basis.get_euler().y + PI
+	intimacy_cam_pitch = 0.25
+	intimacy_dragging = false
+	_update_intimacy_camera()
+	intimacy_camera.current = true
+
+	if is_instance_valid(hud):
+		var m_name: String = str(motion.get("name", "互动"))
+		var m_tier: String = "日常侍奉" if str(motion.get("tier", "service")) == "service" else "深度温存"
+		var f_name: String = CATALOG.get_furniture_label(req_furn)
+		hud.show_notice("【家园亲密互动 · %s】与 %s 在 %s 进行互动（动作：%s）\n按住右键拖动环绕视角 · 滚轮缩放视距 · 按【E】或【ESC】结束互动" % [
+			m_tier, resident_actor.get_display_name(), f_name, m_name
+		])
+
+func finish_intimacy_staging() -> void:
+	if not is_intimacy_active:
+		return
+	is_intimacy_active = false
+	if is_instance_valid(intimacy_staging_root):
+		intimacy_staging_root.queue_free()
+		intimacy_staging_root = null
+	intimacy_npc_actor = null
+	intimacy_master_actor = null
+	if is_instance_valid(intimacy_camera):
+		intimacy_camera.current = false
+		intimacy_camera.queue_free()
+		intimacy_camera = null
+	if world != null and "camera" in world and is_instance_valid(world.camera):
+		world.camera.current = true
+	if world != null and "character" in world and is_instance_valid(world.character):
+		world.character.visible = true
+	if is_instance_valid(current_intimacy_actor):
+		current_intimacy_actor.visible = true
+		current_intimacy_actor.state = HomeResidentActor.State.IDLE
+		current_intimacy_actor = null
+	if is_instance_valid(hud):
+		hud.show_notice("已结束家园亲密互动。")
+
+func _update_intimacy_camera() -> void:
+	if not is_instance_valid(intimacy_camera):
+		return
+	var offset := Vector3(
+		sin(intimacy_cam_yaw) * cos(intimacy_cam_pitch),
+		sin(intimacy_cam_pitch),
+		cos(intimacy_cam_yaw) * cos(intimacy_cam_pitch)
+	) * intimacy_cam_dist
+	intimacy_camera.global_position = intimacy_focal_point + offset
+	intimacy_camera.look_at(intimacy_focal_point, Vector3.UP)
 
 func _get_room_spawn_position(plot_id: String, room: Dictionary) -> Vector3:
 	if not plots.has(plot_id):

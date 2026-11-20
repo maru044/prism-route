@@ -48,6 +48,15 @@ func make(definition: String) -> Node3D:
 			add_collision(root,{"shape":"box","size":[.88,.42,.86],"position":[0,.21,-.02]})
 			add_collision(root,{"shape":"box","size":[.88,.42,.16],"position":[0,.63,-.39]})
 		var approach:=Marker3D.new();approach.name="Anchor_Front";approach.position=v(d.approach);approach.rotation.y=PI;root.add_child(approach)
+		if definition == "bed":
+			_ensure_anchor(root, "Anchor_BedEdge_Front", Vector3(0.0, 0.46, 1.33), PI)
+			_ensure_anchor(root, "Anchor_Bed_Center", Vector3(0.0, 0.46, 0.25), 0.0)
+			_ensure_anchor(root, "Anchor_Bed_Headboard", Vector3(0.0, 0.46, -0.60), 0.0)
+		elif definition == "chair":
+			_ensure_anchor(root, "Anchor_Seat", Vector3(0.0, 0.42, 0.0), 0.0)
+			_ensure_anchor(root, "Anchor_Chair_Front", Vector3(0.0, 0.0, 0.50), 0.0)
+		elif definition == "desk":
+			_ensure_anchor(root, "Anchor_Desk_Surface", Vector3(0.0, 0.838, -0.03), 0.0)
 		root.set_meta("interaction_status","anchors_ready");root.set_meta("sleep_slots",d.get("sleep_slots",0))
 	else:
 		root=Node3D.new()
@@ -63,3 +72,11 @@ func set_door(node: Node3D,opened: bool,direction: float=-1.) -> void:
 	var hinge:=node.get_node_or_null("DoorHinge") as Node3D
 	if hinge==null:return
 	hinge.rotation.y=direction*PI*.5 if opened else 0.
+
+func _ensure_anchor(parent: Node3D, anchor_name: String, pos: Vector3, rot_y: float) -> void:
+	if parent.find_child(anchor_name, true, false) == null:
+		var marker := Marker3D.new()
+		marker.name = anchor_name
+		marker.position = pos
+		marker.rotation.y = rot_y
+		parent.add_child(marker)

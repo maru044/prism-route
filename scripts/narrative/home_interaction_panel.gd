@@ -5,11 +5,13 @@ extends CanvasLayer
 
 signal closed
 signal intimacy_requested(tier: String, resident_actor: HomeResidentActor)
+signal intimacy_motion_selected(motion_data: Dictionary, resident_actor: HomeResidentActor)
 signal follow_mode_toggled(following: bool, resident_actor: HomeResidentActor)
 
 const UI := preload("res://scenes/combat/encounter_ui_style.gd")
 const PALETTE := preload("res://scenes/combat/temple_paper_palette.tres")
 const ROSTER := preload("res://scripts/characters/character_roster_database.gd")
+const CATALOG := preload("res://scripts/construction/home_intimacy_catalog.gd")
 
 var current_actor: HomeResidentActor = null
 
@@ -21,6 +23,8 @@ var _title_label: Label
 var _dialogue_label: RichTextLabel
 var _options_container: VBoxContainer
 var _intimacy_options_container: VBoxContainer
+var _motion_scroll: ScrollContainer
+var _motion_list_container: VBoxContainer
 var _feedback_label: Label
 var _mode_intimacy_selection := false
 var _built := false
@@ -144,6 +148,18 @@ func _build_ui() -> void:
 	right_col.add_child(_intimacy_options_container)
 	_intimacy_options_container.hide()
 
+	# Scrollable motion list container
+	_motion_scroll = ScrollContainer.new()
+	_motion_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_motion_scroll.custom_minimum_size.y = 260
+	_motion_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	right_col.add_child(_motion_scroll)
+	_motion_scroll.hide()
+
+	_motion_list_container = UI.column(6)
+	_motion_list_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_motion_scroll.add_child(_motion_list_container)
+
 func open(actor: HomeResidentActor) -> void:
 	_ensure_built()
 	current_actor = actor
@@ -191,6 +207,7 @@ func _get_default_greeting(char_id: String) -> String:
 func _show_main_options() -> void:
 	_options_container.show()
 	_intimacy_options_container.hide()
+	_motion_scroll.hide()
 	for child in _options_container.get_children():
 		child.queue_free()
 
@@ -215,22 +232,107 @@ func _show_main_options() -> void:
 func _show_intimacy_options() -> void:
 	_options_container.hide()
 	_intimacy_options_container.show()
+	_motion_scroll.hide()
 	for child in _intimacy_options_container.get_children():
 		child.queue_free()
 
 	_dialogue_label.text = "主人，要我为您做些什么呢？只要是主人的心愿，无论何种要求，我都会顺从接受。"
 
 	# Sub-option 1: 日常侍奉 (普通侍奉)
-	var service_btn := _create_option_button("🔹【日常侍奉】 普通侍奉 / 前戏抚慰 / 局部互动", _on_intimacy_selected.bind("service"))
+	var service_btn := _create_option_button("🔹【日常侍奉】 普通侍奉 / 前戏抚慰 / 局部互动", _show_motion_list.bind("service"))
 	_intimacy_options_container.add_child(service_btn)
 
 	# Sub-option 2: 深度温存 (本番侍奉)
-	var honban_btn := _create_option_button("🔹【深度温存】 本番侍奉 / 结合交融 / 极致欢愉", _on_intimacy_selected.bind("honban"))
+	var honban_btn := _create_option_button("🔹【深度温存】 本番侍奉 / 结合交融 / 极致欢愉", _show_motion_list.bind("honban"))
 	_intimacy_options_container.add_child(honban_btn)
 
 	# Sub-option 3: 返回
 	var back_btn := _create_option_button("◀ 返回上级菜单", _show_main_options)
 	_intimacy_options_container.add_child(back_btn)
+
+func _show_motion_list(tier: String) -> void:
+	_options_container.hide()
+	_intimacy_options_container.hide()
+	_motion_scroll.show()
+	for child in _motion_list_container.get_children():
+		child.queue_free()
+
+	if tier == "service":
+		_dialogue_label.text = "主人，请挑选您希望我如何为您侍奉呢？房间里备好的家具设施，我都随时为您准备好。"
+	else:
+		_dialogue_label.text = "主人想要和我进行怎样深入的温存呢？无论主人挑选哪种方式，我都会全然接纳主人的爱意。"
+
+	var available_furniture := _get_available_furniture()
+	var furn_names: Array[String] = []
+	for f: String in available_furniture:
+		furn_names.append(CATALOG.get_furniture_label(f))
+	var furn_summary := "、".join(furn_names) if not furn_names.is_empty() else "仅地面席位"
+	var tier_label := "日常侍奉" if tier == "service" else "深度温存"
+	_feedback_label.text = "【%s · 房间可用设施】%s" % [tier_label, furn_summary]
+
+	var motions: Array[Dictionary] = CATALOG.get_motions(tier)
+	for motion: Dictionary in motions:
+		var can_play: bool = CATALOG.can_play_in_room(motion, available_furniture)
+		var furn_lbl: String = CATALOG.get_furniture_label(str(motion.get("furniture", "ground")))
+		var m_name: String = str(motion.get("name", motion.get("id", "")))
+		var m_dur: float = float(motion.get("duration", 0.0))
+
+		if can_play:
+			var caption := "▶ %s  [%s]  (%.1f秒)" % [m_name, furn_lbl, m_dur]
+			var btn := _create_option_button(caption, _on_motion_selected.bind(motion))
+			_motion_list_container.add_child(btn)
+		else:
+			var caption := "🔒 %s  [缺少家具：%s]" % [m_name, furn_lbl]
+			var btn := _create_disabled_motion_button(caption)
+			_motion_list_container.add_child(btn)
+
+	var back_btn := _create_option_button("◀ 返回选择侍奉类别", _show_intimacy_options)
+	_motion_list_container.add_child(back_btn)
+
+func _on_motion_selected(motion: Dictionary) -> void:
+	if is_instance_valid(current_actor):
+		intimacy_motion_selected.emit(motion, current_actor)
+		intimacy_requested.emit(str(motion.get("tier", "service")), current_actor)
+	close()
+
+func _create_disabled_motion_button(caption: String) -> Button:
+	var btn := Button.new()
+	btn.text = caption
+	btn.custom_minimum_size = Vector2(480, 38)
+	btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	btn.disabled = true
+
+	var disabled_style := StyleBoxFlat.new()
+	disabled_style.bg_color = Color(PALETTE.paper_wash, 0.45)
+	disabled_style.border_color = Color(PALETTE.paper_ink, 0.2)
+	disabled_style.set_border_width_all(1)
+	disabled_style.set_corner_radius_all(4)
+	disabled_style.content_margin_left = 16
+	disabled_style.content_margin_right = 16
+	disabled_style.content_margin_top = 8
+	disabled_style.content_margin_bottom = 8
+	btn.add_theme_stylebox_override("disabled", disabled_style)
+
+	btn.add_theme_color_override("font_disabled_color", Color(PALETTE.secondary, 0.6))
+	btn.add_theme_font_override("font", UI.interface_font())
+	btn.add_theme_font_size_override("font_size", 15)
+	return btn
+
+func _get_available_furniture() -> Array[String]:
+	var kinds: Array[String] = []
+	if not is_instance_valid(current_actor) or not is_instance_valid(current_actor.home):
+		return kinds
+	var plot_id: String = current_actor.plot_id
+	if not current_actor.home.plots.has(plot_id):
+		return kinds
+	var p_data = current_actor.home.plots[plot_id].data
+	var f_ids: Array = current_actor.room_data.get("furniture", [])
+	for f_id in f_ids:
+		if p_data.pieces.has(f_id):
+			var def: String = str(p_data.pieces[f_id].definition)
+			if not kinds.has(def):
+				kinds.append(def)
+	return kinds
 
 func _on_chat_pressed() -> void:
 	if not is_instance_valid(current_actor):

@@ -2,6 +2,7 @@ extends SceneTree
 ## Automated test suite for Home Housing and Multi-Dimensional Resident Interaction System.
 
 const DATA := preload("res://scripts/construction/building_data.gd")
+const CATALOG := preload("res://scripts/construction/home_intimacy_catalog.gd")
 const RESIDENT_MANAGER := preload("res://scripts/construction/home_resident_manager.gd")
 const RESIDENT_ACTOR := preload("res://scripts/construction/home_resident_actor.gd")
 const ROOM_ASSIGNMENT_PANEL := preload("res://scripts/ui/home_room_assignment_panel.gd")
@@ -17,6 +18,7 @@ func _run() -> void:
 	print("[Test] Verifying Home Housing & Resident Interaction System")
 	print("==================================================\n")
 
+	test_intimacy_catalog()
 	test_resident_manager()
 	test_housing_panel_ui()
 	test_interaction_panel_and_tiers()
@@ -26,6 +28,56 @@ func _run() -> void:
 	print("ALL HOME HOUSING & INTERACTION TESTS PASSED!")
 	print("==================================================\n")
 	quit(0)
+
+func test_intimacy_catalog() -> void:
+	print("--- Test 0: HomeIntimacyCatalog Definitions & Furniture Locking Logic ---")
+	var services: Array[Dictionary] = CATALOG.get_motions("service")
+	var honbans: Array[Dictionary] = CATALOG.get_motions("honban")
+	assert(services.size() == 16, "Must catalog 16 service motions, got %d" % services.size())
+	assert(honbans.size() == 17, "Must catalog 17 honban motions, got %d" % honbans.size())
+
+	# Ground motion always available even with empty room furniture
+	var ground_motion: Dictionary = {}
+	for m in services:
+		if m.get("furniture") == "ground":
+			ground_motion = m
+			break
+	assert(not ground_motion.is_empty(), "Must find a ground service motion")
+	assert(CATALOG.can_play_in_room(ground_motion, []), "Ground motion must be playable without furniture")
+
+	# Bed motion requires bed
+	var bed_motion: Dictionary = {}
+	for m in services:
+		if m.get("furniture") == "bed":
+			bed_motion = m
+			break
+	assert(not bed_motion.is_empty(), "Must find a bed service motion")
+	assert(not CATALOG.can_play_in_room(bed_motion, []), "Bed motion cannot play in room without bed")
+	assert(not CATALOG.can_play_in_room(bed_motion, ["chair", "desk"]), "Bed motion cannot play without bed")
+	assert(CATALOG.can_play_in_room(bed_motion, ["bed"]), "Bed motion must play when bed is present")
+
+	# Chair motion requires chair or bench
+	var chair_motion: Dictionary = {}
+	for m in services:
+		if m.get("furniture") == "chair":
+			chair_motion = m
+			break
+	assert(not chair_motion.is_empty(), "Must find a chair service motion")
+	assert(not CATALOG.can_play_in_room(chair_motion, ["bed", "desk"]), "Chair motion cannot play without chair/bench")
+	assert(CATALOG.can_play_in_room(chair_motion, ["chair"]), "Chair motion must play when chair is present")
+	assert(CATALOG.can_play_in_room(chair_motion, ["bench"]), "Chair motion must play when bench is present")
+
+	# Desk motion requires desk
+	var desk_motion: Dictionary = {}
+	for m in honbans:
+		if m.get("furniture") == "desk":
+			desk_motion = m
+			break
+	assert(not desk_motion.is_empty(), "Must find a desk honban motion")
+	assert(not CATALOG.can_play_in_room(desk_motion, ["bed", "chair"]), "Desk motion cannot play without desk")
+	assert(CATALOG.can_play_in_room(desk_motion, ["desk"]), "Desk motion must play when desk is present")
+
+	print("  [Pass] HomeIntimacyCatalog 16 service & 17 honban motions and furniture locks verified")
 
 func test_resident_manager() -> void:
 	print("--- Test 1: HomeResidentManager 1-to-1 Logic & Serialization ---")
@@ -172,10 +224,46 @@ func test_interaction_panel_and_tiers() -> void:
 	assert(intimacy_log.size() == 2, "Intimacy signal must fire for honban")
 	assert(intimacy_log[1].tier == "honban", "Tier must be honban")
 
+	# Test 5: In-room motion list scroll view with disabled furniture buttons
+	panel.open(actor)
+	panel._on_intimacy_menu_pressed()
+	panel._show_motion_list("service")
+	assert(panel._motion_scroll.visible, "Motion scroll container must be visible")
+	var btns := panel._motion_list_container.get_children()
+	assert(btns.size() == 17, "Must contain 16 motions plus back button, got %d" % btns.size())
+
+	# Since actor room has no furniture, bed and chair buttons must be disabled
+	var disabled_count := 0
+	var enabled_count := 0
+	for b in btns:
+		if b is Button and b.text != "◀ 返回选择侍奉类别":
+			if b.disabled:
+				disabled_count += 1
+				assert("缺少家具" in b.text, "Disabled button must show missing furniture notice")
+			else:
+				enabled_count += 1
+	assert(disabled_count == 4, "Must have 4 furniture-locked service motions (1 bed + 3 chair), got %d" % disabled_count)
+	assert(enabled_count == 12, "Must have 12 enabled ground service motions, got %d" % enabled_count)
+
+	# Click an enabled motion button
+	var selected_motion_log: Array[Dictionary] = []
+	panel.intimacy_motion_selected.connect(func(m: Dictionary, act: RESIDENT_ACTOR):
+		selected_motion_log.append(m)
+	)
+	var first_active_btn: Button = null
+	for b in btns:
+		if b is Button and not b.disabled and b.text.begins_with("▶"):
+			first_active_btn = b
+			break
+	assert(first_active_btn != null, "Must find an active motion button")
+	first_active_btn.pressed.emit()
+	assert(selected_motion_log.size() == 1, "intimacy_motion_selected must emit when clicked")
+	assert(not panel.visible, "Panel must close when motion is selected")
+
 	panel.queue_free()
 	actor.queue_free()
 	root_ctrl.queue_free()
-	print("  [Pass] Interaction panel chat, companion follow and dual intimacy tiers verified")
+	print("  [Pass] Interaction panel chat, companion follow, scrollable motions and furniture locks verified")
 
 func test_construction_world_housing_integration() -> void:
 	print("--- Test 4: ConstructionWorld Full Housing Integration & Snapshot Persistence ---")
@@ -203,11 +291,11 @@ func active_actor() -> Node3D:
 	root.add_child(world_mock)
 
 	var char_mock := CharacterBody3D.new()
-	char_mock.global_position = Vector3(25.0, 0.25, 25.0)
 	var char_shape := CollisionShape3D.new()
 	char_shape.shape = CapsuleShape3D.new()
 	char_mock.add_child(char_shape)
 	world_mock.add_child(char_mock)
+	char_mock.global_position = Vector3(25.0, 0.25, 25.0)
 	world_mock.character = char_mock
 
 	var cw: Node3D = CONSTRUCTION_WORLD.new()
@@ -277,6 +365,33 @@ func active_actor() -> Node3D:
 	cw._on_home_intimacy_requested("service", actor_instance)
 	cw._on_home_intimacy_requested("honban", actor_instance)
 
+	# Test in-room paired animation playback staging and camera control
+	var test_motion: Dictionary = CATALOG.get_motions("service")[0]
+	cw._on_home_intimacy_motion_selected(test_motion, actor_instance)
+	assert(cw.is_intimacy_active, "is_intimacy_active must be true during staging")
+	assert(cw.is_world_input_locked(), "Input must be locked during staging")
+	assert(is_instance_valid(cw.intimacy_staging_root), "intimacy_staging_root must be created")
+	assert(is_instance_valid(cw.intimacy_camera), "intimacy_camera must be created")
+	assert(not char_mock.visible, "Player character must be hidden during intimacy")
+	assert(not actor_instance.visible, "Resident actor must be hidden during intimacy")
+
+	# Test camera orbit zoom
+	var initial_dist: float = cw.intimacy_cam_dist
+	var wheel_up := InputEventMouseButton.new()
+	wheel_up.button_index = MOUSE_BUTTON_WHEEL_UP
+	wheel_up.pressed = true
+	cw._input(wheel_up)
+	assert(cw.intimacy_cam_dist < initial_dist, "Wheel up must zoom in camera")
+
+	# Test finishing intimacy staging
+	cw.finish_intimacy_staging()
+	assert(not cw.is_intimacy_active, "is_intimacy_active must be false after finish")
+	assert(cw.intimacy_staging_root == null, "Staging root must be cleaned up")
+	assert(cw.intimacy_camera == null, "Staging camera must be cleaned up")
+	assert(char_mock.visible, "Player character must be restored")
+	assert(actor_instance.visible, "Resident actor must be restored")
+	assert(actor_instance.state == RESIDENT_ACTOR.State.IDLE, "Resident actor state must be IDLE")
+
 	cw.queue_free()
 	world_mock.queue_free()
-	print("  [Pass] ConstructionWorld room detection, resident spawning, and snapshot persistence verified")
+	print("  [Pass] ConstructionWorld room detection, resident spawning, in-room intimacy playback staging and persistence verified")
