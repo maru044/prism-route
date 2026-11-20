@@ -27,7 +27,12 @@ func _run() -> void:
 	while get_tree().root.has_node("WorldLoadingScreen"):
 		await get_tree().process_frame
 	await get_tree().process_frame
+	if is_instance_valid(world) and world.has_method("set_npc_lod_enabled"):
+		world.set_npc_lod_enabled(false)
+		await get_tree().process_frame
+		await get_tree().process_frame
 	_check_world_assets()
+	_checks["local_airp_runtime"] = _check_local_airp()
 	var encounters := {}
 	var complete := true
 	for duel in get_tree().get_nodes_in_group("world_interactive_npcs"):
@@ -106,6 +111,15 @@ func _check_world_assets() -> void:
 	for path: String in [HOME_HUD.THUMBNAILS, "res://assets/title/prism_route_wordmark.png",
 			"res://assets/title/archaea_studio.png", "res://assets/title/archaea_bubbles.png"]:
 		_check_texture(path)
+	for airp_path: String in [
+		"res://assets/ai/local_airp/templates.json",
+		"res://assets/ai/local_airp/wildcards_sparkle.json",
+		"res://assets/ai/local_airp/wildcards_keqing.json",
+		"res://assets/ai/local_airp/wildcards_scenes.json",
+		"res://assets/ai/local_airp/reference_embeddings.json"
+	]:
+		if not FileAccess.file_exists(airp_path):
+			_missing.append(airp_path)
 
 	var installed := {
 		"oval_atrium": world.oval_atrium.local_grass_cells,
@@ -227,3 +241,25 @@ func _key(code: Key) -> void:
 	event.physical_keycode = code
 	event.pressed = true
 	get_tree().root.push_input(event)
+
+func _check_local_airp() -> bool:
+	var client_script: GDScript = load("res://scripts/ai/local_airp/local_airp_client.gd") as GDScript
+	if client_script == null:
+		_missing.append("res://scripts/ai/local_airp/local_airp_client.gd")
+		return false
+	var client: Node = client_script.new()
+	client.load_resources()
+	if client.templates.is_empty() or client.reference_embeddings.is_empty():
+		_missing.append("res://assets/ai/local_airp/templates.json or embeddings")
+		return false
+	if not client.ensure_probe():
+		_missing.append("Local AIRP BGE probe native sidecar executable")
+		return false
+	var res: Dictionary = client.retrieve_and_compose("花火早上好呀", "sparkle", "home_chat", {}, 42)
+	client.close_probe()
+	if res.get("content_tag", "") != "greet":
+		return false
+	var text: String = str(res.get("text", ""))
+	if text.is_empty() or text.contains("\u2026") or text.contains("." + "." + "."):
+		return false
+	return true

@@ -5,6 +5,7 @@ signal changed
 const Transport := preload("res://scripts/ai/chat_transport.gd")
 const ToolRegistry := preload("res://scripts/ai/assistant_tool_registry.gd")
 const AssistantPrompts := preload("res://scripts/ai/assistant_prompts.gd")
+const LocalAirpClientScript := preload("res://scripts/ai/local_airp/local_airp_client.gd")
 const SETTINGS_PATH := "user://llm_client.cfg"
 const DIALOGUE_PROMPT_DIR := "res://assets/ai/worldbook"
 const PERSONAS_DIR := "res://assets/ai/personas"
@@ -57,6 +58,7 @@ var _thread_id := ""
 var _threads := {}
 var _action_offers := {}
 var _tool_registry := ToolRegistry.new()
+var _local_airp: Node = null
 var _assistant_prompts := AssistantPrompts.new()
 var _request_tools: Dictionary = {}
 var _request_tool_specs: Array = []
@@ -755,12 +757,55 @@ func payload() -> Dictionary:
 		body["tools"] = _request_tool_specs
 	return body
 
+func _get_local_airp() -> Node:
+	if _local_airp == null:
+		var airp_node: Node = LocalAirpClientScript.new()
+		airp_node.call("load_resources")
+		_local_airp = airp_node
+	return _local_airp
+
+func _dispatch_local_airp() -> void:
+	var airp := _get_local_airp()
+	var char_id := _resolve_character_id()
+	var scene_id: String = "intimate" if context.get("intimate_mode", false) or str(context.get("scene", "")).contains("intimate") else "home_chat"
+	var player_input := ""
+	if not history.is_empty():
+		var last_entry: Variant = history.back()
+		if last_entry is Dictionary and last_entry.has("user"):
+			var user_val: Variant = last_entry["user"]
+			if user_val is Dictionary:
+				player_input = str(user_val.get("content", ""))
+	if player_input.is_empty():
+		player_input = "你好呀"
+		
+	var result: Dictionary = airp.call("retrieve_and_compose", player_input, char_id, scene_id, context, -1)
+	var output_text: String = str(result.get("text", ""))
+	if output_text.is_empty():
+		output_text = "（微笑着看着你）"
+		
+	partial = output_text
+	status = "完成。"
+	diagnostic = "本地检索式 AIRP · %s · 得分: %s" % [result.get("reply_id", ""), str(result.get("score", 0.0))]
+	if not history.is_empty():
+		var active_turn: Variant = history.back()
+		if active_turn is Dictionary:
+			active_turn["assistant"] = {"role": "assistant", "content": output_text}
+	pending = false
+	changed.emit()
+
 func _dispatch() -> void:
 	if not pending:
 		return
+	if route == DIALOGUE and (_request_profile.get("url", "").is_empty() or _request_profile.get("key", "").is_empty()):
+		_dispatch_local_airp()
+		return
 	var error: String = _transport.start(_request_profile.url, _request_profile.key, payload())
 	if not error.is_empty() and not _schedule_assistant_retry(error):
-		_complete(error)
+		if route == DIALOGUE:
+			print("[本地 AIRP 降级响应] %sZ · 启动失败，自动切换本地检索: %s" % [Time.get_datetime_string_from_system(true), error])
+			_dispatch_local_airp()
+		else:
+			_complete(error)
 
 func _schedule_assistant_retry(error: String) -> bool:
 	if route != ASSISTANT or _tool_rounds > 0 or _assistant_retries >= MAX_ASSISTANT_RETRIES or not partial.is_empty():
@@ -843,6 +888,10 @@ func _receive_result(message: Dictionary, error: String) -> void:
 		return
 	var calls: Variant = message.get("tool_calls", [])
 	if not error.is_empty():
+		if route == DIALOGUE and partial.is_empty():
+			print("[本地 AIRP 降级响应] %sZ · 回复错误，自动切换本地检索: %s" % [Time.get_datetime_string_from_system(true), error])
+			_dispatch_local_airp()
+			return
 		if route == ASSISTANT and message.get("content") is String and (calls == null or calls == []):
 			partial = message.content
 		if not _schedule_assistant_retry(error):

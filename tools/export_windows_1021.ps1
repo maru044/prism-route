@@ -26,10 +26,14 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'Export dependency check failed.' }
     $gamePath = Join-Path $outputPath 'PrismRoute1021.exe'
     $consolePath = Join-Path $outputPath 'PrismRoute1021.console.exe'
+    $origPref = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
     & $GodotPath --headless --path $projectPath --export-release 'Windows 1021' $gamePath `
         --log-file (Join-Path $cachePath 'export_windows_1021.log') `
         > (Join-Path $cachePath 'export_windows_1021.out') 2> (Join-Path $cachePath 'export_windows_1021.err')
-    if ($LASTEXITCODE -ne 0) { throw 'Windows export failed; see .current_map_build/export_windows_1021.err.' }
+    $exportCode = $LASTEXITCODE
+    $ErrorActionPreference = $origPref
+    if ($exportCode -ne 0) { throw 'Windows export failed; see .current_map_build/export_windows_1021.err.' }
     if (-not (Test-Path -LiteralPath $consolePath -PathType Leaf)) { throw 'Windows export did not generate the console launcher.' }
     & $PythonPath (Join-Path $PSScriptRoot 'audit_export_1021.py') --build $outputPath --require-embedded
     if ($LASTEXITCODE -ne 0) { throw 'Package integrity or content audit failed.' }
@@ -37,6 +41,15 @@ try {
     if (Test-Path -LiteralPath $standalonePack -PathType Leaf) {
         Remove-Item -LiteralPath $standalonePack
     }
+    $toolsDir = Join-Path $outputPath 'tools'
+    $modelsDir = Join-Path $outputPath 'models\bge-small-zh-v1.5-q8_0'
+    [IO.Directory]::CreateDirectory($toolsDir) | Out-Null
+    [IO.Directory]::CreateDirectory($modelsDir) | Out-Null
+    $srcProbeDir = Join-Path (Split-Path -Parent $projectPath) 'tools\local-intent-retrieval\native-probe'
+    $srcModelDir = Join-Path (Split-Path -Parent $projectPath) 'tools\local-intent-retrieval\models\bge-small-zh-v1.5-q8_0'
+    Copy-Item -Path (Join-Path $srcProbeDir '*.dll') -Destination $toolsDir -Force
+    Copy-Item -Path (Join-Path $srcProbeDir 'embedding_probe.exe') -Destination $toolsDir -Force
+    Copy-Item -Path (Join-Path $srcModelDir 'bge-small-zh-v1.5-q8_0.gguf') -Destination $modelsDir -Force
     if ($Verify) {
         $gameArgs = @('--log-file', ('"' + (Join-Path $cachePath 'export_1021_smoke.log') + '"'),
             '--', '--verify-export', ('"--export-report=' + (Join-Path $cachePath 'export_1021_validation.json') + '"'))
