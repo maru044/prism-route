@@ -1,0 +1,1954 @@
+{
+  "version": "issue_28_wildcard_retrieval",
+  "single_turn_results": [
+    {
+      "case_id": "sp_home_01",
+      "character_id": "sparkle",
+      "scene_id": "home_chat",
+      "query": "花火，早安呀！",
+      "expected_tag": "greet",
+      "predicted_tag": "greet",
+      "reply_id": "home_greet_01",
+      "score": 0.7813,
+      "latency_ms": 3.35,
+      "text": "Master大人，轻掩着狐狸面具噗嗤一笑。今天又有什么好玩的乐子在等着我们呢？ 要不要我给你变个小戏法解解闷呀？",
+      "is_fallback": false
+    },
+    {
+      "case_id": "sp_home_02",
+      "character_id": "sparkle",
+      "scene_id": "home_chat",
+      "query": "今天天气真好，在干嘛呢",
+      "expected_tag": "greet",
+      "predicted_tag": "greet",
+      "reply_id": "home_greet_01",
+      "score": 0.8291,
+      "latency_ms": 2.7,
+      "text": "小主人，神殿这里的微风真舒服，不过要是能看Master出丑就更棒啦！ 迈着轻快的步伐凑到你身前。",
+      "is_fallback": false
+    },
+    {
+      "case_id": "sp_home_03",
+      "character_id": "sparkle",
+      "scene_id": "home_chat",
+      "query": "小傻瓜，看你脸红的样子真可爱",
+      "expected_tag": "tease",
+      "predicted_tag": "tease",
+      "reply_id": "home_tease_01",
+      "score": 0.7559,
+      "latency_ms": 2.79,
+      "text": "笨蛋旅行者，狡黠地眨了眨眼！这么直勾勾地盯着人家看，难道心里在打什么坏主意吗？ 把玩着手中的狐狸面具靠近你。",
+      "is_fallback": false
+    },
+    {
+      "case_id": "sp_home_04",
+      "character_id": "sparkle",
+      "scene_id": "home_chat",
+      "query": "你这只坏狐狸又在动什么歪脑筋呢",
+      "expected_tag": "tease",
+      "predicted_tag": "tease",
+      "reply_id": "sparkle_prank_01",
+      "score": 0.8549,
+      "latency_ms": 3.0,
+      "text": "Master大人，这么直勾勾地盯着人家看，难道心里在打什么坏主意吗？ 狡黠地眨了眨眼！",
+      "is_fallback": false
+    },
+    {
+      "case_id": "sp_home_05",
+      "character_id": "sparkle",
+      "scene_id": "home_chat",
+      "query": "花火今天穿的这身衣服真漂亮",
+      "expected_tag": "compliment",
+      "predicted_tag": "compliment",
+      "reply_id": "home_compliment_01",
+      "score": 1.0,
+      "latency_ms": 2.65,
+      "text": "小主人，狡黠地眨了眨眼。虽然知道你在哄我开心，不过这句夸奖本愚者就大方地收下啦！ 迈着轻快的步伐凑到你身前。",
+      "is_fallback": false
+    },
+    {
+      "case_id": "sp_home_06",
+      "character_id": "sparkle",
+      "scene_id": "home_chat",
+      "query": "有你在身边真的太开心了",
+      "expected_tag": "compliment",
+      "predicted_tag": "compliment",
+      "reply_id": "home_compliment_01",
+      "score": 0.7946,
+      "latency_ms": 2.48,
+      "text": "笨蛋旅行者！哼哼，花火大人的魅力自然是无人能挡啦！ 接下来想去岛上的哪里走走呀？",
+      "is_fallback": false
+    },
+    {
+      "case_id": "sp_home_07",
+      "character_id": "sparkle",
+      "scene_id": "home_chat",
+      "query": "这片浮空岛的风景怎么样，住得还习惯吗",
+      "expected_tag": "chat_island",
+      "predicted_tag": "chat_island",
+      "reply_id": "home_island_01",
+      "score": 0.7091,
+      "latency_ms": 3.67,
+      "text": "Master大人，关于这里，这片浮空岛的风景再美，也没有捉弄Master有趣呢！",
+      "is_fallback": false
+    },
+    {
+      "case_id": "sp_home_08",
+      "character_id": "sparkle",
+      "scene_id": "home_chat",
+      "query": "神殿附近的石椅修得挺气派的吧",
+      "expected_tag": "chat_island",
+      "predicted_tag": "chat_island",
+      "reply_id": "home_island_01",
+      "score": 1.0,
+      "latency_ms": 4.05,
+      "text": "Master大人，宁静祥和的午后时光在身旁静静流淌。要是能在神殿的石椅上多摆弄点新鲜花样，那才算不虚此行嘛！ 单侧大腿环系着的小铃铛随着走动叮咚作响。",
+      "is_fallback": false
+    },
+    {
+      "case_id": "sp_home_09",
+      "character_id": "sparkle",
+      "scene_id": "home_chat",
+      "query": "忍不住想要你了，我们去石椅那边亲热一下吧",
+      "expected_tag": "invite_intimacy",
+      "predicted_tag": "invite_intimacy",
+      "reply_id": "invite_intimacy_01",
+      "score": 0.654,
+      "latency_ms": 3.75,
+      "text": "亲爱的Master，呀呜~♡♡ 眼神都变得这么炽热了，还想装正人君子吗？快点把人家抱过去嘛♡ 娇柔的身躯完全放松瘫软，毫无防备地任由你索取。",
+      "is_fallback": false
+    },
+    {
+      "case_id": "sp_home_10",
+      "character_id": "sparkle",
+      "scene_id": "home_chat",
+      "query": "量子力学校准参数是多少",
+      "expected_tag": "clarify_unknown",
+      "predicted_tag": "clarify_unknown",
+      "reply_id": "clarify_unknown_01",
+      "score": 0.6116,
+      "latency_ms": 2.42,
+      "text": "狡黠地眨了眨眼。Master大人，神殿里可没有那种奇怪的规矩，专心陪人家聊点好玩的嘛！",
+      "is_fallback": false
+    },
+    {
+      "case_id": "sp_int_01",
+      "character_id": "sparkle",
+      "scene_id": "intimate",
+      "query": "轻轻抚摸你的后背和敏感的尾巴根部",
+      "expected_tag": "intimate_touch",
+      "predicted_tag": "intimate_touch",
+      "reply_id": "intimate_touch_01",
+      "score": 0.7385,
+      "latency_ms": 5.81,
+      "text": "小腿紧紧盘在你的腰际，狐尾轻轻扫过你的后背，呀啊！对~ 就是那里，稍微用力捏一下也没关系哦♡ 还要更多、更深入地占有人家吗♡",
+      "is_fallback": false
+    },
+    {
+      "case_id": "sp_int_02",
+      "character_id": "sparkle",
+      "scene_id": "intimate",
+      "query": "揉捏你胸前的软肉，亲吻你的嘴唇",
+      "expected_tag": "intimate_touch",
+      "predicted_tag": "intimate_touch",
+      "reply_id": "intimate_touch_01",
+      "score": 0.7727,
+      "latency_ms": 3.16,
+      "text": "呼~ 呵呵♡！Master大人，小主人终于忍不住要动真格了吗？手指碰到的地方好热呢♡ 微仰着娇俏的面庞，双颊晕红微伸舌尖。",
+      "is_fallback": false
+    },
+    {
+      "case_id": "sp_int_03",
+      "character_id": "sparkle",
+      "scene_id": "intimate",
+      "query": "好舒服，加速撞击，再快一点",
+      "expected_tag": "intimate_rhythm_faster",
+      "predicted_tag": "intimate_rhythm_faster",
+      "reply_id": "intimate_rhythm_faster_01",
+      "score": 0.7425,
+      "latency_ms": 2.75,
+      "text": "娇柔的身躯完全放松瘫软，毫无防备地任由你索取！哈啊哈啊~♡，太棒了~ 这种狂风暴雨般的支配感，快把人家推向极限吧♡ 还要更多、更深入地占有人家吗♡",
+      "is_fallback": false
+    },
+    {
+      "case_id": "sp_int_04",
+      "character_id": "sparkle",
+      "scene_id": "intimate",
+      "query": "太刺激了，加大力度狠狠动起来",
+      "expected_tag": "intimate_rhythm_faster",
+      "predicted_tag": "intimate_rhythm_faster",
+      "reply_id": "intimate_rhythm_faster_01",
+      "score": 0.739,
+      "latency_ms": 2.78,
+      "text": "呀呜~♡！笨蛋旅行者，对！就是这个节奏，再快一点，把本愚者彻底弄乱吧♡ 微仰着娇俏的面庞，双颊晕红微伸舌尖！",
+      "is_fallback": false
+    },
+    {
+      "case_id": "sp_int_05",
+      "character_id": "sparkle",
+      "scene_id": "intimate",
+      "query": "稍微慢一点，慢慢研磨感受彼此的体温",
+      "expected_tag": "intimate_rhythm_slower",
+      "predicted_tag": "intimate_rhythm_slower",
+      "reply_id": "intimate_rhythm_slower_01",
+      "score": 0.7204,
+      "latency_ms": 3.68,
+      "text": "哈啊哈啊~♡，亲爱的Master，呼~ 这种深入又缓慢的研磨，快感反而像潮水一样涌上来了呢♡ 娇柔的身躯完全放松瘫软，毫无防备地任由你索取。",
+      "is_fallback": false
+    },
+    {
+      "case_id": "sp_int_06",
+      "character_id": "sparkle",
+      "scene_id": "intimate",
+      "query": "完全插到最深处，顶到花心了",
+      "expected_tag": "intimate_deep",
+      "predicted_tag": "intimate_deep",
+      "reply_id": "intimate_deep_01",
+      "score": 0.8105,
+      "latency_ms": 4.29,
+      "text": "腰肢主动迎合着你的每一次动作，铃铛轻响不断！哈啊~ 唔嗯♡！呀啊~ 那里每次被碰到，灵魂都像是在战栗呢♡ 小主人接下来的指令是什么呢♡",
+      "is_fallback": false
+    },
+    {
+      "case_id": "sp_int_07",
+      "character_id": "sparkle",
+      "scene_id": "intimate",
+      "query": "受不了了要出来了，一起高潮吧",
+      "expected_tag": "intimate_peak",
+      "predicted_tag": "intimate_peak",
+      "reply_id": "intimate_peak_01",
+      "score": 0.8097,
+      "latency_ms": 2.99,
+      "text": "笨蛋旅行者！哈啊~ 唔嗯♡♡ 哈啊~ 彻底坏掉了，真不愧是Master，把人家玩得彻底站不起来了呢♡ 小主人接下来的指令是什么呢♡",
+      "is_fallback": false
+    },
+    {
+      "case_id": "sp_int_08",
+      "character_id": "sparkle",
+      "scene_id": "intimate",
+      "query": "等一下，太激烈了先暂停缓口气",
+      "expected_tag": "pause_stop",
+      "predicted_tag": "pause_stop",
+      "reply_id": "pause_request_01",
+      "score": 0.8834,
+      "latency_ms": 2.82,
+      "text": "小主人，呼~ 既然Master喊停了，那人家就先放过你一会儿好啦！ 单侧大腿环系着的小铃铛随着走动叮咚作响。",
+      "is_fallback": false
+    },
+    {
+      "case_id": "sp_int_09",
+      "character_id": "sparkle",
+      "scene_id": "intimate",
+      "query": "休息好了，我们接着刚才的继续做吧",
+      "expected_tag": "resume_intimacy",
+      "predicted_tag": "resume_intimacy",
+      "reply_id": "resume_intimacy_01",
+      "score": 0.853,
+      "latency_ms": 4.21,
+      "text": "娇柔的身躯完全放松瘫软，毫无防备地任由你索取。小主人，刚才的感觉那么棒，怎么能半途而废呢？快点再抱紧人家嘛♡",
+      "is_fallback": false
+    },
+    {
+      "case_id": "sp_int_10",
+      "character_id": "sparkle",
+      "scene_id": "intimate",
+      "query": "做完好累，辛苦你了，抱着你温存一下",
+      "expected_tag": "post_intimate",
+      "predicted_tag": "post_intimate",
+      "reply_id": "post_intimate_01",
+      "score": 0.7578,
+      "latency_ms": 3.52,
+      "text": "狡黠地眨了眨眼。Master大人，刚才表现得很棒哦，辛苦啦，我的好Master♡ 接下来想去岛上的哪里走走呀？",
+      "is_fallback": false
+    },
+    {
+      "case_id": "kq_home_01",
+      "character_id": "keqing",
+      "scene_id": "home_chat",
+      "query": "刻晴，早上好呀",
+      "expected_tag": "greet",
+      "predicted_tag": "greet",
+      "reply_id": "home_greet_01",
+      "score": 0.9477,
+      "latency_ms": 2.22,
+      "text": "Master，现在虽然是私下时间，但也不要太松懈了，今天就破例陪你多聊会儿吧。 睫毛轻颤，有些不好意思地低下头。",
+      "is_fallback": false
+    },
+    {
+      "case_id": "kq_home_02",
+      "character_id": "keqing",
+      "scene_id": "home_chat",
+      "query": "巡视辛苦了，我来看看你",
+      "expected_tag": "greet",
+      "predicted_tag": "greet",
+      "reply_id": "home_greet_01",
+      "score": 0.9723,
+      "latency_ms": 2.44,
+      "text": "Master，抿了抿唇，强装镇定地看着你。今天的工作基本告一段落了，很高兴能在这个时候见到你。 只要你想聊，我随时奉陪。",
+      "is_fallback": false
+    },
+    {
+      "case_id": "kq_home_03",
+      "character_id": "keqing",
+      "scene_id": "home_chat",
+      "query": "大工作狂，今天先放下文件陪我偷懒一会儿吧",
+      "expected_tag": "tease",
+      "predicted_tag": "tease",
+      "reply_id": "keqing_duty_01",
+      "score": 0.7304,
+      "latency_ms": 3.5,
+      "text": "单侧腿环微微绷紧，黑丝双马尾在海风中轻扬。你，今天的工作基本告一段落了，很高兴能在这个时候见到你。",
+      "is_fallback": false
+    },
+    {
+      "case_id": "kq_home_04",
+      "character_id": "keqing",
+      "scene_id": "home_chat",
+      "query": "你怎么一看到我就害羞地偏过头去呀",
+      "expected_tag": "tease",
+      "predicted_tag": "tease",
+      "reply_id": "home_tease_01",
+      "score": 0.7068,
+      "latency_ms": 3.06,
+      "text": "旅行者，微微偏过头轻咳一声！你刚才那句话，是在故意逗我笑吗？虽然挺幼稚的，但不讨厌就是了。 快步走到你身侧，与你并肩站立。",
+      "is_fallback": false
+    },
+    {
+      "case_id": "kq_home_05",
+      "character_id": "keqing",
+      "scene_id": "home_chat",
+      "query": "刻晴认真工作的侧脸真的特别迷人",
+      "expected_tag": "compliment",
+      "predicted_tag": "compliment",
+      "reply_id": "home_compliment_01",
+      "score": 1.0,
+      "latency_ms": 2.97,
+      "text": "抿了抿唇，强装镇定地看着你，听到Master这么说，突、突然说这种夸奖的话干什么，不过，谢谢你的认可。",
+      "is_fallback": false
+    },
+    {
+      "case_id": "kq_home_06",
+      "character_id": "keqing",
+      "scene_id": "home_chat",
+      "query": "把领地交给你打理真的让我特别安心",
+      "expected_tag": "compliment",
+      "predicted_tag": "compliment",
+      "reply_id": "home_compliment_01",
+      "score": 0.7286,
+      "latency_ms": 3.82,
+      "text": "Master，抿了抿唇，强装镇定地看着你。既然是你真心说的，那我就记在心里了，今后也会更加努力的。 睫毛轻颤，有些不好意思地低下头。",
+      "is_fallback": false
+    },
+    {
+      "case_id": "kq_home_07",
+      "character_id": "keqing",
+      "scene_id": "home_chat",
+      "query": "沙洲这边的海风吹着真惬意",
+      "expected_tag": "chat_island",
+      "predicted_tag": "chat_island",
+      "reply_id": "home_island_01",
+      "score": 0.7222,
+      "latency_ms": 2.66,
+      "text": "Master，关于这里，无论领地遇到什么困难，只要我们齐心协力，一定能够迅速解决。",
+      "is_fallback": false
+    },
+    {
+      "case_id": "kq_home_08",
+      "character_id": "keqing",
+      "scene_id": "home_chat",
+      "query": "工坊建设的进度还顺利吗",
+      "expected_tag": "chat_island",
+      "predicted_tag": "chat_island",
+      "reply_id": "home_island_01",
+      "score": 1.0,
+      "latency_ms": 2.5,
+      "text": "你，和煦的阳光洒在庭院里。沙洲的海风很舒服，和你在一起的时候，工作上的杂念不知不觉都散去了。 微微侧过身以剑鞘遮挡视线。",
+      "is_fallback": false
+    },
+    {
+      "case_id": "kq_home_09",
+      "character_id": "keqing",
+      "scene_id": "home_chat",
+      "query": "长案就在眼前，今天想和你做点舒服的事情",
+      "expected_tag": "invite_intimacy",
+      "predicted_tag": "invite_intimacy",
+      "reply_id": "invite_intimacy_01",
+      "score": 0.778,
+      "latency_ms": 3.4,
+      "text": "旅行者，嗯哼~ 别~ 不要停！♡ 既然你都表达得这么明显了，那今天，我就把全部都交给你。 轻咬下唇强忍娇喘，身体却诚实地完全顺从瘫软。",
+      "is_fallback": false
+    },
+    {
+      "case_id": "kq_home_10",
+      "character_id": "keqing",
+      "scene_id": "home_chat",
+      "query": "把背包里的铁矿转移到仓库第3格",
+      "expected_tag": "clarify_unknown",
+      "predicted_tag": "clarify_unknown",
+      "reply_id": "clarify_unknown_01",
+      "score": 0.6032,
+      "latency_ms": 4.55,
+      "text": "我不太明白你的意思，但如果是想和我交谈，我随时都在听着。 旅行者，我们聊点别的吧？",
+      "is_fallback": false
+    },
+    {
+      "case_id": "kq_int_01",
+      "character_id": "keqing",
+      "scene_id": "intimate",
+      "query": "手指轻轻划过你的黑丝大腿环和腰肢",
+      "expected_tag": "intimate_touch",
+      "predicted_tag": "intimate_touch",
+      "reply_id": "intimate_touch_01",
+      "score": 0.7466,
+      "latency_ms": 3.31,
+      "text": "旅行者~ 唔！唔~ 嗯哼！既然是Master的要求，那不管是哪里，都可以让你仔细触摸。",
+      "is_fallback": false
+    },
+    {
+      "case_id": "kq_int_02",
+      "character_id": "keqing",
+      "scene_id": "intimate",
+      "query": "抚摸你的敏感处，把手探入衣襟微敞的地方",
+      "expected_tag": "intimate_touch",
+      "predicted_tag": "intimate_touch",
+      "reply_id": "intimate_touch_01",
+      "score": 0.8355,
+      "latency_ms": 3.64,
+      "text": "仰起白皙脆弱的颈项，微闭着双眼任由你索取，嗯哼~ 别~ 不要停！触碰得太突然了，不过，身体完全不排斥你的温度呢。 无论你想要怎样对待我，我都做好了觉悟♡",
+      "is_fallback": false
+    },
+    {
+      "case_id": "kq_int_03",
+      "character_id": "keqing",
+      "scene_id": "intimate",
+      "query": "好舒服，请再快一点，猛烈地动起来",
+      "expected_tag": "intimate_rhythm_faster",
+      "predicted_tag": "intimate_rhythm_faster",
+      "reply_id": "intimate_rhythm_faster_01",
+      "score": 0.8343,
+      "latency_ms": 3.23,
+      "text": "轻咬下唇强忍娇喘，身体却诚实地完全顺从瘫软！呼~ 哈啊~ 哈啊~ 攻势太迅猛了，剑势完全被你压制得无法反抗！ 请告诉我，你接下来的指示是什么♡",
+      "is_fallback": false
+    },
+    {
+      "case_id": "kq_int_04",
+      "character_id": "keqing",
+      "scene_id": "intimate",
+      "query": "加快抽送速度，大力一点撞击",
+      "expected_tag": "intimate_rhythm_faster",
+      "predicted_tag": "intimate_rhythm_faster",
+      "reply_id": "intimate_rhythm_faster_01",
+      "score": 0.6764,
+      "latency_ms": 4.45,
+      "text": "仰起白皙脆弱的颈项，微闭着双眼任由你索取！呼~ 哈啊~ 快一点，如果这是你的期望，那我就全部承受下来！ 接下来的每一步，都由你来主导♡",
+      "is_fallback": false
+    },
+    {
+      "case_id": "kq_int_05",
+      "character_id": "keqing",
+      "scene_id": "intimate",
+      "query": "放慢节奏，温柔一点慢慢来",
+      "expected_tag": "intimate_rhythm_slower",
+      "predicted_tag": "intimate_rhythm_slower",
+      "reply_id": "intimate_rhythm_slower_01",
+      "score": 0.9026,
+      "latency_ms": 2.74,
+      "text": "身体微微战栗躲闪，却始终维持着方便你继续触碰的姿势。呀啊~ 轻点！轻柔一点，不要那么着急，我们还有充裕的时间互相体温交融。 接下来的每一步，都由你来主导♡",
+      "is_fallback": false
+    },
+    {
+      "case_id": "kq_int_06",
+      "character_id": "keqing",
+      "scene_id": "intimate",
+      "query": "进到最深处了，整根都被紧紧包裹着",
+      "expected_tag": "intimate_deep",
+      "predicted_tag": "intimate_deep",
+      "reply_id": "intimate_deep_01",
+      "score": 0.7837,
+      "latency_ms": 3.1,
+      "text": "旅行者♡ 哈啊~ 呜！呜~ 整个小腹都热得发烫，灵魂深处都在为你战栗！",
+      "is_fallback": false
+    },
+    {
+      "case_id": "kq_int_07",
+      "character_id": "keqing",
+      "scene_id": "intimate",
+      "query": "要到了忍不住了，全部在里面射给你",
+      "expected_tag": "intimate_peak",
+      "predicted_tag": "intimate_peak",
+      "reply_id": "intimate_peak_01",
+      "score": 0.7384,
+      "latency_ms": 3.07,
+      "text": "旅行者！嗯哼~ 别~ 不要停！♡ 哈啊！极限要突破了，剑势彻底溃败，是我输了♡ 无论你想要怎样对待我，我都做好了觉悟♡",
+      "is_fallback": false
+    },
+    {
+      "case_id": "kq_int_08",
+      "character_id": "keqing",
+      "scene_id": "intimate",
+      "query": "停一下，我体力有点吃不消了先暂停",
+      "expected_tag": "pause_stop",
+      "predicted_tag": "pause_stop",
+      "reply_id": "pause_request_01",
+      "score": 0.7601,
+      "latency_ms": 3.03,
+      "text": "Master，既然你觉得需要缓一缓，那就先暂停吧，我也正好稍微平复一下心跳。 快步走到你身侧，与你并肩站立。",
+      "is_fallback": false
+    },
+    {
+      "case_id": "kq_int_09",
+      "character_id": "keqing",
+      "scene_id": "intimate",
+      "query": "休息好了，刚才的感觉太美妙了我们继续吧",
+      "expected_tag": "resume_intimacy",
+      "predicted_tag": "resume_intimacy",
+      "reply_id": "resume_intimacy_01",
+      "score": 0.8563,
+      "latency_ms": 5.0,
+      "text": "旅行者，呼~ 哈啊~♡ 别愣着了，继续吧，玉衡星的承诺向来言出必行。 仰起白皙脆弱的颈项，微闭着双眼任由你索取。",
+      "is_fallback": false
+    },
+    {
+      "case_id": "kq_int_10",
+      "character_id": "keqing",
+      "scene_id": "intimate",
+      "query": "今天辛苦你了，躺在一起好好休息吧",
+      "expected_tag": "post_intimate",
+      "predicted_tag": "post_intimate",
+      "reply_id": "post_intimate_01",
+      "score": 0.705,
+      "latency_ms": 3.28,
+      "text": "你，凌乱的衣衫与散落的发丝交织出迷人的余韵。靠在我怀里休息吧，今天剩下的时间，我就这样一直陪着你。 睫毛轻颤，有些不好意思地低下头。",
+      "is_fallback": false
+    }
+  ],
+  "multi_turn_results": [
+    {
+      "episode_id": "sp_flow_01",
+      "character_id": "sparkle",
+      "turns": [
+        {
+          "turn_index": 0,
+          "scene_id": "home_chat",
+          "query": "花火，早安呀！",
+          "expected_tag": "greet",
+          "predicted_tag": "greet",
+          "reply_id": "home_greet_01",
+          "score": 0.7813,
+          "latency_ms": 2.04,
+          "text": "轻掩着狐狸面具噗嗤一笑，亲爱的Master，特意跑到我面前来，是不是一刻不被我捉弄就浑身难受呀？",
+          "slots_filled": {
+            "reaction": "轻掩着狐狸面具噗嗤一笑",
+            "address": "亲爱的Master",
+            "dialogue_core": "特意跑到我面前来，是不是一刻不被我捉弄就浑身难受呀？"
+          }
+        },
+        {
+          "turn_index": 1,
+          "scene_id": "home_chat",
+          "query": "看你一脸坏笑，又在打什么鬼主意呢",
+          "expected_tag": "tease",
+          "predicted_tag": "tease",
+          "reply_id": "sparkle_prank_01",
+          "score": 0.7726,
+          "latency_ms": 3.05,
+          "text": "咯咯娇笑起来！笨蛋旅行者，这都被你发现了？哎呀呀，Master现在的表情可真可爱呢！ 背着双手微微前倾身子！",
+          "slots_filled": {
+            "reaction": "咯咯娇笑起来",
+            "address": "笨蛋旅行者",
+            "dialogue_core": "哎呀呀，Master现在的表情可真可爱呢！",
+            "body_action": "背着双手微微前倾身子"
+          }
+        },
+        {
+          "turn_index": 2,
+          "scene_id": "home_chat",
+          "query": "不过你今天真迷人，好喜欢你",
+          "expected_tag": "compliment",
+          "predicted_tag": "compliment",
+          "reply_id": "home_compliment_01",
+          "score": 0.7845,
+          "latency_ms": 2.64,
+          "text": "小主人，狡黠地眨了眨眼。虽然知道你在哄我开心，不过这句夸奖本愚者就大方地收下啦！ 单侧大腿环系着的小铃铛随着走动叮咚作响。",
+          "slots_filled": {
+            "address": "小主人",
+            "reaction": "狡黠地眨了眨眼",
+            "dialogue_core": "虽然知道你在哄我开心，不过这句夸奖本愚者就大方地收下啦！",
+            "body_action": "单侧大腿环系着的小铃铛随着走动叮咚作响"
+          }
+        },
+        {
+          "turn_index": 3,
+          "scene_id": "home_chat",
+          "query": "我们去神殿石椅那边亲热一下吧",
+          "expected_tag": "invite_intimacy",
+          "predicted_tag": "chat_island",
+          "reply_id": "home_island_01",
+          "score": 0.7961,
+          "latency_ms": 2.91,
+          "text": "Master大人，浮空岛边缘泛着柔和的七彩云雾。小主人打理的这片领地还挺像模像样的，本愚者很满意哦！ 迈着轻快的步伐凑到你身前。",
+          "slots_filled": {
+            "address": "Master大人",
+            "atmosphere": "浮空岛边缘泛着柔和的七彩云雾",
+            "dialogue_core": "小主人打理的这片领地还挺像模像样的，本愚者很满意哦！",
+            "body_action": "迈着轻快的步伐凑到你身前"
+          }
+        },
+        {
+          "turn_index": 4,
+          "scene_id": "intimate",
+          "query": "把手伸进衣服里揉捏你的胸部",
+          "expected_tag": "intimate_touch",
+          "predicted_tag": "intimate_touch",
+          "reply_id": "intimate_touch_01",
+          "score": 0.7984,
+          "latency_ms": 3.93,
+          "text": "呼~ 呵呵♡！亲爱的Master，哎呀呀，Master的动作比平时更急切了呢，人家好喜欢♡ 微仰着娇俏的面庞，双颊晕红微伸舌尖。",
+          "slots_filled": {
+            "reaction": "呼~ 呵呵♡",
+            "address": "亲爱的Master",
+            "dialogue_core": "哎呀呀，Master的动作比平时更急切了呢，人家好喜欢♡",
+            "body_action": "微仰着娇俏的面庞，双颊晕红微伸舌尖"
+          }
+        },
+        {
+          "turn_index": 5,
+          "scene_id": "intimate",
+          "query": "太刺激了，加快速度猛烈一点",
+          "expected_tag": "intimate_rhythm_faster",
+          "predicted_tag": "intimate_rhythm_faster",
+          "reply_id": "intimate_rhythm_faster_01",
+          "score": 0.8298,
+          "latency_ms": 2.93,
+          "text": "笨蛋旅行者！嗯哼~ 呜♡！太棒了~ 这种狂风暴雨般的支配感，快把人家推向极限吧♡",
+          "slots_filled": {
+            "address": "笨蛋旅行者",
+            "reaction": "嗯哼~ 呜♡",
+            "dialogue_core": "太棒了~ 这种狂风暴雨般的支配感，快把人家推向极限吧♡"
+          }
+        },
+        {
+          "turn_index": 6,
+          "scene_id": "intimate",
+          "query": "顶到最里面了，整个人都被填满了",
+          "expected_tag": "intimate_deep",
+          "predicted_tag": "intimate_deep",
+          "reply_id": "intimate_deep_01",
+          "score": 0.8085,
+          "latency_ms": 4.13,
+          "text": "小主人♡ 呀呜~♡！不行了不行了，脑海里全是一片空白，完全被欢愉淹没了♡",
+          "slots_filled": {
+            "address": "小主人",
+            "reaction": "呀呜~♡",
+            "dialogue_core": "不行了不行了，脑海里全是一片空白，完全被欢愉淹没了♡"
+          }
+        },
+        {
+          "turn_index": 7,
+          "scene_id": "intimate",
+          "query": "忍不住要到了，射在里面给你",
+          "expected_tag": "intimate_peak",
+          "predicted_tag": "intimate_peak",
+          "reply_id": "intimate_peak_01",
+          "score": 0.7911,
+          "latency_ms": 3.99,
+          "text": "腰肢主动迎合着你的每一次动作，铃铛轻响不断！呀啊！哈啊~ 彻底坏掉了，真不愧是Master，把人家玩得彻底站不起来了呢♡",
+          "slots_filled": {
+            "body_action": "腰肢主动迎合着你的每一次动作，铃铛轻响不断",
+            "reaction": "呀啊！",
+            "dialogue_core": "哈啊~ 彻底坏掉了，真不愧是Master，把人家玩得彻底站不起来了呢♡"
+          }
+        }
+      ]
+    },
+    {
+      "episode_id": "sp_flow_02",
+      "character_id": "sparkle",
+      "turns": [
+        {
+          "turn_index": 0,
+          "scene_id": "intimate",
+          "query": "轻轻抚摸你的后背和敏感处",
+          "expected_tag": "intimate_touch",
+          "predicted_tag": "intimate_touch",
+          "reply_id": "intimate_touch_01",
+          "score": 0.8643,
+          "latency_ms": 2.98,
+          "text": "娇柔的身躯完全放松瘫软，毫无防备地任由你索取，哈啊~ 唔嗯♡！对~ 就是那里，稍微用力捏一下也没关系哦♡ 还要更多、更深入地占有人家吗♡",
+          "slots_filled": {
+            "body_action": "娇柔的身躯完全放松瘫软，毫无防备地任由你索取",
+            "reaction": "哈啊~ 唔嗯♡",
+            "dialogue_core": "对~ 就是那里，稍微用力捏一下也没关系哦♡",
+            "followup": "还要更多、更深入地占有人家吗♡"
+          }
+        },
+        {
+          "turn_index": 1,
+          "scene_id": "intimate",
+          "query": "好舒服，请再快一点！",
+          "expected_tag": "intimate_rhythm_faster",
+          "predicted_tag": "intimate_rhythm_faster",
+          "reply_id": "intimate_rhythm_faster_01",
+          "score": 0.9231,
+          "latency_ms": 2.69,
+          "text": "呼~ 呵呵♡！亲爱的Master，太棒了~ 这种狂风暴雨般的支配感，快把人家推向极限吧♡ 微仰着娇俏的面庞，双颊晕红微伸舌尖！",
+          "slots_filled": {
+            "reaction": "呼~ 呵呵♡",
+            "address": "亲爱的Master",
+            "dialogue_core": "太棒了~ 这种狂风暴雨般的支配感，快把人家推向极限吧♡",
+            "body_action": "微仰着娇俏的面庞，双颊晕红微伸舌尖"
+          }
+        },
+        {
+          "turn_index": 2,
+          "scene_id": "intimate",
+          "query": "等一下，太激烈了先暂停缓口气",
+          "expected_tag": "pause_stop",
+          "predicted_tag": "pause_stop",
+          "reply_id": "pause_request_01",
+          "score": 0.8834,
+          "latency_ms": 2.92,
+          "text": "把玩着手中的狐狸面具靠近你。笨蛋旅行者，呼~ 既然Master喊停了，那人家就先放过你一会儿好啦！",
+          "slots_filled": {
+            "body_action": "把玩着手中的狐狸面具靠近你",
+            "address": "笨蛋旅行者",
+            "dialogue_core": "呼~ 既然Master喊停了，那人家就先放过你一会儿好啦！"
+          }
+        },
+        {
+          "turn_index": 3,
+          "scene_id": "intimate",
+          "query": "休息好了，我们接着刚才的继续做吧",
+          "expected_tag": "resume_intimacy",
+          "predicted_tag": "resume_intimacy",
+          "reply_id": "resume_intimacy_01",
+          "score": 0.853,
+          "latency_ms": 3.05,
+          "text": "哈啊哈啊~♡！既然小主人这么说，既然小主人恢复元气了，本愚者可要主动出击咯♡ 今夜的时间还很长呢，慢慢享受吧♡",
+          "slots_filled": {
+            "reaction": "哈啊哈啊~♡",
+            "address": "小主人",
+            "dialogue_core": "既然小主人恢复元气了，本愚者可要主动出击咯♡",
+            "followup": "今夜的时间还很长呢，慢慢享受吧♡"
+          }
+        },
+        {
+          "turn_index": 4,
+          "scene_id": "intimate",
+          "query": "稍微慢一点，慢慢研磨感受彼此的温度",
+          "expected_tag": "intimate_rhythm_slower",
+          "predicted_tag": "intimate_rhythm_slower",
+          "reply_id": "intimate_rhythm_slower_01",
+          "score": 0.7467,
+          "latency_ms": 4.57,
+          "text": "双臂主动缠上你的脖颈，娇躯紧紧贴合在你怀里。呀呜~♡，轻一点，让每一次触碰的余韵都停留得更久一些嘛♡ 小主人接下来的指令是什么呢♡",
+          "slots_filled": {
+            "body_action": "双臂主动缠上你的脖颈，娇躯紧紧贴合在你怀里",
+            "reaction": "呀呜~♡",
+            "dialogue_core": "轻一点，让每一次触碰的余韵都停留得更久一些嘛♡",
+            "followup": "小主人接下来的指令是什么呢♡"
+          }
+        },
+        {
+          "turn_index": 5,
+          "scene_id": "intimate",
+          "query": "插到最深处，顶到敏感点了",
+          "expected_tag": "intimate_deep",
+          "predicted_tag": "intimate_deep",
+          "reply_id": "intimate_deep_01",
+          "score": 0.8181,
+          "latency_ms": 3.34,
+          "text": "眼神迷离炽热，贴在你耳边吐气如兰！嗯哼~ 呜♡！呀啊~ 那里每次被碰到，灵魂都像是在战栗呢♡ 还要更多、更深入地占有人家吗♡",
+          "slots_filled": {
+            "body_action": "眼神迷离炽热，贴在你耳边吐气如兰",
+            "reaction": "嗯哼~ 呜♡",
+            "dialogue_core": "呀啊~ 那里每次被碰到，灵魂都像是在战栗呢♡",
+            "followup": "还要更多、更深入地占有人家吗♡"
+          }
+        },
+        {
+          "turn_index": 6,
+          "scene_id": "intimate",
+          "query": "要出来了，全部给你",
+          "expected_tag": "intimate_peak",
+          "predicted_tag": "intimate_peak",
+          "reply_id": "intimate_peak_01",
+          "score": 0.7804,
+          "latency_ms": 2.41,
+          "text": "腰肢主动迎合着你的每一次动作，铃铛轻响不断！哈啊~ 唔嗯♡！要到了！全部都给人家，一滴也不准保留哦♡",
+          "slots_filled": {
+            "body_action": "腰肢主动迎合着你的每一次动作，铃铛轻响不断",
+            "reaction": "哈啊~ 唔嗯♡",
+            "dialogue_core": "要到了！全部都给人家，一滴也不准保留哦♡"
+          }
+        },
+        {
+          "turn_index": 7,
+          "scene_id": "intimate",
+          "query": "刚才太棒了，抱着你好好温存一下",
+          "expected_tag": "post_intimate",
+          "predicted_tag": "post_intimate",
+          "reply_id": "post_intimate_01",
+          "score": 0.745,
+          "latency_ms": 2.99,
+          "text": "Master大人，凌乱的衣衫与散落的发丝交织出迷人的余韵。这具身体可是完全被小主人疼爱透了呢，接下来好好抱着我睡会儿吧♡ 单侧大腿环系着的小铃铛随着走动叮咚作响。",
+          "slots_filled": {
+            "address": "Master大人",
+            "atmosphere": "凌乱的衣衫与散落的发丝交织出迷人的余韵",
+            "dialogue_core": "这具身体可是完全被小主人疼爱透了呢，接下来好好抱着我睡会儿吧♡",
+            "body_action": "单侧大腿环系着的小铃铛随着走动叮咚作响"
+          }
+        }
+      ]
+    },
+    {
+      "episode_id": "sp_flow_03",
+      "character_id": "sparkle",
+      "turns": [
+        {
+          "turn_index": 0,
+          "scene_id": "home_chat",
+          "query": "今天天气真好，在干嘛呢",
+          "expected_tag": "greet",
+          "predicted_tag": "greet",
+          "reply_id": "home_greet_01",
+          "score": 0.8291,
+          "latency_ms": 2.47,
+          "text": "咯咯娇笑起来，Master大人，特意跑到我面前来，是不是一刻不被我捉弄就浑身难受呀？",
+          "slots_filled": {
+            "reaction": "咯咯娇笑起来",
+            "address": "Master大人",
+            "dialogue_core": "特意跑到我面前来，是不是一刻不被我捉弄就浑身难受呀？"
+          }
+        },
+        {
+          "turn_index": 1,
+          "scene_id": "home_chat",
+          "query": "这片岛屿怎么样，还习惯吗",
+          "expected_tag": "chat_island",
+          "predicted_tag": "chat_island",
+          "reply_id": "home_island_01",
+          "score": 0.8739,
+          "latency_ms": 3.31,
+          "text": "亲爱的Master，关于这里，要是能在神殿的石椅上多摆弄点新鲜花样，那才算不虚此行嘛！",
+          "slots_filled": {
+            "address": "亲爱的Master",
+            "dialogue_core": "要是能在神殿的石椅上多摆弄点新鲜花样，那才算不虚此行嘛！"
+          }
+        },
+        {
+          "turn_index": 2,
+          "scene_id": "home_chat",
+          "query": "你的铃铛叮咚作响真好听",
+          "expected_tag": "tease",
+          "predicted_tag": "tease",
+          "reply_id": "sparkle_prank_01",
+          "score": 0.9143,
+          "latency_ms": 2.81,
+          "text": "小主人，这么直勾勾地盯着人家看，难道心里在打什么坏主意吗？ 轻掩着狐狸面具噗嗤一笑！",
+          "slots_filled": {
+            "address": "小主人",
+            "dialogue_core": "这么直勾勾地盯着人家看，难道心里在打什么坏主意吗？",
+            "reaction": "轻掩着狐狸面具噗嗤一笑"
+          }
+        },
+        {
+          "turn_index": 3,
+          "scene_id": "home_chat",
+          "query": "花火是世界上最可爱的小恶魔",
+          "expected_tag": "compliment",
+          "predicted_tag": "clarify_unknown",
+          "reply_id": "clarify_unknown_01",
+          "score": 0.5621,
+          "latency_ms": 4.37,
+          "text": "笨蛋旅行者，神殿里可没有那种奇怪的规矩，专心陪人家聊点好玩的嘛！ 小主人可别想轻易溜掉哦！",
+          "slots_filled": {
+            "address": "笨蛋旅行者",
+            "dialogue_core": "神殿里可没有那种奇怪的规矩，专心陪人家聊点好玩的嘛！",
+            "followup": "小主人可别想轻易溜掉哦！"
+          }
+        },
+        {
+          "turn_index": 4,
+          "scene_id": "home_chat",
+          "query": "忍不住想要你了，去床上吧",
+          "expected_tag": "invite_intimacy",
+          "predicted_tag": "invite_intimacy",
+          "reply_id": "invite_intimacy_01",
+          "score": 0.8103,
+          "latency_ms": 3.29,
+          "text": "双臂主动缠上你的脖颈，娇躯紧紧贴合在你怀里。Master大人，眼神都变得这么炽热了，还想装正人君子吗？快点把人家抱过去嘛♡",
+          "slots_filled": {
+            "body_action": "双臂主动缠上你的脖颈，娇躯紧紧贴合在你怀里",
+            "address": "Master大人",
+            "dialogue_core": "眼神都变得这么炽热了，还想装正人君子吗？快点把人家抱过去嘛♡"
+          }
+        },
+        {
+          "turn_index": 5,
+          "scene_id": "intimate",
+          "query": "亲吻你的嘴唇，揉抚你的大腿",
+          "expected_tag": "intimate_touch",
+          "predicted_tag": "intimate_touch",
+          "reply_id": "intimate_touch_01",
+          "score": 0.8419,
+          "latency_ms": 2.9,
+          "text": "腰肢主动迎合着你的每一次动作，铃铛轻响不断，哈啊~ 唔嗯♡！对~ 就是那里，稍微用力捏一下也没关系哦♡ 小主人接下来的指令是什么呢♡",
+          "slots_filled": {
+            "body_action": "腰肢主动迎合着你的每一次动作，铃铛轻响不断",
+            "reaction": "哈啊~ 唔嗯♡",
+            "dialogue_core": "对~ 就是那里，稍微用力捏一下也没关系哦♡",
+            "followup": "小主人接下来的指令是什么呢♡"
+          }
+        }
+      ]
+    },
+    {
+      "episode_id": "sp_flow_04",
+      "character_id": "sparkle",
+      "turns": [
+        {
+          "turn_index": 0,
+          "scene_id": "intimate",
+          "query": "抚摸你的全身敏感部位",
+          "expected_tag": "intimate_touch",
+          "predicted_tag": "intimate_touch",
+          "reply_id": "intimate_touch_01",
+          "score": 0.9183,
+          "latency_ms": 2.83,
+          "text": "小主人~ 唔！呼~ 呵呵♡，小主人终于忍不住要动真格了吗？手指碰到的地方好热呢♡",
+          "slots_filled": {
+            "address": "小主人",
+            "reaction": "呼~ 呵呵♡",
+            "dialogue_core": "小主人终于忍不住要动真格了吗？手指碰到的地方好热呢♡"
+          }
+        },
+        {
+          "turn_index": 1,
+          "scene_id": "intimate",
+          "query": "进到最深处好舒服",
+          "expected_tag": "intimate_deep",
+          "predicted_tag": "intimate_deep",
+          "reply_id": "intimate_deep_01",
+          "score": 0.9568,
+          "latency_ms": 2.52,
+          "text": "娇柔的身躯完全放松瘫软，毫无防备地任由你索取！哈啊哈啊~♡！哈啊！顶得太深了，整个人都被Master填得满满的♡ 还要更多、更深入地占有人家吗♡",
+          "slots_filled": {
+            "body_action": "娇柔的身躯完全放松瘫软，毫无防备地任由你索取",
+            "reaction": "哈啊哈啊~♡",
+            "dialogue_core": "哈啊！顶得太深了，整个人都被Master填得满满的♡",
+            "followup": "还要更多、更深入地占有人家吗♡"
+          }
+        },
+        {
+          "turn_index": 2,
+          "scene_id": "intimate",
+          "query": "加快速度使劲撞击",
+          "expected_tag": "intimate_rhythm_faster",
+          "predicted_tag": "intimate_rhythm_faster",
+          "reply_id": "intimate_rhythm_faster_01",
+          "score": 0.7805,
+          "latency_ms": 2.23,
+          "text": "呀呜~♡！亲爱的Master，对！就是这个节奏，再快一点，把本愚者彻底弄乱吧♡ 微仰着娇俏的面庞，双颊晕红微伸舌尖！",
+          "slots_filled": {
+            "reaction": "呀呜~♡",
+            "address": "亲爱的Master",
+            "dialogue_core": "对！就是这个节奏，再快一点，把本愚者彻底弄乱吧♡",
+            "body_action": "微仰着娇俏的面庞，双颊晕红微伸舌尖"
+          }
+        },
+        {
+          "turn_index": 3,
+          "scene_id": "intimate",
+          "query": "要到了忍不住了",
+          "expected_tag": "intimate_peak",
+          "predicted_tag": "intimate_peak",
+          "reply_id": "intimate_peak_01",
+          "score": 0.9743,
+          "latency_ms": 2.13,
+          "text": "Master大人！嗯哼~ 呜♡♡ 呜！高潮要来了，快感蓄满倒地啦♡ 今夜的时间还很长呢，慢慢享受吧♡",
+          "slots_filled": {
+            "address": "Master大人",
+            "reaction": "嗯哼~ 呜♡",
+            "dialogue_core": "呜！高潮要来了，快感蓄满倒地啦♡",
+            "followup": "今夜的时间还很长呢，慢慢享受吧♡"
+          }
+        },
+        {
+          "turn_index": 4,
+          "scene_id": "intimate",
+          "query": "休息好了我们再来一次",
+          "expected_tag": "resume_intimacy",
+          "predicted_tag": "resume_intimacy",
+          "reply_id": "resume_intimacy_01",
+          "score": 0.8625,
+          "latency_ms": 2.35,
+          "text": "呀啊！既然笨蛋旅行者这么说，既然小主人恢复元气了，本愚者可要主动出击咯♡ 小主人接下来的指令是什么呢♡",
+          "slots_filled": {
+            "reaction": "呀啊！",
+            "address": "笨蛋旅行者",
+            "dialogue_core": "既然小主人恢复元气了，本愚者可要主动出击咯♡",
+            "followup": "小主人接下来的指令是什么呢♡"
+          }
+        },
+        {
+          "turn_index": 5,
+          "scene_id": "intimate",
+          "query": "慢一点温柔地动",
+          "expected_tag": "intimate_rhythm_slower",
+          "predicted_tag": "intimate_rhythm_slower",
+          "reply_id": "intimate_rhythm_slower_01",
+          "score": 0.8846,
+          "latency_ms": 2.06,
+          "text": "小主人，呼~ 这种深入又缓慢的研磨，快感反而像潮水一样涌上来了呢♡ 凌乱的衣衫与散落的发丝交织出迷人的余韵。",
+          "slots_filled": {
+            "address": "小主人",
+            "dialogue_core": "呼~ 这种深入又缓慢的研磨，快感反而像潮水一样涌上来了呢♡",
+            "atmosphere": "凌乱的衣衫与散落的发丝交织出迷人的余韵"
+          }
+        },
+        {
+          "turn_index": 6,
+          "scene_id": "intimate",
+          "query": "今天辛苦了，抱抱你",
+          "expected_tag": "post_intimate",
+          "predicted_tag": "post_intimate",
+          "reply_id": "post_intimate_01",
+          "score": 0.8164,
+          "latency_ms": 2.16,
+          "text": "把玩着手中的狐狸面具靠近你。亲爱的Master，这具身体可是完全被小主人疼爱透了呢，接下来好好抱着我睡会儿吧♡",
+          "slots_filled": {
+            "body_action": "把玩着手中的狐狸面具靠近你",
+            "address": "亲爱的Master",
+            "dialogue_core": "这具身体可是完全被小主人疼爱透了呢，接下来好好抱着我睡会儿吧♡"
+          }
+        }
+      ]
+    },
+    {
+      "episode_id": "sp_flow_05",
+      "character_id": "sparkle",
+      "turns": [
+        {
+          "turn_index": 0,
+          "scene_id": "home_chat",
+          "query": "嗨，我来看看你",
+          "expected_tag": "greet",
+          "predicted_tag": "greet",
+          "reply_id": "home_greet_01",
+          "score": 0.9269,
+          "latency_ms": 4.09,
+          "text": "轻掩着狐狸面具噗嗤一笑，Master大人，神殿这里的微风真舒服，不过要是能看Master出丑就更棒啦！",
+          "slots_filled": {
+            "reaction": "轻掩着狐狸面具噗嗤一笑",
+            "address": "Master大人",
+            "dialogue_core": "神殿这里的微风真舒服，不过要是能看Master出丑就更棒啦！"
+          }
+        },
+        {
+          "turn_index": 1,
+          "scene_id": "home_chat",
+          "query": "帮我查一下数据库日志文件",
+          "expected_tag": "clarify_unknown",
+          "predicted_tag": "clarify_unknown",
+          "reply_id": "clarify_unknown_01",
+          "score": 0.6116,
+          "latency_ms": 2.9,
+          "text": "狡黠地眨了眨眼。小主人，哎呀，小主人这句奇奇怪怪的话，本愚者可有点听不懂呢！",
+          "slots_filled": {
+            "reaction": "狡黠地眨了眨眼",
+            "address": "小主人",
+            "dialogue_core": "哎呀，小主人这句奇奇怪怪的话，本愚者可有点听不懂呢！"
+          }
+        },
+        {
+          "turn_index": 2,
+          "scene_id": "home_chat",
+          "query": "哈哈逗你玩的，你今天真可爱",
+          "expected_tag": "tease",
+          "predicted_tag": "tease",
+          "reply_id": "home_tease_01",
+          "score": 0.8283,
+          "latency_ms": 3.25,
+          "text": "背着双手微微前倾身子。笨蛋旅行者，哎呀呀，Master现在的表情可真可爱呢！",
+          "slots_filled": {
+            "body_action": "背着双手微微前倾身子",
+            "address": "笨蛋旅行者",
+            "dialogue_core": "哎呀呀，Master现在的表情可真可爱呢！"
+          }
+        },
+        {
+          "turn_index": 3,
+          "scene_id": "home_chat",
+          "query": "想和你亲热一下好不好",
+          "expected_tag": "invite_intimacy",
+          "predicted_tag": "invite_intimacy",
+          "reply_id": "invite_intimacy_01",
+          "score": 0.8444,
+          "latency_ms": 2.43,
+          "text": "腰肢主动迎合着你的每一次动作，铃铛轻响不断。亲爱的Master，既然Master都说到这份上了，那可就不能只是嘴上聊聊咯♡",
+          "slots_filled": {
+            "body_action": "腰肢主动迎合着你的每一次动作，铃铛轻响不断",
+            "address": "亲爱的Master",
+            "dialogue_core": "既然Master都说到这份上了，那可就不能只是嘴上聊聊咯♡"
+          }
+        },
+        {
+          "turn_index": 4,
+          "scene_id": "intimate",
+          "query": "揉捏你的娇躯",
+          "expected_tag": "intimate_touch",
+          "predicted_tag": "intimate_touch",
+          "reply_id": "intimate_touch_01",
+          "score": 0.7539,
+          "latency_ms": 2.02,
+          "text": "微仰着娇俏的面庞，双颊晕红微伸舌尖，嗯哼~ 呜♡！哎呀呀，Master的动作比平时更急切了呢，人家好喜欢♡ 小主人接下来的指令是什么呢♡",
+          "slots_filled": {
+            "body_action": "微仰着娇俏的面庞，双颊晕红微伸舌尖",
+            "reaction": "嗯哼~ 呜♡",
+            "dialogue_core": "哎呀呀，Master的动作比平时更急切了呢，人家好喜欢♡",
+            "followup": "小主人接下来的指令是什么呢♡"
+          }
+        },
+        {
+          "turn_index": 5,
+          "scene_id": "intimate",
+          "query": "停一下先休息",
+          "expected_tag": "pause_stop",
+          "predicted_tag": "pause_stop",
+          "reply_id": "pause_request_01",
+          "score": 0.9322,
+          "latency_ms": 2.02,
+          "text": "单侧大腿环系着的小铃铛随着走动叮咚作响。Master大人，呼~ 既然Master喊停了，那人家就先放过你一会儿好啦！",
+          "slots_filled": {
+            "body_action": "单侧大腿环系着的小铃铛随着走动叮咚作响",
+            "address": "Master大人",
+            "dialogue_core": "呼~ 既然Master喊停了，那人家就先放过你一会儿好啦！"
+          }
+        }
+      ]
+    },
+    {
+      "episode_id": "sp_flow_06",
+      "character_id": "sparkle",
+      "turns": [
+        {
+          "turn_index": 0,
+          "scene_id": "intimate",
+          "query": "把手伸进衣服揉捏你的敏感点",
+          "expected_tag": "intimate_touch",
+          "predicted_tag": "intimate_touch",
+          "reply_id": "intimate_touch_01",
+          "score": 0.8386,
+          "latency_ms": 2.95,
+          "text": "呼~ 呵呵♡！Master大人，对~ 就是那里，稍微用力捏一下也没关系哦♡ 双臂主动缠上你的脖颈，娇躯紧紧贴合在你怀里。",
+          "slots_filled": {
+            "reaction": "呼~ 呵呵♡",
+            "address": "Master大人",
+            "dialogue_core": "对~ 就是那里，稍微用力捏一下也没关系哦♡",
+            "body_action": "双臂主动缠上你的脖颈，娇躯紧紧贴合在你怀里"
+          }
+        },
+        {
+          "turn_index": 1,
+          "scene_id": "intimate",
+          "query": "太舒服了再快一点，猛烈地动起来",
+          "expected_tag": "intimate_rhythm_faster",
+          "predicted_tag": "intimate_rhythm_faster",
+          "reply_id": "intimate_rhythm_faster_01",
+          "score": 0.8386,
+          "latency_ms": 3.06,
+          "text": "小主人！哈啊哈啊~♡！太棒了~ 这种狂风暴雨般的支配感，快把人家推向极限吧♡",
+          "slots_filled": {
+            "address": "小主人",
+            "reaction": "哈啊哈啊~♡",
+            "dialogue_core": "太棒了~ 这种狂风暴雨般的支配感，快把人家推向极限吧♡"
+          }
+        },
+        {
+          "turn_index": 2,
+          "scene_id": "intimate",
+          "query": "插到最深处抵在花心上了",
+          "expected_tag": "intimate_deep",
+          "predicted_tag": "intimate_deep",
+          "reply_id": "intimate_deep_01",
+          "score": 0.856,
+          "latency_ms": 2.58,
+          "text": "笨蛋旅行者♡ 哈啊~ 唔嗯♡！哈啊！顶得太深了，整个人都被Master填得满满的♡",
+          "slots_filled": {
+            "address": "笨蛋旅行者",
+            "reaction": "哈啊~ 唔嗯♡",
+            "dialogue_core": "哈啊！顶得太深了，整个人都被Master填得满满的♡"
+          }
+        },
+        {
+          "turn_index": 3,
+          "scene_id": "intimate",
+          "query": "要出来了射给你",
+          "expected_tag": "intimate_peak",
+          "predicted_tag": "intimate_peak",
+          "reply_id": "intimate_peak_01",
+          "score": 0.8657,
+          "latency_ms": 2.03,
+          "text": "呀呜~♡！亲爱的Master！要到了！全部都给人家，一滴也不准保留哦♡ 娇柔的身躯完全放松瘫软，毫无防备地任由你索取♡",
+          "slots_filled": {
+            "reaction": "呀呜~♡",
+            "address": "亲爱的Master",
+            "dialogue_core": "要到了！全部都给人家，一滴也不准保留哦♡",
+            "body_action": "娇柔的身躯完全放松瘫软，毫无防备地任由你索取"
+          }
+        },
+        {
+          "turn_index": 4,
+          "scene_id": "intimate",
+          "query": "做完了好累，躺在一起休息会儿",
+          "expected_tag": "post_intimate",
+          "predicted_tag": "post_intimate",
+          "reply_id": "post_intimate_01",
+          "score": 0.8452,
+          "latency_ms": 3.04,
+          "text": "歪着脑袋促狭地打量着你。Master大人，这具身体可是完全被小主人疼爱透了呢，接下来好好抱着我睡会儿吧♡ 要不要我给你变个小戏法解解闷呀？",
+          "slots_filled": {
+            "reaction": "歪着脑袋促狭地打量着你",
+            "address": "Master大人",
+            "dialogue_core": "这具身体可是完全被小主人疼爱透了呢，接下来好好抱着我睡会儿吧♡",
+            "followup": "要不要我给你变个小戏法解解闷呀？"
+          }
+        },
+        {
+          "turn_index": 5,
+          "scene_id": "home_chat",
+          "query": "花火今天表现真棒",
+          "expected_tag": "compliment",
+          "predicted_tag": "compliment",
+          "reply_id": "home_compliment_01",
+          "score": 0.7722,
+          "latency_ms": 2.6,
+          "text": "小主人，咯咯娇笑起来。被小主人这么夸奖，人家心底可是乐开花了呢！ 背着双手微微前倾身子。",
+          "slots_filled": {
+            "address": "小主人",
+            "reaction": "咯咯娇笑起来",
+            "dialogue_core": "被小主人这么夸奖，人家心底可是乐开花了呢！",
+            "body_action": "背着双手微微前倾身子"
+          }
+        }
+      ]
+    },
+    {
+      "episode_id": "kq_flow_01",
+      "character_id": "keqing",
+      "turns": [
+        {
+          "turn_index": 0,
+          "scene_id": "home_chat",
+          "query": "刻晴，早上好呀",
+          "expected_tag": "greet",
+          "predicted_tag": "greet",
+          "reply_id": "home_greet_01",
+          "score": 0.9477,
+          "latency_ms": 2.34,
+          "text": "旅行者，双手环抱在胸前掩饰微红的脸颊。沙洲的巡视刚刚完成，既然你来了，那就坐下来歇会儿吧。 接下来你有什么打算吗？",
+          "slots_filled": {
+            "address": "旅行者",
+            "reaction": "双手环抱在胸前掩饰微红的脸颊",
+            "dialogue_core": "沙洲的巡视刚刚完成，既然你来了，那就坐下来歇会儿吧。",
+            "followup": "接下来你有什么打算吗？"
+          }
+        },
+        {
+          "turn_index": 1,
+          "scene_id": "home_chat",
+          "query": "别总想着工作了，陪我偷懒一会儿吧",
+          "expected_tag": "tease",
+          "predicted_tag": "tease",
+          "reply_id": "keqing_duty_01",
+          "score": 0.814,
+          "latency_ms": 3.39,
+          "text": "现在虽然是私下时间，但也不要太松懈了，今天就破例陪你多聊会儿吧。 不过既然是Master的要求，今天就听你的好了。只要你想聊，我随时奉陪。",
+          "slots_filled": {
+            "dialogue_core": "现在虽然是私下时间，但也不要太松懈了，今天就破例陪你多聊会儿吧。",
+            "address": "Master",
+            "followup": "只要你想聊，我随时奉陪。"
+          }
+        },
+        {
+          "turn_index": 2,
+          "scene_id": "home_chat",
+          "query": "有你在身边真的特别安心，辛苦你了",
+          "expected_tag": "compliment",
+          "predicted_tag": "compliment",
+          "reply_id": "home_compliment_01",
+          "score": 0.8131,
+          "latency_ms": 3.36,
+          "text": "你，微微偏过头轻咳一声。能够帮到你并得到你的肯定，对我来说就是最值得欣慰的事了。 快步走到你身侧，与你并肩站立。",
+          "slots_filled": {
+            "address": "你",
+            "reaction": "微微偏过头轻咳一声",
+            "dialogue_core": "能够帮到你并得到你的肯定，对我来说就是最值得欣慰的事了。",
+            "body_action": "快步走到你身侧，与你并肩站立"
+          }
+        },
+        {
+          "turn_index": 3,
+          "scene_id": "home_chat",
+          "query": "长案就在眼前，今天想和你做点舒服的事情",
+          "expected_tag": "invite_intimacy",
+          "predicted_tag": "invite_intimacy",
+          "reply_id": "invite_intimacy_01",
+          "score": 0.778,
+          "latency_ms": 3.6,
+          "text": "唔~ 嗯哼！旅行者，长案就在眼前，特意把我逼到这种地步，任凭Master处置就是了♡ 无论你想要怎样对待我，我都做好了觉悟♡",
+          "slots_filled": {
+            "reaction": "唔~ 嗯哼！",
+            "address": "旅行者",
+            "dialogue_core": "长案就在眼前，特意把我逼到这种地步，任凭Master处置就是了♡",
+            "followup": "无论你想要怎样对待我，我都做好了觉悟♡"
+          }
+        },
+        {
+          "turn_index": 4,
+          "scene_id": "intimate",
+          "query": "手指轻轻划过你的黑丝大腿环和腰肢",
+          "expected_tag": "intimate_touch",
+          "predicted_tag": "intimate_touch",
+          "reply_id": "intimate_touch_01",
+          "score": 0.7466,
+          "latency_ms": 4.66,
+          "text": "Master~ 唔！嗯哼~ 别~ 不要停！手指滑过腿环的时候，呼吸总是忍不住变得凌乱起来。",
+          "slots_filled": {
+            "address": "Master",
+            "reaction": "嗯哼~ 别~ 不要停！",
+            "dialogue_core": "手指滑过腿环的时候，呼吸总是忍不住变得凌乱起来。"
+          }
+        },
+        {
+          "turn_index": 5,
+          "scene_id": "intimate",
+          "query": "好舒服，请再快一点！",
+          "expected_tag": "intimate_rhythm_faster",
+          "predicted_tag": "intimate_rhythm_faster",
+          "reply_id": "intimate_rhythm_faster_01",
+          "score": 0.9231,
+          "latency_ms": 2.71,
+          "text": "呼~ 哈啊！你，呜唔！太快了，强烈的快感冲击得我都快要失去思考能力了！ 双臂有些害羞地环住你的肩膀，将脸深深埋入你的胸膛！",
+          "slots_filled": {
+            "reaction": "呼~ 哈啊~",
+            "address": "你",
+            "dialogue_core": "呜唔！太快了，强烈的快感冲击得我都快要失去思考能力了！",
+            "body_action": "双臂有些害羞地环住你的肩膀，将脸深深埋入你的胸膛"
+          }
+        },
+        {
+          "turn_index": 6,
+          "scene_id": "intimate",
+          "query": "进到最深处了，整根都被紧紧包裹着",
+          "expected_tag": "intimate_deep",
+          "predicted_tag": "intimate_deep",
+          "reply_id": "intimate_deep_01",
+          "score": 0.7837,
+          "latency_ms": 3.11,
+          "text": "呜唔~ 哈啊！旅行者，这种深度，完全侵入了防线的核心，身体都要被融化了！ 双手紧紧抓着长案床单，修长双腿轻微战栗着迎合你♡",
+          "slots_filled": {
+            "reaction": "呜唔~ 哈啊！",
+            "address": "旅行者",
+            "dialogue_core": "这种深度，完全侵入了防线的核心，身体都要被融化了！",
+            "body_action": "双手紧紧抓着长案床单，修长双腿轻微战栗着迎合你"
+          }
+        },
+        {
+          "turn_index": 7,
+          "scene_id": "intimate",
+          "query": "要到了忍不住了，全部在里面射给你",
+          "expected_tag": "intimate_peak",
+          "predicted_tag": "intimate_peak",
+          "reply_id": "intimate_peak_01",
+          "score": 0.7384,
+          "latency_ms": 3.08,
+          "text": "身体微微战栗躲闪，却始终维持着方便你继续触碰的姿势！哈啊~ 呜！不行了，要到了，请紧紧抱住我，和我一起到达顶点！",
+          "slots_filled": {
+            "body_action": "身体微微战栗躲闪，却始终维持着方便你继续触碰的姿势",
+            "reaction": "哈啊~ 呜！",
+            "dialogue_core": "不行了，要到了，请紧紧抱住我，和我一起到达顶点！"
+          }
+        }
+      ]
+    },
+    {
+      "episode_id": "kq_flow_02",
+      "character_id": "keqing",
+      "turns": [
+        {
+          "turn_index": 0,
+          "scene_id": "intimate",
+          "query": "抚摸你的敏感处，把手探入衣襟微敞的地方",
+          "expected_tag": "intimate_touch",
+          "predicted_tag": "intimate_touch",
+          "reply_id": "intimate_touch_01",
+          "score": 0.8355,
+          "latency_ms": 3.63,
+          "text": "双手紧紧抓着长案床单，修长双腿轻微战栗着迎合你，唔~ 嗯哼！既然是Master的要求，那不管是哪里，都可以让你仔细触摸。 请告诉我，你接下来的指示是什么♡",
+          "slots_filled": {
+            "body_action": "双手紧紧抓着长案床单，修长双腿轻微战栗着迎合你",
+            "reaction": "唔~ 嗯哼！",
+            "dialogue_core": "既然是Master的要求，那不管是哪里，都可以让你仔细触摸。",
+            "followup": "请告诉我，你接下来的指示是什么♡"
+          }
+        },
+        {
+          "turn_index": 1,
+          "scene_id": "intimate",
+          "query": "加快抽送速度，大力一点撞击",
+          "expected_tag": "intimate_rhythm_faster",
+          "predicted_tag": "intimate_rhythm_faster",
+          "reply_id": "intimate_rhythm_faster_01",
+          "score": 0.6764,
+          "latency_ms": 2.92,
+          "text": "呼~ 哈啊！你，快一点，如果这是你的期望，那我就全部承受下来！ 仰起白皙脆弱的颈项，微闭着双眼任由你索取！",
+          "slots_filled": {
+            "reaction": "呼~ 哈啊~",
+            "address": "你",
+            "dialogue_core": "快一点，如果这是你的期望，那我就全部承受下来！",
+            "body_action": "仰起白皙脆弱的颈项，微闭着双眼任由你索取"
+          }
+        },
+        {
+          "turn_index": 2,
+          "scene_id": "intimate",
+          "query": "停一下，我体力有点吃不消了先暂停",
+          "expected_tag": "pause_stop",
+          "predicted_tag": "pause_stop",
+          "reply_id": "pause_request_01",
+          "score": 0.7601,
+          "latency_ms": 3.28,
+          "text": "睫毛轻颤，有些不好意思地低下头。Master，呼~ 哈啊，好的，先停一下，让我好好调整一下紊乱的呼吸。",
+          "slots_filled": {
+            "body_action": "睫毛轻颤，有些不好意思地低下头",
+            "address": "Master",
+            "dialogue_core": "呼~ 哈啊，好的，先停一下，让我好好调整一下紊乱的呼吸。"
+          }
+        },
+        {
+          "turn_index": 3,
+          "scene_id": "intimate",
+          "query": "休息好了，刚才的感觉太美妙了我们继续吧",
+          "expected_tag": "resume_intimacy",
+          "predicted_tag": "resume_intimacy",
+          "reply_id": "resume_intimacy_01",
+          "score": 0.8563,
+          "latency_ms": 4.48,
+          "text": "轻咬下唇强忍娇喘，身体却诚实地完全顺从瘫软。旅行者，既然呼吸已经平复好了，那就重新开始吧，这一次我不会轻易退缩的。",
+          "slots_filled": {
+            "body_action": "轻咬下唇强忍娇喘，身体却诚实地完全顺从瘫软",
+            "address": "旅行者",
+            "dialogue_core": "既然呼吸已经平复好了，那就重新开始吧，这一次我不会轻易退缩的。"
+          }
+        },
+        {
+          "turn_index": 4,
+          "scene_id": "intimate",
+          "query": "放慢节奏，温柔一点慢慢来",
+          "expected_tag": "intimate_rhythm_slower",
+          "predicted_tag": "intimate_rhythm_slower",
+          "reply_id": "intimate_rhythm_slower_01",
+          "score": 0.9026,
+          "latency_ms": 2.69,
+          "text": "呜唔~ 哈啊！你，呼~ 稍微慢一点，请让我好好感受你贴近的心跳与温度。 双臂有些害羞地环住你的肩膀，将脸深深埋入你的胸膛。",
+          "slots_filled": {
+            "reaction": "呜唔~ 哈啊！",
+            "address": "你",
+            "dialogue_core": "呼~ 稍微慢一点，请让我好好感受你贴近的心跳与温度。",
+            "body_action": "双臂有些害羞地环住你的肩膀，将脸深深埋入你的胸膛"
+          }
+        },
+        {
+          "turn_index": 5,
+          "scene_id": "intimate",
+          "query": "抵到最深的花心了，好深受不了",
+          "expected_tag": "intimate_deep",
+          "predicted_tag": "intimate_deep",
+          "reply_id": "intimate_deep_01",
+          "score": 0.917,
+          "latency_ms": 2.79,
+          "text": "双颊绯红，微喘着任由你的手掌滑过每一寸肌肤！哈啊~ 呜！这种深度，完全侵入了防线的核心，身体都要被融化了！ 无论你想要怎样对待我，我都做好了觉悟♡",
+          "slots_filled": {
+            "body_action": "双颊绯红，微喘着任由你的手掌滑过每一寸肌肤",
+            "reaction": "哈啊~ 呜！",
+            "dialogue_core": "这种深度，完全侵入了防线的核心，身体都要被融化了！",
+            "followup": "无论你想要怎样对待我，我都做好了觉悟♡"
+          }
+        },
+        {
+          "turn_index": 6,
+          "scene_id": "intimate",
+          "query": "快到了要射了，一起高潮吧",
+          "expected_tag": "intimate_peak",
+          "predicted_tag": "intimate_peak",
+          "reply_id": "intimate_peak_01",
+          "score": 0.8773,
+          "latency_ms": 2.69,
+          "text": "双手紧紧抓着长案床单，修长双腿轻微战栗着迎合你！嗯哼~ 别~ 不要停！哈啊！极限要突破了，剑势彻底溃败，是我输了♡",
+          "slots_filled": {
+            "body_action": "双手紧紧抓着长案床单，修长双腿轻微战栗着迎合你",
+            "reaction": "嗯哼~ 别~ 不要停！",
+            "dialogue_core": "哈啊！极限要突破了，剑势彻底溃败，是我输了♡"
+          }
+        },
+        {
+          "turn_index": 7,
+          "scene_id": "intimate",
+          "query": "刚才太棒了，帮你擦擦身体好好休息",
+          "expected_tag": "post_intimate",
+          "predicted_tag": "post_intimate",
+          "reply_id": "post_intimate_01",
+          "score": 0.8047,
+          "latency_ms": 3.14,
+          "text": "快步走到你身侧，与你并肩站立。Master，靠在我怀里休息吧，今天剩下的时间，我就这样一直陪着你。",
+          "slots_filled": {
+            "body_action": "快步走到你身侧，与你并肩站立",
+            "address": "Master",
+            "dialogue_core": "靠在我怀里休息吧，今天剩下的时间，我就这样一直陪着你。"
+          }
+        }
+      ]
+    },
+    {
+      "episode_id": "kq_flow_03",
+      "character_id": "keqing",
+      "turns": [
+        {
+          "turn_index": 0,
+          "scene_id": "home_chat",
+          "query": "刻晴在干嘛呢，巡视辛苦啦",
+          "expected_tag": "greet",
+          "predicted_tag": "greet",
+          "reply_id": "home_greet_01",
+          "score": 0.7069,
+          "latency_ms": 2.61,
+          "text": "旅行者，现在虽然是私下时间，但也不要太松懈了，今天就破例陪你多聊会儿吧。 睫毛轻颤，有些不好意思地低下头。",
+          "slots_filled": {
+            "address": "旅行者",
+            "dialogue_core": "现在虽然是私下时间，但也不要太松懈了，今天就破例陪你多聊会儿吧。",
+            "body_action": "睫毛轻颤，有些不好意思地低下头"
+          }
+        },
+        {
+          "turn_index": 1,
+          "scene_id": "home_chat",
+          "query": "沙洲的海风很舒服，在这里住得习惯吗",
+          "expected_tag": "chat_island",
+          "predicted_tag": "chat_island",
+          "reply_id": "home_island_01",
+          "score": 0.735,
+          "latency_ms": 3.17,
+          "text": "你，关于这里，沙洲的海风很舒服，和你在一起的时候，工作上的杂念不知不觉都散去了。",
+          "slots_filled": {
+            "address": "你",
+            "dialogue_core": "沙洲的海风很舒服，和你在一起的时候，工作上的杂念不知不觉都散去了。"
+          }
+        },
+        {
+          "turn_index": 2,
+          "scene_id": "home_chat",
+          "query": "你怎么害羞得脸都红了呀",
+          "expected_tag": "tease",
+          "predicted_tag": "tease",
+          "reply_id": "home_tease_01",
+          "score": 0.8152,
+          "latency_ms": 2.57,
+          "text": "单侧腿环微微绷紧，黑丝双马尾在海风中轻扬。Master，明明是一岛之主，在我面前却总是像个长不大的孩子一样。",
+          "slots_filled": {
+            "body_action": "单侧腿环微微绷紧，黑丝双马尾在海风中轻扬",
+            "address": "Master",
+            "dialogue_core": "明明是一岛之主，在我面前却总是像个长不大的孩子一样。"
+          }
+        },
+        {
+          "turn_index": 3,
+          "scene_id": "home_chat",
+          "query": "刻晴是我见过的最可靠、最迷人的女孩子",
+          "expected_tag": "compliment",
+          "predicted_tag": "compliment",
+          "reply_id": "home_compliment_01",
+          "score": 0.7201,
+          "latency_ms": 4.01,
+          "text": "旅行者，下意识整理了一下霓裾衣领。既然是你真心说的，那我就记在心里了，今后也会更加努力的。 微微侧过身以剑鞘遮挡视线。",
+          "slots_filled": {
+            "address": "旅行者",
+            "reaction": "下意识整理了一下霓裾衣领",
+            "dialogue_core": "既然是你真心说的，那我就记在心里了，今后也会更加努力的。",
+            "body_action": "微微侧过身以剑鞘遮挡视线"
+          }
+        },
+        {
+          "turn_index": 4,
+          "scene_id": "home_chat",
+          "query": "想抱抱你亲热一下，可以吗",
+          "expected_tag": "invite_intimacy",
+          "predicted_tag": "invite_intimacy",
+          "reply_id": "invite_intimacy_01",
+          "score": 0.772,
+          "latency_ms": 2.71,
+          "text": "嗯哼~ 别~ 不要停！你，长案就在眼前，特意把我逼到这种地步，任凭Master处置就是了♡ 接下来的每一步，都由你来主导♡",
+          "slots_filled": {
+            "reaction": "嗯哼~ 别~ 不要停！",
+            "address": "你",
+            "dialogue_core": "长案就在眼前，特意把我逼到这种地步，任凭Master处置就是了♡",
+            "followup": "接下来的每一步，都由你来主导♡"
+          }
+        },
+        {
+          "turn_index": 5,
+          "scene_id": "intimate",
+          "query": "抚摸你的长腿和腰身",
+          "expected_tag": "intimate_touch",
+          "predicted_tag": "intimate_touch",
+          "reply_id": "intimate_touch_01",
+          "score": 0.8549,
+          "latency_ms": 2.37,
+          "text": "哈啊~ 呜！Master，既然是Master的要求，那不管是哪里，都可以让你仔细触摸。 双颊绯红，微喘着任由你的手掌滑过每一寸肌肤。",
+          "slots_filled": {
+            "reaction": "哈啊~ 呜！",
+            "address": "Master",
+            "dialogue_core": "既然是Master的要求，那不管是哪里，都可以让你仔细触摸。",
+            "body_action": "双颊绯红，微喘着任由你的手掌滑过每一寸肌肤"
+          }
+        }
+      ]
+    },
+    {
+      "episode_id": "kq_flow_04",
+      "character_id": "keqing",
+      "turns": [
+        {
+          "turn_index": 0,
+          "scene_id": "intimate",
+          "query": "轻轻抚摸你的后背与大腿内侧",
+          "expected_tag": "intimate_touch",
+          "predicted_tag": "intimate_touch",
+          "reply_id": "intimate_touch_01",
+          "score": 0.8418,
+          "latency_ms": 2.87,
+          "text": "仰起白皙脆弱的颈项，微闭着双眼任由你索取，嗯哼~ 别~ 不要停！触碰得太突然了，不过，身体完全不排斥你的温度呢。 接下来的每一步，都由你来主导♡",
+          "slots_filled": {
+            "body_action": "仰起白皙脆弱的颈项，微闭着双眼任由你索取",
+            "reaction": "嗯哼~ 别~ 不要停！",
+            "dialogue_core": "触碰得太突然了，不过，身体完全不排斥你的温度呢。",
+            "followup": "接下来的每一步，都由你来主导♡"
+          }
+        },
+        {
+          "turn_index": 1,
+          "scene_id": "intimate",
+          "query": "进到最深处好舒服",
+          "expected_tag": "intimate_deep",
+          "predicted_tag": "intimate_deep",
+          "reply_id": "intimate_deep_01",
+          "score": 0.9568,
+          "latency_ms": 2.07,
+          "text": "唔~ 嗯哼！旅行者，这种深度，完全侵入了防线的核心，身体都要被融化了！ 双颊绯红，微喘着任由你的手掌滑过每一寸肌肤♡",
+          "slots_filled": {
+            "reaction": "唔~ 嗯哼！",
+            "address": "旅行者",
+            "dialogue_core": "这种深度，完全侵入了防线的核心，身体都要被融化了！",
+            "body_action": "双颊绯红，微喘着任由你的手掌滑过每一寸肌肤"
+          }
+        },
+        {
+          "turn_index": 2,
+          "scene_id": "intimate",
+          "query": "用力一点加大力度",
+          "expected_tag": "intimate_rhythm_faster",
+          "predicted_tag": "intimate_rhythm_faster",
+          "reply_id": "intimate_rhythm_faster_01",
+          "score": 0.8987,
+          "latency_ms": 2.09,
+          "text": "双臂有些害羞地环住你的肩膀，将脸深深埋入你的胸膛！呀啊~ 轻点！快一点，如果这是你的期望，那我就全部承受下来！ 无论你想要怎样对待我，我都做好了觉悟♡",
+          "slots_filled": {
+            "body_action": "双臂有些害羞地环住你的肩膀，将脸深深埋入你的胸膛",
+            "reaction": "呀啊~ 轻点！",
+            "dialogue_core": "快一点，如果这是你的期望，那我就全部承受下来！",
+            "followup": "无论你想要怎样对待我，我都做好了觉悟♡"
+          }
+        },
+        {
+          "turn_index": 3,
+          "scene_id": "intimate",
+          "query": "要出来了射给你",
+          "expected_tag": "intimate_peak",
+          "predicted_tag": "intimate_peak",
+          "reply_id": "intimate_peak_01",
+          "score": 0.8657,
+          "latency_ms": 3.11,
+          "text": "Master！呜唔~ 哈啊！♡ 呀啊！全身的力气都被抽空了，现在的刻晴，彻底臣服于你了♡ 请告诉我，你接下来的指示是什么♡",
+          "slots_filled": {
+            "address": "Master",
+            "reaction": "呜唔~ 哈啊！",
+            "dialogue_core": "呀啊！全身的力气都被抽空了，现在的刻晴，彻底臣服于你了♡",
+            "followup": "请告诉我，你接下来的指示是什么♡"
+          }
+        },
+        {
+          "turn_index": 4,
+          "scene_id": "intimate",
+          "query": "休息好了我们再来一次",
+          "expected_tag": "resume_intimacy",
+          "predicted_tag": "resume_intimacy",
+          "reply_id": "resume_intimacy_01",
+          "score": 0.8625,
+          "latency_ms": 2.54,
+          "text": "哈啊~ 呜！既然你这么说，既然呼吸已经平复好了，那就重新开始吧，这一次我不会轻易退缩的。 接下来的每一步，都由你来主导♡",
+          "slots_filled": {
+            "reaction": "哈啊~ 呜！",
+            "address": "你",
+            "dialogue_core": "既然呼吸已经平复好了，那就重新开始吧，这一次我不会轻易退缩的。",
+            "followup": "接下来的每一步，都由你来主导♡"
+          }
+        },
+        {
+          "turn_index": 5,
+          "scene_id": "intimate",
+          "query": "别动那么快温柔一点慢慢研磨",
+          "expected_tag": "intimate_rhythm_slower",
+          "predicted_tag": "intimate_rhythm_slower",
+          "reply_id": "intimate_rhythm_slower_01",
+          "score": 0.825,
+          "latency_ms": 2.68,
+          "text": "轻咬下唇强忍娇喘，身体却诚实地完全顺从瘫软。呼~ 哈啊~ 这种平稳而深沉的节奏，反而让羞耻心和快感都无限放大了。 无论你想要怎样对待我，我都做好了觉悟♡",
+          "slots_filled": {
+            "body_action": "轻咬下唇强忍娇喘，身体却诚实地完全顺从瘫软",
+            "reaction": "呼~ 哈啊~",
+            "dialogue_core": "这种平稳而深沉的节奏，反而让羞耻心和快感都无限放大了。",
+            "followup": "无论你想要怎样对待我，我都做好了觉悟♡"
+          }
+        },
+        {
+          "turn_index": 6,
+          "scene_id": "intimate",
+          "query": "今天辛苦了，抱抱你睡会儿吧",
+          "expected_tag": "post_intimate",
+          "predicted_tag": "post_intimate",
+          "reply_id": "post_intimate_01",
+          "score": 0.7682,
+          "latency_ms": 2.71,
+          "text": "旅行者，凌乱的衣衫与散落的发丝交织出迷人的余韵。表现得很出色呢，辛苦你了，今天真的被你彻底折服了。 微微侧过身以剑鞘遮挡视线。",
+          "slots_filled": {
+            "address": "旅行者",
+            "atmosphere": "凌乱的衣衫与散落的发丝交织出迷人的余韵",
+            "dialogue_core": "表现得很出色呢，辛苦你了，今天真的被你彻底折服了。",
+            "body_action": "微微侧过身以剑鞘遮挡视线"
+          }
+        }
+      ]
+    },
+    {
+      "episode_id": "kq_flow_05",
+      "character_id": "keqing",
+      "turns": [
+        {
+          "turn_index": 0,
+          "scene_id": "home_chat",
+          "query": "早安刻晴",
+          "expected_tag": "greet",
+          "predicted_tag": "greet",
+          "reply_id": "home_greet_01",
+          "score": 0.8766,
+          "latency_ms": 1.63,
+          "text": "旅行者，现在虽然是私下时间，但也不要太松懈了，今天就破例陪你多聊会儿吧。 微微侧过身以剑鞘遮挡视线。",
+          "slots_filled": {
+            "address": "旅行者",
+            "dialogue_core": "现在虽然是私下时间，但也不要太松懈了，今天就破例陪你多聊会儿吧。",
+            "body_action": "微微侧过身以剑鞘遮挡视线"
+          }
+        },
+        {
+          "turn_index": 1,
+          "scene_id": "home_chat",
+          "query": "编写一个Python排序算法",
+          "expected_tag": "clarify_unknown",
+          "predicted_tag": "clarify_unknown",
+          "reply_id": "clarify_unknown_01",
+          "score": 0.4764,
+          "latency_ms": 2.33,
+          "text": "微微偏过头轻咳一声。Master，如果是领地上的政务，我们可以正式讨论，如果是闲聊，请明确一点吧。",
+          "slots_filled": {
+            "reaction": "微微偏过头轻咳一声",
+            "address": "Master",
+            "dialogue_core": "如果是领地上的政务，我们可以正式讨论，如果是闲聊，请明确一点吧。"
+          }
+        },
+        {
+          "turn_index": 2,
+          "scene_id": "home_chat",
+          "query": "开玩笑的，看你严肃的表情真可爱",
+          "expected_tag": "tease",
+          "predicted_tag": "tease",
+          "reply_id": "home_tease_01",
+          "score": 0.7269,
+          "latency_ms": 3.68,
+          "text": "无奈地轻叹一口气，眼神却格外柔和！你，明明是一岛之主，在我面前却总是像个长不大的孩子一样。 接下来你有什么打算吗？",
+          "slots_filled": {
+            "reaction": "无奈地轻叹一口气，眼神却格外柔和",
+            "address": "你",
+            "dialogue_core": "明明是一岛之主，在我面前却总是像个长不大的孩子一样。",
+            "followup": "接下来你有什么打算吗？"
+          }
+        },
+        {
+          "turn_index": 3,
+          "scene_id": "home_chat",
+          "query": "到长案那边陪我亲热一下好不好",
+          "expected_tag": "invite_intimacy",
+          "predicted_tag": "invite_intimacy",
+          "reply_id": "invite_intimacy_01",
+          "score": 0.6465,
+          "latency_ms": 2.93,
+          "text": "旅行者，呼~ 哈啊~♡ 长案就在眼前，特意把我逼到这种地步，任凭Master处置就是了♡ 双臂有些害羞地环住你的肩膀，将脸深深埋入你的胸膛。",
+          "slots_filled": {
+            "address": "旅行者",
+            "reaction": "呼~ 哈啊~",
+            "dialogue_core": "长案就在眼前，特意把我逼到这种地步，任凭Master处置就是了♡",
+            "body_action": "双臂有些害羞地环住你的肩膀，将脸深深埋入你的胸膛"
+          }
+        },
+        {
+          "turn_index": 4,
+          "scene_id": "intimate",
+          "query": "揉捏你的胸部与敏感点",
+          "expected_tag": "intimate_touch",
+          "predicted_tag": "intimate_touch",
+          "reply_id": "intimate_touch_01",
+          "score": 0.8341,
+          "latency_ms": 2.34,
+          "text": "Master~ 唔！呜唔~ 哈啊！既然是Master的要求，那不管是哪里，都可以让你仔细触摸。",
+          "slots_filled": {
+            "address": "Master",
+            "reaction": "呜唔~ 哈啊！",
+            "dialogue_core": "既然是Master的要求，那不管是哪里，都可以让你仔细触摸。"
+          }
+        },
+        {
+          "turn_index": 5,
+          "scene_id": "intimate",
+          "query": "先暂停一下我吃不消了",
+          "expected_tag": "pause_stop",
+          "predicted_tag": "pause_stop",
+          "reply_id": "pause_request_01",
+          "score": 0.869,
+          "latency_ms": 2.29,
+          "text": "睫毛轻颤，有些不好意思地低下头。你，既然你觉得需要缓一缓，那就先暂停吧，我也正好稍微平复一下心跳。",
+          "slots_filled": {
+            "body_action": "睫毛轻颤，有些不好意思地低下头",
+            "address": "你",
+            "dialogue_core": "既然你觉得需要缓一缓，那就先暂停吧，我也正好稍微平复一下心跳。"
+          }
+        }
+      ]
+    },
+    {
+      "episode_id": "kq_flow_06",
+      "character_id": "keqing",
+      "turns": [
+        {
+          "turn_index": 0,
+          "scene_id": "intimate",
+          "query": "把手伸进衣服揉捏你的敏感点",
+          "expected_tag": "intimate_touch",
+          "predicted_tag": "intimate_touch",
+          "reply_id": "intimate_touch_01",
+          "score": 0.8386,
+          "latency_ms": 2.68,
+          "text": "嗯哼~ 别~ 不要停！旅行者，既然是Master的要求，那不管是哪里，都可以让你仔细触摸。 身体微微战栗躲闪，却始终维持着方便你继续触碰的姿势。",
+          "slots_filled": {
+            "reaction": "嗯哼~ 别~ 不要停！",
+            "address": "旅行者",
+            "dialogue_core": "既然是Master的要求，那不管是哪里，都可以让你仔细触摸。",
+            "body_action": "身体微微战栗躲闪，却始终维持着方便你继续触碰的姿势"
+          }
+        },
+        {
+          "turn_index": 1,
+          "scene_id": "intimate",
+          "query": "太舒服了再快一点，猛烈地动起来",
+          "expected_tag": "intimate_rhythm_faster",
+          "predicted_tag": "intimate_rhythm_faster",
+          "reply_id": "intimate_rhythm_faster_01",
+          "score": 0.8386,
+          "latency_ms": 2.9,
+          "text": "呀啊~ 轻点！你，呜唔！太快了，强烈的快感冲击得我都快要失去思考能力了！ 双手紧紧抓着长案床单，修长双腿轻微战栗着迎合你！",
+          "slots_filled": {
+            "reaction": "呀啊~ 轻点！",
+            "address": "你",
+            "dialogue_core": "呜唔！太快了，强烈的快感冲击得我都快要失去思考能力了！",
+            "body_action": "双手紧紧抓着长案床单，修长双腿轻微战栗着迎合你"
+          }
+        },
+        {
+          "turn_index": 2,
+          "scene_id": "intimate",
+          "query": "插到最深处抵在花心上了",
+          "expected_tag": "intimate_deep",
+          "predicted_tag": "intimate_deep",
+          "reply_id": "intimate_deep_01",
+          "score": 0.856,
+          "latency_ms": 3.26,
+          "text": "双颊绯红，微喘着任由你的手掌滑过每一寸肌肤！呼~ 哈啊！哈啊！不要每次都精准撞击那个弱点，太犯规了！ 接下来的每一步，都由你来主导♡",
+          "slots_filled": {
+            "body_action": "双颊绯红，微喘着任由你的手掌滑过每一寸肌肤",
+            "reaction": "呼~ 哈啊~",
+            "dialogue_core": "哈啊！不要每次都精准撞击那个弱点，太犯规了！",
+            "followup": "接下来的每一步，都由你来主导♡"
+          }
+        },
+        {
+          "turn_index": 3,
+          "scene_id": "intimate",
+          "query": "要出来了射给你",
+          "expected_tag": "intimate_peak",
+          "predicted_tag": "intimate_peak",
+          "reply_id": "intimate_peak_01",
+          "score": 0.8657,
+          "latency_ms": 2.2,
+          "text": "Master！唔~ 嗯哼！♡ 呀啊！全身的力气都被抽空了，现在的刻晴，彻底臣服于你了♡ 请告诉我，你接下来的指示是什么♡",
+          "slots_filled": {
+            "address": "Master",
+            "reaction": "唔~ 嗯哼！",
+            "dialogue_core": "呀啊！全身的力气都被抽空了，现在的刻晴，彻底臣服于你了♡",
+            "followup": "请告诉我，你接下来的指示是什么♡"
+          }
+        },
+        {
+          "turn_index": 4,
+          "scene_id": "intimate",
+          "query": "做完了好累，躺在一起休息会儿",
+          "expected_tag": "post_intimate",
+          "predicted_tag": "post_intimate",
+          "reply_id": "post_intimate_01",
+          "score": 0.8452,
+          "latency_ms": 2.76,
+          "text": "微微侧过身以剑鞘遮挡视线。旅行者，靠在我怀里休息吧，今天剩下的时间，我就这样一直陪着你。",
+          "slots_filled": {
+            "body_action": "微微侧过身以剑鞘遮挡视线",
+            "address": "旅行者",
+            "dialogue_core": "靠在我怀里休息吧，今天剩下的时间，我就这样一直陪着你。"
+          }
+        },
+        {
+          "turn_index": 5,
+          "scene_id": "home_chat",
+          "query": "刻晴今天真的太棒了",
+          "expected_tag": "compliment",
+          "predicted_tag": "greet",
+          "reply_id": "home_greet_01",
+          "score": 0.8349,
+          "latency_ms": 2.42,
+          "text": "你，沙洲的巡视刚刚完成，既然你来了，那就坐下来歇会儿吧。 睫毛轻颤，有些不好意思地低下头。",
+          "slots_filled": {
+            "address": "你",
+            "dialogue_core": "沙洲的巡视刚刚完成，既然你来了，那就坐下来歇会儿吧。",
+            "body_action": "睫毛轻颤，有些不好意思地低下头"
+          }
+        }
+      ]
+    }
+  ]
+}

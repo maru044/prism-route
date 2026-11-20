@@ -1,0 +1,535 @@
+[
+  {
+    "reply_id": "home_greet_01",
+    "character_id": "shared",
+    "scene_tags": ["home_chat"],
+    "content_tag": "greet",
+    "reference_queries": [
+      "你好呀",
+      "早安",
+      "早上好",
+      "早上好呀",
+      "晚上好",
+      "在做什么呢",
+      "今天天气真好",
+      "我来看看你",
+      "打个招呼",
+      "你在干嘛呢",
+      "嗨，最近怎么样",
+      "花火早上好",
+      "刻晴早上好",
+      "我来了",
+      "巡视辛苦了我来看看你",
+      "巡视辛苦啦"
+    ],
+    "templates": [
+      "{address}，{reaction}。{dialogue_core} {followup}",
+      "{reaction}，{address}，{dialogue_core}",
+      "{address}，{dialogue_core} {body_action}。"
+    ],
+    "wildcard_slots": {
+      "address": "character.addresses",
+      "reaction": "character.reactions_home",
+      "body_action": "character.actions_home",
+      "dialogue_core": "character.dialogues.greet",
+      "followup": "character.followups_home"
+    },
+    "style_tags": ["daily", "greeting"]
+  },
+  {
+    "reply_id": "home_tease_01",
+    "character_id": "shared",
+    "scene_tags": ["home_chat"],
+    "content_tag": "tease",
+    "reference_queries": [
+      "你今天真可爱",
+      "忍不住想逗逗你",
+      "小傻瓜",
+      "你脸红了吗",
+      "好想捏捏你的脸",
+      "笑一个嘛",
+      "你害羞的样子真好看",
+      "怎么害羞了呀",
+      "看你害羞的样子真好玩",
+      "逗你玩呢",
+      "忍不住想欺负你一下"
+    ],
+    "templates": [
+      "{address}，{reaction}！{dialogue_core} {body_action}。",
+      "{reaction}！{address}，{dialogue_core} {followup}",
+      "{body_action}。{address}，{dialogue_core}"
+    ],
+    "wildcard_slots": {
+      "address": "character.addresses",
+      "reaction": "character.reactions_home",
+      "body_action": "character.actions_home",
+      "dialogue_core": "character.dialogues.tease",
+      "followup": "character.followups_home"
+    },
+    "style_tags": ["playful", "teasing"]
+  },
+  {
+    "reply_id": "home_compliment_01",
+    "character_id": "shared",
+    "scene_tags": ["home_chat"],
+    "content_tag": "compliment",
+    "reference_queries": [
+      "你今天真好看",
+      "你穿这套衣服真漂亮",
+      "有你在真好",
+      "你真能干",
+      "辛苦你了",
+      "谢谢你一直陪着我",
+      "你太棒了",
+      "有你真让人安心",
+      "你最棒了",
+      "好喜欢你",
+      "今天也很迷人",
+      "花火今天穿的这身衣服真漂亮",
+      "刻晴认真工作的侧脸真的特别迷人",
+      "你认真的样子真好看",
+      "你侧脸真迷人"
+    ],
+    "templates": [
+      "{address}，{reaction}。{dialogue_core} {body_action}。",
+      "{reaction}，听到{address}这么说，{dialogue_core}",
+      "{address}！{dialogue_core} {followup}"
+    ],
+    "wildcard_slots": {
+      "address": "character.addresses",
+      "reaction": "character.reactions_home",
+      "body_action": "character.actions_home",
+      "dialogue_core": "character.dialogues.compliment",
+      "followup": "character.followups_home"
+    },
+    "style_tags": ["affectionate", "compliment"]
+  },
+  {
+    "reply_id": "home_island_01",
+    "character_id": "shared",
+    "scene_tags": ["home_chat"],
+    "content_tag": "chat_island",
+    "reference_queries": [
+      "这片岛屿怎么样",
+      "家园建设得还习惯吗",
+      "这里的风景真好",
+      "喜欢我们的家吗",
+      "神殿附近有什么好玩的",
+      "沙洲的环境还适应吗",
+      "岛上建设得怎么样",
+      "岛上的生活怎么样",
+      "在这里住得习惯吗",
+      "看这片海岛风光",
+      "神殿附近的石椅修得挺气派的吧",
+      "神殿石椅修得挺气派",
+      "工坊建设的进度还顺利吗",
+      "工坊建设进展",
+      "领地建设得怎么样"
+    ],
+    "templates": [
+      "{address}，{atmosphere}。{dialogue_core} {body_action}。",
+      "{reaction}，看着周围这片风景，{dialogue_core} {followup}",
+      "{address}，关于这里，{dialogue_core}"
+    ],
+    "wildcard_slots": {
+      "address": "character.addresses",
+      "reaction": "character.reactions_home",
+      "body_action": "character.actions_home",
+      "atmosphere": "scene.home_atmosphere",
+      "dialogue_core": "character.dialogues.chat_island",
+      "followup": "character.followups_home"
+    },
+    "style_tags": ["daily", "scenery"]
+  },
+  {
+    "reply_id": "sparkle_prank_01",
+    "character_id": "sparkle",
+    "scene_tags": ["home_chat"],
+    "content_tag": "tease",
+    "reference_queries": [
+      "你是不是又在搞恶作剧",
+      "狐狸尾巴露出来了",
+      "你的铃铛真响",
+      "你这只坏狐狸",
+      "别逗我了",
+      "你在笑什么",
+      "又在打什么坏主意呢",
+      "你这只坏狐狸又在笑什么"
+    ],
+    "templates": [
+      "{reaction}！{address}，这都被你发现了？{dialogue_core} {body_action}！",
+      "{body_action}，{address}，{dialogue_core} {followup}",
+      "{address}，{dialogue_core} {reaction}！"
+    ],
+    "wildcard_slots": {
+      "address": "character.addresses",
+      "reaction": "character.reactions_home",
+      "body_action": "character.actions_home",
+      "dialogue_core": "character.dialogues.tease",
+      "followup": "character.followups_home"
+    },
+    "style_tags": ["sparkle_exclusive", "mischievous"]
+  },
+  {
+    "reply_id": "keqing_duty_01",
+    "character_id": "keqing",
+    "scene_tags": ["home_chat"],
+    "content_tag": "tease",
+    "reference_queries": [
+      "工作狂休息一下吧",
+      "别总想着工作",
+      "劳逸结合懂不懂",
+      "今天不准看文件了",
+      "陪我偷懒一会儿",
+      "放下你的剑休息下",
+      "休息一下不要太累",
+      "今天先放下手头的工作吧"
+    ],
+    "templates": [
+      "{reaction}。{address}，{dialogue_core} {body_action}。",
+      "{dialogue_core} 不过既然是{address}的要求，今天就听你的好了。{followup}",
+      "{body_action}。{address}，{dialogue_core}"
+    ],
+    "wildcard_slots": {
+      "address": "character.addresses",
+      "reaction": "character.reactions_home",
+      "body_action": "character.actions_home",
+      "dialogue_core": "character.dialogues.greet",
+      "followup": "character.followups_home"
+    },
+    "style_tags": ["keqing_exclusive", "serious_tsundere"]
+  },
+  {
+    "reply_id": "invite_intimacy_01",
+    "character_id": "shared",
+    "scene_tags": ["home_chat", "intimate"],
+    "content_tag": "invite_intimacy",
+    "reference_queries": [
+      "想和你亲密一下",
+      "抱抱我好吗",
+      "我们去床上吧",
+      "想碰碰你",
+      "今天想和你做点舒服的事情",
+      "可以和我亲热吗",
+      "忍不住想要你了",
+      "到长案或者石椅那去吧",
+      "我们去亲热一下吧",
+      "想和你做舒服的事",
+      "可以抱你到床上吗",
+      "想要你的身体"
+    ],
+    "templates": [
+      "{address}，{reaction}♡ {dialogue_core} {body_action}。",
+      "{reaction}！{address}，{dialogue_core} {followup}",
+      "{body_action}。{address}，{dialogue_core}"
+    ],
+    "wildcard_slots": {
+      "address": "character.addresses",
+      "reaction": "character.reactions_intimate",
+      "body_action": "character.actions_intimate",
+      "dialogue_core": "character.dialogues.invite_intimacy",
+      "followup": "character.followups_intimate"
+    },
+    "style_tags": ["intimate_transition", "seduction"]
+  },
+  {
+    "reply_id": "intimate_touch_01",
+    "character_id": "shared",
+    "scene_tags": ["intimate"],
+    "content_tag": "intimate_touch",
+    "reference_queries": [
+      "摸摸你的胸",
+      "揉捏你的大腿",
+      "亲吻你的嘴唇",
+      "抚摸你的后背",
+      "捏你的敏感点",
+      "把手伸进衣服里",
+      "轻轻碰你的大腿环",
+      "抚摸你的敏感处",
+      "摸摸你的腰",
+      "揉揉你的臀部",
+      "摸摸你的这里",
+      "抚摸你的全身"
+    ],
+    "templates": [
+      "{reaction}！{address}，{dialogue_core} {body_action}。",
+      "{body_action}，{reaction}！{dialogue_core} {followup}",
+      "{address}~ 唔！{reaction}，{dialogue_core}"
+    ],
+    "wildcard_slots": {
+      "address": "character.addresses",
+      "reaction": "character.reactions_intimate",
+      "body_action": "character.actions_intimate",
+      "dialogue_core": "character.dialogues.intimate_touch",
+      "followup": "character.followups_intimate"
+    },
+    "style_tags": ["intimate", "touch"]
+  },
+  {
+    "reply_id": "intimate_rhythm_faster_01",
+    "character_id": "shared",
+    "scene_tags": ["intimate"],
+    "content_tag": "intimate_rhythm_faster",
+    "reference_queries": [
+      "动快一点",
+      "加快速度",
+      "用力一点",
+      "猛烈一点",
+      "再快些",
+      "加大力度",
+      "大力一点",
+      "不要停使劲",
+      "受不了了快点撞",
+      "再快一点好刺激",
+      "好舒服请再快一点",
+      "太舒服了再快一点",
+      "再快点受不了了",
+      "用力撞击我",
+      "猛烈地动起来"
+    ],
+    "templates": [
+      "{reaction}！{address}，{dialogue_core} {body_action}！",
+      "{body_action}！{reaction}，{dialogue_core} {followup}",
+      "{address}！{reaction}！{dialogue_core}"
+    ],
+    "wildcard_slots": {
+      "address": "character.addresses",
+      "reaction": "character.reactions_intimate",
+      "body_action": "character.actions_intimate",
+      "dialogue_core": "character.dialogues.intimate_rhythm_faster",
+      "followup": "character.followups_intimate"
+    },
+    "style_tags": ["intimate", "high_intensity"]
+  },
+  {
+    "reply_id": "intimate_rhythm_slower_01",
+    "character_id": "shared",
+    "scene_tags": ["intimate"],
+    "content_tag": "intimate_rhythm_slower",
+    "reference_queries": [
+      "慢一点",
+      "放慢节奏",
+      "温柔一点",
+      "轻一点好吗",
+      "慢慢来",
+      "别那么急慢慢磨",
+      "缓一缓速度",
+      "温柔地动",
+      "慢慢研磨",
+      "太激烈了慢一点",
+      "温柔一点慢慢来",
+      "别动那么快",
+      "缓缓地磨"
+    ],
+    "templates": [
+      "{reaction}，{address}，{dialogue_core} {body_action}。",
+      "{body_action}。{reaction}，{dialogue_core} {followup}",
+      "{address}，{dialogue_core} {atmosphere}。"
+    ],
+    "wildcard_slots": {
+      "address": "character.addresses",
+      "reaction": "character.reactions_intimate",
+      "body_action": "character.actions_intimate",
+      "atmosphere": "scene.intimate_atmosphere",
+      "dialogue_core": "character.dialogues.intimate_rhythm_slower",
+      "followup": "character.followups_intimate"
+    },
+    "style_tags": ["intimate", "gentle"]
+  },
+  {
+    "reply_id": "intimate_deep_01",
+    "character_id": "shared",
+    "scene_tags": ["intimate"],
+    "content_tag": "intimate_deep",
+    "reference_queries": [
+      "插到最深处",
+      "顶到最里面了",
+      "进到深处好舒服",
+      "完全进去了",
+      "顶到敏感点了",
+      "好深啊",
+      "深处被填满了",
+      "整根都进去了",
+      "抵在花心上了",
+      "抵到最深的花心了",
+      "好深要被顶穿了",
+      "完全被填满了"
+    ],
+    "templates": [
+      "{reaction}！{address}，{dialogue_core} {body_action}♡",
+      "{body_action}！{reaction}！{dialogue_core} {followup}",
+      "{address}♡ {reaction}！{dialogue_core}"
+    ],
+    "wildcard_slots": {
+      "address": "character.addresses",
+      "reaction": "character.reactions_intimate",
+      "body_action": "character.actions_intimate",
+      "dialogue_core": "character.dialogues.intimate_deep",
+      "followup": "character.followups_intimate"
+    },
+    "style_tags": ["intimate", "deep_penetration"]
+  },
+  {
+    "reply_id": "intimate_peak_01",
+    "character_id": "shared",
+    "scene_tags": ["intimate"],
+    "content_tag": "intimate_peak",
+    "reference_queries": [
+      "我要射了",
+      "要出来了",
+      "一起高潮吧",
+      "忍不住了要到了",
+      "要到了受不了了",
+      "在里面射出来",
+      "射给你",
+      "高潮了",
+      "全都给你",
+      "受不了了要出来了",
+      "要高潮了射给我",
+      "快到了要射了"
+    ],
+    "templates": [
+      "{reaction}！{address}！{dialogue_core} {body_action}♡",
+      "{body_action}！{reaction}！{dialogue_core}",
+      "{address}！{reaction}♡ {dialogue_core} {followup}"
+    ],
+    "wildcard_slots": {
+      "address": "character.addresses",
+      "reaction": "character.reactions_intimate",
+      "body_action": "character.actions_intimate",
+      "dialogue_core": "character.dialogues.intimate_peak",
+      "followup": "character.followups_intimate"
+    },
+    "style_tags": ["intimate", "climax"]
+  },
+  {
+    "reply_id": "pause_request_01",
+    "character_id": "shared",
+    "scene_tags": ["intimate", "home_chat"],
+    "content_tag": "pause_stop",
+    "reference_queries": [
+      "停一下",
+      "太激烈了先等等",
+      "暂停",
+      "先歇会儿",
+      "等一下我吃不消了",
+      "先停手",
+      "先暂停一下",
+      "缓口气",
+      "今天就到这里吧",
+      "结束吧",
+      "先休息一下",
+      "先停一下我好累",
+      "等一下先停",
+      "太激烈了受不了先歇歇",
+      "休息一会儿先停手",
+      "等一下，太激烈了先暂停"
+    ],
+    "templates": [
+      "{address}，{dialogue_core} {body_action}。",
+      "{dialogue_core} {address}，别勉强自己。",
+      "{body_action}。{address}，{dialogue_core}"
+    ],
+    "wildcard_slots": {
+      "address": "character.addresses",
+      "body_action": "character.actions_home",
+      "dialogue_core": "character.dialogues.pause_stop"
+    },
+    "style_tags": ["boundary", "pause", "safety"]
+  },
+  {
+    "reply_id": "resume_intimacy_01",
+    "character_id": "shared",
+    "scene_tags": ["intimate"],
+    "content_tag": "resume_intimacy",
+    "reference_queries": [
+      "继续吧",
+      "刚才那个好舒服继续",
+      "再来一次",
+      "我们接着做",
+      "再继续动",
+      "换个姿势继续",
+      "休息好了我们继续",
+      "不要停继续刚才的",
+      "还想要继续",
+      "休息好了继续吧",
+      "接着刚才的做",
+      "我还想要我们继续",
+      "重新开始动吧"
+    ],
+    "templates": [
+      "{address}，{reaction}♡ {dialogue_core} {body_action}。",
+      "{reaction}！既然{address}这么说，{dialogue_core} {followup}",
+      "{body_action}。{address}，{dialogue_core}"
+    ],
+    "wildcard_slots": {
+      "address": "character.addresses",
+      "reaction": "character.reactions_intimate",
+      "body_action": "character.actions_intimate",
+      "dialogue_core": "character.dialogues.resume_intimacy",
+      "followup": "character.followups_intimate"
+    },
+    "style_tags": ["intimate", "continuity"]
+  },
+  {
+    "reply_id": "post_intimate_01",
+    "character_id": "shared",
+    "scene_tags": ["intimate", "home_chat"],
+    "content_tag": "post_intimate",
+    "reference_queries": [
+      "做完了好累",
+      "刚才太棒了",
+      "帮你擦擦身体",
+      "抱着你休息",
+      "辛苦你了亲爱的",
+      "事后温存一下",
+      "躺在一起休息会儿",
+      "辛苦了抱抱",
+      "刚才真舒服抱抱我",
+      "躺着休息一会儿",
+      "今天先到这里好好睡吧",
+      "帮你清理一下身体"
+    ],
+    "templates": [
+      "{address}，{atmosphere}。{dialogue_core} {body_action}。",
+      "{reaction}。{address}，{dialogue_core} {followup}",
+      "{body_action}。{address}，{dialogue_core}"
+    ],
+    "wildcard_slots": {
+      "address": "character.addresses",
+      "reaction": "character.reactions_home",
+      "body_action": "character.actions_home",
+      "atmosphere": "scene.intimate_atmosphere",
+      "dialogue_core": "character.dialogues.post_intimate",
+      "followup": "character.followups_home"
+    },
+    "style_tags": ["aftercare", "intimate_recovery"]
+  },
+  {
+    "reply_id": "clarify_unknown_01",
+    "character_id": "shared",
+    "scene_tags": ["home_chat", "intimate"],
+    "content_tag": "clarify_unknown",
+    "reference_queries": [
+      "量子力学与波动方程",
+      "帮我查一下背包里的矿石有几个",
+      "把我的坐标传送到沙洲坐标点",
+      "这个代码报错了怎么修",
+      "明天股市行情如何",
+      "背诵出师表全文",
+      "执行数据库迁移脚本"
+    ],
+    "templates": [
+      "{address}，{dialogue_core} {followup}",
+      "{reaction}。{address}，{dialogue_core}",
+      "{dialogue_core} {address}，我们聊点别的吧？"
+    ],
+    "wildcard_slots": {
+      "address": "character.addresses",
+      "reaction": "character.reactions_home",
+      "dialogue_core": "character.dialogues.clarify_unknown",
+      "followup": "character.followups_home"
+    },
+    "style_tags": ["in_character_fallback", "clarification"]
+  }
+]

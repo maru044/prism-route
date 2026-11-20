@@ -1,0 +1,13 @@
+{
+  "usable_coverage_pct": 97.54,
+  "single_turn_accuracy_pct": 100.0,
+  "multi_turn_accuracy_pct": 96.34,
+  "pause_stop_accuracy_pct": 100.0,
+  "text_repetition_rate_pct": 0.0,
+  "latency_p50_ms": 2.92,
+  "latency_p90_ms": 4.05,
+  "latency_p99_ms": 4.93,
+  "sparkle_marker_rate_pct": 90.0,
+  "keqing_marker_rate_pct": 80.0,
+  "total_evaluated_queries": 122
+}
