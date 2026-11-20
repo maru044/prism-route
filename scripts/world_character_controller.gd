@@ -279,6 +279,17 @@ func _process(_delta: float) -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
+	if WorldControlContext.is_world_input_blocked(get_tree()):
+		velocity.x = 0.0
+		velocity.z = 0.0
+		if not is_on_floor():
+			velocity.y -= gravity_strength * delta
+		else:
+			velocity.y = -0.5
+		_set_animation("idle")
+		move_and_slide()
+		return
+
 	var movement := test_move if automation_enabled else Vector2(
 		float(Input.is_physical_key_pressed(KEY_D)) - float(Input.is_physical_key_pressed(KEY_A)),
 		float(Input.is_physical_key_pressed(KEY_S)) - float(Input.is_physical_key_pressed(KEY_W)))

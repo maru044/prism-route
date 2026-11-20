@@ -171,15 +171,15 @@ const SERVICE_MOTIONS: Array[Dictionary] = [
 		"desc": "站姿背后贴面亲昵手交"
 	},
 	{
-		"id": "mmd_7869c66910b9",
-		"name": "双女天使合璧侍奉",
+		"id": "kk_tagai_ijiri",
+		"name": "站姿双女相互爱抚",
 		"tier": "service",
 		"furniture": "ground",
 		"anchor": "ground",
-		"duration": 66.7,
-		"role_a_motion": "res://assets/characters/mmd_selected/animations/mmd_7869c66910b9_a.tres",
-		"role_b_motion": "res://assets/characters/mmd_selected/animations/mmd_7869c66910b9_b.tres",
-		"desc": "多人协同双女共同侍奉"
+		"duration": 1.3,
+		"role_a_motion": "res://assets/characters/mmd_validation/paired/kk_tagai_ijiri_a.tres",
+		"role_b_motion": "res://assets/characters/mmd_validation/paired/kk_tagai_ijiri_b.tres",
+		"desc": "两位女性站立面对面零距离贴靠并同步彼此挑逗爱抚"
 	}
 ]
 
@@ -396,3 +396,69 @@ static func get_furniture_label(furniture_key: String) -> String:
 			return "长案"
 		_:
 			return "地席"
+
+static func get_role_placements(motion: Dictionary) -> Dictionary:
+	if motion.has("role_a_placement") and motion.has("role_b_placement"):
+		return {
+			"role_a_placement": motion["role_a_placement"],
+			"role_b_placement": motion["role_b_placement"]
+		}
+	var m_id: String = str(motion.get("id", ""))
+	var furn: String = str(motion.get("furniture", "ground"))
+	match m_id:
+		"mmd_fca4bab1635f":
+			return {
+				"role_a_placement": {"offset": [0.0, -0.838, 0.0], "yaw_degrees": 0.0},
+				"role_b_placement": {"offset": [0.0, -0.822, 0.0], "yaw_degrees": 0.0}
+			}
+		"kk_tsukue_nei":
+			return {
+				"role_a_placement": {"offset": [0.0, -0.838, 0.0], "yaw_degrees": 0.0},
+				"role_b_placement": {"offset": [0.0, -0.838, 0.0], "yaw_degrees": 0.0}
+			}
+		"mmd_0a3f6ba5f5de":
+			return {
+				"role_a_placement": {"offset": [0.0, -0.42, 0.25], "yaw_degrees": 0.0},
+				"role_b_placement": {"offset": [0.0, -0.335, 0.0], "yaw_degrees": 0.0}
+			}
+		"mmd_43916ffe3d35":
+			return {
+				"role_a_placement": {"offset": [0.0, -0.02, 0.0], "yaw_degrees": 0.0},
+				"role_b_placement": {"offset": [0.0, 0.0, 0.22], "yaw_degrees": 0.0}
+			}
+		"kk_sofa_kijoui":
+			return {
+				"role_a_placement": {"offset": [0.0, 0.0, 0.0], "yaw_degrees": 0.0},
+				"role_b_placement": {"offset": [0.0, 0.0, 0.0], "yaw_degrees": 0.0}
+			}
+		_:
+			if furn == "chair":
+				return {
+					"role_a_placement": {"offset": [0.0, -0.42, 0.0], "yaw_degrees": 0.0},
+					"role_b_placement": {"offset": [0.0, -0.42, 0.0], "yaw_degrees": 0.0}
+				}
+			elif furn == "desk":
+				return {
+					"role_a_placement": {"offset": [0.0, -0.838, 0.0], "yaw_degrees": 0.0},
+					"role_b_placement": {"offset": [0.0, -0.838, 0.0], "yaw_degrees": 0.0}
+				}
+			else:
+				return {
+					"role_a_placement": {"offset": [0.0, 0.0, 0.0], "yaw_degrees": 0.0},
+					"role_b_placement": {"offset": [0.0, 0.0, 0.0], "yaw_degrees": 0.0}
+				}
+
+static func calculate_role_targets(contact_transform: Transform3D, motion: Dictionary) -> Dictionary:
+	var placements := get_role_placements(motion)
+	var a_placement: Dictionary = placements.get("role_a_placement", {"offset": [0.0, 0.0, 0.0], "yaw_degrees": 0.0})
+	var b_placement: Dictionary = placements.get("role_b_placement", {"offset": [0.0, 0.0, 0.0], "yaw_degrees": 0.0})
+	return {
+		"role_a_target": _calc_target(contact_transform, a_placement),
+		"role_b_target": _calc_target(contact_transform, b_placement)
+	}
+
+static func _calc_target(contact: Transform3D, placement: Dictionary) -> Transform3D:
+	var offset: Array = placement.get("offset", [0.0, 0.0, 0.0])
+	var yaw: float = deg_to_rad(float(placement.get("yaw_degrees", 0.0)))
+	var local := Transform3D(Basis(Vector3.UP, yaw), Vector3(float(offset[0]), float(offset[1]), float(offset[2])))
+	return contact * local

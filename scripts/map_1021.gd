@@ -906,18 +906,23 @@ func _open_llm_dialogue() -> void:
 		"dialogue_location": location,
 	})
 
-func show_free_dialogue(panel: Control, speaker: String, character_id: String = "", custom_context: Dictionary = {}) -> void:
+func show_free_dialogue(panel: Node, speaker: String, character_id: String = "", custom_context: Dictionary = {}) -> void:
 	var chat := _get_llm_panel()
 	if chat.visible:
 		return
-	panel.set_process_input(false)
-	panel.hide()
+	if is_instance_valid(panel):
+		panel.set_process_input(false)
+		panel.hide()
 	var manager = custom_context.get("dialogue_manager", null)
 	if manager == null and is_instance_valid(initial_ruin) and is_instance_valid(initial_ruin.encounter):
 		manager = initial_ruin.encounter.dialogue_manager
 	var session_id: int = manager.session_id if is_instance_valid(manager) else 0
 	chat.panel_closed.connect(func():
-		if is_instance_valid(panel):
+		if custom_context.has("on_closed"):
+			var cb: Callable = custom_context["on_closed"]
+			if cb.is_valid():
+				cb.call()
+		elif is_instance_valid(panel):
 			panel.set_process_input(true)
 			panel.visible = is_instance_valid(manager) and manager.session_active and manager.session_id == session_id
 	, CONNECT_ONE_SHOT)

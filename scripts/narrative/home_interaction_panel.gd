@@ -163,6 +163,11 @@ func _build_ui() -> void:
 func open(actor: HomeResidentActor) -> void:
 	_ensure_built()
 	current_actor = actor
+	if is_instance_valid(current_actor):
+		if current_actor.has_method("enter_interaction"):
+			current_actor.enter_interaction()
+		else:
+			current_actor.state = HomeResidentActor.State.INTERACTING
 	_mode_intimacy_selection = false
 	_feedback_label.text = ""
 	show()
@@ -170,8 +175,15 @@ func open(actor: HomeResidentActor) -> void:
 	_show_main_options()
 
 func close() -> void:
-	if is_instance_valid(current_actor) and current_actor.state == HomeResidentActor.State.INTERACTING:
-		current_actor.state = HomeResidentActor.State.IDLE
+	if is_instance_valid(current_actor):
+		if current_actor.has_method("exit_interaction"):
+			current_actor.exit_interaction()
+		elif current_actor.state == HomeResidentActor.State.INTERACTING:
+			current_actor.state = HomeResidentActor.State.IDLE
+		if is_instance_valid(current_actor.home) and is_instance_valid(current_actor.home.world):
+			if current_actor.home.world.has_method("_sync_actor_controls"):
+				current_actor.home.world._sync_actor_controls()
+		current_actor = null
 	hide()
 	closed.emit()
 
@@ -209,6 +221,7 @@ func _show_main_options() -> void:
 	_intimacy_options_container.hide()
 	_motion_scroll.hide()
 	for child in _options_container.get_children():
+		_options_container.remove_child(child)
 		child.queue_free()
 
 	# Option 1: 聊天交谈
@@ -220,7 +233,7 @@ func _show_main_options() -> void:
 	_options_container.add_child(intimacy_btn)
 
 	# Option 3: 要求跟我走 / 返回房间
-	var is_following: bool = is_instance_valid(current_actor) and current_actor.state == HomeResidentActor.State.FOLLOWING
+	var is_following: bool = current_actor.is_following() if current_actor.has_method("is_following") else (current_actor.state == HomeResidentActor.State.FOLLOWING)
 	var follow_caption := "【返回房间休息】 结束随行伴随" if is_following else "【要求跟我走】 随行伴随大世界"
 	var follow_btn := _create_option_button(follow_caption, _on_follow_toggle_pressed.bind(not is_following))
 	_options_container.add_child(follow_btn)
@@ -234,6 +247,7 @@ func _show_intimacy_options() -> void:
 	_intimacy_options_container.show()
 	_motion_scroll.hide()
 	for child in _intimacy_options_container.get_children():
+		_intimacy_options_container.remove_child(child)
 		child.queue_free()
 
 	_dialogue_label.text = "主人，要我为您做些什么呢？只要是主人的心愿，无论何种要求，我都会顺从接受。"
@@ -255,6 +269,7 @@ func _show_motion_list(tier: String) -> void:
 	_intimacy_options_container.hide()
 	_motion_scroll.show()
 	for child in _motion_list_container.get_children():
+		_motion_list_container.remove_child(child)
 		child.queue_free()
 
 	if tier == "service":
@@ -292,7 +307,6 @@ func _show_motion_list(tier: String) -> void:
 func _on_motion_selected(motion: Dictionary) -> void:
 	if is_instance_valid(current_actor):
 		intimacy_motion_selected.emit(motion, current_actor)
-		intimacy_requested.emit(str(motion.get("tier", "service")), current_actor)
 	close()
 
 func _create_disabled_motion_button(caption: String) -> Button:
@@ -323,7 +337,7 @@ func _get_available_furniture() -> Array[String]:
 	if not is_instance_valid(current_actor) or not is_instance_valid(current_actor.home):
 		return kinds
 	var plot_id: String = current_actor.plot_id
-	if not current_actor.home.plots.has(plot_id):
+	if not ("plots" in current_actor.home) or not current_actor.home.plots.has(plot_id):
 		return kinds
 	var p_data = current_actor.home.plots[plot_id].data
 	var f_ids: Array = current_actor.room_data.get("furniture", [])
@@ -337,20 +351,36 @@ func _get_available_furniture() -> Array[String]:
 func _on_chat_pressed() -> void:
 	if not is_instance_valid(current_actor):
 		return
-	var char_id := current_actor.character_id
-	var char_entry := ROSTER.get_entry(char_id)
-	var char_name := str(char_entry.get("name", char_id))
+	if is_instance_valid(current_actor.home) and is_instance_valid(current_actor.home.world) and current_actor.home.world.has_method("show_free_dialogue"):
+		hide()
+		var furn_list := _get_available_furniture()
+		var furn_names: Array[String] = []
+		for f in furn_list:
+			furn_names.append(CATALOG.get_furniture_label(f))
+		var furn_str := "、".join(furn_names) if not furn_names.is_empty() else "仅地面席位"
+		var room_title := "家园房间 · %s" % current_actor.room_id
+		var custom_ctx := {
+			"dialogue_location": "家园 · %s (%s)" % [current_actor.plot_id, room_title],
+			"current_interaction_state": "家园闲聊",
+			"bound_furniture_info": furn_str,
+			"on_closed": Callable(self, "_on_free_dialogue_closed"),
+		}
+		current_actor.home.world.show_free_dialogue(
+			self,
+			current_actor.get_display_name(),
+			current_actor.character_id,
+			custom_ctx
+		)
+		return
 
-	_feedback_label.text = "【互动反馈】好感度与信任度提升！"
-	match char_id:
-		"ganyu":
-			_dialogue_label.text = "和主人这样坐下来聊天，感觉疲劳都烟消云散了呢。能一直守在主人身边，就是我最大的心愿。"
-		"keqing":
-			_dialogue_label.text = "既然是主人想聊聊，那我就暂时放下公务。您对目前的发展还有什么新想法吗？我都认真听着！"
-		"sparkle":
-			_dialogue_label.text = "哈哈，光是聊天怎么能够满足呢？不过看着主人认真的眼神，花火大人心情大好哦！"
-		_:
-			_dialogue_label.text = "能和主人静静度过这段日常时光，心里感到非常温暖。无论大世界怎样广阔，有主人的地方就是归宿。"
+	_feedback_label.text = ""
+	_dialogue_label.text = "能和主人静静度过这段日常时光，心里感到非常温暖。无论大世界怎样广阔，有主人的地方就是归宿。"
+
+func _on_free_dialogue_closed() -> void:
+	show()
+	set_process_input(true)
+	if is_instance_valid(current_actor):
+		_show_main_options()
 
 func _on_intimacy_menu_pressed() -> void:
 	_show_intimacy_options()
@@ -368,6 +398,9 @@ func _on_follow_toggle_pressed(following: bool) -> void:
 			_feedback_label.text = "已启用伴随！角色将跟随主人一同行动。"
 		else:
 			_feedback_label.text = "已结束伴随，角色已返回房间中休息。"
+			if is_instance_valid(current_actor.home) and current_actor.home.has_method("_get_room_spawn_position"):
+				var return_pos: Vector3 = current_actor.home._get_room_spawn_position(current_actor.plot_id, current_actor.room_data)
+				current_actor.global_position = return_pos
 	_show_main_options()
 
 func _create_option_button(caption: String, action: Callable) -> Button:
