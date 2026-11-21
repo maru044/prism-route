@@ -181,8 +181,12 @@ func _update_source_ui_state() -> void:
 	_fetch_button.disabled = is_local_offline
 	_stream_usage.disabled = is_local_offline
 	if is_local_offline:
-		_status.text = "已选择本地口上 · 全岛 49 位角色词库就绪 · 离线可用"
-	elif _status.text.contains("本地口上"):
+		var readiness: Dictionary = _client.check_local_airp_readiness()
+		if readiness.get("ready", false):
+			_status.text = "已选择本地口上 · 全岛 49 位角色词库就绪 · 离线可用"
+		else:
+			_status.text = "本地组件缺失 · " + str(readiness.get("error", "未就绪"))
+	elif _status.text.contains("本地口上") or _status.text.contains("本地组件缺失"):
 		_status.text = ""
 
 

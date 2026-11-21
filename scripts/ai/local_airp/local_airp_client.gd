@@ -69,6 +69,41 @@ func get_model_path() -> String:
 			return p
 	return ""
 
+func check_readiness() -> Dictionary:
+	var probe_bin := get_probe_path()
+	var model_path := get_model_path()
+	var has_probe: bool = not probe_bin.is_empty() and FileAccess.file_exists(probe_bin)
+	var has_model: bool = not model_path.is_empty() and FileAccess.file_exists(model_path)
+	var err := ""
+	if not has_probe:
+		err = "缺少嵌入探针组件 (embedding_probe.exe)"
+	elif not has_model:
+		err = "缺少 BGE 模型文件 (bge-small-zh-v1.5-q8_0.gguf)"
+	return {
+		"ready": has_probe and has_model,
+		"has_probe": has_probe,
+		"has_model": has_model,
+		"probe_path": probe_bin,
+		"model_path": model_path,
+		"error": err
+	}
+
+static func is_stop_intent(input: String) -> bool:
+	var text := input.strip_edges()
+	if text.is_empty():
+		return false
+	if text.contains("不要停") or text.contains("别停") or text.contains("不能停") or text.contains("继续"):
+		return false
+	var stop_words := [
+		"停", "暂停", "先停", "停下", "别动", "先歇", "到这儿", "到这里", "结束",
+		"改变主意", "算了吧", "不想做", "不做了", "今天先到", "先等等", "等一下",
+		"歇会儿", "缓口气", "先休息", "受不了了先停", "先别", "到此为止", "改天吧"
+	]
+	for word in stop_words:
+		if text.contains(word):
+			return true
+	return false
+
 func ensure_probe() -> bool:
 	if _probe_ready and _probe_stdio != null:
 		return true
@@ -139,6 +174,17 @@ func retrieve_and_compose(player_input: String, character_id: String, scene_id: 
 	if templates.is_empty():
 		load_resources()
 		
+	var readiness := check_readiness()
+	if not readiness.get("ready", false):
+		return {
+			"text": "【本地组件缺失】未找到 BGE 嵌入模型或探针程序，无法执行本地语义检索。",
+			"reply_id": "error_missing_model",
+			"content_tag": "error",
+			"score": 0.0,
+			"is_fallback": true,
+			"error": readiness.get("error", "缺少本地 AIRP 嵌入模型或探针程序")
+		}
+
 	var candidates: Array = []
 	for tmpl in templates:
 		var char_match: bool = (tmpl.get("character_id") == "shared" or tmpl.get("character_id") == character_id)
@@ -153,16 +199,18 @@ func retrieve_and_compose(player_input: String, character_id: String, scene_id: 
 		
 	var player_vec := embed_text(player_input)
 	if player_vec.is_empty():
-		var fallback_tmpl: Dictionary = _find_template("clarify_unknown_01")
-		var comp_res: Dictionary = composer.compose(fallback_tmpl, character_id, scene_id, context, seed_val)
 		return {
-			"text": comp_res["text"],
-			"reply_id": fallback_tmpl.get("reply_id", ""),
-			"content_tag": fallback_tmpl.get("content_tag", ""),
+			"text": "【本地探针异常】未能从输入文本中提取语义向量。",
+			"reply_id": "error_probe_failed",
+			"content_tag": "error",
 			"score": 0.0,
-			"is_fallback": true
+			"is_fallback": true,
+			"error": "本地 AIRP 探针推理异常"
 		}
-		
+
+	var explicit_stop := is_stop_intent(player_input)
+	var turn_count: int = int(context.get("turn_count", 1))
+
 	var scored_candidates: Array = []
 	for tmpl in candidates:
 		var r_id: String = tmpl.get("reply_id", "")
@@ -186,6 +234,15 @@ func retrieve_and_compose(player_input: String, character_id: String, scene_id: 
 		if r_id in recent_reply_ids:
 			adjusted_score -= 0.15
 			
+		var c_tag: String = tmpl.get("content_tag", "")
+		if explicit_stop:
+			if c_tag == "pause_stop":
+				adjusted_score += 0.40
+			elif c_tag in ["intimate_tease_reverse", "tease", "intimate_initiative", "intimate_deep", "combat_restraint", "intimate_touch"]:
+				adjusted_score -= 0.35
+		elif turn_count > 1 and c_tag == "greet":
+			adjusted_score -= 0.25
+
 		scored_candidates.append({
 			"template": tmpl,
 			"raw_score": best_sim,
@@ -203,7 +260,7 @@ func retrieve_and_compose(player_input: String, character_id: String, scene_id: 
 	var matched_ref: String
 	var is_fallback: bool = false
 	
-	if top["raw_score"] < clarify_threshold:
+	if top["raw_score"] < clarify_threshold and not explicit_stop:
 		chosen_tmpl = _find_template("clarify_unknown_01")
 		chosen_score = top["raw_score"]
 		matched_ref = top["matched_ref"]

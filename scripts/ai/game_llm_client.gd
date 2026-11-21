@@ -199,11 +199,14 @@ func open(channel: String, scope: String, speaker_context: Dictionary) -> void:
 		_dialogue_config_error = ""
 	var source_suffix := ("/" + get_dialogue_source()) if channel == DIALOGUE else ""
 	_thread_id = channel + "/" + scope + source_suffix
+	var legacy_id := channel + "/" + scope
+	if channel == DIALOGUE and _threads.has(legacy_id):
+		var cloud_id := legacy_id + "/" + SOURCE_CLOUD_API
+		if not _threads.has(cloud_id):
+			_threads[cloud_id] = (_threads[legacy_id] as Array).duplicate(true)
+		_threads.erase(legacy_id)
 	if not _threads.has(_thread_id):
-		if channel == DIALOGUE and _threads.has(channel + "/" + scope):
-			_threads[_thread_id] = _threads[channel + "/" + scope]
-		else:
-			_threads[_thread_id] = []
+		_threads[_thread_id] = []
 	history = _threads[_thread_id]
 	_restore_last_status()
 	changed.emit()
@@ -263,7 +266,12 @@ func _normalize_saved_threads(value: Variant) -> Dictionary:
 				"action_committed": turn.get("action_committed", false) == true,
 				"result": {"status": notice, "notice": notice, "incomplete": incomplete},
 			})
-		threads[id] = turns
+		var target_id := str(id)
+		if target_id.begins_with(DIALOGUE + "/"):
+			var parts := target_id.split("/")
+			if parts.size() == 2:
+				target_id = target_id + "/" + SOURCE_CLOUD_API
+		threads[target_id] = turns
 	return threads
 
 func _saved_fragment(fragment: Dictionary) -> Dictionary:
@@ -332,6 +340,11 @@ func stop() -> void:
 
 func _can_start() -> bool:
 	if route == DIALOGUE and get_dialogue_source() == SOURCE_LOCAL_AIRP:
+		var readiness := check_local_airp_readiness()
+		if not readiness.get("ready", false):
+			status = "本地口上不可用 · " + str(readiness.get("error", "缺少必要组件"))
+			changed.emit()
+			return false
 		return true
 	if not configured():
 		status = "请先配置这个入口的模型。"
@@ -820,18 +833,35 @@ func _get_local_airp() -> Node:
 		_local_airp = airp_node
 	return _local_airp
 
+func check_local_airp_readiness() -> Dictionary:
+	var airp := _get_local_airp()
+	if airp == null or not airp.has_method("check_readiness"):
+		return {"ready": false, "error": "本地 AIRP 模块未初始化"}
+	return airp.call("check_readiness")
+
+static func resolve_scene_id(ctx: Dictionary) -> String:
+	if ctx.get("combat_mode", false):
+		return "combat_h"
+	if ctx.get("intimate_mode", false):
+		return "intimate"
+	var state_str := str(ctx.get("current_interaction_state", ""))
+	var scene_str := str(ctx.get("scene", ""))
+	var combined := (state_str + " " + scene_str).to_lower()
+	
+	if combined.contains("对决") or combined.contains("对战") or combined.contains("决斗") \
+		or combined.contains("combat") or combined.contains("duel") or combined.contains("战后交涉"):
+		return "combat_h"
+		
+	if combined.contains("侍奉") or combined.contains("玩弄") or combined.contains("intimate") \
+		or combined.contains("亲密") or combined.contains("双修") or combined.contains("调教"):
+		return "intimate"
+		
+	return "home_chat"
+
 func _dispatch_local_airp() -> void:
 	var airp := _get_local_airp()
 	var char_id := _resolve_character_id()
-	var scene_id: String = "combat_h" if context.get("combat_mode", false) \
-		or str(context.get("scene", "")).contains("combat") \
-		or str(context.get("current_interaction_state", "")).contains("对战") \
-		or str(context.get("current_interaction_state", "")).contains("决斗") \
-		else ("intimate" if context.get("intimate_mode", false) \
-			or str(context.get("scene", "")).contains("intimate") \
-			or str(context.get("current_interaction_state", "")).contains("侍奉") \
-			or str(context.get("current_interaction_state", "")).contains("对峙") \
-			else "home_chat")
+	var scene_id := resolve_scene_id(context)
 	
 	if _operation == "continue":
 		var followup_text: String = str(airp.call("compose_followup", char_id, scene_id, context, -1))
@@ -868,22 +898,30 @@ func _dispatch_local_airp() -> void:
 	if player_input.is_empty():
 		player_input = "你好呀"
 		
-	var result: Dictionary = airp.call("retrieve_and_compose", player_input, char_id, scene_id, context, -1)
+	var airp_context := context.duplicate()
+	airp_context["turn_count"] = history.size()
+	var result: Dictionary = airp.call("retrieve_and_compose", player_input, char_id, scene_id, airp_context, -1)
 	var output_text: String = str(result.get("text", ""))
 	if output_text.is_empty():
 		output_text = "（微笑着看着你）"
 		
-	status = ""
-	diagnostic = "本地检索式 AIRP · %s · 得分: %.2f" % [result.get("reply_id", ""), float(result.get("score", 0.0))]
+	var err_msg: String = str(result.get("error", ""))
+	if not err_msg.is_empty():
+		status = err_msg
+		diagnostic = "本地口上异常: " + err_msg
+	else:
+		status = ""
+		diagnostic = "本地检索式 AIRP · %s · 得分: %.2f" % [result.get("reply_id", ""), float(result.get("score", 0.0))]
 	if not history.is_empty():
 		var active_turn: Variant = history.back()
 		if active_turn is Dictionary:
-			active_turn.replies.append({"text": output_text, "note": ""})
+			active_turn.replies.append({"text": output_text, "note": status})
 			active_turn.active = active_turn.replies.size() - 1
 			active_turn["result"] = {
 				"status": status,
 				"diagnostic": diagnostic,
-				"omitted_turns": 0
+				"omitted_turns": 0,
+				"incomplete": not err_msg.is_empty()
 			}
 	partial = ""
 	pending = false
