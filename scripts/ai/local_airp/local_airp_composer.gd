@@ -6,17 +6,30 @@ const HISTORY_CAPACITY := 4
 var sparkle_wildcards: Dictionary = {}
 var keqing_wildcards: Dictionary = {}
 var scenes_wildcards: Dictionary = {}
+var character_wildcards: Dictionary = {}
+var data_directory: String = "res://assets/ai/local_airp"
 var slot_history: Dictionary = {}
 var _slot_regex := RegEx.create_from_string(r"\{([a-zA-Z0-9_]+)\}")
 var _double_punct_regex := RegEx.create_from_string(r"([，。！？~])\1+")
 var _space_punct_regex := RegEx.create_from_string(r"\s+([，。！？~♡])")
 
 func load_data(data_dir: String = "res://assets/ai/local_airp") -> void:
+	data_directory = data_dir
 	sparkle_wildcards = _load_json(data_dir.path_join("wildcards_sparkle.json"))
 	keqing_wildcards = _load_json(data_dir.path_join("wildcards_keqing.json"))
 	scenes_wildcards = _load_json(data_dir.path_join("wildcards_scenes.json"))
+	character_wildcards["sparkle"] = sparkle_wildcards
+	character_wildcards["keqing"] = keqing_wildcards
 
 func get_character_data(character_id: String) -> Dictionary:
+	if character_wildcards.has(character_id):
+		return character_wildcards[character_id]
+	var path := data_directory.path_join("wildcards_%s.json" % character_id)
+	if FileAccess.file_exists(path):
+		var custom_data := _load_json(path)
+		if not custom_data.is_empty():
+			character_wildcards[character_id] = custom_data
+			return custom_data
 	if character_id == "sparkle":
 		return sparkle_wildcards
 	elif character_id == "keqing":

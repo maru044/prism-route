@@ -17,19 +17,33 @@ class WildcardComposer:
     def __init__(self, data_dir=HERE, history_capacity=4):
         self.data_dir = Path(data_dir)
         self.history_capacity = history_capacity
-        self.sparkle_wildcards = json.loads((self.data_dir / "wildcards_sparkle.json").read_text(encoding="utf-8"))
-        self.keqing_wildcards = json.loads((self.data_dir / "wildcards_keqing.json").read_text(encoding="utf-8"))
+        self.char_cache = {}
+        for f in self.data_dir.glob("wildcards_*.json"):
+            cid = f.stem.replace("wildcards_", "")
+            if cid != "scenes":
+                try:
+                    self.char_cache[cid] = json.loads(f.read_text(encoding="utf-8"))
+                except Exception:
+                    pass
+        self.sparkle_wildcards = self.char_cache.get("sparkle", {})
+        self.keqing_wildcards = self.char_cache.get("keqing", {})
         self.scenes_wildcards = json.loads((self.data_dir / "wildcards_scenes.json").read_text(encoding="utf-8"))
         
         # Ring buffer history per character and slot key
         self.slot_history = {}
 
     def get_character_data(self, character_id):
-        if character_id == "sparkle":
-            return self.sparkle_wildcards
-        elif character_id == "keqing":
-            return self.keqing_wildcards
-        return self.sparkle_wildcards
+        if character_id in self.char_cache:
+            return self.char_cache[character_id]
+        custom_file = self.data_dir / f"wildcards_{character_id}.json"
+        if custom_file.is_file():
+            try:
+                data = json.loads(custom_file.read_text(encoding="utf-8"))
+                self.char_cache[character_id] = data
+                return data
+            except Exception:
+                pass
+        return self.char_cache.get("sparkle", {})
 
     def _resolve_pool(self, character_id, pool_path):
         char_data = self.get_character_data(character_id)

@@ -110,6 +110,43 @@ func _init() -> void:
 			print("Test 5 (GameLLMClient offline send): ", rep_text)
 	game_client.queue_free()
 
+	# 8. Test Multi-Character Expansions in Engine
+	var probe_reopen := client.ensure_probe()
+	if probe_reopen:
+		# Raiden Shogun: Combat H 100%
+		var r_raiden := client.retrieve_and_compose("去吧，彻底绝顶高潮吧，把一切都释放出来！", "raiden_shogun", "combat_h", {}, 201)
+		print("Test 6 (Raiden 100% Orgasm): ", r_raiden["reply_id"], " text: ", r_raiden["text"])
+		if r_raiden["content_tag"] != "combat_pleasure_100":
+			push_error("Expected combat_pleasure_100 for Raiden, got: " + r_raiden["content_tag"])
+			failures += 1
+		if _has_ellipsis(r_raiden["text"]):
+			push_error("Ellipsis detected in r_raiden text!")
+			failures += 1
+			
+		# Kafka: Deep Kiss
+		var r_kafka := client.retrieve_and_compose("把舌头伸出来，和我来一个热烈窒息的深吻", "kafka", "intimate", {}, 202)
+		print("Test 7 (Kafka Deep Kiss): ", r_kafka["reply_id"], " text: ", r_kafka["text"])
+		if r_kafka["content_tag"] != "intimate_deep_kiss":
+			push_error("Expected intimate_deep_kiss for Kafka, got: " + r_kafka["content_tag"])
+			failures += 1
+		if _has_ellipsis(r_kafka["text"]):
+			push_error("Ellipsis detected in r_kafka text!")
+			failures += 1
+			
+		# Firefly: Surrender
+		var r_firefly := client.retrieve_and_compose("已经彻底没有反抗能力了，乖乖向我宣布你的无条件投降吧", "firefly", "combat_h", {}, 203)
+		print("Test 8 (Firefly Surrender): ", r_firefly["reply_id"], " text: ", r_firefly["text"])
+		if r_firefly["content_tag"] != "combat_surrender":
+			push_error("Expected combat_surrender for Firefly, got: " + r_firefly["content_tag"])
+			failures += 1
+		if _has_ellipsis(r_firefly["text"]):
+			push_error("Ellipsis detected in r_firefly text!")
+			failures += 1
+		client.close_probe()
+	else:
+		push_error("Failed to reopen probe for expanded tests")
+		failures += 1
+
 	_finish(failures)
 
 func _has_ellipsis(text: String) -> bool:
