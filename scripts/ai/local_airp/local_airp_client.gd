@@ -240,6 +240,11 @@ func _find_template(target_reply_id: String) -> Dictionary:
 			return t
 	return templates[0] if not templates.is_empty() else {}
 
+func compose_followup(character_id: String, scene_id: String, context: Dictionary = {}, seed_val: int = -1) -> String:
+	if templates.is_empty():
+		load_resources()
+	return composer.compose_followup(character_id, scene_id, context, seed_val)
+
 func reset_history() -> void:
 	recent_reply_ids.clear()
 	composer.reset_history()

@@ -20,6 +20,8 @@ const LOCAL_PLAYER_PROFILE := "user://" + PLAYER_PROFILE_FILE
 const OUTPUT_TOKEN_RESERVE := 8000
 const DIALOGUE := "dialogue"
 const ASSISTANT := "assistant"
+const SOURCE_CLOUD_API := "cloud_api"
+const SOURCE_LOCAL_AIRP := "local_airp"
 const MAX_TOOL_ROUNDS := 3
 const MAX_ASSISTANT_RETRIES := 2
 const MAX_ASSISTANT_RETRY_WAIT := 10
@@ -37,7 +39,7 @@ static var _dialogue_tag_prefixes := [
 ]
 
 var profiles := {
-	DIALOGUE: {"url": "", "model": "", "key": ""},
+	DIALOGUE: {"url": "", "model": "", "key": "", "source": SOURCE_LOCAL_AIRP},
 	ASSISTANT: {"url": "", "model": "", "key": ""},
 }
 var route: String:
@@ -71,6 +73,7 @@ var _assistant_retries := 0
 var _assistant_retry_timer: Timer
 var _context_limit_tokens := CONTEXT_TOKEN_LIMIT
 var _retained_turns := 0
+var _dialogue_source: String = SOURCE_LOCAL_AIRP
 var _dialogue_entries: Array[Dictionary] = []
 var _dialogue_config_error := ""
 var _dialogue_escape_tail := ""
@@ -92,6 +95,23 @@ func _ready() -> void:
 			for field in ["url", "model", "key"]:
 				profiles[channel][field] = str(config.get_value(channel, field, profiles[channel][field]))
 		profiles[DIALOGUE]["include_stream_usage"] = config.get_value(DIALOGUE, "include_stream_usage", false) == true
+		var saved_source: String = str(config.get_value(DIALOGUE, "source", ""))
+		if saved_source.is_empty():
+			if not str(profiles[DIALOGUE]["url"]).is_empty():
+				saved_source = SOURCE_CLOUD_API
+			else:
+				saved_source = SOURCE_LOCAL_AIRP
+		_dialogue_source = saved_source
+		profiles[DIALOGUE]["source"] = saved_source
+
+func get_dialogue_source() -> String:
+	return _dialogue_source
+
+func set_dialogue_source(source_val: String) -> void:
+	if source_val == SOURCE_CLOUD_API or source_val == SOURCE_LOCAL_AIRP:
+		_dialogue_source = source_val
+		if profiles.has(DIALOGUE):
+			profiles[DIALOGUE]["source"] = source_val
 
 func _load_dialogue_markdown(local_profile_path := LOCAL_PLAYER_PROFILE) -> String:
 	_dialogue_entries.clear()
@@ -136,14 +156,20 @@ func _load_dialogue_markdown(local_profile_path := LOCAL_PLAYER_PROFILE) -> Stri
 static func _is_nonnegative_integer(value: Variant) -> bool:
 	return (value is int or value is float) and value >= 0 and value <= 2147483647 and value == int(value)
 
-func save_profile(channel: String, url: String, model: String, key: String, include_stream_usage := false) -> String:
+func save_profile(channel: String, url: String, model: String, key: String, include_stream_usage := false, dialogue_source := "") -> String:
 	if not profiles.has(channel):
 		return "未知的模型入口。"
-	var connection_error := Transport.connection_error(url, key)
-	if not connection_error.is_empty():
-		return connection_error
-	if model.strip_edges().is_empty():
-		return "请填写模型 ID。"
+	var source_val := dialogue_source
+	if source_val.is_empty():
+		source_val = get_dialogue_source()
+	if channel == DIALOGUE and source_val == SOURCE_LOCAL_AIRP:
+		pass
+	else:
+		var connection_error := Transport.connection_error(url, key)
+		if not connection_error.is_empty():
+			return connection_error
+		if model.strip_edges().is_empty():
+			return "请填写模型 ID。"
 	var config := ConfigFile.new()
 	config.load(SETTINGS_PATH)
 	config.set_value(channel, "url", url.strip_edges())
@@ -151,11 +177,14 @@ func save_profile(channel: String, url: String, model: String, key: String, incl
 	config.set_value(channel, "key", key.strip_edges())
 	if channel == DIALOGUE:
 		config.set_value(channel, "include_stream_usage", include_stream_usage)
+		config.set_value(channel, "source", source_val)
 	if config.save(SETTINGS_PATH) != OK:
 		return "无法写入本机连接设置。"
 	profiles[channel] = {"url": url.strip_edges(), "model": model.strip_edges(), "key": key.strip_edges()}
 	if channel == DIALOGUE:
+		_dialogue_source = source_val
 		profiles[channel]["include_stream_usage"] = include_stream_usage
+		profiles[channel]["source"] = source_val
 	return ""
 
 func open(channel: String, scope: String, speaker_context: Dictionary) -> void:
@@ -164,18 +193,26 @@ func open(channel: String, scope: String, speaker_context: Dictionary) -> void:
 	stop()
 	_route = channel
 	context = speaker_context
-	if channel == DIALOGUE:
+	if channel == DIALOGUE and get_dialogue_source() == SOURCE_CLOUD_API:
 		_dialogue_config_error = _load_dialogue_markdown()
-	_thread_id = channel + "/" + scope
+	else:
+		_dialogue_config_error = ""
+	var source_suffix := ("/" + get_dialogue_source()) if channel == DIALOGUE else ""
+	_thread_id = channel + "/" + scope + source_suffix
 	if not _threads.has(_thread_id):
-		_threads[_thread_id] = []
+		if channel == DIALOGUE and _threads.has(channel + "/" + scope):
+			_threads[_thread_id] = _threads[channel + "/" + scope]
+		else:
+			_threads[_thread_id] = []
 	history = _threads[_thread_id]
 	_restore_last_status()
 	changed.emit()
 
 func configured() -> bool:
 	if route == DIALOGUE:
-		return true
+		if get_dialogue_source() == SOURCE_LOCAL_AIRP:
+			return true
+		return not profiles[DIALOGUE].url.is_empty() and not profiles[DIALOGUE].model.is_empty()
 	return not profiles[route].url.is_empty() and not profiles[route].model.is_empty()
 
 func register_tool(name: String, description: String, parameters: Dictionary, handler: Callable) -> Error:
@@ -294,6 +331,8 @@ func stop() -> void:
 		_complete("已停止")
 
 func _can_start() -> bool:
+	if route == DIALOGUE and get_dialogue_source() == SOURCE_LOCAL_AIRP:
+		return true
 	if not configured():
 		status = "请先配置这个入口的模型。"
 	elif route == DIALOGUE and not _dialogue_config_error.is_empty():
@@ -313,6 +352,21 @@ func _restore_last_status() -> void:
 	incomplete_turns = result.get("incomplete_turns", 0)
 
 func _start(operation: String, turn: Dictionary) -> bool:
+	_operation = operation
+	partial = ""
+	_dialogue_escape_tail = ""
+	diagnostic = ""
+	_tool_turn.clear()
+
+	if route == DIALOGUE and get_dialogue_source() == SOURCE_LOCAL_AIRP:
+		if operation == "send":
+			history.append(turn)
+		pending = true
+		status = "检索本地口上。"
+		changed.emit()
+		_dispatch_local_airp()
+		return true
+
 	var assistant_system: Dictionary
 	if route == ASSISTANT:
 		_request_tools = _tool_registry.snapshot()
@@ -769,11 +823,39 @@ func _get_local_airp() -> Node:
 func _dispatch_local_airp() -> void:
 	var airp := _get_local_airp()
 	var char_id := _resolve_character_id()
-	var scene_id: String = "intimate" if context.get("intimate_mode", false) \
-		or str(context.get("scene", "")).contains("intimate") \
-		or str(context.get("current_interaction_state", "")).contains("侍奉") \
-		or str(context.get("current_interaction_state", "")).contains("对峙") \
-		else "home_chat"
+	var scene_id: String = "combat_h" if context.get("combat_mode", false) \
+		or str(context.get("scene", "")).contains("combat") \
+		or str(context.get("current_interaction_state", "")).contains("对战") \
+		or str(context.get("current_interaction_state", "")).contains("决斗") \
+		else ("intimate" if context.get("intimate_mode", false) \
+			or str(context.get("scene", "")).contains("intimate") \
+			or str(context.get("current_interaction_state", "")).contains("侍奉") \
+			or str(context.get("current_interaction_state", "")).contains("对峙") \
+			else "home_chat")
+	
+	if _operation == "continue":
+		var followup_text: String = str(airp.call("compose_followup", char_id, scene_id, context, -1))
+		if followup_text.is_empty():
+			followup_text = "（微笑着看着你，等待你的回应）"
+		status = ""
+		diagnostic = "本地口上 · 角色追问补充"
+		if not history.is_empty():
+			var active_turn: Variant = history.back()
+			if active_turn is Dictionary and active_turn.get("active", -1) >= 0:
+				var reply: Dictionary = active_turn.replies[active_turn.active]
+				if not reply.has("continuations"):
+					reply.continuations = []
+				reply.continuations.append({"text": followup_text, "note": ""})
+				active_turn["result"] = {
+					"status": status,
+					"diagnostic": diagnostic,
+					"omitted_turns": 0
+				}
+		partial = ""
+		pending = false
+		changed.emit()
+		return
+
 	var player_input := ""
 	if not history.is_empty():
 		var last_entry: Variant = history.back()
@@ -796,14 +878,8 @@ func _dispatch_local_airp() -> void:
 	if not history.is_empty():
 		var active_turn: Variant = history.back()
 		if active_turn is Dictionary:
-			if _operation == "continue" and active_turn.get("active", -1) >= 0:
-				var reply: Dictionary = active_turn.replies[active_turn.active]
-				if not reply.has("continuations"):
-					reply.continuations = []
-				reply.continuations.append({"text": output_text, "note": ""})
-			else:
-				active_turn.replies.append({"text": output_text, "note": ""})
-				active_turn.active = active_turn.replies.size() - 1
+			active_turn.replies.append({"text": output_text, "note": ""})
+			active_turn.active = active_turn.replies.size() - 1
 			active_turn["result"] = {
 				"status": status,
 				"diagnostic": diagnostic,
@@ -816,16 +892,9 @@ func _dispatch_local_airp() -> void:
 func _dispatch() -> void:
 	if not pending:
 		return
-	if route == DIALOGUE and (_request_profile.get("url", "").is_empty() or _request_profile.get("key", "").is_empty()):
-		_dispatch_local_airp()
-		return
 	var error: String = _transport.start(_request_profile.url, _request_profile.key, payload())
 	if not error.is_empty() and not _schedule_assistant_retry(error):
-		if route == DIALOGUE:
-			print("[本地 AIRP 降级响应] %sZ · 启动失败，自动切换本地检索: %s" % [Time.get_datetime_string_from_system(true), error])
-			_dispatch_local_airp()
-		else:
-			_complete(error)
+		_complete(error)
 
 func _schedule_assistant_retry(error: String) -> bool:
 	if route != ASSISTANT or _tool_rounds > 0 or _assistant_retries >= MAX_ASSISTANT_RETRIES or not partial.is_empty():

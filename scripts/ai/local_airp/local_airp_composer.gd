@@ -34,7 +34,8 @@ func get_character_data(character_id: String) -> Dictionary:
 		return sparkle_wildcards
 	elif character_id == "keqing":
 		return keqing_wildcards
-	return sparkle_wildcards
+	push_error("Missing dedicated wildcard data for character: " + character_id)
+	return {}
 
 func _resolve_pool(character_id: String, pool_path: String) -> Array:
 	var parts := pool_path.split(".")
@@ -174,6 +175,23 @@ func _sanitize_text(text: String) -> String:
 
 func reset_history() -> void:
 	slot_history.clear()
+
+func compose_followup(character_id: String, scene_id: String, context: Dictionary = {}, seed_val: int = -1) -> String:
+	var rng := RandomNumberGenerator.new()
+	if seed_val >= 0:
+		rng.seed = seed_val
+	else:
+		rng.randomize()
+	var cdata := get_character_data(character_id)
+	var pool_key := "followups_intimate" if scene_id == "intimate" else ("followups_combat" if scene_id == "combat_h" else "followups_home")
+	var candidates: Array = cdata.get(pool_key, [])
+	if candidates.is_empty():
+		candidates = cdata.get("followups_home", [])
+	if candidates.is_empty():
+		return "（静静地注视着你，等待着你的下一步动作。）"
+	var chosen := _pick_with_anti_repetition("%s_%s" % [character_id, pool_key], candidates, rng)
+	var clean := _sanitize_text(chosen)
+	return clean
 
 func _load_json(file_path: String) -> Dictionary:
 	var file := FileAccess.open(file_path, FileAccess.READ)

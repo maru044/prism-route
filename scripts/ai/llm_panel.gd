@@ -47,12 +47,14 @@ func _ready() -> void:
 func open_panel(route: String, scope: String, context: Dictionary = {}) -> void:
 	if visible:
 		return
-	_thread_id = route + "/" + scope
+	var source_suffix := ("/" + client.get_dialogue_source()) if route == Client.DIALOGUE else ""
+	_thread_id = route + "/" + scope + source_suffix
 	_draft.text = _drafts.get(_thread_id, "")
 	_expanded_reports.clear()
 	_reset_transcript()
 	var speaker := str(context.get("npc_name", ""))
-	_title.text = "游戏助手" if route == Client.ASSISTANT else ("自由对话" if speaker.is_empty() else speaker + "  ·  自由对话")
+	var source_label := (" [本地口上]" if client.get_dialogue_source() == Client.SOURCE_LOCAL_AIRP else " [云端 API]") if route == Client.DIALOGUE else ""
+	_title.text = "游戏助手" if route == Client.ASSISTANT else ("自由对话" + source_label if speaker.is_empty() else speaker + "  ·  自由对话" + source_label)
 	client.open(route, scope, context)
 	if not client.configured():
 		client.status = "请在标题界面的「API 配置」中填写连接。"

@@ -18,6 +18,10 @@ var _model_transport := Client.Transport.new()
 var _model_menu := PopupMenu.new()
 var _fetch_button: Button
 var _status: Label
+var _source_container: VBoxContainer
+var _source_cloud_btn: Button
+var _source_local_btn: Button
+var _selected_source := Client.SOURCE_LOCAL_AIRP
 
 
 func _ready() -> void:
@@ -69,6 +73,22 @@ func _ready() -> void:
 		button.button_group = group
 		button.size_flags_horizontal = SIZE_EXPAND_FILL
 		_routes[entry[0]] = button
+
+	_source_container = UI.column(6)
+	content.add_child(_source_container)
+	_source_container.add_child(UI.text_label("自由对话来源", 20, PALETTE.text, PALETTE))
+	var source_row := UI.row(10)
+	_source_container.add_child(source_row)
+	var source_group := ButtonGroup.new()
+	_source_local_btn = _button(source_row, "本地口上（脱机游玩）", _on_source_selected.bind(Client.SOURCE_LOCAL_AIRP))
+	_source_local_btn.toggle_mode = true
+	_source_local_btn.button_group = source_group
+	_source_local_btn.size_flags_horizontal = SIZE_EXPAND_FILL
+
+	_source_cloud_btn = _button(source_row, "云端 API（大模型生成）", _on_source_selected.bind(Client.SOURCE_CLOUD_API))
+	_source_cloud_btn.toggle_mode = true
+	_source_cloud_btn.button_group = source_group
+	_source_cloud_btn.size_flags_horizontal = SIZE_EXPAND_FILL
 
 	_add_field(content, "API 基础地址", _url, "https://服务域名")
 	_url.drag_and_drop_selection_enabled = false
@@ -148,16 +168,43 @@ func _button(parent: Container, caption: String, callback: Callable) -> Button:
 	return button
 
 
+func _on_source_selected(source_val: String) -> void:
+	_selected_source = source_val
+	_update_source_ui_state()
+
+
+func _update_source_ui_state() -> void:
+	var is_local_offline := (_channel == Client.DIALOGUE and _selected_source == Client.SOURCE_LOCAL_AIRP)
+	_url.editable = not is_local_offline
+	_model.editable = not is_local_offline
+	_key.editable = not is_local_offline
+	_fetch_button.disabled = is_local_offline
+	_stream_usage.disabled = is_local_offline
+	if is_local_offline:
+		_status.text = "已选择本地口上 · 全岛 49 位角色词库就绪 · 离线可用"
+	elif _status.text.contains("本地口上"):
+		_status.text = ""
+
+
 func _load_route(channel: String) -> void:
 	_connection_edited()
 	_channel = channel
 	_routes[channel].set_pressed_no_signal(true)
+	var is_dialogue := channel == Client.DIALOGUE
+	_source_container.visible = is_dialogue
+	if is_dialogue:
+		_selected_source = _client.get_dialogue_source()
+		if _selected_source == Client.SOURCE_LOCAL_AIRP:
+			_source_local_btn.set_pressed_no_signal(true)
+		else:
+			_source_cloud_btn.set_pressed_no_signal(true)
 	var profile: Dictionary = _client.profiles[channel]
 	_url.text = profile.url
 	_model.text = profile.model
 	_key.text = profile.key
-	_stream_usage.visible = channel == Client.DIALOGUE
+	_stream_usage.visible = is_dialogue
 	_stream_usage.set_pressed_no_signal(profile.get("include_stream_usage", false))
+	_update_source_ui_state()
 
 
 func _connection_edited(_text := "") -> void:
@@ -202,8 +249,11 @@ func _choose_model(index: int) -> void:
 
 func _save() -> void:
 	_connection_edited()
-	var result := _client.save_profile(_channel, _url.text, _model.text, _key.text, _stream_usage.button_pressed)
-	_status.text = "已保存当前连接到本机。" if result.is_empty() else result
+	var result := _client.save_profile(_channel, _url.text, _model.text, _key.text, _stream_usage.button_pressed, _selected_source)
+	if result.is_empty():
+		_status.text = "已保存设置。" + (" 本地口上已就绪。" if _channel == Client.DIALOGUE and _selected_source == Client.SOURCE_LOCAL_AIRP else " 已保存当前连接到本机。")
+	else:
+		_status.text = result
 
 
 func _close() -> void:
