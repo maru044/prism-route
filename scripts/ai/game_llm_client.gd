@@ -174,6 +174,8 @@ func open(channel: String, scope: String, speaker_context: Dictionary) -> void:
 	changed.emit()
 
 func configured() -> bool:
+	if route == DIALOGUE:
+		return true
 	return not profiles[route].url.is_empty() and not profiles[route].model.is_empty()
 
 func register_tool(name: String, description: String, parameters: Dictionary, handler: Callable) -> Error:
@@ -767,13 +769,19 @@ func _get_local_airp() -> Node:
 func _dispatch_local_airp() -> void:
 	var airp := _get_local_airp()
 	var char_id := _resolve_character_id()
-	var scene_id: String = "intimate" if context.get("intimate_mode", false) or str(context.get("scene", "")).contains("intimate") else "home_chat"
+	var scene_id: String = "intimate" if context.get("intimate_mode", false) \
+		or str(context.get("scene", "")).contains("intimate") \
+		or str(context.get("current_interaction_state", "")).contains("侍奉") \
+		or str(context.get("current_interaction_state", "")).contains("对峙") \
+		else "home_chat"
 	var player_input := ""
 	if not history.is_empty():
 		var last_entry: Variant = history.back()
 		if last_entry is Dictionary and last_entry.has("user"):
 			var user_val: Variant = last_entry["user"]
-			if user_val is Dictionary:
+			if user_val is String:
+				player_input = user_val
+			elif user_val is Dictionary:
 				player_input = str(user_val.get("content", ""))
 	if player_input.is_empty():
 		player_input = "你好呀"
@@ -783,13 +791,25 @@ func _dispatch_local_airp() -> void:
 	if output_text.is_empty():
 		output_text = "（微笑着看着你）"
 		
-	partial = output_text
-	status = "完成。"
-	diagnostic = "本地检索式 AIRP · %s · 得分: %s" % [result.get("reply_id", ""), str(result.get("score", 0.0))]
+	status = ""
+	diagnostic = "本地检索式 AIRP · %s · 得分: %.2f" % [result.get("reply_id", ""), float(result.get("score", 0.0))]
 	if not history.is_empty():
 		var active_turn: Variant = history.back()
 		if active_turn is Dictionary:
-			active_turn["assistant"] = {"role": "assistant", "content": output_text}
+			if _operation == "continue" and active_turn.get("active", -1) >= 0:
+				var reply: Dictionary = active_turn.replies[active_turn.active]
+				if not reply.has("continuations"):
+					reply.continuations = []
+				reply.continuations.append({"text": output_text, "note": ""})
+			else:
+				active_turn.replies.append({"text": output_text, "note": ""})
+				active_turn.active = active_turn.replies.size() - 1
+			active_turn["result"] = {
+				"status": status,
+				"diagnostic": diagnostic,
+				"omitted_turns": 0
+			}
+	partial = ""
 	pending = false
 	changed.emit()
 
@@ -888,10 +908,6 @@ func _receive_result(message: Dictionary, error: String) -> void:
 		return
 	var calls: Variant = message.get("tool_calls", [])
 	if not error.is_empty():
-		if route == DIALOGUE and partial.is_empty():
-			print("[本地 AIRP 降级响应] %sZ · 回复错误，自动切换本地检索: %s" % [Time.get_datetime_string_from_system(true), error])
-			_dispatch_local_airp()
-			return
 		if route == ASSISTANT and message.get("content") is String and (calls == null or calls == []):
 			partial = message.content
 		if not _schedule_assistant_retry(error):

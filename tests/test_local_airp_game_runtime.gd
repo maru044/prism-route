@@ -78,6 +78,38 @@ func _init() -> void:
 		failures += 1
 		
 	client.close_probe()
+
+	# 7. Test GameLLMClient end-to-end integration without remote API
+	var game_client := preload("res://scripts/ai/game_llm_client.gd").new()
+	root.add_child(game_client)
+	game_client.open("dialogue", "sparkle_end_to_end", {"npc_name": "花火", "character_id": "sparkle", "scene": "home_chat"})
+	if not game_client.configured():
+		push_error("GameLLMClient must be configured for dialogue offline fallback")
+		failures += 1
+	var send_ok := game_client.send("花火早上好呀")
+	if not send_ok:
+		push_error("GameLLMClient send failed")
+		failures += 1
+	if game_client.history.is_empty():
+		push_error("History is empty after send")
+		failures += 1
+	else:
+		var turn: Dictionary = game_client.history.back()
+		if turn.replies.is_empty() or turn.active < 0:
+			push_error("Turn replies empty or active < 0")
+			failures += 1
+		else:
+			var rep_text: String = str(turn.replies[turn.active].get("text", ""))
+			var sections: Dictionary = game_client.reply_sections(turn.replies[turn.active])
+			if sections.body.is_empty():
+				push_error("Reply sections body is empty")
+				failures += 1
+			if _has_ellipsis(rep_text):
+				push_error("Ellipsis detected in end-to-end reply")
+				failures += 1
+			print("Test 5 (GameLLMClient offline send): ", rep_text)
+	game_client.queue_free()
+
 	_finish(failures)
 
 func _has_ellipsis(text: String) -> bool:
