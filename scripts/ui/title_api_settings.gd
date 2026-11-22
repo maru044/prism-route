@@ -21,7 +21,7 @@ var _status: Label
 var _source_container: VBoxContainer
 var _source_cloud_btn: Button
 var _source_local_btn: Button
-var _selected_source := Client.SOURCE_LOCAL_AIRP
+var _selected_source := Client.SOURCE_CLOUD_API
 
 
 func _ready() -> void:
@@ -175,10 +175,6 @@ func _on_source_selected(source_val: String) -> void:
 
 func _update_source_ui_state() -> void:
 	var is_local_offline := (_channel == Client.DIALOGUE and _selected_source == Client.SOURCE_LOCAL_AIRP)
-	_url.editable = not is_local_offline
-	_model.editable = not is_local_offline
-	_key.editable = not is_local_offline
-	_fetch_button.disabled = is_local_offline
 	_stream_usage.disabled = is_local_offline
 	if is_local_offline:
 		var readiness: Dictionary = _client.check_local_airp_readiness()

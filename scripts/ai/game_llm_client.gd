@@ -39,7 +39,7 @@ static var _dialogue_tag_prefixes := [
 ]
 
 var profiles := {
-	DIALOGUE: {"url": "", "model": "", "key": "", "source": SOURCE_LOCAL_AIRP},
+	DIALOGUE: {"url": "", "model": "", "key": "", "source": ""},
 	ASSISTANT: {"url": "", "model": "", "key": ""},
 }
 var route: String:
@@ -73,7 +73,7 @@ var _assistant_retries := 0
 var _assistant_retry_timer: Timer
 var _context_limit_tokens := CONTEXT_TOKEN_LIMIT
 var _retained_turns := 0
-var _dialogue_source: String = SOURCE_LOCAL_AIRP
+var _dialogue_source: String = SOURCE_CLOUD_API
 var _dialogue_entries: Array[Dictionary] = []
 var _dialogue_config_error := ""
 var _dialogue_escape_tail := ""
@@ -96,21 +96,25 @@ func _ready() -> void:
 				profiles[channel][field] = str(config.get_value(channel, field, profiles[channel][field]))
 		profiles[DIALOGUE]["include_stream_usage"] = config.get_value(DIALOGUE, "include_stream_usage", false) == true
 		var saved_source: String = str(config.get_value(DIALOGUE, "source", ""))
-		if saved_source.is_empty():
-			if not str(profiles[DIALOGUE]["url"]).is_empty():
-				saved_source = SOURCE_CLOUD_API
-			else:
-				saved_source = SOURCE_LOCAL_AIRP
-		_dialogue_source = saved_source
-		profiles[DIALOGUE]["source"] = saved_source
+		if not saved_source.is_empty():
+			_dialogue_source = saved_source
+			profiles[DIALOGUE]["source"] = saved_source
 
 func get_dialogue_source() -> String:
+	if profiles.has(DIALOGUE) and profiles[DIALOGUE] is Dictionary:
+		var prof: Dictionary = profiles[DIALOGUE]
+		var prof_source: String = str(prof.get("source", ""))
+		if prof_source == SOURCE_LOCAL_AIRP or prof_source == SOURCE_CLOUD_API:
+			return prof_source
+		if not str(prof.get("url", "")).is_empty():
+			return SOURCE_CLOUD_API
+		return SOURCE_LOCAL_AIRP
 	return _dialogue_source
 
 func set_dialogue_source(source_val: String) -> void:
 	if source_val == SOURCE_CLOUD_API or source_val == SOURCE_LOCAL_AIRP:
 		_dialogue_source = source_val
-		if profiles.has(DIALOGUE):
+		if profiles.has(DIALOGUE) and profiles[DIALOGUE] is Dictionary:
 			profiles[DIALOGUE]["source"] = source_val
 
 func _load_dialogue_markdown(local_profile_path := LOCAL_PLAYER_PROFILE) -> String:
