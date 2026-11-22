@@ -24,8 +24,20 @@ class MockTransport extends TransportClass:
 			return force_start_error
 		return ""
 
+class CountingAirp extends LocalAirpClientClass:
+	var embedding_calls := 0
+	func embed_text(text: String) -> PackedFloat32Array:
+		embedding_calls += 1
+		return super.embed_text(text)
+
+var _passed := false
+
 func _initialize() -> void:
-	run.call_deferred()
+	_run_and_exit.call_deferred()
+
+func _run_and_exit() -> void:
+	run()
+	quit(0 if _passed else 1)
 
 func _has_ellipsis(text: String) -> bool:
 	return text.contains("." + "." + ".") or text.contains("\u2026")
@@ -40,6 +52,9 @@ func run() -> void:
 	client._transport.free()
 	client._transport = mock_transport
 	root.add_child(client)
+	var counting_airp := CountingAirp.new()
+	counting_airp.load_resources()
+	client._local_airp = counting_airp
 
 	# -----------------------------------------------------------------
 	# Test 1: Dedicated Offline Mode (Zero HTTP, Local Generation)
@@ -51,13 +66,12 @@ func run() -> void:
 	client.profiles[GameLLMClientClass.DIALOGUE]["url"] = ""
 	client.profiles[GameLLMClientClass.DIALOGUE]["model"] = ""
 	client.profiles[GameLLMClientClass.DIALOGUE]["key"] = ""
-	assert(client.configured(), "Offline mode must report configured == true even with blank cloud settings")
-
 	client.open(GameLLMClientClass.DIALOGUE, "sparkle_offline_test", {
 		"npc_id": "sparkle",
 		"npc_name": "花火",
 		"dialogue_location": "酒馆"
 	})
+	assert(client.configured(), "Offline dialogue must be configured with blank cloud settings")
 
 	var initial_sends := mock_transport.sends
 	var send_ok := client.send("你好花火，今天有什么好玩的吗？")
@@ -165,13 +179,20 @@ func run() -> void:
 	var old_save := {
 		"dialogue/sparkle_migrated_scope": [
 			{
-				"user": "旧存档中的云端前言",
-				"replies": [{"text": "旧存档中的云端回复", "note": ""}],
+				"user": "旧版未标记本地消息",
+				"replies": [{"text": "旧版未标记本地回复", "note": ""}],
 				"active": 0,
 				"result": {"status": "", "notice": "", "incomplete": false},
 				"action_committed": false
 			}
-		]
+		],
+		"dialogue/sparkle_migrated_scope/cloud_api": [
+			{
+				"user": "此前迁移到云端页但来源不明",
+				"replies": [{"text": "此前迁移的回复", "note": ""}],
+				"active": 0, "result": {}
+			}
+		],
 	}
 	client.restore_threads(old_save)
 
@@ -188,33 +209,31 @@ func run() -> void:
 
 	# Step 3: Switch to cloud API and open the same scope
 	client.set_dialogue_source(GameLLMClientClass.SOURCE_CLOUD_API)
+	var sends_before_reopen := mock_transport.sends
+	assert(client.send("同一已打开的本地面板"), "An open local thread must stay local until reopened")
+	assert(mock_transport.sends == sends_before_reopen, "An open local thread must not start a cloud request")
 	client.open(GameLLMClientClass.DIALOGUE, "sparkle_migrated_scope", {"npc_id": "sparkle", "npc_name": "花火"})
-	assert(client.history.size() == 1, "Cloud thread should contain the migrated legacy turn")
-	assert(client.history[0].user == "旧存档中的云端前言", "Cloud thread should contain old cloud message")
+	assert(client.history.size() == 2, "Both legacy formats should remain visible")
+	assert(not client.can_retry() and not client.can_continue_reply(), "Unverified turns must not be resent")
 	
 	# Step 4: Send new cloud turn and inspect outgoing request payload
 	mock_transport.force_start_error = ""
 	var send_cloud_ok := client.send("主人在云端发出的新指示")
 	assert(send_cloud_ok, "Cloud send should start")
-	var req_body: Dictionary = mock_transport.last_body
-	var req_messages: Array = req_body.get("messages", [])
-	
-	var has_local_leak := false
-	var has_old_cloud := false
-	var has_new_cloud := false
-	for msg in req_messages:
-		var content_str := str(msg.get("content", ""))
-		if content_str.contains("这是本地离线模式下的秘密对话"):
-			has_local_leak = true
-		if content_str.contains("旧存档中的云端前言"):
-			has_old_cloud = true
-		if content_str.contains("主人在云端发出的新指示"):
-			has_new_cloud = true
-			
-	assert(not has_local_leak, "CRITICAL: Local offline messages must NEVER leak into Cloud API request body!")
-	assert(has_old_cloud, "Migrated old cloud turn must be present in cloud context")
-	assert(has_new_cloud, "New cloud message must be present in cloud context")
-	print("  [Pass] Session migration verified: Zero local messages leaked into cloud request body")
+	var request := JSON.stringify(mock_transport.last_body.get("messages", []))
+	for excluded in ["旧版未标记本地消息", "旧版未标记本地回复", "此前迁移到云端页但来源不明", "此前迁移的回复", "这是本地离线模式下的秘密对话", "同一已打开的本地面板"]:
+		assert(not request.contains(excluded), "Unverified or local history must stay out of the cloud payload")
+	assert(request.contains("主人在云端发出的新指示"), "New cloud input must be sent")
+	mock_transport.delta_received.emit("此轮明确由云端回复")
+	mock_transport.finished.emit({}, "")
+	client.restore_threads(client.save_threads())
+	client.open(GameLLMClientClass.DIALOGUE, "sparkle_migrated_scope", {"npc_id": "sparkle", "npc_name": "花火"})
+	assert(client.can_retry() and client.can_continue_reply(), "Verified cloud turns remain usable after loading")
+	assert(client.send("第二轮云端消息"), "Follow-up cloud turn should start")
+	request = JSON.stringify(mock_transport.last_body.get("messages", []))
+	assert(request.contains("此轮明确由云端回复"), "Verified cloud history must round-trip into the cloud context")
+	assert(not request.contains("旧版未标记本地消息"), "Reload must not make legacy history eligible")
+	print("  [Pass] Old and previously migrated records stay out of cloud requests, verified cloud history survives reload")
 
 	# -----------------------------------------------------------------
 	# Test 4 (P0): Strict Stop Intent Priority and Regression Table
@@ -227,20 +246,30 @@ func run() -> void:
 		{"input": "别继续了。", "expect_stop": true},
 		{"input": "我改变主意了，到这儿就好。", "expect_stop": true},
 		{"input": "等一下再继续。", "expect_stop": true},
+		{"input": "不要再继续。", "expect_stop": true},
+		{"input": "我不想继续了。", "expect_stop": true},
+		{"input": "停。", "expect_stop": true},
+		{"input": "不要停下。", "expect_stop": false},
+		{"input": "我改变主意了，去散步吧。", "expect_stop": false},
 		{"input": "停电了吗？", "expect_stop": false}
 	]
 
 	for tc in p0_cases:
-		client.open(GameLLMClientClass.DIALOGUE, "p0_scope_" + str(randi()), {"npc_id": "sparkle", "npc_name": "花火"})
+		client.open(GameLLMClientClass.DIALOGUE, "p0_scope_" + tc["input"], {"npc_id": "sparkle", "npc_name": "花火", "intimate_mode": true})
 		var p0_inp: String = tc["input"]
+		var calls_before := counting_airp.embedding_calls
 		client.send(p0_inp)
 		var p0_diag: String = client.diagnostic
 		var is_pause: bool = p0_diag.contains("pause_request_01")
 		assert(is_pause == tc["expect_stop"], "P0 failed on input: " + p0_inp)
 		if tc["expect_stop"]:
 			assert(p0_diag.contains("路径: 显式叫停直接截断"), "Stop must use fast-path截断")
+			assert(counting_airp.embedding_calls == calls_before, "Stop must bypass embedding")
+			assert(not client.can_continue_reply(), "Pause must disable continuation")
+			client.continue_reply()
+			assert(client.active_reply().get("continuations", []).is_empty(), "Pause must not append scene dialogue")
 		else:
-			assert(not p0_diag.contains("pause_request_01"), "停电了吗 must not match pause")
+			assert(not p0_diag.contains("resume_intimacy_01"), "Regular inputs must not select the explicit resume template")
 		var p0_reply: String = str(client.active_reply().get("text", ""))
 		assert(not _has_ellipsis(p0_reply), "P0 reply must have zero ellipses")
 	print("  [Pass] P0 Strict stop regression table validated with zero false positives")
@@ -254,6 +283,14 @@ func run() -> void:
 
 	client.send("继续吧")
 	assert(client.diagnostic.contains("resume_intimacy_01"), "继续吧 must route to resume")
+	client.send("停。")
+	client.send("今天做点心一起吃吧")
+	assert(not client.can_continue_reply(), "Neutral conversation must not clear a paused scene")
+	client.restore_threads(client.save_threads())
+	client.open(GameLLMClientClass.DIALOGUE, "negation_scope", {"npc_id": "keqing", "npc_name": "刻晴", "intimate_mode": true})
+	assert(not client.can_continue_reply(), "Pause must survive loading")
+	client.send("继续吧")
+	assert(client.can_continue_reply(), "A fresh explicit resume may clear the pause")
 	print("  [Pass] Continuation '继续吧' correctly routed to resume_intimacy_01")
 
 	# -----------------------------------------------------------------
@@ -267,7 +304,9 @@ func run() -> void:
 	client.send("换一种")
 	assert(client.diagnostic.contains("home_meal_share"), "Must maintain meal share topic")
 	assert(client.diagnostic.contains("路径: 多轮短句承接"), "Path reason must be 多轮短句承接")
-	assert(client.diagnostic.contains("承接上文: [一起品尝美食] 换一种"), "Augmented query logged")
+	assert(client.diagnostic.contains("承接上文") and client.diagnostic.contains("参考问法"), "Summary shows path and authored reference")
+	assert(not client.diagnostic.contains("换一种"), "Default diagnostic must not expose the raw input")
+	assert(client.diagnostic_details.contains("[一起品尝美食] 换一种"), "Detailed diagnostic shows query on demand")
 	print("  [Pass] Context A (Meal share -> 换一种) maintained meal share topic")
 
 	# Context B: Island scenery -> "换一种"
@@ -277,7 +316,7 @@ func run() -> void:
 	client.send("换一种")
 	assert(client.diagnostic.contains("home_island_01"), "Must maintain island topic")
 	assert(client.diagnostic.contains("路径: 多轮短句承接"), "Path reason must be 多轮短句承接")
-	assert(client.diagnostic.contains("承接上文: [浮空岛与风景] 换一种"), "Augmented query logged")
+	assert(client.diagnostic_details.contains("[浮空岛与风景] 换一种"), "Detailed diagnostic shows island topic")
 	print("  [Pass] Context B (Island scenery -> 换一种) maintained island topic")
 
 	# Context C: Empty context -> "换一种" -> Clarify
@@ -292,6 +331,11 @@ func run() -> void:
 	client.send("今天做点心一起吃吧")
 	client.send("拔刀吧，让我看看你的武艺！")
 	assert(not client.diagnostic.contains("承接上文"), "Explicit topic change must NOT be augmented")
+	client.open(GameLLMClientClass.DIALOGUE, "p1_short_topic_switch", {"npc_id": "sparkle", "npc_name": "花火"})
+	client.send("今天做点心一起吃吧")
+	client.send("我还想看岛上的风景")
+	assert(not client.diagnostic.contains("承接上文"), "A complete new topic containing 还想 must not inherit the previous topic")
+	assert(client.active_reply().get("content_tag") == "chat_island", "An explicit island topic must replace the meal topic")
 	print("  [Pass] Context D Explicit topic change was NOT augmented")
 
 	# Context E: Undo reverts topic
@@ -464,4 +508,6 @@ func run() -> void:
 	print("\n==================================================")
 	print("ALL OFFLINE PLAY MODE TESTS PASSED SUCCESSFULLY! (0 FAILURES)")
 	print("==================================================")
-	quit(0)
+	counting_airp.close_probe()
+	counting_airp.free()
+	_passed = true

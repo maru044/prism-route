@@ -331,6 +331,11 @@ func _build_subsystems() -> void:
 	dialogue_panel.next_pressed.connect(dialogue_manager.advance_text)
 	dialogue_panel.free_dialogue_requested.connect(func():
 		if dialogue_manager.session_active and is_instance_valid(world):
+			var stage_str := "神殿初遇对话"
+			if current_state == EncounterState.COMBAT:
+				stage_str = "对决对峙中"
+			elif current_state == EncounterState.FURNITURE_SERVICE_ACTIVE:
+				stage_str = "神殿侍奉安置"
 			var extra_context: Dictionary = {
 				"dialogue_manager": dialogue_manager,
 				"character_id": "sparkle",
@@ -338,11 +343,13 @@ func _build_subsystems() -> void:
 				"character_title": "假面愚者",
 				"dialogue_location": "初始神殿",
 				"companion_status": "已缔结契约" if companion_unlocked else "初始相遇",
-				"current_interaction_state": "神殿初遇对话",
+				"current_interaction_state": stage_str,
 				"bound_furniture_info": "神殿御座 / 石座",
 				"pleasure_npc": "%.1f%%" % (npc_pleasure.current_pleasure if npc_pleasure else 0.0),
 				"pleasure_player": "%.1f%%" % (player_pleasure.current_pleasure if player_pleasure else 0.0),
 			}
+			if is_instance_valid(combat_manager) and combat_manager.has_method("get_combat_llm_context"):
+				extra_context.merge(combat_manager.get_combat_llm_context(), true)
 			world.show_free_dialogue(dialogue_panel, runtime.character_name, encounter_bundle["identity"]["character_id"], extra_context)
 	)
 	dialogue_manager.dialogue_ended.connect(_on_dialogue_ended)

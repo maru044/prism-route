@@ -30,6 +30,7 @@ var _version: Label
 var _confirm: Button
 var _action_turn := -1
 var _copy_diagnostic: Button
+var _copy_diagnostic_details: Button
 var _drafts := {}
 var _thread_id := ""
 var _expanded_reports := {}
@@ -161,6 +162,9 @@ func _build_ui() -> void:
 	_status_row.add_child(_status)
 	_copy_diagnostic = _button(_status_row, "复制诊断", func(): DisplayServer.clipboard_set(client.diagnostic))
 	_copy_diagnostic.hide()
+	_copy_diagnostic_details = _button(_status_row, "复制详细诊断", func(): DisplayServer.clipboard_set(client.diagnostic + "\n" + client.diagnostic_details))
+	_copy_diagnostic_details.tooltip_text = "可能包含本轮输入与口上槽位"
+	_copy_diagnostic_details.hide()
 	_status_row.hide()
 
 	_actions = Style.row(10)
@@ -275,6 +279,7 @@ func _refresh() -> void:
 	if client.incomplete_turns > 0:
 		_status.text += ("\n" if not _status.text.is_empty() else "") + "%d 个未完成回合未纳入本次上下文。" % client.incomplete_turns
 	_copy_diagnostic.visible = not client.diagnostic.is_empty()
+	_copy_diagnostic_details.visible = not client.diagnostic_details.is_empty()
 	_status_row.visible = not _status.text.is_empty() or _copy_diagnostic.visible
 	_send.text = "停止" if client.pending else "发送"
 	_draft.placeholder_text = "生成中，可先输入下一条消息" if client.pending else "输入消息 · Ctrl+Enter 发送"

@@ -540,6 +540,8 @@ func _on_free_dialogue_requested() -> void:
 		"pleasure_npc": "%.1f%%" % pleasure_npc_val,
 		"pleasure_player": "%.1f%%" % pleasure_player_val,
 	}
+	if is_instance_valid(runtime.combat_manager) and runtime.combat_manager.has_method("get_combat_llm_context"):
+		extra_context.merge(runtime.combat_manager.get_combat_llm_context(), true)
 
 	world.show_free_dialogue(panel, char_name, char_id, extra_context)
 

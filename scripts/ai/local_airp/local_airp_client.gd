@@ -123,63 +123,50 @@ const TOPIC_DESCRIPTIONS: Dictionary = {
 	"resume_intimacy": "继续亲密侍奉"
 }
 
+static var _negative_continue := RegEx.create_from_string(r"(?:不要|别|不能|不想|不愿(?:意)?|不必|不用|不再|不)(?:再)?\s*继续")
+static var _negative_stop := RegEx.create_from_string(r"(?:不要|别|不能|不用|不必)(?:再)?\s*(?:暂停|停(?:一下|下|手|住|止)?)")
+static var _standalone_stop := RegEx.create_from_string(r"(?:^|[，,。！？!?；;、\s])(?:请你|请|先|现在)?(?:停止?|先别)(?:吧|啊|一下)?(?=$|[，,。！？!?；;、\s])")
+static var _end_punctuation := RegEx.create_from_string(r"[。！？!?，,；;\x{2026}\s]+$")
+static var _resume_request := RegEx.create_from_string(
+	r"^(?:那么|那就|现在|我们|我想|请|可以|好[,， ]*)*"
+	+ r"(?:继续(?:刚才的?)?|接着(?:来|做|刚才的?)|恢复刚才的?)"
+	+ r"(?:吧|啊|了|好了|好吗|可以吗)?$"
+)
+static var _anaphoric_query := RegEx.create_from_string(
+	r"^(?:那就|那|我想|我|请你|请|能不能|能|可以)*"
+	+ r"(?:那个|这个|(?:照|按)刚才(?:那(?:个|种|样)|的)?(?:来|做)?|刚才那个"
+	+ r"|换(?:一(?:种|个)|别的)|再来(?:一次)?|(?:接着|继续)刚才的?|还要|还想)"
+	+ r"(?:了|吧|呢|呀|啊|好吗|吗)?$"
+)
+const STOP_PHRASES := [
+	"到此为止", "到这就好", "到这儿就好", "到这里就好", "今天先到这里", "今天到这", "先到这里吧",
+	"不想做了", "不做了", "别做了", "不要做了", "停止继续",
+	"停一下", "先停", "停下", "停手", "停住", "暂停", "等一下", "先等等",
+	"先等", "稍等", "先歇", "歇会儿", "缓一下", "缓口气", "先休息",
+	"别动", "算了吧", "改天吧", "放过我吧", "饶了我吧"
+]
+
 static func is_strict_stop(input: String) -> bool:
 	var clean := input.strip_edges()
-	if clean.is_empty():
-		return false
-
-	# 1. 优先检查矛盾输入：同时表达「先停/先等」与「再继续/接着做」
-	# 规则：若一句话同时表达「先等一下」和「再继续」，先暂停本轮，等新的明确指令再恢复
-	var has_pause_marker := false
-	var pause_conflict_markers := ["等一下", "先等", "稍等", "先停", "暂停", "先歇", "先休息", "缓一下", "缓口气"]
-	for pm in pause_conflict_markers:
-		if clean.contains(pm):
-			has_pause_marker = true
-			break
-			
-	var has_continue_marker := (clean.contains("再继续") or clean.contains("后继续") or clean.contains("接着") or clean.contains("继续"))
-	if has_pause_marker and has_continue_marker:
+	if _negative_continue.search(clean) != null:
 		return true
-
-	# 2. 正向继续或否定叫停请求（如 "不要停", "别停", "不能停", "继续吧", "请继续"）
-	var continue_phrases := ["不要停", "别停", "不能停", "继续", "接着来", "请继续"]
-	for cp in continue_phrases:
-		if clean.contains(cp):
-			# 若同时含有“不要继续 / 别继续”，则仍为叫停
-			if not (clean.contains("不要继续") or clean.contains("别继续") or clean.contains("不能继续") or clean.contains("停止继续")):
-				return false
-
-	# 3. 明确叫停复合短语
-	var explicit_stop_phrases := [
-		"不要继续", "别继续", "不能继续", "停止继续", "不要再继续",
-		"到此为止", "到这就好", "到这儿就好", "到这里就好", "今天先到这里", "今天到这", "先到这里吧",
-		"我改变主意了", "改变主意", "不想做了", "不做了", "别做了", "不要做了",
-		"停一下", "先停", "停下", "停手", "停住", "暂停",
-		"别动", "先别", "先等等", "等一下", "先歇", "歇会儿", "缓口气", "先休息", "受不了了先停",
-		"算了吧", "改天吧", "放过我吧", "饶了我吧"
-	]
-	for phrase in explicit_stop_phrases:
+	clean = _negative_stop.sub(clean, "", true)
+	if _standalone_stop.search(clean) != null:
+		return true
+	for phrase in STOP_PHRASES:
 		if clean.contains(phrase):
 			return true
-
-	# 严格移除单凭出现单个「停」字就判定暂停的规则（避免误判「停电了吗？」）
 	return false
 
 static func is_stop_intent(input: String) -> bool:
 	return is_strict_stop(input)
 
+static func is_explicit_resume(input: String) -> bool:
+	var clean := _negative_stop.sub(input.strip_edges(), "", true).strip_edges()
+	return _resume_request.search(_end_punctuation.sub(clean, "")) != null
+
 static func is_anaphoric_short_query(input_text: String) -> bool:
-	var clean := input_text.strip_edges()
-	if clean.length() > 14:
-		return false
-	var anaphoric_markers := [
-		"那个呢", "刚才那个", "照刚才那个", "照刚才", "换一种", "换一个", "再来一次",
-		"继续刚才", "接着刚才", "还要", "再来", "还想", "换别的", "那个呢？", "这个呢"
-	]
-	for m in anaphoric_markers:
-		if clean.contains(m):
-			return true
-	return false
+	return _anaphoric_query.search(_end_punctuation.sub(input_text.strip_edges(), "")) != null
 
 static func build_augmented_query(input_text: String, last_topic_tag: String) -> String:
 	var clean := input_text.strip_edges()
@@ -302,26 +289,29 @@ func retrieve_and_compose(player_input: String, character_id: String, scene_id: 
 				"is_fallback": false
 			}
 
+	var resume_requested := is_explicit_resume(player_input)
+	var keep_paused: bool = context.get("airp_paused", false) and not resume_requested
+	var retrieval_scene := "home_chat" if keep_paused else scene_id
 	var candidates: Array = []
 	for tmpl in templates:
 		var c_tag: String = tmpl.get("content_tag", "")
 		if c_tag == "pause_stop" or c_tag == "clarify_unknown":
 			continue
+		if c_tag == "resume_intimacy" and not resume_requested:
+			continue
+		if keep_paused and (c_tag == "invite_intimacy" or c_tag.begins_with("intimate_")):
+			continue
 		var char_match: bool = (tmpl.get("character_id") == "shared" or tmpl.get("character_id") == character_id)
-		var scene_match: bool = (scene_id in tmpl.get("scene_tags", []))
+		var scene_match: bool = (retrieval_scene in tmpl.get("scene_tags", []))
 		if char_match and scene_match:
 			candidates.append(tmpl)
-			
-	if candidates.is_empty():
-		candidates = templates
 
 	var last_topic_tag: String = str(context.get("last_topic", ""))
 	var is_anaphoric := is_anaphoric_short_query(player_input)
-	
-	# 如果是无指代短句且没有任何可用前文，触发角色口吻追问澄清
-	if is_anaphoric and last_topic_tag.is_empty():
+
+	if candidates.is_empty() or (is_anaphoric and last_topic_tag.is_empty() and not resume_requested):
 		var clarify_tmpl: Dictionary = _find_template("clarify_unknown_01")
-		var comp_clarify: Dictionary = composer.compose(clarify_tmpl, character_id, scene_id, context, seed_val)
+		var comp_clarify: Dictionary = composer.compose(clarify_tmpl, character_id, retrieval_scene, context, seed_val)
 		return {
 			"text": comp_clarify["text"],
 			"reply_id": "clarify_unknown_01",
@@ -329,9 +319,9 @@ func retrieve_and_compose(player_input: String, character_id: String, scene_id: 
 			"score": 0.0,
 			"raw_score": 0.0,
 			"adjusted_score": 0.0,
-			"path_reason": "缺少上下文指代澄清",
+			"path_reason": "无适用模板澄清" if candidates.is_empty() else "缺少上下文指代澄清",
 			"is_augmented": false,
-			"matched_reference_query": "缺少上下文指代澄清",
+			"matched_reference_query": "",
 			"character_id": character_id,
 			"scene_id": scene_id,
 			"template_skeleton": comp_clarify["template_skeleton"],
@@ -358,6 +348,7 @@ func retrieve_and_compose(player_input: String, character_id: String, scene_id: 
 		}
 
 	var turn_count: int = int(context.get("turn_count", 1))
+	var previous_ids: Array = context.get("recent_reply_ids", recent_reply_ids)
 
 	var scored_candidates: Array = []
 	for tmpl in candidates:
@@ -379,7 +370,7 @@ func retrieve_and_compose(player_input: String, character_id: String, scene_id: 
 				best_q = ref_queries[ref_idx] if ref_idx < ref_queries.size() else ""
 				
 		var adjusted_score := best_sim
-		if r_id in recent_reply_ids:
+		if r_id in previous_ids:
 			adjusted_score -= 0.15
 			
 		var c_tag: String = tmpl.get("content_tag", "")
@@ -427,7 +418,7 @@ func retrieve_and_compose(player_input: String, character_id: String, scene_id: 
 	while recent_reply_ids.size() > window_size:
 		recent_reply_ids.pop_front()
 		
-	var comp_result: Dictionary = composer.compose(chosen_tmpl, character_id, scene_id, context, seed_val)
+	var comp_result: Dictionary = composer.compose(chosen_tmpl, character_id, retrieval_scene, context, seed_val)
 	
 	return {
 		"text": comp_result["text"],
@@ -451,7 +442,7 @@ func _find_template(target_reply_id: String) -> Dictionary:
 	for t in templates:
 		if t.get("reply_id") == target_reply_id:
 			return t
-	return templates[0] if not templates.is_empty() else {}
+	return {}
 
 func compose_followup(character_id: String, scene_id: String, context: Dictionary = {}, seed_val: int = -1) -> String:
 	if templates.is_empty():

@@ -51,6 +51,7 @@ var pending := false
 var partial := ""
 var status := ""
 var diagnostic := ""
+var diagnostic_details := ""
 var omitted_turns := 0
 var incomplete_turns := 0
 var assistant_prompt_directory := AssistantPrompts.DIRECTORY
@@ -74,6 +75,7 @@ var _assistant_retry_timer: Timer
 var _context_limit_tokens := CONTEXT_TOKEN_LIMIT
 var _retained_turns := 0
 var _dialogue_source: String = SOURCE_CLOUD_API
+var _session_dialogue_source := ""
 var _dialogue_entries: Array[Dictionary] = []
 var _dialogue_config_error := ""
 var _dialogue_escape_tail := ""
@@ -197,27 +199,25 @@ func open(channel: String, scope: String, speaker_context: Dictionary) -> void:
 	stop()
 	_route = channel
 	context = speaker_context
-	if channel == DIALOGUE and get_dialogue_source() == SOURCE_CLOUD_API:
+	_session_dialogue_source = get_dialogue_source() if channel == DIALOGUE else ""
+	if _session_dialogue_source == SOURCE_CLOUD_API:
 		_dialogue_config_error = _load_dialogue_markdown()
 	else:
 		_dialogue_config_error = ""
-	var source_suffix := ("/" + get_dialogue_source()) if channel == DIALOGUE else ""
+	var source_suffix := ("/" + _session_dialogue_source) if channel == DIALOGUE else ""
 	_thread_id = channel + "/" + scope + source_suffix
-	var legacy_id := channel + "/" + scope
-	if channel == DIALOGUE and _threads.has(legacy_id):
-		var cloud_id := legacy_id + "/" + SOURCE_CLOUD_API
-		if not _threads.has(cloud_id):
-			_threads[cloud_id] = (_threads[legacy_id] as Array).duplicate(true)
-		_threads.erase(legacy_id)
 	if not _threads.has(_thread_id):
 		_threads[_thread_id] = []
 	history = _threads[_thread_id]
 	_restore_last_status()
+	if _session_dialogue_source == SOURCE_CLOUD_API and status.is_empty():
+		if history.any(func(turn: Dictionary) -> bool: return not _is_cloud_turn(turn)):
+			status = "来源不明的旧聊天记录仅供查看，不会发送给云端。"
 	changed.emit()
 
 func configured() -> bool:
 	if route == DIALOGUE:
-		if get_dialogue_source() == SOURCE_LOCAL_AIRP:
+		if _session_dialogue_source == SOURCE_LOCAL_AIRP:
 			return true
 		return not profiles[DIALOGUE].url.is_empty() and not profiles[DIALOGUE].model.is_empty()
 	return not profiles[route].url.is_empty() and not profiles[route].model.is_empty()
@@ -238,6 +238,7 @@ func restore_threads(threads: Variant) -> void:
 
 func _normalize_saved_threads(value: Variant) -> Dictionary:
 	var threads := {}
+	var legacy_threads := {}
 	if not value is Dictionary:
 		return threads
 	for id: Variant in value:
@@ -265,17 +266,23 @@ func _normalize_saved_threads(value: Variant) -> Dictionary:
 				replies.append(saved_reply)
 			var incomplete: bool = turn.result.get("incomplete", false) == true
 			var notice := "本轮回复未完成" if incomplete else ""
-			turns.append({
+			var saved_turn := {
 				"user": turn.user, "replies": replies, "active": active,
 				"action_committed": turn.get("action_committed", false) == true,
 				"result": {"status": notice, "notice": notice, "incomplete": incomplete},
-			})
-		var target_id := str(id)
-		if target_id.begins_with(DIALOGUE + "/"):
-			var parts := target_id.split("/")
-			if parts.size() == 2:
-				target_id = target_id + "/" + SOURCE_CLOUD_API
-		threads[target_id] = turns
+			}
+			# Older saves could already contain local replies under a cloud thread key.
+			if id.begins_with(DIALOGUE + "/") and id.ends_with("/" + SOURCE_CLOUD_API) and _is_cloud_turn(turn):
+				saved_turn["source"] = SOURCE_CLOUD_API
+			turns.append(saved_turn)
+		if id.begins_with(DIALOGUE + "/") and id.split("/").size() == 2:
+			legacy_threads[id + "/" + SOURCE_CLOUD_API] = turns
+		else:
+			threads[id] = turns
+	for id in legacy_threads:
+		var current: Array = threads.get(id, [])
+		var older: Array = legacy_threads[id].filter(func(turn: Dictionary) -> bool: return not current.has(turn))
+		threads[id] = older + current
 	return threads
 
 func _saved_fragment(fragment: Dictionary) -> Dictionary:
@@ -285,7 +292,12 @@ func _saved_fragment(fragment: Dictionary) -> Dictionary:
 		res["content_tag"] = fragment["content_tag"]
 	if fragment.has("reply_id"):
 		res["reply_id"] = fragment["reply_id"]
+	if fragment.get("airp_paused", false) == true:
+		res["airp_paused"] = true
 	return res
+
+static func _is_cloud_turn(turn: Dictionary) -> bool:
+	return turn.get("source", "") == SOURCE_CLOUD_API
 
 func send(text: String) -> bool:
 	if pending or text.strip_edges().is_empty() or not _can_start():
@@ -300,7 +312,9 @@ func retry() -> void:
 	_start("retry", history.back())
 
 func can_retry() -> bool:
-	return not pending and not history.is_empty() and not history.back().action_committed
+	if pending or history.is_empty() or history.back().action_committed:
+		return false
+	return _session_dialogue_source != SOURCE_CLOUD_API or _is_cloud_turn(history.back())
 
 func continue_reply() -> void:
 	if not can_continue_reply() or not _can_start():
@@ -308,7 +322,11 @@ func continue_reply() -> void:
 	_start("continue", history.back())
 
 func can_continue_reply() -> bool:
-	if route != DIALOGUE or pending:
+	if route != DIALOGUE or pending or history.is_empty():
+		return false
+	if _session_dialogue_source == SOURCE_CLOUD_API and not _is_cloud_turn(history.back()):
+		return false
+	if _session_dialogue_source == SOURCE_LOCAL_AIRP and get_last_valid_topic().get("airp_paused", false):
 		return false
 	var body: String = reply_sections(active_reply(), "", false, true).body
 	return not body.strip_edges().is_empty()
@@ -348,10 +366,12 @@ func stop() -> void:
 		_complete("已停止")
 
 func _can_start() -> bool:
-	if route == DIALOGUE and get_dialogue_source() == SOURCE_LOCAL_AIRP:
+	if _session_dialogue_source == SOURCE_LOCAL_AIRP:
 		var readiness := check_local_airp_readiness()
 		if not readiness.get("ready", false):
 			status = "本地口上不可用 · " + str(readiness.get("error", "缺少必要组件"))
+			diagnostic = ""
+			diagnostic_details = ""
 			changed.emit()
 			return false
 		return true
@@ -370,6 +390,7 @@ func _restore_last_status() -> void:
 	var result: Dictionary = {} if history.is_empty() else history.back().get("result", {})
 	status = result.get("status", "")
 	diagnostic = result.get("diagnostic", "")
+	diagnostic_details = result.get("diagnostic_details", "")
 	omitted_turns = result.get("omitted_turns", 0)
 	incomplete_turns = result.get("incomplete_turns", 0)
 
@@ -378,9 +399,10 @@ func _start(operation: String, turn: Dictionary) -> bool:
 	partial = ""
 	_dialogue_escape_tail = ""
 	diagnostic = ""
+	diagnostic_details = ""
 	_tool_turn.clear()
 
-	if route == DIALOGUE and get_dialogue_source() == SOURCE_LOCAL_AIRP:
+	if _session_dialogue_source == SOURCE_LOCAL_AIRP:
 		if operation == "send":
 			history.append(turn)
 		pending = true
@@ -426,6 +448,8 @@ func _start(operation: String, turn: Dictionary) -> bool:
 		changed.emit()
 		return false
 	if operation == "send":
+		if _session_dialogue_source == SOURCE_CLOUD_API:
+			turn["source"] = SOURCE_CLOUD_API
 		history.append(turn)
 	if route == DIALOGUE:
 		_request_messages = _build_dialogue_messages(messages, operation)
@@ -452,6 +476,8 @@ func _build_request_history(operation: String, turn: Dictionary, remaining: int)
 	var latest := history.size() - (1 if operation == "send" else 2)
 	for i in range(latest, -1, -1):
 		var previous: Dictionary = history[i]
+		if _session_dialogue_source == SOURCE_CLOUD_API and not _is_cloud_turn(previous):
+			continue
 		if previous.active < 0:
 			if previous.get("result", {}).get("incomplete", false):
 				incomplete_turns += 1
@@ -810,11 +836,29 @@ func _expand_dialogue_prompt(text: String) -> String:
 				parts.append(str(randi_range(1, 100)))
 			_:
 				var key := token.trim_prefix("{{").trim_suffix("}}")
-				parts.append(str(context.get(key, "未指定")))
+				var val = context.get(key, "")
+				parts.append(str(val) if val != null else "")
 		cursor = matched.get_end()
 	if comment_depth == 0:
 		parts.append(text.substr(cursor))
-	return "".join(parts)
+	var expanded := "".join(parts)
+	var raw_lines := text.split("\n")
+	var exp_lines := expanded.split("\n")
+	if raw_lines.size() == exp_lines.size():
+		var filtered := PackedStringArray()
+		for i in range(raw_lines.size()):
+			var raw_l := raw_lines[i]
+			var exp_l := exp_lines[i]
+			if raw_l.contains("{{"):
+				var trimmed := exp_l.strip_edges()
+				if trimmed.ends_with("（）"):
+					exp_l = exp_l.replace("（）", "").strip_edges()
+					trimmed = exp_l
+				if trimmed.ends_with("：") or trimmed.ends_with(":"):
+					continue
+			filtered.append(exp_l)
+		return "\n".join(filtered)
+	return expanded
 
 static func _merge_dialogue_messages(messages: Array) -> Array[Dictionary]:
 	var merged: Array[Dictionary] = []
@@ -884,7 +928,8 @@ func get_last_valid_topic() -> Dictionary:
 			return {
 				"content_tag": tag,
 				"reply_id": str(rep.get("reply_id", "")),
-				"is_pause": tag == "pause_stop"
+				"is_pause": tag == "pause_stop",
+				"airp_paused": rep.get("airp_paused", false) or tag == "pause_stop"
 			}
 	return {}
 
@@ -931,6 +976,18 @@ func _dispatch_local_airp() -> void:
 	var last_topic_info := get_last_valid_topic()
 	var airp_context := context.duplicate()
 	airp_context["turn_count"] = history.size()
+	var recent_ids: Array[String] = []
+	var recent_end := history.size() if _operation == "retry" else history.size() - 1
+	var recent_start := maxi(0, recent_end - int(airp.get("window_size")))
+	for previous in history.slice(recent_start, recent_end):
+		var active: int = previous.get("active", -1)
+		if active >= 0:
+			var reply_id: String = str(previous.replies[active].get("reply_id", ""))
+			if not reply_id.is_empty():
+				recent_ids.append(reply_id)
+	airp_context["recent_reply_ids"] = recent_ids
+	var was_paused: bool = bool(last_topic_info.get("airp_paused", false))
+	airp_context["airp_paused"] = was_paused
 	if not last_topic_info.is_empty() and not last_topic_info.get("is_pause", false):
 		airp_context["last_topic"] = last_topic_info.get("content_tag", "")
 		airp_context["last_reply_id"] = last_topic_info.get("reply_id", "")
@@ -941,11 +998,14 @@ func _dispatch_local_airp() -> void:
 		output_text = "（微笑着看着你）"
 		
 	var err_msg: String = str(result.get("error", ""))
+	var content_tag: String = str(result.get("content_tag", ""))
+	var resumed := LocalAirpClientScript.is_explicit_resume(player_input) and err_msg.is_empty() and content_tag != "clarify_unknown"
+	var paused := content_tag == "pause_stop" or (was_paused and not resumed)
 	if not err_msg.is_empty():
 		status = err_msg
 		var path_str: String = str(result.get("path_reason", "探针推理异常"))
 		diagnostic = "本地检索式 AIRP · 来源: %s · NPC: %s · 场景: %s · 路径: %s · 错误: %s" % [
-			get_dialogue_source(),
+			_session_dialogue_source,
 			char_id,
 			scene_id,
 			path_str,
@@ -955,29 +1015,39 @@ func _dispatch_local_airp() -> void:
 		status = ""
 		var is_aug: bool = bool(result.get("is_augmented", false))
 		var path_str: String = str(result.get("path_reason", "普通语义检索"))
+		var matched_ref: String = str(result.get("matched_reference_query", ""))
 		diagnostic = "本地检索式 AIRP · 来源: %s · NPC: %s · 场景: %s · 模板: %s · 原始分: %.2f · 调整分: %.2f · 路径: %s%s" % [
-			get_dialogue_source(),
+			_session_dialogue_source,
 			char_id,
 			scene_id,
 			result.get("reply_id", ""),
 			float(result.get("raw_score", result.get("score", 0.0))),
-			float(result.get("score", 0.0)),
+			float(result.get("adjusted_score", result.get("score", 0.0))),
 			path_str,
-			(" · 承接上文: " + str(result.get("augmented_query", ""))) if is_aug else ""
+			" · 承接上文" if is_aug else ""
 		]
+		if not matched_ref.is_empty():
+			diagnostic += " · 参考问法: " + matched_ref
+		if is_aug:
+			diagnostic_details = "增强查询: " + str(result.get("augmented_query", ""))
+		var slots: Dictionary = result.get("slots_filled", {})
+		if not slots.is_empty():
+			diagnostic_details += ("\n" if not diagnostic_details.is_empty() else "") + "槽位: " + JSON.stringify(slots)
 	if not history.is_empty():
 		var active_turn: Variant = history.back()
 		if active_turn is Dictionary:
 			active_turn.replies.append({
 				"text": output_text,
 				"note": status,
-				"content_tag": str(result.get("content_tag", "")),
-				"reply_id": str(result.get("reply_id", ""))
+				"content_tag": content_tag,
+				"reply_id": str(result.get("reply_id", "")),
+				"airp_paused": paused
 			})
 			active_turn.active = active_turn.replies.size() - 1
 			active_turn["result"] = {
 				"status": status,
 				"diagnostic": diagnostic,
+				"diagnostic_details": diagnostic_details,
 				"omitted_turns": 0,
 				"incomplete": not err_msg.is_empty()
 			}
