@@ -13,6 +13,7 @@ func _init() -> void:
 	_test_combat_dialogue_expansion()
 	_test_combat_manager_context_lifecycle()
 	_test_prompt_depth_900_placement()
+	_test_edge_cases_and_clean_pruning()
 	
 	print("==================================================")
 	print("[SUCCESS] All Dynamic Prompt Variable Tests Passed 100%!")
@@ -60,6 +61,8 @@ func _test_home_dialogue_expansion() -> void:
 	assert(not scene_prompt.contains("Master危险度"), "Player danger level must be absent in home dialogue")
 	assert(not scene_prompt.contains("受访者动情状态"), "NPC pleasure stage must be absent in home dialogue")
 	assert(not scene_prompt.contains("当前对决增益"), "Combat buffs must be absent in home dialogue")
+	assert(not scene_prompt.contains("受访者上一招"), "Last NPC skill must be absent in home dialogue")
+	assert(not scene_prompt.contains("受访者反应台词"), "Last NPC reaction must be absent in home dialogue")
 	assert(not scene_prompt.contains("未指定"), "No '未指定' placeholder must exist")
 	
 	print("  [Pass] Home prompt expansion pure and free of combat tags!")
@@ -83,6 +86,8 @@ func _test_combat_dialogue_expansion() -> void:
 		"player_danger_level": "渐入佳境",
 		"npc_pleasure_stage": "意乱情迷 / 娇喘连连",
 		"combat_buffs": "识趣生效（走神放水）",
+		"last_npc_skill": "灵巧舌尖缠绕",
+		"last_npc_koujou": "哈啊，Master好用力",
 	}
 	
 	var err := client._load_dialogue_markdown()
@@ -106,12 +111,14 @@ func _test_combat_dialogue_expansion() -> void:
 	assert(scene_prompt.contains("Master危险度：渐入佳境"), "Player danger level must be present")
 	assert(scene_prompt.contains("受访者动情状态：意乱情迷 / 娇喘连连"), "NPC pleasure stage must be present")
 	assert(scene_prompt.contains("当前对决增益：识趣生效（走神放水）"), "Combat buffs must be present")
+	assert(scene_prompt.contains("受访者上一招：灵巧舌尖缠绕"), "NPC last skill must be present")
+	assert(scene_prompt.contains("受访者反应台词：哈啊，Master好用力"), "NPC reaction koujou must be present")
 	assert(not scene_prompt.contains("未指定"), "No '未指定' placeholder must exist")
 	
 	print("  [Pass] Combat prompt expansion correctly injected all combat variables!")
 
 func _test_combat_manager_context_lifecycle() -> void:
-	print("\n--- Test 3: TurnCombatManager Context Extraction ---")
+	print("\n--- Test 3: TurnCombatManager Context Extraction & Buff Sync ---")
 	var mgr := CombatManagerClass.new()
 	var p_pleasure := PleasureCompClass.new()
 	var n_pleasure := PleasureCompClass.new()
@@ -124,37 +131,56 @@ func _test_combat_manager_context_lifecycle() -> void:
 	# Before combat starts, context is empty
 	assert(mgr.get_combat_llm_context().is_empty(), "Inactive combat context must be empty")
 	
-	# Start combat
+	# Start combat with meta cheat settings
 	mgr.start_combat(false, {"meta_cheat_mode": "distracted", "edging_endure": true})
 	assert(mgr.current_phase == CombatManagerClass.Phase.PLAYER_INPUT, "Phase must be player input")
 	
 	var ctx1 := mgr.get_combat_llm_context()
 	assert(ctx1.get("combat_round") == "第 1 回合", "Round count must be 1")
 	assert(ctx1.get("combat_phase") == "Master行动回合", "Phase must be Master行动回合")
+	# In player turn before mid-battle talk, mid_battle_reason MUST be empty!
+	assert(ctx1.get("mid_battle_reason").is_empty(), "Mid battle reason must be empty in player turn")
 	assert(ctx1.get("combat_buffs").contains("识趣生效"), "Buffs must contain 识趣生效")
-	assert(ctx1.get("combat_buffs").contains("心神合一"), "Buffs must contain 心神合一")
-	
-	# Execute player action
-	mgr.animation_delays = false
-	mgr.execute_player_action({
-		"action_name": "揉捏敏感",
-		"base_pleasure": 10.0,
-		"target_zone": "nipples",
-		"self_pleasure_defense": 0.0,
-	})
-	
-	var ctx2 := mgr.get_combat_llm_context()
-	assert(ctx2.get("last_player_action") == "揉捏敏感", "Last action name must be recorded")
-	assert(ctx2.get("last_target_zone") == "敏感双乳", "Target zone must be mapped to Chinese")
-	assert(ctx2.get("last_combat_exchange").contains("敏感双乳"), "Combat exchange must describe zone")
+	assert(ctx1.get("combat_buffs").contains("战意增益"), "Buffs must contain 战意增益 from temporary modifier")
 	
 	# Trigger mid battle dialogue
 	mgr.request_in_battle_negotiation()
-	var ctx3 := mgr.get_combat_llm_context()
-	assert(ctx3.get("mid_battle_reason") == "Master主动战中搭话", "Mid battle reason must be recorded")
-	assert(ctx3.get("combat_phase") == "战中交涉阶段", "Phase must be 战中交涉阶段")
+	var ctx_mid := mgr.get_combat_llm_context()
+	assert(ctx_mid.get("mid_battle_reason") == "Master主动战中搭话", "Mid battle reason must be recorded in mid-battle phase")
+	assert(ctx_mid.get("combat_phase") == "战中交涉阶段", "Phase must be 战中交涉阶段")
 	
-	print("  [Pass] TurnCombatManager context lifecycle verified cleanly!")
+	# Resume combat after dialogue
+	mgr.resume_combat_after_dialogue(false, false)
+	var ctx_resumed := mgr.get_combat_llm_context()
+	assert(mgr.current_phase == CombatManagerClass.Phase.PLAYER_INPUT, "Phase must return to PLAYER_INPUT")
+	# After resuming, mid_battle_reason MUST be cleared back to empty!
+	assert(ctx_resumed.get("mid_battle_reason").is_empty(), "Mid battle reason must be cleared upon resuming combat")
+	
+	# Execute player defense posture action
+	mgr.animation_delays = false
+	mgr.execute_player_action({
+		"action_name": "坚守心神",
+		"base_pleasure": 0.0,
+		"target_zone": "",
+		"self_pleasure_defense": 0.5,
+	})
+	
+	var ctx_def := mgr.get_combat_llm_context()
+	assert(ctx_def.get("last_player_action") == "坚守心神", "Last action name must be recorded")
+	assert(ctx_def.get("last_combat_exchange").contains("姿态"), "Combat exchange must describe posture")
+	
+	# In-battle dynamic modification: test 50% temporary defense injection (from 咬牙忍耐)
+	mgr.temporary_defense_modifier = 0.5
+	var ctx_buff_sync := mgr.get_combat_llm_context()
+	assert(ctx_buff_sync.get("combat_buffs").contains("50%"), "Combat buffs must reflect dynamic 50% defense modifier")
+	
+	# Check battle resolution: when battle is resolved, get_combat_llm_context must return empty!
+	n_pleasure.add_pleasure(100.0)
+	mgr._check_battle_state()
+	assert(mgr.is_resolved, "Combat must be resolved")
+	assert(mgr.get_combat_llm_context().is_empty(), "Resolved battle must return empty context so settlement dialogue is clean")
+	
+	print("  [Pass] TurnCombatManager context lifecycle and in-battle buff sync verified cleanly!")
 
 func _test_prompt_depth_900_placement() -> void:
 	print("\n--- Test 4: Prompt Depth 900 Placement Hierarchy ---")
@@ -178,8 +204,6 @@ func _test_prompt_depth_900_placement() -> void:
 			break
 			
 	assert(scene_index >= 0, "角色与场景 must be present in mid prompts")
-	# System prompt sort order: mid_prompts sorted descending by depth (highest depth first)
-	# Depth 978 (玩家人设) -> Depth 900 (角色与场景) -> Depth 850 (角色设定)
 	for i in range(scene_index):
 		var prev_depth: int = mid_list[i].get("depth", 0)
 		assert(prev_depth >= 900, "Entries before scene tag must have depth >= 900")
@@ -188,3 +212,28 @@ func _test_prompt_depth_900_placement() -> void:
 		assert(next_depth <= 900, "Entries after scene tag must have depth <= 900")
 		
 	print("  [Pass] Depth 900 placement verified at exact hierarchy location!")
+
+func _test_edge_cases_and_clean_pruning() -> void:
+	print("\n--- Test 5: Empty Line Pruning and Edge Cases ---")
+	var client := Client.new()
+	
+	# Edge Case A: Variable containing newline must NOT break pruning of empty combat tags
+	client.context = {
+		"npc_name": "花火",
+		"dialogue_location": "沙洲度假\n第二层遗址",
+		"current_interaction_state": "家园闲聊",
+		"bound_furniture_info": "双人软床",
+		# combat tags empty
+	}
+	var template := "当前对话地点：{{dialogue_location}}\n当前互动阶段：{{current_interaction_state}}\n战斗回合：{{combat_round}}\n战斗阶段：{{combat_phase}}"
+	var result_a := client._expand_dialogue_prompt(template)
+	assert(result_a.contains("沙洲度假\n第二层遗址"), "Location with newline must be expanded")
+	assert(not result_a.contains("战斗回合"), "Empty combat round tag must be pruned even if other variable has newline")
+	assert(not result_a.contains("战斗阶段"), "Empty combat phase tag must be pruned even if other variable has newline")
+	
+	# Edge Case B: Legitimate header ending in colon must be preserved
+	var template_b := "下一行介绍{{npc_name}}：\n花火是可爱的假面愚者。"
+	var result_b := client._expand_dialogue_prompt(template_b)
+	assert(result_b.contains("下一行介绍花火："), "Legitimate author header ending in colon must be preserved")
+	
+	print("  [Pass] Edge cases for newline variables and colon preservation verified!")

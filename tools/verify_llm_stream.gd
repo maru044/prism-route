@@ -77,7 +77,7 @@ func _verify_transport() -> void:
 		{"name": "server event error", "body": text + _sse({"error": {"message": "fixture"}}), "text": "你好", "error": "错误事件"},
 		{"name": "invalid choices after text", "body": text + _sse({"choices": {}}), "text": "你好", "error": "无效的流式选项"},
 		{"name": "output token limit", "body": text + _sse({"choices": [{"finish_reason": "length"}]}), "text": "你好", "error": "输出上限",
-			"diagnostic": ["max_tokens=8000", "结束原因 · length", "收到 content · 1 个事件，正文 2 字符", "首个 content", "未返回可用统计"]},
+			"diagnostic": ["max_tokens=65536", "结束原因 · length", "收到 content · 1 个事件，正文 2 字符", "首个 content", "未返回可用统计"]},
 		{"name": "output limit with final usage", "request_usage": true, "text": "你好", "error": "输出上限",
 			"body": text + _sse({"choices": [{"finish_reason": "length"}]})
 				+ _sse({"choices": [{"finish_reason": "", "delta": {}}]})
@@ -398,7 +398,7 @@ func _verify_context_budget() -> void:
 			or not full_messages[31].content.contains("问题5") \
 			or JSON.stringify(full_messages).count("[Game rules]") != 1:
 		_fail("worldbook depth", "world rules must be inserted before the final four chat messages")
-	var budget := Client.OUTPUT_TOKEN_RESERVE + client.fixed_dialogue_tokens()
+	var budget := Client.DIALOGUE_MAX_TOKENS + client.fixed_dialogue_tokens()
 	for content: String in ["问题5", "回复5", "最后的问题"]:
 		budget += Client._message_tokens({"content": content})
 	client._context_limit_tokens = budget + 3
@@ -406,7 +406,7 @@ func _verify_context_budget() -> void:
 	var messages: Array = capture.request.messages
 	if _dialogue_user_contents(messages).slice(-2) != ["问题5", "最后的问题"] or not messages[23].content.begins_with("回复5"):
 		_fail("context budget", "history did not preserve the newest complete turns")
-	if client.history.size() != 7 or client.omitted_turns != 5 or capture.request.max_tokens != 8000:
+	if client.history.size() != 7 or client.omitted_turns != 5 or capture.request.max_tokens != 65536:
 		_fail("context budget", "request budget changed local history")
 	var before: String = messages.front().content
 	var worldbook: String = messages[21].content
@@ -549,7 +549,7 @@ func _verify_tool_context_budget() -> void:
 	client.send("newer")
 	capture.finished.emit({"content": "new answer"}, "")
 	client.send("current query")
-	var budget := Client.OUTPUT_TOKEN_RESERVE + Client._text_tokens(JSON.stringify(capture.request.tools))
+	var budget := Client.ASSISTANT_OUTPUT_TOKEN_RESERVE + Client._text_tokens(JSON.stringify(capture.request.tools))
 	for row: Dictionary in capture.request.messages:
 		budget += Client._message_tokens(row)
 	client.stop()
@@ -840,7 +840,7 @@ func _verify_report_panel() -> void:
 		_fail("failed turns", "failed user messages entered the new request")
 	capture.delta_received.emit("new answer")
 	capture.finished.emit({}, "")
-	var budget := Client.OUTPUT_TOKEN_RESERVE + client.fixed_dialogue_tokens()
+	var budget := Client.DIALOGUE_MAX_TOKENS + client.fixed_dialogue_tokens()
 	for content: String in ["new turn", "new answer", "trimmed"]:
 		budget += Client._message_tokens({"content": content})
 	client._context_limit_tokens = budget + 3

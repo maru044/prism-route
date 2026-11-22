@@ -348,7 +348,9 @@ func _build_subsystems() -> void:
 				"pleasure_npc": "%.1f%%" % (npc_pleasure.current_pleasure if npc_pleasure else 0.0),
 				"pleasure_player": "%.1f%%" % (player_pleasure.current_pleasure if player_pleasure else 0.0),
 			}
-			if is_instance_valid(combat_manager) and combat_manager.has_method("get_combat_llm_context"):
+			if current_state == EncounterState.COMBAT \
+					and is_instance_valid(combat_manager) \
+					and combat_manager.has_method("get_combat_llm_context"):
 				extra_context.merge(combat_manager.get_combat_llm_context(), true)
 			world.show_free_dialogue(dialogue_panel, runtime.character_name, encounter_bundle["identity"]["character_id"], extra_context)
 	)

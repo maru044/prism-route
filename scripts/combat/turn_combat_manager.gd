@@ -179,6 +179,7 @@ func request_in_battle_negotiation() -> void:
 func resume_combat_after_dialogue(surrender_requested: bool = false, from_edging_danger: bool = false) -> void:
 	if current_phase != Phase.MID_BATTLE_DIALOGUE or is_resolved:
 		return
+	last_mid_battle_reason = ""
 		
 	if surrender_requested:
 		npc_pleasure.add_pleasure(100.0)
@@ -294,10 +295,10 @@ func _check_battle_state() -> bool:
 	return false
 
 func get_combat_llm_context(mid_reason: String = "") -> Dictionary:
-	if current_phase == Phase.INACTIVE:
+	if current_phase == Phase.INACTIVE or is_resolved:
 		return {}
 	var reason_text := ""
-	var r := mid_reason if not mid_reason.is_empty() else last_mid_battle_reason
+	var r := mid_reason if not mid_reason.is_empty() else (last_mid_battle_reason if current_phase == Phase.MID_BATTLE_DIALOGUE else "")
 	if r == "player_manual_call":
 		reason_text = "Master主动战中搭话"
 	elif r == "player_edging_critical":
@@ -347,15 +348,19 @@ func get_combat_llm_context(mid_reason: String = "") -> Dictionary:
 		npc_stage = "动情微润"
 
 	var buffs: Array[String] = []
-	var cheat: String = str(active_meta_settings.get("meta_cheat_mode", "none"))
-	if cheat == "distracted":
-		buffs.append("识趣生效（故意走神放水，受快感大幅增加）")
-	elif cheat == "lock_master_pleasure":
-		buffs.append("锁精结界（Master快感限制在90%以下）")
-	elif cheat == "reduce_damage":
-		buffs.append("防线强化（Master受快感大幅降低）")
-	if active_meta_settings.get("edging_endure", false):
-		buffs.append("心神合一（快感减免60%）")
+	if is_instance_valid(player_pleasure):
+		if player_pleasure.pleasure_locked:
+			buffs.append("锁精结界（Master快感上限锁定在 %.0f%%）" % player_pleasure.pleasure_cap)
+		elif player_pleasure.damage_taken_multiplier < 0.99:
+			buffs.append("防线强化（Master受快感降低至 %.0f%%）" % (player_pleasure.damage_taken_multiplier * 100.0))
+	if is_instance_valid(npc_pleasure):
+		if npc_pleasure.damage_taken_multiplier > 1.01:
+			buffs.append("识趣生效（故意走神放水，受快感提升至 %.1f倍）" % npc_pleasure.damage_taken_multiplier)
+
+	if temporary_defense_modifier > 0.0:
+		buffs.append("战意增益（本轮快感额外减免 %.0f%%）" % (temporary_defense_modifier * 100.0))
+	elif round_action_defense > 0.0:
+		buffs.append("防守姿态（本回合快感减免 %.0f%%）" % (round_action_defense * 100.0))
 	var buffs_str := "、".join(buffs)
 
 	var last_act_desc := ""

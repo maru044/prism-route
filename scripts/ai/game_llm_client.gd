@@ -17,7 +17,8 @@ const CHARACTER_NAME_TO_ID := {
 }
 const PLAYER_PROFILE_FILE := "玩家人设.md"
 const LOCAL_PLAYER_PROFILE := "user://" + PLAYER_PROFILE_FILE
-const OUTPUT_TOKEN_RESERVE := 8000
+const DIALOGUE_MAX_TOKENS := 65536
+const ASSISTANT_OUTPUT_TOKEN_RESERVE := 8000
 const DIALOGUE := "dialogue"
 const ASSISTANT := "assistant"
 const SOURCE_CLOUD_API := "cloud_api"
@@ -32,6 +33,7 @@ const CONTEXT_OVERFLOW := "当前请求超过约 100 万 token 的上下文预�
 
 static var _dialogue_tag := RegEx.create_from_string(r"(?i)<(/?)(game|report_nya~?|think_nya~?)>")
 static var _prompt_token := RegEx.create_from_string(r"\{\{//|\{\{(?:roll 1d100|[a-zA-Z0-9_]+)\}\}|\{\{|\}\}")
+static var _empty_label_line := RegEx.create_from_string(r"(?m)^[ \t]*([^#\-\n：:]{1,20}[：:])\s*\{\{([a-zA-Z0-9_]+)\}\}\s*\n?")
 static var _dialogue_role_marker := RegEx.create_from_string(r"(?m)^\|(用户|小猫之神)\|")
 static var _dialogue_tag_prefixes := [
 	"<game>", "</game>", "<report_nya>", "</report_nya>", "<think_nya>", "</think_nya>",
@@ -440,7 +442,8 @@ func _start(operation: String, turn: Dictionary) -> bool:
 	var fixed := fixed_dialogue_tokens(operation) if route == DIALOGUE else _message_tokens(assistant_system)
 	if route == ASSISTANT and _allows_tools():
 		fixed += _text_tokens(JSON.stringify(_request_tool_specs))
-	var messages := _build_request_history(operation, turn, _context_limit_tokens - OUTPUT_TOKEN_RESERVE - fixed)
+	var output_reserve := DIALOGUE_MAX_TOKENS if route == DIALOGUE else ASSISTANT_OUTPUT_TOKEN_RESERVE
+	var messages := _build_request_history(operation, turn, _context_limit_tokens - output_reserve - fixed)
 	if messages.is_empty():
 		status = CONTEXT_OVERFLOW
 		print("[LLM 报错] %sZ · 入口 · %s · %s" % [Time.get_datetime_string_from_system(true), "自由对话" if route == DIALOGUE else "游戏助手", CONTEXT_OVERFLOW])
@@ -812,10 +815,17 @@ static func reply_sections(reply: Dictionary, partial_text := "", streaming := f
 	return sections
 
 func _expand_dialogue_prompt(text: String) -> String:
+	var cleaned_template := text
+	for m: RegExMatch in _empty_label_line.search_all(text):
+		var key := m.get_string(2)
+		var val = context.get(key, "")
+		if val == null or str(val).strip_edges().is_empty():
+			cleaned_template = cleaned_template.replace(m.get_string(0), "")
+
 	var parts := PackedStringArray()
 	var cursor := 0
 	var comment_depth := 0
-	for matched in _prompt_token.search_all(text):
+	for matched in _prompt_token.search_all(cleaned_template):
 		var token := matched.get_string()
 		if comment_depth > 0:
 			match token:
@@ -828,7 +838,7 @@ func _expand_dialogue_prompt(text: String) -> String:
 			continue
 		if token in ["{{", "}}"]:
 			continue
-		parts.append(text.substr(cursor, matched.get_start() - cursor))
+		parts.append(cleaned_template.substr(cursor, matched.get_start() - cursor))
 		match token:
 			"{{//":
 				comment_depth = 1
@@ -840,24 +850,9 @@ func _expand_dialogue_prompt(text: String) -> String:
 				parts.append(str(val) if val != null else "")
 		cursor = matched.get_end()
 	if comment_depth == 0:
-		parts.append(text.substr(cursor))
+		parts.append(cleaned_template.substr(cursor))
 	var expanded := "".join(parts)
-	var raw_lines := text.split("\n")
-	var exp_lines := expanded.split("\n")
-	if raw_lines.size() == exp_lines.size():
-		var filtered := PackedStringArray()
-		for i in range(raw_lines.size()):
-			var raw_l := raw_lines[i]
-			var exp_l := exp_lines[i]
-			if raw_l.contains("{{"):
-				var trimmed := exp_l.strip_edges()
-				if trimmed.ends_with("（）"):
-					exp_l = exp_l.replace("（）", "").strip_edges()
-					trimmed = exp_l
-				if trimmed.ends_with("：") or trimmed.ends_with(":"):
-					continue
-			filtered.append(exp_l)
-		return "\n".join(filtered)
+	expanded = expanded.replace("（）", "").replace("()", "")
 	return expanded
 
 static func _merge_dialogue_messages(messages: Array) -> Array[Dictionary]:
@@ -872,7 +867,7 @@ static func _merge_dialogue_messages(messages: Array) -> Array[Dictionary]:
 func payload() -> Dictionary:
 	var body := {"model": _request_profile.get("model", ""), "messages": _request_messages, "stream": route == DIALOGUE}
 	if route == DIALOGUE:
-		body["max_tokens"] = OUTPUT_TOKEN_RESERVE
+		body["max_tokens"] = DIALOGUE_MAX_TOKENS
 		if _request_profile.get("include_stream_usage", false):
 			body["stream_options"] = {"include_usage": true}
 	elif _allows_tools():
@@ -1200,7 +1195,7 @@ func _follow_tools(calls: Array, text: Variant) -> void:
 	_dispatch()
 
 func _fit_tool_context() -> bool:
-	var cost := OUTPUT_TOKEN_RESERVE
+	var cost := ASSISTANT_OUTPUT_TOKEN_RESERVE
 	if _allows_tools():
 		cost += _text_tokens(JSON.stringify(_request_tool_specs))
 	for row: Dictionary in _request_messages:
@@ -1324,7 +1319,7 @@ func _complete(error: String) -> void:
 	changed.emit()
 
 func _append_stream_diagnostic(lines: PackedStringArray, stream: Dictionary, visible_chars: int) -> void:
-	lines.append("请求输出上限 · max_tokens=%d" % OUTPUT_TOKEN_RESERVE)
+	lines.append("请求输出上限 · max_tokens=%d" % DIALOGUE_MAX_TOKENS)
 	var usage_requested := "已请求" if _request_profile.get("include_stream_usage", false) else "未请求"
 	lines.append("流式用量 · " + usage_requested)
 	if stream.is_empty():
