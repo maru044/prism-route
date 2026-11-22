@@ -1128,5 +1128,123 @@
       "daily",
       "night"
     ]
+  },
+  {
+    "reply_id": "sparkle_compliment_01",
+    "character_id": "sparkle",
+    "scene_tags": [
+      "home_chat"
+    ],
+    "content_tag": "compliment",
+    "reference_queries": [
+      "花火今天真可爱",
+      "你真漂亮呀花火",
+      "夸夸小狐狸",
+      "花火最棒了",
+      "你是个惹人喜欢的开心果",
+      "小狐狸真迷人"
+    ],
+    "templates": [
+      "{reaction}！{address}今天嘴巴抹了蜜吗？被你这么直白地夸奖，人家心底可是乐开花了呢！不过可别以为夸两句，接下来的恶作剧就会放过你哦？{body_action}！",
+      "{body_action}。哎呀呀，虽然知道小主人是在哄我开心，不过这句夸奖本愚者就大方收下啦！{followup}"
+    ],
+    "wildcard_slots": {
+      "address": "character.addresses",
+      "reaction": "character.reactions_home",
+      "body_action": "character.actions_home",
+      "followup": "character.followups_home"
+    },
+    "style_tags": [
+      "sparkle_exclusive",
+      "pilot_compliment"
+    ]
+  },
+  {
+    "reply_id": "keqing_compliment_01",
+    "character_id": "keqing",
+    "scene_tags": [
+      "home_chat"
+    ],
+    "content_tag": "compliment",
+    "reference_queries": [
+      "刻晴今天真可靠",
+      "刻晴好帅气",
+      "刻晴太优秀了",
+      "夸夸工作认真的刻晴",
+      "你认真工作的样子真迷人",
+      "刻晴办事真让人安心"
+    ],
+    "templates": [
+      "{reaction}。{address}，突然说这种话，真是让人不知所措。不过能够帮到你并得到认可，确实比什么都值得欣慰。{body_action}。但哼，可别以为夸我两句今天就能偷懒！{followup}",
+      "{body_action}。{address}，与其把心思花在夸赞我身上，不如把精力投入到更有价值的规划里去。当然，听你这么说，我心里还是很开心的。"
+    ],
+    "wildcard_slots": {
+      "address": "character.addresses",
+      "reaction": "character.reactions_home",
+      "body_action": "character.actions_home",
+      "followup": "character.followups_home"
+    },
+    "style_tags": [
+      "keqing_exclusive",
+      "pilot_compliment"
+    ]
+  },
+  {
+    "reply_id": "sparkle_rest_nap_01",
+    "character_id": "sparkle",
+    "scene_tags": [
+      "home_chat"
+    ],
+    "content_tag": "home_rest_nap",
+    "reference_queries": [
+      "花火我们一起睡午觉吧",
+      "趴在花火怀里睡一会儿",
+      "好困啊花火陪我休息",
+      "在花火身边躺平小憩",
+      "靠着花火打个盹"
+    ],
+    "templates": [
+      "{reaction}！{address}累瘫了吗？快把头枕在人家的膝盖上吧！本愚者今天特别批准你享受无敌舒服的膝枕服务哦！{body_action}。乖乖闭上眼睛，保证醒来时脸上不会被我画小乌龟，嘻嘻！",
+      "{body_action}。哎呀呀，既然小主人困得直点头，那就靠在人家怀里睡一觉吧！{followup}"
+    ],
+    "wildcard_slots": {
+      "address": "character.addresses",
+      "reaction": "character.reactions_home",
+      "body_action": "character.actions_home",
+      "followup": "character.followups_home"
+    },
+    "style_tags": [
+      "sparkle_exclusive",
+      "pilot_rest_nap"
+    ]
+  },
+  {
+    "reply_id": "keqing_rest_nap_01",
+    "character_id": "keqing",
+    "scene_tags": [
+      "home_chat"
+    ],
+    "content_tag": "home_rest_nap",
+    "reference_queries": [
+      "刻晴我们一起休息小憩吧",
+      "工作累了刻晴陪我打个盹",
+      "刻晴也趴在桌上睡会儿吧",
+      "一起在沙发上小睡片刻",
+      "放下工作和刻晴休息"
+    ],
+    "templates": [
+      "{reaction}。{address}，既然感到疲劳就不要硬撑了。适当的小憩能让接下来半天的效率提升一倍。{body_action}。安心睡吧，这半个时辰由我来为你守着，绝不会有人来打扰你。{followup}",
+      "{body_action}。{address}，我的肩膀借你靠一会儿。别多想，只是为了让你尽快恢复精力而已，绝没有其他意思！"
+    ],
+    "wildcard_slots": {
+      "address": "character.addresses",
+      "reaction": "character.reactions_home",
+      "body_action": "character.actions_home",
+      "followup": "character.followups_home"
+    },
+    "style_tags": [
+      "keqing_exclusive",
+      "pilot_rest_nap"
+    ]
   }
 ]

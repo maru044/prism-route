@@ -276,7 +276,12 @@ func _normalize_saved_threads(value: Variant) -> Dictionary:
 
 func _saved_fragment(fragment: Dictionary) -> Dictionary:
 	var note: String = "" if str(fragment.get("note", "")).is_empty() else "回复未完成"
-	return {"text": fragment.text, "note": note}
+	var res := {"text": fragment.text, "note": note}
+	if fragment.has("content_tag"):
+		res["content_tag"] = fragment["content_tag"]
+	if fragment.has("reply_id"):
+		res["reply_id"] = fragment["reply_id"]
+	return res
 
 func send(text: String) -> bool:
 	if pending or text.strip_edges().is_empty() or not _can_start():
@@ -858,6 +863,27 @@ static func resolve_scene_id(ctx: Dictionary) -> String:
 		
 	return "home_chat"
 
+func get_last_valid_topic() -> Dictionary:
+	var count := history.size()
+	var end_idx := count - 1 if pending else count
+	for i in range(end_idx - 1, -1, -1):
+		var turn: Variant = history[i]
+		if not turn is Dictionary:
+			continue
+		var active_idx: int = int(turn.get("active", -1))
+		var replies: Array = turn.get("replies", [])
+		if active_idx < 0 or active_idx >= replies.size():
+			continue
+		var rep: Dictionary = replies[active_idx]
+		var tag: String = str(rep.get("content_tag", ""))
+		if not tag.is_empty() and tag != "clarify_unknown" and tag != "error":
+			return {
+				"content_tag": tag,
+				"reply_id": str(rep.get("reply_id", "")),
+				"is_pause": tag == "pause_stop"
+			}
+	return {}
+
 func _dispatch_local_airp() -> void:
 	var airp := _get_local_airp()
 	var char_id := _resolve_character_id()
@@ -898,8 +924,13 @@ func _dispatch_local_airp() -> void:
 	if player_input.is_empty():
 		player_input = "你好呀"
 		
+	var last_topic_info := get_last_valid_topic()
 	var airp_context := context.duplicate()
 	airp_context["turn_count"] = history.size()
+	if not last_topic_info.is_empty() and not last_topic_info.get("is_pause", false):
+		airp_context["last_topic"] = last_topic_info.get("content_tag", "")
+		airp_context["last_reply_id"] = last_topic_info.get("reply_id", "")
+
 	var result: Dictionary = airp.call("retrieve_and_compose", player_input, char_id, scene_id, airp_context, -1)
 	var output_text: String = str(result.get("text", ""))
 	if output_text.is_empty():
@@ -908,14 +939,37 @@ func _dispatch_local_airp() -> void:
 	var err_msg: String = str(result.get("error", ""))
 	if not err_msg.is_empty():
 		status = err_msg
-		diagnostic = "本地口上异常: " + err_msg
+		var path_str: String = str(result.get("path_reason", "探针推理异常"))
+		diagnostic = "本地检索式 AIRP · 来源: %s · NPC: %s · 场景: %s · 路径: %s · 错误: %s" % [
+			get_dialogue_source(),
+			char_id,
+			scene_id,
+			path_str,
+			err_msg
+		]
 	else:
 		status = ""
-		diagnostic = "本地检索式 AIRP · %s · 得分: %.2f" % [result.get("reply_id", ""), float(result.get("score", 0.0))]
+		var is_aug: bool = bool(result.get("is_augmented", false))
+		var path_str: String = str(result.get("path_reason", "普通语义检索"))
+		diagnostic = "本地检索式 AIRP · 来源: %s · NPC: %s · 场景: %s · 模板: %s · 原始分: %.2f · 调整分: %.2f · 路径: %s%s" % [
+			get_dialogue_source(),
+			char_id,
+			scene_id,
+			result.get("reply_id", ""),
+			float(result.get("raw_score", result.get("score", 0.0))),
+			float(result.get("score", 0.0)),
+			path_str,
+			(" · 承接上文: " + str(result.get("augmented_query", ""))) if is_aug else ""
+		]
 	if not history.is_empty():
 		var active_turn: Variant = history.back()
 		if active_turn is Dictionary:
-			active_turn.replies.append({"text": output_text, "note": status})
+			active_turn.replies.append({
+				"text": output_text,
+				"note": status,
+				"content_tag": str(result.get("content_tag", "")),
+				"reply_id": str(result.get("reply_id", ""))
+			})
 			active_turn.active = active_turn.replies.size() - 1
 			active_turn["result"] = {
 				"status": status,

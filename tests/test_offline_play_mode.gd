@@ -217,32 +217,99 @@ func run() -> void:
 	print("  [Pass] Session migration verified: Zero local messages leaked into cloud request body")
 
 	# -----------------------------------------------------------------
-	# Test 4 (P1 Issue 2): Explicit Pause/Stop Priority and Multi-turn Coherence
+	# Test 4 (P0): Strict Stop Intent Priority and Regression Table
 	# -----------------------------------------------------------------
-	print("\n--- Test 4: Explicit Stop Priority and Multi-turn Context Coherence (P1) ---")
+	print("\n--- Test 4: Strict Stop Intent Priority and Regression Table (P0) ---")
 	client.set_dialogue_source(GameLLMClientClass.SOURCE_LOCAL_AIRP)
-	client.open(GameLLMClientClass.DIALOGUE, "stop_intent_scope", {"npc_id": "sparkle", "npc_name": "花火"})
-	
-	# Turn 1: Normal Greeting
-	client.send("花火下午好呀")
-	assert(client.history.size() == 1, "Turn 1 recorded")
-	
-	# Turn 2: Explicit Stop / Mind Changed
-	client.send("我改变主意了，到这儿就好")
-	assert(client.history.size() == 2, "Turn 2 recorded")
-	var stop_diag: String = client.diagnostic
-	var stop_reply: String = str(client.active_reply().get("text", ""))
-	assert(stop_diag.contains("pause_request_01"), "Explicit stop input must hit pause_request_01, got: %s" % stop_diag)
-	assert(not stop_diag.contains("intimate_tease_reverse_01"), "Explicit stop must NOT hit tease_reverse_01!")
-	assert(not _has_ellipsis(stop_reply), "Stop reply must have zero ellipses")
-	print("  [Pass] Explicit stop correctly routed to pause_request_01: %s" % stop_reply)
 
-	# Turn 3: Negation of stop ("不要停，再快点")
+	var p0_cases := [
+		{"input": "到此为止，不要继续。", "expect_stop": true},
+		{"input": "别继续了。", "expect_stop": true},
+		{"input": "我改变主意了，到这儿就好。", "expect_stop": true},
+		{"input": "等一下再继续。", "expect_stop": true},
+		{"input": "停电了吗？", "expect_stop": false}
+	]
+
+	for tc in p0_cases:
+		client.open(GameLLMClientClass.DIALOGUE, "p0_scope_" + str(randi()), {"npc_id": "sparkle", "npc_name": "花火"})
+		var p0_inp: String = tc["input"]
+		client.send(p0_inp)
+		var p0_diag: String = client.diagnostic
+		var is_pause: bool = p0_diag.contains("pause_request_01")
+		assert(is_pause == tc["expect_stop"], "P0 failed on input: " + p0_inp)
+		if tc["expect_stop"]:
+			assert(p0_diag.contains("路径: 显式叫停直接截断"), "Stop must use fast-path截断")
+		else:
+			assert(not p0_diag.contains("pause_request_01"), "停电了吗 must not match pause")
+		var p0_reply: String = str(client.active_reply().get("text", ""))
+		assert(not _has_ellipsis(p0_reply), "P0 reply must have zero ellipses")
+	print("  [Pass] P0 Strict stop regression table validated with zero false positives")
+
+	# Negation of stop ("不要停，再快点") and Intimate Resume ("继续吧")
 	client.open(GameLLMClientClass.DIALOGUE, "negation_scope", {"npc_id": "keqing", "npc_name": "刻晴", "intimate_mode": true})
 	client.send("不要停，再快点")
 	var non_stop_diag: String = client.diagnostic
 	assert(non_stop_diag.contains("intimate_rhythm_faster_01"), "Negation '不要停' must route to faster rhythm, got: %s" % non_stop_diag)
 	print("  [Pass] Negation '不要停，再快点' correctly avoided pause_stop")
+
+	client.send("继续吧")
+	assert(client.diagnostic.contains("resume_intimacy_01"), "继续吧 must route to resume")
+	print("  [Pass] Continuation '继续吧' correctly routed to resume_intimacy_01")
+
+	# -----------------------------------------------------------------
+	# Test 4b (P1): Short-Phrase Contextual Topic Continuation
+	# -----------------------------------------------------------------
+	print("\n--- Test 4b: Short-Phrase Contextual Topic Continuation (P1) ---")
+	# Context A: Meal share -> "换一种"
+	client.open(GameLLMClientClass.DIALOGUE, "p1_meal_scope", {"npc_id": "sparkle", "npc_name": "花火"})
+	client.send("今天做点心一起吃吧")
+	assert(client.diagnostic.contains("home_meal_share"), "Turn 1 meal share pass")
+	client.send("换一种")
+	assert(client.diagnostic.contains("home_meal_share"), "Must maintain meal share topic")
+	assert(client.diagnostic.contains("路径: 多轮短句承接"), "Path reason must be 多轮短句承接")
+	assert(client.diagnostic.contains("承接上文: [一起品尝美食] 换一种"), "Augmented query logged")
+	print("  [Pass] Context A (Meal share -> 换一种) maintained meal share topic")
+
+	# Context B: Island scenery -> "换一种"
+	client.open(GameLLMClientClass.DIALOGUE, "p1_island_scope", {"npc_id": "sparkle", "npc_name": "花火"})
+	client.send("带我在浮空岛四处逛逛看风景吧")
+	assert(client.diagnostic.contains("home_island_01"), "Turn 1 island pass")
+	client.send("换一种")
+	assert(client.diagnostic.contains("home_island_01"), "Must maintain island topic")
+	assert(client.diagnostic.contains("路径: 多轮短句承接"), "Path reason must be 多轮短句承接")
+	assert(client.diagnostic.contains("承接上文: [浮空岛与风景] 换一种"), "Augmented query logged")
+	print("  [Pass] Context B (Island scenery -> 换一种) maintained island topic")
+
+	# Context C: Empty context -> "换一种" -> Clarify
+	client.open(GameLLMClientClass.DIALOGUE, "p1_empty_scope", {"npc_id": "sparkle", "npc_name": "花火"})
+	client.send("换一种")
+	assert(client.diagnostic.contains("clarify_unknown_01"), "Empty context must trigger clarify")
+	assert(client.diagnostic.contains("路径: 缺少上下文指代澄清"), "Path reason must be 缺少上下文指代澄清")
+	print("  [Pass] Context C (Empty context -> 换一种) triggered character clarification")
+
+	# Context D: Explicit topic switch (Meal share -> Combat)
+	client.open(GameLLMClientClass.DIALOGUE, "p1_switch_scope", {"npc_id": "keqing", "npc_name": "刻晴"})
+	client.send("今天做点心一起吃吧")
+	client.send("拔刀吧，让我看看你的武艺！")
+	assert(not client.diagnostic.contains("承接上文"), "Explicit topic change must NOT be augmented")
+	print("  [Pass] Context D Explicit topic change was NOT augmented")
+
+	# Context E: Undo reverts topic
+	client.open(GameLLMClientClass.DIALOGUE, "p1_undo_scope", {"npc_id": "sparkle", "npc_name": "花火"})
+	client.send("今天做点心一起吃吧")
+	client.send("带我在浮空岛四处逛逛看风景吧")
+	client.undo()
+	client.send("换一种")
+	assert(client.diagnostic.contains("home_meal_share"), "Undo must revert topic to meal share")
+	print("  [Pass] Context E Undo cleanly restored previous turn topic")
+
+	# Context F: Switch NPC topic isolation
+	client.open(GameLLMClientClass.DIALOGUE, "p1_npc_sparkle", {"npc_id": "sparkle", "npc_name": "花火"})
+	client.send("今天做点心一起吃吧")
+	client.open(GameLLMClientClass.DIALOGUE, "p1_npc_keqing", {"npc_id": "keqing", "npc_name": "刻晴"})
+	client.send("换一种")
+	assert(client.diagnostic.contains("clarify_unknown_01"), "New NPC must not inherit previous NPC topic")
+	print("  [Pass] Context F Cross-NPC topic isolation verified")
 
 	# -----------------------------------------------------------------
 	# Test 5 (P2 Issue 3): Real Game Entry Points Scene Parameter Alignment
@@ -318,6 +385,81 @@ func run() -> void:
 		assert(title_ui._status.text.contains("本地组件缺失"), "Status must report missing component when absent")
 	title_ui.queue_free()
 	print("  [Pass] Component readiness and Title Settings UI status synchronization verified")
+
+	# -----------------------------------------------------------------
+	# Test 7 (P2): Pilot Koujou Material for Sparkle and Keqing
+	# -----------------------------------------------------------------
+	print("\n--- Test 7: Pilot Koujou Material for Sparkle and Keqing (P2) ---")
+	# Sparkle compliment with unrecorded synonym
+	client.open(GameLLMClientClass.DIALOGUE, "p2_sparkle_comp", {"npc_id": "sparkle", "npc_name": "花火"})
+	client.send("小狐狸今天嘴巴真甜，长得也真标致")
+	assert(client.diagnostic.contains("sparkle_compliment_01"), "Sparkle must hit sparkle_compliment_01")
+	var sp_comp_text: String = str(client.active_reply().get("text", ""))
+	assert(not _has_ellipsis(sp_comp_text), "Sparkle compliment text zero ellipses")
+	assert(sp_comp_text.contains("恶作剧") or sp_comp_text.contains("愚者") or sp_comp_text.contains("面具"), "Sparkle personality verified")
+	print("  [Pass] Sparkle exclusive compliment pilot verified: %s" % sp_comp_text)
+
+	# Keqing compliment with unrecorded synonym
+	client.open(GameLLMClientClass.DIALOGUE, "p2_keqing_comp", {"npc_id": "keqing", "npc_name": "刻晴"})
+	client.send("刻晴办事真是一丝不苟又利落")
+	assert(client.diagnostic.contains("keqing_compliment_01"), "Keqing must hit keqing_compliment_01")
+	var kq_comp_text: String = str(client.active_reply().get("text", ""))
+	assert(not _has_ellipsis(kq_comp_text), "Keqing compliment text zero ellipses")
+	assert(kq_comp_text.contains("认可") or kq_comp_text.contains("公文") or kq_comp_text.contains("偷懒") or kq_comp_text.contains("价值"), "Keqing personality verified")
+	print("  [Pass] Keqing exclusive compliment pilot verified: %s" % kq_comp_text)
+
+	# Sparkle rest nap with unrecorded synonym
+	client.open(GameLLMClientClass.DIALOGUE, "p2_sparkle_nap", {"npc_id": "sparkle", "npc_name": "花火"})
+	client.send("脑袋晕乎乎的，借花火的膝盖躺一下")
+	assert(client.diagnostic.contains("sparkle_rest_nap_01"), "Sparkle must hit sparkle_rest_nap_01")
+	var sp_nap_text: String = str(client.active_reply().get("text", ""))
+	assert(not _has_ellipsis(sp_nap_text), "Sparkle nap text zero ellipses")
+	print("  [Pass] Sparkle exclusive rest nap pilot verified: %s" % sp_nap_text)
+
+	# Keqing rest nap with unrecorded synonym
+	client.open(GameLLMClientClass.DIALOGUE, "p2_keqing_nap", {"npc_id": "keqing", "npc_name": "刻晴"})
+	client.send("盯公文眼睛酸了，刻晴借个肩膀靠靠")
+	assert(client.diagnostic.contains("keqing_rest_nap_01"), "Keqing must hit keqing_rest_nap_01")
+	var kq_nap_text: String = str(client.active_reply().get("text", ""))
+	assert(not _has_ellipsis(kq_nap_text), "Keqing nap text zero ellipses")
+	print("  [Pass] Keqing exclusive rest nap pilot verified: %s" % kq_nap_text)
+
+	# -----------------------------------------------------------------
+	# Test 8 (P2): Retrieval Diagnostics 5-Path Full Coverage
+	# -----------------------------------------------------------------
+	print("\n--- Test 8: Retrieval Diagnostics 5-Path Full Coverage (P2) ---")
+	# Path 1: 显式叫停直接截断
+	client.open(GameLLMClientClass.DIALOGUE, "diag_p1", {"npc_id": "sparkle", "npc_name": "花火"})
+	client.send("到此为止，不要继续。")
+	assert(client.diagnostic.contains("路径: 显式叫停直接截断"), "Path 1 must be 显式叫停直接截断")
+	print("  [Pass] Diagnostic Path 1 (显式叫停直接截断) verified")
+
+	# Path 2: 普通语义检索
+	client.open(GameLLMClientClass.DIALOGUE, "diag_p2", {"npc_id": "sparkle", "npc_name": "花火"})
+	client.send("今天天气真好，你好呀")
+	assert(client.diagnostic.contains("路径: 普通语义检索"), "Path 2 must be 普通语义检索")
+	print("  [Pass] Diagnostic Path 2 (普通语义检索) verified")
+
+	# Path 3: 多轮短句承接
+	client.send("换一种")
+	assert(client.diagnostic.contains("路径: 多轮短句承接"), "Path 3 must be 多轮短句承接")
+	print("  [Pass] Diagnostic Path 3 (多轮短句承接) verified")
+
+	# Path 4: 低置信度澄清
+	client.open(GameLLMClientClass.DIALOGUE, "diag_p4", {"npc_id": "sparkle", "npc_name": "花火"})
+	client.send("量子力学与广义相对论的大一统几何结构")
+	assert(client.diagnostic.contains("路径: 低置信度澄清"), "Path 4 must be 低置信度澄清")
+	print("  [Pass] Diagnostic Path 4 (低置信度澄清) verified")
+
+	# Path 5: 探针推理异常
+	var real_airp: LocalAirpClientClass = client._get_local_airp()
+	real_airp.force_probe_error = true
+	client.open(GameLLMClientClass.DIALOGUE, "diag_p5", {"npc_id": "sparkle", "npc_name": "花火"})
+	client.send("你好呀")
+	assert(client.diagnostic.contains("路径: 探针推理异常"), "Path 5 must be 探针推理异常")
+	assert(client.diagnostic.contains("错误: 本地 AIRP 探针推理异常"), "Path 5 error message verified")
+	real_airp.force_probe_error = false
+	print("  [Pass] Diagnostic Path 5 (探针推理异常) verified")
 
 	print("\n==================================================")
 	print("ALL OFFLINE PLAY MODE TESTS PASSED SUCCESSFULLY! (0 FAILURES)")

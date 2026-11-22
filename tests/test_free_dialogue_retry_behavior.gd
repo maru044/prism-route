@@ -48,6 +48,7 @@ func run() -> void:
 		"key": "test-key"
 	}
 
+	client.set_dialogue_source(GameLLMClientClass.SOURCE_CLOUD_API)
 	client.open(GameLLMClientClass.DIALOGUE, "sparkle_test", {
 		"npc_name": "花火",
 		"dialogue_location": "初始神殿"

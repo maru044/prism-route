@@ -6,6 +6,7 @@ const ComposerScript := preload("res://scripts/ai/local_airp/local_airp_composer
 @export var data_directory: String = "res://assets/ai/local_airp"
 @export var clarify_threshold: float = 0.58
 @export var window_size: int = 5
+@export var force_probe_error: bool = false
 
 var composer: RefCounted
 var templates: Array = []
@@ -88,21 +89,104 @@ func check_readiness() -> Dictionary:
 		"error": err
 	}
 
-static func is_stop_intent(input: String) -> bool:
-	var text := input.strip_edges()
-	if text.is_empty():
+const TOPIC_DESCRIPTIONS: Dictionary = {
+	"greet": "日常问候打招呼",
+	"home_meal_share": "一起品尝美食",
+	"home_island_01": "浮空岛与风景",
+	"chat_island": "浮空岛与风景",
+	"home_rest_nap": "休息小憩",
+	"home_patrol_work": "巡逻与工作",
+	"home_night_whisper": "夜晚与星空谈心",
+	"home_compliment": "夸奖赞美",
+	"compliment": "夸奖赞美",
+	"tease": "恶作剧与捉弄",
+	"sparkle_prank": "恶作剧与捉弄",
+	"keqing_duty": "工作与摸鱼闲聊",
+	"invite_intimacy": "邀请亲密互动",
+	"intimate_touch": "亲密抚摸与接触",
+	"intimate_rhythm_faster": "加快节奏",
+	"intimate_rhythm_slower": "放慢节奏",
+	"intimate_deep": "深处结合",
+	"intimate_peak": "绝顶高潮",
+	"intimate_deep_kiss": "深吻接吻",
+	"intimate_initiative": "主动侍奉",
+	"intimate_tease_reverse": "反向调戏",
+	"intimate_submission": "顺从服从",
+	"intimate_aftercare_sweet": "事后温存照料",
+	"combat_pleasure_25": "对战快感初阶",
+	"combat_pleasure_50": "对战快感中阶",
+	"combat_pleasure_75": "对战快感高阶",
+	"combat_pleasure_100": "对战绝顶溃败",
+	"combat_restraint": "对战拘束玩弄",
+	"combat_surrender": "对战彻底臣服",
+	"post_intimate": "事后谈心温存",
+	"resume_intimacy": "继续亲密侍奉"
+}
+
+static func is_strict_stop(input: String) -> bool:
+	var clean := input.strip_edges()
+	if clean.is_empty():
 		return false
-	if text.contains("不要停") or text.contains("别停") or text.contains("不能停") or text.contains("继续"):
-		return false
-	var stop_words := [
-		"停", "暂停", "先停", "停下", "别动", "先歇", "到这儿", "到这里", "结束",
-		"改变主意", "算了吧", "不想做", "不做了", "今天先到", "先等等", "等一下",
-		"歇会儿", "缓口气", "先休息", "受不了了先停", "先别", "到此为止", "改天吧"
+
+	# 1. 优先检查矛盾输入：同时表达「先停/先等」与「再继续/接着做」
+	# 规则：若一句话同时表达「先等一下」和「再继续」，先暂停本轮，等新的明确指令再恢复
+	var has_pause_marker := false
+	var pause_conflict_markers := ["等一下", "先等", "稍等", "先停", "暂停", "先歇", "先休息", "缓一下", "缓口气"]
+	for pm in pause_conflict_markers:
+		if clean.contains(pm):
+			has_pause_marker = true
+			break
+			
+	var has_continue_marker := (clean.contains("再继续") or clean.contains("后继续") or clean.contains("接着") or clean.contains("继续"))
+	if has_pause_marker and has_continue_marker:
+		return true
+
+	# 2. 正向继续或否定叫停请求（如 "不要停", "别停", "不能停", "继续吧", "请继续"）
+	var continue_phrases := ["不要停", "别停", "不能停", "继续", "接着来", "请继续"]
+	for cp in continue_phrases:
+		if clean.contains(cp):
+			# 若同时含有“不要继续 / 别继续”，则仍为叫停
+			if not (clean.contains("不要继续") or clean.contains("别继续") or clean.contains("不能继续") or clean.contains("停止继续")):
+				return false
+
+	# 3. 明确叫停复合短语
+	var explicit_stop_phrases := [
+		"不要继续", "别继续", "不能继续", "停止继续", "不要再继续",
+		"到此为止", "到这就好", "到这儿就好", "到这里就好", "今天先到这里", "今天到这", "先到这里吧",
+		"我改变主意了", "改变主意", "不想做了", "不做了", "别做了", "不要做了",
+		"停一下", "先停", "停下", "停手", "停住", "暂停",
+		"别动", "先别", "先等等", "等一下", "先歇", "歇会儿", "缓口气", "先休息", "受不了了先停",
+		"算了吧", "改天吧", "放过我吧", "饶了我吧"
 	]
-	for word in stop_words:
-		if text.contains(word):
+	for phrase in explicit_stop_phrases:
+		if clean.contains(phrase):
+			return true
+
+	# 严格移除单凭出现单个「停」字就判定暂停的规则（避免误判「停电了吗？」）
+	return false
+
+static func is_stop_intent(input: String) -> bool:
+	return is_strict_stop(input)
+
+static func is_anaphoric_short_query(input_text: String) -> bool:
+	var clean := input_text.strip_edges()
+	if clean.length() > 14:
+		return false
+	var anaphoric_markers := [
+		"那个呢", "刚才那个", "照刚才那个", "照刚才", "换一种", "换一个", "再来一次",
+		"继续刚才", "接着刚才", "还要", "再来", "还想", "换别的", "那个呢？", "这个呢"
+	]
+	for m in anaphoric_markers:
+		if clean.contains(m):
 			return true
 	return false
+
+static func build_augmented_query(input_text: String, last_topic_tag: String) -> String:
+	var clean := input_text.strip_edges()
+	if not is_anaphoric_short_query(clean) or last_topic_tag.is_empty():
+		return clean
+	var topic_desc: String = str(TOPIC_DESCRIPTIONS.get(last_topic_tag, last_topic_tag))
+	return "[%s] %s" % [topic_desc, clean]
 
 func ensure_probe() -> bool:
 	if _probe_ready and _probe_stdio != null:
@@ -136,6 +220,8 @@ func ensure_probe() -> bool:
 	return true
 
 func embed_text(text: String) -> PackedFloat32Array:
+	if force_probe_error:
+		return PackedFloat32Array()
 	if not ensure_probe():
 		return PackedFloat32Array()
 		
@@ -181,34 +267,96 @@ func retrieve_and_compose(player_input: String, character_id: String, scene_id: 
 			"reply_id": "error_missing_model",
 			"content_tag": "error",
 			"score": 0.0,
+			"raw_score": 0.0,
+			"adjusted_score": 0.0,
+			"path_reason": "组件缺失异常",
+			"is_augmented": false,
 			"is_fallback": true,
 			"error": readiness.get("error", "缺少本地 AIRP 嵌入模型或探针程序")
 		}
 
+	# 1. 明确叫停最高优先级安全门禁 (Strict Stop Fast-Path: 零 BGE 向量耗时)
+	if is_strict_stop(player_input):
+		var stop_tmpl: Dictionary = _find_template("pause_request_01")
+		if stop_tmpl.is_empty():
+			for tmpl in templates:
+				if tmpl.get("content_tag") == "pause_stop":
+					stop_tmpl = tmpl
+					break
+		if not stop_tmpl.is_empty():
+			var comp_stop: Dictionary = composer.compose(stop_tmpl, character_id, scene_id, context, seed_val)
+			return {
+				"text": comp_stop["text"],
+				"reply_id": stop_tmpl.get("reply_id", "pause_request_01"),
+				"content_tag": "pause_stop",
+				"score": 1.0,
+				"raw_score": 1.0,
+				"adjusted_score": 1.0,
+				"path_reason": "显式叫停直接截断",
+				"is_augmented": false,
+				"matched_reference_query": "停止指令直接截断",
+				"character_id": character_id,
+				"scene_id": scene_id,
+				"template_skeleton": comp_stop["template_skeleton"],
+				"slots_filled": comp_stop["slots_filled"],
+				"is_fallback": false
+			}
+
 	var candidates: Array = []
 	for tmpl in templates:
+		var c_tag: String = tmpl.get("content_tag", "")
+		if c_tag == "pause_stop" or c_tag == "clarify_unknown":
+			continue
 		var char_match: bool = (tmpl.get("character_id") == "shared" or tmpl.get("character_id") == character_id)
 		var scene_match: bool = (scene_id in tmpl.get("scene_tags", []))
-		if tmpl.get("content_tag") in ["pause_stop", "clarify_unknown"]:
-			scene_match = true
 		if char_match and scene_match:
 			candidates.append(tmpl)
 			
 	if candidates.is_empty():
 		candidates = templates
+
+	var last_topic_tag: String = str(context.get("last_topic", ""))
+	var is_anaphoric := is_anaphoric_short_query(player_input)
+	
+	# 如果是无指代短句且没有任何可用前文，触发角色口吻追问澄清
+	if is_anaphoric and last_topic_tag.is_empty():
+		var clarify_tmpl: Dictionary = _find_template("clarify_unknown_01")
+		var comp_clarify: Dictionary = composer.compose(clarify_tmpl, character_id, scene_id, context, seed_val)
+		return {
+			"text": comp_clarify["text"],
+			"reply_id": "clarify_unknown_01",
+			"content_tag": "clarify_unknown",
+			"score": 0.0,
+			"raw_score": 0.0,
+			"adjusted_score": 0.0,
+			"path_reason": "缺少上下文指代澄清",
+			"is_augmented": false,
+			"matched_reference_query": "缺少上下文指代澄清",
+			"character_id": character_id,
+			"scene_id": scene_id,
+			"template_skeleton": comp_clarify["template_skeleton"],
+			"slots_filled": comp_clarify["slots_filled"],
+			"is_fallback": true
+		}
+
+	var query_to_embed := build_augmented_query(player_input, last_topic_tag)
+	var is_augmented := (query_to_embed != player_input.strip_edges())
 		
-	var player_vec := embed_text(player_input)
+	var player_vec := embed_text(query_to_embed)
 	if player_vec.is_empty():
 		return {
 			"text": "【本地探针异常】未能从输入文本中提取语义向量。",
 			"reply_id": "error_probe_failed",
 			"content_tag": "error",
 			"score": 0.0,
+			"raw_score": 0.0,
+			"adjusted_score": 0.0,
+			"path_reason": "探针推理异常",
+			"is_augmented": is_augmented,
 			"is_fallback": true,
 			"error": "本地 AIRP 探针推理异常"
 		}
 
-	var explicit_stop := is_stop_intent(player_input)
 	var turn_count: int = int(context.get("turn_count", 1))
 
 	var scored_candidates: Array = []
@@ -235,13 +383,13 @@ func retrieve_and_compose(player_input: String, character_id: String, scene_id: 
 			adjusted_score -= 0.15
 			
 		var c_tag: String = tmpl.get("content_tag", "")
-		if explicit_stop:
-			if c_tag == "pause_stop":
-				adjusted_score += 0.40
-			elif c_tag in ["intimate_tease_reverse", "tease", "intimate_initiative", "intimate_deep", "combat_restraint", "intimate_touch"]:
-				adjusted_score -= 0.35
+		if is_augmented and (c_tag == last_topic_tag or r_id == str(context.get("last_reply_id", ""))):
+			adjusted_score += 0.30
 		elif turn_count > 1 and c_tag == "greet":
 			adjusted_score -= 0.25
+
+		if tmpl.get("character_id") == character_id:
+			adjusted_score += 0.05
 
 		scored_candidates.append({
 			"template": tmpl,
@@ -259,17 +407,20 @@ func retrieve_and_compose(player_input: String, character_id: String, scene_id: 
 	var chosen_score: float
 	var matched_ref: String
 	var is_fallback: bool = false
+	var path_reason: String = "普通语义检索"
 	
-	if top["raw_score"] < clarify_threshold and not explicit_stop:
+	if top["raw_score"] < clarify_threshold:
 		chosen_tmpl = _find_template("clarify_unknown_01")
 		chosen_score = top["raw_score"]
 		matched_ref = top["matched_ref"]
 		is_fallback = true
+		path_reason = "低置信度澄清"
 	else:
 		chosen_tmpl = top["template"]
 		chosen_score = top["raw_score"]
 		matched_ref = top["matched_ref"]
 		is_fallback = false
+		path_reason = "多轮短句承接" if is_augmented else "普通语义检索"
 		
 	var r_id_chosen: String = chosen_tmpl.get("reply_id", "")
 	recent_reply_ids.append(r_id_chosen)
@@ -282,7 +433,12 @@ func retrieve_and_compose(player_input: String, character_id: String, scene_id: 
 		"text": comp_result["text"],
 		"reply_id": r_id_chosen,
 		"content_tag": chosen_tmpl.get("content_tag", ""),
-		"score": snapped(chosen_score, 0.0001),
+		"score": snapped(top["adjusted_score"] if not is_fallback else chosen_score, 0.0001),
+		"raw_score": snapped(chosen_score, 0.0001),
+		"adjusted_score": snapped(top["adjusted_score"], 0.0001),
+		"path_reason": path_reason,
+		"is_augmented": is_augmented,
+		"augmented_query": query_to_embed if is_augmented else "",
 		"matched_reference_query": matched_ref,
 		"character_id": character_id,
 		"scene_id": scene_id,
