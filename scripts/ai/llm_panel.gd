@@ -6,6 +6,16 @@ const Client := preload("res://scripts/ai/game_llm_client.gd")
 const Style := preload("res://scenes/combat/encounter_ui_style.gd")
 const Card := preload("res://scenes/combat/encounter_card.gd")
 const PAPER_PALETTE := preload("res://scenes/combat/temple_paper_palette.tres")
+const REPLY_PAPER_WASH := .15
+const REPLY_TAG_PREFIXES := [
+	"[color=#", "[/color]", "[i]", "[/i]", "[wave]", "[/wave]", "[rainbow]", "[/rainbow]",
+	"[shake]", "[shake rate=10 level=5]", "[/shake]",
+]
+
+static var _reply_tags := RegEx.create_from_string(
+	r"(?i)\[(?:color=(#[0-9a-f]{6})|(shake) rate=10 level=5|(i|rainbow|wave|shake)|/(color|i|rainbow|wave|shake))\]"
+)
+static var _partial_color_tag := RegEx.create_from_string(r"^\[color=#[0-9a-f]{0,6}$")
 
 var client := Client.new()
 var palette: Style.Palette = PAPER_PALETTE
@@ -336,6 +346,7 @@ func _add_turn(index: int) -> void:
 	var speaker := str(client.context.get("npc_name", "自由对话")) if client.route == Client.DIALOGUE else "游戏助手"
 	var reply_box := _message_card(row, speaker, false)
 	var body := _message_text(22, palette.text)
+	body.bbcode_enabled = client.route == Client.DIALOGUE
 	reply_box.add_child(body)
 	var report_button := _button(reply_box, "▸ 查看报告", _toggle_report.bind(index))
 	report_button.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
@@ -357,7 +368,7 @@ func _message_card(row: VBoxContainer, speaker: String, is_player: bool) -> VBox
 	if is_player:
 		lane.add_child(inset)
 	var card := PanelContainer.new()
-	var tint := palette.paper_face.lerp(palette.paper_wash, .87 if is_player else .15)
+	var tint := palette.paper_face.lerp(palette.paper_wash, .87 if is_player else REPLY_PAPER_WASH)
 	card.add_theme_stylebox_override("panel", _paper_box(tint, 20, 13, .28))
 	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	card.size_flags_stretch_ratio = 8.0
@@ -398,8 +409,13 @@ func _update_reply(index: int) -> void:
 	var sections := Client.reply_sections(shown, fragment, streaming) if client.route == Client.DIALOGUE \
 		else {"body": shown.get("text", "") + fragment, "report": ""}
 	var body: String = sections.body
+	var formatted: bool = view.body.bbcode_enabled
+	if formatted:
+		body = _render_reply_bbcode(body, streaming)
 	var note: String = "" if streaming else shown.get("note", "")
 	if not note.is_empty():
+		if formatted:
+			note = note.replace("[", "[lb]")
 		body += ("\n" if not body.is_empty() else "") + "〔%s〕" % note
 	var notice: String = turn.get("result", {}).get("notice", "")
 	_set_message(view.body, body)
@@ -411,6 +427,55 @@ func _update_reply(index: int) -> void:
 	view.report_button.text = "▾ 收起报告" if expanded else "▸ 查看报告"
 	_set_message(view.report, sections.report if expanded else "")
 	view.reply_lane.visible = not body.is_empty() or not notice.is_empty() or has_report or _action_turn == index
+
+func _render_reply_bbcode(value: String, streaming: bool) -> String:
+	var parts := PackedStringArray()
+	var open_tags: Array[String] = []
+	var cursor := 0
+	for token in _reply_tags.search_all(value):
+		parts.append(value.substr(cursor, token.get_start() - cursor).replace("[", "[lb]"))
+		cursor = token.get_end()
+		var closing := token.get_string(4).to_lower()
+		if not closing.is_empty():
+			if not open_tags.is_empty() and open_tags.back() == closing:
+				open_tags.pop_back()
+				parts.append("[/%s]" % closing)
+			else:
+				parts.append(token.get_string().replace("[", "[lb]"))
+			continue
+		var color := token.get_string(1)
+		var tag := token.get_string(3).to_lower() if token.get_string(2).is_empty() else "shake"
+		if not color.is_empty():
+			tag = "color"
+			parts.append("[color=#%s]" % _readable_reply_color(Color.html(color)).to_html(false))
+		else:
+			match tag:
+				"wave": parts.append("[wave amp=3]")
+				"rainbow": parts.append("[rainbow val=0.4]")
+				"shake": parts.append("[shake rate=10 level=5]")
+				_: parts.append("[%s]" % tag)
+		open_tags.append(tag)
+	var tail := value.substr(cursor)
+	if streaming:
+		var start := tail.rfind("[")
+		if start >= 0:
+			var suffix := tail.substr(start).to_lower()
+			if _partial_color_tag.search(suffix) != null or REPLY_TAG_PREFIXES.any(func(tag: String) -> bool: return tag.begins_with(suffix)):
+				tail = tail.left(start)
+	parts.append(tail.replace("[", "[lb]"))
+	for i in range(open_tags.size() - 1, -1, -1):
+		parts.append("[/%s]" % open_tags[i])
+	return "".join(parts)
+
+func _readable_reply_color(color: Color) -> Color:
+	var paper := palette.paper_face.lerp(palette.paper_wash, REPLY_PAPER_WASH)
+	var background := paper.srgb_to_linear().get_luminance() + .05
+	for step in range(8):
+		var candidate := color.lerp(palette.text, step / 8.0)
+		var foreground := candidate.srgb_to_linear().get_luminance() + .05
+		if maxf(background, foreground) >= 4.5 * minf(background, foreground):
+			return candidate
+	return palette.text
 
 func _set_message(label: RichTextLabel, value: String) -> void:
 	if label.text != value:

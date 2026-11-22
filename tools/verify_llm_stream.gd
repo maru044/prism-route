@@ -31,6 +31,7 @@ func run() -> void:
 		await _verify_transport()
 	_verify_endpoint_paths()
 	await _verify_report_panel()
+	_verify_reply_bbcode()
 	_verify_model_routes()
 	_verify_assistant_retry()
 	_verify_context_budget()
@@ -761,6 +762,39 @@ func _visible_chat_text(panel: ChatPanel) -> String:
 		if view.report_button.is_visible_in_tree():
 			lines.append(view.report_button.text)
 	return "\n".join(lines)
+
+func _verify_reply_bbcode() -> void:
+	var panel := ChatPanel.new()
+	var capture := CaptureTransport.new()
+	panel.client._transport.free()
+	panel.client._transport = capture
+	root.add_child(panel)
+	var client := panel.client
+	client.profiles[Client.DIALOGUE] = {"url": "https://fixture.invalid", "model": "fixture", "key": ""}
+	panel.open_panel(Client.DIALOGUE, "markup", {})
+	client.send("[i]玩家原文[/i]")
+	capture.delta_received.emit("<game>前文[col")
+	if _visible_chat_text(panel) != "前文":
+		_fail("reply BBCode", "a split opening tag should stay hidden until complete")
+	capture.delta_received.emit("or=#7FFFD4]地图[/co")
+	var body: RichTextLabel = panel._turn_views[0].body
+	if body.get_parsed_text() != "前文地图" or not body.text.contains("[color=#") or body.text.contains("#7fffd4"):
+		_fail("reply BBCode", "the streamed heading should use readable color without exposing tags")
+	var plain := '[url]链接[/url][img]res://fixture.png[/img]<span>普通文本</span>'
+	capture.delta_received.emit("lor][i]斜体[/i][wave]波浪[/wave][rainbow]彩虹[/rainbow][shake rate=10 level=5]颤抖[/shake]" + plain + "</game>")
+	capture.finished.emit({}, "")
+	var expected := "前文地图斜体波浪彩虹颤抖" + plain
+	var player_lane: Node = panel._turn_views[0].root.get_child(0)
+	var questions := player_lane.find_children("*", "RichTextLabel", true, false)
+	if body.get_parsed_text() != expected or questions.is_empty() or questions[0].get_parsed_text() != "[i]玩家原文[/i]":
+		_fail("reply BBCode", "expected only permitted model markup, with literal player input and unsupported tags")
+	var snapshot := panel.save_snapshot()
+	panel.close_panel()
+	panel.restore_snapshot(snapshot)
+	panel.open_panel(Client.DIALOGUE, "markup", {})
+	if _visible_chat_text(panel) != expected or not client.active_reply().text.contains("[color=#7FFFD4]"):
+		_fail("reply BBCode", "restored chat should render the same without altering the saved reply")
+	panel.free()
 
 func _verify_report_panel() -> void:
 	var panel := ChatPanel.new()
