@@ -9,6 +9,7 @@ const ROOM_ASSIGNMENT_PANEL := preload("res://scripts/ui/home_room_assignment_pa
 const HOME_INTERACTION_PANEL := preload("res://scripts/narrative/home_interaction_panel.gd")
 const CATALOG := preload("res://scripts/construction/home_intimacy_catalog.gd")
 const SHARED_HUMANOID_ACTOR := preload("res://scenes/characters/shared_humanoid_actor.tscn")
+const HVoiceManagerClass := preload("res://scripts/audio/h_voice_manager.gd")
 const MASK_SIZE:=256
 const SAVE_PATH:="user://construction/home_v1.json"
 const WALKABLE_MASK := 32
@@ -1055,6 +1056,10 @@ func _start_intimacy_staging(motion: Dictionary, resident_actor: HomeResidentAct
 		], -1.0)
 		hud.show_intimacy_button("💬 贴身耳语 [T]", Callable(self, "_open_intimacy_free_dialogue"))
 
+	var vm: Node = _get_h_voice_manager()
+	if is_instance_valid(vm):
+		vm.start_intimacy(motion)
+
 func _find_ground_staging_origin(resident: HomeResidentActor, motion: Dictionary) -> Variant:
 	var space := get_world_3d().direct_space_state
 	var basis := Basis(Vector3.UP, resident.global_rotation.y)
@@ -1119,6 +1124,9 @@ func _staging_floor_hit(space: PhysicsDirectSpaceState3D, point: Vector3, above:
 func finish_intimacy_staging() -> void:
 	if not is_intimacy_active:
 		return
+	var vm: Node = _get_h_voice_manager()
+	if is_instance_valid(vm):
+		vm.stop_intimacy(true)
 	is_intimacy_active = false
 	current_intimacy_motion.clear()
 	if is_instance_valid(intimacy_staging_root):
@@ -1319,3 +1327,10 @@ func refresh_residents() -> void:
 		actor_node.position = spawn_pos
 		add_child(actor_node)
 		resident_actors[r_id] = actor_node
+
+func _get_h_voice_manager() -> Node:
+	if HVoiceManagerClass.instance != null and is_instance_valid(HVoiceManagerClass.instance):
+		return HVoiceManagerClass.instance
+	if world != null and "h_voice_manager" in world and is_instance_valid(world.h_voice_manager):
+		return world.h_voice_manager
+	return null

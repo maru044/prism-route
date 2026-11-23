@@ -38,7 +38,8 @@ func _init() -> void:
 	var chest_world_pos: Vector3 = comp.targets[0].global_position
 	cam.look_at(chest_world_pos)
 	cam.position = chest_world_pos + Vector3(0, 0, 1.5) # 1.5m away
-	await process_frame
+	await physics_frame
+	await physics_frame
 
 	var screen_pos: Vector2 = cam.unproject_position(chest_world_pos)
 	near_hit = comp._ray_hit(screen_pos)
@@ -48,7 +49,8 @@ func _init() -> void:
 
 	# Move camera to 10.0m away (beyond MAX_INTERACTION_DISTANCE = 4.5m)
 	cam.position = chest_world_pos + Vector3(0, 0, 10.0)
-	await process_frame
+	await physics_frame
+	await physics_frame
 	screen_pos = cam.unproject_position(chest_world_pos)
 	var far_hit: Dictionary = comp._ray_hit(screen_pos)
 	assert(far_hit.is_empty(), "Raycast at 10.0m should NOT hit target due to max distance cutoff")

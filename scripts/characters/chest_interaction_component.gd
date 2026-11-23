@@ -10,6 +10,7 @@ const HIT_RADIUS := 0.044
 const MAX_DRAG := 0.026
 const PRESS_DEPTH := 0.006
 const MAX_INTERACTION_DISTANCE := 4.5
+const HVoiceManagerClass := preload("res://scripts/audio/h_voice_manager.gd")
 
 class GrabPose extends SkeletonModifier3D:
 	var bones := PackedInt32Array()
@@ -36,6 +37,8 @@ var _drag_plane: Plane
 var _grab_origin: Vector3
 var _active_camera: Camera3D
 var _cursor_set_by_us := false
+var _hold_duration: float = 0.0
+var _continuous_fondle_triggered: bool = false
 
 func setup(p_skeleton: Skeleton3D) -> void:
 	cleanup()
@@ -189,6 +192,8 @@ func _physics_process(delta: float) -> void:
 		_queued_press = null
 
 	if held < 0:
+		_hold_duration = 0.0
+		_continuous_fondle_triggered = false
 		var hit := _ray_hit(_pointer)
 		var collider: Variant = hit.get("collider")
 		var hit_idx := targets.find(collider) if collider != null else -1
@@ -196,6 +201,12 @@ func _physics_process(delta: float) -> void:
 			hovered = hit_idx
 			_update_cursor()
 	else:
+		_hold_duration += delta
+		if _hold_duration > 1.2 and not _continuous_fondle_triggered:
+			_continuous_fondle_triggered = true
+			var vm: Node = HVoiceManagerClass.instance
+			if is_instance_valid(vm):
+				vm.play_chest_fondle(true)
 		_update_cursor()
 
 	var blend := 1.0 - exp(-17.0 * delta)
@@ -232,6 +243,11 @@ func _begin_grab(point: Vector2) -> void:
 	hovered = held
 	_grab_origin = hit.position
 	_drag_plane = Plane(_active_camera.global_basis.z, _grab_origin)
+	_hold_duration = 0.0
+	_continuous_fondle_triggered = false
+	var vm: Node = HVoiceManagerClass.instance
+	if is_instance_valid(vm):
+		vm.play_chest_fondle(false)
 
 func _drag_offset(side: int) -> Vector3:
 	if _active_camera == null:
@@ -261,6 +277,8 @@ func _update_cursor() -> void:
 func _release() -> void:
 	held = -1
 	_queued_press = null
+	_hold_duration = 0.0
+	_continuous_fondle_triggered = false
 	if _cursor_set_by_us and hovered < 0:
 		_cursor_set_by_us = false
 		Input.set_default_cursor_shape(Input.CURSOR_ARROW)

@@ -3,6 +3,9 @@ extends RefCounted
 const PATH := "user://graphics.cfg"
 const AUDIO_DEFAULTS := "res://assets/audio/world_1030/settings.json"
 const QUALITY_NAMES := ["高画质", "中画质", "最低画质"]
+const GAMMA_MIN := 0.70
+const GAMMA_MAX := 1.40
+const GAMMA_DEFAULT := 1.00
 const AUDIO_KEYS := ["enabled", "master", "ambience", "actions"]
 
 static func load_config() -> ConfigFile:
@@ -15,6 +18,12 @@ static func quality() -> int:
 	var legacy: Variant = config.get_value("graphics", "performance", false)
 	var preset: Variant = config.get_value("graphics", "preset", 1 if legacy == true else 0)
 	return preset if preset is int and preset >= 0 and preset < QUALITY_NAMES.size() else 0
+
+static func gamma() -> float:
+	var value: Variant = load_config().get_value("graphics", "gamma", GAMMA_DEFAULT)
+	if (value is int or value is float) and is_finite(float(value)):
+		return clampf(float(value), GAMMA_MIN, GAMMA_MAX)
+	return GAMMA_DEFAULT
 
 static func audio() -> Dictionary:
 	var defaults: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(AUDIO_DEFAULTS))

@@ -17,6 +17,8 @@ const SKY := preload("res://assets/environment/sky/fresh_cumulus_sky.tres")
 const WATER_MANAGER := preload("res://scripts/water/water_manager.gd")
 const WORLD_AUDIO := preload("res://scripts/audio/world_audio_1030.gd")
 var world_audio
+const H_VOICE_MANAGER := preload("res://scripts/audio/h_voice_manager.gd")
+var h_voice_manager: Node
 const INITIAL_RUIN := preload("res://scenes/world/initial_ruin.tscn")
 const DIALOGUE_INPUT := preload("res://scenes/narrative/dialogue_panel.gd")
 const WORLD_CONTROL := preload("res://scripts/world/world_control_context.gd")
@@ -673,6 +675,11 @@ func _hud() -> void:
 	layer.add_child(settings_panel)
 	settings_panel.closed.connect(_sync_actor_controls)
 	settings_panel.quality_changed.connect(_on_graphics_quality_selected)
+	var grade_material: ShaderMaterial = $BrightWorldGrade/Grade.material
+	grade_material.set_shader_parameter("display_gamma", PREFERENCES.gamma())
+	settings_panel.gamma_changed.connect(func(value: float):
+		grade_material.set_shader_parameter("display_gamma", value)
+	)
 	settings_panel.assistant_requested.connect(_open_llm_assistant)
 	settings_panel.dialogue_requested.connect(_open_llm_dialogue)
 	settings_panel.monitor_changed.connect(set_performance_monitor)
@@ -687,6 +694,9 @@ func _hud() -> void:
 	world_audio.name = "WorldAudio"
 	add_child(world_audio)
 	settings_panel.audio_changed.connect(world_audio.set_volume_setting)
+	h_voice_manager = H_VOICE_MANAGER.new()
+	h_voice_manager.name = "HVoiceManager"
+	add_child(h_voice_manager)
 	performance_monitor = PERFORMANCE_MONITOR.new()
 	performance_monitor.world_scene = self
 	add_child(performance_monitor)
@@ -940,6 +950,9 @@ func show_free_dialogue(panel: Node, speaker: String, character_id: String = "",
 				"胡桃": resolved_id = "hutao"
 				_: resolved_id = speaker.to_lower()
 			
+	if is_instance_valid(h_voice_manager):
+		h_voice_manager.play_chat_greet(resolved_id)
+		
 	var loc: String = ""
 	if custom_context.has("dialogue_location") and not str(custom_context.get("dialogue_location")).is_empty():
 		loc = str(custom_context.get("dialogue_location"))

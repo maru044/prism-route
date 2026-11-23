@@ -2,6 +2,7 @@ extends Control
 
 signal closed
 signal quality_changed(index: int)
+signal gamma_changed(value: float)
 signal audio_changed(key: String, value: Variant)
 signal monitor_changed(enabled: bool)
 signal detail_changed(enabled: bool)
@@ -86,6 +87,8 @@ func _ready() -> void:
 		button.toggle_mode = true
 		button.button_group = quality_group
 		_quality.append(button)
+	if in_world:
+		_add_slider(page_settings, "伽马", "gamma")
 
 	_section(page_settings, "声音")
 	_audio_enabled = add_button(page_settings, "游戏声音", Callable())
@@ -213,8 +216,9 @@ func open(tab_index := 0) -> void:
 	_audio_enabled.text = "游戏声音 · 开启" if audio.enabled else "游戏声音 · 关闭"
 	for key: String in _sliders:
 		var row: Array = _sliders[key]
-		row[0].set_value_no_signal(audio[key])
-		row[1].text = "%d%%" % roundi(audio[key] * 100)
+		var value: float = PREFS.gamma() if key == "gamma" else audio[key]
+		row[0].set_value_no_signal(value)
+		row[1].text = _slider_readout(key, value)
 	_status.text = ""
 	show()
 	if is_inside_tree():
@@ -293,6 +297,8 @@ static func style_dropdown(button: Button) -> void:
 	popup.add_theme_color_override("font_hover_color", PALETTE.text)
 
 func _add_slider(parent: VBoxContainer, caption: String, key: String) -> void:
+	var is_gamma := key == "gamma"
+	var section := "graphics" if is_gamma else "audio"
 	var row := UI.row(15)
 	parent.add_child(row)
 	var label := UI.text_label(caption, 21, PALETTE.text, PALETTE)
@@ -301,7 +307,10 @@ func _add_slider(parent: VBoxContainer, caption: String, key: String) -> void:
 	var slider := HSlider.new()
 	slider.custom_minimum_size.y = 31
 	slider.size_flags_horizontal = SIZE_EXPAND_FILL
-	slider.max_value = 1.0
+	slider.max_value = PREFS.GAMMA_MAX if is_gamma else 1.0
+	if is_gamma:
+		slider.min_value = PREFS.GAMMA_MIN
+		slider.tooltip_text = "1.00 为默认亮度，数值越高，画面越亮。"
 	slider.step = .01
 	var track := StyleBoxFlat.new()
 	track.bg_color = PALETTE.paper_wash
@@ -314,24 +323,30 @@ func _add_slider(parent: VBoxContainer, caption: String, key: String) -> void:
 	slider.add_theme_stylebox_override("grabber_area", fill)
 	slider.add_theme_stylebox_override("grabber_area_highlight", fill)
 	row.add_child(slider)
-	var percent := UI.text_label("", 19, PALETTE.text, PALETTE)
-	percent.custom_minimum_size.x = 67
-	percent.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	row.add_child(percent)
-	_sliders[key] = [slider, percent]
+	var readout := UI.text_label("", 19, PALETTE.text, PALETTE)
+	readout.custom_minimum_size.x = 67
+	readout.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	row.add_child(readout)
+	_sliders[key] = [slider, readout]
 	var drag := {"active": false}
 	slider.drag_started.connect(func(): drag.active = true)
 	slider.value_changed.connect(func(value: float):
-		percent.text = "%d%%" % roundi(value * 100)
-		audio_changed.emit(key, value)
+		readout.text = _slider_readout(key, value)
+		if is_gamma:
+			gamma_changed.emit(value)
+		else:
+			audio_changed.emit(key, value)
 		if not drag.active:
-			_show_save_status(PREFS.store("audio", key, value))
+			_show_save_status(PREFS.store(section, key, value))
 	)
 	slider.drag_ended.connect(func(changed: bool):
 		drag.active = false
 		if changed:
-			_show_save_status(PREFS.store("audio", key, slider.value))
+			_show_save_status(PREFS.store(section, key, slider.value))
 	)
+
+func _slider_readout(key: String, value: float) -> String:
+	return "%.2f" % value if key == "gamma" else "%d%%" % roundi(value * 100)
 
 func _set_quality(index: int) -> void:
 	_quality[index].set_pressed_no_signal(true)

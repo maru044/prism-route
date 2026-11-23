@@ -12,6 +12,7 @@ signal koujou_triggered(speaker: String, text: String, emotion: String)
 
 const ReactionResolverClass := preload("res://scripts/combat/reaction_resolver.gd")
 const CombatStrategyClass := preload("res://scripts/combat/combat_strategy.gd")
+const HVoiceManagerClass := preload("res://scripts/audio/h_voice_manager.gd")
 
 enum Phase {
 	INACTIVE,
@@ -112,6 +113,9 @@ func start_combat(tutorial_mode: bool = false, meta_settings: Dictionary = {}) -
 	current_phase = Phase.ROUND_START
 	phase_changed.emit(current_phase)
 	combat_started.emit()
+	var vm: Node = HVoiceManagerClass.instance
+	if is_instance_valid(vm):
+		vm.play_battle_taunt()
 	
 	log_message_emitted.emit("【身心对决开始】与%s的身心快感对决正式打响！" % npc_name)
 	_advance_to_player_turn()
@@ -154,6 +158,9 @@ func execute_player_action(command: Variant) -> void:
 		var koujou: Dictionary = reaction_resolver.get_zone_reaction(action.target_zone, npc_pleasure.current_pleasure) if reaction_resolver else {"speaker": npc_name, "text": "哈啊"}
 		last_npc_koujou_text = str(koujou.get("text", ""))
 		koujou_triggered.emit(koujou.get("speaker", npc_name), koujou.get("text", ""), extra_badge)
+		var vm: Node = HVoiceManagerClass.instance
+		if is_instance_valid(vm):
+			vm.play_battle_reaction(npc_pleasure.current_pleasure / npc_pleasure.max_pleasure)
 	else:
 		last_player_target_zone = ""
 		last_npc_koujou_text = ""
@@ -280,6 +287,9 @@ func _check_battle_state() -> bool:
 		phase_changed.emit(current_phase)
 		log_message_emitted.emit("【对决结束】%s娇喘连连彻底失守，陷入了剧烈绝顶！主人获得了胜利！" % npc_name)
 		combat_ended.emit("player", npc_name, "npc_climax")
+		var vm: Node = HVoiceManagerClass.instance
+		if is_instance_valid(vm):
+			vm.play_battle_defeat()
 		return true
 		
 	# Check Edging Threshold Interruption (Only trigger once per battle unless reset)
