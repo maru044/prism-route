@@ -122,7 +122,47 @@ func logic(catalog: Dictionary) -> void:
 		for z in range(30):data.pieces["f_%d_%d"%[x,z]]={"id":"f_%d_%d"%[x,z],"definition":"floor","story":0,"x":x*2.,"z":z*2.,"rotation":0}
 	var begin:=Time.get_ticks_usec();data.analyze();report["900_cell_analysis_ms"]=(Time.get_ticks_usec()-begin)/1000.
 	check(data.rooms.size()==1 and data.rooms[0].cells.size()==900,"900-cell flood fill")
+	editing_checks(catalog)
 	print("CONSTRUCTION_LOGIC_PASS checks=",checks)
+
+func editing_checks(catalog: Dictionary) -> void:
+	var data := DATA.new()
+	data.initialize("editing", catalog.definitions)
+	for angle in range(4):
+		for definition: String in ["floor", "roof"]:
+			var row := {"definition": definition, "story": 0, "x": 20, "z": 20, "rotation": angle}
+			check(data.occupied_cells(row) == [Vector2i(10, 10)], "Rotated %s stays in its grid cell" % definition)
+	check(data.place("entry_ramp", 0, 4, 4).ok and not data.place("entry_ramp", 0, 4, 4).ok, "Duplicate entrance ramp blocked")
+
+	for z in range(18, 28, 2):
+		data.place("floor", 0, 20, z)
+		data.place("floor", 1, 20, z)
+	var before := data.snapshot()
+	check(not data.place("stairs", 0, 20, 20).ok and data.snapshot() == before, "Normal stairs click keeps the ceiling intact")
+	var chair := data.place("chair", 1, 21, 21)
+	var with_chair := data.snapshot()
+	check(chair.ok and not data.place("stairs", 0, 20, 20, 0, true, true).ok and data.snapshot() == with_chair,
+		"Stairwell cut cannot remove furniture support")
+	data.remove(chair.id)
+	check(data.remove(data.floor_map(1)[Vector2i(10, 12)]).ok and data.place("roof", 0, 20, 24).ok, "Mixed floor and roof over stairwell")
+	var before_stairs := data.snapshot()
+	var stair := data.place("stairs", 0, 20, 20, 0, true, true)
+	check(stair.ok and stair.cut_count == 3 and data.floor_map(1).has(Vector2i(10, 9))
+		and data.floor_map(1).size() == 2, "Assisted stairs cut three ceilings and keep the landings")
+	check(data.undo() and data.snapshot() == before_stairs and data.redo() and data.pieces.has(stair.id), "Stairwell cut and stairs share one undo")
+	check(not data.place("stairs", 0, 20, 20).ok and not data.place("stairs", 0, 22, 26, 2).ok, "Duplicate stairs blocked in both directions")
+	check(not data.place("roof", 0, 20, 20).ok and not data.place("wall", 0, 20, 22).ok, "Roof and cross wall blocked over stairs")
+	var landing: String = data.floor_map(1)[Vector2i(10, 9)]
+	check(not data.remove(landing).ok and data.pieces.has(stair.id), "Single demolition keeps stair landing supported")
+	var floor_cut := data.remove(landing, true, true)
+	check(floor_cut.ok and floor_cut.removed_count == 2 and not data.pieces.has(stair.id), "Explicit demolition includes dependent stairs")
+	check(data.undo() and data.pieces.has(landing) and data.pieces.has(stair.id), "Linked floor demolition has one undo")
+
+	var first := data.place("floor", 0, 30, 20)
+	var second := data.place("floor", 0, 30, 22)
+	var wall := data.place("wall", 0, 30, 22)
+	check(first.ok and second.ok and wall.ok and data.remove(first.id).ok and data.pieces.has(wall.id), "Shared wall stays on alternate floor support")
+	check(not data.remove(second.id).ok and data.pieces.has(wall.id), "Last floor support of a wall is protected")
 
 func run() -> void:
 	create_timer(300).timeout.connect(func():push_error("Construction verification timeout");quit(1))

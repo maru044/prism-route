@@ -940,11 +940,20 @@ func show_free_dialogue(panel: Node, speaker: String, character_id: String = "",
 				"胡桃": resolved_id = "hutao"
 				_: resolved_id = speaker.to_lower()
 			
-	var loc: String = "初始神殿" if resolved_id == "sparkle" else "大世界"
-	if resolved_id == "keqing":
-		loc = "沙洲度假遗址"
-	elif custom_context.has("dialogue_location"):
+	var loc: String = ""
+	if custom_context.has("dialogue_location") and not str(custom_context.get("dialogue_location")).is_empty():
 		loc = str(custom_context.get("dialogue_location"))
+	else:
+		var world_status := _llm_world_status()
+		var landmark: Dictionary = world_status.get("nearest_landmark", {})
+		if not landmark.is_empty() and not str(landmark.get("name", "")).is_empty():
+			loc = str(landmark.get("name"))
+		elif resolved_id == "sparkle":
+			loc = "初始神殿"
+		elif resolved_id == "keqing":
+			loc = "沙洲度假遗址"
+		else:
+			loc = "大世界"
 		
 	var title: String = "大世界伙伴"
 	var entry := CharacterRosterDatabase.get_entry(resolved_id)

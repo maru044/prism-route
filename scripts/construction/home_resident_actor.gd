@@ -451,6 +451,9 @@ func _look_towards(target: Vector3, weight: float) -> void:
 		rotation.y = lerp_angle(rotation.y, target_yaw, clampf(weight, 0.0, 1.0))
 
 func get_display_name() -> String:
+	if _display_name.is_empty() and not character_id.is_empty():
+		var entry := ROSTER.get_entry(character_id)
+		_display_name = str(entry.get("name", character_id))
 	return _display_name
 
 func is_player_nearby() -> bool:

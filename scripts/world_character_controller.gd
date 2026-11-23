@@ -4,6 +4,7 @@ const MTOON_MATERIALS := preload("res://scripts/characters/mtoon_materials.gd")
 const WETNESS := preload("res://scripts/characters/character_wetness.gd")
 const WHEEL_SCENE := preload("res://scenes/ui/character_switch_wheel.tscn")
 const HUMANOID_RIG := preload("res://scripts/characters/humanoid_rig.gd")
+const CHEST_FONDLE_COMPONENT := preload("res://scripts/characters/chest_interaction_component.gd")
 
 ## Camera-relative world controller with Genshin Impact style dynamic character switching.
 ## Supports Stelle, Ganyu, Lumine, and Firefly with auto-retargeting and MToon NPR tuning.
@@ -172,6 +173,14 @@ func _apply_character_setup(char_id: String, is_runtime_switch: bool) -> void:
 			wetness.name = "CharacterWetness"
 			add_child(wetness)
 		wetness.bind(self, character)
+
+	# Standalone tactile chest fondling component
+	var chest_fondle = get_node_or_null("ChestInteractionComponent")
+	if chest_fondle == null:
+		chest_fondle = CHEST_FONDLE_COMPONENT.new()
+		chest_fondle.name = "ChestInteractionComponent"
+		add_child(chest_fondle)
+	chest_fondle.setup(skeleton)
 	
 	# AnimationPlayer setup with automatic retargeting
 	player = AnimationPlayer.new()

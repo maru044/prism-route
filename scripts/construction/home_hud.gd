@@ -25,6 +25,7 @@ var _hint: Label
 var _status: Label
 var _notice: Label
 var _room_prompt: Label
+var _intimacy_whisper_button: Button
 var _catalog: GridContainer
 var _category_buttons: ButtonGroup
 var _story_buttons: ButtonGroup
@@ -75,10 +76,20 @@ func _ready() -> void:
 	_notice.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_screen.add_child(_notice)
 	_notice.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
-	_notice.offset_left = -456
-	_notice.offset_right = 456
-	_notice.offset_top = -59
-	_notice.offset_bottom = -28
+	_notice.offset_left = -600
+	_notice.offset_right = 600
+	_notice.offset_top = -84
+	_notice.offset_bottom = -16
+	_intimacy_whisper_button = CARD.new()
+	_intimacy_whisper_button.configure("💬 贴身耳语 [T]", PAPER, CARD.Kind.CONTINUE)
+	_intimacy_whisper_button.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
+	_intimacy_whisper_button.offset_left = -100
+	_intimacy_whisper_button.offset_right = 100
+	_intimacy_whisper_button.offset_top = -135
+	_intimacy_whisper_button.offset_bottom = -92
+	_intimacy_whisper_button.custom_minimum_size = Vector2(200, 42)
+	_screen.add_child(_intimacy_whisper_button)
+	_intimacy_whisper_button.hide()
 	_room_prompt = UI.text_label("", 19, Color("#ffe899"), UI.DEFAULT_PALETTE)
 	_room_prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_screen.add_child(_room_prompt)
@@ -319,9 +330,26 @@ func show_status(note: String) -> void:
 	_status.text = note
 
 
-func show_notice(note: String) -> void:
+func show_notice(note: String, duration: float = 5.0) -> void:
 	_notice.text = note
-	_notice_left = 5.0
+	_notice_left = duration
+
+
+func show_intimacy_button(caption: String, callback: Callable) -> void:
+	if is_instance_valid(_intimacy_whisper_button):
+		_intimacy_whisper_button.text = caption
+		for conn in _intimacy_whisper_button.pressed.get_connections():
+			_intimacy_whisper_button.pressed.disconnect(conn.callable)
+		if not callback.is_null():
+			_intimacy_whisper_button.pressed.connect(callback)
+		_intimacy_whisper_button.show()
+
+
+func hide_intimacy_button() -> void:
+	if is_instance_valid(_intimacy_whisper_button):
+		for conn in _intimacy_whisper_button.pressed.get_connections():
+			_intimacy_whisper_button.pressed.disconnect(conn.callable)
+		_intimacy_whisper_button.hide()
 
 
 func set_room_prompt(prompt_text: String) -> void:
@@ -347,7 +375,7 @@ func set_navigation(enabled: bool, forward: Vector3, origin: Vector3, homes: Arr
 		var direction: Vector3 = entry.position - origin
 		var meters := Vector2(direction.x, direction.z).length()
 		var angle := _heading if meters < .5 else rad_to_deg(atan2(direction.x, -direction.z))
-		_markers.append({"delta": wrapf(angle - _heading, -180, 180), "meters": meters, "name": entry.name})
+		_markers.append({"delta": wrapf(angle - _heading, -180, 180), "meters": meters})
 	_markers.sort_custom(func(a: Dictionary, b: Dictionary): return a.meters < b.meters)
 	_compass.queue_redraw()
 
@@ -376,20 +404,24 @@ func _draw_compass() -> void:
 		else:
 			_compass.draw_line(Vector2(x, 16), Vector2(x, 22), Color("#182d41"), 3)
 			_compass.draw_line(Vector2(x, 16), Vector2(x, 22), Color(ink, alpha), 1)
-	var last_x := -100.0
+	var distance_font_size := 16
+	var occupied: Array[Vector2] = []
 	for marker: Dictionary in _markers:
 		var x := half + clampf(marker.delta, -COMPASS_SPAN + 3, COMPASS_SPAN - 3) * half / COMPASS_SPAN
-		if absf(x - last_x) < 27.0:
+		var distance := "%d m" % roundi(marker.meters)
+		var text_width := font.get_string_size(distance, HORIZONTAL_ALIGNMENT_LEFT, -1, distance_font_size).x
+		var half_width := maxf(13.5, text_width * .5 + 4.0)
+		var span := Vector2(x - half_width, x + half_width)
+		if occupied.any(func(other: Vector2) -> bool: return span.x < other.y and span.y > other.x):
 			continue
-		last_x = x
+		occupied.append(span)
 		var bright: bool = absf(marker.delta) < 11.0
 		var color := Color(ink, .92 if bright else .66)
 		var house := PackedVector2Array([Vector2(x - 9, 46), Vector2(x, 37), Vector2(x + 9, 46),
 			Vector2(x + 6, 46), Vector2(x + 6, 55), Vector2(x - 6, 55), Vector2(x - 6, 46), Vector2(x - 9, 46)])
 		_compass.draw_polyline(house, Color("#192c40"), 4, true)
 		_compass.draw_polyline(house, color, 2, true)
-		if bright and not marker.name.is_empty():
-			_draw_text(font, "%s  %d m" % [marker.name, roundi(marker.meters)], Vector2(x, 75), 16, color)
+		_draw_text(font, distance, Vector2(x, 75), distance_font_size, color)
 
 
 func _draw_text(font: Font, value: String, center: Vector2, font_size: int, color: Color) -> void:

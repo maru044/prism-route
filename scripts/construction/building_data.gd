@@ -19,9 +19,14 @@ func initialize(id: String,catalog: Dictionary) -> void:
 static func cell_key(story: int,x: int,z: int) -> String:return "%d:%d:%d"%[story,x,z]
 static func edge_key(row: Dictionary) -> String:return "%d:%d:%d:%d"%[int(row.story),roundi(row.x/2.),roundi(row.z/2.),int(row.rotation)%2]
 static func local_position(row: Dictionary) -> Vector3:
-	return Vector3(row.x,(0. if row.definition=="entry_ramp" else .2)+(int(row.story)+(1 if row.definition=="roof" else 0))*STORY,row.z)
+	var position := Vector3(row.x,(0. if row.definition=="entry_ramp" else .2)+(int(row.story)+(1 if row.definition=="roof" else 0))*STORY,row.z)
+	if row.definition in ["floor", "roof"]:
+		var center := Vector3(CELL * 0.5, 0, CELL * 0.5)
+		position += center - Basis(Vector3.UP, yaw(row, "cell")) * center
+	return position
 static func yaw(row: Dictionary,kind: String) -> float:
-	return -PI*.5*(int(row.rotation)%2) if kind=="edge" else PI*.5*int(row.rotation)
+	var rotation := int(row.get("rotation", 0))
+	return -PI*.5*(rotation%2) if kind=="edge" else PI*.5*rotation
 
 func floor_map(story: int) -> Dictionary:
 	var result: Dictionary={}
@@ -45,9 +50,10 @@ func footprint(row: Dictionary) -> PackedVector2Array:
 	var centered: bool=definition.kind=="furniture"
 	var base:=Vector2(-float(size[0])*.5,-float(size[1])*.5) if centered else Vector2.ZERO
 	var output:=PackedVector2Array()
+	var origin := local_position(row)
 	for offset: Vector2 in [base,base+Vector2(size[0],0),base+Vector2(size[0],size[1]),base+Vector2(0,size[1])]:
 		var p:=Basis(Vector3.UP,yaw(row,definition.kind))*Vector3(offset.x,0,offset.y)
-		output.append(Vector2(row.x+p.x,row.z+p.z))
+		output.append(Vector2(origin.x+p.x,origin.z+p.z))
 	return output
 
 func occupied_cells(row: Dictionary) -> Array[Vector2i]:
@@ -68,7 +74,32 @@ func wall_crosses(row: Dictionary,polygon: PackedVector2Array) -> bool:
 		if Geometry2D.is_point_in_polygon(a.lerp(b,t),polygon):return true
 	return false
 
-func validate(row: Dictionary) -> String:
+func _edge_cells(row: Dictionary) -> Array[Vector2i]:
+	var first := Vector2i(roundi(row.x / CELL), roundi(row.z / CELL))
+	var second := first - (Vector2i(0, 1) if int(row.rotation) % 2 == 0 else Vector2i(1, 0))
+	return [first, second]
+
+func _stair_end_cell(row: Dictionary, upper: bool) -> Vector2i:
+	var length := float(definitions.stairs.footprint[1])
+	var z := -CELL * 0.5 if upper else length + CELL * 0.5
+	var point := Basis(Vector3.UP, yaw(row, "connector")) * Vector3(CELL * 0.5, 0, z) + Vector3(row.x, 0, row.z)
+	return Vector2i(floori(point.x / CELL), floori(point.z / CELL))
+
+func _edge_blocks_stair(edge: Dictionary, stair: Dictionary, occupied: Array[Vector2i]) -> bool:
+	var level := int(edge.story) - int(stair.story)
+	if level < 0 or level > 1:
+		return false
+	var sides := _edge_cells(edge)
+	var first_inside := sides[0] in occupied
+	var second_inside := sides[1] in occupied
+	if first_inside and second_inside:
+		return true
+	if first_inside == second_inside or definitions[edge.definition].get("passable", false):
+		return false
+	var outside := sides[1] if first_inside else sides[0]
+	return outside == _stair_end_cell(stair, true) or (level == 0 and outside == _stair_end_cell(stair, false))
+
+func validate(row: Dictionary, cut_stairwell := false) -> String:
 	if not definitions.has(row.definition):return "未知组件"
 	if int(row.story)<0 or int(row.story)>=MAX_STORIES:return "家园最多可建五层"
 	var d: Dictionary=definitions[row.definition];var kind: String=d.kind
@@ -76,12 +107,18 @@ func validate(row: Dictionary) -> String:
 	var floors:=floor_map(int(row.story))
 	if kind=="edge":
 		if not is_zero_approx(fposmod(row.x,2.)) or not is_zero_approx(fposmod(row.z,2.)):return "墙体必须对齐2米边界"
-		var p:=Vector2i(roundi(row.x/2.),roundi(row.z/2.));var q:=p-(Vector2i(0,1) if int(row.rotation)%2==0 else Vector2i(1,0))
+		var sides := _edge_cells(row)
+		var p := sides[0]
+		var q := sides[1]
 		if p.x<0 or p.y<0 or p.x>30 or p.y>30 or (int(row.rotation)%2==0 and p.x==30) or (int(row.rotation)%2==1 and p.y==30):return "超出地块"
 		if not floors.has(p) and not floors.has(q):return "墙体旁需要楼板"
 		if row.definition!="railing":
 			for furniture: Dictionary in pieces.values():
 				if definitions[furniture.definition].kind=="furniture" and int(furniture.story)==int(row.story) and wall_crosses(row,footprint(furniture)):return "墙体穿过家具"
+		for stair: Dictionary in pieces.values():
+			if stair.definition == "stairs" and int(stair.story) in [int(row.story) - 1, int(row.story)] \
+					and _edge_blocks_stair(row, stair, occupied_cells(stair)):
+				return "墙体或栏杆挡住楼梯通道"
 		return ""
 	if kind!="furniture" and (not is_zero_approx(fposmod(row.x,2.)) or not is_zero_approx(fposmod(row.z,2.))):return "结构必须对齐2米网格"
 	for p: Vector2 in footprint(row):
@@ -99,58 +136,128 @@ func validate(row: Dictionary) -> String:
 			if not floors.has(c):return "屋顶下需要有效楼层"
 			if floor_map(int(row.story)+1).has(c):return "上层楼板已经提供天花板，不能重叠屋顶"
 		for other: Dictionary in pieces.values():
-			if other.definition=="roof" and int(other.story)==int(row.story) and Vector2i(roundi(row.x/2.),roundi(row.z/2.)) in occupied_cells(other):return "已有屋顶"
+			if int(other.story) != int(row.story):
+				continue
+			if other.definition == "roof" and cells[0] in occupied_cells(other):return "已有屋顶"
+			if other.definition == "stairs" and cells[0] in occupied_cells(other):return "保留楼梯上方开口"
 	elif kind=="ramp":
 		if int(row.story)!=0:return "入口坡道仅用于地面"
 	elif kind=="connector":
 		if int(row.story)<0 or int(row.story)>=MAX_STORIES-1:return "顶层无法再向上建造楼梯"
+		var upper := floor_map(int(row.story) + 1)
 		for c: Vector2i in cells:
 			if not floors.has(c):return "楼梯需要完整底层支撑"
-			if floor_map(int(row.story)+1).has(c):return "先移除楼梯上方楼板"
-		var top:=Basis(Vector3.UP,yaw(row,kind))*Vector3(1,0,-1)+Vector3(row.x,0,row.z)
-		if not floor_map(int(row.story)+1).has(Vector2i(floori(top.x/2.),floori(top.z/2.))):return "楼梯上端需要落脚楼板"
+			if not cut_stairwell and upper.has(c):return "先移除楼梯上方楼板"
+		if not upper.has(_stair_end_cell(row, true)):return "楼梯上端需要落脚楼板"
+		for other: Dictionary in pieces.values():
+			if int(other.story) not in [int(row.story), int(row.story) + 1]:
+				continue
+			if not cut_stairwell and other.definition == "roof" and int(other.story) == int(row.story) \
+					and occupied_cells(other)[0] in cells:
+				return "先移除楼梯上方屋顶"
+			if definitions[other.definition].kind == "edge" and _edge_blocks_stair(other, row, cells):
+				return "墙体或栏杆挡住楼梯通道"
 	else:
 		for c: Vector2i in cells:
 			if not floors.has(c):return "家具需要完整楼板支撑"
 		var polygon:=footprint(row)
 		for edge: Dictionary in edges(int(row.story)).values():
 			if wall_crosses(edge,polygon):return "家具跨越墙体"
+	if kind in ["furniture", "connector", "ramp"]:
+		var polygon := footprint(row)
 		for other: Dictionary in pieces.values():
-			if int(other.story)!=int(row.story) or not definitions[other.definition].kind in ["furniture","connector"]:continue
-			if not Geometry2D.intersect_polygons(polygon,footprint(other)).is_empty():return "与家具或楼梯重叠"
+			if int(other.story)!=int(row.story) or not definitions[other.definition].kind in ["furniture","connector","ramp"]:continue
+			if not Geometry2D.intersect_polygons(polygon,footprint(other)).is_empty():return "与家具、楼梯或坡道重叠"
 	return ""
+
+func plan_stairwell(row: Dictionary) -> Dictionary:
+	var error := validate(row, true)
+	if not error.is_empty():
+		return {"ok": false, "error": error}
+	var occupied := occupied_cells(row)
+	var cuts: Array[String] = []
+	for piece: Dictionary in pieces.values():
+		var covers_stair: bool = (piece.definition == "floor" and int(piece.story) == int(row.story) + 1) \
+			or (piece.definition == "roof" and int(piece.story) == int(row.story))
+		if covers_stair and occupied_cells(piece)[0] in occupied:
+			cuts.append(piece.id)
+	for id in cuts:
+		var blockers := _removal_blockers(id, cuts)
+		if not blockers.is_empty():
+			return {"ok": false, "error": blockers.values()[0]}
+	return {"ok": true, "cuts": cuts}
 
 func _remember() -> void:
 	undo_stack.append(snapshot())
 	if undo_stack.size()>100:undo_stack.pop_front()
 	redo_stack.clear()
 
-func place(definition: String,story: int,x: float,z: float,rotation: int=0,remember:=true) -> Dictionary:
+func place(definition: String,story: int,x: float,z: float,rotation: int=0,remember:=true,cut_stairwell:=false) -> Dictionary:
 	var row: Dictionary={"definition":definition,"story":story,"x":x,"z":z,"rotation":posmod(rotation,4)}
-	var error:=validate(row)
-	if not error.is_empty():return {"ok":false,"error":error}
+	var cuts: Array[String] = []
+	if cut_stairwell and definition == "stairs":
+		var plan := plan_stairwell(row)
+		if not plan.ok:return plan
+		cuts = plan.cuts
+	else:
+		var error:=validate(row)
+		if not error.is_empty():return {"ok":false,"error":error}
 	if remember:_remember()
+	for id in cuts:pieces.erase(id)
 	if definitions[definition].kind=="edge":
 		for id: String in pieces.keys():
 			if definitions[pieces[id].definition].kind=="edge" and edge_key(pieces[id])==edge_key(row):pieces.erase(id)
 	serial+=1;row.id=plot_id+"_piece_%05d"%serial;row.open=false;pieces[row.id]=row;revision+=1
-	return {"ok":true,"id":row.id}
+	return {"ok":true,"id":row.id,"cut_count":cuts.size()}
 
-func remove(id: String,remember:=true) -> Dictionary:
-	if not pieces.has(id):return {"ok":false,"error":"没有选中组件"}
+func _removal_blockers(id: String, removing: Array[String]) -> Dictionary:
 	var row: Dictionary=pieces[id]
-	if row.definition=="floor":
-		var c:=Vector2i(roundi(row.x/2.),roundi(row.z/2.));var story:=int(row.story)
-		for other: Dictionary in pieces.values():
-			if other.id==id:continue
-			var kind: String=definitions[other.definition].kind
-			if int(other.story)==story and kind in ["furniture","connector","cover"] and c in occupied_cells(other):return {"ok":false,"error":"先移除楼板上的家具、楼梯或屋顶"}
-			if int(other.story)==story+1 and other.definition=="floor" and c in occupied_cells(other):return {"ok":false,"error":"先移除上层楼板"}
-			if int(other.story)==story and kind=="edge":
-				var p:=Vector2i(roundi(other.x/2.),roundi(other.z/2.));var q:=p-(Vector2i(0,1) if int(other.rotation)%2==0 else Vector2i(1,0))
-				if c==p or c==q:return {"ok":false,"error":"先移除相邻墙体或栏杆"}
+	var blockers := {}
+	if row.definition != "floor":
+		return blockers
+	var cell := Vector2i(roundi(row.x / CELL), roundi(row.z / CELL))
+	var story := int(row.story)
+	var floor_ids := floor_map(story)
+	for other: Dictionary in pieces.values():
+		if other.id in removing:
+			continue
+		var level := int(other.story) - story
+		var kind: String = definitions[other.definition].kind
+		if level == 0 and kind == "edge":
+			var sides := _edge_cells(other)
+			if cell in sides:
+				var alternate := sides[1] if cell == sides[0] else sides[0]
+				var alternate_floor: String = floor_ids.get(alternate, "")
+				if alternate_floor.is_empty() or alternate_floor in removing:
+					blockers[other.id] = "相邻墙体或栏杆需要这块楼板"
+		elif level == 0 and kind in ["furniture", "connector", "cover"] and cell in occupied_cells(other):
+			blockers[other.id] = "先移除相依构件：%s" % definitions[other.definition].label
+		elif level == 1 and other.definition == "floor" and cell in occupied_cells(other):
+			blockers[other.id] = "先移除上层楼板"
+		elif level == -1 and other.definition == "stairs" and cell == _stair_end_cell(other, true):
+			blockers[other.id] = "这块楼板是楼梯上端的落脚点"
+	return blockers
+
+func removal_error(id: String) -> String:
+	if not pieces.has(id):
+		return "没有选中组件"
+	var blockers := _removal_blockers(id, [id])
+	return "" if blockers.is_empty() else blockers.values()[0]
+
+func remove(id: String,remember:=true,include_dependents:=false) -> Dictionary:
+	if not pieces.has(id):return {"ok":false,"error":"没有选中组件"}
+	var removals: Array[String] = [id]
+	var cursor := 0
+	while cursor < removals.size():
+		var blockers := _removal_blockers(removals[cursor], removals)
+		if not blockers.is_empty() and not include_dependents:
+			return {"ok": false, "error": blockers.values()[0]}
+		for blocker: String in blockers:
+			removals.append(blocker)
+		cursor += 1
 	if remember:_remember()
-	pieces.erase(id);revision+=1;return {"ok":true}
+	for piece_id in removals:pieces.erase(piece_id)
+	revision+=1;return {"ok":true,"removed_count":removals.size()}
 
 func snapshot() -> Dictionary:return {"plot_id":plot_id,"serial":serial,"room_serial":room_serial,"pieces":pieces.duplicate(true),"rooms":rooms.duplicate(true)}
 func restore(data: Dictionary) -> void:

@@ -1,5 +1,6 @@
 extends Node3D
 const HUMANOID_RIG := preload("res://scripts/characters/humanoid_rig.gd")
+const CHEST_FONDLE_COMPONENT := preload("res://scripts/characters/chest_interaction_component.gd")
 ## Immutable shared clip; per-instance rest calibration and physics state only.
 signal initialized
 @export_file("*.vrm") var model_resource := ""
@@ -163,6 +164,10 @@ func _ready() -> void:
 		set_process(false)
 		if simulation:
 			simulation.active = false
+	var chest_fondle = CHEST_FONDLE_COMPONENT.new()
+	chest_fondle.name = "ChestInteractionComponent"
+	add_child(chest_fondle)
+	chest_fondle.setup(skeleton)
 	initialized.emit()
 
 func _append_order(index: int) -> void:

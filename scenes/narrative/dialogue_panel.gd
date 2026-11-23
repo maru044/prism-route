@@ -154,6 +154,20 @@ func _update_text_height() -> void:
 	if text_label.size.x > 0.0:
 		text_label.custom_minimum_size.y = clampf(text_label.get_content_height() + 5.0, 40.0, 148.0)
 
+func add_header_hint() -> Label:
+	var hint := UI.text_label("", 18, palette.accent, palette)
+	hint.add_theme_font_override("font", UI.interface_font())
+	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	hint.hide()
+	_dock.add_child(hint)
+	_dock.move_child(hint, 0)
+	return hint
+
+func is_over_scroll_area(point: Vector2) -> bool:
+	return is_visible_in_tree() and (text_label.get_global_rect().has_point(point) \
+		or (_choices_scroll.visible and _choices_scroll.get_global_rect().has_point(point)))
+
 static func has_active_dialogue(tree: SceneTree) -> bool:
 	if tree == null:
 		return false

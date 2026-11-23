@@ -311,18 +311,8 @@ func _build_subsystems() -> void:
 	dialogue_panel.visible = false
 	canvas.add_child(dialogue_panel)
 	
-	service_hud = Label.new()
+	service_hud = dialogue_panel.add_header_hint()
 	service_hud.name = "ServiceHUD"
-	service_hud.anchor_left = 0.1
-	service_hud.anchor_right = 0.9
-	service_hud.anchor_top = 0.84
-	service_hud.anchor_bottom = 0.93
-	service_hud.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	service_hud.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	service_hud.add_theme_font_size_override("font_size", 16)
-	service_hud.add_theme_color_override("font_color", Color(1.0, 0.96, 0.72))
-	service_hud.visible = false
-	canvas.add_child(service_hud)
 	
 	# Signal connections
 	dialogue_manager.text_updated.connect(dialogue_panel.display_text)
@@ -543,11 +533,12 @@ func _get_world_character() -> Node:
 	return null
 
 func tick(delta: float) -> void:
-	if is_instance_valid(world) and world.has_method("has_llm_panel_open") and world.has_llm_panel_open():
+	if _is_free_dialogue_open():
 		return
-	if current_state == EncounterState.COMBAT or current_state == EncounterState.FURNITURE_SERVICE_ACTIVE:
-		if not (dialogue_panel and is_instance_valid(dialogue_panel) and dialogue_panel.visible):
-			_process_combat_camera_keys(delta)
+	if current_state == EncounterState.FURNITURE_SERVICE_ACTIVE:
+		_process_combat_camera_keys(delta, false)
+	elif current_state == EncounterState.COMBAT and not _is_scripted_dialogue_visible():
+		_process_combat_camera_keys(delta, true)
 			
 	var char_node := _get_world_character()
 	if char_node == null:
@@ -619,8 +610,6 @@ func tick(delta: float) -> void:
 						
 		if has_los:
 			interact_prompt.visible = true
-			if Input.is_action_just_pressed("interact") or Input.is_action_just_pressed("ui_accept") or Input.is_physical_key_pressed(KEY_E):
-				start_encounter_dialogue()
 		else:
 			interact_prompt.visible = false
 	else:
@@ -855,9 +844,11 @@ func _reset_combat_camera_to_default() -> void:
 	combat_cam_focal_offset = Vector3.ZERO
 	_update_combat_camera_transform()
 
-func _process_combat_camera_keys(delta: float) -> void:
+func _process_combat_camera_keys(delta: float, allow_vertical_keys: bool) -> void:
 	var move_x: float = float(Input.is_physical_key_pressed(KEY_D)) - float(Input.is_physical_key_pressed(KEY_A))
-	var move_y: float = float(Input.is_physical_key_pressed(KEY_E)) - float(Input.is_physical_key_pressed(KEY_Q))
+	var move_y := 0.0
+	if allow_vertical_keys:
+		move_y = float(Input.is_physical_key_pressed(KEY_E)) - float(Input.is_physical_key_pressed(KEY_Q))
 	var move_z: float = float(Input.is_physical_key_pressed(KEY_S)) - float(Input.is_physical_key_pressed(KEY_W))
 	if move_x != 0.0 or move_y != 0.0 or move_z != 0.0:
 		var cam_basis: Basis = combat_camera.global_basis
@@ -868,38 +859,71 @@ func _process_combat_camera_keys(delta: float) -> void:
 		combat_cam_focal_offset.z = clampf(combat_cam_focal_offset.z, -2.5, 2.5)
 		_update_combat_camera_transform()
 
+func _is_free_dialogue_open() -> bool:
+	return is_instance_valid(world) and world.has_method("has_llm_panel_open") and world.has_llm_panel_open()
+
+func _is_scripted_dialogue_visible() -> bool:
+	return is_instance_valid(dialogue_panel) and dialogue_panel.is_visible_in_tree()
+
+func _input(event: InputEvent) -> void:
+	if current_state != EncounterState.FURNITURE_SERVICE_ACTIVE:
+		return
+	if _is_free_dialogue_open():
+		is_dragging_combat_cam = false
+		is_panning_combat_cam = false
+		return
+	if _is_service_exit_requested(event):
+		get_viewport().set_input_as_handled()
+		_finish_furniture_service()
+		return
+	# Capture orbit and pan for the whole gesture, including over dialogue controls.
+	if (event is InputEventMouseButton and event.button_index in [MOUSE_BUTTON_RIGHT, MOUSE_BUTTON_MIDDLE]) \
+			or (event is InputEventMouseMotion and (is_dragging_combat_cam or is_panning_combat_cam)):
+		get_viewport().set_input_as_handled()
+		_apply_combat_camera_input(event)
+
+func _is_service_exit_requested(event: InputEvent) -> bool:
+	if event.is_echo():
+		return false
+	if event is InputEventKey and event.pressed:
+		var key: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
+		if key in [KEY_E, KEY_ESCAPE]:
+			return true
+	if event.is_action_pressed("interact") or event.is_action_pressed("ui_cancel"):
+		return true
+	return not _is_scripted_dialogue_visible() and not dialogue_manager.session_active \
+		and (event.is_action_pressed("ui_accept") or (InputMap.has_action("cancel") and event.is_action_pressed("cancel")))
+
 func _unhandled_input(event: InputEvent) -> void:
-	if is_instance_valid(world) and world.has_method("has_llm_panel_open") and world.has_llm_panel_open():
+	if _is_free_dialogue_open():
 		return
 	if is_ragdoll_active and corpse_interaction_handler:
 		if corpse_interaction_handler.handle_input(event):
 			get_viewport().set_input_as_handled()
 			return
-	if current_state != EncounterState.COMBAT and current_state != EncounterState.FURNITURE_SERVICE_ACTIVE:
-		return
-	if dialogue_panel and is_instance_valid(dialogue_panel) and dialogue_panel.visible:
-		is_dragging_combat_cam = false
-		is_panning_combat_cam = false
-		return
-		
 	if current_state == EncounterState.FURNITURE_SERVICE_ACTIVE:
-		if dialogue_manager and dialogue_manager.session_active:
-			if (event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE) or event.is_action_pressed("ui_cancel"):
-				_finish_furniture_service()
-				return
-		else:
-			var is_dismiss := false
-			if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept") or event.is_action_pressed("ui_cancel"):
-				is_dismiss = true
-			elif InputMap.has_action("cancel") and event.is_action_pressed("cancel"):
-				is_dismiss = true
-			elif event is InputEventKey and event.pressed:
-				if event.keycode in [KEY_E, KEY_SPACE, KEY_ESCAPE]:
-					is_dismiss = true
-			if is_dismiss:
-				_finish_furniture_service()
-				return
-		
+		if event is InputEventMouseButton and event.pressed \
+				and event.button_index in [MOUSE_BUTTON_WHEEL_UP, MOUSE_BUTTON_WHEEL_DOWN] \
+				and not dialogue_panel.is_over_scroll_area(event.position):
+			get_viewport().set_input_as_handled()
+			_apply_combat_camera_input(event)
+	elif current_state == EncounterState.COMBAT:
+		if _is_scripted_dialogue_visible():
+			is_dragging_combat_cam = false
+			is_panning_combat_cam = false
+			return
+		_apply_combat_camera_input(event)
+	elif current_state in [EncounterState.AVAILABLE, EncounterState.COMPLETED] \
+			and is_instance_valid(interact_prompt) and interact_prompt.is_visible_in_tree():
+		if is_instance_valid(world) and world.has_method("is_world_input_allowed") and not world.is_world_input_allowed():
+			return
+		var pressed_e: bool = event is InputEventKey and event.pressed and not event.echo \
+			and (event.physical_keycode == KEY_E or event.keycode == KEY_E)
+		if pressed_e or event.is_action_pressed("interact") or event.is_action_pressed("ui_accept"):
+			get_viewport().set_input_as_handled()
+			start_encounter_dialogue()
+
+func _apply_combat_camera_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			is_dragging_combat_cam = event.pressed
@@ -1436,7 +1460,7 @@ func _begin_furniture_service_staging(service_type: String = "virgin") -> void:
 	_set_encounter_state(EncounterState.FURNITURE_SERVICE_ACTIVE)
 	
 	if service_hud:
-		service_hud.text = title_text + "\n右键环绕视角 | 滚轮缩放视距 | 中键复位视角 | WASD微调对焦 | 按【E】直接完成侍奉"
+		service_hud.text = title_text + "\n右键环绕  ·  场景区滚轮缩放  ·  中键复位  ·  WASD 调整焦点  ·  E / Esc 结束"
 		service_hud.visible = true
 	print("【大世界演出】成功步入家具开启乞命侍奉: " + title_text)
 	

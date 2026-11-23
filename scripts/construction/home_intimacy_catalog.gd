@@ -417,20 +417,19 @@ static func get_role_placements(motion: Dictionary) -> Dictionary:
 				"role_b_placement": {"offset": [0.0, -0.838, 0.0], "yaw_degrees": 0.0}
 			}
 		"mmd_0a3f6ba5f5de":
-			return {
-				"role_a_placement": {"offset": [0.0, -0.42, 0.25], "yaw_degrees": 0.0},
-				"role_b_placement": {"offset": [0.0, -0.335, 0.0], "yaw_degrees": 0.0}
-			}
+			# The foot-edge marker faces inward. The source pair faces outward from floor height.
+			return _paired_placement(Vector3(0.0, -0.46, 0.0), 180.0)
 		"mmd_43916ffe3d35":
-			return {
-				"role_a_placement": {"offset": [0.0, -0.02, 0.0], "yaw_degrees": 0.0},
-				"role_b_placement": {"offset": [0.0, 0.0, 0.22], "yaw_degrees": 0.0}
-			}
+			# The animation already includes the rise onto the mattress.
+			return _paired_placement(Vector3(0.0, -0.46, 0.05))
 		"kk_sofa_kijoui":
-			return {
-				"role_a_placement": {"offset": [0.0, 0.0, 0.0], "yaw_degrees": 0.0},
-				"role_b_placement": {"offset": [0.0, 0.0, 0.0], "yaw_degrees": 0.0}
-			}
+			return _paired_placement(Vector3(0.0, -0.46, 0.33), 180.0)
+		"mmd_781d8c87fd79":
+			# Preserve the preview's paired shift to the chair's seat and front floor.
+			return _paired_placement(Vector3(0.0, -0.42, 0.512))
+		"kk_isu_matagari_fera":
+			# Turn the pair together so the seated role and the front role clear the solid backrest.
+			return _paired_placement(Vector3(0.0, -0.42, 0.47), 180.0)
 		_:
 			if furn == "chair":
 				return {
@@ -447,6 +446,10 @@ static func get_role_placements(motion: Dictionary) -> Dictionary:
 					"role_a_placement": {"offset": [0.0, 0.0, 0.0], "yaw_degrees": 0.0},
 					"role_b_placement": {"offset": [0.0, 0.0, 0.0], "yaw_degrees": 0.0}
 				}
+
+static func _paired_placement(offset: Vector3, yaw_degrees: float = 0.0) -> Dictionary:
+	var placement := {"offset": [offset.x, offset.y, offset.z], "yaw_degrees": yaw_degrees}
+	return {"role_a_placement": placement, "role_b_placement": placement.duplicate(true)}
 
 static func calculate_role_targets(contact_transform: Transform3D, motion: Dictionary) -> Dictionary:
 	var placements := get_role_placements(motion)

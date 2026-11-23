@@ -784,6 +784,8 @@ func _verify_reply_bbcode() -> void:
 	capture.delta_received.emit("lor][i]斜体[/i][wave]波浪[/wave][rainbow]彩虹[/rainbow][shake rate=10 level=5]颤抖[/shake]" + plain + "</game>")
 	capture.finished.emit({}, "")
 	var expected := "前文地图斜体波浪彩虹颤抖" + plain
+	if body.get_theme_font_size("italics_font_size") != body.get_theme_font_size("normal_font_size"):
+		_fail("reply BBCode", "italics should keep the rest of the reply's font size")
 	var player_lane: Node = panel._turn_views[0].root.get_child(0)
 	var questions := player_lane.find_children("*", "RichTextLabel", true, false)
 	if body.get_parsed_text() != expected or questions.is_empty() or questions[0].get_parsed_text() != "[i]玩家原文[/i]":

@@ -10,6 +10,17 @@ const GULLS := [preload("res://assets/audio/world_1030/gull_01.wav"),preload("re
 const BIRDS := GULLS
 const STEPS := [preload("res://assets/audio/world_1030/water_step_01.wav"),preload("res://assets/audio/world_1030/water_step_02.wav"),preload("res://assets/audio/world_1030/water_step_03.wav"),preload("res://assets/audio/world_1030/water_step_04.wav"),preload("res://assets/audio/world_1030/water_step_05.wav"),preload("res://assets/audio/world_1030/water_step_06.wav")]
 const STARTUP := preload("res://assets/audio/world_1030/vehicle_start.wav")
+const RADIO_TRACKS: Array[AudioStream] = [
+	preload("res://assets/audio/camper_radio/Crest_of_the_Sunny_Slope.mp3"),
+	preload("res://assets/audio/camper_radio/Porcelain_and_Petals.mp3"),
+	preload("res://assets/audio/camper_radio/Sunrise_on_the_High_Trail.mp3"),
+	preload("res://assets/audio/camper_radio/The_Traveler’s_Brass_Key.mp3"),
+]
+# The tracks measure about -11.2 LUFS. At the default master level, this puts
+# them about 1.6 LU above the combined outdoor waves and leaves at full level.
+const RADIO_VOLUME_DB := -16.0
+const RADIO_FADE_IN_SECONDS := 1.25
+const RADIO_FADE_OUT_SECONDS := 1.0
 const TREE_CELL := 32.0
 var world
 var settings: Dictionary = PREFERENCES.audio()
@@ -19,6 +30,9 @@ var leaves
 var gull: AudioStreamPlayer3D
 var bird: AudioStreamPlayer3D
 var startup: AudioStreamPlayer3D
+var radio: AudioStreamPlayer
+var radio_queue: Array[AudioStream] = []
+var radio_fade := 0.0
 var steps: Array[AudioStreamPlayer3D] = []
 var step_voice := 0
 var last_step := -1
@@ -44,6 +58,7 @@ var ready_audio := false
 func initialize(scene: Node3D) -> void:
 	world = scene; rng.randomize()
 	_bus("PR_World", "Master"); _bus("PR_Ambience", "PR_World"); _bus("PR_Actions", "PR_World")
+	_bus("PR_Radio", "PR_World")
 	AudioServer.add_bus_effect(AudioServer.get_bus_index("PR_Ambience"),lowpass)
 	lowpass.cutoff_hz = 20500
 	var limiter := AudioEffectLimiter.new(); limiter.ceiling_db = -1.5
@@ -53,6 +68,11 @@ func initialize(scene: Node3D) -> void:
 	leaves = BED.new(); add_child(leaves); leaves.initialize(LEAVES,"PR_Ambience")
 	gull = _voice("PR_Ambience",60); bird = _voice("PR_Ambience",35)
 	startup = _voice("PR_Actions",30)
+	radio = AudioStreamPlayer.new()
+	radio.name = "CamperRadio"
+	radio.bus = &"PR_Radio"
+	radio.volume_linear = 0.0
+	add_child(radio)
 	for i in 6:steps.append(_voice("PR_Actions",15))
 	rebuild_tree_grid()
 	for body: Dictionary in world.water_manager.bodies:_extract_shores(body)
@@ -152,6 +172,8 @@ func _physics_process(delta: float) -> void:
 		waves.advance(delta,wave_target); leaves.advance(delta,leaf_target)
 	else:
 		waves.silence(); leaves.silence()
+
+	_update_radio(delta)
 	if world.character_mode != last_character_mode:
 		startup_armed = true; last_character_mode = world.character_mode
 		if world.character_mode:startup.stop()
@@ -173,6 +195,26 @@ func _physics_process(delta: float) -> void:
 		bird_due = rng.randf_range(7,16)
 		if _calls_allowed() and float(context.forest) > .2 and rng.randf() < float(context.forest)*(1-.65*wind):
 			_call(bird,BIRDS,p,float(settings.bird_db),7); bird_count += 1
+
+func _update_radio(delta: float) -> void:
+	var in_camper: bool = bool(settings.enabled) and not world.character_mode and not world.free_mode and world.camper.visible
+	var duration := RADIO_FADE_IN_SECONDS if in_camper else RADIO_FADE_OUT_SECONDS
+	radio_fade = move_toward(radio_fade, 1.0 if in_camper else 0.0, delta / duration)
+	radio.volume_linear = db_to_linear(RADIO_VOLUME_DB) * smoothstep(0.0, 1.0, radio_fade)
+	if not in_camper:
+		if radio_fade == 0.0 and radio.playing:
+			radio.stop()
+		return
+	if radio.playing:
+		return
+	if radio_queue.is_empty():
+		radio_queue.assign(RADIO_TRACKS)
+		radio_queue.shuffle()
+		# Prevent a repeat where two shuffled rounds meet.
+		if radio_queue.back() == radio.stream:
+			radio_queue.push_front(radio_queue.pop_back())
+	radio.stream = radio_queue.pop_back()
+	radio.play()
 
 func _calls_allowed() -> bool:
 	return bool(settings.enabled) and float(context.cover) < .6 and not bool(context.underwater)
@@ -202,6 +244,9 @@ func apply_volumes() -> void:
 	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index("PR_Actions"),float(settings.actions))
 	if not bool(settings.enabled):
 		waves.silence(); leaves.silence(); gull.stop(); bird.stop(); startup.stop()
+		radio.stop()
+		radio_fade = 0.0
+		radio.volume_linear = 0.0
 		for voice in steps:voice.stop()
 
 func set_volume_setting(key: String, value: Variant) -> void:

@@ -45,6 +45,7 @@ var home_interaction_panel: HomeInteractionPanel
 var resident_actors: Dictionary = {}
 var is_intimacy_active := false
 var current_intimacy_actor: HomeResidentActor = null
+var current_intimacy_motion: Dictionary = {}
 var intimacy_staging_root: Node3D = null
 var intimacy_npc_actor: Node3D = null
 var intimacy_master_actor: Node3D = null
@@ -90,10 +91,10 @@ func _ready() -> void:
 		var image:=Image.create(MASK_SIZE,MASK_SIZE,false,Image.FORMAT_R8);image.fill(Color.BLACK)
 		plots[spec.id]={"spec":spec,"root":node,"data":data,"nodes":{},"image":image,"texture":ImageTexture.create_from_image(image)}
 	# Verification never touches a real player's save.
-	var session: Node = world.get("save_session") if "save_session" in world else null
+	var session: Node = world.get("save_session") if (world != null and "save_session" in world) else null
 	if session != null and session.sections.has("construction"):
 		restore_snapshot(session.read_section("construction"), false)
-	elif not world.automation_enabled and FileAccess.file_exists(save_path):
+	elif world != null and not world.automation_enabled and FileAccess.file_exists(save_path):
 		if session == null or GAME_SAVES.latest().is_empty():
 			load_file(save_path, false)
 	for id: String in plots:refresh(id)
@@ -392,7 +393,7 @@ func _make_preview() -> void:
 
 func _place_grid() -> void:
 	grid.global_transform = plots[selected_plot].root.global_transform * Transform3D(Basis.IDENTITY,
-			Vector3(0, .225 + DATA.STORY * selected_story, 0))
+			Vector3(0, _placement_height() + .025, 0))
 	grid.show()
 
 func select_piece(id: String) -> void:
@@ -401,15 +402,20 @@ func select_piece(id: String) -> void:
 		placement_rotation = 0
 		_make_preview()
 	set_erase(false)
-	_update_floor_visibility()
+	if active:
+		_clamp_camera()
+		_place_grid()
 
 func set_erase(enabled: bool) -> void:
 	erase_mode = enabled
 	hud.set_selection(selected_definition, erase_mode)
 	hud.show_hint("点击构件拆除" if erase_mode else "")
+	_update_floor_visibility()
 
 func select_story(story: int) -> void:
 	selected_story = clampi(story, 0, DATA.MAX_STORIES - 1)
+	if active:
+		_clamp_camera()
 	_place_grid()
 	_update_floor_visibility()
 	if is_instance_valid(hud):
@@ -419,7 +425,7 @@ func _update_floor_visibility() -> void:
 	var plot: Dictionary = plots[selected_plot]
 	for row: Dictionary in plot.data.pieces.values():
 		var story := int(row.story)
-		var below_roof: bool = row.definition == "roof" and story == selected_story and selected_definition != "roof"
+		var below_roof: bool = row.definition == "roof" and story == selected_story and selected_definition != "roof" and not erase_mode
 		plot.nodes[row.id].visible = not active or (story <= selected_story and not below_roof)
 
 func rotate_piece() -> void:
@@ -488,27 +494,28 @@ func _pointed_piece(mouse: Vector2) -> Dictionary:
 	var excluded: Array[RID] = [world.character.get_rid()]
 	var space := get_world_3d().direct_space_state
 	var plot: Dictionary = plots[selected_plot]
-	for attempt in range(8):
+	for attempt in range(32):
 		query.exclude = excluded
 		var hit := space.intersect_ray(query)
 		if hit.is_empty() or hit.collider.get_meta("plot_id", "") != selected_plot:
 			return {}
 		var key: String = hit.collider.get_meta("construction_id", "")
-		if plot.nodes[key].visible:
-			var row: Dictionary = plot.data.pieces[key]
-			return row if int(row.story) == selected_story else {}
+		var node: Node3D = plot.nodes.get(key)
+		var row: Dictionary = plot.data.pieces.get(key, {})
+		if is_instance_valid(node) and node.visible and not row.is_empty() and int(row.story) == selected_story:
+			return row
 		excluded.append(hit.rid)
 	return {}
 
-func _remove_target(mouse: Vector2) -> void:
+func _remove_target(mouse: Vector2, include_dependents := false) -> void:
 	var target := _pointed_piece(mouse)
 	if target.is_empty():
 		hud.show_hint("请选择当前楼层的构件")
 		return
-	var result: Dictionary = plots[selected_plot].data.remove(target.id)
+	var result: Dictionary = plots[selected_plot].data.remove(target.id, true, include_dependents)
 	if result.ok:
 		_after_edit(selected_plot)
-		hud.show_hint("已拆除")
+		hud.show_hint("已拆除 %d 件构件" % result.removed_count)
 	else:
 		hud.show_hint(result.error)
 
@@ -516,6 +523,8 @@ func _input(event: InputEvent) -> void:
 	if not initialized or not world.test_ready:
 		return
 	if is_intimacy_active:
+		if world != null and world.has_method("has_llm_panel_open") and world.has_llm_panel_open():
+			return
 		if event is InputEventMouseButton:
 			if event.button_index == MOUSE_BUTTON_RIGHT:
 				intimacy_dragging = event.pressed
@@ -544,7 +553,11 @@ func _input(event: InputEvent) -> void:
 			return
 		elif event is InputEventKey and event.pressed and not event.echo:
 			var intimacy_key: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
-			if intimacy_key in [KEY_E, KEY_ESCAPE, KEY_SPACE]:
+			if intimacy_key == KEY_T:
+				_open_intimacy_free_dialogue()
+				get_viewport().set_input_as_handled()
+				return
+			elif intimacy_key in [KEY_E, KEY_ESCAPE, KEY_SPACE]:
 				finish_intimacy_staging()
 				get_viewport().set_input_as_handled()
 				return
@@ -577,7 +590,7 @@ func _input(event: InputEvent) -> void:
 			if event.ctrl_pressed: change_history(true)
 		KEY_DELETE:
 			if not hud.panel.get_global_rect().has_point(get_viewport().get_mouse_position()):
-				_remove_target(get_viewport().get_mouse_position())
+				_remove_target(get_viewport().get_mouse_position(), event.shift_pressed)
 		KEY_F:
 			if not hud.panel.get_global_rect().has_point(get_viewport().get_mouse_position()):
 				var target := _pointed_piece(get_viewport().get_mouse_position())
@@ -634,13 +647,14 @@ func _unhandled_input(event: InputEvent) -> void:
 			if hud.panel.get_global_rect().has_point(event.position):
 				return
 			if erase_mode:
-				_remove_target(event.position)
+				_remove_target(event.position, event.shift_pressed)
 			else:
 				var point := _placement_at(event.position)
 				if not point.is_empty():
 					var result: Dictionary = plots[selected_plot].data.place(selected_definition, selected_story,
-							point.x, point.z, placement_rotation)
-					if result.ok: _after_edit(selected_plot)
+							point.x, point.z, placement_rotation, true, event.shift_pressed)
+					if result.ok:
+						_after_edit(selected_plot)
 					else: hud.show_hint(result.error)
 		get_viewport().set_input_as_handled()
 	elif event is InputEventMouseMotion and look_drag:
@@ -652,21 +666,33 @@ func _clamp_camera() -> void:
 	var plot: Dictionary = plots[selected_plot]
 	var local: Vector3 = plot.root.to_local(world.camera.global_position)
 	var edge := float(plot.spec.size) + 12.0
-	local = local.clamp(Vector3(-12, 3.5 + selected_story * DATA.STORY, -12), Vector3(edge, 58, edge))
+	var minimum_height := 3.5 + selected_story * DATA.STORY
+	if selected_definition == "roof" and not erase_mode:
+		minimum_height = _placement_height() + 1.0
+	local = local.clamp(Vector3(-12, minimum_height, -12), Vector3(edge, 58, edge))
 	world.camera.global_position = plot.root.to_global(local)
+
+func _placement_height() -> float:
+	return DATA.local_position({"definition": selected_definition, "story": selected_story,
+		"x": 0.0, "z": 0.0, "rotation": 0}).y
 
 func _placement_at(mouse: Vector2) -> Dictionary:
 	var plot: Dictionary = plots[selected_plot]
 	var camera: Camera3D = world.camera
-	var height: float = plot.spec.ground_height + .2 + selected_story * DATA.STORY
+	var height: float = plot.root.to_global(Vector3.UP * _placement_height()).y
 	var hit: Variant = Plane(Vector3.UP, height).intersects_ray(camera.project_ray_origin(mouse), camera.project_ray_normal(mouse))
 	if hit == null:
 		return {}
 	var local: Vector3 = plot.root.to_local(hit)
+	if selected_definition in ["floor", "roof"]:
+		return {"x": floorf((local.x + .001) / DATA.CELL) * DATA.CELL,
+			"z": floorf((local.z + .001) / DATA.CELL) * DATA.CELL}
 	var step := .5 if kit.catalog.definitions[selected_definition].kind == "furniture" else DATA.CELL
 	return {"x": snappedf(local.x, step), "z": snappedf(local.z, step)}
 
 func _navigation() -> void:
+	if world == null:
+		return
 	var visible_now: bool = world.test_ready and world.review_ui_visible and not world.encounter_ui_active \
 			and world.is_world_input_allowed()
 	if not visible_now:
@@ -678,7 +704,7 @@ func _navigation() -> void:
 		for row: Dictionary in world.resolved_spawns:
 			var key := str(row.get("key", ""))
 			if key.begins_with("home_") and plots.has(key.substr(5)):
-				_home_markers.append({"position": row.floor_position, "name": plots[key.substr(5)].spec.name})
+				_home_markers.append({"position": row.floor_position})
 	var plot_id := eligible_plot()
 	var label := str(plots[plot_id].spec.name) if not plot_id.is_empty() else ""
 	if label.is_empty() and not plot_id.is_empty():
@@ -696,6 +722,8 @@ func _navigation() -> void:
 			hud.set_room_prompt("")
 
 func _process(delta: float) -> void:
+	if world == null:
+		return
 	if not active:
 		_navigation()
 		return
@@ -711,19 +739,34 @@ func _process(delta: float) -> void:
 	var mouse := get_viewport().get_mouse_position()
 	if hud.panel.get_global_rect().has_point(mouse):
 		return
+	var plot: Dictionary = plots[selected_plot]
 	if erase_mode:
-		hud.show_hint("点击构件拆除" if not _pointed_piece(mouse).is_empty() else "指向当前楼层的构件")
+		var target := _pointed_piece(mouse)
+		if target.is_empty():
+			hud.show_hint("指向当前楼层的构件")
+		else:
+			var blocked: String = plot.data.removal_error(target.id)
+			hud.show_hint("点击拆除 · %s" % kit.catalog.definitions[target.definition].label if blocked.is_empty()
+				else blocked + " · Shift+左键连带拆除")
 		return
 	var point := _placement_at(mouse)
 	if point.is_empty():
 		return
-	var plot: Dictionary = plots[selected_plot]
 	var definition: Dictionary = kit.catalog.definitions[selected_definition]
 	var row := {"definition": selected_definition, "story": selected_story, "x": point.x,
 			"z": point.z, "rotation": placement_rotation}
 	var error: String = plot.data.validate(row)
-	ghost_material.albedo_color = Color(.35, .82, .91, .43) if error.is_empty() else Color(1, .41, .33, .40)
-	hud.show_hint("左键放置 · 右键转动视角" if error.is_empty() else error)
+	var hint_text := "左键放置 · 右键转动视角" if error.is_empty() else error
+	var ghost_color := Color(.35, .82, .91, .43) if error.is_empty() else Color(1, .41, .33, .40)
+	if selected_definition == "stairs" and not error.is_empty() and error in ["先移除楼梯上方楼板", "先移除楼梯上方屋顶"]:
+		var plan: Dictionary = plot.data.plan_stairwell(row)
+		if plan.ok:
+			hint_text = "Shift+左键开洞并放置 · 拆除上方 %d 件楼板或屋顶" % plan.cuts.size()
+			ghost_color = Color(.74, .79, .45, .43)
+		else:
+			hint_text = plan.error
+	ghost_material.albedo_color = ghost_color
+	hud.show_hint(hint_text)
 	ghost.global_transform = plot.root.global_transform * Transform3D(
 			Basis(Vector3.UP, DATA.yaw(row, definition.kind)), DATA.local_position(row))
 	ghost.show()
@@ -930,21 +973,16 @@ func _start_intimacy_staging(motion: Dictionary, resident_actor: HomeResidentAct
 						if is_instance_valid(anchor_node):
 							target_transform = anchor_node.global_transform
 							found_anchor = true
-						else:
-							target_transform = furn_node.global_transform
-							found_anchor = true
-						break
+							break
 		if not found_anchor:
 			hud.show_notice("无法启动互动：房间内未找到所需家具或定位点 (%s)" % req_furn)
 			return
 	else:
-		var w3d := get_world_3d()
-		if w3d != null and w3d.direct_space_state != null:
-			var space := w3d.direct_space_state
-			var g_ray := PhysicsRayQueryParameters3D.create(target_transform.origin + Vector3.UP * 0.8, target_transform.origin - Vector3.UP * 1.5, 32 | 1)
-			var g_hit := space.intersect_ray(g_ray)
-			if not g_hit.is_empty():
-				target_transform.origin.y = g_hit.position.y + 0.02
+		var floor_origin: Variant = _find_ground_staging_origin(resident_actor, motion)
+		if floor_origin == null:
+			hud.show_notice("无法启动互动：附近没有足够的平整地面")
+			return
+		target_transform.origin = floor_origin
 
 	target_transform = target_transform.orthonormalized()
 
@@ -955,6 +993,7 @@ func _start_intimacy_staging(motion: Dictionary, resident_actor: HomeResidentAct
 
 	is_intimacy_active = true
 	current_intimacy_actor = resident_actor
+	current_intimacy_motion = motion.duplicate(true)
 	if resident_actor.has_method("enter_interaction"):
 		resident_actor.enter_interaction()
 	else:
@@ -1011,14 +1050,77 @@ func _start_intimacy_staging(motion: Dictionary, resident_actor: HomeResidentAct
 		var m_name: String = str(motion.get("name", "互动"))
 		var m_tier: String = "日常侍奉" if str(motion.get("tier", "service")) == "service" else "深度温存"
 		var f_name: String = CATALOG.get_furniture_label(req_furn)
-		hud.show_notice("【家园亲密互动 · %s】与 %s 在 %s 进行互动（动作：%s）\n按住右键拖动环绕视角 · 滚轮缩放视距 · 按【E】或【ESC】结束互动" % [
+		hud.show_notice("【家园亲密互动 · %s】与 %s 在 %s 进行互动（动作：%s）\n按住右键拖动环绕视角 · 滚轮缩放视距 · 按【T】或点击【贴身耳语】自由聊天 · 按【E】或【ESC】结束互动" % [
 			m_tier, resident_actor.get_display_name(), f_name, m_name
-		])
+		], -1.0)
+		hud.show_intimacy_button("💬 贴身耳语 [T]", Callable(self, "_open_intimacy_free_dialogue"))
+
+func _find_ground_staging_origin(resident: HomeResidentActor, motion: Dictionary) -> Variant:
+	var space := get_world_3d().direct_space_state
+	var basis := Basis(Vector3.UP, resident.global_rotation.y)
+	var origin := resident.global_position
+	var room_cells: Array = resident.room_data.get("cells", [])
+	var plot_root: Node3D = plots.get(resident.plot_id, {}).get("root")
+	var story := int(resident.room_data.get("story", 0))
+	# Keep a nearby relocation in the assigned room when the resident is already inside it.
+	var in_room := is_instance_valid(plot_root) and _staging_cell_key(plot_root.to_local(origin), story) in room_cells
+	var lying_pair := str(motion.get("id", "")) == "mmd_16a2ecfb7781"
+	var clearance := BoxShape3D.new()
+	clearance.size = Vector3(1.25, 1.1, 1.9) if lying_pair else Vector3(0.9, 1.1, 1.0)
+	var center_offset := basis.z * 0.32 if lying_pair else Vector3.ZERO
+	var query := PhysicsShapeQueryParameters3D.new()
+	query.shape = clearance
+	query.collision_mask = WALKABLE_MASK | 1
+	var nearby: Array[Vector2] = []
+	for x in range(-4, 5):
+		for z in range(-4, 5):
+			var offset := Vector2(x, z) * 0.5
+			if offset.length_squared() <= 4.0:
+				nearby.append(offset)
+	nearby.sort_custom(func(a: Vector2, b: Vector2) -> bool: return a.length_squared() < b.length_squared())
+	for offset in nearby:
+		var point := origin + Vector3(offset.x, 0, offset.y)
+		var floor_hit := _staging_floor_hit(space, point, 0.65, 0.8)
+		if floor_hit.is_empty():
+			continue
+		var floor_point: Vector3 = floor_hit.position
+		var center := floor_point + center_offset
+		query.transform = Transform3D(basis, center + Vector3.UP * (clearance.size.y * 0.5 + 0.035))
+		if not space.intersect_shape(query, 1).is_empty():
+			continue
+		var supported := true
+		var half := clearance.size * 0.5
+		for corner: Vector2 in [Vector2(-half.x, -half.z), Vector2(-half.x, half.z),
+				Vector2(half.x, -half.z), Vector2(half.x, half.z)]:
+			var foot := center + basis * Vector3(corner.x, 0.0, corner.y)
+			var support := _staging_floor_hit(space, foot, 0.09, 0.09)
+			if support.is_empty() or (in_room and _staging_cell_key(plot_root.to_local(foot), story) not in room_cells):
+				supported = false
+				break
+		if supported:
+			return floor_point + Vector3.UP * 0.02
+	return null
+
+func _staging_cell_key(local: Vector3, story: int) -> String:
+	return DATA.cell_key(story, floori(local.x / DATA.CELL), floori(local.z / DATA.CELL))
+
+func _staging_floor_hit(space: PhysicsDirectSpaceState3D, point: Vector3, above: float, below: float) -> Dictionary:
+	var ray := PhysicsRayQueryParameters3D.create(point + Vector3.UP * above, point - Vector3.UP * below, WALKABLE_MASK | 1)
+	var hit := space.intersect_ray(ray)
+	if hit.is_empty() or hit.normal.y < 0.75:
+		return {}
+	var body: CollisionObject3D = hit.collider
+	var plot: Dictionary = plots.get(body.get_meta("plot_id", ""), {})
+	if not plot.is_empty():
+		var piece: Dictionary = plot.data.pieces.get(body.get_meta("construction_id", ""), {})
+		return hit if piece.get("definition") == "floor" else {}
+	return hit if body.get_meta("surface_kind", "") in ["Terrain", "Sand", "Road"] else {}
 
 func finish_intimacy_staging() -> void:
 	if not is_intimacy_active:
 		return
 	is_intimacy_active = false
+	current_intimacy_motion.clear()
 	if is_instance_valid(intimacy_staging_root):
 		intimacy_staging_root.queue_free()
 		intimacy_staging_root = null
@@ -1050,6 +1152,8 @@ func finish_intimacy_staging() -> void:
 		current_intimacy_actor = null
 
 	if world != null:
+		if world.has_method("has_llm_panel_open") and world.has_llm_panel_open() and world.has_method("close_free_dialogue"):
+			world.close_free_dialogue()
 		if "character" in world and is_instance_valid(world.character):
 			world.character.visible = true
 			world.character.process_mode = Node.PROCESS_MODE_INHERIT
@@ -1059,7 +1163,55 @@ func finish_intimacy_staging() -> void:
 			world._sync_actor_controls()
 
 	if is_instance_valid(hud):
+		hud.hide_intimacy_button()
 		hud.show_notice("已结束家园亲密互动。")
+
+func _open_intimacy_free_dialogue() -> void:
+	if not is_intimacy_active or not is_instance_valid(current_intimacy_actor) or world == null:
+		return
+	if world.has_method("has_llm_panel_open") and world.has_llm_panel_open():
+		return
+	if not world.has_method("show_free_dialogue"):
+		return
+
+	var resident := current_intimacy_actor
+	var speaker := resident.get_display_name()
+	var char_id := resident.character_id
+	var room_title: String = str(resident.room_data.get("title", "起居室"))
+	var plot_title: String = "海岛别墅"
+	if plots.has(resident.plot_id):
+		var p_name: String = str(plots[resident.plot_id].get("data", {}).get("name", ""))
+		if not p_name.is_empty():
+			plot_title = p_name
+	var loc := "%s · %s" % [plot_title, room_title]
+
+	var m_name: String = str(current_intimacy_motion.get("name", "亲密互动"))
+	var m_desc: String = str(current_intimacy_motion.get("desc", ""))
+	var m_tier: String = "日常侍奉" if str(current_intimacy_motion.get("tier", "service")) == "service" else "深度温存"
+	var req_furn: String = str(current_intimacy_motion.get("furniture", "ground"))
+	var f_name: String = CATALOG.get_furniture_label(req_furn)
+	var anchor_name: String = str(current_intimacy_motion.get("anchor", ""))
+	var furn_info: String = f_name if anchor_name.is_empty() else ("%s（%s）" % [f_name, anchor_name])
+
+	var custom_ctx: Dictionary = {
+		"dialogue_location": loc,
+		"companion_status": "海岛契约伴侣 / 亲密同居中",
+		"current_interaction_state": "家园亲密互动 · %s" % m_tier,
+		"bound_furniture_info": furn_info,
+		"intimate_action": m_name,
+		"intimate_action_desc": m_desc,
+		"intimate_mode": true,
+		"on_closed": Callable(self, "_on_intimacy_dialogue_closed")
+	}
+
+	if is_instance_valid(hud):
+		hud.hide_intimacy_button()
+
+	world.show_free_dialogue(null, speaker, char_id, custom_ctx)
+
+func _on_intimacy_dialogue_closed() -> void:
+	if is_intimacy_active and is_instance_valid(hud):
+		hud.show_intimacy_button("💬 贴身耳语 [T]", Callable(self, "_open_intimacy_free_dialogue"))
 
 func _update_intimacy_camera() -> void:
 	if not is_instance_valid(intimacy_camera):

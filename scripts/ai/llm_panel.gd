@@ -16,6 +16,7 @@ static var _reply_tags := RegEx.create_from_string(
 	r"(?i)\[(?:color=(#[0-9a-f]{6})|(shake) rate=10 level=5|(i|rainbow|wave|shake)|/(color|i|rainbow|wave|shake))\]"
 )
 static var _partial_color_tag := RegEx.create_from_string(r"^\[color=#[0-9a-f]{0,6}$")
+static var _reply_italics: FontVariation
 
 var client := Client.new()
 var palette: Style.Palette = PAPER_PALETTE
@@ -347,6 +348,13 @@ func _add_turn(index: int) -> void:
 	var reply_box := _message_card(row, speaker, false)
 	var body := _message_text(22, palette.text)
 	body.bbcode_enabled = client.route == Client.DIALOGUE
+	if body.bbcode_enabled:
+		if _reply_italics == null:
+			_reply_italics = FontVariation.new()
+			_reply_italics.base_font = Style.interface_font()
+			_reply_italics.variation_transform = Transform2D(Vector2.RIGHT, Vector2(.2, 1), Vector2.ZERO)
+		body.add_theme_font_override("italics_font", _reply_italics)
+		body.add_theme_font_size_override("italics_font_size", body.get_theme_font_size("normal_font_size"))
 	reply_box.add_child(body)
 	var report_button := _button(reply_box, "▸ 查看报告", _toggle_report.bind(index))
 	report_button.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
