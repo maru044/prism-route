@@ -1,85 +1,32 @@
 extends Node
-## Accepted B wind for the 1021 world. Presentation only: reuse baked roots,
-## instance buffers, density LOD and actor interaction without a new bake.
+## Shared wind material and immutable indexed grass LODs for the 1021 world.
 enum Mode { BREEZE, STRONG, AUTO }
 const MESH := preload("res://assets/vegetation/models/grass_star_3card_gust_v7.glb")
 const SHADER := preload("res://assets/vegetation/shaders/grass_world_wind.gdshader")
-const REFERENCE_SHADER := preload("res://assets/vegetation/shaders/grass_gust.gdshader")
 const SETTINGS := preload("res://scripts/grass_wind_settings.gd")
 const TRANSITION_SECONDS := SETTINGS.TRANSITION_SECONDS
 const CYCLE_SECONDS := SETTINGS.CYCLE_SECONDS
 const CULL_MARGIN := 1.8
-var vegetation
+# Native LOD edge errors for approximately 18 m and 44 m at 1080p / 60°.
+# Godot uses projected size, so narrower FOV and higher resolutions retain detail longer.
+const MIDDLE_LOD_ERROR := 0.019245
+const FAR_LOD_ERROR := 0.047044
+
 var material: ShaderMaterial
 var mode := Mode.AUTO
 var elapsed := 0.0
 var blend := 0.0
 var auto_epoch := 0.0
 var running := true
-var mesh: Mesh
-var reference_mesh: Mesh
-var lod_meshes: Dictionary = {}
-var grass_nodes: Array[MultiMeshInstance3D] = []
-var lod_clock := 0.0
-var optimized := true
-var resident_cpu_cache_bytes:=0
-var last_lod_change_usec:=0
-const LOD_CHANGE_BUDGET_USEC:=1000
-var profile_enabled := "--grass-profile" in OS.get_cmdline_user_args()
-var profile := {"configure_usec":0,"configure_count":0,"lod_refresh_usec":0,"lod_refresh_max_usec":0,"mesh_switch_usec":0,"mesh_switch_max_usec":0,"mesh_switch_count":0}
 
-func initialize(owner_vegetation) -> void:
-	vegetation = owner_vegetation
+func initialize(vegetation) -> void:
 	material = vegetation.grass_material
 	apply_wind_material(material)
-	mesh = vegetation._extract_first_mesh(MESH)
-	mesh.surface_set_material(0, material)
-	reference_mesh = mesh
-	# Both models have the same unbent envelope. The baked-store AABB already
-	# grows that envelope conservatively to include wind and actor interaction.
-	assert(mesh.get_aabb().is_equal_approx(vegetation.grass_mesh.get_aabb()))
-	mesh = make_presentation_mesh(reference_mesh, material, 4)
-	vegetation.grass_mesh = mesh
-	lod_meshes = {
-		4: mesh,
-		2: make_presentation_mesh(reference_mesh, material, 2),
-		1: make_presentation_mesh(reference_mesh, material, 1),
-	}
-	var stream: Node = vegetation.volume_streamer
-	stream.presentation_mesh_selector=select_mesh_for_bounds
-	stream.presentation_far_mesh=lod_meshes[1]
-	stream.child_entered_tree.connect(_track_chunk)
-	for chunk: Node in stream.get_children():
-		_track_chunk(chunk)
+	var source: Mesh = vegetation._extract_first_mesh(MESH)
+	# Keep the existing grass envelope used by the baked-store AABBs.
+	assert(source.get_aabb().is_equal_approx(vegetation.grass_mesh.get_aabb()))
+	vegetation.grass_mesh = make_presentation_mesh(source, material, 4, true)
 	advance(0.0)
-
-func _track_chunk(chunk: Node) -> void:
-	if not chunk.child_entered_tree.is_connected(_configure_node):
-		chunk.child_entered_tree.connect(_configure_node)
-	if not chunk.tree_exiting.is_connected(_untrack_chunk.bind(chunk)):
-		chunk.tree_exiting.connect(_untrack_chunk.bind(chunk))
-	for node: Node in chunk.get_children():
-		_configure_node(node)
-
-func _untrack_chunk(chunk: Node) -> void:
-	for node: Node in chunk.get_children():
-		if node is MultiMeshInstance3D:
-			grass_nodes.erase(node)
-
-func _configure_node(node: Node) -> void:
-	if node is MultiMeshInstance3D:
-		var started:=Time.get_ticks_usec()
-		node.material_override = material
-		node.extra_cull_margin = maxf(node.extra_cull_margin, CULL_MARGIN)
-		var existing: Mesh=node.multimesh.mesh
-		node.set_meta("wind_mesh",existing)
-		node.set_meta("wind_bounds",node.global_transform*node.multimesh.custom_aabb)
-		node.set_meta("wind_lod",4 if existing==mesh else (2 if existing==lod_meshes[2] else 1))
-		if not grass_nodes.has(node):
-			grass_nodes.append(node)
-		_update_node_lod(node)
-		if profile_enabled:
-			profile.configure_usec+=Time.get_ticks_usec()-started;profile.configure_count+=1
 
 static func apply_wind_material(material: ShaderMaterial) -> void:
 	# Preserve the exact world's biome, alpha, LOD and interaction settings.
@@ -92,94 +39,53 @@ static func apply_wind_material(material: ShaderMaterial) -> void:
 	for parameter: String in settings:
 		material.set_shader_parameter(parameter, settings[parameter])
 	SETTINGS.apply(material, SETTINGS.DEFAULT_PARAMETERS)
-	material.set_shader_parameter("gust_shared_curve",true)
-	material.set_shader_parameter("gust_distance_lod",true)
+	material.set_shader_parameter("gust_shared_curve", true)
+	material.set_shader_parameter("gust_distance_lod", true)
 
-
-static func make_presentation_mesh(source: Mesh, material: ShaderMaterial, segments: int) -> ArrayMesh:
+static func make_presentation_mesh(source: Mesh, material: ShaderMaterial, segments: int, use_mesh_lods := false) -> ArrayMesh:
 	var arrays: Array = []
 	arrays.resize(Mesh.ARRAY_MAX)
 	var vertices := PackedVector3Array()
 	var normals := PackedVector3Array()
 	var colors := PackedColorArray()
 	var uvs := PackedVector2Array()
-	var indices := PackedInt32Array()
 	var width := source.get_aabb().size.x
 	var height := source.get_aabb().size.y
 	for card in 3:
-		var angle := float(card)*PI/3.0
-		var right := Vector3(cos(angle),0,-sin(angle))*width*0.5
-		var base := vertices.size()
-		for row in segments+1:
-			var u := float(row)/segments
+		var angle := float(card) * PI / 3.0
+		var right := Vector3(cos(angle), 0, -sin(angle)) * width * 0.5
+		for row in segments + 1:
+			var u := float(row) / segments
 			for side: int in [-1,1]:
-				vertices.append(right*side+Vector3.UP*height*u)
-				normals.append(Vector3.UP);colors.append(Color(u,u,u,1))
+				vertices.append(right * side + Vector3.UP * height * u)
+				normals.append(Vector3.UP)
+				colors.append(Color(u, u, u, 1))
 				# glTF flips Blender's V: roots sample the atlas bottom (V=1).
-				uvs.append(Vector2(float(side+1)*0.5,1.0-u))
-		for row in segments:
-			var a := base+row*2
-			indices.append_array([a,a+1,a+3,a,a+3,a+2])
-	arrays[Mesh.ARRAY_VERTEX]=vertices;arrays[Mesh.ARRAY_NORMAL]=normals
-	arrays[Mesh.ARRAY_COLOR]=colors;arrays[Mesh.ARRAY_TEX_UV]=uvs;arrays[Mesh.ARRAY_INDEX]=indices
+				uvs.append(Vector2(float(side + 1) * 0.5, 1.0 - u))
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	arrays[Mesh.ARRAY_NORMAL] = normals
+	arrays[Mesh.ARRAY_COLOR] = colors
+	arrays[Mesh.ARRAY_TEX_UV] = uvs
+	arrays[Mesh.ARRAY_INDEX] = _card_indices(segments, 1)
+	var lods := {}
+	if use_mesh_lods:
+		assert(segments == 4)
+		lods[MIDDLE_LOD_ERROR] = _card_indices(segments, 2)
+		lods[FAR_LOD_ERROR] = _card_indices(segments, 4)
 	var result := ArrayMesh.new()
-	result.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays)
-	result.surface_set_material(0,material)
+	result.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays, [], lods)
+	result.surface_set_material(0, material)
 	return result
 
-func _update_node_lod(node: MultiMeshInstance3D, allow_change:=true) -> void:
-	last_lod_change_usec=0
-	var box: AABB=node.get_meta("wind_bounds")
-	var level:=_level_for_bounds(box,node.get_meta("wind_lod",4))
-	var desired: Mesh = lod_meshes[level] if optimized else reference_mesh
-	if node.get_meta("wind_mesh")!=desired:
-		if not allow_change:return
-		var started:=Time.get_ticks_usec()
-		if node.multimesh!=null:
-			node.multimesh.mesh=desired
-		node.set_meta("wind_mesh",desired)
-		node.set_meta("wind_lod",level)
-		last_lod_change_usec=Time.get_ticks_usec()-started
-		if profile_enabled:
-			var cost:=Time.get_ticks_usec()-started
-			profile.mesh_switch_usec+=cost;profile.mesh_switch_max_usec=maxi(profile.mesh_switch_max_usec,cost);profile.mesh_switch_count+=1
-
-func select_mesh_for_bounds(box: AABB) -> Mesh:
-	return lod_meshes[_level_for_bounds(box,4)] if optimized else reference_mesh
-
-func _level_for_bounds(box: AABB, old: int) -> int:
-	var level := 4
-	var vp := get_viewport()
-	if vp != null and optimized:
-		var camera := vp.get_camera_3d()
-		if camera != null:
-			var point := camera.global_position
-			var distance := point.distance_to(point.clamp(box.position,box.end))
-			# Switch only beyond each shader morph's completed range. Hysteresis
-			# avoids mesh oscillation while the camera sits on a threshold.
-			if distance>(42.0 if old==1 else 44.0):level=1
-			elif distance>(16.0 if old==2 else 18.0):level=2
-	return level
-
-func set_optimized(enabled: bool) -> void:
-	optimized=enabled
-	material.shader=SHADER if enabled else REFERENCE_SHADER
-	material.set_shader_parameter("gust_shared_curve",enabled)
-	material.set_shader_parameter("gust_distance_lod",enabled)
-	refresh_lods(true)
-
-func refresh_lods(force:=false) -> void:
-	var started:=Time.get_ticks_usec()
-	grass_nodes=grass_nodes.filter(func(node):return is_instance_valid(node))
-	resident_cpu_cache_bytes=0
-	var changes_usec:=0
-	for node in grass_nodes:
-		_update_node_lod(node,force or changes_usec<LOD_CHANGE_BUDGET_USEC)
-		changes_usec+=last_lod_change_usec
-		resident_cpu_cache_bytes+=int(node.get_meta("wind_cpu_cache_bytes",0))
-	if profile_enabled:
-		var cost:=Time.get_ticks_usec()-started
-		profile.lod_refresh_usec+=cost;profile.lod_refresh_max_usec=maxi(profile.lod_refresh_max_usec,cost)
+static func _card_indices(segments: int, step: int) -> PackedInt32Array:
+	var indices := PackedInt32Array()
+	for card in 3:
+		var base := card * (segments + 1) * 2
+		for row in range(0, segments, step):
+			var bottom := base + row * 2
+			var top := bottom + step * 2
+			indices.append_array([bottom, bottom + 1, top + 1, bottom, top + 1, top])
+	return indices
 
 func set_mode(value: int) -> void:
 	mode = clampi(value, Mode.BREEZE, Mode.AUTO)
@@ -189,10 +95,6 @@ func set_mode(value: int) -> void:
 func _process(delta: float) -> void:
 	if running:
 		advance(delta)
-	lod_clock+=delta
-	if lod_clock>=0.1:
-		lod_clock=0.0
-		refresh_lods()
 
 func advance(delta: float) -> void:
 	elapsed += delta
@@ -201,5 +103,4 @@ func advance(delta: float) -> void:
 	blend = move_toward(blend, 1.0 if strong else 0.0, delta / TRANSITION_SECONDS)
 	material.set_shader_parameter("gust_mix", blend)
 	material.set_shader_parameter("gust_time", elapsed)
-	if optimized:
-		SETTINGS.update_shared_curve(material,elapsed)
+	SETTINGS.update_shared_curve(material, elapsed)

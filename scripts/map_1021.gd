@@ -255,6 +255,8 @@ func _ready() -> void:
 		await get_tree().process_frame
 	vegetation=VEGETATION.new();vegetation.world_scene=self;add_child(vegetation)
 	vegetation.initialize(character,_noise(),2)
+	grass_wind=GRASS_WIND.new();add_child(grass_wind)
+	grass_wind.initialize(vegetation);grass_wind.set_mode(GRASS_WIND.Mode.AUTO)
 	if loading_from_title:
 		await get_tree().process_frame
 	oval_atrium.bind_grass(vegetation.grass_material)
@@ -272,8 +274,6 @@ func _ready() -> void:
 	vegetation.volume_streamer.waypoint_grass_cell_filter = npc_waypoint_ruins.overlaps_grass_cell
 	cape_town.bind_vegetation(vegetation)
 	upper_ring.plant_courtyard(vegetation)
-	grass_wind=GRASS_WIND.new();add_child(grass_wind)
-	grass_wind.initialize(vegetation);grass_wind.set_mode(GRASS_WIND.Mode.AUTO)
 	sunken_archive.install_courtyard_grass(vegetation)
 	_apply_grass_quality()
 	_sync_meadow_color()

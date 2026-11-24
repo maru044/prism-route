@@ -178,6 +178,8 @@ func _plant_meadow_cell(cell: Vector3i, ground_min: float, ground_max: float,
 	var buffer := GRASS_BUFFER.pack(near, near_data)
 	var grass := GRASS_BUFFER.make_node("TitleMeadowGrass", near_mesh, material, buffer, 0.0,
 		GRASS_BUFFER.bounds(buffer, near_mesh.get_aabb()))
+	if grass == null:
+		return
 	grass.position = origin
 	grass.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	grass.extra_cull_margin = WORLD_GRASS.CULL_MARGIN
