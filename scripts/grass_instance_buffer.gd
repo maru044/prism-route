@@ -22,7 +22,12 @@ static func from_roots(roots: PackedFloat64Array,states: PackedInt64Array,fracti
 	for i in states.size():
 		rng.state=states[i];var at:=i*6
 		append_blades(rng,roots[at],roots[at+1],roots[at+2],Vector3(roots[at+3],roots[at+4],roots[at+5]),near,far,near_data,far_data,fraction)
-	var data: Dictionary={"near":pack(near,near_data),"far":pack(far,far_data),"bounds":[],"bytes":0}
+	var near_buffer := pack(near,near_data)
+	var far_buffer := pack(far,far_data)
+	if (near_buffer.is_empty() and not near.is_empty()) or (far_buffer.is_empty() and not far.is_empty()):
+		push_error("grass_instance_buffer: pack failed during from_roots")
+		return {}
+	var data: Dictionary={"near":near_buffer,"far":far_buffer,"bounds":[],"bytes":0}
 	for group: String in ["near","far"]:
 		var b:=bounds(data[group],mesh_bounds)
 		data.bounds.append([b.position.x,b.position.y,b.position.z,b.size.x,b.size.y,b.size.z])
@@ -30,9 +35,16 @@ static func from_roots(roots: PackedFloat64Array,states: PackedInt64Array,fracti
 	return data
 
 static func pack(transforms: Array,custom: Array) -> PackedFloat32Array:
-	assert(transforms.size()==custom.size())
-	var buffer:=PackedFloat32Array();buffer.resize(transforms.size()*16)
-	for i in transforms.size():
+	if transforms.is_empty() or transforms.size() != custom.size():
+		return PackedFloat32Array()
+	var count := transforms.size()
+	var target_size := count * 16
+	var buffer := PackedFloat32Array()
+	var err := buffer.resize(target_size)
+	if err != OK or buffer.size() != target_size:
+		push_error("grass_instance_buffer: pack failed to allocate %d floats"%target_size)
+		return PackedFloat32Array()
+	for i in count:
 		var t: Transform3D=transforms[i];var c: Color=custom[i];var at:=i*16
 		buffer[at]=t.basis.x.x;buffer[at+1]=t.basis.y.x;buffer[at+2]=t.basis.z.x;buffer[at+3]=t.origin.x
 		buffer[at+4]=t.basis.x.y;buffer[at+5]=t.basis.y.y;buffer[at+6]=t.basis.z.y;buffer[at+7]=t.origin.y
@@ -53,8 +65,15 @@ static func bounds(buffer: PackedFloat32Array,mesh_bounds: AABB) -> AABB:
 
 static func make_node(node_name: String,mesh: Mesh,material: Material,buffer: PackedFloat32Array,end: float,aabb: AABB) -> MultiMeshInstance3D:
 	var mm:=MultiMesh.new();mm.transform_format=MultiMesh.TRANSFORM_3D
-	mm.use_custom_data=true;mm.mesh=mesh;mm.instance_count=buffer.size()/16
-	mm.custom_aabb=aabb;mm.buffer=buffer
+	mm.use_custom_data=true;mm.mesh=mesh
+	var target_count := buffer.size()/16
+	if target_count <= 0:
+		mm.instance_count = 0
+	else:
+		mm.instance_count = target_count
+		if mm.instance_count == target_count:
+			mm.custom_aabb=aabb
+			mm.buffer=buffer
 	var node:=MultiMeshInstance3D.new();node.name=node_name;node.multimesh=mm
 	node.material_override=material;node.visibility_range_begin=0;node.visibility_range_end=end
 	node.set_meta("lod_begin",0.0);node.set_meta("lod_end",end)

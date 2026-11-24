@@ -347,6 +347,8 @@ func _build_subsystems() -> void:
 	dialogue_manager.dialogue_ended.connect(_on_dialogue_ended)
 	
 	combat_manager.log_message_emitted.connect(combat_hud.append_log)
+	combat_manager.voice_motion_ready = func() -> bool:
+		return HVoiceManager.paired_motion_started(sparkle_combat_actor, master_combat_actor)
 	combat_manager.koujou_triggered.connect(combat_hud.display_koujou)
 	combat_manager.phase_changed.connect(_on_combat_phase_changed)
 	combat_manager.combat_ended.connect(_on_combat_ended)
@@ -1573,6 +1575,8 @@ func _set_encounter_state(new_state: EncounterState) -> bool:
 		return false
 	var old_state := current_state
 	var was_input_locked := is_world_input_locked()
+	if old_state == EncounterState.COMBAT and is_instance_valid(combat_manager):
+		combat_manager.stop_battle_voice()
 	current_state = new_state
 	if world != null and world.has_method("set_encounter_ui_active"):
 		world.set_encounter_ui_active(new_state in [

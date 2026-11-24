@@ -41,6 +41,7 @@ var temporary_defense_modifier: float = 0.0 # From mid-battle dialogue (e.g. 咬
 var has_triggered_mid_edging_talk: bool = false
 var is_resolved: bool = false
 var animation_delays: bool = true
+var voice_motion_ready: Callable
 
 var active_meta_settings: Dictionary = {}
 var last_player_action_name: String = ""
@@ -115,7 +116,7 @@ func start_combat(tutorial_mode: bool = false, meta_settings: Dictionary = {}) -
 	combat_started.emit()
 	var vm: Node = HVoiceManagerClass.instance
 	if is_instance_valid(vm):
-		vm.play_battle_taunt()
+		vm.start_battle(self, voice_motion_ready)
 	
 	log_message_emitted.emit("【身心对决开始】与%s的身心快感对决正式打响！" % npc_name)
 	_advance_to_player_turn()
@@ -159,8 +160,8 @@ func execute_player_action(command: Variant) -> void:
 		last_npc_koujou_text = str(koujou.get("text", ""))
 		koujou_triggered.emit(koujou.get("speaker", npc_name), koujou.get("text", ""), extra_badge)
 		var vm: Node = HVoiceManagerClass.instance
-		if is_instance_valid(vm):
-			vm.play_battle_reaction(npc_pleasure.current_pleasure / npc_pleasure.max_pleasure)
+		if is_instance_valid(vm) and not npc_pleasure.has_reached_climax:
+			vm.play_battle_reaction(self, npc_pleasure.current_pleasure / npc_pleasure.max_pleasure)
 	else:
 		last_player_target_zone = ""
 		last_npc_koujou_text = ""
@@ -274,6 +275,7 @@ func _check_battle_state() -> bool:
 	# Check Player Defeat (100% Pleasure)
 	if player_pleasure.has_reached_climax:
 		is_resolved = true
+		stop_battle_voice()
 		current_phase = Phase.DEFEAT
 		phase_changed.emit(current_phase)
 		log_message_emitted.emit("【对决结束】主人承受不住强烈刺激，达到了绝顶高潮！对决落败！")
@@ -283,13 +285,11 @@ func _check_battle_state() -> bool:
 	# Check NPC Defeat (100% Pleasure)
 	if npc_pleasure.has_reached_climax:
 		is_resolved = true
+		stop_battle_voice()
 		current_phase = Phase.VICTORY
 		phase_changed.emit(current_phase)
 		log_message_emitted.emit("【对决结束】%s娇喘连连彻底失守，陷入了剧烈绝顶！主人获得了胜利！" % npc_name)
 		combat_ended.emit("player", npc_name, "npc_climax")
-		var vm: Node = HVoiceManagerClass.instance
-		if is_instance_valid(vm):
-			vm.play_battle_defeat()
 		return true
 		
 	# Check Edging Threshold Interruption (Only trigger once per battle unless reset)
@@ -303,6 +303,14 @@ func _check_battle_state() -> bool:
 		return true
 		
 	return false
+
+func stop_battle_voice() -> void:
+	var vm: Node = HVoiceManagerClass.instance
+	if is_instance_valid(vm):
+		vm.stop_scene(self)
+
+func _exit_tree() -> void:
+	stop_battle_voice()
 
 func get_combat_llm_context(mid_reason: String = "") -> Dictionary:
 	if current_phase == Phase.INACTIVE or is_resolved:

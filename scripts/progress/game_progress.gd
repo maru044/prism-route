@@ -8,6 +8,7 @@ var initial_temple_defeat_count: int = 0
 var settlement_outcome: String = ""
 var companion_unlocks: Array[String] = []
 var world_unlocks: Array[String] = []
+var camper_intro_seen: bool = false
 
 signal progress_changed(key: String, new_val)
 
@@ -40,13 +41,19 @@ func unlock_world(area_id: String) -> void:
 func is_world_unlocked(area_id: String) -> bool:
 	return world_unlocks.has(area_id)
 
+func mark_camper_intro_seen() -> void:
+	if not camper_intro_seen:
+		camper_intro_seen = true
+		progress_changed.emit("camper_intro_seen", true)
+
 func to_dict() -> Dictionary:
 	return {
 		"tutorial_completed": tutorial_completed,
 		"initial_temple_defeat_count": initial_temple_defeat_count,
 		"settlement_outcome": settlement_outcome,
 		"companion_unlocks": companion_unlocks.duplicate(),
-		"world_unlocks": world_unlocks.duplicate()
+		"world_unlocks": world_unlocks.duplicate(),
+		"camper_intro_seen": camper_intro_seen
 	}
 
 func from_dict(data: Dictionary) -> void:
@@ -59,6 +66,7 @@ func from_dict(data: Dictionary) -> void:
 	if tutorial_completed and settlement_outcome == "kill" and not companion_unlocks.has("sparkle"):
 		companion_unlocks.append("sparkle")
 	world_unlocks = _saved_ids(data.get("world_unlocks"))
+	camper_intro_seen = data.get("camper_intro_seen", false) == true
 
 func _saved_ids(values: Variant) -> Array[String]:
 	var ids: Array[String] = []

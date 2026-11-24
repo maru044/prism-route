@@ -19,6 +19,8 @@ const WORLD_AUDIO := preload("res://scripts/audio/world_audio_1030.gd")
 var world_audio
 const H_VOICE_MANAGER := preload("res://scripts/audio/h_voice_manager.gd")
 var h_voice_manager: Node
+const CAMPER_CINEMATIC_INTRO := preload("res://scripts/ui/camper_cinematic_intro.gd")
+var _camper_intro_instance: Node = null
 const INITIAL_RUIN := preload("res://scenes/world/initial_ruin.tscn")
 const DIALOGUE_INPUT := preload("res://scenes/narrative/dialogue_panel.gd")
 const WORLD_CONTROL := preload("res://scripts/world/world_control_context.gd")
@@ -1253,9 +1255,33 @@ func set_character_mode(enabled: bool) -> void:
 	if floor_point.is_empty():
 		_show_world_notice("附近空间不足，先移动到开阔路面再按 C");switching_actor=false;_sync_actor_controls();return
 	character_mode=enabled;free_mode=false;overview_mode=false
-	if enabled:character.set_spawn(floor_point.position+Vector3.UP*.1,heading)
-	else:_spawn_camper(floor_point.position,heading)
+	if enabled:
+		character.set_spawn(floor_point.position+Vector3.UP*.1,heading)
+		_interrupt_camper_intro()
+	else:
+		_spawn_camper(floor_point.position,heading)
+		_check_and_trigger_camper_intro()
 	switching_actor=false;_sync_actor_controls()
+
+func _check_and_trigger_camper_intro() -> void:
+	if game_progress == null or game_progress.camper_intro_seen:
+		return
+	game_progress.mark_camper_intro_seen()
+	_start_camper_intro()
+
+func _start_camper_intro() -> void:
+	_interrupt_camper_intro()
+	var intro := CAMPER_CINEMATIC_INTRO.new()
+	_camper_intro_instance = intro
+	add_child(intro)
+
+func _interrupt_camper_intro() -> void:
+	if is_instance_valid(_camper_intro_instance):
+		if _camper_intro_instance.has_method("interrupt"):
+			_camper_intro_instance.interrupt()
+		else:
+			_camper_intro_instance.queue_free()
+		_camper_intro_instance = null
 
 func show_overview() -> void:
 	free_mode=true;overview_mode=true;_sync_actor_controls()

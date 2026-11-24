@@ -434,6 +434,8 @@ func _upload_piece() -> void:
 	var cell: Vector3i=staging.cell;var data: Dictionary=staging.data;var chunk: Node3D=staging.chunk
 	if staging.group<2:
 		var group: String="near" if staging.group==0 else "far"
+		if not data.has(group) or not data.has("bounds") or data.bounds.size()<2:
+			staging.group+=1;staging.offset=0;return
 		var source: PackedFloat32Array=data[group]
 		var offset: int=staging.offset
 		if offset>=source.size()/16:staging.group+=1;staging.offset=0;return
@@ -497,7 +499,17 @@ func _make_lod_node(node_name: String, display_mesh: Mesh, buffer: PackedFloat32
 
 func make_display_multimesh(display_mesh: Mesh, buffer: PackedFloat32Array, bounds: AABB, keep_local: bool) -> MultiMesh:
 	var mm:=MultiMesh.new();mm.transform_format=MultiMesh.TRANSFORM_3D
-	mm.use_custom_data=true;mm.mesh=display_mesh;mm.instance_count=buffer.size()/16
+	mm.use_custom_data=true;mm.mesh=display_mesh
+	var target_count := buffer.size()/16
+	if target_count <= 0:
+		mm.instance_count = 0
+		mm.custom_aabb = bounds
+		return mm
+	mm.instance_count = target_count
+	if mm.instance_count != target_count:
+		push_error("make_display_multimesh: instance allocation failed")
+		mm.instance_count = 0
+		return mm
 	mm.custom_aabb=bounds
 	# Seed Godot's local transform cache BEFORE the first bulk upload. Otherwise
 	# changing a populated MultiMesh's mesh performs a synchronous GPU readback

@@ -56,8 +56,15 @@ func initialize(owner_vegetation) -> void:
 func _track_chunk(chunk: Node) -> void:
 	if not chunk.child_entered_tree.is_connected(_configure_node):
 		chunk.child_entered_tree.connect(_configure_node)
+	if not chunk.tree_exiting.is_connected(_untrack_chunk.bind(chunk)):
+		chunk.tree_exiting.connect(_untrack_chunk.bind(chunk))
 	for node: Node in chunk.get_children():
 		_configure_node(node)
+
+func _untrack_chunk(chunk: Node) -> void:
+	for node: Node in chunk.get_children():
+		if node is MultiMeshInstance3D:
+			grass_nodes.erase(node)
 
 func _configure_node(node: Node) -> void:
 	if node is MultiMeshInstance3D:
@@ -68,7 +75,8 @@ func _configure_node(node: Node) -> void:
 		node.set_meta("wind_mesh",existing)
 		node.set_meta("wind_bounds",node.global_transform*node.multimesh.custom_aabb)
 		node.set_meta("wind_lod",4 if existing==mesh else (2 if existing==lod_meshes[2] else 1))
-		grass_nodes.append(node)
+		if not grass_nodes.has(node):
+			grass_nodes.append(node)
 		_update_node_lod(node)
 		if profile_enabled:
 			profile.configure_usec+=Time.get_ticks_usec()-started;profile.configure_count+=1
@@ -124,42 +132,10 @@ func _update_node_lod(node: MultiMeshInstance3D, allow_change:=true) -> void:
 	var box: AABB=node.get_meta("wind_bounds")
 	var level:=_level_for_bounds(box,node.get_meta("wind_lod",4))
 	var desired: Mesh = lod_meshes[level] if optimized else reference_mesh
-	if optimized and level==1:
-		var camera:=get_viewport().get_camera_3d()
-		if camera!=null and camera.global_position.distance_to(camera.global_position.clamp(box.position,box.end))<64.0:
-			var source: Dictionary=node.get_meta("wind_source",{})
-			if not source.is_empty():vegetation.volume_streamer.store.request(source.cell)
 	if node.get_meta("wind_mesh")!=desired:
 		if not allow_change:return
 		var started:=Time.get_ticks_usec()
-		var has_local:=int(node.get_meta("wind_cpu_cache_bytes",0))>0
-		var needs_local:=not optimized or level!=1
-		if has_local!=needs_local:
-			var buffer:=PackedFloat32Array()
-			if has_local:
-				# This is a CPU-cache read, not a GPU readback. Drop that cache
-				# when leaving the near/middle region instead of retaining it.
-				buffer=node.multimesh.buffer
-			else:
-				var source: Dictionary=node.get_meta("wind_source",{})
-				if source.is_empty():return
-				var store=vegetation.volume_streamer.store
-				var data: Dictionary=store.get_data(source.cell)
-				if data.is_empty():
-					if not optimized:
-						# Explicit offline reference comparisons may synchronously
-						# read back; this branch is never used during normal play.
-						buffer=node.multimesh.buffer
-					else:
-						store.request(source.cell)
-						return # Keep existing coarse grass visible while loading.
-				else:
-					var original: PackedFloat32Array=data[source.group]
-					buffer=original.slice(source.offset*16,(source.offset+source.count)*16)
-			var bounds: AABB=node.multimesh.custom_aabb
-			node.multimesh=vegetation.volume_streamer.make_display_multimesh(desired,buffer,bounds,needs_local)
-			node.set_meta("wind_cpu_cache_bytes",buffer.size()*4 if needs_local else 0)
-		else:
+		if node.multimesh!=null:
 			node.multimesh.mesh=desired
 		node.set_meta("wind_mesh",desired)
 		node.set_meta("wind_lod",level)
@@ -173,14 +149,16 @@ func select_mesh_for_bounds(box: AABB) -> Mesh:
 
 func _level_for_bounds(box: AABB, old: int) -> int:
 	var level := 4
-	var camera := get_viewport().get_camera_3d()
-	if optimized and camera!=null:
-		var point := camera.global_position
-		var distance := point.distance_to(point.clamp(box.position,box.end))
-		# Switch only beyond each shader morph's completed range. Hysteresis
-		# avoids mesh oscillation while the camera sits on a threshold.
-		if distance>(42.0 if old==1 else 44.0):level=1
-		elif distance>(16.0 if old==2 else 18.0):level=2
+	var vp := get_viewport()
+	if vp != null and optimized:
+		var camera := vp.get_camera_3d()
+		if camera != null:
+			var point := camera.global_position
+			var distance := point.distance_to(point.clamp(box.position,box.end))
+			# Switch only beyond each shader morph's completed range. Hysteresis
+			# avoids mesh oscillation while the camera sits on a threshold.
+			if distance>(42.0 if old==1 else 44.0):level=1
+			elif distance>(16.0 if old==2 else 18.0):level=2
 	return level
 
 func set_optimized(enabled: bool) -> void:

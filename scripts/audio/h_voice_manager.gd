@@ -85,18 +85,24 @@ const POOLS: Dictionary = {
 }
 
 var player: AudioStreamPlayer
+var _feedback_player: AudioStreamPlayer
 var _stream_cache: Dictionary = {}
 var rng := RandomNumberGenerator.new()
 
-# Intimacy state
-var is_intimacy_active: bool = false
-var current_intimacy_pool: String = ""
-var motion_stage: int = 0 # 0: 初入浅尝, 1: 渐入佳境/持续升温
-var time_in_stage: float = 0.0
-var next_clip_timer: float = 0.0
-var min_interval: float = 2.8
-var max_interval: float = 5.2
-var last_clip_played: String = ""
+const OPENING_DELAY := 3.5
+const MIN_PAUSE := 3.0
+const MAX_PAUSE := 5.0
+const FADE_DURATION := 0.30
+
+enum SceneVoice { NONE, BATTLE, INTIMACY }
+var _scene_voice := SceneVoice.NONE
+var _scene_owner_id := 0
+var _motion_ready: Callable
+var _pending_opening := false
+var _next_clip_delay := 0.0
+var _intimacy_pool := ""
+var _motion_stage := 0
+var _fade: Tween
 
 # Tactile interaction state
 var _last_chest_touch_time: float = -100.0
@@ -120,8 +126,12 @@ func _setup_player() -> void:
 		return
 	player = AudioStreamPlayer.new()
 	player.name = "HVoicePlayer"
+	_feedback_player = AudioStreamPlayer.new()
+	_feedback_player.name = "FeedbackVoicePlayer"
 	_setup_bus()
 	add_child(player)
+	add_child(_feedback_player)
+	player.finished.connect(_on_scene_clip_finished)
 
 func _setup_bus() -> void:
 	var bus_name := &"PR_Voice"
@@ -131,88 +141,96 @@ func _setup_bus() -> void:
 		var idx := AudioServer.bus_count - 1
 		AudioServer.set_bus_name(idx, bus_name)
 		AudioServer.set_bus_send(idx, send_bus)
-	if is_instance_valid(player):
-		player.bus = bus_name
+	player.bus = bus_name
+	_feedback_player.bus = bus_name
 
 func _process(delta: float) -> void:
-	if not is_intimacy_active:
+	if _scene_voice == SceneVoice.NONE:
+		return
+	if not is_instance_id_valid(_scene_owner_id):
+		_end_scene()
+		return
+	if _motion_ready.is_valid():
+		if _motion_ready.call():
+			_motion_ready = Callable()
+		return
+	if not _pending_opening and player.playing:
+		return
+	_next_clip_delay = maxf(0.0, _next_clip_delay - delta)
+	if _next_clip_delay > 0.0 or _fade != null:
 		return
 
-	time_in_stage += delta
-	next_clip_timer -= delta
-
-	if next_clip_timer <= 0.0:
-		if is_instance_valid(player) and player.playing:
-			return # 等待当前音声播完后再计算间隔
-
+	if _pending_opening:
+		_pending_opening = false
+		if _scene_voice == SceneVoice.BATTLE:
+			_play_random_from_pool("voice_battle_taunt")
+		else:
+			_play_clip(str(POOLS[_intimacy_pool][0]), _intimacy_pool, player)
+	elif _scene_voice == SceneVoice.INTIMACY:
 		_advance_intimacy_cycle()
 
 func _advance_intimacy_cycle() -> void:
-	if not POOLS.has(current_intimacy_pool):
+	var pool: Array = POOLS[_intimacy_pool]
+	if _motion_stage == 0:
+		_motion_stage = 1
+		intimacy_intensity_increased.emit(_motion_stage)
+	_play_clip(str(pool[rng.randi_range(1 if pool.size() > 1 else 0, pool.size() - 1)]), _intimacy_pool, player)
+
+static func paired_motion_started(first: Node3D, second: Node3D) -> bool:
+	return _motion_started(first) and _motion_started(second)
+
+static func _motion_started(actor: Node3D) -> bool:
+	return is_instance_valid(actor) and actor.is_visible_in_tree() and actor.ready_for_review \
+		and actor.is_active_playback and actor.auto_play and actor.time > 0.0
+
+func start_intimacy(owner: Node, motion: Dictionary, motion_ready: Callable = Callable()) -> void:
+	_begin_scene(owner, SceneVoice.INTIMACY, motion_ready)
+	_intimacy_pool = resolve_intimacy_pool(motion)
+
+func start_battle(owner: Node, motion_ready: Callable = Callable()) -> void:
+	_begin_scene(owner, SceneVoice.BATTLE, motion_ready)
+
+func _begin_scene(owner: Node, kind: SceneVoice, motion_ready: Callable) -> void:
+	_end_scene()
+	_scene_voice = kind
+	_scene_owner_id = owner.get_instance_id()
+	_motion_ready = motion_ready
+	_pending_opening = true
+	_next_clip_delay = OPENING_DELAY
+	_feedback_player.stop()
+
+func stop_scene(owner: Node) -> void:
+	if owner.get_instance_id() == _scene_owner_id:
+		_end_scene()
+
+func _end_scene() -> void:
+	_scene_voice = SceneVoice.NONE
+	_scene_owner_id = 0
+	_motion_ready = Callable()
+	_pending_opening = false
+	_next_clip_delay = 0.0
+	_intimacy_pool = ""
+	_motion_stage = 0
+	if not player.playing or _fade != null:
 		return
-	var pool: Array = POOLS[current_intimacy_pool]
-	if pool.is_empty():
-		return
+	_fade = create_tween().set_ignore_time_scale(true)
+	_fade.tween_property(player, "volume_db", -60.0, FADE_DURATION)
+	_fade.tween_callback(_finish_scene_fade)
 
-	if motion_stage == 0:
-		# 刚进入或初入阶段结束，步入持续高潮段
-		motion_stage = 1
-		intimacy_intensity_increased.emit(motion_stage)
+func _finish_scene_fade() -> void:
+	player.stop()
+	player.volume_db = 0.0
+	_fade = null
 
-	# 持续阶段：在深层夹吸与高潮喘息（索引 1 与 2）之间轮播，不倒退回初入浅尝
-	var pick_idx := 0
-	if pool.size() > 1:
-		pick_idx = rng.randi_range(1, pool.size() - 1)
-
-	var clip_name: String = str(pool[pick_idx])
-	var len_s := _play_clip(clip_name, current_intimacy_pool)
-	next_clip_timer = len_s + rng.randf_range(min_interval, max_interval)
-
-## 家园亲密侍奉动作启动
-func start_intimacy(motion: Dictionary) -> void:
-	var pool_id := resolve_intimacy_pool(motion)
-	current_intimacy_pool = pool_id
-	motion_stage = 0
-	time_in_stage = 0.0
-	is_intimacy_active = true
-
-	if not POOLS.has(pool_id):
-		return
-	var pool: Array = POOLS[pool_id]
-	if pool.is_empty():
-		return
-
-	# 初入浅尝：锁定第 0 条（结合/初入/浅尝）
-	var clip_name: String = str(pool[0])
-	var len_s := _play_clip(clip_name, pool_id)
-	next_clip_timer = len_s + rng.randf_range(min_interval, max_interval)
-
-## 家园亲密侍奉动作停止
-func stop_intimacy(play_aftercare: bool = true) -> void:
-	is_intimacy_active = false
-	current_intimacy_pool = ""
-	motion_stage = 0
-	time_in_stage = 0.0
-	next_clip_timer = 0.0
-
-	if is_instance_valid(player):
-		player.stop()
-
-	if play_aftercare:
-		_play_random_from_pool("voice_pool_aftercare")
-
-## 触发绝顶高潮释出
-func trigger_orgasm() -> void:
-	_play_random_from_pool("voice_pool_orgasm")
-	# 高潮期间推迟常规喘息
-	next_clip_timer = 12.0
-
-## 战斗开始挑衅
-func play_battle_taunt() -> void:
-	_play_random_from_pool("voice_battle_taunt")
+func _on_scene_clip_finished() -> void:
+	if _scene_voice != SceneVoice.NONE and _fade == null:
+		_next_clip_delay = rng.randf_range(MIN_PAUSE, MAX_PAUSE)
 
 ## 战斗快感阶梯受击（传入快感比率 0.0~1.0 或 0~100）
-func play_battle_reaction(pleasure_ratio: float) -> void:
+func play_battle_reaction(owner: Node, pleasure_ratio: float) -> void:
+	if _scene_voice != SceneVoice.BATTLE or owner.get_instance_id() != _scene_owner_id \
+			or _pending_opening or _next_clip_delay > 0.0 or player.playing or _fade != null:
+		return
 	var pct := pleasure_ratio if pleasure_ratio > 1.0 else (pleasure_ratio * 100.0)
 	if pct < 40.0:
 		_play_random_from_pool("voice_battle_pleasure_low")
@@ -221,12 +239,10 @@ func play_battle_reaction(pleasure_ratio: float) -> void:
 	else:
 		_play_random_from_pool("voice_battle_pleasure_high")
 
-## 战斗战败臣服
-func play_battle_defeat() -> void:
-	_play_random_from_pool("voice_battle_defeat")
-
 ## 随手摸胸即时短反馈（单发轻触 vs 快速连续拖拽）
 func play_chest_fondle(continuous: bool = false) -> void:
+	if _scene_voice != SceneVoice.NONE or _fade != null:
+		return
 	var now := float(Time.get_ticks_msec()) / 1000.0
 	var is_rapid := (now - _last_chest_touch_time) < 1.6
 	_last_chest_touch_time = now
@@ -236,17 +252,19 @@ func play_chest_fondle(continuous: bool = false) -> void:
 		return
 
 	if (continuous or is_rapid) and pool.size() > 1:
-		_play_clip(str(pool[1]), "voice_touch_chest")
+		_play_clip(str(pool[1]), "voice_touch_chest", _feedback_player)
 	else:
-		_play_clip(str(pool[0]), "voice_touch_chest")
+		_play_clip(str(pool[0]), "voice_touch_chest", _feedback_player)
 
 ## 自由对话面板开启招呼
 func play_chat_greet(character_id: String = "") -> void:
+	if _scene_voice != SceneVoice.NONE or _fade != null:
+		return
 	var cid := character_id.to_lower()
 	if cid in ["char", "charlotte", "夏洛特"]:
-		_play_clip("char0088.ogg", "voice_chat_greet")
+		_play_clip("char0088.ogg", "voice_chat_greet", _feedback_player)
 	else:
-		_play_clip("hime0013.ogg", "voice_chat_greet")
+		_play_clip("hime0013.ogg", "voice_chat_greet", _feedback_player)
 
 ## 动作目录自动匹配到 8 大受纳体位池
 func resolve_intimacy_pool(motion: Dictionary) -> String:
@@ -278,31 +296,21 @@ func resolve_intimacy_pool(motion: Dictionary) -> String:
 	# 3. 仰卧正常位被动承欢（包含正常位、仰卧、折腿、抬腿、面对面等）
 	return "voice_pool_honban_missionary"
 
-func _play_random_from_pool(pool_id: String) -> float:
-	if not POOLS.has(pool_id):
-		return 0.0
+func _play_random_from_pool(pool_id: String) -> void:
 	var pool: Array = POOLS[pool_id]
-	if pool.is_empty():
-		return 0.0
 	var clip_name: String = str(pool[rng.randi_range(0, pool.size() - 1)])
-	return _play_clip(clip_name, pool_id)
+	_play_clip(clip_name, pool_id, player)
 
-func _play_clip(clip_name: String, pool_id: String = "") -> float:
-	_setup_player()
+func _play_clip(clip_name: String, pool_id: String, target: AudioStreamPlayer) -> void:
 	var stream := get_stream(clip_name)
 	if stream == null:
-		return 0.0
-
-	last_clip_played = clip_name
+		if target == player:
+			_on_scene_clip_finished()
+		return
+	target.stop()
+	target.stream = stream
+	target.play()
 	voice_played.emit(pool_id, clip_name)
-
-	if not is_inside_tree() or player == null or not player.is_inside_tree():
-		return stream.get_length()
-
-	player.stop()
-	player.stream = stream
-	player.play()
-	return stream.get_length()
 
 ## 获取或缓存 AudioStream 资源
 func get_stream(clip_name: String) -> AudioStream:

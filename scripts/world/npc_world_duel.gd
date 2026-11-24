@@ -212,6 +212,8 @@ func initialize(host: Node3D, p_world: Node3D, p_runtime: Runtime) -> void:
 	panel.free_dialogue_requested.connect(_on_free_dialogue_requested)
 
 	var combat := runtime.combat_manager
+	combat.voice_motion_ready = func() -> bool:
+		return HVoiceManager.paired_motion_started(npc_paired_actor, master_paired_actor)
 	combat.combat_started.connect(hud.reset_battle)
 	combat.log_message_emitted.connect(hud.append_log)
 	combat.koujou_triggered.connect(hud.display_koujou)
@@ -359,7 +361,9 @@ func _on_phase_changed(phase: int) -> void:
 	hud.set_chat_open(phase == TurnCombatManager.Phase.MID_BATTLE_DIALOGUE)
 	hud.set_input_enabled(phase == TurnCombatManager.Phase.PLAYER_INPUT)
 
-func _on_encounter_state_changed(_old: int, state: int) -> void:
+func _on_encounter_state_changed(old: int, state: int) -> void:
+	if old == Runtime.EncounterState.COMBAT and state != Runtime.EncounterState.COMBAT:
+		runtime.combat_manager.stop_battle_voice()
 	if state != Runtime.EncounterState.AVAILABLE:
 		set_npc_active(true)
 	hud.visible = (state == Runtime.EncounterState.COMBAT)

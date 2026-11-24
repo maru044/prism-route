@@ -488,6 +488,11 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST and initialized and _dirty and (not "save_session" in world or world.save_session == null):
 		_flush_save()
 
+func _exit_tree() -> void:
+	var vm: Node = _get_h_voice_manager()
+	if is_instance_valid(vm):
+		vm.stop_scene(self)
+
 func _pointed_piece(mouse: Vector2) -> Dictionary:
 	var camera: Camera3D = world.camera
 	var start := camera.project_ray_origin(mouse)
@@ -1058,7 +1063,9 @@ func _start_intimacy_staging(motion: Dictionary, resident_actor: HomeResidentAct
 
 	var vm: Node = _get_h_voice_manager()
 	if is_instance_valid(vm):
-		vm.start_intimacy(motion)
+		vm.start_intimacy(self, motion, func() -> bool:
+			return HVoiceManagerClass.paired_motion_started(intimacy_npc_actor, intimacy_master_actor)
+		)
 
 func _find_ground_staging_origin(resident: HomeResidentActor, motion: Dictionary) -> Variant:
 	var space := get_world_3d().direct_space_state
@@ -1126,7 +1133,7 @@ func finish_intimacy_staging() -> void:
 		return
 	var vm: Node = _get_h_voice_manager()
 	if is_instance_valid(vm):
-		vm.stop_intimacy(true)
+		vm.stop_scene(self)
 	is_intimacy_active = false
 	current_intimacy_motion.clear()
 	if is_instance_valid(intimacy_staging_root):

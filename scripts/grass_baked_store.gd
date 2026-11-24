@@ -5,6 +5,7 @@ const MAX_CACHE_BYTES := 96*1024*1024
 const MAX_JOBS := 2
 const FORMAT_VERSION := 2
 const BUFFER := preload("res://scripts/grass_instance_buffer.gd")
+const GRASS_BUFFER_BASE_SHA256 := "28afa632669717b63398a84c43c4087fd1e4a64ed5a51c47409a1f9cab42f255"
 var manifest: Dictionary = {}
 var directory := ""
 var mesh_bounds:=AABB()
@@ -42,8 +43,9 @@ static func signature(world) -> String:
 		text+=FileAccess.get_sha256("res://scripts/world/initial_ruin_mask.gd")
 		if world.metadata.static_features.has("upper_ring_1030"):text+=FileAccess.get_sha256("res://scripts/world/upper_ring_mask.gd")
 	# Include generation code/constants and the actual SDF bytes, not only mesh.
-	for path in [root+"landscape_mask.res",root+"surface_roles.json","res://scripts/vegetation_lod_streamer.gd","res://scripts/map_1021_vegetation.gd","res://scripts/grass_instance_buffer.gd"]:
+	for path in [root+"landscape_mask.res",root+"surface_roles.json","res://scripts/vegetation_lod_streamer.gd","res://scripts/map_1021_vegetation.gd"]:
 		text+=FileAccess.get_sha256(path)
+	text+=GRASS_BUFFER_BASE_SHA256
 	# Queue/profiling-only edits must not force a geometry rebake. Generation
 	# routines and the query configuration remain part of the signature.
 	var include:=false
@@ -124,9 +126,16 @@ func poll() -> void:
 		io_usec+=result.read_usec;decode_usec+=result.decode_usec
 		if result.data.is_empty():
 			corrupt+=1;manifest.cells.erase(result.id);continue
+		if cache.has(result.id):
+			cache_bytes-=cache[result.id].bytes
+			lru.erase(result.id)
 		cache[result.id]=result.data;lru.append(result.id);cache_bytes+=result.data.bytes
 		while cache_bytes>MAX_CACHE_BYTES and lru.size()>1:
-			var oldest: String=lru.pop_front();cache_bytes-=cache[oldest].bytes;cache.erase(oldest);evictions+=1
+			var oldest: String=lru.pop_front()
+			if cache.has(oldest):
+				cache_bytes-=cache[oldest].bytes
+				cache.erase(oldest)
+				evictions+=1
 
 func get_data(cell: Vector3i) -> Dictionary:
 	var id:=key(cell)
