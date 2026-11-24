@@ -31,13 +31,22 @@ const DIALOGUE_SYSTEM := {"role": "system", "content": "保持当前角色语气
 const CONTINUE_MESSAGE := {"role": "user", "content": "接着上一条回复继续，只写新增内容。"}
 const CONTEXT_OVERFLOW := "当前请求超过约 100 万 token 的上下文预算。请缩短输入或提示词。"
 
-static var _dialogue_tag := RegEx.create_from_string(r"(?i)<(/?)(game|report_nya~?|think_nya~?)>")
+const DIALOGUE_TAG_NAMES := "game|report_nya~?|think_nya~?|think|thinking|reasoning"
+const DIALOGUE_ROLL_TAG := "<roll 1d100>"
+static var _dialogue_tag := RegEx.create_from_string(
+	r"(?i)`</?(?:%s)>(?:`|\z)|<(/?)(%s)>" % [DIALOGUE_TAG_NAMES, DIALOGUE_TAG_NAMES]
+)
+static var _dialogue_roll_line := RegEx.create_from_string(
+	r"(?mi)^[ \t]*<roll[ \t]+1d100>[ \t]*(100|[1-9][0-9]?)[ \t]*</roll[ \t]+1d100>[ \t]*(?=\r?$)"
+)
 static var _prompt_token := RegEx.create_from_string(r"\{\{//|\{\{(?:roll 1d100|[a-zA-Z0-9_]+)\}\}|\{\{|\}\}")
-static var _empty_label_line := RegEx.create_from_string(r"(?m)^[ \t]*([^#\-\n：:]{1,20}[：:])\s*\{\{([a-zA-Z0-9_]+)\}\}\s*\n?")
+static var _empty_label_line := RegEx.create_from_string(r"(?m)^[ \t]*([^#\-\n：:\{\}]{1,20}[：:])([^\n]+)\n?")
+static var _placeholder_key := RegEx.create_from_string(r"\{\{([a-zA-Z0-9_]+)\}\}")
 static var _dialogue_role_marker := RegEx.create_from_string(r"(?m)^\|(用户|小猫之神)\|")
 static var _dialogue_tag_prefixes := [
 	"<game>", "</game>", "<report_nya>", "</report_nya>", "<think_nya>", "</think_nya>",
 	"<report_nya~>", "</report_nya~>", "<think_nya~>", "</think_nya~>",
+	"<think>", "</think>", "<thinking>", "</thinking>", "<reasoning>", "</reasoning>",
 ]
 
 var profiles := {
@@ -759,42 +768,72 @@ static func dialogue_sections(raw: String, streaming := false) -> Dictionary:
 	var plain := PackedStringArray()
 	var game := PackedStringArray()
 	var reports := PackedStringArray()
-	var in_report := false
-	var in_game := false
+	var hidden_tags: Array[String] = []
+	var game_depth := 0
 	var has_game := false
+	var has_tags := false
 	var cursor := 0
 	for matched in _dialogue_tag.search_all(raw):
-		var tag := matched.get_string(2).to_lower()
-		if in_report and tag == "game":
+		var tag := matched.get_string(2).to_lower().trim_suffix("~")
+		if tag.is_empty() or (not hidden_tags.is_empty() and tag == "game"):
 			continue
+		has_tags = true
 		var segment := raw.substr(cursor, matched.get_start() - cursor)
-		if in_report:
-			reports.append(segment)
-		elif in_game:
+		if not hidden_tags.is_empty():
+			if hidden_tags.back().ends_with("_nya") and not segment.strip_edges().is_empty():
+				reports.append(segment)
+		elif game_depth > 0:
 			game.append(segment)
 		else:
 			plain.append(segment)
+		var closing := not matched.get_string(1).is_empty()
 		if tag == "game":
-			in_game = matched.get_string(1).is_empty()
-			has_game = has_game or in_game
-		else:
-			in_report = matched.get_string(1).is_empty()
+			if closing:
+				game_depth = maxi(0, game_depth - 1)
+			elif not has_game or game_depth > 0:
+				game_depth += 1
+				has_game = true
+		elif not closing:
+			hidden_tags.append(tag)
+		elif not hidden_tags.is_empty() and hidden_tags.back() == tag:
+			hidden_tags.pop_back()
+		elif hidden_tags.is_empty() and not has_game:
+			# Some replies start inside a reasoning block and emit only its closing tag.
+			plain.clear()
 		cursor = matched.get_end()
 	var tail := raw.substr(cursor)
 	var start := tail.rfind("<")
-	if start >= 0 and (streaming or in_report or tail.length() - start >= 3):
+	if start >= 0 and (streaming or not hidden_tags.is_empty() or tail.length() - start >= 3):
 		var suffix := tail.substr(start).to_lower()
 		for tag: String in _dialogue_tag_prefixes:
 			if tag.begins_with(suffix):
 				tail = tail.left(start)
+				has_tags = true
 				break
-	if in_report:
-		reports.append(tail)
-	elif in_game:
+	if not hidden_tags.is_empty():
+		if hidden_tags.back().ends_with("_nya") and not tail.strip_edges().is_empty():
+			reports.append(tail)
+	elif game_depth > 0:
 		game.append(tail)
 	else:
 		plain.append(tail)
-	return {"body": "".join(game if has_game else plain), "report": "\n\n".join(reports).strip_edges()}
+	var body := "".join(game)
+	if not has_game and not streaming:
+		var unwrapped := "".join(plain)
+		# A standalone, complete dice result can mark the start of a malformed reply.
+		var roll := _dialogue_roll_line.search(unwrapped)
+		if roll != null:
+			body = unwrapped.substr(roll.get_start())
+		elif not has_tags:
+			body = unwrapped
+	if streaming and not body.is_empty():
+		var last_line := body.rfind("\n") + 1
+		var suffix := body.substr(last_line).strip_edges().to_lower()
+		if not suffix.is_empty() and (DIALOGUE_ROLL_TAG.begins_with(suffix) \
+				or (suffix.begins_with(DIALOGUE_ROLL_TAG) and _dialogue_roll_line.search(suffix) == null)):
+			body = body.left(last_line)
+	body = _dialogue_roll_line.sub(body, "〔1d100 · $1〕", true)
+	return {"body": body, "report": "\n\n".join(reports).strip_edges()}
 
 static func reply_sections(reply: Dictionary, partial_text := "", streaming := false, for_context := false) -> Dictionary:
 	var sections := dialogue_sections(reply.get("text", ""))
@@ -814,13 +853,27 @@ static func reply_sections(reply: Dictionary, partial_text := "", streaming := f
 			sections.report += ("\n\n" if not sections.report.is_empty() else "") + part.report
 	return sections
 
-func _expand_dialogue_prompt(text: String) -> String:
+func _prune_empty_label_lines(text: String) -> String:
 	var cleaned_template := text
 	for m: RegExMatch in _empty_label_line.search_all(text):
-		var key := m.get_string(2)
-		var val = context.get(key, "")
-		if val == null or str(val).strip_edges().is_empty():
+		var rhs := m.get_string(2)
+		if "{{//" in rhs or "{{roll 1d100}}" in rhs:
+			continue
+		var tokens := _placeholder_key.search_all(rhs)
+		if tokens.is_empty():
+			continue
+		var all_empty := true
+		for tok: RegExMatch in tokens:
+			var val = context.get(tok.get_string(1), "")
+			if val != null and not str(val).strip_edges().is_empty():
+				all_empty = false
+				break
+		if all_empty:
 			cleaned_template = cleaned_template.replace(m.get_string(0), "")
+	return cleaned_template
+
+func _expand_dialogue_prompt(text: String) -> String:
+	var cleaned_template := _prune_empty_label_lines(text)
 
 	var parts := PackedStringArray()
 	var cursor := 0

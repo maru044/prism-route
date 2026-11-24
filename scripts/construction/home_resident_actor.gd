@@ -209,11 +209,11 @@ func _pick_next_wander_destination() -> void:
 	var ray := PhysicsRayQueryParameters3D.create(target_global + Vector3.UP * 0.8, target_global - Vector3.UP * 1.5, 32)
 	ray.exclude = [static_body.get_rid()]
 	var hit := space.intersect_ray(ray)
-	if not hit.is_empty():
+	if not hit.is_empty() and hit.position.y >= target_global.y - 0.05 and hit.position.y <= target_global.y + 0.15:
 		_target_position = hit.position + Vector3.UP * 0.02
-		state = State.WANDERING
 	else:
-		_reset_wander_timer()
+		_target_position = target_global + Vector3.UP * 0.02
+	state = State.WANDERING
 
 func _process_wandering(delta: float) -> void:
 	var delta_pos := _target_position - global_position

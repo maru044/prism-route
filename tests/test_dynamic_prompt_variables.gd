@@ -30,8 +30,6 @@ func _test_home_dialogue_expansion() -> void:
 		"current_interaction_state": "家园闲聊",
 		"bound_furniture_info": "双人软床",
 		"companion_status": "已缔结契约（识趣玩伴）",
-		"pleasure_npc": "0.0%",
-		"pleasure_player": "0.0%",
 	}
 	
 	var err := client._load_dialogue_markdown()
@@ -53,7 +51,9 @@ func _test_home_dialogue_expansion() -> void:
 	assert(scene_prompt.contains("场景家具绑定：双人软床"), "Must contain bound furniture")
 	assert(scene_prompt.contains("当前互动阶段：家园闲聊"), "Must contain interaction state")
 	
-	# Verify that ALL combat lines are absent
+	# Verify that ALL combat and pleasure lines are absent
+	assert(not scene_prompt.contains("双方快感状态"), "Pleasure status line must be absent in home dialogue")
+	assert(not scene_prompt.contains("0.0%"), "Misleading 0.0% pleasure must be absent in home dialogue")
 	assert(not scene_prompt.contains("战斗回合"), "Combat round must be absent in home dialogue")
 	assert(not scene_prompt.contains("战斗阶段"), "Combat phase must be absent in home dialogue")
 	assert(not scene_prompt.contains("交涉起因"), "Negotiation reason must be absent in home dialogue")
@@ -104,6 +104,7 @@ func _test_combat_dialogue_expansion() -> void:
 			break
 			
 	assert(not scene_prompt.is_empty(), "角色与场景 tag must be found at depth 900")
+	assert(scene_prompt.contains("双方快感状态：受访者 75.0% / Master 45.0%"), "Combat pleasure state must be injected")
 	assert(scene_prompt.contains("战斗回合：第 2 回合"), "Combat round must be present")
 	assert(scene_prompt.contains("战斗阶段：战中交涉阶段"), "Combat phase must be present")
 	assert(scene_prompt.contains("交涉起因：Master主动战中搭话"), "Negotiation reason must be present")

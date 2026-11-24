@@ -7,6 +7,7 @@ const HomeHUDClass := preload("res://scripts/construction/home_hud.gd")
 const ConstructionWorldClass := preload("res://scripts/construction/construction_world.gd")
 const HomeIntimacyCatalogClass := preload("res://scripts/construction/home_intimacy_catalog.gd")
 const BasicKitClass := preload("res://scripts/construction/basic_kit.gd")
+const BuildingDataClass := preload("res://scripts/construction/building_data.gd")
 
 func _initialize() -> void:
 	run.call_deferred()
@@ -43,6 +44,7 @@ func run() -> void:
 	assert(not normal_scene_content.is_empty(), "Worldbook entry '角色与场景' must be present")
 	assert(not normal_scene_content.contains("当前亲密动作"), "Normal context must NOT contain '当前亲密动作' label")
 	assert(not normal_scene_content.contains("亲密动作细节"), "Normal context must NOT contain '亲密动作细节' label")
+	assert(not normal_scene_content.contains("双方快感状态"), "Normal context must NOT contain '双方快感状态' label")
 	print("  ✓ Clean removal verified: Inactive intimate tags leave zero blank labels!")
 
 	# Case B: Home intimacy context with active motion
@@ -65,6 +67,8 @@ func run() -> void:
 			break
 	assert(intimate_scene_content.contains("当前亲密动作：床沿仰卧胸部侍奉"), "Intimate context must inject current intimate action")
 	assert(intimate_scene_content.contains("亲密动作细节：床沿仰卧互动，前戏胸部轻柔抚慰"), "Intimate context must inject action description")
+	assert(not intimate_scene_content.contains("双方快感状态"), "Home intimacy must NOT contain '双方快感状态' label")
+	assert(not intimate_scene_content.contains("0.0%"), "Home intimacy must NOT contain misleading 0.0% pleasure")
 	print("  ✓ Dynamic tag injection verified: '当前亲密动作' and '亲密动作细节' injected perfectly!")
 
 	# ----------------------------------------------------
@@ -179,6 +183,12 @@ func close_free_dialogue() -> void:
 	resident_actor.plot_id = "coastal"
 	resident_actor.room_data = {"title": "晴空卧室"}
 
+	var real_building_data := BuildingDataClass.new()
+	cw2.plots["coastal"] = {
+		"spec": {"id": "coastal", "name": "海湾露台"},
+		"data": real_building_data
+	}
+
 	cw2.is_intimacy_active = true
 	cw2.current_intimacy_actor = resident_actor
 	cw2.current_intimacy_motion = {
@@ -195,6 +205,9 @@ func close_free_dialogue() -> void:
 	assert(mock_world.get("received_speaker") == "刻晴", "Speaker must be passed as 刻晴")
 	assert(mock_world.get("received_char_id") == "keqing", "Character ID must be passed as keqing")
 	var ctx: Dictionary = mock_world.get("received_context")
+	assert(str(ctx.get("dialogue_location")) == "海湾露台 · 晴空卧室", "Location must resolve spec.name without calling 2-arg get on BuildingData")
+	assert(not ctx.has("pleasure_npc"), "Home intimacy context must NOT pass pleasure_npc")
+	assert(not ctx.has("pleasure_player"), "Home intimacy context must NOT pass pleasure_player")
 	assert(ctx.get("intimate_action") == "床沿仰卧胸部侍奉", "Context must contain accurate intimate_action")
 	assert(ctx.get("intimate_action_desc") == "床沿仰卧互动，前戏胸部轻柔抚慰", "Context must contain accurate intimate_action_desc")
 	assert(ctx.get("intimate_mode") == true, "Context must have intimate_mode = true")

@@ -57,12 +57,30 @@ var ready_audio := false
 
 func initialize(scene: Node3D) -> void:
 	world = scene; rng.randomize()
-	_bus("PR_World", "Master"); _bus("PR_Ambience", "PR_World"); _bus("PR_Actions", "PR_World")
-	_bus("PR_Radio", "PR_World")
-	AudioServer.add_bus_effect(AudioServer.get_bus_index("PR_Ambience"),lowpass)
+	var world_idx := _bus(&"PR_World", &"Master")
+	var ambience_idx := _bus(&"PR_Ambience", &"PR_World")
+	_bus(&"PR_Actions", &"PR_World")
+	_bus(&"PR_Voice", &"PR_World")
+	_bus(&"PR_Radio", &"PR_World")
+	var existing_lowpass: AudioEffectLowPassFilter = null
+	for i in AudioServer.get_bus_effect_count(ambience_idx):
+		var eff := AudioServer.get_bus_effect(ambience_idx, i)
+		if eff is AudioEffectLowPassFilter:
+			existing_lowpass = eff
+			break
+	if existing_lowpass != null:
+		lowpass = existing_lowpass
+	else:
+		AudioServer.add_bus_effect(ambience_idx, lowpass)
 	lowpass.cutoff_hz = 20500
-	var limiter := AudioEffectLimiter.new(); limiter.ceiling_db = -1.5
-	AudioServer.add_bus_effect(AudioServer.get_bus_index("PR_World"),limiter)
+	var has_limiter := false
+	for i in AudioServer.get_bus_effect_count(world_idx):
+		if AudioServer.get_bus_effect(world_idx, i) is AudioEffectLimiter:
+			has_limiter = true
+			break
+	if not has_limiter:
+		var limiter := AudioEffectLimiter.new(); limiter.ceiling_db = -1.5
+		AudioServer.add_bus_effect(world_idx, limiter)
 	listener = AudioListener3D.new(); add_child(listener); listener.make_current()
 	waves = BED.new(); add_child(waves); waves.initialize(WAVES,"PR_Ambience")
 	leaves = BED.new(); add_child(leaves); leaves.initialize(LEAVES,"PR_Ambience")
@@ -81,10 +99,14 @@ func initialize(scene: Node3D) -> void:
 	ready_audio = true; apply_volumes()
 	print("WORLD_AUDIO_READY shoreline_segments=%d tree_cells=%d"%[shore_segments.size(),tree_grid.size()])
 
-func _bus(label: StringName, send: StringName) -> void:
-	if AudioServer.get_bus_index(label) >= 0:return
-	AudioServer.add_bus(); var index := AudioServer.bus_count-1
-	AudioServer.set_bus_name(index,label); AudioServer.set_bus_send(index,send)
+func _bus(label: StringName, send: StringName) -> int:
+	var index := AudioServer.get_bus_index(label)
+	if index < 0:
+		AudioServer.add_bus()
+		index = AudioServer.bus_count - 1
+		AudioServer.set_bus_name(index, label)
+	AudioServer.set_bus_send(index, send)
+	return index
 
 func _voice(bus: StringName, distance: float) -> AudioStreamPlayer3D:
 	var player := AudioStreamPlayer3D.new()
@@ -238,10 +260,13 @@ func _water_step(event: Dictionary) -> void:
 
 func apply_volumes() -> void:
 	if not ready_audio:return
-	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index("PR_World"),float(settings.master))
-	AudioServer.set_bus_mute(AudioServer.get_bus_index("PR_World"),not bool(settings.enabled))
-	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index("PR_Ambience"),float(settings.ambience))
-	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index("PR_Actions"),float(settings.actions))
+	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index(&"PR_World"), float(settings.master))
+	AudioServer.set_bus_mute(AudioServer.get_bus_index(&"PR_World"), not bool(settings.enabled))
+	var ambience_vol := float(settings.ambience)
+	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index(&"PR_Ambience"), ambience_vol)
+	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index(&"PR_Actions"), ambience_vol)
+	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index(&"PR_Voice"), float(settings.voice))
+	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index(&"PR_Radio"), float(settings.music))
 	if not bool(settings.enabled):
 		waves.silence(); leaves.silence(); gull.stop(); bird.stop(); startup.stop()
 		radio.stop()

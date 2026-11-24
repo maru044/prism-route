@@ -6,7 +6,7 @@ const QUALITY_NAMES := ["高画质", "中画质", "最低画质"]
 const GAMMA_MIN := 0.70
 const GAMMA_MAX := 1.40
 const GAMMA_DEFAULT := 1.00
-const AUDIO_KEYS := ["enabled", "master", "ambience", "actions"]
+const AUDIO_KEYS := ["enabled", "master", "ambience", "voice", "music"]
 
 static func load_config() -> ConfigFile:
 	var config := ConfigFile.new()

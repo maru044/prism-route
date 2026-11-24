@@ -2,6 +2,7 @@ extends SceneTree
 ## Resolve resource dependencies directly; headless filesystem caches can omit them.
 const ROSTER := preload("res://scripts/characters/character_roster_database.gd")
 const GRASS_SOURCE := preload("res://scripts/world/grass_source_geometry.gd")
+const VOICE := preload("res://scripts/audio/h_voice_manager.gd")
 const GRASS_INPUTS := {
 	"assets/world/current_map_validation/current_region.glb": ["assets/world/terrain_repairs_1103/manifest.json", "road_shoulder", "source_mesh_sha256"],
 	"assets/world/terrain_repairs_1103/terrain.glb": ["assets/world/terrain_repairs_1103/grass_bake/manifest.json", "source_geometry_sha256"],
@@ -31,6 +32,9 @@ func run() -> void:
 	# The gallery loads textures by character ID, so dependency scanning cannot discover them.
 	for entry: Dictionary in ROSTER.get_all_entries():
 		queue.append(ROSTER.PORTRAIT_DIR.path_join(entry.file))
+	for clips: Array in VOICE.POOLS.values():
+		for clip: String in clips:
+			queue.append("res://assets/audio/h_voice/".path_join(clip))
 	for clip in ["A01","A05","A06","A18","A19","A20","A25"]:
 		queue.append("res://assets/characters/motion_review/"+clip+".tres")
 	for name in ["painted_clumps_v1.png","painted_small_canopy_8view_v1.png","painted_broad_canopy_8view_v1.png","painted_upright_canopy_8view_v1.png"]:

@@ -103,8 +103,6 @@ var overview_mode := false
 var camera: Camera3D
 var spawn_index := 0
 var resolved_spawns: Array[Dictionary] = []
-var status: Label
-var spawn_menu: OptionButton
 var graphics_environment: Environment
 var graphics_quality: int = GraphicsQuality.HIGH
 var dragging := false
@@ -688,8 +686,6 @@ func _hud() -> void:
 	settings_panel.detail_changed.connect(set_detailed_timings)
 	if save_session != null:
 		settings_panel.save_menu_requested.connect(save_session.open)
-	if settings_panel.teleport_options != null:
-		_build_teleport_controls(settings_panel.teleport_options)
 	if developer_tools_enabled:
 		_build_developer_controls(settings_panel.developer_options)
 	world_audio = WORLD_AUDIO.new()
@@ -717,52 +713,6 @@ func _hud() -> void:
 	_world_notice_timer.timeout.connect(_world_notice.hide)
 	add_child(_world_notice_timer)
 	set_review_ui_visible(not "--no-ui" in OS.get_cmdline_user_args())
-
-func _build_teleport_controls(box: VBoxContainer) -> void:
-	var quick_row := GRAPHICS_UI.row(8)
-	box.add_child(quick_row)
-	settings_panel.add_button(quick_row, "【沙洲 · 刻晴】", func():
-		settings_panel.close()
-		_teleport_to_key("sandbar_pavilion")
-	)
-	settings_panel.add_button(quick_row, "【沙洲 · 甘雨】", func():
-		settings_panel.close()
-		_teleport_to_key("sandbar_pavilion")
-	)
-	settings_panel.add_button(quick_row, "【神殿 · 花火】", func():
-		settings_panel.close()
-		_teleport_to_key("initial_ruin")
-	)
-	settings_panel.add_button(quick_row, "【海岬小镇】", func():
-		settings_panel.close()
-		_teleport_to_key("cape_town")
-	)
-	var quick_row_2 := GRAPHICS_UI.row(8)
-	box.add_child(quick_row_2)
-	settings_panel.add_button(quick_row_2, "【孤顶教堂】", func():
-		settings_panel.close()
-		_teleport_to_key("church_ruins")
-	)
-	settings_panel.add_button(quick_row_2, "【浅水庭院】", func():
-		settings_panel.close()
-		_teleport_to_key("water_court")
-	)
-	settings_panel.add_button(quick_row_2, "【覆土庭院】", func():
-		settings_panel.close()
-		_teleport_to_key("earth_pavilion")
-	)
-
-	spawn_menu = OptionButton.new()
-	for i in metadata.spawns.size():
-		spawn_menu.add_item("%d  %s" % [i + 1, metadata.spawns[i].name])
-	GAME_SETTINGS.style_dropdown(spawn_menu)
-	box.add_child(spawn_menu)
-	spawn_menu.item_selected.connect(func(index: int):
-		settings_panel.close()
-		select_spawn(index)
-	)
-	status = GRAPHICS_UI.text_label("", 18, GAME_SETTINGS.PALETTE.text, GAME_SETTINGS.PALETTE)
-	box.add_child(status)
 
 func _teleport_to_key(target_key: String) -> void:
 	for i in resolved_spawns.size():
@@ -952,9 +902,6 @@ func show_free_dialogue(panel: Node, speaker: String, character_id: String = "",
 				"胡桃": resolved_id = "hutao"
 				_: resolved_id = speaker.to_lower()
 			
-	if is_instance_valid(h_voice_manager):
-		h_voice_manager.play_chat_greet(resolved_id)
-		
 	var loc: String = ""
 	if custom_context.has("dialogue_location") and not str(custom_context.get("dialogue_location")).is_empty():
 		loc = str(custom_context.get("dialogue_location"))
@@ -985,8 +932,6 @@ func show_free_dialogue(panel: Node, speaker: String, character_id: String = "",
 		"companion_status": "初次相遇 / 尚未收服为玩伴",
 		"current_interaction_state": "大世界对话",
 		"bound_furniture_info": "地面",
-		"pleasure_npc": "0.0%",
-		"pleasure_player": "0.0%",
 	}
 	merged_context.merge(custom_context, true)
 		
@@ -1140,9 +1085,6 @@ func select_spawn(index: int) -> void:
 		if floor_point.is_empty():character_mode=true;character.set_spawn((row.floor_position as Vector3)+Vector3.UP*.1,heading)
 		else:_spawn_camper(floor_point.position,heading)
 	_sync_actor_controls()
-	if is_instance_valid(spawn_menu):
-		spawn_menu.select(index)
-		status.text="%s · %.1f m" % [row.name,(row.floor_position as Vector3).y]
 	await get_tree().physics_frame
 
 func set_free(enabled: bool) -> void:

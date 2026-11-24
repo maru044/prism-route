@@ -76,6 +76,15 @@ func test_game_settings_in_world() -> void:
 	assert(flags.get("save_menu_kind") == "quit", "save_menu_requested('quit') should be emitted, got: " + str(flags.get("save_menu_kind")))
 	assert(not settings.visible, "Settings should close when return to title clicked")
 
+	# Verify audio sliders match consolidated 4-slider layout
+	for key: String in ["master", "ambience", "voice", "music"]:
+		assert(settings._sliders.has(key), "Missing audio slider: " + key)
+	assert(not settings._sliders.has("actions"), "Legacy 'actions' slider should be removed")
+	settings.open(0)
+	var audio_prefs := settings.PREFS.audio()
+	assert(audio_prefs.has("voice") and audio_prefs.has("music"), "PREFS.audio() must include voice and music")
+	settings.close()
+
 	# Verify backward compatibility for performance monitor capture
 	assert(settings._show_monitor != null, "_show_monitor must exist")
 	assert(settings._show_details != null, "_show_details must exist")

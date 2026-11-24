@@ -21,7 +21,6 @@ var allow_developer_tools := false
 var game_progress: RefCounted = null
 var _unlocked_panel: Control = null
 var developer_options: VBoxContainer
-var teleport_options: VBoxContainer
 var _quality: Array[Button] = []
 var _sliders: Dictionary = {}
 var _audio_enabled: Button
@@ -95,14 +94,12 @@ func _ready() -> void:
 	_audio_enabled.toggle_mode = true
 	_audio_enabled.toggled.connect(_set_audio.bind("enabled"))
 	_add_slider(page_settings, "总音量", "master")
-	_add_slider(page_settings, "环境音量", "ambience")
-	_add_slider(page_settings, "动作音量", "actions")
+	_add_slider(page_settings, "环境音效", "ambience")
+	_add_slider(page_settings, "角色语音", "voice")
+	_add_slider(page_settings, "背景音乐", "music")
 
 	if in_world:
 		add_to_group("world_input_blockers")
-		_section(page_settings, "快捷传送")
-		teleport_options = UI.column(8)
-		page_settings.add_child(teleport_options)
 
 		_section(page_settings, "性能监视")
 		var monitors := UI.row(8)

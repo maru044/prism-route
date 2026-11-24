@@ -559,6 +559,32 @@ func active_actor() -> Node3D:
 	assert(cw.resident_manager.get_resident(test_room_id) == "ganyu", "Resident assignment must be restored")
 	assert(cw.resident_actors.has(test_room_id), "Resident actor must be restored and spawned")
 
+	await physics_frame
+	await physics_frame
+	actor_instance = cw.resident_actors[test_room_id]
+	var expected_floor_y: float = coastal_plot.root.global_position.y + 0.2 + int(first_room.get("story", 0)) * 3.6
+	assert(actor_instance.global_position.y >= expected_floor_y, "Restored resident must not sink below floor surface")
+
+	# Lower terrain raycast trap: simulate terrain synced in Jolt 0.25m below floor when no floor collider hits
+	var lower_terrain := StaticBody3D.new()
+	lower_terrain.collision_layer = 32
+	lower_terrain.collision_mask = 0
+	var terrain_shape := CollisionShape3D.new()
+	var terrain_box := BoxShape3D.new()
+	terrain_box.size = Vector3(2.0, 0.2, 2.0)
+	terrain_shape.shape = terrain_box
+	lower_terrain.add_child(terrain_shape)
+	root.add_child(lower_terrain)
+	var trap_local := Vector3(1.0 * 2.0 + 1.0, 0.2 - 0.35, 1.0 * 2.0 + 1.0)
+	lower_terrain.global_position = coastal_plot.root.to_global(trap_local)
+	await physics_frame
+	await physics_frame
+	var trap_room := {"id": "trap_test", "story": 0, "cells": ["0:1:1"]}
+	var trap_spawn: Vector3 = cw._get_room_spawn_position("coastal", trap_room)
+	var trap_floor_y: float = coastal_plot.root.global_position.y + 0.2
+	assert(trap_spawn.y >= trap_floor_y and trap_spawn.y <= trap_floor_y + 0.14, "Lower terrain below floor must not pull resident down: %f" % trap_spawn.y)
+	lower_terrain.queue_free()
+
 	# Test Intimacy dispatch with furniture routing
 	cw._on_home_intimacy_requested("service", actor_instance)
 	cw._on_home_intimacy_requested("honban", actor_instance)

@@ -8,79 +8,72 @@ signal intimacy_intensity_increased(stage: int)
 
 static var instance: HVoiceManager
 
-# Voice Pool Definitions
+# Voice Pool Definitions (精选 6 句全场景通用纯拟声，温和克制自然)
 const POOLS: Dictionary = {
-	# 家园日常亲密侍奉 (8大受纳体位)
+	# 口交侍奉 (轻舐水声与敏感轻哼自然配合)
 	"voice_pool_oral": [
-		"hime2561.ogg", # 0: 轻嘬柱身
-		"hime2634.ogg", # 1: 深含吞吐
-		"hime0860.ogg"  # 2: 深喉呜咽
+		"hime2561.ogg", # 06: 前端含吮轻舐水声
+		"hime0072.ogg", # 01: 敏感轻哼
+		"hime0634.ogg"  # 02: 浅层受纳
 	],
+	# 揉胸与手足前戏
 	"voice_pool_paizuri_chest": [
-		"hime2009.ogg", # 0: 敏感抚弄
-		"hime0139.ogg", # 1: 持续揉捻
-		"hime2930.ogg"  # 2: 乳交夹触
+		"hime0072.ogg", # 01: 前戏抚触敏感轻哼
+		"hime0779.ogg", # 03: 敏感抚弄动情娇喘
+		"hime0482.ogg"  # 04: 深入承欢隐忍闷哼
 	],
 	"voice_pool_service_manual": [
-		"hime0070.ogg", # 0: 指尖触碰
-		"hime1996.ogg", # 1: 发热动情
-		"hime3858.ogg"  # 2: 双女爱抚
+		"hime0072.ogg", # 01: 前戏抚触敏感轻哼
+		"hime0779.ogg", # 03: 敏感抚弄动情娇喘
+		"hime0482.ogg"  # 04: 深入承欢隐忍闷哼
 	],
+	# 本番深入体位 (骑乘/正常位/后背等，通用阶梯推进)
 	"voice_pool_honban_cowgirl": [
-		"hime1459.ogg", # 0: 跨坐深入
-		"hime3035.ogg", # 1: 起伏颠簸
-		"hime3056.ogg"  # 2: 深层满足
+		"hime0634.ogg", # 02: 初次结合浅层受纳
+		"hime0779.ogg", # 03: 敏感抚弄动情娇喘
+		"hime0482.ogg", # 04: 深入承欢隐忍闷哼
+		"hime0706.ogg"  # 05: 节律抽送颠簸喘息
 	],
 	"voice_pool_honban_missionary": [
-		"hime2029.ogg", # 0: 面对面受纳
-		"hime2056.ogg", # 1: 密集抽送
-		"hime2076.ogg"  # 2: 宫口深顶
+		"hime0634.ogg", # 02: 初次结合浅层受纳
+		"hime0779.ogg", # 03: 敏感抚弄动情娇喘
+		"hime0482.ogg", # 04: 深入承欢隐忍闷哼
+		"hime0706.ogg"  # 05: 节律抽送颠簸喘息
 	],
 	"voice_pool_honban_doggy": [
-		"hime1999.ogg", # 0: 背后贴入
-		"hime2060.ogg", # 1: 剧烈冲撞
-		"hime2102.ogg"  # 2: 抓扶边缘绝叫
+		"hime0634.ogg", # 02: 初次结合浅层受纳
+		"hime0779.ogg", # 03: 敏感抚弄动情娇喘
+		"hime0482.ogg", # 04: 深入承欢隐忍闷哼
+		"hime0706.ogg"  # 05: 节律抽送颠簸喘息
 	],
 	"voice_pool_orgasm": [
-		"hime2107.ogg", # 0: 临界攀升
-		"hime2108.ogg", # 1: 爆发绝顶
-		"hime0209.ogg"  # 2: 痉挛脱力
+		"hime0706.ogg"  # 05: 节律深喘沉沦
 	],
 	"voice_pool_aftercare": [
-		"hime3007.ogg", # 0: 脱力慵懒喘息
-		"hime0437.ogg"  # 1: 平复余韵轻柔询问
+		"hime0072.ogg"  # 01: 平复轻哼温存
 	],
 
-	# 战斗色色对决 Battle Fuck
+	# 战斗色色对决 Battle Fuck (温和生理娇喘，零台词出戏)
 	"voice_battle_taunt": [
-		"char0001.ogg", # 魔女冷嘲宣战
-		"elle0111.ogg"   # 小恶魔戏谑反讽
+		"hime0072.ogg"  # 01: 敏感情哼
 	],
 	"voice_battle_pleasure_low": [
-		"elle0205.ogg", # 嘴硬强撑
-		"muts0651.ogg"  # 皱眉抽气抵抗
+		"hime0634.ogg"  # 02: 浅层受纳轻吟
 	],
 	"voice_battle_pleasure_mid": [
-		"sall0153.ogg", # 防线动摇尖叫
-		"elle0248.ogg"  # 呼吸凌乱失控
+		"hime0779.ogg"  # 03: 动情娇喘
 	],
 	"voice_battle_pleasure_high": [
-		"char0263.ogg", # 贯穿沦陷浪叫
-		"sall0180.ogg"  # 暴风绝顶失神悲鸣
+		"hime0482.ogg"  # 04: 深入承欢隐忍深顶
 	],
 	"voice_battle_defeat": [
-		"char0306.ogg", # 魔女沉沦自白
-		"elle0288.ogg"  # 小恶魔屈辱臣服
+		"hime0706.ogg"  # 05: 节律颠簸沦陷
 	],
 
-	# 微交互
+	# 微交互反馈
 	"voice_touch_chest": [
-		"hime0068.ogg", # 0: 轻按微颤
-		"hime5294.ogg"  # 1: 拉扯娇嗔抗议
-	],
-	"voice_chat_greet": [
-		"hime0013.ogg", # 温和轻唤
-		"char0088.ogg"  # 优雅轻笑
+		"hime0072.ogg", # 01: 单发抚按敏感轻哼
+		"hime0779.ogg"  # 03: 连续揉按动情娇喘
 	]
 }
 
@@ -134,13 +127,17 @@ func _setup_player() -> void:
 	player.finished.connect(_on_scene_clip_finished)
 
 func _setup_bus() -> void:
+	var world_bus := &"PR_World"
+	if AudioServer.get_bus_index(world_bus) < 0:
+		AudioServer.add_bus()
+		var world_idx := AudioServer.bus_count - 1
+		AudioServer.set_bus_name(world_idx, world_bus)
+		AudioServer.set_bus_send(world_idx, &"Master")
 	var bus_name := &"PR_Voice"
 	if AudioServer.get_bus_index(bus_name) < 0:
-		var send_bus: StringName = &"PR_Actions" if AudioServer.get_bus_index(&"PR_Actions") >= 0 else (&"PR_World" if AudioServer.get_bus_index(&"PR_World") >= 0 else &"Master")
 		AudioServer.add_bus()
-		var idx := AudioServer.bus_count - 1
-		AudioServer.set_bus_name(idx, bus_name)
-		AudioServer.set_bus_send(idx, send_bus)
+		AudioServer.set_bus_name(AudioServer.bus_count - 1, bus_name)
+	AudioServer.set_bus_send(AudioServer.get_bus_index(bus_name), world_bus)
 	player.bus = bus_name
 	_feedback_player.bus = bus_name
 
@@ -163,18 +160,21 @@ func _process(delta: float) -> void:
 	if _pending_opening:
 		_pending_opening = false
 		if _scene_voice == SceneVoice.BATTLE:
-			_play_random_from_pool("voice_battle_taunt")
+			_play_clip("hime0072.ogg", "voice_battle_taunt", player)
 		else:
 			_play_clip(str(POOLS[_intimacy_pool][0]), _intimacy_pool, player)
 	elif _scene_voice == SceneVoice.INTIMACY:
 		_advance_intimacy_cycle()
 
 func _advance_intimacy_cycle() -> void:
-	var pool: Array = POOLS[_intimacy_pool]
-	if _motion_stage == 0:
-		_motion_stage = 1
-		intimacy_intensity_increased.emit(_motion_stage)
-	_play_clip(str(pool[rng.randi_range(1 if pool.size() > 1 else 0, pool.size() - 1)]), _intimacy_pool, player)
+	var pool: Array = POOLS.get(_intimacy_pool, [])
+	if pool.is_empty():
+		return
+	_motion_stage += 1
+	intimacy_intensity_increased.emit(_motion_stage)
+	# 确定性顺序推进，到达最深层后维持高强度纯拟声
+	var idx: int = mini(_motion_stage, pool.size() - 1)
+	_play_clip(str(pool[idx]), _intimacy_pool, player)
 
 static func paired_motion_started(first: Node3D, second: Node3D) -> bool:
 	return _motion_started(first) and _motion_started(second)
@@ -232,12 +232,14 @@ func play_battle_reaction(owner: Node, pleasure_ratio: float) -> void:
 			or _pending_opening or _next_clip_delay > 0.0 or player.playing or _fade != null:
 		return
 	var pct := pleasure_ratio if pleasure_ratio > 1.0 else (pleasure_ratio * 100.0)
-	if pct < 40.0:
-		_play_random_from_pool("voice_battle_pleasure_low")
-	elif pct < 75.0:
-		_play_random_from_pool("voice_battle_pleasure_mid")
+	if pct < 35.0:
+		_play_clip("hime0634.ogg", "voice_battle_pleasure_low", player)
+	elif pct < 70.0:
+		_play_clip("hime0779.ogg", "voice_battle_pleasure_mid", player)
+	elif pct < 90.0:
+		_play_clip("hime0482.ogg", "voice_battle_pleasure_high", player)
 	else:
-		_play_random_from_pool("voice_battle_pleasure_high")
+		_play_clip("hime0706.ogg", "voice_battle_defeat", player)
 
 ## 随手摸胸即时短反馈（单发轻触 vs 快速连续拖拽）
 func play_chest_fondle(continuous: bool = false) -> void:
@@ -256,15 +258,9 @@ func play_chest_fondle(continuous: bool = false) -> void:
 	else:
 		_play_clip(str(pool[0]), "voice_touch_chest", _feedback_player)
 
-## 自由对话面板开启招呼
-func play_chat_greet(character_id: String = "") -> void:
-	if _scene_voice != SceneVoice.NONE or _fade != null:
-		return
-	var cid := character_id.to_lower()
-	if cid in ["char", "charlotte", "夏洛特"]:
-		_play_clip("char0088.ogg", "voice_chat_greet", _feedback_player)
-	else:
-		_play_clip("hime0013.ogg", "voice_chat_greet", _feedback_player)
+## 自由对话时机已移除音频播放，保持空函数避免破坏外部调用
+func play_chat_greet(_character_id: String = "") -> void:
+	pass
 
 ## 动作目录自动匹配到 8 大受纳体位池
 func resolve_intimacy_pool(motion: Dictionary) -> String:

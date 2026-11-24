@@ -230,11 +230,9 @@ func _review_site(index: int) -> void:
 			continue
 		world.character.set_spawn(floor_point + Vector3.UP * 0.08, atan2(offset.x, offset.z) + PI)
 		world.set_free(false)
-		world.spawn_menu.select(-1)
-		world.status.text = "%s · 角色点位" % site.get_meta("label")
+		world._show_world_notice("%s · 角色点位" % site.get_meta("label"))
 		return
 	world.set_free(true)
-	world.spawn_menu.select(-1)
 	world.camera.global_position = point + Vector3.UP * 1.5 + front * 1.65
 	world.camera.look_at(point + Vector3.UP * 0.95)
-	world.status.text = "%s · 自由镜头" % site.get_meta("label")
+	world._show_world_notice("%s · 自由镜头" % site.get_meta("label"))

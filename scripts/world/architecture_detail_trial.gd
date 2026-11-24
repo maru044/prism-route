@@ -32,7 +32,6 @@ func reload_settings(rebuild: bool=false) -> void:
 	if "--no-architecture-details" in OS.get_cmdline_user_args():enabled=false
 	_collect()
 	cluster_layer=CLUSTER_LAYER.new();cluster_layer.name="WorldLeafClustersV6";world.add_child(cluster_layer);cluster_layer.initialize(records,settings)
-	world.get_window().title="Prism Route | 大世界 · 叶团 V6"
 	apply()
 
 func _collect() -> void:

@@ -6,6 +6,8 @@ const ROSTER := preload("res://scripts/characters/character_roster_database.gd")
 const STORE := preload("res://scripts/progress/game_save_store.gd")
 const Runtime := preload("res://scripts/world/npc_encounter_runtime.gd")
 const HOME_HUD := preload("res://scripts/construction/home_hud.gd")
+const VOICE := preload("res://scripts/audio/h_voice_manager.gd")
+const WORLD_AUDIO := preload("res://scripts/audio/world_audio_1030.gd")
 const WORLD_SCENES := [
 	"res://assets/world/current_map_validation/current_region.glb",
 	"res://assets/world/terrain_repairs_1103/terrain.glb",
@@ -32,6 +34,7 @@ func _run() -> void:
 		await get_tree().process_frame
 		await get_tree().process_frame
 	_check_world_assets()
+	_checks["audio_assets"] = _check_audio_assets()
 	_checks["local_airp_runtime"] = _check_local_airp()
 	var encounters := {}
 	var complete := true
@@ -168,6 +171,26 @@ func _check_texture(path: String) -> void:
 		_missing.append(path)
 
 
+func _check_audio_assets() -> bool:
+	var missing_before := _missing.size()
+	var voice_count := 0
+	for clips: Array in VOICE.POOLS.values():
+		for clip: String in clips:
+			var path := "res://assets/audio/h_voice/".path_join(clip)
+			var stream := ResourceLoader.load(path, "AudioStream") as AudioStream
+			if stream == null or stream.get_length() <= 0.0:
+				_missing.append(path)
+			else:
+				voice_count += 1
+	var radio_count := 0
+	for track: AudioStream in WORLD_AUDIO.RADIO_TRACKS:
+		if track != null and track.get_length() > 0.0:
+			radio_count += 1
+	_observed["voice_clips"] = voice_count
+	_observed["radio_tracks"] = radio_count
+	return _missing.size() == missing_before and radio_count == 4
+
+
 func _has_visible_mesh(root: Node) -> bool:
 	for mesh: MeshInstance3D in root.find_children("*", "MeshInstance3D", true, false):
 		if mesh.mesh != null and mesh.is_visible_in_tree():
@@ -251,12 +274,16 @@ func _check_local_airp() -> bool:
 	client.load_resources()
 	if client.templates.is_empty() or client.reference_embeddings.is_empty():
 		_missing.append("res://assets/ai/local_airp/templates.json or embeddings")
+		client.free()
 		return false
 	if not client.ensure_probe():
 		_missing.append("Local AIRP BGE probe native sidecar executable")
+		client.close_probe()
+		client.free()
 		return false
 	var res: Dictionary = client.retrieve_and_compose("花火早上好呀", "sparkle", "home_chat", {}, 42)
 	client.close_probe()
+	client.free()
 	if res.get("content_tag", "") != "greet":
 		return false
 	var text: String = str(res.get("text", ""))

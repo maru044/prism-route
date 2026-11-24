@@ -5,6 +5,7 @@ func _initialize() -> void:
 
 func _run() -> void:
 	print("--- Running test_settings_teleport ---")
+	var initial_title := root.title
 	var world = load("res://scenes/main.tscn").instantiate()
 	world.automation_enabled = true
 	root.add_child(world)
@@ -13,9 +14,17 @@ func _run() -> void:
 		await process_frame
 
 	assert(world.settings_panel != null, "Settings panel should exist")
-	assert(world.settings_panel.teleport_options != null, "Teleport options container should exist in settings")
-	assert(world.spawn_menu != null, "Spawn menu option button should exist")
-	assert(world.spawn_menu.item_count == world.metadata.spawns.size(), "Spawn menu should have all spawns")
+	assert(root.title == initial_title, "Entering the world should preserve the application title")
+	world.settings_panel.open()
+	var page: Control = world.settings_panel._pages[0]
+	for label: Label in page.find_children("*", "Label", true, false):
+		assert(label.text != "快捷传送", "Settings must not show the teleport section")
+	for button: Button in page.find_children("*", "Button", true, false):
+		assert(button.text not in ["【沙洲 · 刻晴】", "【神殿 · 花火】", "【海岬小镇】"],
+			"Settings must not offer a destination")
+	assert(page.find_children("*", "OptionButton", true, false).is_empty(),
+		"Settings must not offer a spawn selector")
+	world.settings_panel.close()
 
 	# Test teleporting to sandbar pavilion (Keqing)
 	world._teleport_to_key("sandbar_pavilion")

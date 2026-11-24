@@ -22,6 +22,7 @@ func _run() -> void:
 	vm.set_process(false)
 	vm.rng.seed = 5
 	vm.voice_played.connect(func(pool: String, _clip: String): played.append(pool))
+	_check_bus_routing()
 	_check_catalog()
 
 	var home := Node.new()
@@ -115,9 +116,10 @@ func _run() -> void:
 	vm._process(4.0)
 	_check(played.size() == before_exit, "Removing a battle cancels pending audio")
 	vm.play_chat_greet("charlotte")
-	_check(played.back() == "voice_chat_greet" and vm._feedback_player.playing, "Standalone greetings still play")
+	_check(played.size() == before_exit, "Free dialogue greetings are disabled and produce no voice events")
 	vm.play_chest_fondle()
 	_check(played.back() == "voice_touch_chest" and vm._feedback_player.playing, "Standalone short feedback still plays")
+	_check_world_audio_volumes()
 	vm.free()
 	home.free()
 	hero.free()
@@ -140,3 +142,31 @@ func _check_catalog() -> void:
 	]
 	for sample: Array in cases:
 		_check(vm.resolve_intimacy_pool(sample[0]) == sample[1], "Expected pool: " + sample[1])
+
+func _check_bus_routing() -> void:
+	var world_idx := AudioServer.get_bus_index(&"PR_World")
+	var voice_idx := AudioServer.get_bus_index(&"PR_Voice")
+	_check(world_idx >= 0, "PR_World bus must exist when HVoiceManager enters tree")
+	_check(voice_idx >= 0, "PR_Voice bus must exist when HVoiceManager enters tree")
+	_check(AudioServer.get_bus_send(world_idx) == &"Master", "PR_World must route to Master")
+	_check(AudioServer.get_bus_send(voice_idx) == &"PR_World", "PR_Voice must route to PR_World even before WorldAudio init")
+	_check(vm.player.bus == &"PR_Voice" and vm._feedback_player.bus == &"PR_Voice", "Voice players must bind to PR_Voice")
+
+func _check_world_audio_volumes() -> void:
+	var world_audio_script := load("res://scripts/audio/world_audio_1030.gd")
+	var wa: Node = world_audio_script.new()
+	wa._bus(&"PR_World", &"Master")
+	wa._bus(&"PR_Ambience", &"PR_World")
+	wa._bus(&"PR_Actions", &"PR_World")
+	wa._bus(&"PR_Voice", &"PR_World")
+	wa._bus(&"PR_Radio", &"PR_World")
+	wa.ready_audio = true
+	wa.settings = {"enabled": true, "master": 0.6, "ambience": 0.4, "voice": 0.35, "music": 0.25}
+	wa.apply_volumes()
+	_check(is_equal_approx(AudioServer.get_bus_volume_linear(AudioServer.get_bus_index(&"PR_World")), 0.6), "PR_World volume mismatch")
+	_check(is_equal_approx(AudioServer.get_bus_volume_linear(AudioServer.get_bus_index(&"PR_Ambience")), 0.4), "PR_Ambience volume mismatch")
+	_check(is_equal_approx(AudioServer.get_bus_volume_linear(AudioServer.get_bus_index(&"PR_Actions")), 0.4), "PR_Actions must follow ambience volume")
+	_check(is_equal_approx(AudioServer.get_bus_volume_linear(AudioServer.get_bus_index(&"PR_Voice")), 0.35), "PR_Voice volume mismatch")
+	_check(is_equal_approx(AudioServer.get_bus_volume_linear(AudioServer.get_bus_index(&"PR_Radio")), 0.25), "PR_Radio volume mismatch")
+	_check(AudioServer.get_bus_send(AudioServer.get_bus_index(&"PR_Voice")) == &"PR_World", "PR_Voice must stay routed to PR_World after WorldAudio setup")
+	wa.free()

@@ -31,6 +31,7 @@ func run() -> void:
 		await _verify_transport()
 	_verify_endpoint_paths()
 	await _verify_report_panel()
+	_verify_nested_dialogue_tags()
 	_verify_reply_bbcode()
 	_verify_model_routes()
 	_verify_assistant_retry()
@@ -797,6 +798,71 @@ func _verify_reply_bbcode() -> void:
 	if _visible_chat_text(panel) != expected or not client.active_reply().text.contains("[color=#7FFFD4]"):
 		_fail("reply BBCode", "restored chat should render the same without altering the saved reply")
 	panel.free()
+
+
+func _verify_nested_dialogue_tags() -> void:
+	var panel := ChatPanel.new()
+	var capture := CaptureTransport.new()
+	panel.client._transport.free()
+	panel.client._transport = capture
+	root.add_child(panel)
+	var client := panel.client
+	client.profiles[Client.DIALOGUE] = {"url": "https://fixture.invalid", "model": "fixture", "key": ""}
+	panel.open_panel(Client.DIALOGUE, "nested tags", {})
+	client.send("查看地图")
+	for chunk: String in [
+		"前置杂文 `<game>`", "<report_nya~>报告开头<thi",
+		"nk>内部推演</report_nya~>仍在推演</think>",
+		"<think_nya~>内层报告</think_nya>外层报告尾部<game>示例</game></report_nya~>",
+	]:
+		capture.delta_received.emit(chunk)
+		if not panel._turn_views[0].body.get_parsed_text().is_empty():
+			_fail("nested dialogue tags", "text escaped before the body opened: " + panel._turn_views[0].body.get_parsed_text())
+	capture.delta_received.emit("<ga")
+	capture.delta_received.emit("me>第一句<game>第二句</game>第三句")
+	if panel._turn_views[0].body.get_parsed_text() != "第一句第二句第三句":
+		_fail("nested dialogue tags", "unexpected body: " + panel._turn_views[0].body.get_parsed_text())
+	capture.delta_received.emit("</game><game>额外回合</game>")
+	capture.finished.emit({}, "")
+	var parsed := Client.reply_sections(client.active_reply())
+	if parsed.body != "第一句第二句第三句" or not parsed.report.contains("外层报告尾部") \
+			or parsed.report.contains("内部推演") or parsed.report.contains("仍在推演"):
+		_fail("nested dialogue tags", "unexpected sections: " + JSON.stringify(parsed))
+
+	client.send("出发")
+	capture.delta_received.emit("前置构思和标签示例 `<game>`。\n\n<roll 1d100>52</roll 1d")
+	capture.delta_received.emit("100>\n<roll 1d100>46</roll 1d100>\n\n出发吧。")
+	if not panel._turn_views[1].body.get_parsed_text().is_empty():
+		_fail("untagged dice fallback", "unconfirmed prelude was displayed while streaming")
+	capture.finished.emit({}, "")
+	var expected := "〔1d100 · 52〕\n〔1d100 · 46〕\n\n出发吧。"
+	if panel._turn_views[1].body.get_parsed_text() != expected:
+		_fail("untagged dice fallback", "the dice and body were not recovered cleanly")
+	var snapshot := panel.save_snapshot()
+	panel.close_panel()
+	panel.restore_snapshot(snapshot)
+	panel.open_panel(Client.DIALOGUE, "nested tags", {})
+	if panel._turn_views[1].body.get_parsed_text() != expected:
+		_fail("untagged dice fallback", "the restored reply exposed the prelude")
+	client.send("下一轮")
+	var request := JSON.stringify(capture.request.messages)
+	if request.contains("前置构思和标签示例") or not request.contains("出发吧。"):
+		_fail("untagged dice fallback", "the next request should include only the player-facing reply")
+	capture.delta_received.emit("只有报告</think><report_nya~>未闭合报告<game>示例</game>")
+	capture.finished.emit({}, "")
+	if not Client.reply_sections(client.active_reply()).body.is_empty() or not client.status.contains("未返回正文"):
+		_fail("unclosed report", "a tag example was mistaken for the real body")
+	client.retry()
+	capture.delta_received.emit("<game>\n<roll 1d")
+	capture.delta_received.emit("100>52</roll")
+	if panel._turn_views[2].body.get_parsed_text().contains("<"):
+		_fail("split dice tag", "a partially streamed dice tag leaked")
+	capture.delta_received.emit(" 1d100>\n出发吧。</game>")
+	capture.finished.emit({}, "")
+	if panel._turn_views[2].body.get_parsed_text() != "\n〔1d100 · 52〕\n出发吧。":
+		_fail("split dice tag", "a complete dice result did not render")
+	panel.free()
+
 
 func _verify_report_panel() -> void:
 	var panel := ChatPanel.new()

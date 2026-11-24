@@ -68,10 +68,11 @@ func run() -> void:
 	await frames(25);audio.gull_due=0;await frames(2)
 	report.shore=audio.context.duplicate()
 	check(audio.wave_target > .25 and audio.gull_count > 0,"Shore waves or gull playback failed")
-	# All three user-facing sliders must route to independent buses.
-	audio.settings.ambience=0;audio.settings.actions=.44;audio.apply_volumes()
-	check(is_zero_approx(AudioServer.get_bus_volume_linear(AudioServer.get_bus_index("PR_Ambience"))) and is_equal_approx(AudioServer.get_bus_volume_linear(AudioServer.get_bus_index("PR_Actions")),.44),"Environment/actions volumes not independent")
-	audio.settings.ambience=.85;audio.settings.actions=.85;audio.apply_volumes()
+	# User-facing sliders route ambience+actions together and voice/music independently.
+	audio.settings.ambience=0.0;audio.settings.voice=0.44;audio.settings.music=0.33;audio.apply_volumes()
+	check(AudioServer.get_bus_send(AudioServer.get_bus_index(&"PR_Voice"))==&"PR_World","PR_Voice must route through PR_World")
+	check(is_zero_approx(AudioServer.get_bus_volume_linear(AudioServer.get_bus_index(&"PR_Ambience"))) and is_zero_approx(AudioServer.get_bus_volume_linear(AudioServer.get_bus_index(&"PR_Actions"))) and is_equal_approx(AudioServer.get_bus_volume_linear(AudioServer.get_bus_index(&"PR_Voice")),0.44) and is_equal_approx(AudioServer.get_bus_volume_linear(AudioServer.get_bus_index(&"PR_Radio")),0.33),"Environment, voice, and music volumes mismatch")
+	audio.settings.ambience=0.85;audio.settings.voice=0.75;audio.settings.music=0.85;audio.apply_volumes()
 	# Wading must follow the real existing ripple events, then stop while stationary.
 	await world._water_review_view(3);await frames(30)
 	var emitted: int=world.water_manager.interaction.emitted

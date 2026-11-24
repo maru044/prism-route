@@ -102,6 +102,8 @@ func _ready() -> void:
 	_setup_editor()
 	initialized=true
 	refresh_residents()
+	if is_inside_tree():
+		call_deferred("_reground_residents_after_physics")
 	for id: String in plots:
 		var p: Node3D=plots[id].root
 		var entry_pos: Vector3 = p.to_global(ENTRY) if p.is_inside_tree() else (p.transform * ENTRY)
@@ -220,6 +222,8 @@ func restore_snapshot(parsed: Variant, update_scene:=true) -> bool:
 		resident_manager.clear_all()
 	if update_scene:
 		refresh_residents()
+		if is_inside_tree():
+			call_deferred("_reground_residents_after_physics")
 	load_error = ""
 	if active:
 		_update_editor_state()
@@ -1195,9 +1199,13 @@ func _open_intimacy_free_dialogue() -> void:
 	var room_title: String = str(resident.room_data.get("title", "起居室"))
 	var plot_title: String = "海岛别墅"
 	if plots.has(resident.plot_id):
-		var p_name: String = str(plots[resident.plot_id].get("data", {}).get("name", ""))
-		if not p_name.is_empty():
-			plot_title = p_name
+		var plot_entry: Variant = plots[resident.plot_id]
+		if plot_entry is Dictionary:
+			var spec: Variant = plot_entry.get("spec", {})
+			if spec is Dictionary:
+				var p_name: String = str(spec.get("name", ""))
+				if not p_name.is_empty():
+					plot_title = p_name
 	var loc := "%s · %s" % [plot_title, room_title]
 
 	var m_name: String = str(current_intimacy_motion.get("name", "亲密互动"))
@@ -1219,6 +1227,7 @@ func _open_intimacy_free_dialogue() -> void:
 		"on_closed": Callable(self, "_on_intimacy_dialogue_closed")
 	}
 
+	intimacy_dragging = false
 	if is_instance_valid(hud):
 		hud.hide_intimacy_button()
 
@@ -1258,9 +1267,27 @@ func _get_room_spawn_position(plot_id: String, room: Dictionary) -> Vector3:
 	if cells.is_empty():
 		return plot.root.to_global(ENTRY)
 
-	var target_cell_str: String = str(cells[cells.size() / 2])
-	var parts: PackedStringArray = target_cell_str.split(":")
 	var story: int = int(room.get("story", 0))
+	var occupied: Dictionary = {}
+	if plot.has("data") and plot.data != null:
+		for piece: Dictionary in plot.data.pieces.values():
+			if int(piece.get("story", 0)) != story:
+				continue
+			var def: Dictionary = plot.data.definitions.get(piece.get("definition", ""), {})
+			if str(def.get("kind", "")) != "furniture":
+				continue
+			for cell: Vector2i in plot.data.occupied_cells(piece):
+				occupied[cell] = true
+
+	var target_cell_str: String = str(cells[cells.size() / 2])
+	for c_val: Variant in cells:
+		var c_str := str(c_val)
+		var c_parts := c_str.split(":")
+		if c_parts.size() == 3 and not occupied.has(Vector2i(c_parts[1].to_int(), c_parts[2].to_int())):
+			target_cell_str = c_str
+			break
+
+	var parts: PackedStringArray = target_cell_str.split(":")
 	var cx: int = 15
 	var cz: int = 15
 	if parts.size() == 3:
@@ -1269,15 +1296,15 @@ func _get_room_spawn_position(plot_id: String, room: Dictionary) -> Vector3:
 		cz = parts[2].to_int()
 
 	var local_pos := Vector3(cx * 2.0 + 1.0, 0.2 + story * DATA.STORY, cz * 2.0 + 1.0)
-	var global_pos: Vector3 = plot.root.to_global(local_pos)
+	var floor_pos: Vector3 = plot.root.to_global(local_pos)
 	var w3d := get_world_3d()
 	if w3d != null and w3d.direct_space_state != null:
 		var space := w3d.direct_space_state
-		var ray := PhysicsRayQueryParameters3D.create(global_pos + Vector3.UP * 0.8, global_pos - Vector3.UP * 1.5, WALKABLE_MASK)
+		var ray := PhysicsRayQueryParameters3D.create(floor_pos + Vector3.UP * 0.8, floor_pos - Vector3.UP * 1.5, WALKABLE_MASK)
 		var hit := space.intersect_ray(ray)
-		if not hit.is_empty():
+		if not hit.is_empty() and hit.position.y >= floor_pos.y - 0.05 and hit.position.y <= floor_pos.y + 0.12:
 			return hit.position + Vector3.UP * 0.02
-	return global_pos
+	return floor_pos + Vector3.UP * 0.02
 
 func refresh_residents() -> void:
 	if not initialized or resident_manager == null:
@@ -1331,9 +1358,30 @@ func refresh_residents() -> void:
 		actor_node.interaction_requested.connect(_on_resident_interacted)
 
 		var spawn_pos: Vector3 = _get_room_spawn_position(plot_id, room)
-		actor_node.position = spawn_pos
 		add_child(actor_node)
+		actor_node.global_position = spawn_pos
+		actor_node._last_stuck_check_pos = spawn_pos
 		resident_actors[r_id] = actor_node
+
+func _reground_residents_after_physics() -> void:
+	if not is_inside_tree():
+		return
+	await get_tree().physics_frame
+	if not is_inside_tree():
+		return
+	await get_tree().physics_frame
+	if not is_inside_tree():
+		return
+	for actor_val: Variant in resident_actors.values():
+		if not is_instance_valid(actor_val):
+			continue
+		var actor := actor_val as HomeResidentActor
+		if actor == null or actor.state != HomeResidentActor.State.IDLE:
+			continue
+		var expected_pos: Vector3 = _get_room_spawn_position(actor.plot_id, actor.room_data)
+		if actor.global_position.y < expected_pos.y - 0.03:
+			actor.global_position.y = expected_pos.y
+			actor._last_stuck_check_pos = actor.global_position
 
 func _get_h_voice_manager() -> Node:
 	if HVoiceManagerClass.instance != null and is_instance_valid(HVoiceManagerClass.instance):
